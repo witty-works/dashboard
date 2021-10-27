@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a5f28a39d1a2022fbb692a6055df4865",
+    "content-hash": "a18418f7358f860d55ce436ca406a0a7",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2903,6 +2903,98 @@
                 }
             ],
             "time": "2021-08-28T21:27:29+00:00"
+        },
+        {
+            "name": "platformsh/config-reader",
+            "version": "2.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/platformsh/config-reader-php.git",
+                "reference": "5511abfdb673ccfcf0eac9eaf65204f73edd90fd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/platformsh/config-reader-php/zipball/5511abfdb673ccfcf0eac9eaf65204f73edd90fd",
+                "reference": "5511abfdb673ccfcf0eac9eaf65204f73edd90fd",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Platformsh\\ConfigReader\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Larry Garfield",
+                    "email": "larry@platform.sh"
+                }
+            ],
+            "description": "Small helper to access Platform.sh environment variables",
+            "support": {
+                "issues": "https://github.com/platformsh/config-reader-php/issues",
+                "source": "https://github.com/platformsh/config-reader-php/tree/2.4.0"
+            },
+            "time": "2020-12-10T20:50:12+00:00"
+        },
+        {
+            "name": "platformsh/laravel-bridge",
+            "version": "2.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/platformsh/laravel-bridge.git",
+                "reference": "eed34313f142f9d720ff304d1f8fe64af59e1359"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/platformsh/laravel-bridge/zipball/eed34313f142f9d720ff304d1f8fe64af59e1359",
+                "reference": "eed34313f142f9d720ff304d1f8fe64af59e1359",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2",
+                "platformsh/config-reader": "^2.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "platformsh-laravel-env.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Larry Garfield",
+                    "email": "larry@platform.sh"
+                }
+            ],
+            "description": "Bridge library for running Symfony Flex on Platform.sh",
+            "support": {
+                "issues": "https://github.com/platformsh/laravel-bridge/issues",
+                "source": "https://github.com/platformsh/laravel-bridge/tree/2.2.0"
+            },
+            "time": "2020-12-10T21:08:31+00:00"
         },
         {
             "name": "pragmarx/google2fa",
