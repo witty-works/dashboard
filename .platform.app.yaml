@@ -1,0 +1,95 @@
+# This file describes an application. You can have multiple applications
+# in the same project.
+
+# The name of this app. Must be unique within a project.
+name: admin-ui
+
+# The type of the application to build.
+type: php:8.0
+
+build:
+    flavor: composer
+
+dependencies:
+    nodejs:
+        npm: ^6
+    php:
+        composer/composer: ^2
+
+variables:
+    env:
+        # Update these for your desired NVM and Node versions.
+        NVM_VERSION: v0.39.0
+        NODE_VERSION: v14.18.1
+
+# The hooks that will be performed when the package is deployed.
+hooks:
+    build: |
+        set -e
+        # https://docs.platform.sh/languages/nodejs/nvm.html#how-to-use-nvm-to-run-different-versions-of-nodejs
+        unset NPM_CONFIG_PREFIX
+        export NVM_DIR="$PLATFORM_APP_DIR/.nvm"
+        # install.sh will automatically install NodeJS based on the presence of $NODE_VERSION
+        curl -f -o- https://raw.githubusercontent.com/nvm-sh/nvm/$NVM_VERSION/install.sh | bash
+        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+        curl -sS https://platform.sh/cli/installer | php
+        composer dump-autoload -o
+        php artisan config:clear
+        php artisan clear-compiled
+        php artisan storage:link
+        npm ci
+        npm run production
+    deploy: |
+        set -e
+        php artisan clear-compiled
+        php artisan config:cache
+        php artisan route:cache
+        php artisan view:cache
+        php artisan migrate --force
+
+crons:
+    snapshot:
+        spec: '0 5 * * *'
+        cmd: |
+            if [ "$PLATFORM_BRANCH" = master ]; then
+                platform snapshot:create --yes --no-wait
+            fi
+
+# The relationships of the application with services or other applications.
+# The left-hand side is the name of the relationship as it will be exposed
+# to the application in the PLATFORM_RELATIONSHIPS variable. The right-hand
+# side is in the form `<service name>:<endpoint name>`.
+relationships:
+    database: "rdbms:mysqmariadb"
+
+# The size of the persistent disk of the application (in MB).
+disk: 2048
+
+# The mounts that will be performed when the package is deployed.
+mounts:
+    "storage/app/public": "shared:files/public"
+    "storage/framework/views": "shared:files/views"
+    "storage/framework/sessions": "shared:files/sessions"
+    "storage/framework/cache": "shared:files/cache"
+    "storage/logs": "shared:files/logs"
+    "bootstrap/cache": "shared:files/bootstrap/cache"
+    "/.config": "shared:files/config"
+
+# The configuration of app when it is exposed to the web.
+web:
+    commands:
+        start: php artisan clear-compiled && php artisan config:cache && /usr/sbin/php-fpm8.0-zts
+    locations:
+        "/":
+            root: "public"
+            index:
+                - index.php
+            allow: true
+            passthru: "/index.php"
+            rules:
+                '^/(css|js)/app.(css|js)':
+                    expires: 2m
+
+runtime:
+    extensions:
+        - blackfire
