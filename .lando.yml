@@ -1,0 +1,33 @@
+name: witty-admin-ui
+recipe: laravel
+
+proxy:
+  appserver_nginx:
+    - admin.lndo.site
+  mailhog:
+    - mail.lndo.site
+
+services:
+  database:
+    portforward: 3307
+  node:
+    type: node:14
+  mailhog:
+    type: mailhog
+    portforward: true
+    hogfrom:
+      - appserver_nginx
+
+tooling:
+  npm:
+    service: node
+  node:
+    service: node
+
+config:
+  via: nginx
+  php: '8.0'
+  composer_version: 2-latest
+  xdebug: false
+  webroot: public
+  database: mariadb:10.5
