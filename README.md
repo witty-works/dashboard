@@ -1,6 +1,8 @@
 # Introduction
 
-Admin UI for Witty
+Dashboard for Witty
+
+Handles registration, SSO, user license management, corporate rules and personal/team statistics.
 
 * https://jetstream.laravel.com/
 * https://laravel.com/docs/8.x/socialite
