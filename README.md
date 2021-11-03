@@ -52,7 +52,7 @@ Fetch code from https://github.com/witty-works/admin-ui
   * Run `lando start`
   * Run `lando npm run watch`
 
-* Goto `https://admin.lndo.site`
+* Goto `https://dashboard.lndo.site`
 
 Use gitflow to do feature or hotfix branches:
 https://nvie.com/posts/a-successful-git-branching-model/
