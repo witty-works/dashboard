@@ -4,7 +4,7 @@
 # Each route describes how an incoming URL is going
 # to be processed by Platform.sh.
 
-"https://admin.{default}/":
+"https://dashboard.{default}/":
     type: upstream
     primary: true
-    upstream: "admin-ui:http"
+    upstream: "dashboard:http"
