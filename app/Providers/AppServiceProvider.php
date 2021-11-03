@@ -23,9 +23,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        view()->composer('language_switcher', function ($view) {
-            $view->with('current_locale', app()->getLocale());
-            $view->with('supported_locales', config('laravellocalization.supportedLocales'));
-        });
+        //
     }
 }

@@ -28,7 +28,7 @@ Route::group(
         return view('dashboard');
     })->name('dashboard');
 
-    require base_path('vendor/laravel/fortify/routes/routes.php');
+    require_once base_path('vendor/laravel/fortify/routes/routes.php');
     
-	require base_path('vendor/laravel/jetstream/routes/livewire.php');
+	require_once base_path('vendor/laravel/jetstream/routes/livewire.php');
 });

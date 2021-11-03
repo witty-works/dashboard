@@ -45,6 +45,8 @@ Fetch code from https://github.com/witty-works/admin-ui
 
 * Install Sentry CLI https://docs.sentry.io/product/cli/installation/
     * Run `sentry-cli login`
+    * Run `cp .sentryclirc.example .sentryclirc` 
+    * Edit `.sentryclirc` to add the auth token from https://sentry.io/settings/account/api/auth-tokens/
 
 # Development
 

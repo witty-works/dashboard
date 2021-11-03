@@ -110,26 +110,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Supported Application Locales
-    |--------------------------------------------------------------------------
-    |
-    | Our supported locales will have available frontend and model
-    | translations.
-    |
-    */
-    'supported_locales' => [
-        'en' => [
-            'name' => 'English',
-            'dir'  => 'ltr',
-        ],
-        'de' => [
-            'name' => 'German',
-            'dir'  => 'ltr'
-        ],
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
     | Encryption Key
     |--------------------------------------------------------------------------
     |
@@ -198,6 +178,8 @@ return [
         App\Providers\JetstreamServiceProvider::class,
         App\Providers\SocialstreamServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
+        Themsaid\Langman\LangmanServiceProvider::class,
+
 
     ],
 
