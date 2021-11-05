@@ -178,6 +178,8 @@ return [
         App\Providers\JetstreamServiceProvider::class,
         App\Providers\SocialstreamServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
+        Themsaid\Langman\LangmanServiceProvider::class,
+
 
     ],
 

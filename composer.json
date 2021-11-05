@@ -1,9 +1,7 @@
 {
-    "name": "laravel/laravel",
+    "name": "wityworks/dashboard",
     "type": "project",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
-    "license": "MIT",
+    "description": "The Witty Dashboard",
     "require": {
         "php": "^7.3|^8.0",
         "fruitcake/laravel-cors": "^2.0",
@@ -15,12 +13,14 @@
         "laravel/socialite": "^5.2",
         "laravel/tinker": "^2.5",
         "livewire/livewire": "^2.5",
+        "mcamara/laravel-localization": "^1.6",
         "platformsh/laravel-bridge": "^2.2",
         "socialiteproviders/azureadb2c": "^4.0",
-        "socialiteproviders/microsoft-azure": "^5.0"
+        "socialiteproviders/microsoft-azure": "^5.0",
+        "themsaid/laravel-langman": "dev-master"
     },
     "require-dev": {
-        "facade/ignition": "^2.5",
+        "tio/laravel": "dev-remove-array-align-laravel-8",
         "fakerphp/faker": "^1.9.1",
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.4",
@@ -65,5 +65,16 @@
         "sort-packages": true
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@github.com:witty-works/laravel-langman.git"
+        },
+        {
+            "type": "vcs",
+            "url": "git@github.com:lsmith77/laravel.git"
+        }
+    ]
+
 }

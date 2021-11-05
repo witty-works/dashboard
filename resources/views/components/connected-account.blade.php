@@ -39,7 +39,7 @@
                     </div>
                 @else
                     <div class="text-xs text-gray-500">
-                        {{ __('Not connected.') }}
+                        {{ __('content.not_connected') }}
                     </div>
                 @endif
             </div>

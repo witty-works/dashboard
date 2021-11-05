@@ -1,23 +1,23 @@
 <x-jet-action-section>
     <x-slot name="title">
-        {{ __('Connected Accounts') }}
+        {{ __('content.connected_accounts') }}
     </x-slot>
 
     <x-slot name="description">
-        {{ __('Manage and remove your connect accounts.') }}
+        {{ __('content.manage_and_remove_your_connect_accounts') }}
     </x-slot>
 
     <x-slot name="content">
         <h3 class="text-lg font-medium text-gray-900">
             @if (count($this->accounts) == 0)
-                {{ __('You have no connected accounts.') }}
+                {{ __('content.you_have_no_connected_accounts') }}
             @else
-                {{ __('Your connected accounts.') }}
+                {{ __('content.your_connected_accounts') }}
             @endif
         </h3>
 
         <div class="mt-3 max-w-xl text-sm text-gray-600">
-            {{ __('You are free to connect any social accounts to your profile and may remove any connected accounts at any time. If you feel any of your connected accounts have been compromised, you should disconnect them immediately and change your password.') }}
+            {{ __('content.you_are_free_to_connect_any_scocial_accounts') }}
         </div>
 
         <div class="mt-5 space-y-6">
@@ -33,19 +33,19 @@
                             <div class="flex items-center space-x-6">
                                 @if (Laravel\Jetstream\Jetstream::managesProfilePhotos() && ! is_null($account->avatar_path))
                                     <button class="cursor-pointer ml-6 text-sm text-gray-500 focus:outline-none" wire:click="setAvatarAsProfilePhoto({{ $account->id }})">
-                                        {{ __('Use Avatar as Profile Photo') }}
+                                        {{ __('content.use_avatar_as_profile_photo') }}
                                     </button>
                                 @endif
 
                                 @if (($this->accounts->count() > 1 || ! is_null($this->user->password)))
                                     <x-jet-danger-button wire:click="confirmRemove({{ $account->id }})" wire:loading.attr="disabled">
-                                        {{ __('Remove') }}
+                                        {{ __('content.remove') }}
                                     </x-jet-danger-button>
                                 @endif
                             </div>
                         @else
                             <x-action-link href="{{ route('oauth.redirect', ['provider' => $provider]) }}">
-                                {{ __('Connect') }}
+                                {{ __('content.connect') }}
                             </x-action-link>
                         @endif
                     </x-slot>
@@ -57,20 +57,20 @@
         <!-- Logout Other Devices Confirmation Modal -->
         <x-jet-dialog-modal wire:model="confirmingRemove">
             <x-slot name="title">
-                {{ __('Remove Connected Account') }}
+                {{ __('content.remove_connected_account') }}
             </x-slot>
 
             <x-slot name="content">
-                {{ __('Please confirm your removal of this account - this action cannot be undone.') }}
+                {{ __('content.please_confirm_your_removal') }}
             </x-slot>
 
             <x-slot name="footer">
                 <x-jet-secondary-button wire:click="$toggle('confirmingRemove')" wire:loading.attr="disabled">
-                    {{ __('Nevermind') }}
+                    {{ __('content.nevermind') }}
                 </x-jet-secondary-button>
 
                 <x-jet-danger-button class="ml-2" wire:click="removeConnectedAccount({{ $this->selectedAccountId }})" wire:loading.attr="disabled">
-                    {{ __('Remove Connected Account') }}
+                    {{ __('content.remove_connected_account') }}
                 </x-jet-danger-button>
             </x-slot>
         </x-jet-dialog-modal>

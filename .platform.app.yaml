@@ -8,7 +8,7 @@ name: dashboard
 type: php:8.0
 
 build:
-    flavor: composer
+    flavor: none
 
 dependencies:
     nodejs:
@@ -26,6 +26,7 @@ variables:
 hooks:
     build: |
         set -e
+        composer install --no-ansi --no-dev --no-interaction --no-plugins --no-progress --no-scripts --optimize-autoloader
         # https://docs.platform.sh/languages/nodejs/nvm.html#how-to-use-nvm-to-run-different-versions-of-nodejs
         unset NPM_CONFIG_PREFIX
         export NVM_DIR="$PLATFORM_APP_DIR/.nvm"
@@ -33,7 +34,6 @@ hooks:
         curl -f -o- https://raw.githubusercontent.com/nvm-sh/nvm/$NVM_VERSION/install.sh | bash
         [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
         curl -sS https://platform.sh/cli/installer | php
-        composer dump-autoload -o
         php artisan config:clear
         php artisan clear-compiled
         php artisan storage:link
@@ -43,7 +43,8 @@ hooks:
         set -e
         php artisan clear-compiled
         php artisan config:cache
-        php artisan route:cache
+        # https://github.com/mcamara/laravel-localization/pull/763
+        # php artisan route:cache
         php artisan view:cache
         php artisan migrate --force
 
