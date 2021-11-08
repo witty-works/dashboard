@@ -5,10 +5,10 @@ return [
     'dsn' => env('SENTRY_LARAVEL_DSN', env('SENTRY_DSN')),
 
     // capture release as git sha
-    // 'release' => trim(exec('git --git-dir ' . base_path('.git') . ' log --pretty="%h" -n1 HEAD')),
-
+    'release' => '1.0.0',
+ 
     // When left empty or `null` the Laravel environment will be used
-    'environment' => env('SENTRY_ENVIRONMENT'),
+    'environment' => env('PLATFORM_BRANCH', 'local'),
 
     'breadcrumbs' => [
         // Capture Laravel logs in breadcrumbs
