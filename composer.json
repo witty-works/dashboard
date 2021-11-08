@@ -15,6 +15,7 @@
         "livewire/livewire": "^2.5",
         "mcamara/laravel-localization": "^1.6",
         "platformsh/laravel-bridge": "^2.2",
+        "sentry/sentry-laravel": "^2.9",
         "socialiteproviders/azureadb2c": "^4.0",
         "socialiteproviders/microsoft-azure": "^5.0",
         "themsaid/laravel-langman": "dev-master"
