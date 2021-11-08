@@ -43,8 +43,7 @@ hooks:
         set -e
         php artisan clear-compiled
         php artisan config:cache
-        # https://github.com/mcamara/laravel-localization/pull/763
-        # php artisan route:cache
+        php artisan route:trans:cache
         php artisan view:cache
         php artisan migrate --force
 
