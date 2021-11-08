@@ -1,9 +1,9 @@
-name: witty-admin-ui
+name: dashboard
 recipe: laravel
 
 proxy:
   appserver_nginx:
-    - admin.lndo.site
+    - dashboard.lndo.site
   mailhog:
     - mail.lndo.site
 

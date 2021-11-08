@@ -53,7 +53,8 @@ case $1 in
         set -x
         git flow $MODE start $VERSION;
         sentry-cli releases new "$VERSION";
-        sed -i "s/$PREV_VERSION/$VERSION/" config/sentry.php;
+        sed "s/$PREV_VERSION/$VERSION/" config/sentry.php > config/sentry.php.bak
+        mv config/sentry.php.bak config/sentry.php
         git stash pop;
     ;;
 

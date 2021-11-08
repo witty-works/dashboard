@@ -1,6 +1,8 @@
 # Introduction
 
-Admin UI for Witty
+Dashboard for Witty
+
+Handles registration, SSO, user license management, corporate rules and personal/team statistics.
 
 * https://jetstream.laravel.com/
 * https://laravel.com/docs/8.x/socialite
@@ -43,6 +45,8 @@ Fetch code from https://github.com/witty-works/admin-ui
 
 * Install Sentry CLI https://docs.sentry.io/product/cli/installation/
     * Run `sentry-cli login`
+    * Run `cp .sentryclirc.example .sentryclirc` 
+    * Edit `.sentryclirc` to add the auth token from https://sentry.io/settings/account/api/auth-tokens/
 
 # Development
 
@@ -50,7 +54,7 @@ Fetch code from https://github.com/witty-works/admin-ui
   * Run `lando start`
   * Run `lando npm run watch`
 
-* Goto `https://admin.lndo.site`
+* Goto `https://dashboard.lndo.site`
 
 Use gitflow to do feature or hotfix branches:
 https://nvie.com/posts/a-successful-git-branching-model/
