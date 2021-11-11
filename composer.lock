@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e3f908180ff031db6ae8d2c65a8e5b3b",
+    "content-hash": "01c9cf67fdbb2a96e6701672959ff3a9",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -5352,57 +5352,6 @@
                 "source": "https://github.com/SocialiteProviders/Manager/tree/4.0.1"
             },
             "time": "2020-12-01T23:09:06+00:00"
-        },
-        {
-            "name": "socialiteproviders/microsoft-azure",
-            "version": "5.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/SocialiteProviders/Microsoft-Azure.git",
-                "reference": "9b23e02ff711de42e513aa55f768a4f1c67c0e41"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/SocialiteProviders/Microsoft-Azure/zipball/9b23e02ff711de42e513aa55f768a4f1c67c0e41",
-                "reference": "9b23e02ff711de42e513aa55f768a4f1c67c0e41",
-                "shasum": ""
-            },
-            "require": {
-                "ext-json": "*",
-                "php": "^7.2 || ^8.0",
-                "socialiteproviders/manager": "~4.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "SocialiteProviders\\Azure\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Chris Hemmings",
-                    "email": "chris@hemmin.gs"
-                }
-            ],
-            "description": "Microsoft Azure OAuth2 Provider for Laravel Socialite",
-            "keywords": [
-                "azure",
-                "laravel",
-                "microsoft",
-                "oauth",
-                "provider",
-                "socialite"
-            ],
-            "support": {
-                "docs": "https://socialiteproviders.com/microsoft-azure",
-                "issues": "https://github.com/socialiteproviders/providers/issues",
-                "source": "https://github.com/socialiteproviders/providers"
-            },
-            "time": "2021-10-07T22:21:59+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",

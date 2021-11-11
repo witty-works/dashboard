@@ -66,7 +66,7 @@
 
             <x-slot name="footer">
                 <x-jet-secondary-button wire:click="$toggle('confirmingRemove')" wire:loading.attr="disabled">
-                    {{ __('content.nevermind') }}
+                    {{ __('content.cancel') }}
                 </x-jet-secondary-button>
 
                 <x-jet-danger-button class="ml-2" wire:click="removeConnectedAccount({{ $this->selectedAccountId }})" wire:loading.attr="disabled">

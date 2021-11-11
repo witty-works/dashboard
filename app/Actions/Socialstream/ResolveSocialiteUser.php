@@ -18,6 +18,16 @@ class ResolveSocialiteUser implements ResolvesSocialiteUsers
     {
         $user = Socialite::driver($provider)->user();
 
+        if ($provider === 'azureadb2c') {
+            $user->nickname = $user->user['nickname'] = $user->user['name'] ?: '';
+            $user->name = $user->user['name'] = trim($user->user['given_name'].' '.$user->user['family_name']);
+            if (empty($user->user['name'])) {
+                $user->name = $user->user['name'] = $user->user['nickname'];
+            }
+
+            $user->email = $user->user['email'] = $user->user['emails'][0] ?: null;
+        }
+
         if (Socialstream::generatesMissingEmails()) {
             $user->email = $user->getEmail() ?? "{$user->id}@{$provider}".config('app.domain');
         }
