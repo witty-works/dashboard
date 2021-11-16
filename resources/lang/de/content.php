@@ -141,4 +141,5 @@ return [
     'team members' => 'Teammitglieder',
     'woops' => 'hoppla',
     'documentation' => 'Dokumentation',
+    'welcome' => 'Willkommen beim Witty Dashboard',
 ];

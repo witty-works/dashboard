@@ -121,6 +121,8 @@
                         </x-slot>
                     </x-jet-dropdown>
                 </div>
+
+                @include('language_switcher')
             </div>
 
             <!-- Hamburger -->
@@ -205,12 +207,19 @@
                     <!-- Team Switcher -->
                     <div class="block px-4 py-2 text-xs text-gray-400">
                         {{ __('content.switch_teams') }}
+
                     </div>
 
                     @foreach (Auth::user()->allTeams() as $team)
                         <x-jet-switchable-team :team="$team" component="jet-responsive-nav-link" />
                     @endforeach
                 @endif
+
+                <div class="border-t border-gray-200"></div>
+
+                <div class="block px-4 py-2 text-xs text-gray-400">
+                    @include('language_switcher')
+                </div>
             </div>
         </div>
     </div>
