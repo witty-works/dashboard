@@ -53,4 +53,9 @@
             <span class="sr-only">BitBucket</span>
         </a>
     @endif
+    @if (JoelButcher\Socialstream\Socialstream::enabled('azureadb2c'))
+        <a href="{{ route('oauth.redirect', ['provider' => 'azureadb2c']) }}">
+            <span>Azure B2C</span>
+        </a>
+    @endif
 </div>

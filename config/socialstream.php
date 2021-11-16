@@ -31,6 +31,7 @@ return [
 
     'providers' => [
         Providers::github(),
+        'azureadb2c',
     ],
 
     /*
