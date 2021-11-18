@@ -1,0 +1,11 @@
+Dockerfile
+.platform*
+.lando*
+.git
+docker-compose.yaml
+ops/**/*
+!ops/dashboard/entrypoint.sh
+!ops/nginx/dashboard.conf.template
+!ops/dashboard/ssh*
+!ops/dashboard/dashboard.conf
+!ops/dashboard/php.ini
