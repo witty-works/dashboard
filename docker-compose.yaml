@@ -1,13 +1,9 @@
 version: '3.9'
 
-services:
-  # nginx:
-  #   build:
-  #     context: .
-  #     dockerfile: ./ops/nginx/Dockerfile
-  #   ports:
-  #     - "8080:80"
+# to use this docker-compose file copy the .env.example file to .env
+# and overwrite the azure ad b2c provider configuration
 
+services:
   dashboard:
     build:
       context: .
@@ -16,16 +12,17 @@ services:
       - dashboard_data:/var/www/html/storage
     depends_on:
       - mysql
+    env_file:
+      - .env
     environment:
       - DB_HOST=mysql
       - DB_PORT=3306
       - DB_DATABASE=dashboard
       - DB_USERNAME=dashboard
       - DB_PASSWORD=dashboard
+      # disable ssl integration
       - DB_SSLMODE=disable
       - MYSQL_ATTR_SSL_CA=""
-      # generated via php artisan key:generate --show
-      - APP_KEY=base64:N7kLZR5gKHHPJ0VEPWUYRKkgLQjRpz7RojP1DpIcc+E=
     restart: always
     ports:
       - "8080:80"
