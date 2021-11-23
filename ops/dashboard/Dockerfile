@@ -32,8 +32,7 @@ RUN . ${NVM_DIR}/nvm.sh \
 
 FROM php:8-apache as dashboard
 
-COPY --from=builder /app /var/www/html
-RUN chown -R www-data:www-data /var/www/html
+COPY --from=builder --chown=www-data:www-data /app /var/www/html
 WORKDIR /var/www/html
 
 # install dependencies
@@ -61,7 +60,8 @@ RUN curl -Lo ${MYSQL_ATTR_SSL_CA} https://www.digicert.com/CACerts/BaltimoreCybe
 # configure apache
 COPY ops/dashboard/dashboard.conf /etc/apache2/sites-available
 RUN unlink /etc/apache2/sites-enabled/000-default.conf \
-  && ln -s /etc/apache2/sites-available/dashboard.conf /etc/apache2/sites-enabled/000-dashboard.conf
+  && ln -s /etc/apache2/sites-available/dashboard.conf /etc/apache2/sites-enabled/000-dashboard.conf \
+  && a2enmod rewrite headers
 
 # configure php
 COPY ops/dashboard/php.ini /tmp
