@@ -26,7 +26,10 @@ variables:
 hooks:
     build: |
         set -e
+        composer config http-basic.spark.laravel.com ${SPARK_USERNAME} ${SPARK_API_TOKEN}
         composer install --no-ansi --no-dev --no-interaction --no-plugins --no-progress --no-scripts --optimize-autoloader
+        mv SparkManager.php vendor/laravel/spark-stripe/src/SparkManager.php
+        mv SparkServiceProvider.php vendor/laravel/spark-stripe/src/SparkServiceProvider.php
         # https://docs.platform.sh/languages/nodejs/nvm.html#how-to-use-nvm-to-run-different-versions-of-nodejs
         unset NPM_CONFIG_PREFIX
         export NVM_DIR="$PLATFORM_APP_DIR/.nvm"
@@ -49,7 +52,7 @@ hooks:
 
 crons:
     snapshot:
-        spec: '0 5 * * *'
+        spec: "0 5 * * *"
         cmd: |
             if [ "$PLATFORM_BRANCH" = master ]; then
                 platform snapshot:create --yes --no-wait
@@ -87,7 +90,7 @@ web:
             allow: true
             passthru: "/index.php"
             rules:
-                '^/(css|js)/app.(css|js)':
+                "^/(css|js)/app.(css|js)":
                     expires: 2m
 
 runtime:

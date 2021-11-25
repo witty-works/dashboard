@@ -7,10 +7,12 @@ use Laravel\Jetstream\Events\TeamCreated;
 use Laravel\Jetstream\Events\TeamDeleted;
 use Laravel\Jetstream\Events\TeamUpdated;
 use Laravel\Jetstream\Team as JetstreamTeam;
+use Spark\Billable;
 
 class Team extends JetstreamTeam
 {
     use HasFactory;
+    use Billable;
 
     /**
      * The attributes that should be cast.
@@ -41,4 +43,9 @@ class Team extends JetstreamTeam
         'updated' => TeamUpdated::class,
         'deleted' => TeamDeleted::class,
     ];
+
+    public function stripeEmail()
+    {
+        return $this->owner->email;
+    }
 }

@@ -16,3 +16,4 @@ yarn-error.log
 public/js
 public/css
 .sentryclirc
+auth.json
