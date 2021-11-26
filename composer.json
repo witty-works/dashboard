@@ -18,7 +18,8 @@
         "platformsh/laravel-bridge": "^2.2",
         "sentry/sentry-laravel": "^2.9",
         "socialiteproviders/azureadb2c": "^4.0",
-        "themsaid/laravel-langman": "dev-master"
+        "themsaid/laravel-langman": "dev-master",
+        "laravel/spark-stripe": "^1.0"
     },
     "require-dev": {
         "tio/laravel": "dev-remove-array-align-laravel-8",
@@ -75,7 +76,13 @@
         {
             "type": "vcs",
             "url": "git@github.com:lsmith77/laravel.git"
+        },
+        {
+            "type": "composer",
+            "url": "https://spark.laravel.com"
         }
+    ],
+    "listen-stripe": [
+        "stripe listen --forward-to http://spark-test.test/spark/webhook"
     ]
-
 }
