@@ -100,6 +100,8 @@
                                 {{ __('content.profile') }}
                             </x-jet-dropdown-link>
 
+                            @lumki
+
                             @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
                                 <x-jet-dropdown-link href="{{ route('api-tokens.index') }}">
                                     {{ __('content.api_tokens') }}
@@ -165,6 +167,8 @@
                 <x-jet-responsive-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')">
                     {{ __('content.profile') }}
                 </x-jet-responsive-nav-link>
+
+                @lumki
 
                 @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
                     <x-jet-responsive-nav-link href="{{ route('api-tokens.index') }}" :active="request()->routeIs('api-tokens.index')">
