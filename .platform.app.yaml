@@ -26,7 +26,6 @@ variables:
 hooks:
     build: |
         set -e
-        composer config http-basic.spark.laravel.com ${SPARK_USERNAME} ${SPARK_API_TOKEN}
         composer install --no-ansi --no-dev --no-interaction --no-plugins --no-progress --no-scripts --optimize-autoloader
         mv SparkManager.php vendor/laravel/spark-stripe/src/SparkManager.php
         mv SparkServiceProvider.php vendor/laravel/spark-stripe/src/SparkServiceProvider.php
