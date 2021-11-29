@@ -22,11 +22,11 @@
                             <x-jet-nav-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}">
                                 {{ __('content.team_settings') }}
                             </x-jet-nav-link>
-                            @endcan
 
                             <x-jet-nav-link href="{{ route('spark.portal') }}" :active="request()->routeIs('spark.portal')">
                                 {{ __('Subscribe') }}
                             </x-jet-nav-link>
+                            @endcan
                         @else
                             @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
                                 <x-jet-nav-link href="{{ route('teams.create') }}">

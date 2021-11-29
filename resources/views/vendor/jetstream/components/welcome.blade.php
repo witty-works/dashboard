@@ -14,6 +14,7 @@
         ecosystem to be a breath of fresh air. We hope you love it.
     </div>
 
+    @can('update', Auth::user()->currentTeam)
     <div class="mt-6 text-gray-500">
             @auth
             <h2>Next steps</h2>
@@ -24,6 +25,7 @@
             </ol>
         @endauth
     </div>
+    @endcan
 </div>
 
 <div class="bg-gray-200 bg-opacity-25 grid grid-cols-1 md:grid-cols-2">
