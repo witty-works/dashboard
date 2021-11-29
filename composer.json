@@ -33,9 +33,13 @@
     "autoload": {
         "psr-4": {
             "App\\": "app/",
+            "Spark\\": "app/Spark",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "exclude-from-classmap": [
+            "vendor/laravel/spark-stripe/src/Countries.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
