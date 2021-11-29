@@ -32,7 +32,8 @@ class AddTeamMember implements AddsTeamMembers
         AddingTeamMember::dispatch($team, $newTeamMember);
 
         $team->users()->attach(
-            $newTeamMember, ['role' => $role]
+            $newTeamMember,
+            ['role' => $role]
         );
 
         TeamMemberAdded::dispatch($team, $newTeamMember);
@@ -54,6 +55,8 @@ class AddTeamMember implements AddsTeamMembers
         ], $this->rules(), [
             'email.exists' => __('We were unable to find a registered user with this email address.'),
         ])->after(
+            $this->ensureOwnerEmailHasSameDomain($team, $email)
+        )->after(
             $this->ensureUserIsNotAlreadyOnTeam($team, $email)
         )->validateWithBag('addTeamMember');
     }
@@ -68,9 +71,33 @@ class AddTeamMember implements AddsTeamMembers
         return array_filter([
             'email' => ['required', 'email', 'exists:users'],
             'role' => Jetstream::hasRoles()
-                            ? ['required', 'string', new Role]
-                            : null,
+                ? ['required', 'string', new Role]
+                : null,
         ]);
+    }
+
+    protected function getEmailDomain($email)
+    {
+        return substr(strrchr($email, '@'), 1);
+    }
+
+    /**
+     * Ensure that the user email is the same domain as the team owner
+     *
+     * @param  mixed  $team
+     * @param  string  $email
+     * @return \Closure
+     */
+    protected function ensureOwnerEmailHasSameDomain($team, string $email)
+    {
+        dd($this->getEmailDomain($team->owner->email) !== $this->getEmailDomain($email));
+        return function ($validator) use ($team, $email) {
+            $validator->errors()->addIf(
+                $this->getEmailDomain($team->owner->email) !== $this->getEmailDomain($email),
+                'email',
+                __('This user email domain must be the same as owner.')
+            );
+        };
     }
 
     /**

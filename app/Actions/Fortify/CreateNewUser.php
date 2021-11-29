@@ -2,12 +2,12 @@
 
 namespace App\Actions\Fortify;
 
-use App\Models\Team;
+use App\Models\TeamInvitation;
 use App\Models\User;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
+use Laravel\Jetstream\Contracts\AddsTeamMembers;
 use Laravel\Jetstream\Jetstream;
 
 class CreateNewUser implements CreatesNewUsers
@@ -23,12 +23,28 @@ class CreateNewUser implements CreatesNewUsers
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['required', 'accepted'] : '',
         ])->validate();
 
+        $invitation = TeamInvitation::where('email', '=', $input['email'])->first();
+
         /** @var User $user */
         $user = User::create([
             'name' => $input['name'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
         ]);
+
+        $invitation = TeamInvitation::where('email', '=', $input['email'])->first();
+        if ($invitation) {
+            app(AddsTeamMembers::class)->add(
+                $invitation->team->owner,
+                $invitation->team,
+                $invitation->email,
+                $invitation->role
+            );
+
+            $user->switchTeam($invitation->team);
+
+            $invitation->delete();
+        }
 
         return $user;
     }
