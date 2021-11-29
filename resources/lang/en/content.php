@@ -142,4 +142,8 @@ return [
     'woops' => 'woops',
     'documentation' => 'Documentation',
     'welcome' => 'Welcome to Witty Dashboard',
+    'admin' => 'Administrator',
+    'admin_role' => 'Administrator users can manage the team.',
+    'user' => 'User',
+    'user_role' => 'Users can use the teams corporate language rules.',
 ];

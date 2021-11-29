@@ -142,4 +142,8 @@ return [
     'woops' => 'hoppla',
     'documentation' => 'Dokumentation',
     'welcome' => 'Willkommen beim Witty Dashboard',
+    'admin_role' => 'Administratorbenutzer können das Team verwalten.',
+    'user_role' => 'Benutzer können die Unternehmenssprachenregeln des Teams verwenden.',
+    'admin' => 'Administrator:innen',
+    'user' => 'Benutzer:innen',
 ];
