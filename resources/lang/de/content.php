@@ -43,7 +43,7 @@ return [
     'dashboard' => 'Dashboard',
     'manage_team' => 'Team verwalten',
     'team_settings' => 'Teameinstellungen',
-    'create_new_team' => 'Erstellen Sie ein neues Team, um mit anderen an Projekten zusammenzuarbeiten.',
+    'create_new_team' => 'Team erstellen',
     'switch_teams' => 'Team wechseln',
     'manage_account' => 'Konto verwalten',
     'profile' => 'Profil',

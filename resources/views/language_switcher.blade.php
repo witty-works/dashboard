@@ -1,9 +1,7 @@
 @foreach(LaravelLocalization::getSupportedLocales() as $locale => $supported_locale)
     @if($locale === LaravelLocalization::getCurrentLocale())
-        <span class="ml-2 mr-2 text-gray-700">{{ $supported_locale['native'] }}</span>
+        <span class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 underline">{{ $supported_locale['native'] }}</span>
     @else
-        <a class="ml-1 underline ml-2 mr-2" href="{{ LaravelLocalization::getLocalizedURL($locale) }}">
-            <span>{{ $supported_locale['native'] }}</span>
-        </a>
+        <x-jet-nav-link href="{{ LaravelLocalization::getLocalizedURL($locale) }}"><span>{{ $supported_locale['native'] }}</span></x-jet-nav-link>
     @endif
 @endforeach
