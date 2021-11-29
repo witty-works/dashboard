@@ -4,7 +4,7 @@
     </div>
 
     <div class="mt-8 text-2xl">
-        {{ __('content.welcome')}}
+        <h1>{{ __('content.welcome')}}</h1>
     </div>
 
     <div class="mt-6 text-gray-500">
@@ -12,6 +12,17 @@
         to help you build your application using a development environment that is simple, powerful, and enjoyable. We believe
         you should love expressing your creativity through programming, so we have spent time carefully crafting the Laravel
         ecosystem to be a breath of fresh air. We hope you love it.
+    </div>
+
+    <div class="mt-6 text-gray-500">
+            @auth
+            <h2>Next steps</h2>
+            <ol>
+                <li>Create Team @if (Auth::user()->currentTeam)✔️@endif</li>   
+                <li>Configure Corporate Rules</li>
+                <li>Invite Users to Team @if (Auth::user()->currentTeam && Auth::user()->currentTeam->users->count())✔️@endif</li>   
+            </ol>
+        @endauth
     </div>
 </div>
 

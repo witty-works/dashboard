@@ -12,12 +12,25 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    @auth
                     <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('content.dashboard') }}
                     </x-jet-nav-link>
+                    <x-jet-nav-link href="{{ route('spark.portal') }}" :active="request()->routeIs('spark.portal')">
+                        {{ __('Subscribe') }}
+                    </x-jet-nav-link>
+                    @else
+                    <x-jet-nav-link href="{{ route('login') }}" :active="request()->routeIs('login')">
+                        {{ __('content.log_in') }}
+                    </x-jet-nav-link>
+                    <x-jet-nav-link href="{{ route('register') }}" :active="request()->routeIs('register')">
+                        {{ __('content.register') }}
+                    </x-jet-nav-link>
+                    @endauth
                 </div>
             </div>
 
+            @auth
             <div class="hidden sm:flex sm:items-center sm:ml-6">
                 <!-- Teams Dropdown -->
 
@@ -130,7 +143,10 @@
                         </x-slot>
                     </x-jet-dropdown>
                 </div>
+            </div>
+            @endauth
 
+            <div class="hidden sm:flex sm:items-center sm:ml-6">
                 @include('language_switcher')
             </div>
 
@@ -149,11 +165,21 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
+            @auth
             <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                 {{ __('content.dashboard') }}
             </x-jet-responsive-nav-link>
+            @else
+                <x-jet-responsive-nav-link href="{{ route('login') }}" :active="request()->routeIs('login')">
+                    {{ __('content.log_in') }}
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="{{ route('register') }}" :active="request()->routeIs('register')">
+                    {{ __('content.register') }}
+                </x-jet-responsive-nav-link>
+            @endauth
         </div>
 
+        @auth
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
             <div class="flex items-center px-4">
@@ -235,5 +261,6 @@
                 </div>
             </div>
         </div>
+        @endauth
     </div>
 </nav>
