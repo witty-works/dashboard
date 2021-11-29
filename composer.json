@@ -22,12 +22,13 @@
         "laravel/spark-stripe": "^1.0"
     },
     "require-dev": {
-        "tio/laravel": "dev-remove-array-align-laravel-8",
+        "barryvdh/laravel-ide-helper": "^2.10",
         "fakerphp/faker": "^1.9.1",
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^5.10",
-        "phpunit/phpunit": "^9.5.10"
+        "phpunit/phpunit": "^9.5.10",
+        "tio/laravel": "dev-remove-array-align-laravel-8"
     },
     "autoload": {
         "psr-4": {

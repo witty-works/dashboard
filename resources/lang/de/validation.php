@@ -119,4 +119,5 @@ return [
     'accepted_if' => 'accepted if',
     'current_password' => 'current_password',
     'prohibits' => 'prohibits',
+    'attributes' => 'Attribute',
 ];
