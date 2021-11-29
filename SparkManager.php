@@ -331,9 +331,9 @@ class SparkManager
      *
      * @return static
      */
-    public static function ignoreRoutes()
+    public function ignoreRoutes()
     {
-        $this->$registersRoutes = false;
+        $this->registersRoutes = false;
 
         return new static;
     }

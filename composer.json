@@ -45,10 +45,13 @@
     "scripts": {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi"
+            "@php artisan package:discover --ansi",
+            "php -r \"copy('SparkManager.php', 'vendor/laravel/spark-stripe/src/SparkManager.php');\"",
+            "php -r \"copy('SparkServiceProvider.php', 'vendor/laravel/spark-stripe/src/SparkServiceProvider.php');\""
         ],
         "post-update-cmd": [
-            "@php artisan vendor:publish --tag=laravel-assets --ansi"
+            "@php artisan vendor:publish --tag=laravel-assets --ansi",
+            "@php artisan ide-helper:generate"
         ],
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""

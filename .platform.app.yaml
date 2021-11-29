@@ -27,8 +27,6 @@ hooks:
     build: |
         set -e
         composer install --no-ansi --no-dev --no-interaction --no-plugins --no-progress --no-scripts --optimize-autoloader
-        mv SparkManager.php vendor/laravel/spark-stripe/src/SparkManager.php
-        mv SparkServiceProvider.php vendor/laravel/spark-stripe/src/SparkServiceProvider.php
         # https://docs.platform.sh/languages/nodejs/nvm.html#how-to-use-nvm-to-run-different-versions-of-nodejs
         unset NPM_CONFIG_PREFIX
         export NVM_DIR="$PLATFORM_APP_DIR/.nvm"
