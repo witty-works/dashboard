@@ -347,17 +347,6 @@ Route::group(
             });
         });
 
-        /*
-        |------------------
-        | /SPARK
-        |------------------
-        */
-        /*
-        |------------------
-        | SPARK
-        |------------------
-        */
-
         Route::group([
             'middleware' => config('spark.middleware', ['web', 'auth']),
             'namespace' => 'Spark\Http\Controllers',
