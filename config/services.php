@@ -36,8 +36,19 @@ return [
         'redirect' => env('GITHUB_REDIRECT'), // e.g. 'https://your-domain.com/oauth/{provider}/callback'
     ],
 
+    'google' => [
+        'client_id'     => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        'redirect'      => env('GOOGLE_REDIRECT')
+    ],
 
-      'azureadb2c' => [
+    'linkedin' => [
+        'client_id' => env('LINKEDIN_CLIENT_ID'),
+        'client_secret' => env('LINKEDIN_CLIENT_SECRET'),
+        'redirect' => env('LINKEDIN_REDIRECT_URI')
+    ],
+
+    'azureadb2c' => [
         'client_id' => env('AADB2C_ClientId'),
         'client_secret' => env('AADB2C_ClientSecret'),
         'redirect' => env('AADB2C_RedirectUri'),
