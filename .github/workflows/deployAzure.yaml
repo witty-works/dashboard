@@ -1,3 +1,21 @@
+# build and push docker image to azure container registry
+# required secrets:
+# REGISTRY_LOGIN_SERVER: hostname of the azure registry -> usually wittyworks.azurecr.io
+# REGISTRY_USERNAME: username for the registry -> usually wittyworks
+# REGISTRY_PASSWORD: password for the registry
+# COMPOSE_AUTH: composer auth.json file to access private laravel repos
+# format of the file:
+
+# {
+#     "http-basic": {
+#         "spark.laravel.com": {
+#             "username": "<username>",
+#             "password": "<password>"
+#         }
+#     }
+# }
+
+
 on: [push]
 name: Build a Docker image and Push it to ACR
 jobs:
@@ -14,6 +32,7 @@ jobs:
 
       # build dashboard
       - run: |
+          echo ${{ secrets.COMPOSE_AUTH }} > auth.json
           docker build . -f ops/dashboard/Dockerfile -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/dashboard:${{ github.sha }}
           docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/dashboard:${{ github.sha }}
           # release version
