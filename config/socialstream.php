@@ -31,6 +31,8 @@ return [
 
     'providers' => [
         Providers::github(),
+        Providers::google(),
+        Providers::linkedin(),
         'azureadb2c',
     ],
 
