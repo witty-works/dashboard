@@ -4,12 +4,15 @@ FROM php:8 as builder
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
 RUN apt-get update \
-  && apt-get install -y git unzip \
+  && apt-get install -y git unzip libxml2-dev \
   && rm -rf /var/lib/apt/*
 
 # copy files
 COPY . /app
 WORKDIR /app
+
+# enable php extensions
+RUN docker-php-ext-install mysqli pdo pdo_mysql soap
 
 # run installation
 ENV NVM_VERSION v0.39.0
@@ -37,9 +40,9 @@ WORKDIR /var/www/html
 
 # install dependencies
 RUN apt-get update \
-  && apt-get install -y git unzip openssh-server \
+  && apt-get install -y git unzip openssh-server libxml2-dev\
   && pecl install -o -f redis \
-  && docker-php-ext-install mysqli pdo pdo_mysql \
+  && docker-php-ext-install mysqli pdo pdo_mysql soap \
   && docker-php-ext-enable redis \
   && rm -rf /var/lib/apt/* \
   && rm -rf /tmp/pear
