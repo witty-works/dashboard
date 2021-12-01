@@ -33,15 +33,28 @@ return [
     'github' => [
         'client_id' => env('GITHUB_CLIENT_ID'),
         'client_secret' => env('GITHUB_CLIENT_SECRET'),
-        'redirect' => env('GITHUB_REDIRECT'), // e.g. 'https://your-domain.com/oauth/{provider}/callback'
+        'redirect' => '/oauth/github/callback',
     ],
 
-    'azure' => [    
-        'client_id' => env('AZURE_CLIENT_ID'),
-        'client_secret' => env('AZURE_CLIENT_SECRET'),
-        'redirect' => env('AZURE_REDIRECT_URI'),
-        'tenant' => env('AZURE_TENANT_ID'),
-        'logout_url' => 'https://login.microsoftonline.com/'.env('AZURE_TENANT_ID').'/oauth2/v2.0/logout?post_logout_redirect_uri=',
-        'proxy' => env('PROXY')  // optionally
-      ],
+    // https://console.cloud.google.com/apis/credentials?project=witty-dashboard
+    'google' => [
+        'client_id'     => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        'redirect' => '/oauth/google/callback',
+    ],
+
+    // https://developer.linkedin.com/
+    'linkedin' => [
+        'client_id' => env('LINKEDIN_CLIENT_ID'),
+        'client_secret' => env('LINKEDIN_CLIENT_SECRET'),
+        'redirect' => '/oauth/linkedin/callback',
+    ],
+
+    'azureadb2c' => [
+        'client_id' => env('AADB2C_ClientId'),
+        'client_secret' => env('AADB2C_ClientSecret'),
+        'redirect' => '/oauth/azureadb2c/callback',
+        'domain' => env('AADB2C_Domain'),  // {your_domain}.b2clogin.com
+        'policy' => env('AADB2C_Policy'),  // such as 'b2c_1_user_susi'
+    ],
 ];

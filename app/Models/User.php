@@ -9,7 +9,10 @@ use JoelButcher\Socialstream\HasConnectedAccounts;
 use JoelButcher\Socialstream\SetsProfilePhotoFromUrl;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
+use Spatie\Permission\Traits\HasRoles;
+use Lab404\Impersonate\Models\Impersonate;
 use Laravel\Jetstream\HasTeams;
+use Laravel\Jetstream\Jetstream;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -19,6 +22,8 @@ class User extends Authenticatable
     use HasProfilePhoto {
         getProfilePhotoUrlAttribute as getPhotoUrl;
     }
+    use HasRoles;
+    use Impersonate;
     use HasTeams;
     use HasConnectedAccounts;
     use Notifiable;
@@ -76,5 +81,15 @@ class User extends Authenticatable
         }
 
         return $this->getPhotoUrl();
+    }
+
+    /**
+     * Get the current team of the user's context.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function currentTeam()
+    {
+        return $this->belongsTo(Jetstream::teamModel(), 'current_team_id');
     }
 }

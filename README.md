@@ -19,11 +19,11 @@ Email sending on platform.sh is enabled for master and develop branches only.
 
 # Local Install
 
-Fetch code from https://github.com/witty-works/admin-ui
+Fetch code from https://github.com/witty-works/dashboard
 
 * Clone Admin UI
   * Make sure to add your SSH key to github
-  * Run `git@github.com:witty-works/admin-ui.git`
+  * Run `git@github.com:witty-works/dashboard.git`
   * Run `cp .env.example .env`
   * Install Lando https://docs.lando.dev/basics/installation.html
     * On Windows 10 use WSL2 https://blog.calevans.com/2020/06/18/making-lando-work-inside-wsl2/
