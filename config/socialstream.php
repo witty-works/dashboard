@@ -32,7 +32,7 @@ return [
     'providers' => [
         Providers::google(),
         Providers::linkedin(),
-        'azureadb2c',
+        // 'azureadb2c',
     ],
 
     /*
