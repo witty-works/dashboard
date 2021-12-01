@@ -33,25 +33,27 @@ return [
     'github' => [
         'client_id' => env('GITHUB_CLIENT_ID'),
         'client_secret' => env('GITHUB_CLIENT_SECRET'),
-        'redirect' => env('GITHUB_REDIRECT'), // e.g. 'https://your-domain.com/oauth/{provider}/callback'
+        'redirect' => '/oauth/github/callback',
     ],
 
+    // https://console.cloud.google.com/apis/credentials?project=witty-dashboard
     'google' => [
         'client_id'     => env('GOOGLE_CLIENT_ID'),
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
-        'redirect'      => env('GOOGLE_REDIRECT')
+        'redirect' => '/oauth/google/callback',
     ],
 
+    // https://developer.linkedin.com/
     'linkedin' => [
         'client_id' => env('LINKEDIN_CLIENT_ID'),
         'client_secret' => env('LINKEDIN_CLIENT_SECRET'),
-        'redirect' => env('LINKEDIN_REDIRECT_URI')
+        'redirect' => '/oauth/linkedin/callback',
     ],
 
     'azureadb2c' => [
         'client_id' => env('AADB2C_ClientId'),
         'client_secret' => env('AADB2C_ClientSecret'),
-        'redirect' => env('AADB2C_RedirectUri'),
+        'redirect' => '/oauth/azureadb2c/callback',
         'domain' => env('AADB2C_Domain'),  // {your_domain}.b2clogin.com
         'policy' => env('AADB2C_Policy'),  // such as 'b2c_1_user_susi'
     ],
