@@ -41,7 +41,7 @@ class TeamPolicy
      */
     public function create(User $user)
     {
-        return !$user->currentTeam;
+        return true;
     }
 
     /**
