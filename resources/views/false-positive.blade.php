@@ -5,11 +5,13 @@
         </h2>
     </x-slot>
 
+    @can('update', Auth::user()->currentTeam)
     <div>
         <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
             @livewire('false-positive.form', ['team' => $team])
         </div>
     </div>
+    @endcan
 
     <div>
         <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">

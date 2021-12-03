@@ -33,15 +33,15 @@
     </x-slot>
 
     @if (Gate::check('update', $team))
-        <x-slot name="actions">
-            <x-jet-action-message class="mr-3" on="saved">
-                {{ __('content.saved') }}
-            </x-jet-action-message>
+    <x-slot name="actions">
+        <x-jet-action-message class="mr-3" on="saved">
+            {{ __('content.saved') }}
+        </x-jet-action-message>
 
-            <x-jet-button>
-                {{ __('content.save') }}
-            </x-jet-button>
-        </x-slot>
+        <x-jet-button>
+            {{ __('content.save') }}
+        </x-jet-button>
+    </x-slot>
     @endif
 
 </x-jet-form-section>
