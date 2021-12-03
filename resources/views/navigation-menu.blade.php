@@ -21,7 +21,7 @@
                             <!-- Team Settings -->
                             @can('update', Auth::user()->currentTeam)
                             <x-jet-nav-link href="{{ route('spark.portal') }}" :active="request()->routeIs('spark.portal')">
-                                {{ !Auth::user()->currentTeam->subscribed() || Auth::user()->currentTeam->onTrial() ? __('Subscribe') : __('Billing') }}
+                                {{ !Auth::user()->currentTeam->subscribed() ? __('Subscribe') : __('Billing') }}
                             </x-jet-nav-link>
                             @endcan
                         @elseif(count(Auth::user()->allTeams()) === 0)
