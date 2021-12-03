@@ -15,7 +15,7 @@
                 :options="\App\Models\CorporateRules::GERMAN_GENDER_ENDING"
                 class="mt-1 block w-full"
                 wire:model.defer="german_gender_ending"
-                :disabled="! Gate::check('update', $team)" />
+                :disabled="! Auth::user()->hasTeamPermission($team, 'edit_rules')" />
 
                 <x-jet-input-error for="german_gender_ending" class="mt-2" />
         </div>
@@ -27,7 +27,7 @@
                 :options="\App\Models\CorporateRules::GENDERED_ROLES_FORMAT"
                 class="mt-1 block w-full"
                 wire:model.defer="gendered_roles_format"
-                :disabled="! Gate::check('update', $team)" />
+                :disabled="! Auth::user()->hasTeamPermission($team, 'edit_rules')" />
 
             <x-jet-input-error for="gendered_roles_format" class="mt-2" />
         </div>
@@ -40,22 +40,22 @@
                         type="checkbox"
                         class="mt-1 block"
                         wire:model.defer="store_context"
-                        :disabled="! Gate::check('update', $team)" />
+                        :disabled="! Auth::user()->hasTeamPermission($team, 'edit_rules')" />
 
             <x-jet-input-error for="store_context" class="mt-2" />
         </div>
     </x-slot>
 
-    @if (Gate::check('update', $team))
-        <x-slot name="actions">
-            <x-jet-action-message class="mr-3" on="saved">
-                {{ __('content.saved') }}
-            </x-jet-action-message>
+    @if (Auth::user()->hasTeamPermission($team, 'edit_rules'))
+    <x-slot name="actions">
+        <x-jet-action-message class="mr-3" on="saved">
+            {{ __('content.saved') }}
+        </x-jet-action-message>
 
-            <x-jet-button>
-                {{ __('content.save') }}
-            </x-jet-button>
-        </x-slot>
+        <x-jet-button>
+            {{ __('content.save') }}
+        </x-jet-button>
+    </x-slot>
     @endif
 
 </x-jet-form-section>

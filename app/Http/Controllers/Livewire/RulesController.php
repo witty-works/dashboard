@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Livewire;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Jetstream\Jetstream;
 
@@ -13,7 +14,7 @@ class RulesController extends Controller
     {
         $team = Jetstream::newTeamModel()->findOrFail($teamId);
 
-        if (Gate::denies('view', $team)) {
+        if (!Auth::user()->hasTeamPermission($team, 'read')) {
             abort(403);
         }
 
@@ -27,7 +28,7 @@ class RulesController extends Controller
     {
         $team = Jetstream::newTeamModel()->findOrFail($teamId);
 
-        if (Gate::denies('view', $team)) {
+        if (!Auth::user()->hasTeamPermission($team, 'read')) {
             abort(403);
         }
 

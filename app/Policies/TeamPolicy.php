@@ -57,6 +57,18 @@ class TeamPolicy
     }
 
     /**
+     * Determine whether the user can update the model.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Team  $team
+     * @return mixed
+     */
+    public function rules(User $user, Team $team)
+    {
+        return $user->ownsTeam($team) || $user->hasTeamPermission($team, 'edit_rules');
+    }
+
+    /**
      * Determine whether the user can add team members.
      *
      * @param  \App\Models\User  $user

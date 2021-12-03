@@ -4,6 +4,7 @@ namespace App\Http\Livewire\FalsePositive;
 
 use App\Models\FalsePositive;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class Show extends Component
@@ -32,7 +33,9 @@ class Show extends Component
 
     public function render()
     {
-        $this->authorize('view', $this->team);
+        if (!Auth::user()->hasTeamPermission($this->team, 'read')) {
+            abort(403);
+        }
 
         $list = FalsePositive::all()->where('team_id', $this->team->id)->sortByDesc('created_at');
 
@@ -46,7 +49,9 @@ class Show extends Component
 
     public function deleteFalsePositive(FalsePositive $falsePositive)
     {
-        $this->authorize('update', $this->team);
+        if (!Auth::user()->hasTeamPermission($this->team, 'edit_rules')) {
+            abort(403);
+        }
 
         $falsePositive->delete();
     }

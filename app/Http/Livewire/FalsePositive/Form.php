@@ -4,6 +4,7 @@ namespace App\Http\Livewire\FalsePositive;
 
 use App\Models\FalsePositive;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class Form extends Component
@@ -45,7 +46,9 @@ class Form extends Component
     {
         $this->validate();
 
-        $this->authorize('update', $this->team);
+        if (!Auth::user()->hasTeamPermission($this->team, 'edit_rules')) {
+            abort(403);
+        }
 
         $falsePositive = new FalsePositive();
         $falsePositive->false_positive = $this->false_positive;

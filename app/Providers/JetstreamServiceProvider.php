@@ -56,6 +56,7 @@ class JetstreamServiceProvider extends ServiceProvider
             'read',
             'update',
             'delete',
+            'edit_rules',
         ])->description(__('content.admin_role'));
 
         Jetstream::role('user', __('content.user'), [

@@ -15,7 +15,8 @@
                 type="text" 
                 lass="mt-1 block w-full"
                 wire:model.defer="false_positive"
-                autocomplete="false_positive" />
+                autocomplete="false_positive"
+                :disabled="! Auth::user()->hasTeamPermission($team, 'edit_rules')" />
 
                 <x-jet-input-error for="false_positive" class="mt-2" />
         </div>
@@ -26,13 +27,14 @@
             <x-select id="language_code"
                 :options="\App\Models\FalsePositive::LANGUAGE_CODE"
                 class="mt-1 block w-full"
-                wire:model.defer="language_code" />
+                wire:model.defer="language_code"
+                :disabled="! Auth::user()->hasTeamPermission($team, 'edit_rules')" />
 
                 <x-jet-input-error for="language_code" class="mt-2" />
         </div>
     </x-slot>
 
-    @if (Gate::check('update', $team))
+    @if (Auth::user()->hasTeamPermission($team, 'edit_rules'))
     <x-slot name="actions">
         <x-jet-action-message class="mr-3" on="saved">
             {{ __('content.saved') }}
