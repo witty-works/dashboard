@@ -26,7 +26,7 @@ class RemoveTeamMember implements RemovesTeamMembers
 
         $team->removeUser($teamMember);
 
-        $team->addSeat();
+        $team->removeSeat();
 
         TeamMemberRemoved::dispatch($team, $teamMember);
     }
@@ -41,8 +41,10 @@ class RemoveTeamMember implements RemovesTeamMembers
      */
     protected function authorize($user, $team, $teamMember)
     {
-        if (! Gate::forUser($user)->check('removeTeamMember', $team) &&
-            $user->id !== $teamMember->id) {
+        if (
+            !Gate::forUser($user)->check('removeTeamMember', $team) &&
+            $user->id !== $teamMember->id
+        ) {
             throw new AuthorizationException;
         }
     }
