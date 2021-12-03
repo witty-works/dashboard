@@ -106,6 +106,10 @@ Route::group(
         Route::group(['middleware' => config('fortify.middleware', ['web'])], function () {
             $enableViews = config('fortify.views', true);
 
+            Route::get('/false-positive', function () {
+                return view('false-positive');
+            })->name('false-positive');
+
             // Authentication...
             if ($enableViews) {
                 Route::get('/login', [AuthenticatedSessionController::class, 'create'])

@@ -146,4 +146,6 @@ return [
     'user_role' => 'Benutzer können die Unternehmenssprachenregeln des Teams verwenden.',
     'admin' => 'Administrator:innen',
     'user' => 'Benutzer:innen',
+    'actions' => 'Aktionen',
+    'any' => 'alle',
 ];
