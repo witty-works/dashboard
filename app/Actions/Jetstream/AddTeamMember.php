@@ -38,6 +38,8 @@ class AddTeamMember implements AddsTeamMembers
             ['role' => $role]
         );
 
+        $team->addSeat();
+
         TeamMemberAdded::dispatch($team, $newTeamMember);
     }
 
