@@ -73,10 +73,10 @@ return [
     */
 
     'features' => [
-        // Features::billingAddressCollection(),
+        Features::billingAddressCollection(),
         Features::mustAcceptTerms(),
         Features::euVatCollection(['home-country' => 'CH']),
-        // Features::receiptEmails(['custom-addresses' => true]),
+        Features::receiptEmails(['custom-addresses' => true]),
         Features::paymentNotificationEmails(),
     ],
 
