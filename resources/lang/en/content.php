@@ -146,4 +146,6 @@ return [
     'admin_role' => 'Administrator users can manage the team.',
     'user' => 'User',
     'user_role' => 'Users can use the teams corporate language rules.',
+    'actions' => 'actions',
+    'any' => 'any',
 ];
