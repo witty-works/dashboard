@@ -1,6 +1,6 @@
 <x-jet-form-section submit="updateTeamName">
     <x-slot name="title">
-        {{ __('content.team name') }}
+        {{ __('content.team_name') }}
     </x-slot>
 
     <x-slot name="description">
@@ -10,7 +10,7 @@
     <x-slot name="form">
         <!-- Team Owner Information -->
         <div class="col-span-6">
-            <x-jet-label value="{{ __('content.team owner') }}" />
+            <x-jet-label value="{{ __('content.team_owner') }}" />
 
             <div class="flex items-center mt-2">
                 <img class="w-12 h-12 rounded-full object-cover" src="{{ $team->owner->profile_photo_url }}" alt="{{ $team->owner->name }}">
@@ -24,7 +24,7 @@
 
         <!-- Team Name -->
         <div class="col-span-6 sm:col-span-4">
-            <x-jet-label for="name" value="{{ __('content.team name') }}" />
+            <x-jet-label for="name" value="{{ __('content.team_name') }}" />
 
             <x-jet-input id="name"
                         type="text"

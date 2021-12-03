@@ -149,7 +149,7 @@
     <!-- Delete Token Confirmation Modal -->
     <x-jet-confirmation-modal wire:model="confirmingApiTokenDeletion">
         <x-slot name="title">
-            {{ __('content.delete api_token') }}
+            {{ __('contentdelete_api_token') }}
         </x-slot>
 
         <x-slot name="content">
