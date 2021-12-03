@@ -143,4 +143,5 @@ return [
     'user' => 'Benutzer:innen',
     'actions' => 'Aktionen',
     'any' => 'alle',
+    'delete_permanently' => 'delete permanently',
 ];

@@ -18,6 +18,24 @@ class Form extends Component
         'language_code' => 'nullable|size:2',
     ];
 
+    /**
+     * The team instance.
+     *
+     * @var mixed
+     */
+    public $team;
+
+    /**
+     * Mount the component.
+     *
+     * @param  mixed  $team
+     * @return void
+     */
+    public function mount($team)
+    {
+        $this->team = $team;
+    }
+
     public function render()
     {
         return view('livewire.false-positive.form');
@@ -27,17 +45,14 @@ class Form extends Component
     {
         $this->validate();
 
-        $user = auth()->user();
-        if ($user && $user->currentTeam) {
-            $this->authorize('update', $user->currentTeam);
+        $this->authorize('update', $this->team);
 
-            $falsePositive = new FalsePositive();
-            $falsePositive->false_positive = $this->false_positive;
-            $falsePositive->language_code = $this->language_code;
-            $falsePositive->team_id = auth()->user()->currentTeam->id;
-            $falsePositive->save();
+        $falsePositive = new FalsePositive();
+        $falsePositive->false_positive = $this->false_positive;
+        $falsePositive->language_code = $this->language_code;
+        $falsePositive->team_id = $this->team->id;
+        $falsePositive->save();
 
-            $this->emit('saved');
-        }
+        $this->emit('saved');
     }
 }

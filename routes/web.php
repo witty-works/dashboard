@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Livewire\RulesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -105,10 +106,6 @@ Route::group(
 
         Route::group(['middleware' => config('fortify.middleware', ['web'])], function () {
             $enableViews = config('fortify.views', true);
-
-            Route::get('/false-positive', function () {
-                return view('false-positive');
-            })->name('false-positive');
 
             // Authentication...
             if ($enableViews) {
@@ -287,6 +284,8 @@ Route::group(
                     Route::get('/team-invitations/{invitation}', [TeamInvitationController::class, 'accept'])
                         ->middleware(['signed'])
                         ->name('team-invitations.accept');
+
+                    Route::get('/teams/{team}/false-positive', [RulesController::class, 'editFalsePositives'])->name('false-positive');
                 }
             });
         });

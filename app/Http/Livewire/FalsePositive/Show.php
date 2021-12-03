@@ -12,9 +12,29 @@ class Show extends Component
 
     protected $listeners = ['saved'];
 
+    /**
+     * The team instance.
+     *
+     * @var mixed
+     */
+    public $team;
+
+    /**
+     * Mount the component.
+     *
+     * @param  mixed  $corporateRules
+     * @return void
+     */
+    public function mount($team)
+    {
+        $this->team = $team;
+    }
+
     public function render()
     {
-        $list = FalsePositive::all()->sortByDesc('created_at');
+        $this->authorize('view', $this->team);
+
+        $list = FalsePositive::all()->where('team_id', $this->team->id)->sortByDesc('created_at');
 
         return view('livewire.false-positive.show', ['list' => $list]);
     }
@@ -26,11 +46,8 @@ class Show extends Component
 
     public function deleteFalsePositive(FalsePositive $falsePositive)
     {
-        $user = auth()->user();
-        if ($user && $user->currentTeam) {
-            $this->authorize('update', $user->currentTeam);
+        $this->authorize('update', $this->team);
 
-            $falsePositive->delete();
-        }
+        $falsePositive->delete();
     }
 }

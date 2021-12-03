@@ -76,11 +76,11 @@
                                     <x-jet-dropdown-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}">
                                         {{ __('Team Settings') }}
                                     </x-jet-dropdown-link>
-                                    @endif
 
-                                    <x-jet-dropdown-link href="{{ route('false-positive') }}">
+                                    <x-jet-dropdown-link href="{{ route('false-positive', Auth::user()->currentTeam->id) }}">
                                         {{ __('rules.false_positives_list') }}
                                     </x-jet-dropdown-link>
+                                    @endif
             
 
                                     @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
