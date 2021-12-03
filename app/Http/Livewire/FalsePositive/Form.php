@@ -3,10 +3,13 @@
 namespace App\Http\Livewire\FalsePositive;
 
 use App\Models\FalsePositive;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
 class Form extends Component
 {
+    use AuthorizesRequests;
+
     public $false_positive;
     public $language_code;
 
@@ -24,12 +27,17 @@ class Form extends Component
     {
         $this->validate();
 
-        $falsePositive = new FalsePositive();
-        $falsePositive->false_positive = $this->false_positive;
-        $falsePositive->language_code = $this->language_code;
-        $falsePositive->team_id = auth()->user()->currentTeam->id;
-        $falsePositive->save();
+        $user = auth()->user();
+        if ($user && $user->currentTeam) {
+            $this->authorize('update', $user->currentTeam);
 
-        $this->emit('saved');
+            $falsePositive = new FalsePositive();
+            $falsePositive->false_positive = $this->false_positive;
+            $falsePositive->language_code = $this->language_code;
+            $falsePositive->team_id = auth()->user()->currentTeam->id;
+            $falsePositive->save();
+
+            $this->emit('saved');
+        }
     }
 }

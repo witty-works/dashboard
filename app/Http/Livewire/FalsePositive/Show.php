@@ -3,10 +3,13 @@
 namespace App\Http\Livewire\FalsePositive;
 
 use App\Models\FalsePositive;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
 class Show extends Component
 {
+    use AuthorizesRequests;
+
     protected $listeners = ['saved'];
 
     public function render()
@@ -21,8 +24,13 @@ class Show extends Component
         $this->render();
     }
 
-    public function deleteItem(FalsePositive $falsePositive)
+    public function deleteFalsePositive(FalsePositive $falsePositive)
     {
-        $falsePositive->delete();
+        $user = auth()->user();
+        if ($user && $user->currentTeam) {
+            $this->authorize('update', $user->currentTeam);
+
+            $falsePositive->delete();
+        }
     }
 }
