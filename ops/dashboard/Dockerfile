@@ -52,7 +52,8 @@ COPY ops/dashboard/sshd_config /etc/ssh
 COPY ops/dashboard/ssh_setup.sh /tmp/ssh_setup.sh
 RUN chmod +x /tmp/ssh_setup.sh \
   && (sleep 1; /tmp/ssh_setup.sh 2>&1 > /dev/null) \
-  && rm -f /tmp/ssh_setup.sh
+  && rm -f /tmp/ssh_setup.sh \
+  && echo "root:Docker!" | chpasswd
 
 # retrieve CA certificate for SSL connection to Azure mysql
 # https://docs.microsoft.com/en-us/azure/mysql/howto-configure-ssl
