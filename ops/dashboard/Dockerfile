@@ -18,7 +18,9 @@ RUN docker-php-ext-install mysqli pdo pdo_mysql soap
 ENV NVM_VERSION v0.39.0
 ENV NODE_VERSION v14.18.1
 ENV NVM_DIR /app/.nvm
-RUN composer install --no-ansi --no-dev --no-interaction --no-plugins --no-progress --no-scripts --optimize-autoloader \
+# todo: no-dev borken due to Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider
+#RUN composer install --no-ansi --no-dev --no-interaction --no-plugins --no-progress --no-scripts --optimize-autoloader \
+RUN composer install --no-ansi --no-interaction --no-plugins --no-progress --no-scripts --optimize-autoloader \
   && mkdir ${NVM_DIR} \
   && curl -f -o- https://raw.githubusercontent.com/nvm-sh/nvm/$NVM_VERSION/install.sh | bash
 
@@ -35,24 +37,64 @@ RUN . ${NVM_DIR}/nvm.sh \
 
 FROM php:8-apache as dashboard
 
-COPY --from=builder --chown=www-data:www-data /app /var/www/html
-WORKDIR /var/www/html
+# see for azure app service example\
+# https://github.com/Azure/app-service-builtin-images/blob/master/php/7.2.1-apache/Dockerfile
 
-# install dependencies
+# enable apache modules
+RUN a2enmod rewrite expires include deflate
+
+# install additional php extensions
 RUN apt-get update \
-  && apt-get install -y git unzip openssh-server libxml2-dev\
-  && pecl install -o -f redis \
-  && docker-php-ext-install mysqli pdo pdo_mysql soap \
-  && docker-php-ext-enable redis \
-  && rm -rf /var/lib/apt/* \
-  && rm -rf /tmp/pear
+    && apt-get install -y --no-install-recommends \
+         libpng-dev \
+         libjpeg-dev \
+         libpq-dev \
+         libmcrypt-dev \
+         libldap2-dev \
+         libldb-dev \
+         libicu-dev \
+         libgmp-dev \
+         libmagickwand-dev \
+         libzip-dev \
+         libonig-dev \
+    && ln -s /usr/lib/x86_64-linux-gnu/libldap.so /usr/lib/libldap.so \
+    && ln -s /usr/lib/x86_64-linux-gnu/liblber.so /usr/lib/liblber.so \
+    && ln -s /usr/include/x86_64-linux-gnu/gmp.h /usr/include/gmp.h \
+    && pecl install imagick-beta \
+    && pecl install mcrypt \
+    && pecl install redis \
+    && docker-php-ext-configure gd \
+    && docker-php-ext-install gd \
+         mysqli \
+         opcache \
+         pdo \
+         pdo_mysql \
+         ldap \
+         intl \
+         gmp \
+         zip \
+         bcmath \
+         mbstring \
+         pcntl \
+    && docker-php-ext-enable imagick \
+    && docker-php-ext-enable mcrypt \
+    && docker-php-ext-enable redis \
+    && rm -rf /tmp/pear \
+    && rm -rf /var/lib/apt/lists/*
 
-# install sshd for app services
-COPY ops/dashboard/sshd_config /etc/ssh
-COPY ops/dashboard/ssh_setup.sh /tmp/ssh_setup.sh
-RUN chmod +x /tmp/ssh_setup.sh \
-  && (sleep 1; /tmp/ssh_setup.sh 2>&1 > /dev/null) \
-  && rm -f /tmp/ssh_setup.sh \
+# setup app service and app relevant tooling
+RUN apt-get update \
+  && apt-get install -y git unzip openssh-server \
+  && rm -rf /var/lib/apt/lists/*
+
+# copy files
+COPY ops/dashboard/files/ /
+
+
+# setup sshd
+RUN chmod +x /ssh_setup.sh \
+  && (sleep 1; /ssh_setup.sh 2>&1 > /dev/null) \
+  && rm -f /ssh_setup.sh \
   && echo "root:Docker!" | chpasswd
 
 # retrieve CA certificate for SSL connection to Azure mysql
@@ -61,20 +103,18 @@ RUN mkdir /ssl
 ENV MYSQL_ATTR_SSL_CA /ssl/BaltimoreCyberTrustRoot.crt.pem
 RUN curl -Lo ${MYSQL_ATTR_SSL_CA} https://www.digicert.com/CACerts/BaltimoreCyberTrustRoot.crt.pem
 
-# configure apache
-COPY ops/dashboard/dashboard.conf /etc/apache2/sites-available
-RUN unlink /etc/apache2/sites-enabled/000-default.conf \
-  && ln -s /etc/apache2/sites-available/dashboard.conf /etc/apache2/sites-enabled/000-dashboard.conf \
-  && a2enmod rewrite headers
+# copy dashboard application
+COPY --from=builder --chown=www-data:www-data /app /var/www/html
+WORKDIR /var/www/html
 
-# configure php
-COPY ops/dashboard/php.ini /tmp
-RUN mv "/tmp/php.ini" "$PHP_INI_DIR/php.ini"
+# configure apache
+RUN unlink /etc/apache2/sites-enabled/000-default.conf \
+  && ln -s /etc/apache2/sites-available/dashboard.conf /etc/apache2/sites-enabled/000-dashboard.conf
 
 # enable entrypoint script
-RUN mv ops/dashboard/entrypoint.sh / \
-  && chmod +x /entrypoint.sh
-CMD [ "/entrypoint.sh" ]
+RUN chmod +x /entrypoint.sh
+ENTRYPOINT [ "/entrypoint.sh" ]
 
 # expose ports for http and ssh access
-EXPOSE 80 2222
+ENV PORT 8080
+EXPOSE 8080 2222
