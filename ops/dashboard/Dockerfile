@@ -107,6 +107,10 @@ RUN curl -Lo ${MYSQL_ATTR_SSL_CA} https://www.digicert.com/CACerts/BaltimoreCybe
 COPY --from=builder --chown=www-data:www-data /app /var/www/html
 WORKDIR /var/www/html
 
+# create an empty html file in the public folder
+# to keep load for frontdoor health checks low
+RUN touch /var/www/html/public/_frontdoor.html
+
 # configure apache
 RUN unlink /etc/apache2/sites-enabled/000-default.conf \
   && ln -s /etc/apache2/sites-available/dashboard.conf /etc/apache2/sites-enabled/000-dashboard.conf
