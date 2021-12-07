@@ -14,9 +14,8 @@
 {{ __('content.you_may_accept_this_invitiation') }}
 @endif
 
-
-@component('mail::button', ['url' => $acceptUrl])
-{{ __('content.accept_invitation') }}
+@component('mail::button', ['url' => route('login')])
+{{ __('content.log_in') }}
 @endcomponent
 
 {{ __('content.if_you_did_not_expect') }}

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Livewire\RulesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -283,6 +284,10 @@ Route::group(
                     Route::get('/team-invitations/{invitation}', [TeamInvitationController::class, 'accept'])
                         ->middleware(['signed'])
                         ->name('team-invitations.accept');
+
+                    Route::get('/teams/{team}/false-positive', [RulesController::class, 'editFalsePositives'])->name('false-positive');
+
+                    Route::get('/teams/{team}/corporate-rules', [RulesController::class, 'editCorporateRules'])->name('corporate-rules');
                 }
             });
         });

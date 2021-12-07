@@ -1,3 +1,3 @@
 <a href="/">
-    <img class="w-48 h-48" src="{{ url('svg/witty-logo-color.svg') }}" />
+    <img src="{{ url('svg/witty-logo-color.svg') }}" width="96" />
 </a>

@@ -12,6 +12,8 @@ use Laravel\Jetstream\Rules\Role;
 
 class AddTeamMember implements AddsTeamMembers
 {
+    use SameDomainTrait;
+
     /**
      * Add a new team member to the given team.
      *
@@ -35,6 +37,8 @@ class AddTeamMember implements AddsTeamMembers
             $newTeamMember,
             ['role' => $role]
         );
+
+        $team->addSeat();
 
         TeamMemberAdded::dispatch($team, $newTeamMember);
     }
@@ -74,30 +78,6 @@ class AddTeamMember implements AddsTeamMembers
                 ? ['required', 'string', new Role]
                 : null,
         ]);
-    }
-
-    protected function getEmailDomain($email)
-    {
-        return substr(strrchr($email, '@'), 1);
-    }
-
-    /**
-     * Ensure that the user email is the same domain as the team owner
-     *
-     * @param  mixed  $team
-     * @param  string  $email
-     * @return \Closure
-     */
-    protected function ensureOwnerEmailHasSameDomain($team, string $email)
-    {
-        dd($this->getEmailDomain($team->owner->email) !== $this->getEmailDomain($email));
-        return function ($validator) use ($team, $email) {
-            $validator->errors()->addIf(
-                $this->getEmailDomain($team->owner->email) !== $this->getEmailDomain($email),
-                'email',
-                __('This user email domain must be the same as owner.')
-            );
-        };
     }
 
     /**

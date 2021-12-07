@@ -66,6 +66,11 @@ https://github.com/nvie/gitflow/wiki/Installation
 
 * For local test emails see: http://mail.lndo.site/
 
+# Using Stripe in development
+
+* Install Stripe CLI https://stripe.com/docs/stripe-cli
+* Run stripe_listen.sh
+
 # Translations
 
 Add missing translation keys from blade views and javascript code

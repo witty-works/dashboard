@@ -118,7 +118,7 @@
         <div class="mt-10 sm:mt-0">
             <x-jet-action-section>
                 <x-slot name="title">
-                    {{ __('content.team members') }}
+                    {{ __('content.team_members') }}
                 </x-slot>
 
                 <x-slot name="description">

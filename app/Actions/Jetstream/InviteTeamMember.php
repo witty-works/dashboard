@@ -14,6 +14,8 @@ use Laravel\Jetstream\Rules\Role;
 
 class InviteTeamMember implements InvitesTeamMembers
 {
+    use SameDomainTrait;
+
     /**
      * Invite a new team member to the given team.
      *
@@ -55,6 +57,8 @@ class InviteTeamMember implements InvitesTeamMembers
         ], $this->rules($team), [
             'email.unique' => __('This user has already been invited to the team.'),
         ])->after(
+            $this->ensureOwnerEmailHasSameDomain($team, $email)
+        )->after(
             $this->ensureUserIsNotAlreadyOnTeam($team, $email)
         )->validateWithBag('addTeamMember');
     }

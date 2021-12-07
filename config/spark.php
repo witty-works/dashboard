@@ -73,10 +73,10 @@ return [
     */
 
     'features' => [
-        // Features::billingAddressCollection(),
+        Features::billingAddressCollection(),
         Features::mustAcceptTerms(),
         Features::euVatCollection(['home-country' => 'CH']),
-        // Features::receiptEmails(['custom-addresses' => true]),
+        Features::receiptEmails(['custom-addresses' => true]),
         Features::paymentNotificationEmails(),
     ],
 
@@ -115,21 +115,23 @@ return [
     |
     */
 
+    // days since the last trial in order to be able to start a new trial
+    'skip_trial_if_subscribed_before' => 365,
+
     'billables' => [
 
         'team' => [
             'model' => Team::class,
 
-            'trial_days' => 7,
-
             'default_interval' => 'monthly',
 
             'plans' => [
                 [
+                    'trial_days' => 7,
                     'name' => 'Standard',
                     'short_description' => 'This is a short, human friendly description of the plan.',
-                    'monthly_id' => 'price_1JzzSRCKySiDI8CQgrGdQT8k',
-                    'yearly_id' => 'price_1JzzSRCKySiDI8CQf65kd6cD',
+                    'monthly_id' => 'price_1K2ZV8CKySiDI8CQadbnX5cL',
+                    'yearly_id' => 'price_1K2ZV8CKySiDI8CQG1zNJqW4',
                     'features' => [
                         'Feature 1',
                         'Feature 2',
