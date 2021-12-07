@@ -26,6 +26,8 @@
         }
     </style>
     @endif
+
+    @include('posthog')
 </head>
 <body class="font-sans antialiased">
     @inertia

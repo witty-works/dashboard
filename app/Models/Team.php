@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Middleware\PostHogMiddleware;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Laravel\Jetstream\Events\TeamCreated;
 use Laravel\Jetstream\Events\TeamDeleted;
@@ -42,6 +43,7 @@ class Team extends JetstreamTeam
     protected $dispatchesEvents = [
         'created' => TeamCreated::class,
         'updated' => TeamUpdated::class,
+        'saved' => TeamUpdated::class,
         'deleted' => TeamDeleted::class,
     ];
 
@@ -58,5 +60,10 @@ class Team extends JetstreamTeam
     public function corporateRules()
     {
         return $this->hasOne(CorporateRules::class, 'team_id');
+    }
+
+    public function posthogId()
+    {
+        return PostHogMiddleware::POSTHOG_ID_PREFIX . $this->id;
     }
 }
