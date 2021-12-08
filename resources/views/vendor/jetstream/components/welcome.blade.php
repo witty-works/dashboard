@@ -20,7 +20,7 @@
             <h2>Next steps</h2>
             <ol>
                 <li>Create Team @if (Auth::user()->currentTeam)✔️@endif</li>   
-                <li>Configure Corporate Rules</li>
+                <li>Configure Corporate Rules @if (Auth::user()->currentTeam->corporateRules)✔️@endif</li>   
                 <li>Invite Users to Team @if (Auth::user()->currentTeam && Auth::user()->currentTeam->users->count())✔️@endif</li>   
             </ol>
     </div>

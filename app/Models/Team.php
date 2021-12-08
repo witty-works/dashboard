@@ -49,4 +49,14 @@ class Team extends JetstreamTeam
     {
         return $this->owner->email;
     }
+
+    /**
+     * Get the current team of the user's context.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function corporateRules()
+    {
+        return $this->hasOne(CorporateRules::class, 'team_id');
+    }
 }
