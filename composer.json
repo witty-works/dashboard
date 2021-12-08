@@ -33,7 +33,7 @@
     "autoload": {
         "psr-4": {
             "App\\": "app/",
-            "Spark\\": "app/Spark",
+            "Spark\\": "spark",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
         },
@@ -49,9 +49,7 @@
     "scripts": {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi",
-            "php -r \"copy('SparkManager.php', 'vendor/laravel/spark-stripe/src/SparkManager.php');\"",
-            "php -r \"copy('SparkServiceProvider.php', 'vendor/laravel/spark-stripe/src/SparkServiceProvider.php');\""
+            "@php artisan package:discover --ansi"
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi",
