@@ -1,4 +1,4 @@
-FROM php:8 as builder
+FROM php:8.0 as builder
 
 # install latest and greatest composer binary
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
@@ -35,7 +35,7 @@ RUN . ${NVM_DIR}/nvm.sh \
   && npm run production
 
 
-FROM php:8-apache as dashboard
+FROM php:8.0-apache as dashboard
 
 # see for azure app service example\
 # https://github.com/Azure/app-service-builtin-images/blob/master/php/7.2.1-apache/Dockerfile
