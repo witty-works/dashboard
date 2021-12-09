@@ -33,8 +33,11 @@ jobs:
       # build dashboard
       - run: |
           echo '${{ secrets.COMPOSE_AUTH }}' > auth.json
+          # sha commit version
           docker build . -f ops/dashboard/Dockerfile -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/dashboard:${{ github.sha }}
           docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/dashboard:${{ github.sha }}
           # release version
-          docker tag ${{ secrets.REGISTRY_LOGIN_SERVER }}/dashboard:${{ github.sha }} ${{ secrets.REGISTRY_LOGIN_SERVER }}/dashboard:${{ github.ref_name }}
-          docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/dashboard:${{ github.ref_name }}
+          ref=${{ github.ref_name }}
+          tag=${ref////-}
+          docker tag ${{ secrets.REGISTRY_LOGIN_SERVER }}/dashboard:${{ github.sha }} ${{ secrets.REGISTRY_LOGIN_SERVER }}/dashboard:$tag
+          docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/dashboard:$tag
