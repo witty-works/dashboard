@@ -1,0 +1,44 @@
+version: '3.9'
+
+# to use this docker-compose file copy the .env.example file to .env
+# and overwrite the azure ad b2c provider configuration
+
+services:
+  dashboard:
+    build:
+      context: .
+      dockerfile: ./ops/dashboard/Dockerfile
+    volumes:
+      - dashboard_data:/var/www/html/storage
+    depends_on:
+      - mariadb
+    env_file:
+      - .env
+    environment:
+      - DB_HOST=mariadb
+      - DB_PORT=3306
+      - DB_DATABASE=dashboard
+      - DB_USERNAME=dashboard
+      - DB_PASSWORD=dashboard
+      # disable ssl integration
+      - DB_SSLMODE=disable
+      - MYSQL_ATTR_SSL_CA=""
+    restart: always
+    ports:
+      - "8080:8080"
+      - "2222:2222"
+
+  mariadb:
+    image: mariadb:10.3 # same version as in azure
+    volumes:
+      - db_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: dashboard
+      MYSQL_USER: dashboard
+      MYSQL_PASSWORD: dashboard
+    restart: always
+
+volumes:
+  db_data: {}
+  dashboard_data: {}
