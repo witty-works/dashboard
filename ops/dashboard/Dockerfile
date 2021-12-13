@@ -18,16 +18,9 @@ RUN docker-php-ext-install mysqli pdo pdo_mysql soap
 ENV NVM_VERSION v0.39.0
 ENV NODE_VERSION v14.18.1
 ENV NVM_DIR /app/.nvm
-# todo: no-dev borken due to Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider
-#RUN composer install --no-ansi --no-dev --no-interaction --no-plugins --no-progress --no-scripts --optimize-autoloader \
-RUN composer install --no-ansi --no-interaction --no-plugins --no-progress --no-scripts --optimize-autoloader \
-  && mkdir ${NVM_DIR} \
-  && curl -f -o- https://raw.githubusercontent.com/nvm-sh/nvm/$NVM_VERSION/install.sh | bash
 
-# configure php
-RUN php artisan config:clear \
-  && php artisan clear-compiled \
-  && php artisan storage:link
+RUN mkdir ${NVM_DIR} \
+  && curl -f -o- https://raw.githubusercontent.com/nvm-sh/nvm/$NVM_VERSION/install.sh | bash
 
 # configure nvm
 RUN . ${NVM_DIR}/nvm.sh \
@@ -86,6 +79,9 @@ RUN apt-get update \
 RUN apt-get update \
   && apt-get install -y git unzip openssh-server \
   && rm -rf /var/lib/apt/lists/*
+
+# install PHP dependencies
+RUN composer install --no-ansi --no-dev --no-interaction --no-plugins --no-progress --no-scripts --optimize-autoloader
 
 # copy files
 COPY ops/dashboard/files/ /
