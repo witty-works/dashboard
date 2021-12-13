@@ -18,16 +18,9 @@ RUN docker-php-ext-install mysqli pdo pdo_mysql soap
 ENV NVM_VERSION v0.39.0
 ENV NODE_VERSION v14.18.1
 ENV NVM_DIR /app/.nvm
-# todo: no-dev borken due to Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider
-#RUN composer install --no-ansi --no-dev --no-interaction --no-plugins --no-progress --no-scripts --optimize-autoloader \
-RUN composer install --no-ansi --no-interaction --no-plugins --no-progress --no-scripts --optimize-autoloader \
-  && mkdir ${NVM_DIR} \
-  && curl -f -o- https://raw.githubusercontent.com/nvm-sh/nvm/$NVM_VERSION/install.sh | bash
 
-# configure php
-RUN php artisan config:clear \
-  && php artisan clear-compiled \
-  && php artisan storage:link
+RUN mkdir ${NVM_DIR} \
+  && curl -f -o- https://raw.githubusercontent.com/nvm-sh/nvm/$NVM_VERSION/install.sh | bash
 
 # configure nvm
 RUN . ${NVM_DIR}/nvm.sh \
@@ -45,47 +38,50 @@ RUN a2enmod rewrite expires include deflate
 
 # install additional php extensions
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-         libpng-dev \
-         libjpeg-dev \
-         libpq-dev \
-         libmcrypt-dev \
-         libldap2-dev \
-         libldb-dev \
-         libicu-dev \
-         libgmp-dev \
-         libmagickwand-dev \
-         libzip-dev \
-         libonig-dev \
-    && ln -s /usr/lib/x86_64-linux-gnu/libldap.so /usr/lib/libldap.so \
-    && ln -s /usr/lib/x86_64-linux-gnu/liblber.so /usr/lib/liblber.so \
-    && ln -s /usr/include/x86_64-linux-gnu/gmp.h /usr/include/gmp.h \
-    && pecl install imagick-beta \
-    && pecl install mcrypt \
-    && pecl install redis \
-    && docker-php-ext-configure gd \
-    && docker-php-ext-install gd \
-         mysqli \
-         opcache \
-         pdo \
-         pdo_mysql \
-         ldap \
-         intl \
-         gmp \
-         zip \
-         bcmath \
-         mbstring \
-         pcntl \
-    && docker-php-ext-enable imagick \
-    && docker-php-ext-enable mcrypt \
-    && docker-php-ext-enable redis \
-    && rm -rf /tmp/pear \
-    && rm -rf /var/lib/apt/lists/*
+  && apt-get install -y --no-install-recommends \
+  libpng-dev \
+  libjpeg-dev \
+  libpq-dev \
+  libmcrypt-dev \
+  libldap2-dev \
+  libldb-dev \
+  libicu-dev \
+  libgmp-dev \
+  libmagickwand-dev \
+  libzip-dev \
+  libonig-dev \
+  && ln -s /usr/lib/x86_64-linux-gnu/libldap.so /usr/lib/libldap.so \
+  && ln -s /usr/lib/x86_64-linux-gnu/liblber.so /usr/lib/liblber.so \
+  && ln -s /usr/include/x86_64-linux-gnu/gmp.h /usr/include/gmp.h \
+  && pecl install imagick-beta \
+  && pecl install mcrypt \
+  && pecl install redis \
+  && docker-php-ext-configure gd \
+  && docker-php-ext-install gd \
+  mysqli \
+  opcache \
+  pdo \
+  pdo_mysql \
+  ldap \
+  intl \
+  gmp \
+  zip \
+  bcmath \
+  mbstring \
+  pcntl \
+  && docker-php-ext-enable imagick \
+  && docker-php-ext-enable mcrypt \
+  && docker-php-ext-enable redis \
+  && rm -rf /tmp/pear \
+  && rm -rf /var/lib/apt/lists/*
 
 # setup app service and app relevant tooling
 RUN apt-get update \
   && apt-get install -y git unzip openssh-server \
   && rm -rf /var/lib/apt/lists/*
+
+# install PHP dependencies
+RUN composer install --no-ansi --no-dev --no-interaction --no-plugins --no-progress --no-scripts --optimize-autoloader
 
 # copy files
 COPY ops/dashboard/files/ /
