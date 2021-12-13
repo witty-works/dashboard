@@ -19,7 +19,8 @@ ENV NVM_VERSION v0.39.0
 ENV NODE_VERSION v14.18.1
 ENV NVM_DIR /app/.nvm
 
-RUN mkdir ${NVM_DIR} \
+RUN composer install --no-ansi --no-dev --no-interaction --no-plugins --no-progress --no-scripts --optimize-autoloader \
+  && mkdir ${NVM_DIR} \
   && curl -f -o- https://raw.githubusercontent.com/nvm-sh/nvm/$NVM_VERSION/install.sh | bash
 
 # configure nvm
@@ -79,9 +80,6 @@ RUN apt-get update \
 RUN apt-get update \
   && apt-get install -y git unzip openssh-server \
   && rm -rf /var/lib/apt/lists/*
-
-# install PHP dependencies
-RUN composer install --no-ansi --no-dev --no-interaction --no-plugins --no-progress --no-scripts --optimize-autoloader
 
 # copy files
 COPY ops/dashboard/files/ /
