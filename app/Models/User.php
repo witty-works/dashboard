@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Middleware\PostHogMiddleware;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -92,5 +93,19 @@ class User extends Authenticatable implements MustVerifyEmail
     public function currentTeam()
     {
         return $this->belongsTo(Jetstream::teamModel(), 'current_team_id');
+    }
+
+    public function posthogId()
+    {
+        return PostHogMiddleware::POSTHOG_ID_PREFIX . $this->id;
+    }
+
+    public function posthogTeamId()
+    {
+        if ($this->currentTeam) {
+            return $this->currentTeam->posthogId();
+        }
+
+        return null;
     }
 }
