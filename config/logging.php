@@ -50,7 +50,7 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single'],
+            'channels' => ['daily', 'sentry'],
             'ignore_exceptions' => false,
         ],
 
@@ -112,6 +112,13 @@ return [
 
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
+        ],
+
+
+        'sentry' => [
+            'driver' => 'sentry',
+            'level'  => env('SENTRY_LOG_LEVEL', 'error'), // The minimum monolog logging level at which this handler will be triggered
+            'bubble' => true, // Whether the messages that are handled can bubble up the stack or not
         ],
     ],
 
