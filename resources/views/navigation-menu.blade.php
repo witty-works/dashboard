@@ -167,7 +167,7 @@
             @endif
 
             <div class="hidden sm:flex sm:items-center sm:ml-6">
-                @include('language_switcher')
+                @include('partials/language-switcher')
             </div>
 
             <!-- Hamburger -->
@@ -261,7 +261,7 @@
                 <div class="border-t border-gray-200"></div>
 
                 <div class="block px-4 py-2 text-xs text-gray-400">
-                    @include('language_switcher')
+                    @include('partials/language-switcher')
                 </div>
             </div>
         </div>

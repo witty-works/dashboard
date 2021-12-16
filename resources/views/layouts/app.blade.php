@@ -17,7 +17,7 @@
 
         <!-- Scripts -->
         <script src="{{ mix('js/app.js') }}" defer></script>
-        @include('posthog')
+        @include('partials/posthog')
     </head>
     <body class="font-sans antialiased">
         <x-jet-banner />

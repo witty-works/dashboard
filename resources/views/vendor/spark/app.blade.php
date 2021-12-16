@@ -27,7 +27,7 @@
     </style>
     @endif
 
-    @include('posthog')
+    @include('partials/posthog')
 </head>
 <body class="font-sans antialiased">
     @inertia
