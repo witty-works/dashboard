@@ -16,6 +16,7 @@
         @livewireStyles
 
         <!-- Scripts -->
+        @include('partials/sentry')    
         <script src="{{ mix('js/app.js') }}" defer></script>
         @include('partials/posthog')
     </head>
