@@ -19,7 +19,7 @@ class PosthogBillingEvent
             PostHog::capture([
                 'distinctId' => $event->billable->postHogId(),
                 'event' => get_class($event),
-                '$groups' => ['company' => $event->billable->posthogTeamId()],
+                '$groups' => ['organization' => $event->billable->posthogTeamId()],
             ]);
         }
     }

@@ -7,7 +7,7 @@ use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use App\Listeners\PosthogBillingEvent;
 use App\Listeners\PosthogReset;
-use App\Listeners\PostHogUpdateCompany;
+use App\Listeners\PostHogUpdateOrganization;
 use Laravel\Jetstream\Events\TeamCreated;
 use Laravel\Jetstream\Events\TeamUpdated;
 use Laravel\Jetstream\Events\TeamDeleted;
@@ -27,22 +27,22 @@ class EventServiceProvider extends ServiceProvider
      */
     protected $listen = [
         TeamMemberAdded::class => [
-            PostHogUpdateCompany::class,
+            PostHogUpdateOrganization::class,
         ],
         TeamMemberAdded::class => [
-            PostHogUpdateCompany::class,
+            PostHogUpdateOrganization::class,
         ],
         TeamMemberRemoved::class => [
-            PostHogUpdateCompany::class,
+            PostHogUpdateOrganization::class,
         ],
         TeamCreated::class => [
-            PostHogUpdateCompany::class,
+            PostHogUpdateOrganization::class,
         ],
         TeamUpdated::class => [
-            PostHogUpdateCompany::class,
+            PostHogUpdateOrganization::class,
         ],
         TeamDeleted::class => [
-            PostHogUpdateCompany::class,
+            PostHogUpdateOrganization::class,
         ],
         Registered::class => [
             SendEmailVerificationNotification::class,

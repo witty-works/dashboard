@@ -5,7 +5,7 @@ namespace App\Listeners;
 use App\Http\Middleware\PostHogMiddleware;
 use PostHog\PostHog;
 
-class PostHogUpdateCompany
+class PostHogUpdateOrganization
 {
     public function handle($event)
     {
@@ -24,7 +24,7 @@ class PostHogUpdateCompany
         }
 
         PostHog::groupIdentify([
-            'groupType' => PostHogMiddleware::POSTHOG_COMPANY_TYPE,
+            'groupType' => PostHogMiddleware::POSTHOG_ORGANIZATION_TYPE,
             'groupKey' => $team->posthogId(),
             'properties' => [
                 'name' => $team->name,

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\Livewire\RulesController;
 use Illuminate\Support\Facades\Route;
 
@@ -90,13 +91,13 @@ Route::group(
         'middleware' => ['localize', 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath']
     ],
     function () {
-
-
         Route::impersonate();
 
         Route::get('/', function () {
             return view('dashboard');
         })->name('dashboard');
+
+        Route::get('/analytics', [AnalyticsController::class, 'index'])->name('analytics');
 
         /*
         |------------------

@@ -10,7 +10,7 @@ if ($user) {
 
     $team = $user->currentTeam;
     if ($team) {
-        $companyData = ['name' => $team->name];
+        $organizationData = ['name' => $team->name];
     }
 }
 @endphp
@@ -40,9 +40,9 @@ if ($user) {
 
             @if (!empty($team))
             posthog.group(
-                {!! json_encode(\App\Http\Middleware\PostHogMiddleware::POSTHOG_COMPANY_TYPE) !!},
+                {!! json_encode(\App\Http\Middleware\PostHogMiddleware::POSTHOG_ORGANIZATION_TYPE) !!},
                 {!! json_encode($team->posthogId()) !!},
-                {!! json_encode($companyData) !!}
+                {!! json_encode($organizationData) !!}
             );
             @endif
         }
