@@ -23,7 +23,7 @@ class Show extends Component
     /**
      * Mount the component.
      *
-     * @param  mixed  $corporateRules
+     * @param  mixed  $organizationGuidelines
      * @return void
      */
     public function mount($team)
@@ -49,7 +49,7 @@ class Show extends Component
 
     public function deleteFalsePositive(FalsePositive $falsePositive)
     {
-        if (!Auth::user()->hasTeamPermission($this->team, 'edit_rules')) {
+        if (!Auth::user()->hasTeamPermission($this->team, 'edit_guidelines')) {
             abort(403);
         }
 

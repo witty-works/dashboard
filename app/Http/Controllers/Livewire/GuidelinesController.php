@@ -5,12 +5,11 @@ namespace App\Http\Controllers\Livewire;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
 use Laravel\Jetstream\Jetstream;
 
-class RulesController extends Controller
+class GuidelinesController extends Controller
 {
-    public function editCorporateRules(Request $request, $teamId)
+    public function editOrganizationGuidelines(Request $request, $teamId)
     {
         $team = Jetstream::newTeamModel()->findOrFail($teamId);
 
@@ -18,7 +17,7 @@ class RulesController extends Controller
             abort(403);
         }
 
-        return view('corporate-rules', [
+        return view('organization-guidelines', [
             'user' => $request->user(),
             'team' => $team,
         ]);

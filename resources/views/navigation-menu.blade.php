@@ -77,12 +77,12 @@
                                         {{ __('Team Settings') }}
                                     </x-jet-dropdown-link>
 
-                                    <x-jet-dropdown-link href="{{ route('corporate-rules', Auth::user()->currentTeam->id) }}">
-                                        {{ __('rules.corporate_rules') }}
+                                    <x-jet-dropdown-link href="{{ route('organization-guidelines', Auth::user()->currentTeam->id) }}">
+                                        {{ __('guidelines.organization_guidelines') }}
                                     </x-jet-dropdown-link>
 
                                     <x-jet-dropdown-link href="{{ route('false-positive', Auth::user()->currentTeam->id) }}">
-                                        {{ __('rules.false_positives_list') }}
+                                        {{ __('guidelines.false_positives_list') }}
                                     </x-jet-dropdown-link>
                                     @endif
             
