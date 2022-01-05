@@ -57,9 +57,9 @@ class Team extends JetstreamTeam
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function corporateRules()
+    public function organizationGuidelines()
     {
-        return $this->hasOne(CorporateRules::class, 'team_id');
+        return $this->hasOne(OrganizationGuidelines::class, 'team_id');
     }
 
     public function posthogId()

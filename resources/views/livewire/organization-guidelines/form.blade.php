@@ -1,52 +1,52 @@
-<x-jet-form-section submit="updateCorporateRules">
+<x-jet-form-section submit="updateOrganizationGuidelines">
     <x-slot name="title">
-        {{ __('rules.manage_corporate_rules') }}
+        {{ __('guidelines.manage_organization_guidelines') }}
     </x-slot>
 
     <x-slot name="description">
-        {{ __('rules.manage_corporate_rules_description') }}
+        {{ __('guidelines.manage_organization_guidelines_description') }}
     </x-slot>
 
     <x-slot name="form">
         <div class="col-span-6 sm:col-span-4">
-            <x-jet-label for="german_gender_ending" value="{{ __('rules.german_gender_ending') }}" />
+            <x-jet-label for="german_gender_ending" value="{{ __('guidelines.german_gender_ending') }}" />
 
             <x-select id="german_gender_ending"
-                :options="\App\Models\CorporateRules::GERMAN_GENDER_ENDING"
+                :options="\App\Models\OrganizationGuidelines::GERMAN_GENDER_ENDING"
                 class="mt-1 block w-full"
                 wire:model.defer="german_gender_ending"
-                :disabled="! Auth::user()->hasTeamPermission($team, 'edit_rules')" />
+                :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" />
 
                 <x-jet-input-error for="german_gender_ending" class="mt-2" />
         </div>
 
         <div class="col-span-6 sm:col-span-4">
-            <x-jet-label for="gendered_roles_format" value="{{ __('rules.gendered_roles_format') }}" />
+            <x-jet-label for="gendered_roles_format" value="{{ __('guidelines.gendered_roles_format') }}" />
 
             <x-select id="gendered_roles_format"
-                :options="\App\Models\CorporateRules::GENDERED_ROLES_FORMAT"
+                :options="\App\Models\OrganizationGuidelines::GENDERED_ROLES_FORMAT"
                 class="mt-1 block w-full"
                 wire:model.defer="gendered_roles_format"
-                :disabled="! Auth::user()->hasTeamPermission($team, 'edit_rules')" />
+                :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" />
 
             <x-jet-input-error for="gendered_roles_format" class="mt-2" />
         </div>
 
         <div class="col-span-6 sm:col-span-4">
-            <x-jet-label for="store_context" value="{{ __('rules.store_context') }}" />
+            <x-jet-label for="store_context" value="{{ __('guidelines.store_context') }}" />
 
             <x-jet-input id="store_context"
                         value="1"
                         type="checkbox"
                         class="mt-1 block"
                         wire:model.defer="store_context"
-                        :disabled="! Auth::user()->hasTeamPermission($team, 'edit_rules')" />
+                        :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" />
 
             <x-jet-input-error for="store_context" class="mt-2" />
         </div>
     </x-slot>
 
-    @if (Auth::user()->hasTeamPermission($team, 'edit_rules'))
+    @if (Auth::user()->hasTeamPermission($team, 'edit_guidelines'))
     <x-slot name="actions">
         <x-jet-action-message class="mr-3" on="saved">
             {{ __('content.saved') }}

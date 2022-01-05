@@ -143,5 +143,47 @@ return [
     'user' => 'Benutzer:innen',
     'actions' => 'Aktionen',
     'any' => 'alle',
-    'delete_permanently' => 'delete permanently',
+    'delete_permanently' => 'löschen',
+    'de' => 'Deutsch',
+    'en' => 'Englisch',
+    'welcome_text' => 'Dies ist die Willkommensseite des Witty Dashboards. Das Dashboard hilft Ihnen, Witty an Ihrem Arbeitsplatz einzurichten und zu verwenden.',
+    'onboarding_next_steps' => 'Nächste Schritte zum Einrichten Ihres Witty Teams:',
+    'onboarding_create_team' => 'Erstellen sie ihr Team',
+    'onboarding_configure_organization_guidelines' => 'Konfigurieren Sie die Richtlinien für ihre Organisation',
+    'onboarding_invite_users' => 'Laden Sie Benutzer in Ihr Team ein',
+    'section_1_title' => 'Was ist Witty?',
+    'section_1_text' => 'Witty ist ein integrativer Schreibassistent für Einzelpersonen und Organisationen, der Ihnen die Freude am integrativen Schreiben einfach, in Echtzeit und schnell bringt. Es ist ein Software-as-a-Service, der unbewusste Stereotypen in der Kommunikation erkennt. Und führt den Autor dann an, wie er denselben Inhalt inklusiv formulieren kann.
+
+Witty bietet die ganze inklusive Sprachlogik in Englisch und Deutsch an. Außerdem erhalten Sie Feedback zu Rechtschreibung und Grammatik. Weitere Sprachen sind geplant.
+
+Mit Witty werden Sie täglich Teil des Wandels hin zu mehr Vielfalt und Inklusion.
+
+Lesen Sie mehr über [Witty](https://www.witty.works/ "Inklusives Schreiben, überall, in Echtzeit")',
+    'section_2_title' => 'Was macht das Witty Dashboard?',
+    'section_2_text' => 'Das Witty-Dashboard hilft Ihnen, Witty für Ihr Team einzurichten und zu verwalten. Nach der Anmeldung verwalten Sie Folgendes:
+
+* Laden Sie Ihre Teammitglieder ein
+* Richten Sie Ihre eigenen Sprachrichtlinien ein. So stellen Sie sicher, dass Ihr gesamtes Team mit derselben Markenstimme schreibt.
+* Lesen und interpretieren Sie Analysen auf Team-, Abteilungs- und Unternehmensebene in Übereinstimmung mit den Datenschutzgesetzen.
+* In Kürze: Editor - eine einfache Anwendung, die für alle funktioniert, auch für diejenigen, die das Browser-Plugin (noch) nicht verwenden
+
+Erstellen Sie zunächst Ihr eigenes [login](de/login "Login")
+',
+    'section_3_title' => 'Witty für Teams und Organisationen',
+    'section_3_text' => 'Für Organisationen bietet Witty eine Reihe von Dienstleistungen an, damit ganze Teams reibungslos mit Witty arbeiten können, wie zum Beispiel:
+* Einmalige Anmeldung
+* Richtlinien zur Organisationssprache
+* Statistik der Organisation/Abteilung
+* Sitzung zur Sensibilisierung für unbewusste Voreingenommenheit
+* Zentrale Kontrolle über den Datenschutz
+
+Lesen Sie mehr über Dienstleistungen für [Organisationen](https://www.witty.works/witty-for-companies "Witty for Organizations")',
+    'section_4_title' => 'Wittys ROI für Unternehmen',
+    'section_4_text' => 'Der Einsatz von Witty erhöht den Wettbewerbsvorteil von Unternehmen.
+* Erreichen Sie 100 % der Zielgruppen statt nur 60 %.
+* Vielfalt und Inklusion umsetzen – effizient und effektiv
+* [ESG](https://en.wikipedia.org/wiki/Environmental,_social_and_corporate_governance "Umwelt, Soziales und Unternehmensführung") und [UNSDG](https://sdgs.un.org/goals "UN Sustainable Development Goals") konkret umsetzen.
+* Sorgen Sie für eine optimierte Markenstimme in Ihrer gesamten Organisation.
+
+Lesen Sie mehr über den ROI für [Organisationen](https://www.witty.works/witty-for-companies "Witty for Organizations")',
 ];
