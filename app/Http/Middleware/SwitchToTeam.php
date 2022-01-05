@@ -11,8 +11,9 @@ class SwitchToTeam
     public function handle(Request $request, Closure $next)
     {
         $user = Auth::user();
-        if ($user && $user->team && !$user->currentTeam) {
-            $user->switchTeam($user->team);
+
+        if ($user && $user->allTeams()->count() && !$user->currentTeam) {
+            $user->switchTeam($user->allTeams()->first());
         }
 
         return $next($request);
