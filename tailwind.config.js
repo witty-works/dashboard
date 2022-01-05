@@ -9,10 +9,21 @@ module.exports = {
     ],
 
     theme: {
+        fontFamily: {
+          sans: ['Lato', 'sans-serif'],
+        },
         extend: {
-            fontFamily: {
-                sans: ['Nunito', ...defaultTheme.fontFamily.sans],
+          colors: {
+            red: {
+              500: '#F06464',
+              600: '#D42035',
             },
+            magenta: '#F277D0',
+            blue: '#55B8E9',
+            purple: '#9489DB',
+            cyan: '#37D1E5',
+            green: '#5ACFB9',
+          },
         },
     },
 

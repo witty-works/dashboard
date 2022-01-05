@@ -1,3 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;400;700&display=swap');
+
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+@layer base {
+  p {
+    @apply text-black;
+    @apply mb-3;
+  }
+
+  ol,
+  ul {
+    margin: 1em;
+    padding: 0;
+  }
+
+  ol {
+    list-style: auto;
+  }
+
+  ul {
+    list-style: disc;
+  }
+
+  li {
+    margin-bottom: 6px;
+  }
+
+  a {
+    @apply text-blue;
+    @apply font-semibold;
+  }
+}
