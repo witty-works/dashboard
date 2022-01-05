@@ -43,7 +43,7 @@ return [
     'dashboard' => 'Dashboard',
     'manage_team' => 'Manage Team',
     'team_settings' => 'Team Settings',
-    'create_new_team' => 'Create team',
+    'create_new_team' => 'Create new team',
     'switch_teams' => 'Switch Teams',
     'manage_account' => 'Manage Account',
     'profile' => 'Profile',
