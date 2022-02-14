@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Livewire\RulesController;
+use App\Http\Controllers\Livewire\GuidelinesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -285,9 +285,9 @@ Route::group(
                         ->middleware(['signed'])
                         ->name('team-invitations.accept');
 
-                    Route::get('/teams/{team}/false-positive', [RulesController::class, 'editFalsePositives'])->name('false-positive');
+                    Route::get('/teams/{team}/false-positive', [GuidelinesController::class, 'editFalsePositives'])->name('false-positive');
 
-                    Route::get('/teams/{team}/corporate-rules', [RulesController::class, 'editCorporateRules'])->name('corporate-rules');
+                    Route::get('/teams/{team}/organization-guidelines', [GuidelinesController::class, 'editOrganizationGuidelines'])->name('organization-guidelines');
                 }
             });
         });

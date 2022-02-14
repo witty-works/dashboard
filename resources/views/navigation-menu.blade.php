@@ -74,22 +74,22 @@
                                     <!-- Team Settings -->
                                     @if (Auth::user()->currentTeam)
                                     <x-jet-dropdown-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}">
-                                        {{ __('Team Settings') }}
+                                        {{ __('content.team_settings') }}
                                     </x-jet-dropdown-link>
 
-                                    <x-jet-dropdown-link href="{{ route('corporate-rules', Auth::user()->currentTeam->id) }}">
-                                        {{ __('rules.corporate_rules') }}
+                                    <x-jet-dropdown-link href="{{ route('organization-guidelines', Auth::user()->currentTeam->id) }}">
+                                        {{ __('guidelines.organization_guidelines') }}
                                     </x-jet-dropdown-link>
 
                                     <x-jet-dropdown-link href="{{ route('false-positive', Auth::user()->currentTeam->id) }}">
-                                        {{ __('rules.false_positives_list') }}
+                                        {{ __('guidelines.false_positives_list') }}
                                     </x-jet-dropdown-link>
                                     @endif
             
 
                                     @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
                                         <x-jet-dropdown-link href="{{ route('teams.create') }}">
-                                            {{ __('Create New Team') }}
+                                            {{ __('content.create_new_team') }}
                                         </x-jet-dropdown-link>
                                     @endcan
 
@@ -97,7 +97,7 @@
 
                                     <!-- Team Switcher -->
                                     <div class="block px-4 py-2 text-xs text-gray-400">
-                                        {{ __('Switch Teams') }}
+                                        {{ __('content.switch_teams') }}
                                     </div>
 
                                     @foreach (Auth::user()->allTeams() as $team)
@@ -167,7 +167,7 @@
             @endif
 
             <div class="hidden sm:flex sm:items-center sm:ml-6">
-                @include('language_switcher')
+                @include('partials/language-switcher')
             </div>
 
             <!-- Hamburger -->
@@ -261,7 +261,7 @@
                 <div class="border-t border-gray-200"></div>
 
                 <div class="block px-4 py-2 text-xs text-gray-400">
-                    @include('language_switcher')
+                    @include('partials/language-switcher')
                 </div>
             </div>
         </div>

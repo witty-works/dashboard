@@ -14,7 +14,9 @@
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 
         <!-- Scripts -->
+        @include('partials/sentry')        
         <script src="{{ mix('js/app.js') }}" defer></script>
+        @include('partials/posthog')
     </head>
     <body>
         <div class="font-sans text-gray-900 antialiased">

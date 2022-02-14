@@ -2,7 +2,7 @@
 
 Dashboard for Witty
 
-Handles registration, SSO, user license management, corporate rules and personal/team statistics.
+Handles registration, SSO, user license management, organization rules and personal/team statistics.
 
 * https://jetstream.laravel.com/
 * https://laravel.com/docs/8.x/socialite
@@ -88,12 +88,6 @@ Sync translations with translation.io
 
 ```bash
 lando artisan translation:sync_and_purge
-```
-
-Export translations to javascript
-
-```bash
-lando artisan export:messages-flat
 ```
 
 # Deployments

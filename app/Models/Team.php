@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Middleware\PostHogMiddleware;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Laravel\Jetstream\Events\TeamCreated;
 use Laravel\Jetstream\Events\TeamDeleted;
@@ -42,11 +43,27 @@ class Team extends JetstreamTeam
     protected $dispatchesEvents = [
         'created' => TeamCreated::class,
         'updated' => TeamUpdated::class,
+        'saved' => TeamUpdated::class,
         'deleted' => TeamDeleted::class,
     ];
 
     public function stripeEmail()
     {
         return $this->owner->email;
+    }
+
+    /**
+     * Get the current team of the user's context.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function organizationGuidelines()
+    {
+        return $this->hasOne(OrganizationGuidelines::class, 'team_id');
+    }
+
+    public function posthogId()
+    {
+        return PostHogMiddleware::POSTHOG_ID_PREFIX . $this->id;
     }
 }

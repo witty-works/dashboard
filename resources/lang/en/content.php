@@ -43,7 +43,7 @@ return [
     'dashboard' => 'Dashboard',
     'manage_team' => 'Manage Team',
     'team_settings' => 'Team Settings',
-    'create_new_team' => 'Create team',
+    'create_new_team' => 'Create new team',
     'switch_teams' => 'Switch Teams',
     'manage_account' => 'Manage Account',
     'profile' => 'Profile',
@@ -140,10 +140,50 @@ return [
     'admin' => 'Administrator',
     'admin_role' => 'Administrator users can manage the team.',
     'user' => 'User',
-    'user_role' => 'Users can use the teams corporate language rules.',
+    'user_role' => 'Users can use the teams organization language guidelines.',
     'actions' => 'actions',
     'any' => 'any',
     'delete_permanently' => 'delete',
     'de' => 'German',
     'en' => 'English',
+    'welcome_text' => 'This is the welcome page of the Witty dashboard. The dashboard helps you to set up and use Witty in your workplace.',
+    'onboarding_next_steps' => 'Next steps to setup your Witty team:',
+    'onboarding_create_team' => 'Create your team',
+    'onboarding_configure_organization_guidelines' => 'Configure the language organization guidelines',
+    'onboarding_invite_users' => 'Invite users to your team',
+    'section_1_title' => 'What is Witty',
+    'section_1_text' => 'Witty is an inclusive writing assistant made for individuals and organizations, bringing you the joy of inclusive writing simple, real-time and fast. It is a Software-as-a-Service that detects unconscious stereotypes in communication. And then guides the writer how to formulate the same content in an inclusive manner. 
+
+Witty offers the whole inclusive language logic in English and German. You also receive feedback on spelling and grammar. More languages are planned.
+
+With Witty you become part of the change towards more diversity and inclusion on a daily basis.
+
+Read more about [Witty](https://www.witty.works/ "Inclusive writing, anywhere, in real time")',
+    'section_2_title' => 'What does the Witty Dashboard do?',
+    'section_2_text' => 'The Witty dashboard helps you to set up and manage Witty for your team. Once logged, you manage the following: 
+
+* Invite your team members
+* Set up your very own language guidelines based. That way you ensure that your whole team writes with the same brand voice.
+* Read and interpret analytics at team, department and company level in accordance with data privacy laws.
+* Coming soon: Editor - a simple application that works for everyone, even those that do not use the browser plugin (yet)        
+
+Start by creating your own [login](en/login "Login")
+',
+    'section_3_title' => 'Witty for Teams and Organizations',
+    'section_3_text' => 'For Organizations Witty offers an array of services so that whole teams can work with Witty flawlessly, such as:
+* Single-Sign-On
+* Organization language guidelines
+* Organization/Department statistics
+* Unconscious bias awareness session
+* Central control over data privacy
+
+Read more about services for [organizations](https://www.witty.works/witty-for-companies "Witty for Organizations")',
+    'section_4_title' => 'Witty’s ROI for Organizations',
+    'section_4_text' => 'The use of Witty increases organizations’ competitive advantage. 
+* Reach 100% of target groups instead of only 60%.
+* Implement Diversity and Inclusion - efficiently and effectively
+* Implement [ESG](https://en.wikipedia.org/wiki/Environmental,_social_and_corporate_governance "Environmental, Social, and Governance") and [UNSDG](https://sdgs.un.org/goals "UN Sustainable Development Goals") concretely. 
+* Ensure streamlined brand voice through your whole organization. 
+
+Read more about ROI for [organizations](https://www.witty.works/witty-for-companies "Witty for Organizations")',
 ];

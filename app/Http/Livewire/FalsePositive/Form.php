@@ -46,7 +46,7 @@ class Form extends Component
     {
         $this->validate();
 
-        if (!Auth::user()->hasTeamPermission($this->team, 'edit_rules')) {
+        if (!Auth::user()->hasTeamPermission($this->team, 'edit_guidelines')) {
             abort(403);
         }
 

@@ -12,14 +12,15 @@
         "laravel/jetstream": "^2.4",
         "laravel/sanctum": "^2.11",
         "laravel/socialite": "^5.2",
+        "laravel/spark-stripe": "^1.0",
         "laravel/tinker": "^2.5",
         "livewire/livewire": "^2.5",
         "mcamara/laravel-localization": "^1.6",
         "platformsh/laravel-bridge": "^2.2",
+        "posthog/posthog-php": "^2.1",
         "sentry/sentry-laravel": "^2.9",
         "socialiteproviders/azureadb2c": "^4.0",
-        "themsaid/laravel-langman": "dev-master",
-        "laravel/spark-stripe": "^1.0"
+        "themsaid/laravel-langman": "dev-master"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.10",
@@ -33,7 +34,7 @@
     "autoload": {
         "psr-4": {
             "App\\": "app/",
-            "Spark\\": "app/Spark",
+            "Spark\\": "spark",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
         },
@@ -49,9 +50,7 @@
     "scripts": {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi",
-            "php -r \"copy('SparkManager.php', 'vendor/laravel/spark-stripe/src/SparkManager.php');\"",
-            "php -r \"copy('SparkServiceProvider.php', 'vendor/laravel/spark-stripe/src/SparkServiceProvider.php');\""
+            "@php artisan package:discover --ansi"
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi",
