@@ -32,11 +32,8 @@
                             @endcan
                         @endif
                     @else
-                        <x-jet-nav-link href="{{ route('login') }}" :active="request()->routeIs('login')">
-                            {{ __('content.log_in') }}
-                        </x-jet-nav-link>
-                        <x-jet-nav-link href="{{ route('register') }}" :active="request()->routeIs('register')">
-                            {{ __('content.register') }}
+                        <x-jet-nav-link href="{{ route('oauth.redirect', ['provider' => 'azureadb2c']) }}">
+                            {{ __('content.log_in') }} / {{ __('content.register') }}
                         </x-jet-nav-link>
                     @endauth
                 </div>
@@ -190,12 +187,9 @@
                 {{ __('content.dashboard') }}
             </x-jet-responsive-nav-link>
             @else
-                <x-jet-responsive-nav-link href="{{ route('login') }}" :active="request()->routeIs('login')">
-                    {{ __('content.log_in') }}
-                </x-jet-responsive-nav-link>
-                <x-jet-responsive-nav-link href="{{ route('register') }}" :active="request()->routeIs('register')">
-                    {{ __('content.register') }}
-                </x-jet-responsive-nav-link>
+            <x-jet-responsive-nav-link href="{{ route('oauth.redirect', ['provider' => 'azureadb2c']) }}">
+                {{ __('content.log_in') }} / {{ __('content.register') }}
+            </x-jet-responsive-nav-link>
             @endauth
         </div>
 
