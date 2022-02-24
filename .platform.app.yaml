@@ -95,7 +95,3 @@ web:
             rules:
                 "^/(css|js)/app.(css|js)":
                     expires: 2m
-
-runtime:
-    extensions:
-        - blackfire
