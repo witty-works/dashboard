@@ -43,7 +43,7 @@
                     {{ __('content.cancel') }}
                 </x-jet-secondary-button>
 
-                <x-jet-danger-button class="ml-2" wire:click="deleteUser" wire:loading.attr="disabled">
+                <x-jet-danger-button class="ml-3" wire:click="deleteUser" wire:loading.attr="disabled">
                     {{ __('content.delete_account') }}
                 </x-jet-danger-button>
             </x-slot>
