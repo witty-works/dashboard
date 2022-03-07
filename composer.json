@@ -4,11 +4,12 @@
     "description": "The Witty Dashboard",
     "require": {
         "php": "^7.3|^8.0",
+        "barryvdh/laravel-debugbar": "^3.6",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "joelbutcher/socialstream": "^3.2",
-        "kineticamobile/lumki": "^0.1.10",
-        "laravel/framework": "^8.65",
+        "kineticamobile/lumki": "dev-main",
+        "laravel/framework": "^9",
         "laravel/jetstream": "^2.4",
         "laravel/sanctum": "^2.11",
         "laravel/socialite": "^5.2",
@@ -27,7 +28,7 @@
         "fakerphp/faker": "^1.9.1",
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.4",
-        "nunomaduro/collision": "^5.10",
+        "nunomaduro/collision": "^5.10 | ^6.0",
         "phpunit/phpunit": "^9.5.10",
         "tio/laravel": "dev-remove-array-align-laravel-8"
     },

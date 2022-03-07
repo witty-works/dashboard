@@ -44,6 +44,72 @@
 
             <x-jet-input-error for="store_context" class="mt-2" />
         </div>
+
+        <div class="col-span-6 sm:col-span-4">
+            <x-jet-label for="expert_mode" value="{{ __('guidelines.expert_mode') }}" />
+
+            <x-jet-input id="expert_mode"
+                        value="1"
+                        type="checkbox"
+                        class="mt-1 block"
+                        wire:model.defer="expert_mode"
+                        :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" />
+
+            <x-jet-input-error for="expert_mode" class="mt-2" />
+        </div>
+
+        <div class="col-span-6 sm:col-span-4">
+            <x-jet-label for="singular_they" value="{{ __('guidelines.singular_they') }}" />
+
+            <x-jet-input id="singular_they"
+                        value="1"
+                        type="checkbox"
+                        class="mt-1 block"
+                        wire:model.defer="singular_they"
+                        :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" />
+
+            <x-jet-input-error for="singular_they" class="mt-2" />
+        </div>
+
+        <div class="col-span-6 sm:col-span-4">
+            <x-jet-label for="preferred_variants" value="{{ __('guidelines.preferred_variants') }}" />
+
+            <x-jet-label for="preferred_variants_en" value="{{ __('guidelines.preferred_variants_en') }}" />
+
+            <x-select id="preferred_variants_en"
+                :options="App\Models\OrganizationGuidelines::PREFERRED_VARIANTS_EN"
+                class="mt-1 block w-full"
+                wire:model.defer="preferred_variants_en"
+                :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" />
+
+            <x-jet-input-error for="preferred_variants_en" class="mt-2" />
+        
+            <x-jet-label for="preferred_variants_de" value="{{ __('guidelines.preferred_variants_de') }}" />
+
+            <x-select id="preferred_variants_de"
+                :options="App\Models\OrganizationGuidelines::PREFERRED_VARIANTS_DE"
+                class="mt-1 block w-full"
+                wire:model.defer="preferred_variants_de"
+                :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" />
+
+            <x-jet-input-error for="preferred_variants_de" class="mt-2" />
+        </div>
+
+        <div class="col-span-6 sm:col-span-4">
+            <x-jet-label for="disabled_categories" value="{{ __('guidelines.disabled_categories') }}" />
+
+            @foreach(\App\Models\OrganizationGuidelines::DISABLED_CATEGORIES as $category)
+                <x-jet-label for="disabled_categories_{{ $category }}" value="{{ __('guidelines.disabled_categories_'.$category) }}" />
+
+                <x-jet-input id="disabled_categories_{{ $category }}"
+                            value="1"
+                            type="checkbox"
+                            class="mt-1 block"
+                            wire:model.defer="disabled_categories_{{ $category }}"
+                            :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" />
+            @endforeach
+
+        </div>
     </x-slot>
 
     @if (Auth::user()->hasTeamPermission($team, 'edit_guidelines'))

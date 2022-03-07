@@ -17,4 +17,8 @@ return [
     'gender_inclusive' => 'Geschlecht inklusive',
     'both' => 'beide',
     'gender_binary' => 'Geschlecht binär',
+    'expert_mode' => 'expert mode',
+    'singular_they' => 'singular they',
+    'preferred_variants' => 'preferred variants',
+    'disabled_categories' => 'disabled categories',
 ];

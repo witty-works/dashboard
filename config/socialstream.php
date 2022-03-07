@@ -32,7 +32,7 @@ return [
     'providers' => [
         Providers::google(),
         Providers::linkedin(),
-        // 'azureadb2c',
+        'azureadb2c',
     ],
 
     /*
@@ -47,7 +47,7 @@ return [
     */
 
     'features' => [
-        // Features::createAccountOnFirstLogin(),
+        Features::createAccountOnFirstLogin(),
         // Features::generateMissingEmails(),
         Features::rememberSession(),
         Features::providerAvatars(),
