@@ -51,10 +51,10 @@ return [
     ],
 
     'azureadb2c' => [
-        'client_id' => env('AADB2C_ClientId'),
-        'client_secret' => env('AADB2C_ClientSecret'),
+        'client_id' => env('AADB2C_CLIENT_ID'),
+        'client_secret' => env('AADB2C_CLIENT_SECRET'),
         'redirect' => '/oauth/azureadb2c/callback',
-        'domain' => env('AADB2C_Domain'),  // {your_domain}.b2clogin.com
-        'policy' => env('AADB2C_Policy'),  // such as 'b2c_1_user_susi'
+        'domain' => env('AADB2C_DOMAIN'),
+        'policy' => env('AADB2C_POLICY'),
     ],
 ];
