@@ -5,6 +5,8 @@ use Spark\Features;
 
 return [
 
+    'enabled' => env('SPARK_ENABLED', false),
+
     /*
     |--------------------------------------------------------------------------
     | Spark Path
