@@ -77,11 +77,8 @@ class TeamPolicy
      */
     public function addTeamMember(User $user, Team $team)
     {
-        $openInvitationsCount = $team->teamInvitations()->count();
-        $createdUsersCount = $team->users()->count();
-
         $max_count = $team->maxUserCount();
-        if ($openInvitationsCount + $createdUsersCount >= $max_count) {
+        if ($team->totalUserCount() >= $max_count) {
             return false;
         }
 

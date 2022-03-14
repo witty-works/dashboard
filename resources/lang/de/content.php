@@ -188,4 +188,5 @@ Lesen Sie mehr über Dienstleistungen für [Organisationen](https://www.witty.wo
 Lesen Sie mehr über den ROI für [Organisationen](https://www.witty.works/witty-for-companies "Witty for Organizations")',
     'user_limit_reached' => 'Sie haben das Limit von :max_count der Benutzer erreicht, die zu Ihrem aktuellen Plan eingeladen werden können. Um einen neuen Benutzer hinzuzufügen, müssen Sie zuerst stornieren und einen Benutzer aus Ihrem Team einladen und/oder entfernen.',
     'user_limit_reached_error' => 'Benutzerlimit von :max_count für den aktuellen Plan erreicht.',
+    'onboarding_signup_to_witty' => 'Meldung für ein Witty-Konto',
 ];

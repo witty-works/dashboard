@@ -16,9 +16,10 @@
     <div class="mt-6 text-gray-500">
             <h2>{{ __('content.onboarding_next_steps') }}</h2>
             <ol>
-                <li>{{ __('content.onboarding_create_team') }} @if (Auth::user()->currentTeam)✔️@endif</li>   
-                <li>{{ __('content.onboarding_configure_organization_guidelines') }} @if (Auth::user()->currentTeam->organizationGuidelines)✔️@endif</li>   
-                <li>{{ __('content.onboarding_invite_users') }} @if (Auth::user()->currentTeam && Auth::user()->currentTeam->users->count())✔️@endif</li>   
+                <li>✔️ </span>{{ __('content.onboarding_signup_to_witty') }}</li>   
+                <li>@if (Auth::user()->currentTeam)✔️@endif{{ __('content.onboarding_create_team') }}</li>   
+                <li>@if (Auth::user()->currentTeam->organizationGuidelines)✔️@endif{{ __('content.onboarding_configure_organization_guidelines') }}</li>   
+                <li>@if (Auth::user()->currentTeam && Auth::user()->currentTeam->totalUserCount())✔️@endif{{ __('content.onboarding_invite_users') }}</li>   
             </ol>
     </div>
     @endcan
