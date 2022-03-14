@@ -186,4 +186,6 @@ Read more about services for [organizations](https://www.witty.works/witty-for-c
 * Ensure streamlined brand voice through your whole organization. 
 
 Read more about ROI for [organizations](https://www.witty.works/witty-for-companies "Witty for Organizations")',
+    'user_limit_reached' => 'You have reached the limit of :max_count of the users that can be invited on your current plan. To add a new user you first must cancel and invitation and/or remove a user from your team.',
+    'user_limit_reached_error' => 'User limit of :max_count on the current plan reached.',
 ];

@@ -11,6 +11,11 @@
 
                 <x-slot name="description">
                     {{ __('content.add_a_new_team_member', ['max_count' => $team->maxUserCount()]) }}
+                    @if(!Gate::check('addTeamMember', $team))
+                    <br />
+                    <br />
+                    {{ __('content.user_limit_reached', ['max_count' => $team->maxUserCount()]) }}
+                    @endif
                 </x-slot>
 
                 <x-slot name="form">
@@ -24,7 +29,13 @@
                     <div class="col-span-6 sm:col-span-4">
                         <x-jet-label for="email" value="{{ __('content.email') }}" />
                         <x-jet-input id="email" type="email" class="mt-1 block w-full" wire:model.defer="addTeamMemberForm.email" disabled="{{ !Gate::check('addTeamMember', $team) }}" />
-                        <x-jet-input-error for="email" class="mt-2" />
+                        <x-jet-input-error for="email" class="mt-2">
+                        </x-jet-input-error>
+                        <p class="text-sm text-red-600 mt-2">
+                            @if(!Gate::check('addTeamMember', $team))
+                            {{ __('content.user_limit_reached_error', ['max_count' => $team->maxUserCount()]) }}
+                            @endif
+                        </p>
                     </div>
 
                     <!-- Role -->
@@ -66,7 +77,7 @@
                         {{ __('content.added') }}
                     </x-jet-action-message>
 
-                    <x-jet-button disabled="{{ !Gate::check('addTeamMember', $team) }}">
+                    <x-jet-button>
                         {{ __('content.add') }}
                     </x-jet-button>
                 </x-slot>
