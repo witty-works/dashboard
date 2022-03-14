@@ -120,7 +120,7 @@ return [
     'permanently_delete_team' => 'Dieses Team endgültig löschen.',
     'once_a_team_is_deleted' => 'Sobald ein Team gelöscht wird, werden alle seine Ressourcen und Daten dauerhaft gelöscht. Bevor Sie dieses Team löschen, laden Sie bitte alle Daten oder Informationen zu diesem Team herunter, die Sie behalten möchten.',
     'are_you_sure_want_to_delete_team' => 'Möchten Sie dieses Team wirklich löschen? Sobald ein Team gelöscht wird, werden alle seine Ressourcen und Daten dauerhaft gelöscht.',
-    'add_a_new_team_member' => 'Fügen Sie Ihrem Team ein neues Teammitglied hinzu, damit es mit Ihnen zusammenarbeiten kann.',
+    'add_a_new_team_member' => 'Fügen Sie Ihrem Team ein neues Teammitglied hinzu, damit es mit Ihnen zusammenarbeiten kann. Mit Ihrem aktuellen Plan können Sie bis zu :max_count Benutzer hinzufügen.',
     'please_provide_the_email_address' => 'Bitte geben Sie die E-Mail-Adresse der Person an, die Sie diesem Team hinzufügen möchten.',
     'these_people_have_been_invited' => 'Diese Personen wurden in Ihr Team eingeladen und haben eine Einladungs-E-Mail erhalten. Sie können dem Team beitreten, indem sie die E-Mail-Einladung annehmen.',
     'all_of_the_people' => 'Alle Leute, die Teil dieses Teams sind.',
@@ -186,4 +186,6 @@ Lesen Sie mehr über Dienstleistungen für [Organisationen](https://www.witty.wo
 * Sorgen Sie für eine optimierte Markenstimme in Ihrer gesamten Organisation.
 
 Lesen Sie mehr über den ROI für [Organisationen](https://www.witty.works/witty-for-companies "Witty for Organizations")',
+    'user_limit_reached' => 'Sie haben das Limit von :max_count der Benutzer erreicht, die zu Ihrem aktuellen Plan eingeladen werden können. Um einen neuen Benutzer hinzuzufügen, müssen Sie zuerst stornieren und einen Benutzer aus Ihrem Team einladen und/oder entfernen.',
+    'user_limit_reached_error' => 'Benutzerlimit von :max_count für den aktuellen Plan erreicht.',
 ];
