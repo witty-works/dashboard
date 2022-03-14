@@ -33,4 +33,5 @@ return [
     'disabled_categories_style' => 'Style',
     'disabled_categories_inclusive' => 'Inclusive',
     'disabled_categories_casing' => 'Capitalization',
+    'plan_only_allows_x_false_positives' => 'Unfortunately your current plan only allows up to :max_count store false positives.'
 ];
