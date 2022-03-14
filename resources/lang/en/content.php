@@ -120,7 +120,7 @@ return [
     'permanently_delete_team' => 'Permanently delete this team.',
     'once_a_team_is_deleted' => 'Once a team is deleted, all of its resources and data will be permanently deleted. Before deleting this team, please download any data or information regarding this team that you wish to retain.',
     'are_you_sure_want_to_delete_team' => 'Are you sure you want to delete this team? Once a team is deleted, all of its resources and data will be permanently deleted.',
-    'add_a_new_team_member' => 'Add a new team member to your team, allowing them to collaborate with you.',
+    'add_a_new_team_member' => 'Add a new team member to your team, allowing them to collaborate with you. Your current plan allows you to add up to :max_count users.',
     'please_provide_the_email_address' => 'Please provide the email address of the person you would like to add to this team.',
     'these_people_have_been_invited' => 'These people have been invited to your team and have been sent an invitation email. They may join the team by accepting the email invitation.',
     'all_of_the_people' => 'All of the people that are part of this team.',
