@@ -27,7 +27,7 @@ use Laravel\Jetstream\Jetstream;
 | SOCIALSTREAM
 |------------------
 */
-use JoelButcher\Socialstream\Http\Controllers\OAuthController;
+use App\Http\Controllers\OAuthController;
 /*
 |------------------
 | \SOCIALSTREAM
@@ -119,9 +119,7 @@ Route::group(
             Route::get('/profile', function (OAuthController $controller, Request $request, GeneratesProviderRedirect $generator) {
                 return $controller->redirectToProvider($request->getFacadeRoot(), 'azureadb2c', $generator);
             })->name('profile.show');
-            Route::get('/login', function (OAuthController $controller, Request $request, GeneratesProviderRedirect $generator) {
-                $controller->redirectToProvider($request->getFacadeRoot(), 'azureadb2c', $generator);
-            })->name('login');
+            Route::redirect('/login', '/')->name('login');
             Route::get('/logout', function (OAuthController $controller, Request $request, GeneratesProviderRedirect $generator) {
                 $controller->redirectToProvider($request->getFacadeRoot(), 'azureadb2c', $generator);
             })->name('logout');

@@ -116,7 +116,7 @@ return [
     'when_2fa_is_enabled' => 'When two factor authentication is enabled, you will be prompted for a secure, random token during authentication. You may retrieve this token from your phone\'s Google Authenticator application.',
     '2fa_is_now_enabled' => 'Two factor authentication is now enabled. Scan the following QR code using your phone\'s authenticator application.',
     'store_recovery_codes' => 'Store these recovery codes in a secure password manager. They can be used to recover access to your account if your  device is lost.',
-    'update_your_account_profile' => 'Update your account\'s profile information and email address.',
+    'update_your_account_profile' => 'Update your account\'s profile information you can go <a href=":profile_url"><strong>here</strong></a>.',
     'permanently_delete_team' => 'Permanently delete this team.',
     'once_a_team_is_deleted' => 'Once a team is deleted, all of its resources and data will be permanently deleted. Before deleting this team, please download any data or information regarding this team that you wish to retain.',
     'are_you_sure_want_to_delete_team' => 'Are you sure you want to delete this team? Once a team is deleted, all of its resources and data will be permanently deleted.',
