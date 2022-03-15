@@ -4,7 +4,7 @@
     </x-slot>
 
     <x-slot name="description">
-        {!! __('content.update_your_account_profile', ['profile_url' => route('oauth.redirect', ['provider' => 'azureadb2c'])]) !!}
+        {!! __('content.update_your_account_profile', ['profile_url' => route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'profile'])]) !!}
     </x-slot>
 
     <x-slot name="form">

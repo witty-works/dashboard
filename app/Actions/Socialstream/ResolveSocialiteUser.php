@@ -14,9 +14,9 @@ class ResolveSocialiteUser implements ResolvesSocialiteUsers
      * @param  string  $provider
      * @return \Laravel\Socialite\AbstractUser
      */
-    public function resolve($provider)
+    public function resolve($provider, $policy = 'login')
     {
-        $user = Socialite::driver($provider)->user();
+        $user = Socialite::driver($provider)->with(['policy' => $policy])->user();
 
         if ($provider === 'azureadb2c') {
             $user->nickname = $user->user['nickname'] = $user->user['name'] ?: '';

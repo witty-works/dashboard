@@ -83,6 +83,10 @@ Route::group(
             }
 
             Route::group(['middleware' => ['auth:' . config('fortify.guard'), 'verified']], function () {
+                // User & Profile...
+                Route::get('/user/profile', [UserProfileController::class, 'show'])
+                    ->name('profile.show');
+
                 // API...
                 if (Jetstream::hasApiFeatures()) {
                     Route::get('/user/api-tokens', [ApiTokenController::class, 'index'])->name('api-tokens.index');
@@ -116,18 +120,13 @@ Route::group(
         |------------------
         */
         Route::group(['middleware' => config('socialstream.middleware', ['web'])], function () {
-            Route::get('/profile', function (OAuthController $controller, Request $request, GeneratesProviderRedirect $generator) {
-                return $controller->redirectToProvider($request->getFacadeRoot(), 'azureadb2c', $generator);
-            })->name('profile.show');
-            Route::redirect('/login', '/')->name('login');
-            Route::get('/logout', function (OAuthController $controller, Request $request, GeneratesProviderRedirect $generator) {
-                $controller->redirectToProvider($request->getFacadeRoot(), 'azureadb2c', $generator);
-            })->name('logout');
+            Route::redirect('/login', '/register')->name('login');
             Route::get('/register', function (OAuthController $controller, Request $request, GeneratesProviderRedirect $generator) {
                 $controller->redirectToProvider($request->getFacadeRoot(), 'azureadb2c', $generator);
             })->name('register');
-            Route::get('/oauth/{provider}', [OAuthController::class, 'redirectToProvider'])->name('oauth.redirect');
-            Route::get('/oauth/{provider}/callback', [OAuthController::class, 'handleProviderCallback'])->name('oauth.callback');
+            Route::get('/logout/{provider}', [OAuthController::class, 'logout'])->name('logout');
+            Route::get('/oauth/{provider}/{policy}', [OAuthController::class, 'redirectToProvider'])->name('oauth.redirect');
+            Route::get('/oauth/{provider}/{policy}/callback', [OAuthController::class, 'handleProviderCallback'])->name('oauth.callback');
         });
         /*
         |------------------
