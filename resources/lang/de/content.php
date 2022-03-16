@@ -84,7 +84,6 @@ return [
     'manage_role' => 'Rolle verwalten',
     'leave_team' => 'Team verlassen',
     'remove_team_member' => 'Teammitglied entfernen',
-    'create_account' => 'Benutzerkonto anlegen',
     'accept_invitation' => 'Einladung annehmen',
     'api_tokens_allow_third_party_services' => 'API-Token ermöglichen es Drittanbietern, sich in Ihrem Namen bei unserer Anwendung zu authentifizieren.',
     'you_may_delete' => 'Sie können alle Ihre vorhandenen Token löschen, wenn sie nicht mehr benötigt werden.',
@@ -130,9 +129,6 @@ return [
     'for_your_security_confirm' => 'Bestätigen Sie zu Ihrer Sicherheit Ihr Passwort, um fortzufahren.',
     'whoops' => 'Hoppla! Etwas ist schief gelaufen.',
     'you_have_been_invited' => 'Sie wurden eingeladen, dem :team -Team beizutreten!',
-    'if_you_do_not_have_an_account' => 'Wenn Sie kein Konto haben, können Sie eines erstellen, indem Sie auf die Schaltfläche unten klicken. Nachdem Sie ein Konto erstellt haben, können Sie in dieser E-Mail auf die Schaltfläche zur Annahme der Einladung klicken, um die Teameinladung anzunehmen:',
-    'if_you_already_have_an_account' => 'Wenn Sie bereits ein Konto haben, können Sie diese Einladung annehmen, indem Sie auf die Schaltfläche unten klicken:',
-    'you_may_accept_this_invitiation' => 'Sie können diese Einladung annehmen, indem Sie auf die Schaltfläche unten klicken:',
     'if_you_did_not_expect' => 'Wenn Sie nicht erwartet haben, eine Einladung zu diesem Team zu erhalten, können Sie diese E-Mail verwerfen.',
     'woops' => 'hoppla',
     'documentation' => 'Dokumentation',
@@ -189,4 +185,5 @@ Lesen Sie mehr über den ROI für [Organisationen](https://www.witty.works/witty
     'user_limit_reached' => 'Sie haben das Limit von :max_count der Benutzer erreicht, die zu Ihrem aktuellen Plan eingeladen werden können. Um einen neuen Benutzer hinzuzufügen, müssen Sie zuerst stornieren und einen Benutzer aus Ihrem Team einladen und/oder entfernen.',
     'user_limit_reached_error' => 'Benutzerlimit von :max_count für den aktuellen Plan erreicht.',
     'onboarding_signup_to_witty' => 'Meldung für ein Witty-Konto',
+    'invitation_email_welcome' => 'Um diese Einladung anzunehmen, melden Sie sich mit Ihrem bestehenden Konto an oder registrieren Sie ein neues Konto, indem Sie auf die Schaltfläche unten klicken:',
 ];
