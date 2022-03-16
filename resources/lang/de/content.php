@@ -116,7 +116,7 @@ return [
     'when_2fa_is_enabled' => 'Wenn die Zwei-Faktor-Authentifizierung aktiviert ist, werden Sie während der Authentifizierung zur Eingabe eines sicheren, zufälligen Tokens aufgefordert. Sie können dieses Token über die Google Authenticator-Anwendung Ihres Telefons abrufen.',
     '2fa_is_now_enabled' => 'Die Zwei-Faktor-Authentifizierung ist jetzt aktiviert. Scannen Sie den folgenden QR-Code mit der Authentifizierungsanwendung Ihres Telefons.',
     'store_recovery_codes' => 'Speichern Sie diese Wiederherstellungscodes in einem sicheren Passwort-Manager. Sie können verwendet werden, um den Zugriff auf Ihr Konto wiederherzustellen, wenn Ihr Gerät verloren geht.',
-    'update_your_account_profile' => 'Aktualisieren Sie die Profilinformationen und die E-Mail-Adresse Ihres Kontos.',
+    'update_your_account_profile' => 'Aktualisieren Sie die Profilinformationen Ihres Kontos <a href=":profile_url"><strong>hier</strong></a> .',
     'permanently_delete_team' => 'Dieses Team endgültig löschen.',
     'once_a_team_is_deleted' => 'Sobald ein Team gelöscht wird, werden alle seine Ressourcen und Daten dauerhaft gelöscht. Bevor Sie dieses Team löschen, laden Sie bitte alle Daten oder Informationen zu diesem Team herunter, die Sie behalten möchten.',
     'are_you_sure_want_to_delete_team' => 'Möchten Sie dieses Team wirklich löschen? Sobald ein Team gelöscht wird, werden alle seine Ressourcen und Daten dauerhaft gelöscht.',
