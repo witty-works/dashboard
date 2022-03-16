@@ -23,8 +23,6 @@ class CreateNewUser implements CreatesNewUsers
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
         ])->validate();
 
-        $invitation = TeamInvitation::where('email', '=', $input['email'])->first();
-
         /** @var User $user */
         $user = User::create([
             'name' => $input['name'],

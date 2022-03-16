@@ -8,6 +8,7 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvi
 use App\Listeners\PosthogBillingEvent;
 use App\Listeners\PosthogReset;
 use App\Listeners\PostHogUpdateCompany;
+use JoelButcher\Socialstream\Events\ConnectedAccountCreated;
 use Laravel\Jetstream\Events\TeamCreated;
 use Laravel\Jetstream\Events\TeamUpdated;
 use Laravel\Jetstream\Events\TeamDeleted;
@@ -67,6 +68,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         \App\Events\OrganizationGuidelinesUpdated::class => [
             \App\Listeners\OrganizationGuidelinesUpdate::class,
+        ],
+        ConnectedAccountCreated::class => [
+            \App\Listeners\ConnectedAccountCreated::class,
         ],
     ];
 
