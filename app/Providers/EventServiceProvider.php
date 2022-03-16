@@ -65,6 +65,9 @@ class EventServiceProvider extends ServiceProvider
         \SocialiteProviders\Manager\SocialiteWasCalled::class => [
             'SocialiteProviders\\AzureADB2C\\AzureADB2CExtendSocialite@handle',
         ],
+        \App\Events\OrganizationGuidelinesUpdated::class => [
+            \App\Listeners\OrganizationGuidelinesUpdate::class,
+        ],
     ];
 
     /**

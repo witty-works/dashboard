@@ -27,10 +27,10 @@ class Form extends Component
 
     protected $rules = [
         'german_gender_ending' => 'nullable|string|in::in,*in,/in,_in,In,/-in',
-        'gendered_roles_format' => 'nullable|string|in:both,gender_inclusive,gender_binary',
+        'gendered_roles_format' => 'nullable|string|in:both,inclusive_gender,binary_gender',
         'store_context' => 'nullable|boolean',
-        'preferred_variants_de' => 'nullable|string|in:both,de_DE,de_AT,de_CH',
-        'preferred_variants_en' => 'nullable|string|in:both,en_US,en_GB',
+        'preferred_variants_de' => 'nullable|string|in:both,de-DE,de-AT,de-CH',
+        'preferred_variants_en' => 'nullable|string|in:both,en-US,en-GB',
         'singular_they' => 'nullable|boolean',
         'expert_mode' => 'nullable|boolean',
         'disabled_categories_orthography' => 'nullable|boolean',
@@ -113,7 +113,7 @@ class Form extends Component
             }
         }
 
-        $this->disabled_categories = array_unique($this->disabled_categories);
+        $this->disabled_categories = array_values(array_unique($this->disabled_categories));
         $organizationRule->disabled_categories = json_encode($this->disabled_categories);
 
         $organizationRule->save();
