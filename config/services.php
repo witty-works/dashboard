@@ -54,7 +54,11 @@ return [
         'client_id' => env('AADB2C_CLIENT_ID'),
         'client_secret' => env('AADB2C_CLIENT_SECRET'),
         'redirect' => '/oauth/azureadb2c/callback',
+        'redirect_template' => '/oauth/azureadb2c/{policy}/callback',
         'domain' => env('AADB2C_DOMAIN'),
-        'policy' => env('AADB2C_POLICY'),
+        'policy' => [
+            'login' => env('AADB2C_POLICY'),
+            'profile' => env('AADB2C_POLICY_PROFILE'),
+        ],
     ],
 ];

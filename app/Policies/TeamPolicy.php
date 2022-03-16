@@ -77,6 +77,23 @@ class TeamPolicy
      */
     public function addTeamMember(User $user, Team $team)
     {
+        $max_count = $team->maxUserCount();
+        if ($team->totalUserCount() >= $max_count) {
+            return false;
+        }
+
+        return $user->ownsTeam($team);
+    }
+
+    /**
+     * Determine whether the user can add team members.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Team  $team
+     * @return mixed
+     */
+    public function viewUserCreateForm(User $user, Team $team)
+    {
         return $user->ownsTeam($team);
     }
 

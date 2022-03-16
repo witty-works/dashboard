@@ -30,8 +30,8 @@ return [
     */
 
     'providers' => [
-        Providers::google(),
-        Providers::linkedin(),
+        #Providers::google(),
+        #Providers::linkedin(),
         'azureadb2c',
     ],
 

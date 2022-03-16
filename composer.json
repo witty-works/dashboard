@@ -20,7 +20,7 @@
         "platformsh/laravel-bridge": "^2.2",
         "posthog/posthog-php": "^2.1",
         "sentry/sentry-laravel": "^2.9",
-        "socialiteproviders/azureadb2c": "^4.0",
+        "socialiteproviders/azureadb2c": "dev-multiple-policies",
         "themsaid/laravel-langman": "dev-master"
     },
     "require-dev": {
@@ -77,6 +77,10 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@github.com:lsmith77/AzureADB2C.git"
+        },
         {
             "type": "vcs",
             "url": "git@github.com:witty-works/laravel-langman.git"

@@ -66,4 +66,19 @@ class Team extends JetstreamTeam
     {
         return PostHogMiddleware::POSTHOG_ID_PREFIX . $this->id;
     }
+
+    public function maxUserCount()
+    {
+        return 3;
+    }
+
+    public function maxFalsePositiveCount()
+    {
+        return 5;
+    }
+
+    public function totalUserCount()
+    {
+        return $this->teamInvitations()->count() + $this->users()->count();
+    }
 }

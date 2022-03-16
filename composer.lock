@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ffd3efaeda556332fedb00e10bf50d5b",
+    "content-hash": "ecb05b51d2f4007889345bc00e6bc77e",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -6179,16 +6179,16 @@
         },
         {
             "name": "socialiteproviders/azureadb2c",
-            "version": "4.0.0",
+            "version": "dev-multiple-policies",
             "source": {
                 "type": "git",
-                "url": "https://github.com/SocialiteProviders/AzureADB2C.git",
-                "reference": "c3bd42a64d38bbd419abd7faa48c0c9d666a4bb2"
+                "url": "https://github.com/lsmith77/AzureADB2C.git",
+                "reference": "3ea044033d841a05354d3d1a9c23bee6f7590903"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SocialiteProviders/AzureADB2C/zipball/c3bd42a64d38bbd419abd7faa48c0c9d666a4bb2",
-                "reference": "c3bd42a64d38bbd419abd7faa48c0c9d666a4bb2",
+                "url": "https://api.github.com/repos/lsmith77/AzureADB2C/zipball/3ea044033d841a05354d3d1a9c23bee6f7590903",
+                "reference": "3ea044033d841a05354d3d1a9c23bee6f7590903",
                 "shasum": ""
             },
             "require": {
@@ -6204,7 +6204,6 @@
                     "SocialiteProviders\\AzureADB2C\\": ""
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -6218,9 +6217,9 @@
             "keywords": [
                 "Azure AD",
                 "Azure AD B2C",
+                "Azure Active Directory",
                 "Azure Active Directory B2C",
                 "OpenID Connect",
-                "azure active directory",
                 "laravel",
                 "laravel Azure AD B2C",
                 "laravel socialite",
@@ -6228,9 +6227,9 @@
                 "socialite Azure AD B2C"
             ],
             "support": {
-                "source": "https://github.com/SocialiteProviders/AzureADB2C/tree/4.0.0"
+                "source": "https://github.com/lsmith77/AzureADB2C/tree/multiple-policies"
             },
-            "time": "2021-10-12T09:04:44+00:00"
+            "time": "2022-03-16T07:57:21+00:00"
         },
         {
             "name": "socialiteproviders/manager",
@@ -12248,6 +12247,7 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "kineticamobile/lumki": 20,
+        "socialiteproviders/azureadb2c": 20,
         "themsaid/laravel-langman": 20,
         "tio/laravel": 20
     },

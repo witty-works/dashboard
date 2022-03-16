@@ -5,6 +5,7 @@ namespace App\Http\Livewire\FalsePositive;
 use App\Models\FalsePositive;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 
 class Form extends Component
@@ -48,6 +49,19 @@ class Form extends Component
 
         if (!Auth::user()->hasTeamPermission($this->team, 'edit_guidelines')) {
             abort(403);
+        }
+
+        $count = FalsePositive::query()
+            ->where('team_id', $this->team->id)
+            ->count();
+
+        $max_count = $this->team->maxFalsePositiveCount();
+        if ($count >= $max_count) {
+            $message = __(
+                'guidelines.plan_only_allows_x_false_positives',
+                ['max_count' => $max_count]
+            );
+            throw ValidationException::withMessages(['false_positive' => $message]);
         }
 
         $falsePositive = new FalsePositive();
