@@ -47,7 +47,7 @@ return [
 
     'brand' =>  [
         'logo' => realpath(__DIR__ . '/../public/svg/witty-logo-color.svg'),
-        'color' => 'bg-gray-800',
+        'color' => '#F06464',
     ],
 
     /*
