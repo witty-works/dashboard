@@ -34,7 +34,7 @@
                             @endcan
                         @endif
                     @else
-                        <x-jet-nav-link href="{{ route('oauth.redirect', ['provider' => 'azureadb2c']) }}">
+                        <x-jet-nav-link href="{{ route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'login']) }}">
                             {{ __('content.log_in') }} / {{ __('content.register') }}
                         </x-jet-nav-link>
                     @endauth
@@ -150,14 +150,9 @@
                             <div class="border-t border-gray-100"></div>
 
                             <!-- Authentication -->
-                            <form method="POST" action="{{ route('logout') }}" x-data>
-                                @csrf
-
-                                <x-jet-dropdown-link href="{{ route('logout') }}"
-                                    @click.prevent="$root.submit();">
-                                    {{ __('content.log_out') }}
-                                </x-jet-dropdown-link>
-                            </form>
+                            <x-jet-nav-link href="{{ route('logout', ['provider' => 'azureadb2c']) }}">
+                                {{ __('content.log_out') }}
+                            </x-jet-nav-link>
                         </x-slot>
                     </x-jet-dropdown>
                 </div>
@@ -188,7 +183,7 @@
                 {{ __('content.dashboard') }}
             </x-jet-responsive-nav-link>
             @else
-            <x-jet-responsive-nav-link href="{{ route('oauth.redirect', ['provider' => 'azureadb2c']) }}">
+            <x-jet-responsive-nav-link href="{{ route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'login']) }}">
                 {{ __('content.log_in') }} / {{ __('content.register') }}
             </x-jet-responsive-nav-link>
             @endauth
@@ -225,13 +220,9 @@
                 @endif
 
                 <!-- Authentication -->
-                <form method="POST" action="{{ route('logout') }}" x-data>
-                    @csrf
-
-                    <x-jet-responsive-nav-link href="{{ route('logout') }}" @click.prevent="$root.submit();">
-                        {{ __('content.log_out') }}
-                    </x-jet-responsive-nav-link>
-                </form>
+                <x-jet-responsive-nav-link href="{{ route('logout', ['provider' => 'azureadb2c']) }}" @click.prevent="$root.submit();">
+                    {{ __('content.log_out') }}
+                </x-jet-responsive-nav-link>
 
                 <!-- Team Management -->
                 @if (Laravel\Jetstream\Jetstream::hasTeamFeatures() && Auth::user()->currentTeam)
