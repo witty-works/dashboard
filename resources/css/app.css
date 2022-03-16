@@ -1,35 +1,37 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@100;400;700&display=swap");
 
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
-@layer base {
-  p {
+p {
     @apply text-black;
     @apply mb-3;
-  }
+}
 
-  ol,
-  ul {
+ol,
+ul {
     margin: 1em;
     padding: 0;
-  }
+}
 
-  ol {
+ol {
     list-style: auto;
-  }
+}
 
-  ul {
+ul {
     list-style: disc;
-  }
+}
 
-  li {
+li {
     margin-bottom: 6px;
-  }
+}
 
-  a {
+a {
     @apply text-blue;
     @apply font-semibold;
-  }
+}
+
+#ww-main-nav-logo {
+    margin-top: 4px;
 }
