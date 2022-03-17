@@ -164,7 +164,7 @@ Read more about [Witty](https://www.witty.works/ "Inclusive writing, anywhere, i
 * Read and interpret analytics at team, department and company level in accordance with data privacy laws.
 * Coming soon: Editor - a simple application that works for everyone, even those that do not use the browser plugin (yet)        
 
-Start by creating your own [login](en/login "Login")
+Start by creating your own [login](en/oauth/azureadb2c/login "Login")
 ',
     'section_3_title' => 'Witty for Teams and Organizations',
     'section_3_text' => 'For Organizations Witty offers an array of services so that whole teams can work with Witty flawlessly, such as:
@@ -185,5 +185,5 @@ Read more about services for [organizations](https://www.witty.works/witty-for-c
 Read more about ROI for [organizations](https://www.witty.works/witty-for-companies "Witty for Organizations")',
     'user_limit_reached' => 'You have reached the limit of :max_count of the users that can be invited on your current plan. To add a new user you first must cancel and invitation and/or remove a user from your team.',
     'user_limit_reached_error' => 'User limit of :max_count on the current plan reached.',
-    'onboarding_signup_to_witty' => 'Sign up for a Witty account'
+    'onboarding_signup_to_witty' => 'Sign up for a Witty account',
 ];

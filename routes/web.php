@@ -120,10 +120,8 @@ Route::group(
         |------------------
         */
         Route::group(['middleware' => config('socialstream.middleware', ['web'])], function () {
-            Route::redirect('/login', '/register')->name('login');
-            Route::get('/register', function (OAuthController $controller, Request $request, GeneratesProviderRedirect $generator) {
-                $controller->redirectToProvider($request->getFacadeRoot(), 'azureadb2c', $generator);
-            })->name('register');
+            Route::redirect('/login', '/')->name('login');
+            Route::redirect('/register', '/')->name('register');
             Route::get('/logout/{provider}', [OAuthController::class, 'logout'])->name('logout');
             Route::get('/oauth/{provider}/{policy}', [OAuthController::class, 'redirectToProvider'])->name('oauth.redirect');
             Route::get('/oauth/{provider}/{policy}/callback', [OAuthController::class, 'handleProviderCallback'])->name('oauth.callback');

@@ -156,15 +156,7 @@ Mit Witty werden Sie täglich Teil des Wandels hin zu mehr Vielfalt und Inklusio
 
 Lesen Sie mehr über [Witty](https://www.witty.works/ "Inklusives Schreiben, überall, in Echtzeit")',
     'section_2_title' => 'Was macht das Witty Dashboard?',
-    'section_2_text' => 'Das Witty-Dashboard hilft Ihnen, Witty für Ihr Team einzurichten und zu verwalten. Nach der Anmeldung verwalten Sie Folgendes:
-
-* Laden Sie Ihre Teammitglieder ein
-* Richten Sie Ihre eigenen Sprachrichtlinien ein. So stellen Sie sicher, dass Ihr gesamtes Team mit derselben Markenstimme schreibt.
-* Lesen und interpretieren Sie Analysen auf Team-, Abteilungs- und Unternehmensebene in Übereinstimmung mit den Datenschutzgesetzen.
-* In Kürze: Editor - eine einfache Anwendung, die für alle funktioniert, auch für diejenigen, die das Browser-Plugin (noch) nicht verwenden
-
-Erstellen Sie zunächst Ihr eigenes [login](de/login "Login")
-',
+    'section_2_text' => 'Das Witty-Dashboard hilft Ihnen, Witty für Ihr Team einzurichten und zu verwalten. Einmal eingeloggt, verwalten Sie Folgendes: * Laden Sie Ihre Teammitglieder ein * Richten Sie Ihre ganz eigenen Sprachrichtlinien ein. So stellen Sie sicher, dass Ihr gesamtes Team mit der gleichen Markenstimme schreibt. * Lesen und interpretieren Sie Analysen auf Team-, Abteilungs- und Unternehmensebene in Übereinstimmung mit den Datenschutzgesetzen. * Demnächst verfügbar: Editor – eine einfache Anwendung, die für alle funktioniert, auch für diejenigen, die das Browser-Plug-in (noch) nicht verwenden Beginnen Sie mit der Erstellung Ihres eigenen [Login](de/oauth/azureadb2c/login „Login“)',
     'section_3_title' => 'Witty für Teams und Organisationen',
     'section_3_text' => 'Für Organisationen bietet Witty eine Reihe von Dienstleistungen an, damit ganze Teams reibungslos mit Witty arbeiten können, wie zum Beispiel:
 * Einmalige Anmeldung
