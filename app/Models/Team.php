@@ -84,6 +84,6 @@ class Team extends JetstreamTeam
 
     public function totalUserCount()
     {
-        return $this->teamInvitations()->count() + $this->users()->count();
+        return $this->teamInvitations()->count() + $this->allUsers()->count();
     }
 }

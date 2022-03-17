@@ -148,6 +148,10 @@ return [
     'onboarding_create_team' => 'Create your team',
     'onboarding_configure_organization_guidelines' => 'Configure the language organization guidelines',
     'onboarding_invite_users' => 'Invite users to your team',
+    'onboarding_install_witty' => 'Install the Witty browser extension',
+    'open_invitiations' => '{1} You have been invited to join a team, please decide if you want to accept or reject the invitiation.|{2,*} You have been invited to join several teams, please decide if you want to accept one of these invitiations. Note you can only accept one initiation.',
+    'accept_invitiation' => 'accept',
+    'reject_invitiation' => 'reject',
     'section_1_title' => 'What is Witty',
     'section_1_text' => 'Witty is an inclusive writing assistant made for individuals and organizations, bringing you the joy of inclusive writing simple, real-time and fast. It is a Software-as-a-Service that detects unconscious stereotypes in communication. And then guides the writer how to formulate the same content in an inclusive manner. 
 
@@ -161,11 +165,10 @@ Read more about [Witty](https://www.witty.works/ "Inclusive writing, anywhere, i
 
 * Invite your team members
 * Set up your very own language guidelines based. That way you ensure that your whole team writes with the same brand voice.
-* Read and interpret analytics at team, department and company level in accordance with data privacy laws.
+* Coming soon: Read and interpret analytics at team, department and company level in accordance with data privacy laws.
 * Coming soon: Editor - a simple application that works for everyone, even those that do not use the browser plugin (yet)        
-
-Start by creating your own [login](en/oauth/azureadb2c/login "Login")
 ',
+    'login_cta' => 'Start by creating your own <a href=":url">login</a>',
     'section_3_title' => 'Witty for Teams and Organizations',
     'section_3_text' => 'For Organizations Witty offers an array of services so that whole teams can work with Witty flawlessly, such as:
 * Single-Sign-On

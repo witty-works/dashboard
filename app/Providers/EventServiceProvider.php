@@ -69,9 +69,6 @@ class EventServiceProvider extends ServiceProvider
         \App\Events\OrganizationGuidelinesUpdated::class => [
             \App\Listeners\OrganizationGuidelinesUpdate::class,
         ],
-        ConnectedAccountCreated::class => [
-            \App\Listeners\ConnectedAccountCreated::class,
-        ],
     ];
 
     /**

@@ -2,14 +2,14 @@
 
 use App\Http\Controllers\Livewire\GuidelinesController;
 use Illuminate\Support\Facades\Route;
-use JoelButcher\Socialstream\Contracts\GeneratesProviderRedirect;
+
 /*
 |------------------
 | JETSTREAM LIVEWIRE
 |------------------
 */
 use Laravel\Jetstream\Http\Controllers\CurrentTeamController;
-use Laravel\Jetstream\Http\Controllers\TeamInvitationController;
+use App\Http\Controllers\TeamInvitationController;
 use Laravel\Jetstream\Http\Controllers\Livewire\ApiTokenController;
 use Laravel\Jetstream\Http\Controllers\Livewire\PrivacyPolicyController;
 use Laravel\Jetstream\Http\Controllers\Livewire\TeamController;
@@ -99,8 +99,11 @@ Route::group(
                     Route::put('/current-team', [CurrentTeamController::class, 'update'])->name('current-team.update');
 
                     Route::get('/team-invitations/{invitation}', [TeamInvitationController::class, 'accept'])
-                        ->middleware(['signed'])
+                        ->middleware(['auth'])
                         ->name('team-invitations.accept');
+                    Route::get('/team-invitations/{invitation}/reject', [TeamInvitationController::class, 'destroy'])
+                        ->middleware(['auth'])
+                        ->name('team-invitations.reject');
 
                     Route::get('/teams/{team}/false-positive', [GuidelinesController::class, 'editFalsePositives'])->name('false-positive');
 

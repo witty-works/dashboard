@@ -86,6 +86,16 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
+     * Get the open invitiations
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function invitations()
+    {
+        return $this->hasMany(Jetstream::teamInvitationModel(), 'email', 'email');
+    }
+
+    /**
      * Get the current team of the user's context.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

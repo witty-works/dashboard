@@ -8,17 +8,58 @@
     </div>
 
     @auth
-    @can('update', Auth::user()->currentTeam)
+    @php
+        $user = Auth::user();  
+        $currentTeam = $user->currentTeam;  
+    @endphp
+    @if($user->invitations->count())
+        {{ trans_choice('content.open_invitiations', $user->invitations->count()) }}
+        <ul>
+        @foreach($user->invitations as $invitation)
+            <li>
+                {{ $invitation->team->name }}
+                <a href="{{ route('team-invitations.accept', ['invitation' => $invitation]) }}">
+                    {{ __('content.accept_invitiation') }}
+                </a>
+                <a href="{{ route('team-invitations.reject', ['invitation' => $invitation]) }}">
+                    {{ __('content.reject_invitiation') }}
+                </a>
+            </li>
+        @endforeach
+        <ul>
+    @elseif(!$currentTeam || $user->can('update', $currentTeam) || $user->hasTeamRole($currentTeam, 'admin'))
     <div class="mt-6">
-            <h2>{{ __('content.onboarding_next_steps') }}</h2>
-            <ol>
-                <li>{{ __('content.onboarding_signup_to_witty') }} ✔️</li>   
-                <li>{{ __('content.onboarding_create_team') }} @if (Auth::user()->currentTeam)✔️@endif</li>
-                <li>{{ __('content.onboarding_configure_organization_guidelines') }} @if (Auth::user()->currentTeam->organizationGuidelines)✔️@endif</li>
-                <li>{{ __('content.onboarding_invite_users') }} @if (Auth::user()->currentTeam && Auth::user()->currentTeam->totalUserCount())✔️@endif</li>
-            </ol>
+        <h2>{{ __('content.onboarding_next_steps') }}</h2>
+        <ol>
+            <li>{{ __('content.onboarding_signup_to_witty') }} ✔️</li>  
+            @if ($currentTeam)
+            <li>{{ __('content.onboarding_create_team') }} ✔️</li>
+            @else
+            <li><a href="{{ route('teams.create') }}">{{ __('content.onboarding_create_team') }}</a></li>
+            @endif 
+            @if (!$currentTeam)
+            <li>{{ __('content.onboarding_configure_organization_guidelines') }}</li>
+            @elseif ($currentTeam && $currentTeam->organizationGuidelines)
+            <li>{{ __('content.onboarding_configure_organization_guidelines') }} ✔️</li>
+            @else
+            <li><a href="{{ route('organization-guidelines', $currentTeam->id) }}">{{ __('content.onboarding_configure_organization_guidelines') }}</a></li>
+            @endif 
+            @if (!$currentTeam)
+            <li>{{ __('content.onboarding_invite_users') }}</li>
+            @elseif ($currentTeam && $currentTeam->totalUserCount() > 1)
+            <li>{{ __('content.onboarding_invite_users') }} ✔️</li>
+            @else
+            <li><a href="{{ route('teams.show', $currentTeam->id) }}">{{ __('content.onboarding_invite_users') }}</a></li>
+            @endif 
+        </ol>
+
+        @if (false)
+        {{ __('content.onboarding_install_witty') }} ✔️</li>
+        @else
+        <a href="https://www.witty.works/select-browser">{{ __('content.onboarding_install_witty') }}</a>
+        @endif 
     </div>
-    @endcan
+    @endif
     @endauth
 </div>
 
@@ -49,6 +90,10 @@
         <div class="ml-12">
             <div class="mt-2 text-sm">
                 {!! Str::markdown(__('content.section_2_text')) !!}
+
+                @guest
+                {!! __('content.login_cta', ['url' => route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'login'])]) !!}
+                @endguest
             </div>
         </div>
     </div>
