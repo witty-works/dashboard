@@ -2,14 +2,14 @@
 
 use App\Http\Controllers\Livewire\GuidelinesController;
 use Illuminate\Support\Facades\Route;
-use JoelButcher\Socialstream\Contracts\GeneratesProviderRedirect;
+
 /*
 |------------------
 | JETSTREAM LIVEWIRE
 |------------------
 */
 use Laravel\Jetstream\Http\Controllers\CurrentTeamController;
-use Laravel\Jetstream\Http\Controllers\TeamInvitationController;
+use App\Http\Controllers\TeamInvitationController;
 use Laravel\Jetstream\Http\Controllers\Livewire\ApiTokenController;
 use Laravel\Jetstream\Http\Controllers\Livewire\PrivacyPolicyController;
 use Laravel\Jetstream\Http\Controllers\Livewire\TeamController;
@@ -99,8 +99,11 @@ Route::group(
                     Route::put('/current-team', [CurrentTeamController::class, 'update'])->name('current-team.update');
 
                     Route::get('/team-invitations/{invitation}', [TeamInvitationController::class, 'accept'])
-                        ->middleware(['signed'])
+                        ->middleware(['auth'])
                         ->name('team-invitations.accept');
+                    Route::get('/team-invitations/{invitation}/reject', [TeamInvitationController::class, 'destroy'])
+                        ->middleware(['auth'])
+                        ->name('team-invitations.reject');
 
                     Route::get('/teams/{team}/false-positive', [GuidelinesController::class, 'editFalsePositives'])->name('false-positive');
 
@@ -120,10 +123,8 @@ Route::group(
         |------------------
         */
         Route::group(['middleware' => config('socialstream.middleware', ['web'])], function () {
-            Route::redirect('/login', '/register')->name('login');
-            Route::get('/register', function (OAuthController $controller, Request $request, GeneratesProviderRedirect $generator) {
-                $controller->redirectToProvider($request->getFacadeRoot(), 'azureadb2c', $generator);
-            })->name('register');
+            Route::redirect('/login', '/')->name('login');
+            Route::redirect('/register', '/')->name('register');
             Route::get('/logout/{provider}', [OAuthController::class, 'logout'])->name('logout');
             Route::get('/oauth/{provider}/{policy}', [OAuthController::class, 'redirectToProvider'])->name('oauth.redirect');
             Route::get('/oauth/{provider}/{policy}/callback', [OAuthController::class, 'handleProviderCallback'])->name('oauth.callback');

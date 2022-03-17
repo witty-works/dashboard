@@ -23,29 +23,11 @@ class CreateNewUser implements CreatesNewUsers
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
         ])->validate();
 
-        $invitation = TeamInvitation::where('email', '=', $input['email'])->first();
-
         /** @var User $user */
-        $user = User::create([
+        return User::create([
             'name' => $input['name'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
         ]);
-
-        $invitation = TeamInvitation::where('email', '=', $input['email'])->first();
-        if ($invitation) {
-            app(AddsTeamMembers::class)->add(
-                $invitation->team->owner,
-                $invitation->team,
-                $invitation->email,
-                $invitation->role
-            );
-
-            $user->switchTeam($invitation->team);
-
-            $invitation->delete();
-        }
-
-        return $user;
     }
 }

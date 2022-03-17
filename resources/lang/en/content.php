@@ -84,7 +84,6 @@ return [
     'manage_role' => 'Manage Role',
     'leave_team' => 'Leave Team',
     'remove_team_member' => 'Remove Team Member',
-    'create_account' => 'Create Account',
     'accept_invitation' => 'Accept Invitation',
     'api_tokens_allow_third_party_services' => 'API tokens allow third-party services to authenticate with our application on your behalf.',
     'you_may_delete' => 'You may delete any of your existing tokens if they are no longer needed.',
@@ -130,9 +129,7 @@ return [
     'for_your_security_confirm' => 'For your security, please confirm your password to continue.',
     'whoops' => 'Whoops! Something went wrong.',
     'you_have_been_invited' => 'You have been invited to join the :team team!',
-    'if_you_do_not_have_an_account' => 'If you do not have an account, you may create one by clicking the button below. After creating an account, you may click the invitation acceptance button in this email to accept the team invitation:',
-    'if_you_already_have_an_account' => 'If you already have an account, you may accept this invitation by clicking the button below:',
-    'you_may_accept_this_invitiation' => 'You may accept this invitation by clicking the button below:',
+    'invitation_email_welcome' => 'To accept this invitation, login with your exiting account or register a new account by clicking on the button below:',
     'if_you_did_not_expect' => 'If you did not expect to receive an invitation to this team, you may discard this email.',
     'woops' => 'woops',
     'documentation' => 'Documentation',
@@ -151,6 +148,10 @@ return [
     'onboarding_create_team' => 'Create your team',
     'onboarding_configure_organization_guidelines' => 'Configure the language organization guidelines',
     'onboarding_invite_users' => 'Invite users to your team',
+    'onboarding_install_witty' => 'Install the Witty browser extension',
+    'open_invitiations' => '{1} You have been invited to join a team, please decide if you want to accept or reject the invitiation.|{2,*} You have been invited to join several teams, please decide if you want to accept one of these invitiations. Note you can only accept one initiation.',
+    'accept_invitiation' => 'accept',
+    'reject_invitiation' => 'reject',
     'section_1_title' => 'What is Witty',
     'section_1_text' => 'Witty is an inclusive writing assistant made for individuals and organizations, bringing you the joy of inclusive writing simple, real-time and fast. It is a Software-as-a-Service that detects unconscious stereotypes in communication. And then guides the writer how to formulate the same content in an inclusive manner. 
 
@@ -164,11 +165,10 @@ Read more about [Witty](https://www.witty.works/ "Inclusive writing, anywhere, i
 
 * Invite your team members
 * Set up your very own language guidelines based. That way you ensure that your whole team writes with the same brand voice.
-* Read and interpret analytics at team, department and company level in accordance with data privacy laws.
+* Coming soon: Read and interpret analytics at team, department and company level in accordance with data privacy laws.
 * Coming soon: Editor - a simple application that works for everyone, even those that do not use the browser plugin (yet)        
-
-Start by creating your own [login](en/login "Login")
 ',
+    'login_cta' => 'Start by creating your own <a href=":url">login</a>',
     'section_3_title' => 'Witty for Teams and Organizations',
     'section_3_text' => 'For Organizations Witty offers an array of services so that whole teams can work with Witty flawlessly, such as:
 * Single-Sign-On
@@ -188,5 +188,6 @@ Read more about services for [organizations](https://www.witty.works/witty-for-c
 Read more about ROI for [organizations](https://www.witty.works/witty-for-companies "Witty for Organizations")',
     'user_limit_reached' => 'You have reached the limit of :max_count of the users that can be invited on your current plan. To add a new user you first must cancel and invitation and/or remove a user from your team.',
     'user_limit_reached_error' => 'User limit of :max_count on the current plan reached.',
-    'onboarding_signup_to_witty' => 'Sign up for a Witty account'
+    'onboarding_signup_to_witty' => 'Sign up for a Witty account',
+    'team' => 'Team',
 ];

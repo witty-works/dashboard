@@ -14,9 +14,7 @@ return [
     'list_false_postives_description' => 'Alle Wörter oder Sätze in dieser Liste werden nicht hervorgehoben.',
     'gendered_roles_format' => 'geschlechtsspezifisches Format',
     'store_context' => 'Kontext speichern',
-    'gender_inclusive' => 'Geschlecht inklusive',
     'both' => 'beide',
-    'gender_binary' => 'Geschlecht binär',
     'expert_mode' => 'Expertenmodus',
     'singular_they' => 'Singular they',
     'preferred_variants' => 'Bevorzugte Varianten',
@@ -34,4 +32,6 @@ return [
     'disabled_categories_inclusive' => 'Inklusiv',
     'disabled_categories_casing' => 'Groß- und Kleinschreibung',
     'plan_only_allows_x_false_positives' => 'Leider erlaubt Ihr aktuelles Abonnement nur bis zu :max_count falsch positive Ergebnisse zu speichern.',
+    'inclusive_gender' => 'Geschlecht inklusive',
+    'binary_gender' => 'Geschlecht binär',
 ];

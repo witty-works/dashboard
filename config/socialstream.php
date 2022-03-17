@@ -1,7 +1,6 @@
 <?php
 
 use JoelButcher\Socialstream\Features;
-use JoelButcher\Socialstream\Providers;
 
 return [
 
@@ -30,8 +29,6 @@ return [
     */
 
     'providers' => [
-        #Providers::google(),
-        #Providers::linkedin(),
         'azureadb2c',
     ],
 
@@ -48,7 +45,7 @@ return [
 
     'features' => [
         Features::createAccountOnFirstLogin(),
-        // Features::generateMissingEmails(),
+        Features::loginOnRegistration(),
         Features::rememberSession(),
         Features::providerAvatars(),
     ],

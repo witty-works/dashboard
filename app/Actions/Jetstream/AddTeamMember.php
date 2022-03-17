@@ -2,7 +2,6 @@
 
 namespace App\Actions\Jetstream;
 
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Jetstream\Contracts\AddsTeamMembers;
 use Laravel\Jetstream\Events\AddingTeamMember;
@@ -25,8 +24,6 @@ class AddTeamMember implements AddsTeamMembers
      */
     public function add($user, $team, string $email, string $role = null)
     {
-        Gate::forUser($user)->authorize('addTeamMember', $team);
-
         $this->validate($team, $email, $role);
 
         $newTeamMember = Jetstream::findUserByEmailOrFail($email);

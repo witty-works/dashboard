@@ -62,6 +62,11 @@ class Team extends JetstreamTeam
         return $this->hasOne(OrganizationGuidelines::class, 'team_id');
     }
 
+    public function falsePositives()
+    {
+        return $this->hasMany(FalsePositive::class, 'team_id');
+    }
+
     public function posthogId()
     {
         return PostHogMiddleware::POSTHOG_ID_PREFIX . $this->id;
@@ -79,6 +84,6 @@ class Team extends JetstreamTeam
 
     public function totalUserCount()
     {
-        return $this->teamInvitations()->count() + $this->users()->count();
+        return $this->teamInvitations()->count() + $this->allUsers()->count();
     }
 }

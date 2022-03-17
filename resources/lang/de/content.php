@@ -84,7 +84,6 @@ return [
     'manage_role' => 'Rolle verwalten',
     'leave_team' => 'Team verlassen',
     'remove_team_member' => 'Teammitglied entfernen',
-    'create_account' => 'Benutzerkonto anlegen',
     'accept_invitation' => 'Einladung annehmen',
     'api_tokens_allow_third_party_services' => 'API-Token ermöglichen es Drittanbietern, sich in Ihrem Namen bei unserer Anwendung zu authentifizieren.',
     'you_may_delete' => 'Sie können alle Ihre vorhandenen Token löschen, wenn sie nicht mehr benötigt werden.',
@@ -116,7 +115,7 @@ return [
     'when_2fa_is_enabled' => 'Wenn die Zwei-Faktor-Authentifizierung aktiviert ist, werden Sie während der Authentifizierung zur Eingabe eines sicheren, zufälligen Tokens aufgefordert. Sie können dieses Token über die Google Authenticator-Anwendung Ihres Telefons abrufen.',
     '2fa_is_now_enabled' => 'Die Zwei-Faktor-Authentifizierung ist jetzt aktiviert. Scannen Sie den folgenden QR-Code mit der Authentifizierungsanwendung Ihres Telefons.',
     'store_recovery_codes' => 'Speichern Sie diese Wiederherstellungscodes in einem sicheren Passwort-Manager. Sie können verwendet werden, um den Zugriff auf Ihr Konto wiederherzustellen, wenn Ihr Gerät verloren geht.',
-    'update_your_account_profile' => 'Aktualisieren Sie die Profilinformationen und die E-Mail-Adresse Ihres Kontos.',
+    'update_your_account_profile' => 'Aktualisieren Sie die Profilinformationen Ihres Kontos <a href=":profile_url"><strong>hier</strong></a> .',
     'permanently_delete_team' => 'Dieses Team endgültig löschen.',
     'once_a_team_is_deleted' => 'Sobald ein Team gelöscht wird, werden alle seine Ressourcen und Daten dauerhaft gelöscht. Bevor Sie dieses Team löschen, laden Sie bitte alle Daten oder Informationen zu diesem Team herunter, die Sie behalten möchten.',
     'are_you_sure_want_to_delete_team' => 'Möchten Sie dieses Team wirklich löschen? Sobald ein Team gelöscht wird, werden alle seine Ressourcen und Daten dauerhaft gelöscht.',
@@ -130,9 +129,6 @@ return [
     'for_your_security_confirm' => 'Bestätigen Sie zu Ihrer Sicherheit Ihr Passwort, um fortzufahren.',
     'whoops' => 'Hoppla! Etwas ist schief gelaufen.',
     'you_have_been_invited' => 'Sie wurden eingeladen, dem :team -Team beizutreten!',
-    'if_you_do_not_have_an_account' => 'Wenn Sie kein Konto haben, können Sie eines erstellen, indem Sie auf die Schaltfläche unten klicken. Nachdem Sie ein Konto erstellt haben, können Sie in dieser E-Mail auf die Schaltfläche zur Annahme der Einladung klicken, um die Teameinladung anzunehmen:',
-    'if_you_already_have_an_account' => 'Wenn Sie bereits ein Konto haben, können Sie diese Einladung annehmen, indem Sie auf die Schaltfläche unten klicken:',
-    'you_may_accept_this_invitiation' => 'Sie können diese Einladung annehmen, indem Sie auf die Schaltfläche unten klicken:',
     'if_you_did_not_expect' => 'Wenn Sie nicht erwartet haben, eine Einladung zu diesem Team zu erhalten, können Sie diese E-Mail verwerfen.',
     'woops' => 'hoppla',
     'documentation' => 'Dokumentation',
@@ -160,15 +156,7 @@ Mit Witty werden Sie täglich Teil des Wandels hin zu mehr Vielfalt und Inklusio
 
 Lesen Sie mehr über [Witty](https://www.witty.works/ "Inklusives Schreiben, überall, in Echtzeit")',
     'section_2_title' => 'Was macht das Witty Dashboard?',
-    'section_2_text' => 'Das Witty-Dashboard hilft Ihnen, Witty für Ihr Team einzurichten und zu verwalten. Nach der Anmeldung verwalten Sie Folgendes:
-
-* Laden Sie Ihre Teammitglieder ein
-* Richten Sie Ihre eigenen Sprachrichtlinien ein. So stellen Sie sicher, dass Ihr gesamtes Team mit derselben Markenstimme schreibt.
-* Lesen und interpretieren Sie Analysen auf Team-, Abteilungs- und Unternehmensebene in Übereinstimmung mit den Datenschutzgesetzen.
-* In Kürze: Editor - eine einfache Anwendung, die für alle funktioniert, auch für diejenigen, die das Browser-Plugin (noch) nicht verwenden
-
-Erstellen Sie zunächst Ihr eigenes [login](de/login "Login")
-',
+    'section_2_text' => 'Das Witty-Dashboard hilft Ihnen, Witty für Ihr Team einzurichten und zu verwalten. Einmal eingeloggt, verwalten Sie Folgendes: * Laden Sie Ihre Teammitglieder ein * Richten Sie Ihre ganz eigenen Sprachrichtlinien ein. So stellen Sie sicher, dass Ihr gesamtes Team mit der gleichen Markenstimme schreibt. * Lesen und interpretieren Sie Analysen auf Team-, Abteilungs- und Unternehmensebene in Übereinstimmung mit den Datenschutzgesetzen. * Demnächst verfügbar: Editor – eine einfache Anwendung, die für alle funktioniert, auch für diejenigen, die das Browser-Plug-in (noch) nicht verwenden Beginnen Sie mit der Erstellung Ihres eigenen [Login](de/oauth/azureadb2c/login „Login“)',
     'section_3_title' => 'Witty für Teams und Organisationen',
     'section_3_text' => 'Für Organisationen bietet Witty eine Reihe von Dienstleistungen an, damit ganze Teams reibungslos mit Witty arbeiten können, wie zum Beispiel:
 * Einmalige Anmeldung
@@ -189,4 +177,6 @@ Lesen Sie mehr über den ROI für [Organisationen](https://www.witty.works/witty
     'user_limit_reached' => 'Sie haben das Limit von :max_count der Benutzer erreicht, die zu Ihrem aktuellen Plan eingeladen werden können. Um einen neuen Benutzer hinzuzufügen, müssen Sie zuerst stornieren und einen Benutzer aus Ihrem Team einladen und/oder entfernen.',
     'user_limit_reached_error' => 'Benutzerlimit von :max_count für den aktuellen Plan erreicht.',
     'onboarding_signup_to_witty' => 'Meldung für ein Witty-Konto',
+    'invitation_email_welcome' => 'Um diese Einladung anzunehmen, melden Sie sich mit Ihrem bestehenden Konto an oder registrieren Sie ein neues Konto, indem Sie auf die Schaltfläche unten klicken:',
+    'team' => 'Team',
 ];

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class FalsePositive extends Model
 {
     use HasFactory;
+    use OrganizationGuidelinesUpdateTrait;
 
     const LANGUAGE_CODE = ['' => 'content.any', 'de' => 'content.de', 'en' => 'content.en'];
 }

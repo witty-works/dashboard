@@ -78,7 +78,7 @@ class TeamPolicy
     public function addTeamMember(User $user, Team $team)
     {
         $max_count = $team->maxUserCount();
-        if ($team->totalUserCount() >= $max_count) {
+        if ($team->totalUserCount() > $max_count) {
             return false;
         }
 

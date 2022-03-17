@@ -8,6 +8,7 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvi
 use App\Listeners\PosthogBillingEvent;
 use App\Listeners\PosthogReset;
 use App\Listeners\PostHogUpdateCompany;
+use JoelButcher\Socialstream\Events\ConnectedAccountCreated;
 use Laravel\Jetstream\Events\TeamCreated;
 use Laravel\Jetstream\Events\TeamUpdated;
 use Laravel\Jetstream\Events\TeamDeleted;
@@ -64,6 +65,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         \SocialiteProviders\Manager\SocialiteWasCalled::class => [
             'SocialiteProviders\\AzureADB2C\\AzureADB2CExtendSocialite@handle',
+        ],
+        \App\Events\OrganizationGuidelinesUpdated::class => [
+            \App\Listeners\OrganizationGuidelinesUpdate::class,
         ],
     ];
 
