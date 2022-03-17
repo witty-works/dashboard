@@ -178,4 +178,5 @@ Lesen Sie mehr über den ROI für [Organisationen](https://www.witty.works/witty
     'user_limit_reached_error' => 'Benutzerlimit von :max_count für den aktuellen Plan erreicht.',
     'onboarding_signup_to_witty' => 'Meldung für ein Witty-Konto',
     'invitation_email_welcome' => 'Um diese Einladung anzunehmen, melden Sie sich mit Ihrem bestehenden Konto an oder registrieren Sie ein neues Konto, indem Sie auf die Schaltfläche unten klicken:',
+    'team' => 'Team',
 ];
