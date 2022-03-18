@@ -52,6 +52,15 @@ class Form extends Component
         }
 
         $count = FalsePositive::query()
+            ->where('false_positive', $this->false_positive)
+            ->count();
+        if ($count) {
+            $message = __('guidelines.false_positive_already_exists');
+            throw ValidationException::withMessages(['false_positive' => $message]);
+        }
+
+
+        $count = FalsePositive::query()
             ->where('team_id', $this->team->id)
             ->count();
 

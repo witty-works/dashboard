@@ -20,7 +20,7 @@
                         @if (Auth::user()->currentTeam)
                             <!-- Team Settings -->
                             @if(config('spark.enabled'))
-                            @can('update', Auth::user()->currentTeam)
+                            @if(Auth::user()->ownsTeam(Auth::user()->currentTeam))
                             <x-jet-nav-link href="{{ route('spark.portal') }}" :active="request()->routeIs('spark.portal')">
                                 {{ !Auth::user()->currentTeam->subscribed() ? __('teams.subscribe') : __('teams.billing') }}
                             </x-jet-nav-link>
@@ -88,7 +88,6 @@
                                 {{ __('content.team') }}: {{ Auth::user()->currentTeam->name }}
                             </div>
 
-                            @if(Auth::user()->can('update', Auth::user()->currentTeam) || Auth::user()->hasTeamRole(Auth::user()->currentTeam, 'admin'))
                             <!-- Team Management -->
                             <div class="block px-4 py-2 text-xs text-gray-400">
                                 {{ __('content.manage_team') }}
@@ -107,13 +106,12 @@
                                 {{ __('guidelines.false_positives_list') }}
                             </x-jet-dropdown-link>
                             @endif
-                            @else
-                                @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
-                                <x-jet-dropdown-link href="{{ route('teams.create') }}">
-                                    {{ __('content.create_new_team') }}
-                                </x-jet-dropdown-link>
-                                @endcan
-                            @endif
+
+                            @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
+                            <x-jet-dropdown-link href="{{ route('teams.create') }}">
+                                {{ __('content.create_new_team') }}
+                            </x-jet-dropdown-link>
+                            @endcan
                         </div>
 
                         <div class="border-t border-gray-100"></div>
@@ -195,30 +193,28 @@
                     </div>
                 </div>
     
-                @if(Auth::user()->can('update', Auth::user()->currentTeam) || Auth::user()->hasTeamRole(Auth::user()->currentTeam, 'admin'))
-                    <div class="border-t border-gray-200"></div>
-                    <!-- Team Settings -->
-                    @if (Auth::user()->currentTeam)
-                    <x-jet-responsive-nav-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}" :active="request()->routeIs('teams.show')">
-                        {{ __('content.team_settings') }}
-                    </x-jet-responsive-nav-link>
+                <div class="border-t border-gray-200"></div>
 
-                    <x-jet-responsive-nav-link href="{{ route('organization-guidelines', Auth::user()->currentTeam->id) }}">
-                        {{ __('guidelines.organization_guidelines') }}
-                    </x-jet-responsive-nav-link>
+                <!-- Team Settings -->
+                <x-jet-responsive-nav-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}" :active="request()->routeIs('teams.show')">
+                    {{ __('content.team_settings') }}
+                </x-jet-responsive-nav-link>
 
-                    <x-jet-responsive-nav-link href="{{ route('false-positive', Auth::user()->currentTeam->id) }}">
-                        {{ __('guidelines.false_positives_list') }}
+                <x-jet-responsive-nav-link href="{{ route('organization-guidelines', Auth::user()->currentTeam->id) }}">
+                    {{ __('guidelines.organization_guidelines') }}
+                </x-jet-responsive-nav-link>
+
+                <x-jet-responsive-nav-link href="{{ route('false-positive', Auth::user()->currentTeam->id) }}">
+                    {{ __('guidelines.false_positives_list') }}
+                </x-jet-responsive-nav-link>
+
+                @endif
+
+                @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
+                    <x-jet-responsive-nav-link href="{{ route('teams.create') }}" :active="request()->routeIs('teams.create')">
+                        {{ __('content.create_new_team') }}
                     </x-jet-responsive-nav-link>
-                    @endif
-                @endif
-                @else
-                    @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
-                        <x-jet-responsive-nav-link href="{{ route('teams.create') }}" :active="request()->routeIs('teams.create')">
-                            {{ __('content.create_new_team') }}
-                        </x-jet-responsive-nav-link>
-                    @endcan
-                @endif
+                @endcan
 
                 <!-- Authentication -->
                 <x-jet-responsive-nav-link href="{{ route('logout', ['provider' => 'azureadb2c']) }}" @click.prevent="$root.submit();">
