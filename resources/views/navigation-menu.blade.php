@@ -20,7 +20,7 @@
                         @if (Auth::user()->currentTeam)
                             <!-- Team Settings -->
                             @if(config('spark.enabled'))
-                            @can('update', Auth::user()->currentTeam)
+                            @if(Auth::user()->ownsTeam(Auth::user()->currentTeam))
                             <x-jet-nav-link href="{{ route('spark.portal') }}" :active="request()->routeIs('spark.portal')">
                                 {{ !Auth::user()->currentTeam->subscribed() ? __('teams.subscribe') : __('teams.billing') }}
                             </x-jet-nav-link>
@@ -88,7 +88,6 @@
                                 {{ __('content.team') }}: {{ Auth::user()->currentTeam->name }}
                             </div>
 
-                            @if(Auth::user()->can('update', Auth::user()->currentTeam) || Auth::user()->hasTeamRole(Auth::user()->currentTeam, 'admin'))
                             <!-- Team Management -->
                             <div class="block px-4 py-2 text-xs text-gray-400">
                                 {{ __('content.manage_team') }}
@@ -106,7 +105,7 @@
                             <x-jet-dropdown-link href="{{ route('false-positive', Auth::user()->currentTeam->id) }}">
                                 {{ __('guidelines.false_positives_list') }}
                             </x-jet-dropdown-link>
-                            @endif
+
                             @else
                                 @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
                                 <x-jet-dropdown-link href="{{ route('teams.create') }}">

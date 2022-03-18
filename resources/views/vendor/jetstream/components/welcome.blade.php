@@ -27,7 +27,7 @@
             </li>
         @endforeach
         <ul>
-    @elseif(!$currentTeam || $user->can('update', $currentTeam) || $user->hasTeamRole($currentTeam, 'admin'))
+    @elseif(!$currentTeam || $user->can('update', $currentTeam))
     <div class="mt-6">
         <h2>{{ __('content.onboarding_next_steps') }}</h2>
         <ol>
