@@ -24,6 +24,16 @@ class TeamInvitationController extends BaseTeamInvitationController
 
         $result = parent::accept($request, $invitation);
 
+        if ($user->currentTeam) {
+            if ($user->ownsTeam($user->currentTeam)) {
+                return redirect()->route('dashboard')->withErrors(
+                    __('You may not leave a team that you created.')
+                );
+            }
+
+            $user->currentTeam->removeUser($user);
+        }
+
         $user->switchTeam($invitation->team);
 
         foreach ($user->invitations as $invitation) {
@@ -46,6 +56,8 @@ class TeamInvitationController extends BaseTeamInvitationController
             abort(403, 'Unauthorized action.');
         }
 
-        return parent::destroy($request, $invitation);
+        $invitation->delete();
+
+        return back(303);
     }
 }
