@@ -28,6 +28,7 @@ use Laravel\Jetstream\Jetstream;
 |------------------
 */
 use App\Http\Controllers\OAuthController;
+use App\Http\Controllers\ScannerController;
 /*
 |------------------
 | \SOCIALSTREAM
@@ -71,7 +72,10 @@ Route::group(
             return view('dashboard');
         })->name('dashboard');
 
-        /*
+        Route::get('/scanner', [ScannerController::class, 'show'])
+            ->name('scanner.show');
+
+            /*
         |------------------
         | JETSTREAM LIVEWIRE
         |------------------
