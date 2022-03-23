@@ -1,16 +1,18 @@
 <?php
 
 return [
-    'false_positives_list' => 'False Positives',
-    'create_false_positive' => 'Create False Positive',
-    'create_new_false_postive_description' => 'Add a new false postive',
-    'false_positive_label' => 'False Positive',
+    'false_positives_list' => 'Ignore words
+',
+    'create_false_positive' => 'Improve your experience by adding words to your personal ignore list.
+These words will no longer be highlighted by Witty.',
+    'create_new_false_postive_description' => 'All words added to this list will not be highlighted anymore.',
+    'false_positive_label' => 'Add a new word',
     'language_code_label' => 'Language Code',
-    'organization_guidelines' => 'Organization Guidelines',
+    'organization_guidelines' => 'Customize',
     'manage_organization_guidelines' => 'Manage Organization Guidelines',
-    'manage_organization_guidelines_description' => 'Set the default configuration for all users',
-    'german_gender_ending' => 'German Gender Ending',
-    'list_false_positives' => 'List False Positives',
+    'manage_organization_guidelines_description' => 'Manage suggestions to better fit your writing style.',
+    'german_gender_ending' => 'Choose the German gender ending',
+    'list_false_positives' => 'List of ignored words',
     'list_false_postives_description' => 'Any words or phrases in this list will be not be highlighted.',
     'gendered_roles_format' => 'Gendered roles format',
     'store_context' => 'Store context',

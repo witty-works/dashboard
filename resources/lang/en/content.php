@@ -115,11 +115,11 @@ return [
     'when_2fa_is_enabled' => 'When two factor authentication is enabled, you will be prompted for a secure, random token during authentication. You may retrieve this token from your phone\'s Google Authenticator application.',
     '2fa_is_now_enabled' => 'Two factor authentication is now enabled. Scan the following QR code using your phone\'s authenticator application.',
     'store_recovery_codes' => 'Store these recovery codes in a secure password manager. They can be used to recover access to your account if your  device is lost.',
-    'update_your_account_profile' => 'Update your account\'s profile information you can go <a href=":profile_url"><strong>here</strong></a>.',
+    'update_your_account_profile' => 'Update your name and email <a href=":profile_url"><strong>here</strong></a>.',
     'permanently_delete_team' => 'Permanently delete this team.',
     'once_a_team_is_deleted' => 'Once a team is deleted, all of its resources and data will be permanently deleted. Before deleting this team, please download any data or information regarding this team that you wish to retain.',
     'are_you_sure_want_to_delete_team' => 'Are you sure you want to delete this team? Once a team is deleted, all of its resources and data will be permanently deleted.',
-    'add_a_new_team_member' => 'Add a new team member to your team, allowing them to collaborate with you. Your current plan allows you to add up to :max_count users.',
+    'add_a_new_team_member' => 'Add new team members to your team, allowing them to collaborate with you. Your current plan allows you to add up to :max_count users.',
     'please_provide_the_email_address' => 'Please provide the email address of the person you would like to add to this team.',
     'these_people_have_been_invited' => 'These people have been invited to your team and have been sent an invitation email. They may join the team by accepting the email invitation.',
     'all_of_the_people' => 'All of the people that are part of this team.',
@@ -138,18 +138,18 @@ return [
     'admin_role' => 'Administrator users can manage the team.',
     'user' => 'User',
     'user_role' => 'Users can use the teams organization language guidelines.',
-    'actions' => 'actions',
+    'actions' => 'Actions',
     'any' => 'any',
     'delete_permanently' => 'delete',
     'de' => 'German',
     'en' => 'English',
-    'welcome_text' => 'This is the welcome page of the Witty dashboard. The dashboard helps you to set up and use Witty in your workplace.',
+    'welcome_text' => 'The dashboard helps you set up Witty and customize it to your needs.',
     'onboarding_next_steps' => 'Next steps to setup your Witty team:',
     'onboarding_create_team' => 'Create your team',
     'onboarding_configure_organization_guidelines' => 'Configure the language organization guidelines',
     'onboarding_invite_users' => 'Invite users to your team',
     'onboarding_install_witty' => 'Install the Witty browser extension',
-    'open_invitiations' => '{1} You have been invited to join a team, please decide if you want to accept or reject the invitiation.|{2,*} You have been invited to join several teams, please decide if you want to accept one of these invitiations. Note you can only accept one initiation.',
+    'open_invitiations' => '{1} You are already the owner a team, but you have been invited to join another team. You can only be in one team. Please decide if you want to accept or reject the invitiation.|{2,*} You have been invited to join several teams, please decide if you want to accept one of these invitiations.',
     'accept_invitiation' => 'accept',
     'reject_invitiation' => 'reject',
     'section_1_title' => 'What is Witty',
@@ -159,12 +159,12 @@ Witty offers the whole inclusive language logic in English and German. You also 
 
 With Witty you become part of the change towards more diversity and inclusion on a daily basis.
 
-Read more about [Witty](https://www.witty.works/ "Inclusive writing, anywhere, in real time")',
+Read more about [Witty](https://www.witty.works/ "Inclusive writing, anywhere, in real time").',
     'section_2_title' => 'What does the Witty Dashboard do?',
     'section_2_text' => 'The Witty dashboard helps you to set up and manage Witty for your team. Once logged, you manage the following: 
 
 * Invite your team members
-* Set up your very own language guidelines based. That way you ensure that your whole team writes with the same brand voice.
+* Set up your very own language guidelines. That way you ensure that your whole team writes with the same brand voice.
 * Coming soon: Read and interpret analytics at team, department and company level in accordance with data privacy laws.
 * Coming soon: Editor - a simple application that works for everyone, even those that do not use the browser plugin (yet)        
 ',
@@ -177,7 +177,7 @@ Read more about [Witty](https://www.witty.works/ "Inclusive writing, anywhere, i
 * Unconscious bias awareness session
 * Central control over data privacy
 
-Read more about services for [organizations](https://www.witty.works/witty-for-companies "Witty for Organizations")',
+Read more about services for [organizations](https://www.witty.works/witty-for-companies "Witty for Organizations").',
     'section_4_title' => 'Witty’s ROI for Organizations',
     'section_4_text' => 'The use of Witty increases organizations’ competitive advantage. 
 * Reach 100% of target groups instead of only 60%.
@@ -185,7 +185,7 @@ Read more about services for [organizations](https://www.witty.works/witty-for-c
 * Implement [ESG](https://en.wikipedia.org/wiki/Environmental,_social_and_corporate_governance "Environmental, Social, and Governance") and [UNSDG](https://sdgs.un.org/goals "UN Sustainable Development Goals") concretely. 
 * Ensure streamlined brand voice through your whole organization. 
 
-Read more about ROI for [organizations](https://www.witty.works/witty-for-companies "Witty for Organizations")',
+Read more about ROI for [organizations](https://www.witty.works/witty-for-companies "Witty for Organizations").',
     'user_limit_reached' => 'You have reached the limit of :max_count of the users that can be invited on your current plan. To add a new user you first must cancel and invitation and/or remove a user from your team.',
     'user_limit_reached_error' => 'User limit of :max_count on the current plan reached.',
     'onboarding_signup_to_witty' => 'Sign up for a Witty account',
