@@ -15,6 +15,10 @@ class OrganizationGuidelines extends Model
     const PREFERRED_VARIANTS_EN = ['' => 'guidelines.preferred_variants_none', 'en-US' => 'guidelines.preferred_variants_en_US', 'en-GB' => 'guidelines.preferred_variants_en_GB'];
     const PREFERRED_VARIANTS_DE = ['' => 'guidelines.preferred_variants_none', 'de-DE' => 'guidelines.preferred_variants_de_DE', 'de-CH' => 'guidelines.preferred_variants_de_CH', 'de-AT' => 'guidelines.preferred_variants_de_AT'];
     const DISABLED_CATEGORIES = ['orthography', 'casing', 'style', 'inclusive'];
+    const DISABLED_CATEGORIES_ORTHOGRAPHY = ['orthography', 'casing'];
+    const DISABLED_CATEGORIES_INCLUSIVE = ['inclusive'];
+    const DISABLED_CATEGORIES_STYLE = ['style'];
+    const LANGUAGES = ['en', 'de'];
 
     protected $attributes = [
         'german_gender_ending' => ':in',
@@ -23,6 +27,7 @@ class OrganizationGuidelines extends Model
         'preferred_variants' => '{"de-DE", "en-US"}',
         'singular_they' => false,
         'expert_mode' => false,
+        'show_inspiration_alternatives' => false,
         'disabled_categories' => null,
     ];
 
