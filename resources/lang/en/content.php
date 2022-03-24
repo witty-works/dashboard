@@ -155,7 +155,7 @@ return [
     'section_1_title' => 'What is Witty',
     'section_1_text' => 'Witty is an inclusive writing assistant made for individuals and organizations, bringing you the joy of inclusive writing simple, real-time and fast. It is a Software-as-a-Service that detects unconscious stereotypes in communication. And then guides the writer how to formulate the same content in an inclusive manner. 
 
-Witty offers the whole inclusive language logic in English and German. You also receive feedback on spelling and grammar. More languages are planned.
+Witty offers the whole inclusive language logic in English and German. You also receive feedback on orthography and grammar. More languages are planned.
 
 With Witty you become part of the change towards more diversity and inclusion on a daily basis.
 

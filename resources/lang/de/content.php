@@ -179,4 +179,11 @@ Lesen Sie mehr über den ROI für [Organisationen](https://www.witty.works/witty
     'onboarding_signup_to_witty' => 'Meldung für ein Witty-Konto',
     'invitation_email_welcome' => 'Um diese Einladung anzunehmen, melden Sie sich mit Ihrem bestehenden Konto an oder registrieren Sie ein neues Konto, indem Sie auf die Schaltfläche unten klicken:',
     'team' => 'Team',
+    'onboarding_install_witty' => 'onboarding install witty',
+    'open_invitiations' => 'open invitiations',
+    'contact_support_to_delete_owned_teams' => 'contact support to delete owned teams',
+    'accepting_invitation_will_result_in_leaving_your_current_team' => 'accepting invitation will result in leaving your current team',
+    'accept_invitiation' => 'accept invitiation',
+    'reject_invitiation' => 'reject invitiation',
+    'login_cta' => 'login cta',
 ];
