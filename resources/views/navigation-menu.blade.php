@@ -41,8 +41,13 @@
                 </div>
             </div>
 
-            @auth
             <div class="hidden sm:flex sm:items-center sm:ml-6">
+            </div>
+
+            <div class="hidden sm:flex sm:items-center sm:ml-6">
+                @include('partials/language-switcher')
+
+                @auth
                 <x-jet-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
@@ -110,11 +115,7 @@
                         </x-jet-dropdown-link>
                     </x-slot>
                 </x-jet-dropdown>
-            </div>
-            @endif
-
-            <div class="hidden sm:flex sm:items-center sm:ml-6">
-                @include('partials/language-switcher')
+                @endauth
             </div>
 
             <!-- Hamburger -->
