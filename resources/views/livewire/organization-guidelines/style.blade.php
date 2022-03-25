@@ -9,8 +9,6 @@
 
     <x-slot name="form">
         <div class="col-span-6 sm:col-span-4">
-            <x-jet-label for="disabled_categories" value="{{ __('guidelines.disabled_categories') }}" />
-
             @foreach(\App\Models\OrganizationGuidelines::DISABLED_CATEGORIES_STYLE as $category)
                 <x-jet-label for="disabled_categories_{{ $category }}" value="{{ __('guidelines.disabled_categories_'.$category) }}" />
 

@@ -18,9 +18,9 @@ class OrganizationGuidelinesUpdate
         $organizationGuidelines = $event->team->organizationGuidelines;
         $organizationGuidelines = [
             'store_context' => (bool) $organizationGuidelines->store_context,
-            'preferred_variants' => json_decode($organizationGuidelines->preferred_variants),
+            'preferred_variants' => $organizationGuidelines->preferred_variants,
             'german_gender_ending' => $organizationGuidelines->german_gender_ending,
-            'disabled_categories' => json_decode($organizationGuidelines->disabled_categories),
+            'disabled_categories' => $organizationGuidelines->disabled_categories,
             'gendered_roles_format' => $organizationGuidelines->gendered_roles_format,
             'singular_they' => $organizationGuidelines->singular_they ? 'all_pronouns' : 'he_or_she',
             'maximum_importance' => $organizationGuidelines->expert_mode ? 3 : 2,

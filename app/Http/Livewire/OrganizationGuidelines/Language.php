@@ -34,7 +34,8 @@ class Language extends Component
 
         $organizationRule = $this->getOrganizationGuidelines($this->team);
 
-        $this->preferred_variants = (array) json_decode($organizationRule->preferred_variants, JSON_OBJECT_AS_ARRAY);
+        $this->preferred_variants = $organizationRule->preferred_variants;
+
         foreach (OrganizationGuidelines::LANGUAGES as $lang) {
             $property = "preferred_variants_" . $lang;
             foreach (constant('App\Models\OrganizationGuidelines::PREFERRED_VARIANTS_' . strtoupper($lang)) as $locale => $trans_key) {
@@ -62,7 +63,7 @@ class Language extends Component
                 $this->preferred_variants[] = $this->$property;
             }
         }
-        $organizationRule->preferred_variants = json_encode($this->preferred_variants);
+        $organizationRule->preferred_variants = $this->preferred_variants;
 
         $organizationRule->save();
 
