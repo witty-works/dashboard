@@ -92,6 +92,8 @@ lando artisan translation:sync_and_purge
 
 # Deployments
 
+Use https://github.com/witty-works/make-release
+
 In `~/.gitconfig` add make sure you have the following setting
 
 ```

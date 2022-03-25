@@ -131,7 +131,11 @@ return [
     | Endpoint to which to sync the organization guidelines
     |
     */
-    'organization_guidelines_endpoint' => env('APP_NLP_API_SYNC_ENDPOINT'),
+    'organization_guidelines_endpoint' => [
+        'url' => env('APP_NLP_API_SYNC_ENDPOINT'),
+        'user' => env('APP_NLP_API_SYNC_USER'),
+        'password' => env('APP_NLP_API_SYNC_PASSWORD'),
+    ],
 
     /*
     |--------------------------------------------------------------------------

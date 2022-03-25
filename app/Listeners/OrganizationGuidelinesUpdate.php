@@ -34,6 +34,12 @@ class OrganizationGuidelinesUpdate
             'false_positive' => $event->team->falsePositives()->pluck('false_positive')->toArray(),
         ];
 
-        Http::post(config('app.organization_guidelines_endpoint'), $data);
+        $endpoint = config('app.organization_guidelines_endpoint');
+        if (empty($endpoint['user'])) {
+            Http::post($endpoint['url'], $data);
+        } else {
+            Http::withBasicAuth($endpoint['user'], $endpoint['password'])
+                ->post($endpoint['url'], $data);
+        }
     }
 }
