@@ -9,7 +9,7 @@
 
     <x-slot name="form">
         <div class="col-span-6 sm:col-span-4">
-            <x-jet-label for="false_positive" value="{{ __('guidelines.false_positive_label') }}" />
+            <x-jet-label for="false_positive" value="{!! __('guidelines.false_positive_label') !!}" />
 
             <x-jet-input id="false_positive"
                 type="text" 
@@ -22,7 +22,7 @@
         </div>
 
         <div class="col-span-6 sm:col-span-4">
-            <x-jet-label for="language_code" value="{{ __('guidelines.language_code_label') }}" />
+            <x-jet-label for="language_code" value="{!! __('guidelines.language_code_label') !!}" />
 
             <x-select id="language_code"
                 :options="\App\Models\FalsePositive::LANGUAGE_CODE"

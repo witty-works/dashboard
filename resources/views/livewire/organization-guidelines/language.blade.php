@@ -4,29 +4,31 @@
     </x-slot>
 
     <x-slot name="description">
-        {{ __('guidelines.manage_organization_guidelines_description_language') }}
+        {!! Str::markdown(__('guidelines.manage_organization_guidelines_description_language')) !!}
     </x-slot>
 
     <x-slot name="form">
         <div class="col-span-6 sm:col-span-4">
-            <x-jet-label for="preferred_variants" value="{{ __('guidelines.preferred_variants') }}" />
+            <x-jet-label for="preferred_variants" value="{!! __('guidelines.preferred_variants') !!}" />
 
-            <x-jet-label for="preferred_variants_en" value="{{ __('guidelines.preferred_variants_en') }}" />
+            <x-jet-label for="preferred_variants_en" value="{!! __('guidelines.preferred_variants_en') !!}" />
 
             <x-select id="preferred_variants_en"
                 :options="App\Models\OrganizationGuidelines::PREFERRED_VARIANTS_EN"
                 class="mt-1 block w-full"
                 wire:model.defer="preferred_variants_en"
+                wire:change="updateOrganizationGuidelinesLanguage()"
                 :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" />
 
             <x-jet-input-error for="preferred_variants_en" class="mt-2" />
         
-            <x-jet-label for="preferred_variants_de" value="{{ __('guidelines.preferred_variants_de') }}" />
+            <x-jet-label for="preferred_variants_de" value="{!! __('guidelines.preferred_variants_de') !!}" />
 
             <x-select id="preferred_variants_de"
                 :options="App\Models\OrganizationGuidelines::PREFERRED_VARIANTS_DE"
                 class="mt-1 block w-full"
                 wire:model.defer="preferred_variants_de"
+                wire:change="updateOrganizationGuidelinesLanguage()"
                 :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" />
 
             <x-jet-input-error for="preferred_variants_de" class="mt-2" />
@@ -38,10 +40,6 @@
         <x-jet-action-message class="mr-3" on="saved">
             {{ __('content.saved') }}
         </x-jet-action-message>
-
-        <x-jet-button>
-            {{ __('content.save') }}
-        </x-jet-button>
     </x-slot>
     @endif
 
