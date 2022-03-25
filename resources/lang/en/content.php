@@ -46,7 +46,7 @@ return [
     'create_new_team' => 'Create new team',
     'switch_teams' => 'Switch Teams',
     'manage_account' => 'Manage Account',
-    'profile' => 'Profile',
+    'profile' => 'My Account',
     'connected_accounts' => 'Connected Accounts',
     'use_avatar_as_profile_photo' => 'Use Avatar as Profile Photo',
     'remove' => 'Remove',
