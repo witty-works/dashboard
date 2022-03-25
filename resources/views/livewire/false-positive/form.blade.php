@@ -4,7 +4,7 @@
     </x-slot>
 
     <x-slot name="description">
-        {{ __('guidelines.create_new_false_postive_description') }}
+        {!! Str::markdown(__('guidelines.create_new_false_postive_description')) !!}
     </x-slot>
 
     <x-slot name="form">
@@ -20,7 +20,7 @@
 
                 <x-jet-input-error for="false_positive" class="mt-2" />
         </div>
-
+{{--
         <div class="col-span-6 sm:col-span-4">
             <x-jet-label for="language_code" value="{!! __('guidelines.language_code_label') !!}" />
 
@@ -32,6 +32,7 @@
 
                 <x-jet-input-error for="language_code" class="mt-2" />
         </div>
+--}}
     </x-slot>
 
     @if (Auth::user()->hasTeamPermission($team, 'edit_guidelines'))

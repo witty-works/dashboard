@@ -4,19 +4,11 @@
     </x-slot>
 
     <x-slot name="description">
-        {{ __('guidelines.list_false_postives_description') }}
+        {!! Str::markdown(__('guidelines.list_false_postives_description')) !!}
     </x-slot>
 
     <x-slot name="list">
         <table class="table-fixed w-full">
-            <thead>
-            <tr>
-                <th class="px-4 py-2">{{ __('guidelines.false_positive_label') }}</th>
-                @if (Auth::user()->hasTeamPermission($team, 'edit_guidelines'))
-                <th class="px-4 py-2">{{ __('content.actions') }} </th>
-                @endif
-            </tr>
-            </thead>
             <tbody>
             @foreach ($list as $false_positive)
                 <tr @if($loop->even)class="bg-grey"@endif>
