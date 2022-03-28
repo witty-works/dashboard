@@ -67,4 +67,8 @@ Choose how Witty suggests gendered roles such as job titles. There are three pos
     'manage_organization_guidelines_description_store_context' => 'When switched on, Witty stores a few words before and after the highlighted term. This helps  to improve Witty and to make better suggestions in the future.',
     'manage_organization_guidelines_style' => 'Highlight style issues',
     'manage_organization_guidelines_description_style' => 'These are words that make your text difficult for your readers to understand by overcomplicating the language in some way. This includes language that prevents authenticity or emotionality from connecting with your readers. <a href="https://www.witty.works/en/categories/style" target="_blank">Learn more</a>.',
+    'set_for_all' => 'set for all',
+    'enable_singular_they' => 'enable singular they',
+    'enable_expert_mode' => 'enable expert mode',
+    'enable_show_inspiration_alternatives' => 'enable show inspiration alternatives',
 ];

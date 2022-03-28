@@ -10,15 +10,25 @@
     <x-slot name="form">
         <div class="col-span-6 sm:col-span-4">
             @foreach(\App\Models\OrganizationGuidelines::DISABLED_CATEGORIES_ORTHOGRAPHY as $category)
-                <x-jet-label for="disabled_categories_{{ $category }}" value="{!! __('guidelines.disabled_categories_'.$category) !!}" />
+            {{ __('guidelines.set_for_all') }}
 
-                <x-jet-input id="disabled_categories_{{ $category }}"
-                            value="1"
-                            type="checkbox"
-                            class="mt-1 block"
-                            wire:model.defer="disabled_categories_{{ $category }}"
-                            wire:change="updateOrganizationGuidelinesOrthography()"
-                            :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" />
+            <x-jet-input id="disabled_categories_force_{{ $category }}"
+                value="1"
+                type="checkbox"
+                class="mt-1 block"
+                wire:model.defer="disabled_categories_force_{{ $category }}"
+                wire:change="updateOrganizationGuidelinesOrthography()"
+                :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" />
+            
+            {{ __('guidelines.enable_' . $category ) }}
+
+            <x-jet-input id="disabled_categories_{{ $category }}"
+                value="1"
+                type="checkbox"
+                class="mt-1 block"
+                wire:model.defer="disabled_categories_{{ $category }}"
+                wire:change="updateOrganizationGuidelinesOrthography()"
+                :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" />
             @endforeach
 
         </div>

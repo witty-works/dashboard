@@ -11,6 +11,15 @@
         <div class="col-span-6 sm:col-span-4">
             <x-jet-label for="preferred_variants" value="{!! __('guidelines.preferred_variants') !!}" />
 
+            {{ __('guidelines.set_for_all') }}
+            <x-jet-input id="preferred_variants_en_force"
+                value="1"
+                type="checkbox"
+                class="mt-1 block"
+                wire:model.defer="preferred_variants_en_force"
+                wire:change="updateOrganizationGuidelinesLanguage()"
+                :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" />
+
             <x-jet-label for="preferred_variants_en" value="{!! __('guidelines.preferred_variants_en') !!}" />
 
             <x-select id="preferred_variants_en"
@@ -19,8 +28,17 @@
                 wire:model.defer="preferred_variants_en"
                 wire:change="updateOrganizationGuidelinesLanguage()"
                 :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" />
-
+    
             <x-jet-input-error for="preferred_variants_en" class="mt-2" />
+
+            {{ __('guidelines.set_for_all') }}
+            <x-jet-input id="preferred_variants_de_force"
+                value="1"
+                type="checkbox"
+                class="mt-1 block"
+                wire:model.defer="preferred_variants_de_force"
+                wire:change="updateOrganizationGuidelinesLanguage()"
+                :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" />
         
             <x-jet-label for="preferred_variants_de" value="{!! __('guidelines.preferred_variants_de') !!}" />
 

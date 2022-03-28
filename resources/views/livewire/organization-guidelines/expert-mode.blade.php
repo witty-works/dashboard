@@ -9,13 +9,25 @@
 
     <x-slot name="form">
         <div class="col-span-6 sm:col-span-4">
+            {{ __('guidelines.set_for_all') }}
+
+            <x-jet-input id="expert_mode_force"
+                value="1"
+                type="checkbox"
+                class="mt-1 block"
+                wire:model.defer="expert_mode_force"
+                wire:change="updateOrganizationGuidelinesExpertMode()"
+                :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" />
+
+            {{ __('guidelines.enable_expert_mode') }}
+
             <x-jet-input id="expert_mode"
-                        value="1"
-                        type="checkbox"
-                        class="mt-1 block"
-                        wire:model.defer="expert_mode"
-                        wire:change="updateOrganizationGuidelinesExpertMode()"
-                        :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" />
+                value="1"
+                type="checkbox"
+                class="mt-1 block"
+                wire:model.defer="expert_mode"
+                wire:change="updateOrganizationGuidelinesExpertMode()"
+                :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" />
 
             <x-jet-input-error for="expert_mode" class="mt-2" />
         </div>

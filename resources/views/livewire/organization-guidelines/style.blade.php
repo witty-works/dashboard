@@ -10,13 +10,26 @@
     <x-slot name="form">
         <div class="col-span-6 sm:col-span-4">
             @foreach(\App\Models\OrganizationGuidelines::DISABLED_CATEGORIES_STYLE as $category)
-                <x-jet-input id="disabled_categories_{{ $category }}"
-                            value="1"
-                            type="checkbox"
-                            class="mt-1 block"
-                            wire:model.defer="disabled_categories_{{ $category }}"
-                            wire:change="updateOrganizationGuidelinesStyle()"
-                            :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" />
+            {{ __('guidelines.set_for_all') }}
+
+            <x-jet-input id="disabled_categories_force_{{ $category }}"
+                value="1"
+                type="checkbox"
+                class="mt-1 block"
+                wire:model.defer="disabled_categories_force_{{ $category }}"
+                wire:change="updateOrganizationGuidelinesStyle()"
+                :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" />
+            
+            {{ __('guidelines.enable_' . $category ) }}
+
+            <x-jet-input id="disabled_categories_{{ $category }}"
+                value="1"
+                type="checkbox"
+                class="mt-1 block"
+                wire:model.defer="disabled_categories_{{ $category }}"
+                wire:change="updateOrganizationGuidelinesStyle()"
+                :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" />
+
             @endforeach
 
         </div>
