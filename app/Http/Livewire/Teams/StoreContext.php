@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Livewire\OrganizationGuidelines;
+namespace App\Http\Livewire\Teams;
 
-use App\Models\OrganizationGuidelines;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -29,12 +28,10 @@ class StoreContext extends Component
     {
         $this->team = $team;
 
-        $organizationRule = $this->getOrganizationGuidelines($this->team);
-
-        $this->store_context = (bool) $organizationRule->store_context;
+        $this->store_context = (bool) $team->store_context;
     }
 
-    public function updateOrganizationGuidelinesStoreContext()
+    public function updateTeamsStoreContext()
     {
         $this->validate();
 
@@ -42,11 +39,9 @@ class StoreContext extends Component
             abort(403);
         }
 
-        $organizationRule = $this->getOrganizationGuidelines($this->team);
+        $this->team->store_context = (bool) $this->store_context;
 
-        $organizationRule->store_context = (bool) $this->store_context;
-
-        $organizationRule->save();
+        $this->team->save();
 
         $this->emit('saved');
     }
@@ -58,11 +53,6 @@ class StoreContext extends Component
      */
     public function render()
     {
-        return view('livewire.organization-guidelines.store-context');
-    }
-
-    protected function getOrganizationGuidelines($team)
-    {
-        return OrganizationGuidelines::firstOrNew(['team_id' => $team->id]);
+        return view('livewire.teams.store-context');
     }
 }
