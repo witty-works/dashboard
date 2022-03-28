@@ -77,6 +77,11 @@ class Team extends JetstreamTeam
         return 3;
     }
 
+    public function maxTermReplacementCount()
+    {
+        return 5;
+    }
+
     public function maxFalsePositiveCount()
     {
         return 5;
