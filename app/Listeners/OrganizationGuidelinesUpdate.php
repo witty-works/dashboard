@@ -19,7 +19,7 @@ class OrganizationGuidelinesUpdate
         $organizationGuidelines = $event->team->organizationGuidelines;
 
         $force = [
-            'store_context' => (bool) $organizationGuidelines->store_context,
+            'store_context' => (bool) $event->team->store_context,
         ];
         $suggestion = [];
 
