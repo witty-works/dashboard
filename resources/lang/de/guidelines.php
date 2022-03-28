@@ -33,7 +33,7 @@ Diese Wörter werden von Witty nicht mehr hervorgehoben.',
     'manage_organization_guidelines_english' => 'Im Englischen geschlechtsneutrale generische Pronomen verwenden',
     'manage_organization_guidelines_description_english' => 'Wenn aktiviert schlägt Witty im Englischen geschlechtsneutrale generische Pronomen wie "their" anstatt "his" oder "her" vor. ',
     'manage_organization_guidelines_expert_mode' => 'Experten-Modus ',
-    'manage_organization_guidelines_description_expert_mode' => 'Wenn eingeschaltet, macht Witty auch bei weniger schwerwiegenden Probleme in Bezug auf Diversität und Inklusion Vorschläge. <a href="https://www.witty.works/de/blog/wie-analysiert-witty-rahmenwerk-der-inklusiven-sprache"> target="_blank">Mehr dazu</a>.',
+    'manage_organization_guidelines_description_expert_mode' => 'Wenn eingeschaltet, macht Witty auch bei weniger schwerwiegenden Probleme in Bezug auf Diversität und Inklusion Vorschläge. <a href="https://www.witty.works/de/blog/wie-analysiert-witty-rahmenwerk-der-inklusiven-sprache" target="_blank">Mehr dazu</a>.',
     'manage_organization_guidelines_german' => 'Wähle die deutsche Gender-Endung',
     'manage_organization_guidelines_description_german' => 'Wähle die deutsche Gender-Endung, die du verwenden möchtest.
 
