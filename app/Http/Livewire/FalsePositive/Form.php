@@ -75,10 +75,12 @@ class Form extends Component
 
         $falsePositive = new FalsePositive();
         $falsePositive->false_positive = $this->false_positive;
-        $falsePositive->language_code = $this->language_code;
+        $falsePositive->language_code = null;
         $falsePositive->team_id = $this->team->id;
         $falsePositive->save();
 
         $this->emit('saved');
+
+        $this->false_positive = '';
     }
 }

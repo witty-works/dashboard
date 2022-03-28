@@ -10,12 +10,16 @@ use Livewire\Component;
 class Inclusive extends Component
 {
     use AuthorizesRequests;
+    use CategoryTrait;
 
     public $disabled_categories;
+    public $disabled_categories_force;
     public $disabled_categories_inclusive;
+    public $disabled_categories_inclusive_force;
 
     protected $rules = [
         'disabled_categories_inclusive' => 'nullable|boolean',
+        'disabled_categories_inclusive_force' => 'nullable|boolean',
     ];
 
     public $team;
@@ -28,42 +32,12 @@ class Inclusive extends Component
      */
     public function mount($team)
     {
-        $this->team = $team;
-
-        $organizationRule = $this->getOrganizationGuidelines($this->team);
-
-        $this->disabled_categories = (array) json_decode($organizationRule->disabled_categories, JSON_OBJECT_AS_ARRAY);
-        foreach (OrganizationGuidelines::DISABLED_CATEGORIES_INCLUSIVE as $category) {
-            $property = "disabled_categories_" . $category;
-            $this->$property = in_array($category, $this->disabled_categories);
-        }
+        $this->mountCategories($team, OrganizationGuidelines::DISABLED_CATEGORIES_INCLUSIVE);
     }
 
     public function updateOrganizationGuidelinesInclusive()
     {
-        $this->validate();
-
-        if (!Auth::user()->hasTeamPermission($this->team, 'edit_guidelines')) {
-            abort(403);
-        }
-
-        $organizationRule = $this->getOrganizationGuidelines($this->team);
-
-        foreach (OrganizationGuidelines::DISABLED_CATEGORIES_INCLUSIVE as $category) {
-            $property = "disabled_categories_" . $category;
-            if ($this->$property) {
-                $this->disabled_categories[] = $category;
-            } elseif (array_search($category, $this->disabled_categories) !== false) {
-                unset($this->disabled_categories[array_search($category, $this->disabled_categories)]);
-            }
-        }
-
-        $this->disabled_categories = array_values(array_unique($this->disabled_categories));
-        $organizationRule->disabled_categories = json_encode($this->disabled_categories);
-
-        $organizationRule->save();
-
-        $this->emit('saved');
+        return $this->updateCategories(OrganizationGuidelines::DISABLED_CATEGORIES_INCLUSIVE);
     }
 
     /**

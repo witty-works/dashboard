@@ -36,4 +36,18 @@ class GuidelinesController extends Controller
             'team' => $team,
         ]);
     }
+
+    public function editTermReplacements(Request $request, $teamId)
+    {
+        $team = Jetstream::newTeamModel()->findOrFail($teamId);
+
+        if (!Auth::user()->hasTeamPermission($team, 'read')) {
+            abort(403);
+        }
+
+        return view('term-replacement', [
+            'user' => $request->user(),
+            'team' => $team,
+        ]);
+    }
 }

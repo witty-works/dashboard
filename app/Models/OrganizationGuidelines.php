@@ -24,14 +24,35 @@ class OrganizationGuidelines extends Model
         'german_gender_ending' => ':in',
         'gendered_roles_format' => 'inclusive_gender',
         'store_context' => true,
-        'preferred_variants' => '{"de-DE", "en-US"}',
         'singular_they' => false,
         'expert_mode' => false,
         'show_inspiration_alternatives' => false,
-        'disabled_categories' => null,
     ];
 
     protected $fillable = [
         'team_id',
+        'preferred_variants',
+        'preferred_variants_force',
+        'disabled_categories',
+        'disabled_categories_force',
     ];
+
+    protected $casts = [
+        'preferred_variants' => 'json',
+        'preferred_variants_force' => 'json',
+        'disabled_categories' => 'json',
+        'disabled_categories_force' => 'json',
+    ];
+
+    public function __construct(array $attributes = [])
+    {
+        $attributes += [
+            'preferred_variants' => ['de-DE', 'en-US'],
+            'preferred_variants_force' => [],
+            'disabled_categories' => [],
+            'disabled_categories_force' => [],
+        ];
+
+        parent::__construct($attributes);
+    }
 }

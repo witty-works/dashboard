@@ -12,9 +12,11 @@ class ExpertMode extends Component
     use AuthorizesRequests;
 
     public $expert_mode;
+    public $expert_mode_force;
 
     protected $rules = [
         'expert_mode' => 'nullable|boolean',
+        'expert_mode_force' => 'nullable|boolean',
     ];
 
     public $team;
@@ -32,6 +34,7 @@ class ExpertMode extends Component
         $organizationRule = $this->getOrganizationGuidelines($this->team);
 
         $this->expert_mode = (bool) $organizationRule->expert_mode;
+        $this->expert_mode_force = (bool) $organizationRule->expert_mode_force;
     }
 
     public function updateOrganizationGuidelinesExpertMode()
@@ -45,6 +48,7 @@ class ExpertMode extends Component
         $organizationRule = $this->getOrganizationGuidelines($this->team);
 
         $organizationRule->expert_mode = (bool) $this->expert_mode;
+        $organizationRule->expert_mode_force = (bool) $this->expert_mode_force;
 
         $organizationRule->save();
 

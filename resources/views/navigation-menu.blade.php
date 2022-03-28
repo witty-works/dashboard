@@ -5,7 +5,7 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                    <a href="https://witty.works">
                         <x-jet-application-mark class="block h-9 w-auto" />
                     </a>
                 </div>
@@ -41,8 +41,13 @@
                 </div>
             </div>
 
-            @auth
             <div class="hidden sm:flex sm:items-center sm:ml-6">
+            </div>
+
+            <div class="hidden sm:flex sm:items-center sm:ml-6">
+                @include('partials/language-switcher')
+
+                @auth
                 <x-jet-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
@@ -64,10 +69,6 @@
 
                     <x-slot name="content">
                         <!-- Account Management -->
-                        <div class="block px-4 py-2 text-xs text-gray-400">
-                            {{ __('content.manage_account') }}
-                        </div>
-
                         <x-jet-dropdown-link href="{{ route('profile.show') }}">
                             {{ __('content.profile') }}
                         </x-jet-dropdown-link>
@@ -84,15 +85,7 @@
 
                         <div class="w-60">
                             @if (Auth::user()->currentTeam)
-                            <div class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition">
-                                {{ __('content.team') }}: {{ Auth::user()->currentTeam->name }}
-                            </div>
-
                             <!-- Team Management -->
-                            <div class="block px-4 py-2 text-xs text-gray-400">
-                                {{ __('content.manage_team') }}
-                            </div>
-
                             <!-- Team Settings -->
                             <x-jet-dropdown-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}">
                                 {{ __('content.team_settings') }}
@@ -102,8 +95,12 @@
                                 {{ __('guidelines.organization_guidelines') }}
                             </x-jet-dropdown-link>
 
+                            <x-jet-dropdown-link href="{{ route('term-replacement', Auth::user()->currentTeam->id) }}">
+                                {{ __('guidelines.term_replacement_list') }}
+                            </x-jet-dropdown-link>
+
                             <x-jet-dropdown-link href="{{ route('false-positive', Auth::user()->currentTeam->id) }}">
-                                {{ __('guidelines.false_positives_list') }}
+                                {{ __('guidelines.false_positive_list') }}
                             </x-jet-dropdown-link>
                             @endif
 
@@ -122,11 +119,7 @@
                         </x-jet-dropdown-link>
                     </x-slot>
                 </x-jet-dropdown>
-            </div>
-            @endif
-
-            <div class="hidden sm:flex sm:items-center sm:ml-6">
-                @include('partials/language-switcher')
+                @endauth
             </div>
 
             <!-- Hamburger -->
@@ -187,14 +180,6 @@
 
                 <!-- Team Management -->
                 @if(Auth::user()->currentTeam)
-                <div class="flex items-center px-4">
-                    <div>
-                        <div class="font-medium text-base text-gray-800">{{ __('content.team') }}: {{ Auth::user()->currentTeam->name }}</div>
-                    </div>
-                </div>
-    
-                <div class="border-t border-gray-200"></div>
-
                 <!-- Team Settings -->
                 <x-jet-responsive-nav-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}" :active="request()->routeIs('teams.show')">
                     {{ __('content.team_settings') }}
@@ -204,8 +189,12 @@
                     {{ __('guidelines.organization_guidelines') }}
                 </x-jet-responsive-nav-link>
 
+                <x-jet-responsive-nav-link href="{{ route('term-replacement', Auth::user()->currentTeam->id) }}">
+                    {{ __('guidelines.term_replacement_list') }}
+                </x-jet-responsive-nav-link>
+
                 <x-jet-responsive-nav-link href="{{ route('false-positive', Auth::user()->currentTeam->id) }}">
-                    {{ __('guidelines.false_positives_list') }}
+                    {{ __('guidelines.false_positive_list') }}
                 </x-jet-responsive-nav-link>
 
                 @endif
