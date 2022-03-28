@@ -13,10 +13,13 @@ class Inclusive extends Component
     use CategoryTrait;
 
     public $disabled_categories;
+    public $disabled_categories_force;
     public $disabled_categories_inclusive;
+    public $disabled_categories_inclusive_force;
 
     protected $rules = [
         'disabled_categories_inclusive' => 'nullable|boolean',
+        'disabled_categories_inclusive_force' => 'nullable|boolean',
     ];
 
     public $team;

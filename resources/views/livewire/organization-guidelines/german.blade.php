@@ -9,6 +9,16 @@
 
     <x-slot name="form">
         <div class="col-span-6 sm:col-span-4">
+            {{ __('guidelines.set_for_all') }}
+
+            <x-jet-input id="german_gender_ending_force"
+                value="1"
+                type="checkbox"
+                class="mt-1 block"
+                wire:model.defer="german_gender_ending_force"
+                wire:change="updateOrganizationGuidelinesGerman()"
+                :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" />
+
             <x-jet-label for="german_gender_ending" value="{!! __('guidelines.german_gender_ending') !!}" />
 
             <x-select id="german_gender_ending"
@@ -22,6 +32,16 @@
         </div>
 
         <div class="col-span-6 sm:col-span-4">
+            {{ __('guidelines.set_for_all') }}
+
+            <x-jet-input id="gendered_roles_format_force"
+                value="1"
+                type="checkbox"
+                class="mt-1 block"
+                wire:model.defer="gendered_roles_format_force"
+                wire:change="updateOrganizationGuidelinesGerman()"
+                :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" />
+
             <x-jet-label for="gendered_roles_format" value="{!! __('guidelines.gendered_roles_format') !!}" />
 
             <x-select id="gendered_roles_format"

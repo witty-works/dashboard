@@ -9,13 +9,25 @@
 
     <x-slot name="form">
         <div class="col-span-6 sm:col-span-4">
+            {{ __('guidelines.set_for_all') }}
+
+            <x-jet-input id="show_inspiration_alternatives_force"
+                value="1"
+                type="checkbox"
+                class="mt-1 block"
+                wire:model.defer="show_inspiration_alternatives_force"
+                wire:change="updateOrganizationGuidelinesInspirations()"
+                :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" />
+
+            {{ __('guidelines.enable_show_inspiration_alternatives') }}
+
             <x-jet-input id="show_inspiration_alternatives"
-                        value="1"
-                        type="checkbox"
-                        class="mt-1 block"
-                        wire:model.defer="show_inspiration_alternatives"
-                        wire:change="updateOrganizationGuidelinesInspirations()"
-                        :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" />
+                value="1"
+                type="checkbox"
+                class="mt-1 block"
+                wire:model.defer="show_inspiration_alternatives"
+                wire:change="updateOrganizationGuidelinesInspirations()"
+                :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" />
 
             <x-jet-input-error for="show_inspiration_alternatives" class="mt-2" />
         </div>

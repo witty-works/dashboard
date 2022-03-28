@@ -13,10 +13,13 @@ class Style extends Component
     use CategoryTrait;
 
     public $disabled_categories;
+    public $disabled_categories_force;
     public $disabled_categories_style;
+    public $disabled_categories_style_force;
 
     protected $rules = [
         'disabled_categories_style' => 'nullable|boolean',
+        'disabled_categories_style_force' => 'nullable|boolean',
     ];
 
     public $team;

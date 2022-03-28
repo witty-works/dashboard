@@ -10,12 +10,12 @@
     <x-slot name="form">
         <div class="col-span-6 sm:col-span-4">
             <x-jet-input id="store_context"
-                        value="1"
-                        type="checkbox"
-                        class="mt-1 block"
-                        wire:model.defer="store_context"
-                        wire:change="updateOrganizationGuidelinesStoreContext()"
-                        :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" />
+                value="1"
+                type="checkbox"
+                class="mt-1 block"
+                wire:model.defer="store_context"
+                wire:change="updateOrganizationGuidelinesStoreContext()"
+                :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" />
 
             <x-jet-input-error for="store_context" class="mt-2" />
         </div>

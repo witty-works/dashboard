@@ -12,9 +12,11 @@ class Inspirations extends Component
     use AuthorizesRequests;
 
     public $show_inspiration_alternatives;
+    public $show_inspiration_alternatives_force;
 
     protected $rules = [
-        'show_inspiration_alternatives' => 'nullable|boolean'
+        'show_inspiration_alternatives' => 'nullable|boolean',
+        'show_inspiration_alternatives_force' => 'nullable|boolean',
     ];
 
     public $team;
@@ -32,6 +34,7 @@ class Inspirations extends Component
         $organizationRule = $this->getOrganizationGuidelines($this->team);
 
         $this->show_inspiration_alternatives = (bool) $organizationRule->show_inspiration_alternatives;
+        $this->show_inspiration_alternatives_force = (bool) $organizationRule->show_inspiration_alternatives_force;
     }
 
     public function updateOrganizationGuidelinesInspirations()
@@ -45,6 +48,7 @@ class Inspirations extends Component
         $organizationRule = $this->getOrganizationGuidelines($this->team);
 
         $organizationRule->show_inspiration_alternatives = (bool) $this->show_inspiration_alternatives;
+        $organizationRule->show_inspiration_alternatives_force = (bool) $this->show_inspiration_alternatives_force;
 
         $organizationRule->save();
 
