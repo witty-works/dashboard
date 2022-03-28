@@ -95,8 +95,12 @@
                                 {{ __('guidelines.organization_guidelines') }}
                             </x-jet-dropdown-link>
 
+                            <x-jet-dropdown-link href="{{ route('term-replacement', Auth::user()->currentTeam->id) }}">
+                                {{ __('guidelines.term_replacement_list') }}
+                            </x-jet-dropdown-link>
+
                             <x-jet-dropdown-link href="{{ route('false-positive', Auth::user()->currentTeam->id) }}">
-                                {{ __('guidelines.false_positives_list') }}
+                                {{ __('guidelines.false_positive_list') }}
                             </x-jet-dropdown-link>
                             @endif
 
@@ -185,8 +189,12 @@
                     {{ __('guidelines.organization_guidelines') }}
                 </x-jet-responsive-nav-link>
 
+                <x-jet-responsive-nav-link href="{{ route('term-replacement', Auth::user()->currentTeam->id) }}">
+                    {{ __('guidelines.term_replacement_list') }}
+                </x-jet-responsive-nav-link>
+
                 <x-jet-responsive-nav-link href="{{ route('false-positive', Auth::user()->currentTeam->id) }}">
-                    {{ __('guidelines.false_positives_list') }}
+                    {{ __('guidelines.false_positive_list') }}
                 </x-jet-responsive-nav-link>
 
                 @endif

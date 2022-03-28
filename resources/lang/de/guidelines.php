@@ -1,10 +1,8 @@
 <?php
 
 return [
-    'false_positives_list' => 'Wörter, die ignoriert werden',
     'create_false_positive' => 'Passe Witty deinen Bedürfnissen an, indem du Wörter zu deiner persönlichen Ignorierliste hinzufügst.
 Diese Wörter werden von Witty nicht mehr hervorgehoben.',
-    'create_new_false_postive_description' => 'Alle Wörter, die du dieser Liste hinzufügst, werden in Zukunft nicht mehr unterstrichen.',
     'false_positive_label' => 'Füge ein neues Wort hinzu',
     'language_code_label' => 'Sprachcode',
     'organization_guidelines' => 'Regeln anpassen',
@@ -12,7 +10,6 @@ Diese Wörter werden von Witty nicht mehr hervorgehoben.',
     'manage_organization_guidelines_description' => 'Passe die Regeln an, damit Witty besser deinem Schreibstil entspricht.',
     'german_gender_ending' => 'Deutsche Gender Endung',
     'list_false_positives' => 'Liste der ignorierten Wörter',
-    'list_false_postives_description' => 'Alle Wörter oder Sätze in dieser Liste werden nicht hervorgehoben.',
     'gendered_roles_format' => 'Witty sollte folgende Vorschläge machen',
     'store_context' => 'Kontext speichern',
     'both' => 'beide',
@@ -58,4 +55,7 @@ Es gibt drei Möglichkeiten:
     'manage_organization_guidelines_description_store_context' => 'Wenn eingeschaltet, speichert Witty einige Wörter vor und nach dem hervorgehobenen Begriff. So hilfst du mit, Witty zu verbessern, um in Zukunft noch bessere Vorschläge zu machen.',
     'manage_organization_guidelines_style' => 'Vorschläge in Bezug auf den Stil ',
     'manage_organization_guidelines_description_style' => 'Das sind Wörter und Wortkombinationen, die Ihren Lesenden das Verständnis erschweren, indem sie die Sprache in irgendeiner Weise stark verkomplizieren. Dazu gehört auch eine Sprache, der es an Authentizität oder Emotionalität mangelt. <a href="https://www.witty.works/de/kategorien/stil" target="_blank">Mehr dazu</a>.',
+    'create_new_false_positive_description' => 'Alle Wörter, die du dieser Liste hinzufügst, werden in Zukunft nicht mehr unterstrichen.',
+    'list_false_positives_description' => 'Alle Wörter oder Sätze in dieser Liste werden nicht hervorgehoben.',
+    'plan_only_allows_x_term_replacements' => 'Leider erlaubt Ihr aktuelles Abonnement nur bis zu :max_count falsch positive Ergebnisse zu speichern.',
 ];
