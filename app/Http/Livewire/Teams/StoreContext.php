@@ -3,7 +3,7 @@
 namespace App\Http\Livewire\Teams;
 
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
 
 class StoreContext extends Component
@@ -35,7 +35,7 @@ class StoreContext extends Component
     {
         $this->validate();
 
-        if (!Auth::user()->hasTeamPermission($this->team, 'update')) {
+        if (!Gate::check('update', $this->team)) {
             abort(403);
         }
 
