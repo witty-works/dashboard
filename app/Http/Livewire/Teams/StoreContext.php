@@ -35,7 +35,7 @@ class StoreContext extends Component
     {
         $this->validate();
 
-        if (!Auth::user()->hasTeamPermission($this->team, 'edit_guidelines')) {
+        if (!Auth::user()->hasTeamPermission($this->team, 'update')) {
             abort(403);
         }
 
