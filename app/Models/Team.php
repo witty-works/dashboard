@@ -63,6 +63,11 @@ class Team extends JetstreamTeam
         return $this->hasOne(OrganizationGuidelines::class, 'team_id');
     }
 
+    public function termReplacements()
+    {
+        return $this->hasMany(TermReplacement::class, 'team_id');
+    }
+
     public function falsePositives()
     {
         return $this->hasMany(FalsePositive::class, 'team_id');
@@ -73,24 +78,34 @@ class Team extends JetstreamTeam
         return PostHogMiddleware::POSTHOG_ID_PREFIX . $this->id;
     }
 
-    public function maxUserCount()
+    public function getUserLicensesCountAttribute()
     {
-        return 3;
+        return $this->user_licenses ?? 3;
     }
 
-    public function maxTermReplacementCount()
-    {
-        return 5;
-    }
-
-    public function maxFalsePositiveCount()
-    {
-        return 5;
-    }
-
-    public function totalUserCount()
+    public function getTotalUserLicensesCountAttribute()
     {
         return $this->teamInvitations()->count() + $this->allUsers()->count();
+    }
+
+    public function getTermReplacementsCountAttribute()
+    {
+        return $this->term_replacements ?? 5;
+    }
+
+    public function getTotalTermReplacementsCountAttribute()
+    {
+        return $this->termReplacements()->count();
+    }
+
+    public function getFalsePositivesCountAttribute()
+    {
+        return $this->false_positives ?? 5;
+    }
+
+    public function getTotalFalsePositivesCountAttribute()
+    {
+        return $this->falsePositives()->count();
     }
 
     /**
