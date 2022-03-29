@@ -31,7 +31,7 @@
             @endif 
             @if (!$currentTeam)
             <li>{{ __('content.onboarding_invite_users') }}</li>
-            @elseif ($currentTeam && $currentTeam->totalUserCount() > 1)
+            @elseif ($currentTeam && $currentTeam->total_user_licenses_count > 1)
             <li>{{ __('content.onboarding_invite_users') }} ✔️</li>
             @else
             <li><a href="{{ route('teams.show', $currentTeam->id) }}">{{ __('content.onboarding_invite_users') }}</a></li>
