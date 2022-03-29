@@ -83,7 +83,6 @@
 
                         <div class="border-t border-gray-100"></div>
 
-                        <div class="w-60">
                             @if (Auth::user()->currentTeam)
                             <!-- Team Management -->
                             <!-- Team Settings -->
@@ -109,7 +108,6 @@
                                 {{ __('content.create_new_team') }}
                             </x-jet-dropdown-link>
                             @endcan
-                        </div>
 
                         <div class="border-t border-gray-100"></div>
 
