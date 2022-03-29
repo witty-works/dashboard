@@ -5,6 +5,10 @@
 
     <x-slot name="description">
         {!! Str::markdown(__('guidelines.create_new_false_positive_description')) !!}
+
+        @if($team->false_positives_limit_reached)
+        {!! __('guidelines.false_positive_limit_reached', ['max_count' => $team->false_positives_count, 'url' => route('spark.redirect')]) !!}
+        @endif
     </x-slot>
 
     <x-slot name="form">

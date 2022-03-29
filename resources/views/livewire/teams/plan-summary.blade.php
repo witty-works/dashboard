@@ -17,23 +17,33 @@
 
                     {{ $team->subscribed() ? $team->sparkPlan()->name : __('teams.default_plan_name')}}
 
-                    <a href="{{ route('spark.portal') }}">
+                    <a href="{{ route('spark.redirect') }}">
                         {{ __('teams.upgrade') }}
                     </a>
                 </div>
 
                 <div class="col-span-6 sm:col-span-4">
-                    <x-jet-label for="name" value="{{ __('teams.user_licenses') }}" />
+                    <div>
+                        {{ __('teams.what_is_included') }}
+                    </div>
 
-                    {{ __('teams.total_of_max_used', ['total' => $team->total_user_licenses_count, 'max_count' => $team->user_licenses_count]) }}
+                    <div class="mt-5">
+                        <x-jet-label for="name" value="{{ __('teams.user_licenses') }}" />
 
-                    <x-jet-label for="name" value="{{ __('teams.term_replacements') }}" />
+                        {{ __('teams.total_of_max_used', ['total' => $team->total_user_licenses_count, 'max_count' => $team->user_licenses_count]) }}
+                    </div>
 
-                    {{ __('teams.total_of_max_used', ['total' => $team->total_term_replacements_count, 'max_count' => $team->term_replacements_count]) }}
+                    <div class="mt-5">
+                        <x-jet-label for="name" value="{{ __('teams.term_replacements') }}" />
 
-                    <x-jet-label for="name" value="{{ __('teams.false_positives') }}" />
+                        {{ __('teams.total_of_max_used', ['total' => $team->total_term_replacements_count, 'max_count' => $team->term_replacements_count]) }}
+                    </div>
 
-                    {{ __('teams.total_of_max_used', ['total' => $team->total_false_positives_count, 'max_count' => $team->false_positives_count]) }}
+                    <div class="mt-5">
+                        <x-jet-label for="name" value="{{ __('teams.false_positives') }}" />
+
+                        {{ __('teams.total_of_max_used', ['total' => $team->total_false_positives_count, 'max_count' => $team->false_positives_count]) }}
+                    </div>
                 </div>
 
                 @if($team->subscribed())
@@ -53,6 +63,8 @@
                         :disabled="! Gate::check('update', $team)" />
     
                     <x-jet-input-error for="user_licenses" class="mt-2" />
+
+                    {!! __('teams.more_licenses') !!}
                 </div>
                 @endif
             </x-slot>
