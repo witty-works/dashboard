@@ -4,17 +4,24 @@ namespace App\Models;
 
 use App\Events\OrganizationGuidelinesUpdated;
 use App\Http\Middleware\PostHogMiddleware;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Gate;
+use Laravel\Cashier\Subscription;
 use Laravel\Jetstream\Events\TeamCreated;
 use Laravel\Jetstream\Events\TeamDeleted;
 use Laravel\Jetstream\Events\TeamUpdated;
 use Laravel\Jetstream\Team as JetstreamTeam;
 use Spark\Billable;
+use Spark\Plan;
 
 class Team extends JetstreamTeam
 {
     use HasFactory;
-    use Billable;
+    use Billable {
+        sparkPlan as protected parentSparkPlan;
+        subscription as protected parentSubscription;
+    }
 
     /**
      * The attributes that should be cast.
@@ -48,6 +55,30 @@ class Team extends JetstreamTeam
         'deleted' => TeamDeleted::class,
     ];
 
+    public function sparkPlan()
+    {
+        if (config('spark.mock')) {
+            $plan = new Plan('Standard', 'sss');
+
+            return $plan;
+        }
+
+        return $this->parentSparkPlan();
+    }
+
+    public function subscription()
+    {
+        if (config('spark.mock')) {
+            $subscription = new Subscription();
+            $subscription->created_at = Carbon::now();
+            $subscription->ends_at = Carbon::tomorrow();
+
+            return $subscription;
+        }
+
+        return $this->parentSubscription();
+    }
+
     public function stripeEmail()
     {
         return $this->owner->email;
@@ -63,6 +94,11 @@ class Team extends JetstreamTeam
         return $this->hasOne(OrganizationGuidelines::class, 'team_id');
     }
 
+    public function termReplacements()
+    {
+        return $this->hasMany(TermReplacement::class, 'team_id');
+    }
+
     public function falsePositives()
     {
         return $this->hasMany(FalsePositive::class, 'team_id');
@@ -73,24 +109,54 @@ class Team extends JetstreamTeam
         return PostHogMiddleware::POSTHOG_ID_PREFIX . $this->id;
     }
 
-    public function maxUserCount()
+    public function getUserLicensesCountAttribute()
     {
-        return 3;
+        return $this->user_licenses ?? 3;
     }
 
-    public function maxTermReplacementCount()
-    {
-        return 5;
-    }
-
-    public function maxFalsePositiveCount()
-    {
-        return 5;
-    }
-
-    public function totalUserCount()
+    public function getTotalUserLicensesCountAttribute()
     {
         return $this->teamInvitations()->count() + $this->allUsers()->count();
+    }
+
+    public function getUserLicensesLimitReachedAttribute()
+    {
+        return $this->getTotalUserLicensesCountAttribute() >= $this->getUserLicensesCountAttribute();
+    }
+
+    public function getTermReplacementsCountAttribute()
+    {
+        return $this->term_replacements ?? 5;
+    }
+
+    public function getTotalTermReplacementsCountAttribute()
+    {
+        return $this->termReplacements()->count();
+    }
+
+    public function getTermReplacementsLimitReachedAttribute()
+    {
+        return $this->getTotalTermReplacementsCountAttribute() >= $this->getTermReplacementsCountAttribute();
+    }
+
+    public function getFalsePositivesCountAttribute()
+    {
+        return $this->false_positives ?? 5;
+    }
+
+    public function getTotalFalsePositivesCountAttribute()
+    {
+        return $this->falsePositives()->count();
+    }
+
+    public function getFalsePositivesLimitReachedAttribute()
+    {
+        return $this->getTotalFalsePositivesCountAttribute() >= $this->getFalsePositivesCountAttribute();
+    }
+
+    public function getStoreContextDisablableAttribute()
+    {
+        return $this->subscribed() && Gate::check('update', $this);
     }
 
     /**

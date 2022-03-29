@@ -6,6 +6,7 @@ use Spark\Features;
 return [
 
     'enabled' => env('SPARK_ENABLED', false),
+    'mock' => env('SPARK_MOCK_ENABLED', false),
 
     /*
     |--------------------------------------------------------------------------

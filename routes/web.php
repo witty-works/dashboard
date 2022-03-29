@@ -3,6 +3,8 @@
 use App\Http\Controllers\Livewire\GuidelinesController;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\SubscribeRedirectController;
+
 /*
 |------------------
 | JETSTREAM LIVEWIRE
@@ -142,6 +144,7 @@ Route::group(
         | SPARK
         |------------------
         */
+        Route::get('/spark-redirect', [SubscribeRedirectController::class, 'redirect'])->name('spark.redirect');
 
         if (config('spark.enabled')) {
             Route::group([

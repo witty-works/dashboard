@@ -65,12 +65,21 @@ class OrganizationGuidelinesUpdate
             }
         }
 
+        $termReplacements = [];
+        foreach ($event->team->termReplacements as $termReplacement) {
+            $termReplacements[] = [
+                'term' => $termReplacement->term,
+                'alternatives' => [$termReplacement->replacement]
+            ];
+        }
+
         $data = [
             'organization' => $event->team->id,
             'users' => $event->team->allUsers()->pluck('email')->toArray(),
             'forced' => $force,
             'suggestion' => $suggestion,
-            'false_positive' => $event->team->falsePositives()->pluck('false_positive')->toArray(),
+            'false_positives' => $event->team->falsePositives()->pluck('false_positive')->toArray(),
+            'term_replacements' => $termReplacements,
         ];
 
         $endpoint = config('app.organization_guidelines_endpoint');

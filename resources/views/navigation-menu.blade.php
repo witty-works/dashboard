@@ -19,13 +19,11 @@
 
                         @if (Auth::user()->currentTeam)
                             <!-- Team Settings -->
-                            @if(config('spark.enabled'))
                             @if(Auth::user()->ownsTeam(Auth::user()->currentTeam))
-                            <x-jet-nav-link href="{{ route('spark.portal') }}" :active="request()->routeIs('spark.portal')">
+                            <x-jet-nav-link href="{{ route('spark.redirect') }}">
                                 {{ !Auth::user()->currentTeam->subscribed() ? __('teams.subscribe') : __('teams.billing') }}
                             </x-jet-nav-link>
                             @endcan
-                            @endif
                         @elseif(count(Auth::user()->allTeams()) === 0)
                             @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
                                 <x-jet-nav-link href="{{ route('teams.create') }}">
@@ -83,33 +81,31 @@
 
                         <div class="border-t border-gray-100"></div>
 
-                        <div class="w-60">
-                            @if (Auth::user()->currentTeam)
-                            <!-- Team Management -->
-                            <!-- Team Settings -->
-                            <x-jet-dropdown-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}">
-                                {{ __('content.team_settings') }}
-                            </x-jet-dropdown-link>
+                        @if (Auth::user()->currentTeam)
+                        <!-- Team Management -->
+                        <!-- Team Settings -->
+                        <x-jet-dropdown-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}">
+                            {{ __('content.team_settings') }}
+                        </x-jet-dropdown-link>
 
-                            <x-jet-dropdown-link href="{{ route('organization-guidelines', Auth::user()->currentTeam->id) }}">
-                                {{ __('guidelines.organization_guidelines') }}
-                            </x-jet-dropdown-link>
+                        <x-jet-dropdown-link href="{{ route('organization-guidelines', Auth::user()->currentTeam->id) }}">
+                            {{ __('guidelines.organization_guidelines') }}
+                        </x-jet-dropdown-link>
 
-                            <x-jet-dropdown-link href="{{ route('term-replacement', Auth::user()->currentTeam->id) }}">
-                                {{ __('guidelines.term_replacement_list') }}
-                            </x-jet-dropdown-link>
+                        <x-jet-dropdown-link href="{{ route('term-replacement', Auth::user()->currentTeam->id) }}">
+                            {{ __('guidelines.term_replacement_list') }}
+                        </x-jet-dropdown-link>
 
-                            <x-jet-dropdown-link href="{{ route('false-positive', Auth::user()->currentTeam->id) }}">
-                                {{ __('guidelines.false_positive_list') }}
-                            </x-jet-dropdown-link>
-                            @endif
+                        <x-jet-dropdown-link href="{{ route('false-positive', Auth::user()->currentTeam->id) }}">
+                            {{ __('guidelines.false_positive_list') }}
+                        </x-jet-dropdown-link>
+                        @endif
 
-                            @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
-                            <x-jet-dropdown-link href="{{ route('teams.create') }}">
-                                {{ __('content.create_new_team') }}
-                            </x-jet-dropdown-link>
-                            @endcan
-                        </div>
+                        @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
+                        <x-jet-dropdown-link href="{{ route('teams.create') }}">
+                            {{ __('content.create_new_team') }}
+                        </x-jet-dropdown-link>
+                        @endcan
 
                         <div class="border-t border-gray-100"></div>
 

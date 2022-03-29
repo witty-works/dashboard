@@ -61,15 +61,10 @@ class Form extends Component
             throw ValidationException::withMessages(['term' => $message]);
         }
 
-        $count = TermReplacement::query()
-            ->where('team_id', $this->team->id)
-            ->count();
-
-        $max_count = $this->team->maxTermReplacementCount();
-        if ($count >= $max_count) {
+        if ($this->team->term_replacements_limit_reached) {
             $message = __(
-                'guidelines.plan_only_allows_x_term_replacements',
-                ['max_count' => $max_count]
+                'guidelines.term_replacement_limit_reached_error',
+                ['max_count' => $this->team->term_replacements_count]
             );
             throw ValidationException::withMessages(['term' => $message]);
         }

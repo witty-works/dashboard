@@ -59,16 +59,10 @@ class Form extends Component
             throw ValidationException::withMessages(['false_positive' => $message]);
         }
 
-
-        $count = FalsePositive::query()
-            ->where('team_id', $this->team->id)
-            ->count();
-
-        $max_count = $this->team->maxFalsePositiveCount();
-        if ($count >= $max_count) {
+        if ($this->team->false_positive_limit_reached) {
             $message = __(
-                'guidelines.plan_only_allows_x_false_positives',
-                ['max_count' => $max_count]
+                'guidelines.false_positive_limit_reached_error',
+                ['max_count' => $this->team->false_positive_count]
             );
             throw ValidationException::withMessages(['false_positive' => $message]);
         }

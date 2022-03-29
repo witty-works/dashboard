@@ -9,6 +9,10 @@
 
             <x-slot name="description">
                 {!! Str::markdown(__('teams.store_context_description')) !!}
+
+                @if(!$team->store_context_disablable)
+                {!! __('teams.store_context_subscription_required', ['url' => route('spark.redirect')]) !!}
+                @endif
             </x-slot>
 
             <x-slot name="form">
@@ -20,13 +24,13 @@
                         type="checkbox"
                         class="mt-1 block"
                         wire:model.defer="store_context"
-                        :disabled="! Gate::check('update', $team)" />
+                        :disabled="!$team->store_context_disablable" />
 
                     <x-jet-input-error for="store_context" class="mt-2" />
                 </div>
             </x-slot>
 
-            @if (Gate::check('update', $team))
+            @if ($team->store_context_disablable)
                 <x-slot name="actions">
                     <x-jet-action-message class="mr-3" on="saved">
                         {{ __('content.saved') }}
