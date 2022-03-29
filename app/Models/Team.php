@@ -4,18 +4,24 @@ namespace App\Models;
 
 use App\Events\OrganizationGuidelinesUpdated;
 use App\Http\Middleware\PostHogMiddleware;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Gate;
+use Laravel\Cashier\Subscription;
 use Laravel\Jetstream\Events\TeamCreated;
 use Laravel\Jetstream\Events\TeamDeleted;
 use Laravel\Jetstream\Events\TeamUpdated;
 use Laravel\Jetstream\Team as JetstreamTeam;
 use Spark\Billable;
+use Spark\Plan;
 
 class Team extends JetstreamTeam
 {
     use HasFactory;
-    use Billable;
+    use Billable {
+        sparkPlan as protected parentSparkPlan;
+        subscription as protected parentSubscription;
+    }
 
     /**
      * The attributes that should be cast.
@@ -48,6 +54,30 @@ class Team extends JetstreamTeam
         'saved' => TeamUpdated::class,
         'deleted' => TeamDeleted::class,
     ];
+
+    public function sparkPlan()
+    {
+        if (config('spark.mock')) {
+            $plan = new Plan('Standard', 'sss');
+
+            return $plan;
+        }
+
+        return $this->parentSparkPlan();
+    }
+
+    public function subscription()
+    {
+        if (config('spark.mock')) {
+            $subscription = new Subscription();
+            $subscription->created_at = Carbon::now();
+            $subscription->ends_at = Carbon::tomorrow();
+
+            return $subscription;
+        }
+
+        return $this->parentSubscription();
+    }
 
     public function stripeEmail()
     {

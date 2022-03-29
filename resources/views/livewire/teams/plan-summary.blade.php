@@ -50,7 +50,7 @@
                 <div class="col-span-6 sm:col-span-4">
                     <x-jet-label for="name" value="{{ __('teams.renewal_date') }}" />
 
-                    {{ $team->subscription()->ends_at->format('d/m/Y') }}
+                    {{ $team->subscription()->ends_at->toFormattedDateString() }}
                 </div>
 
                 <div class="col-span-6 sm:col-span-4">
@@ -64,7 +64,9 @@
     
                     <x-jet-input-error for="user_licenses" class="mt-2" />
 
-                    {!! __('teams.more_licenses') !!}
+                    <div class="mt-5">
+                        {!! __('teams.more_licenses', ['url' => route('spark.redirect')]) !!}
+                    </div>
                 </div>
                 @endif
             </x-slot>
