@@ -65,7 +65,7 @@ class Form extends Component
             ->where('team_id', $this->team->id)
             ->count();
 
-        $max_count = $this->team->maxTermReplacementCount();
+        $max_count = $this->team->term_replacements_count;
         if ($count >= $max_count) {
             $message = __(
                 'guidelines.plan_only_allows_x_term_replacements',

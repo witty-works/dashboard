@@ -10,11 +10,11 @@
                 </x-slot>
 
                 <x-slot name="description">
-                    {{ __('content.add_a_new_team_member', ['max_count' => $team->maxUserCount()]) }}
+                    {{ __('content.add_a_new_team_member', ['max_count' => $team->user_licenses_count]) }}
                     @if(!Gate::check('addTeamMember', $team))
                     <br />
                     <br />
-                    {{ __('content.user_limit_reached', ['max_count' => $team->maxUserCount()]) }}
+                    {{ __('content.user_limit_reached', ['max_count' => $team->user_licenses_count]) }}
                     @endif
                 </x-slot>
 
@@ -33,7 +33,7 @@
                         </x-jet-input-error>
                         <p class="text-sm text-red-600 mt-2">
                             @if(!Gate::check('addTeamMember', $team))
-                            {{ __('content.user_limit_reached_error', ['max_count' => $team->maxUserCount()]) }}
+                            {{ __('content.user_limit_reached_error', ['max_count' => $team->user_licenses_count]) }}
                             @endif
                         </p>
                     </div>

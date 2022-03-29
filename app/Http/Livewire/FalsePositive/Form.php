@@ -64,7 +64,7 @@ class Form extends Component
             ->where('team_id', $this->team->id)
             ->count();
 
-        $max_count = $this->team->maxFalsePositiveCount();
+        $max_count = $this->team->false_positive_count();
         if ($count >= $max_count) {
             $message = __(
                 'guidelines.plan_only_allows_x_false_positives',
