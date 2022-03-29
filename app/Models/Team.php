@@ -88,6 +88,11 @@ class Team extends JetstreamTeam
         return $this->teamInvitations()->count() + $this->allUsers()->count();
     }
 
+    public function getUserLicensesLimitReachedAttribute()
+    {
+        return $this->getTotalUserLicensesCountAttribute() >= $this->getUserLicensesCountAttribute();
+    }
+
     public function getTermReplacementsCountAttribute()
     {
         return $this->term_replacements ?? 5;
@@ -98,6 +103,11 @@ class Team extends JetstreamTeam
         return $this->termReplacements()->count();
     }
 
+    public function getTermReplacementsLimitReachedAttribute()
+    {
+        return $this->getTotalTermReplacementsCountAttribute() >= $this->getTermReplacementsCountAttribute();
+    }
+
     public function getFalsePositivesCountAttribute()
     {
         return $this->false_positives ?? 5;
@@ -106,6 +116,11 @@ class Team extends JetstreamTeam
     public function getTotalFalsePositivesCountAttribute()
     {
         return $this->falsePositives()->count();
+    }
+
+    public function getFalsePositivesLimitReachedAttribute()
+    {
+        return $this->getTotalFalsePositivesCountAttribute() >= $this->getFalsePositivesCountAttribute();
     }
 
     /**

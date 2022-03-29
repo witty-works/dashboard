@@ -23,7 +23,6 @@ Diese Wörter werden von Witty nicht mehr hervorgehoben.',
     'preferred_variants_none' => '-',
     'disabled_categories_orthography' => 'Rechtschreibung/Grammatik korrigieren',
     'disabled_categories_casing' => 'Groß- und Kleinschreibung korrigieren',
-    'plan_only_allows_x_false_positives' => 'Leider erlaubt Ihr aktuelles Abonnement nur bis zu :max_count falsch positive Ergebnisse zu speichern.',
     'inclusive_gender' => 'Nur die gewählte Gender-Endung',
     'binary_gender' => 'Die weibliche und männliche Form (z.Bsp. "Managerin oder Manager")',
     'manage_organization_guidelines_english' => 'Im Englischen geschlechtsneutrale generische Pronomen verwenden',
@@ -54,5 +53,4 @@ Es gibt drei Möglichkeiten:
     'manage_organization_guidelines_description_style' => 'Das sind Wörter und Wortkombinationen, die Ihren Lesenden das Verständnis erschweren, indem sie die Sprache in irgendeiner Weise stark verkomplizieren. Dazu gehört auch eine Sprache, der es an Authentizität oder Emotionalität mangelt. <a href="https://www.witty.works/de/kategorien/stil" target="_blank">Mehr dazu</a>.',
     'create_new_false_positive_description' => 'Alle Wörter, die du dieser Liste hinzufügst, werden in Zukunft nicht mehr unterstrichen.',
     'list_false_positives_description' => 'Alle Wörter oder Sätze in dieser Liste werden nicht hervorgehoben.',
-    'plan_only_allows_x_term_replacements' => 'Leider erlaubt Ihr aktuelles Abonnement nur bis zu :max_count falsch positive Ergebnisse zu speichern.',
 ];

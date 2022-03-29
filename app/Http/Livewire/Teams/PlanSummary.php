@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Teams;
 
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 
 class PlanSummary extends Component
@@ -90,6 +91,11 @@ class PlanSummary extends Component
 
         if (!$this->team->subscribed() && !Gate::check('update', $this->team)) {
             abort(403);
+        }
+
+        if (!in_array($this->user_licenses, self::USER_LICENSES_STEPS)) {
+            $message = __('teams.user_licenses_error');
+            throw ValidationException::withMessages(['user_licenses' => $message]);
         }
 
         $this->team->user_licenses = (int) $this->user_licenses;

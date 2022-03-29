@@ -75,7 +75,7 @@ return [
     'team_name' => 'Team Name',
     'create_team' => 'Create Team',
     'delete_team' => 'Delete Team',
-    'add team member' => 'Add Team Member',
+    'add_team_member' => 'Add Team Member',
     'role' => 'Role',
     'add' => 'Add',
     'pending_team_invitations' => 'Pending Team Invitations',
@@ -186,8 +186,6 @@ Read more about services for [organizations](https://www.witty.works/witty-for-c
 * Ensure streamlined brand voice through your whole organization. 
 
 Read more about ROI for [organizations](https://www.witty.works/witty-for-companies "Witty for Organizations").',
-    'user_limit_reached' => 'You have reached the limit of :max_count of the users that can be invited on your current plan. To add a new user you first must cancel and invitation and/or remove a user from your team.',
-    'user_limit_reached_error' => 'User limit of :max_count on the current plan reached.',
     'onboarding_signup_to_witty' => 'Sign up for a Witty account',
     'team' => 'Team',
     'accepting_invitation_will_result_in_leaving_your_current_team' => 'Accepting an invitation will result in leaving team ":team_name".',

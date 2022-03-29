@@ -6,15 +6,16 @@
         <div class="mt-10 sm:mt-0">
             <x-jet-form-section submit="addTeamMember">
                 <x-slot name="title">
-                    {{ __('content.add team member') }}
+                    {{ __('content.add_team_member') }}
                 </x-slot>
 
                 <x-slot name="description">
                     {{ __('content.add_a_new_team_member', ['max_count' => $team->user_licenses_count]) }}
-                    @if(!Gate::check('addTeamMember', $team))
+
+                    @if($team->user_licenses_limit_reached)
                     <br />
                     <br />
-                    {{ __('content.user_limit_reached', ['max_count' => $team->user_licenses_count]) }}
+                    {!! __('teams.user_limit_reached', ['max_count' => $team->user_licenses_count]) !!}
                     @endif
                 </x-slot>
 
@@ -32,8 +33,8 @@
                         <x-jet-input-error for="email" class="mt-2">
                         </x-jet-input-error>
                         <p class="text-sm text-red-600 mt-2">
-                            @if(!Gate::check('addTeamMember', $team))
-                            {{ __('content.user_limit_reached_error', ['max_count' => $team->user_licenses_count]) }}
+                            @if($team->user_licenses_limit_reached)
+                            {{ __('teams.user_limit_reached_error', ['max_count' => $team->user_licenses_count]) }}
                             @endif
                         </p>
                     </div>

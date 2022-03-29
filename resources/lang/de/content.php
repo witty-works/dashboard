@@ -75,7 +75,6 @@ return [
     'team_name' => 'Teamname',
     'create_team' => 'Team erstellen',
     'delete_team' => 'Team löschen',
-    'add team member' => 'Teammitglied hinzufügen',
     'role' => 'Rolle',
     'add' => 'Hinzufügen',
     'pending_team_invitations' => 'Ausstehende Teameinladungen',
@@ -174,9 +173,8 @@ Lesen Sie mehr über Dienstleistungen für [Organisationen](https://www.witty.wo
 * Sorgen Sie für eine optimierte Markenstimme in Ihrer gesamten Organisation.
 
 Lesen Sie mehr über den ROI für [Organisationen](https://www.witty.works/witty-for-companies "Witty for Organizations").',
-    'user_limit_reached' => 'Du hast das Limit von :max_count Teammitgliedern erreicht. Um ein neues Teammitglied hinzuzufügen, kannst du entweder ein Upgrade machen oder ein Teammitglied aus deinem Team löschen.',
-    'user_limit_reached_error' => 'Benutzerlimit von :max_count für den aktuellen Plan erreicht.',
     'onboarding_signup_to_witty' => 'Meldung für ein Witty-Konto',
     'invitation_email_welcome' => 'Um diese Einladung anzunehmen, melden Sie sich mit Ihrem bestehenden Konto an oder registrieren Sie ein neues Konto, indem Sie auf die Schaltfläche unten klicken:',
     'team' => 'Team',
+    'add_team_member' => 'Teammitglied hinzufügen',
 ];
