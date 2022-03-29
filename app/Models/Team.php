@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Events\OrganizationGuidelinesUpdated;
 use App\Http\Middleware\PostHogMiddleware;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Gate;
 use Laravel\Jetstream\Events\TeamCreated;
 use Laravel\Jetstream\Events\TeamDeleted;
 use Laravel\Jetstream\Events\TeamUpdated;
@@ -121,6 +122,11 @@ class Team extends JetstreamTeam
     public function getFalsePositivesLimitReachedAttribute()
     {
         return $this->getTotalFalsePositivesCountAttribute() >= $this->getFalsePositivesCountAttribute();
+    }
+
+    public function getStoreContextDisablableAttribute()
+    {
+        return $this->subscribed() && Gate::check('update', $this);
     }
 
     /**

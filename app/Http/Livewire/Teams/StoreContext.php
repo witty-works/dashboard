@@ -35,7 +35,7 @@ class StoreContext extends Component
     {
         $this->validate();
 
-        if (!Gate::check('update', $this->team)) {
+        if (!$this->team->store_context_disablable) {
             abort(403);
         }
 
