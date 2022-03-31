@@ -53,7 +53,7 @@ Es gibt drei Möglichkeiten:
     'false_positive_list' => 'Wörter ignorieren',
     'create_new_false_positive_description' => 'Alle Wörter, die du dieser Liste hinzufügst, werden in Zukunft nicht mehr hervorgehoben.',
     'term_replacement_list' => 'Begriffe ersetzen',
-    'create_term_replacement' => 'Passe Witty deinen Bedürfnissen an, indem du Wörter diese Liste hinzufügst.',
+    'create_term_replacement' => 'Passe Witty deinen Bedürfnissen an, indem du Wörter dieser Liste hinzufügst.',
     'create_new_term_replacement_description' => 'Alle Wörter, die zu dieser Liste hinzugefügt werden, werden von Witty hervorgehoben, und deine Alternative wird vorgeschlagen.',
     'list_false_positives_description' => 'Alle Wörter oder Begriffe in dieser Liste werden nicht hervorgehoben.',
     'list_term_replacements' => 'Liste mit Alternativvorschlägen',
