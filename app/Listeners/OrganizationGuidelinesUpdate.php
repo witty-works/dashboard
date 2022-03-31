@@ -16,12 +16,12 @@ class OrganizationGuidelinesUpdate
      */
     public function handle(OrganizationGuidelinesUpdated $event)
     {
-        $organizationGuidelines = $event->team->organizationGuidelines;
-
+        $suggestion = [];
         $force = [
             'store_context' => (bool) $event->team->store_context,
         ];
-        $suggestion = [];
+
+        $organizationGuidelines = OrganizationGuidelines::firstOrNew(['team_id' => $event->team->id]);
 
         $suggestion['maximum_importance'] = $organizationGuidelines->expert_mode ? 3 : 2;
         if ($organizationGuidelines->expert_mode_force) {
@@ -85,10 +85,14 @@ class OrganizationGuidelinesUpdate
         $endpoint = config('app.organization_guidelines_endpoint');
 
         if (empty($endpoint['user'])) {
-            Http::post($endpoint['url'], $data);
+            $response = Http::post($endpoint['url'], $data);
         } else {
-            Http::withBasicAuth($endpoint['user'], $endpoint['password'])
+            $response = Http::withBasicAuth($endpoint['user'], $endpoint['password'])
                 ->post($endpoint['url'], $data);
+        }
+
+        if (config('app.debug') && $response->failed()) {
+            dd($response->serverError());
         }
     }
 }
