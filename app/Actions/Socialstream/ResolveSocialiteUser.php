@@ -19,12 +19,7 @@ class ResolveSocialiteUser implements ResolvesSocialiteUsers
         $user = Socialite::driver($provider)->with(['policy' => $policy])->user();
 
         if ($provider === 'azureadb2c') {
-            $user->nickname = $user->user['nickname'] = $user->user['name'] ?? '';
-            $user->name = $user->user['name'] = trim($user->user['given_name'] ?? '' . ' ' . $user->user['family_name'] ?? '');
-            if (empty($user->user['name'])) {
-                $user->name = $user->user['name'] = $user->user['nickname'];
-            }
-
+            $user->name = $user->nickname = $user->user['nickname'] = $user->user['name'] ?? '';
             $user->email = $user->user['email'] = $user->user['emails'][0] ?: ($user->user['email'] ?: null);
         }
 
