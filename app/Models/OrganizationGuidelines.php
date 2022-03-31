@@ -23,7 +23,6 @@ class OrganizationGuidelines extends Model
     protected $attributes = [
         'german_gender_ending' => ':in',
         'gendered_roles_format' => 'inclusive_gender',
-        'store_context' => true,
         'singular_they' => false,
         'expert_mode' => false,
         'show_inspiration_alternatives' => false,
