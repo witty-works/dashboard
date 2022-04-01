@@ -174,7 +174,7 @@ Read more about [Witty](https://www.witty.works/ "Inclusive writing, anywhere, i
     'section_3_text' => 'For Organizations Witty offers an array of services so that whole teams can work with Witty flawlessly, such as:
 * Single-Sign-On
 * Organization language guidelines
-* Organization/Department statistics
+* Coming soon: Organization/Department statistics
 * Unconscious bias awareness session
 * Central control over data privacy
 
