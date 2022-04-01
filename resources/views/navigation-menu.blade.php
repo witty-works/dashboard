@@ -21,7 +21,7 @@
                             <!-- Team Settings -->
                             @if(Auth::user()->ownsTeam(Auth::user()->currentTeam))
                             <x-jet-nav-link href="{{ route('spark.redirect') }}">
-                                {{ !Auth::user()->currentTeam->subscribed() ? __('teams.subscribe') : __('teams.billing') }}
+                                {{ Auth::user()->currentTeam->sparkPlan()->id === env('STRIPE_PRICE_WITTY_ME') ? __('teams.subscribe') : __('teams.billing') }}
                             </x-jet-nav-link>
                             @endcan
                         @elseif(count(Auth::user()->allTeams()) === 0)

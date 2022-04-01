@@ -15,7 +15,7 @@
                 <div class="col-span-6 sm:col-span-4">
                     <x-jet-label for="name" value="{{ __('teams.plan_name') }}" />
 
-                    {{ $team->subscribed() ? $team->sparkPlan()->name : __('teams.default_plan_name')}}
+                    {{ $team->sparkPlan()->name }}
 
                     <a href="{{ route('spark.redirect') }}">
                         {{ __('teams.upgrade') }}
@@ -46,7 +46,7 @@
                     </div>
                 </div>
 
-                @if($team->subscribed())
+                @if($team->sparkPlan()->id === env('STRIPE_PRICE_WITTY_TEAMS'))
                 <div class="col-span-6 sm:col-span-4">
                     <x-jet-label for="name" value="{{ __('teams.renewal_date') }}" />
 
