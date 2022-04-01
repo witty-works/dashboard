@@ -59,6 +59,7 @@ return [
         'policy' => [
             'login' => env('AADB2C_POLICY'),
             'profile' => env('AADB2C_POLICY_PROFILE'),
+            'register' => env('AADB2C_POLICY_REGISTER'),
         ],
     ],
 ];

@@ -3,8 +3,14 @@
 
 {{ __('content.invitation_email_welcome') }}
 
+@component('mail::button', ['url' => route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'register'])])
+{{ __('content.register') }}
+@endcomponent
+
+{{ __('content.invitation_email_login') }}
+
 @component('mail::button', ['url' => route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'login'])])
-{{ __('content.log_in') }} / {{ __('content.register') }}
+{{ __('content.log_in') }}
 @endcomponent
 
 {{ __('content.if_you_did_not_expect') }}

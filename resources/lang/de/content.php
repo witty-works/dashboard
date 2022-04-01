@@ -174,7 +174,8 @@ Lesen Sie mehr über Dienstleistungen für [Organisationen](https://www.witty.wo
 
 Lesen Sie mehr über den ROI für [Organisationen](https://www.witty.works/witty-for-companies "Witty for Organizations").',
     'onboarding_signup_to_witty' => 'Meldung für ein Witty-Konto',
-    'invitation_email_welcome' => 'Um diese Einladung anzunehmen, melden Sie sich mit Ihrem bestehenden Konto an oder registrieren Sie ein neues Konto, indem Sie auf die Schaltfläche unten klicken:',
+    'invitation_email_welcome' => 'Um diese Einladung anzunehmen, registrieren Sie ein neues Konto, indem Sie auf die Schaltfläche unten klicken:',
     'team' => 'Team',
     'add_team_member' => 'Teammitglied hinzufügen',
+    'invitation_email_login' => 'Wenn Sie bereits ein bestehendes Konto haben, klicken Sie auf die Schaltfläche unten:',
 ];
