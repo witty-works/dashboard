@@ -121,29 +121,38 @@ return [
     // days since the last trial in order to be able to start a new trial
     'skip_trial_if_subscribed_before' => 365,
 
+    'plans' => [
+        [
+            'name' => 'witty_me',
+            'price_id' => env('STRIPE_PRICE_WITTY_ME'),
+            'features' => [
+                ['name' => 'inclusive_writing'],
+                ['name' => 'spelling_grammar'],
+                ['name' => 'browser_plugin'],
+                ['name' => 'organization_guidelines'],
+                ['name' => 'invite_smaller_teams'],
+            ],
+        ],
+        [
+            'name' => 'witty_teams',
+            'price_id' => env('STRIPE_PRICE_WITTY_TEAMS'),
+            'features' => [
+                ['name' => 'inclusive_writing'],
+                ['name' => 'spelling_grammar'],
+                ['name' => 'browser_plugin'],
+                ['name' => 'invite_larger_teams'],
+            ],
+        ],
+    ],
+
     'billables' => [
 
         'team' => [
             'model' => Team::class,
 
-            'default_interval' => 'monthly',
+            'default_interval' => 'yearly',
 
-            'plans' => [
-                [
-                    'trial_days' => 7,
-                    'name' => 'Standard',
-                    'short_description' => 'This is a short, human friendly description of the plan.',
-                    'monthly_id' => 'price_1K2ZV8CKySiDI8CQadbnX5cL',
-                    'yearly_id' => 'price_1K2ZV8CKySiDI8CQG1zNJqW4',
-                    'features' => [
-                        'Feature 1',
-                        'Feature 2',
-                        'Feature 3',
-                    ],
-                ],
-            ],
-
-
+            'plans' => [],
         ],
     ]
 ];

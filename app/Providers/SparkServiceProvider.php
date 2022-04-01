@@ -45,5 +45,18 @@ class SparkServiceProvider extends ServiceProvider
         Spark::billable(Team::class)->chargePerSeat('user', function ($billable) {
             return $billable->user_licenses;
         });
+
+        foreach (config('spark.plans') as $planConfig) {
+            $planConfig['features'] = $planConfig['features'] ?? [];
+            foreach ($planConfig['features'] as $key => $feature) {
+                $feature['parameters'] = $feature['parameters'] ?? [];
+                $planConfig['features'][$key] = __('spark.feature_' . $feature['name'], $feature['parameters']);
+            }
+
+            Spark::plan('team', __('spark.name_' . $planConfig['name']), $planConfig['price_id'])
+                ->interval('yearly')
+                ->shortDescription(__('spark.description_' . $planConfig['name']))
+                ->features($planConfig['features']);
+        }
     }
 }

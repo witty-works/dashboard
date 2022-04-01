@@ -13,7 +13,7 @@ use Laravel\Jetstream\Events\TeamDeleted;
 use Laravel\Jetstream\Events\TeamUpdated;
 use Laravel\Jetstream\Team as JetstreamTeam;
 use Spark\Billable;
-use Spark\Plan;
+use Spark\Spark;
 
 class Team extends JetstreamTeam
 {
@@ -57,13 +57,14 @@ class Team extends JetstreamTeam
 
     public function sparkPlan()
     {
-        if (config('spark.mock')) {
-            $plan = new Plan('Standard', 'sss');
-
+        $plan = $this->parentSparkPlan();
+        if ($plan) {
             return $plan;
         }
 
-        return $this->parentSparkPlan();
+        $plans = Spark::plans('team');
+
+        return $plans[0];
     }
 
     public function subscription()
