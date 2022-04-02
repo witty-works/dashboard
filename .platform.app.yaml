@@ -49,16 +49,22 @@ hooks:
 
 crons:
     snapshot:
-        spec: "0 5 * * *"
+        spec: "22 5 * * *"
         cmd: |
             if [ "$PLATFORM_BRANCH" = main ]; then
                 platform backup:create --yes --no-wait
             fi
     snapshot-hourly:
-        spec: "35 * * * *"
+        spec: "42 * * * *"
         cmd: |
             if [ "$PLATFORM_BRANCH" = main ]; then
                 platform backup:create --yes --no-wait --live
+            fi
+    update-users-licenses:
+        spec: "*/5 * * * *"
+        cmd: |
+            if [ "$PLATFORM_BRANCH" = main ]; then
+                platform stripe:update-users-licenses
             fi
 
 # The relationships of the application with services or other applications.

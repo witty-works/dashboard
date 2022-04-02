@@ -7,7 +7,7 @@
         {!! Str::markdown(__('guidelines.create_new_term_replacement_description')) !!}
 
         @if($team->term_replacements_limit_reached)
-        {!! __('guidelines.term_replacement_limit_reached', ['max_count' => $team->term_replacements_count, 'url' => route('spark.redirect')]) !!}
+        {!! __('guidelines.term_replacement_limit_reached', ['max_count' => $team->term_replacements_count, 'url' => route('stripe.portal')]) !!}
         @endif
     </x-slot>
 

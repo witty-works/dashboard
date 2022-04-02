@@ -8,4 +8,5 @@ return [
     'term_replacements' => 'Begriffe ersetzen',
     'false_positives' => 'Wörter ignorieren',
     'user_limit_reached_error' => 'Benutzerlimit von :max_count für den aktuellen Plan erreicht.',
+    'pricing' => 'Preise',
 ];

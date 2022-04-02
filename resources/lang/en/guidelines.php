@@ -71,4 +71,6 @@ Choose how Witty suggests gendered roles such as job titles. There are three pos
     'false_positive_limit_reached_error' => 'Ignore word limit of :max_count on the current plan reached.',
     'term_replacement_limit_reached' => 'You have reached the limit of :max_count of the term relplacements that can be set on your current plan. To add a new ignore word please <a href=":url">upgrade</a> or remove an existing term replacement from your team.',
     'term_replacement_limit_reached_error' => 'Term replacement limit of :max_count on the current plan reached.',
+    'false_positive_already_exists' => 'false positive already exists',
+    'term_already_exists' => 'term already exists',
 ];

@@ -19,11 +19,11 @@
 
                         @if (Auth::user()->currentTeam)
                             <!-- Team Settings -->
-                            @if(Auth::user()->ownsTeam(Auth::user()->currentTeam))
-                            <x-jet-nav-link href="{{ route('spark.redirect') }}">
-                                {{ Auth::user()->currentTeam->sparkPlan()->id === env('STRIPE_PRICE_WITTY_ME') ? __('teams.subscribe') : __('teams.billing') }}
+                            @if(Auth::user()->ownsTeam(Auth::user()->currentTeam) && !Auth::user()->currentTeam->subscription())
+                            <x-jet-nav-link href="{{ route('pricing') }}">
+                                {{ __('teams.subscribe') }}
                             </x-jet-nav-link>
-                            @endcan
+                            @endif
                         @elseif(count(Auth::user()->allTeams()) === 0)
                             @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
                                 <x-jet-nav-link href="{{ route('teams.create') }}">
@@ -37,6 +37,9 @@
                         </x-jet-nav-link>
                         <x-jet-nav-link href="{{ route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'register']) }}">
                             {{ __('content.register') }}
+                        </x-jet-nav-link>
+                        <x-jet-nav-link href="{{ route('pricing') }}" :active="request()->routeIs('pricing')">
+                            {{ __('teams.pricing') }}
                         </x-jet-nav-link>
                     @endauth
                 </div>
@@ -90,6 +93,12 @@
                         <x-jet-dropdown-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}">
                             {{ __('content.team_settings') }}
                         </x-jet-dropdown-link>
+
+                        @if(Auth::user()->currentTeam->subscription())
+                        <x-jet-dropdown-link href="{{ route('stripe.portal') }}">
+                            {{ __('teams.billing') }}
+                        </x-jet-dropdown-link>
+                        @endif
 
                         <x-jet-dropdown-link href="{{ route('organization-guidelines', Auth::user()->currentTeam->id) }}">
                             {{ __('guidelines.organization_guidelines') }}
@@ -186,6 +195,12 @@
                 <x-jet-responsive-nav-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}" :active="request()->routeIs('teams.show')">
                     {{ __('content.team_settings') }}
                 </x-jet-responsive-nav-link>
+
+                @if(Auth::user()->currentTeam->subscription())
+                <x-jet-responsive-nav-link href="{{ route('stripe.portal') }}">
+                    {{ __('teams.billing') }}
+                </x-jet-responsive-nav-link>
+                @endif
 
                 <x-jet-responsive-nav-link href="{{ route('organization-guidelines', Auth::user()->currentTeam->id) }}">
                     {{ __('guidelines.organization_guidelines') }}

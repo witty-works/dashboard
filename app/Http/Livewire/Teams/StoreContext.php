@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\Teams;
 
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
 
 class StoreContext extends Component

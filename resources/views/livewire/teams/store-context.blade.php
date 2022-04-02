@@ -11,7 +11,7 @@
                 {!! Str::markdown(__('teams.store_context_description')) !!}
 
                 @if(!$team->store_context_disablable)
-                {!! __('teams.store_context_subscription_required', ['url' => route('spark.redirect')]) !!}
+                {!! __('teams.store_context_subscription_required', ['url' => route('stripe.portal')]) !!}
                 @endif
             </x-slot>
 

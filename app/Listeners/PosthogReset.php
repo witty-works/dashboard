@@ -6,7 +6,6 @@ use App\Http\Middleware\PostHogMiddleware;
 
 class PosthogReset
 {
-
     /**
      * Handle the event.
      *
