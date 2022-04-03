@@ -1,0 +1,33 @@
+<?php
+
+return [
+    'checkout' => 'Subscribe now',
+    'witty_me' => 'Witty Me',
+    'witty_teams' => 'Witty Teams',
+    'witty_enterprise' => 'Witty Enterprise',
+    'feature_inclusive_writing' => 'Inclusive writing',
+    'feature_spelling_grammar' => 'Spelling & Grammar',
+    'feature_browser_plugin' => 'Browser Plugin',
+    'feature_organization_guidelines' => 'Organization language rules',
+    'feature_basic_team_analytics' => 'Basic Personal & Team Analytics (coming soon)',
+    'feature_invite_smaller_teams' => 'Invite up to :count users',
+    'feature_false_positives' => '{1} Ignore one term |{*} Ignore up to :count terms |{999} Ignore unlimited terms',
+    'feature_term_replacements' => '{1} Define one term replacement |{*} Define up to :count custom term replacements |{999} Define unlimited custom term replacements',
+    'feature_witty_me' => 'All Witty Me features',
+    'feature_invite_larger_teams' => 'Invite any number of users',
+    'feature_advanced_team_analytics' => 'Advanced team analytics (coming soon)',
+    'feature_witty_teams' => 'All Witty Teams features',
+    'feature_private_cloud' => 'Deploy into your own private cloud',
+    'feature_sso' => 'SSO via Google, Microsoft & LinkedIn',
+    'feature_saml' => 'SAML SSO',
+    'feature_multiple_teams' => 'Unlimited teams',
+    'feature_advanced_organization_analytics' => 'Advanced organization analytics (coming soon)',
+    'feature_customer_success_helpcenter' => 'Customer success (help-center)',
+    'feature_customer_success_email' => 'Customer success (email)',
+    'feature_customer_success_phone' => 'Customer success (phone)',
+    'schedule_demo' => 'Schedule a demo',
+    'current_plan' => 'Your current plan',
+    'billing' => 'Go to billing portal',
+    'pricing' => 'Pricing',
+    'register_now' => 'Register now'
+];
