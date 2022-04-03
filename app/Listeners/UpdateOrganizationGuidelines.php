@@ -2,26 +2,42 @@
 
 namespace App\Listeners;
 
-use App\Events\OrganizationGuidelinesUpdated;
 use App\Models\OrganizationGuidelines;
 use Illuminate\Support\Facades\Http;
 
-class OrganizationGuidelinesUpdate
+class UpdateOrganizationGuidelines
 {
-    /**
-     * Handle the event.
-     *
-     * @param  object  $event
-     * @return void
-     */
-    public function handle(OrganizationGuidelinesUpdated $event)
+    public function handle($event)
     {
+        $team = $event->team;
+
+        $termReplacements = [];
+        foreach ($team->termReplacements as $termReplacement) {
+            $termReplacements[] = [
+                'term' => $termReplacement->term,
+                'alternatives' => [$termReplacement->replacement]
+            ];
+        }
+
+        $falsePositives = $team->falsePositives()->pluck('false_positive')->toArray();
+
+        if ($team->subscribed()) {
+            $users = $team->allUsers()->pluck('email')->toArray();
+        } else {
+            $users = [$team->owner->email];
+            $team->store_context = true;
+            $team->save();
+            $falsePositives = array_slice($falsePositives, 0, $team->false_positive_count);
+            $termReplacements = array_slice($termReplacements, 0, $team->term_replacement_count);
+        }
+
+        $storeContext = $team->store_context;
+
+        $organizationGuidelines = OrganizationGuidelines::firstOrNew(['team_id' => $team->id]);
         $suggestion = [];
         $force = [
-            'store_context' => (bool) $event->team->store_context,
+            'store_context' => $storeContext,
         ];
-
-        $organizationGuidelines = OrganizationGuidelines::firstOrNew(['team_id' => $event->team->id]);
 
         $suggestion['maximum_importance'] = $organizationGuidelines->expert_mode ? 3 : 2;
         if ($organizationGuidelines->expert_mode_force) {
@@ -65,20 +81,12 @@ class OrganizationGuidelinesUpdate
             }
         }
 
-        $termReplacements = [];
-        foreach ($event->team->termReplacements as $termReplacement) {
-            $termReplacements[] = [
-                'term' => $termReplacement->term,
-                'alternatives' => [$termReplacement->replacement]
-            ];
-        }
-
         $data = [
-            'organization' => $event->team->id,
-            'users' => $event->team->allUsers()->pluck('email')->toArray(),
+            'organization' => $team->id,
+            'users' => $users,
             'forced' => $force,
             'suggestion' => $suggestion,
-            'false_positives' => $event->team->falsePositives()->pluck('false_positive')->toArray(),
+            'false_positives' => $falsePositives,
             'term_replacements' => $termReplacements,
         ];
 
@@ -92,7 +100,7 @@ class OrganizationGuidelinesUpdate
         }
 
         if (config('app.debug') && $response->failed()) {
-            dd($response->serverError());
+            dd($response->body(), $data);
         }
     }
 }

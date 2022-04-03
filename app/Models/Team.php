@@ -4,22 +4,19 @@ namespace App\Models;
 
 use App\Events\OrganizationGuidelinesUpdated;
 use App\Http\Middleware\PostHogMiddleware;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Gate;
-use Laravel\Cashier\Subscription;
 use Laravel\Jetstream\Events\TeamCreated;
 use Laravel\Jetstream\Events\TeamDeleted;
 use Laravel\Jetstream\Events\TeamUpdated;
 use Laravel\Jetstream\Team as JetstreamTeam;
-use Spark\Billable;
-use Spark\Spark;
+use Laravel\Cashier\Billable;
 
 class Team extends JetstreamTeam
 {
     use HasFactory;
     use Billable {
-        sparkPlan as protected parentSparkPlan;
+        subscribed as protected parentSubscribed;
         subscription as protected parentSubscription;
     }
 
@@ -41,6 +38,7 @@ class Team extends JetstreamTeam
     protected $fillable = [
         'name',
         'personal_team',
+        'stripe_id',
     ];
 
     /**
@@ -55,29 +53,18 @@ class Team extends JetstreamTeam
         'deleted' => TeamDeleted::class,
     ];
 
-    public function sparkPlan()
+    public function subscribed($name = 'witty', $price = null)
     {
-        $plan = $this->parentSparkPlan();
-        if ($plan) {
-            return $plan;
+        if ($name === 'witty' && $price === null) {
+            $price = config('stripe.plans.witty_teams.price_id');
         }
 
-        $plans = Spark::plans('team');
-
-        return $plans[0];
+        return $this->parentSubscribed($name, $price);
     }
 
-    public function subscription()
+    public function subscription($name = 'witty')
     {
-        if (config('spark.mock')) {
-            $subscription = new Subscription();
-            $subscription->created_at = Carbon::now();
-            $subscription->ends_at = Carbon::tomorrow();
-
-            return $subscription;
-        }
-
-        return $this->parentSubscription();
+        return $this->parentSubscription($name);
     }
 
     public function stripeEmail()
@@ -112,21 +99,33 @@ class Team extends JetstreamTeam
 
     public function getUserLicensesCountAttribute()
     {
-        return $this->user_licenses ?? 3;
+        if ($this->subscribed()) {
+            return $this->subscription()->quantity;
+        }
+
+        return config('stripe.plans.witty_me.features.invite_smaller_teams.count');
     }
 
     public function getTotalUserLicensesCountAttribute()
     {
-        return $this->teamInvitations()->count() + $this->allUsers()->count();
+        return $this->allUsers()->count();
     }
 
     public function getUserLicensesLimitReachedAttribute()
     {
+        if ($this->subscribed()) {
+            return false;
+        }
+
         return $this->getTotalUserLicensesCountAttribute() >= $this->getUserLicensesCountAttribute();
     }
 
     public function getTermReplacementsCountAttribute()
     {
+        if ($this->subscribed()) {
+            return config('stripe.plans.' . $this->subscription()->planId() . '.features.term_replacements.count');
+        }
+
         return $this->term_replacements ?? 5;
     }
 
@@ -142,6 +141,10 @@ class Team extends JetstreamTeam
 
     public function getFalsePositivesCountAttribute()
     {
+        if ($this->subscribed()) {
+            return config('stripe.plans.' . $this->subscription()->planId() . '.features.false_positives.count');
+        }
+
         return $this->false_positives ?? 5;
     }
 

@@ -26,8 +26,6 @@ class RemoveTeamMember implements RemovesTeamMembers
 
         $team->removeUser($teamMember);
 
-        $team->removeSeat();
-
         TeamMemberRemoved::dispatch($team, $teamMember);
     }
 

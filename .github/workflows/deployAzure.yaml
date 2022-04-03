@@ -6,16 +6,6 @@
 # COMPOSE_AUTH: composer auth.json file to access private laravel repos
 # format of the file:
 
-# {
-#     "http-basic": {
-#         "spark.laravel.com": {
-#             "username": "<username>",
-#             "password": "<password>"
-#         }
-#     }
-# }
-
-
 on: [push]
 name: Build a Docker image and Push it to ACR
 jobs:

@@ -13,7 +13,7 @@
         "laravel/jetstream": "^2.4",
         "laravel/sanctum": "^2.11",
         "laravel/socialite": "^5.2",
-        "laravel/spark-stripe": "^1.0",
+        "laravel/cashier": "^13.8.4",
         "laravel/tinker": "^2.5",
         "livewire/livewire": "^2.5",
         "mcamara/laravel-localization": "^1.6",
@@ -35,13 +35,9 @@
     "autoload": {
         "psr-4": {
             "App\\": "app/",
-            "Spark\\": "spark",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        },
-        "exclude-from-classmap": [
-            "vendor/laravel/spark-stripe/src/Countries.php"
-        ]
+        }
     },
     "autoload-dev": {
         "psr-4": {
@@ -88,13 +84,6 @@
         {
             "type": "vcs",
             "url": "git@github.com:lsmith77/laravel.git"
-        },
-        {
-            "type": "composer",
-            "url": "https://spark.laravel.com"
         }
-    ],
-    "listen-stripe": [
-        "stripe listen --forward-to http://spark-test.test/spark/webhook"
     ]
 }
