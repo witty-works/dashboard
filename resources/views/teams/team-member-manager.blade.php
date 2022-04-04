@@ -11,12 +11,6 @@
 
                 <x-slot name="description">
                     {{ __('content.add_a_new_team_member', ['max_count' => $team->user_licenses_count]) }}
-
-                    @if($team->user_licenses_limit_reached)
-                    <br />
-                    <br />
-                    {!! __('teams.user_limit_reached', ['max_count' => $team->user_licenses_count]) !!}
-                    @endif
                 </x-slot>
 
                 <x-slot name="form">
