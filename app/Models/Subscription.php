@@ -54,4 +54,9 @@ class Subscription extends CashierSubscription
     {
         return __('stripe.' . $this->planId());
     }
+
+    public function isPaidByInvoice()
+    {
+        return $this->stripe_id === 'invoice';
+    }
 }

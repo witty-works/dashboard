@@ -113,7 +113,7 @@ class Team extends JetstreamTeam
 
     public function getUserLicensesLimitReachedAttribute()
     {
-        if ($this->subscribed()) {
+        if ($this->subscribed() && !$this->subscription()->isPaidByInvoice()) {
             return false;
         }
 
@@ -122,7 +122,7 @@ class Team extends JetstreamTeam
 
     public function getTermReplacementsCountAttribute()
     {
-        if ($this->subscribed()) {
+        if ($this->subscribed() && $this->term_replacements === null) {
             return config('stripe.plans.' . $this->subscription()->planId() . '.features.term_replacements.count');
         }
 
@@ -141,7 +141,7 @@ class Team extends JetstreamTeam
 
     public function getFalsePositivesCountAttribute()
     {
-        if ($this->subscribed()) {
+        if ($this->subscribed() && $this->false_positives === null) {
             return config('stripe.plans.' . $this->subscription()->planId() . '.features.false_positives.count');
         }
 

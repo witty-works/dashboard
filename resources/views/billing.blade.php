@@ -11,7 +11,7 @@
                 @if ($team && $team->subscribed())
                 <div class="mt-6">
                     <a class="px-6 py-3 bg-indigo-500 rounded text-white" href="{{ route('stripe.portal') }}">
-                        {{ __('stripe.billing') }}
+                        {{ $team->subscription()->isPaidByInvoice() ? __('stripe.contact_sales') : __('stripe.billing') }}
                     </a>
                 </div>
                 @endif
@@ -22,6 +22,18 @@
                     <h2>
                         {{ __('stripe.'.$planName) }}
                     <h2>
+                    <div>
+                        {{ \Laravel\Cashier\Cashier::formatAmount($planConfig['price'], null, app()->getLocale()) }}
+                        @if(empty($planConfig['price_id']))
+                        *
+                        @endif
+                        @if($planConfig['price'])
+                        {{ __('stripe.price') }}
+                        @endif
+                    </div>
+                    <p>
+                        {!! __('stripe.'.$planName.'_description') !!}
+                    </p>
                     <ul>
                         @foreach ($planConfig['features'] as $featureName => $feature)
                         <li>
@@ -30,14 +42,13 @@
                         @endforeach
                         @if(!empty($planConfig['demo']))
                         <li>
-                            <a href="https://www.witty.works/demo">
+                            <a class="px-6 py-3 bg-indigo-500 rounded text-white" href="https://www.witty.works/demo">
                                 {{ __('stripe.schedule_demo') }}
                             </a>
                         </li>
-                        @endif
-                        @if(empty($team))
+                        @elseif(empty($team))
                         <li>
-                            <a href="{{ route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'register']) }}">
+                            <a class="px-6 py-3 bg-indigo-500 rounded text-white" href="{{ route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'register']) }}">
                                 {{ __('stripe.register_now') }}
                             </a>
                         </li>

@@ -5,6 +5,7 @@ return [
     'plans' => [
         'witty_me' => [
             'price_id' => env('STRIPE_PRICE_WITTY_ME'),
+            'price' => 0,
             'checkout' => false,
             'features' => [
                 'inclusive_writing' => [],
@@ -22,7 +23,7 @@ return [
         'witty_teams' => [
             'price_id' => env('STRIPE_PRICE_WITTY_TEAMS'),
             'checkout' => true,
-            'demo' => true,
+            'demo' => false,
             'features' => [
                 'witty_me' => [],
                 'invite_larger_teams' => [],
@@ -39,6 +40,7 @@ return [
         ],
         'witty_enterprise' => [
             'price_id' => env('STRIPE_PRICE_WITTY_ENTERPRISE'),
+            'price' => 850,
             'checkout' => false,
             'demo' => true,
             'features' => [
