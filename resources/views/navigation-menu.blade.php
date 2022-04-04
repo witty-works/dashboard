@@ -96,7 +96,7 @@
 
                         @if(Auth::user()->currentTeam->subscription())
                         <x-jet-dropdown-link href="{{ route('stripe.portal') }}">
-                            {{ __('teams.billing') }}
+                            {{ Auth::user()->currentTeam->subscription()->isPaidByInvoice() ? __('stripe.contact_sales') : __('stripe.billing') }}
                         </x-jet-dropdown-link>
                         @endif
 
@@ -198,7 +198,7 @@
 
                 @if(Auth::user()->currentTeam->subscription())
                 <x-jet-responsive-nav-link href="{{ route('stripe.portal') }}">
-                    {{ __('teams.billing') }}
+                    {{ Auth::user()->currentTeam->subscription()->isPaidByInvoice() ? __('stripe.contact_sales') : __('stripe.billing') }}
                 </x-jet-responsive-nav-link>
                 @endif
 

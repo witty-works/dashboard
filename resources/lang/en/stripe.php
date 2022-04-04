@@ -35,4 +35,10 @@ return [
     'feature_inclusion_nps_store' => 'Inclusion NPS Score (coming soon)',
     'feature_hr_add_on' => 'HR Add-on (coming soon)',
     'feature_unconscious_bias_video_training' => 'Inclusive language video-awareness tutorial',
+    'feature_custom_onboarding_training' => 'Custom onboarding to meet your organizations needs',
+    'price' => '/ user / month, billed annually',
+    'witty_me_description' => 'Try before you buy - the ideal solution for individual users.',
+    'witty_teams_description' => 'The ideal solution for Start-Ups and other organizations with less than 250 employees - quickly and easily installed.',
+    'witty_enterprise_description' => 'The ideal compliant solution for large organizations and those with strict data security standards.',
+    'contact_sales' => 'Contact Sales',
 ];

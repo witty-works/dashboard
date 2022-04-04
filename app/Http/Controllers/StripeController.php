@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Team;
 use Illuminate\Http\Request;
+use Laravel\Cashier\Cashier;
 
 class StripeController extends Controller
 {
@@ -27,7 +28,11 @@ class StripeController extends Controller
                     );
                 }
 
-                if ($planConfig['checkout'] && $team) {
+                if (!isset($planConfig['price'])) {
+                    $planConfig['price'] = $this->getPrice($planConfig['price_id'])->unit_amount / 12;
+                }
+
+                if ($planConfig['checkout'] && $team && !$team->subscribed()) {
                     $planConfig['checkout'] = $team->allowPromotionCodes()
                         ->checkout(
                             [[
@@ -52,7 +57,12 @@ class StripeController extends Controller
     public function portal(Request $request)
     {
         $team = $request->user()->currentTeam;
-        if ($team->subscription()) {
+        $subscription = $team->subscription();
+        if ($subscription) {
+            if ($subscription->isPaidByInvoice()) {
+                return redirect('mailto:sales@witty.works');
+            }
+
             return $team->redirectToBillingPortal(
                 $this->teamShowRoute($team)
             );
@@ -64,5 +74,10 @@ class StripeController extends Controller
     protected function teamShowRoute(Team $team)
     {
         return route('teams.show', ['team' => $team]);
+    }
+
+    protected function getPrice($priceId)
+    {
+        return Cashier::stripe()->prices->retrieve($priceId, []);
     }
 }

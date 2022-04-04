@@ -35,7 +35,11 @@
                         <x-jet-label for="name" value="{{ __('teams.user_licenses') }}" />
 
                         {{ __('teams.total_of_max_used', ['total' => $team->total_user_licenses_count, 'max_count' => $team->user_licenses_count]) }}
-                        @if ($team->total_user_licenses_count != $team->user_licenses_count)
+                        @if($team->subscription()->isPaidByInvoice())
+                        <div>
+                            {!! __('teams.more_licenses') !!}
+                        </div>
+                        @elseif ($team->total_user_licenses_count != $team->user_licenses_count)
                         <div>
                             @if($team->subscribed())
                             @if($team->total_user_licenses_count > $team->user_licenses_count)
