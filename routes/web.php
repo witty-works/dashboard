@@ -75,8 +75,6 @@ Route::group(
             return view('dashboard');
         })->name('dashboard');
 
-        Route::get('/pricing', [StripeController::class, 'index'])->name('pricing');
-
         /*
         |------------------
         | JETSTREAM LIVEWIRE
@@ -160,6 +158,8 @@ Route::group(
         */
     }
 );
+
+Route::get('/subscribe', [StripeController::class, 'subscribe'])->name('stripe.subscribe');
 
 Route::post(
     '/stripe/webhook',

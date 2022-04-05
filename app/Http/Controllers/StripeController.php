@@ -54,6 +54,21 @@ class StripeController extends Controller
         return view('billing', ['team' => $team, 'plans' => $plans]);
     }
 
+    public function subscribe(Request $request)
+    {
+        $user = $request->user();
+        if (empty($user)) {
+            return redirect(route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'register']));
+        }
+
+        $team = $user->currentTeam;
+        if (empty($team)) {
+            return redirect(route('teams.create'));
+        }
+
+        return $this->portal($request);
+    }
+
     public function portal(Request $request)
     {
         $team = $request->user()->currentTeam;

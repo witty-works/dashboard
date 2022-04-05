@@ -1,5 +1,7 @@
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
-    <!-- Primary Navigation Menu -->
+    @php ($user = Auth::user())
+    @php ($team = $user ? $user->currentTeam : null)
+<!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex">
@@ -17,14 +19,14 @@
                             {{ __('content.dashboard') }}
                         </x-jet-nav-link>
 
-                        @if (Auth::user()->currentTeam)
+                        @if ($team)
                             <!-- Team Settings -->
-                            @if(Auth::user()->ownsTeam(Auth::user()->currentTeam) && !Auth::user()->currentTeam->subscription())
-                            <x-jet-nav-link href="{{ route('pricing') }}">
+                            @if($user->ownsTeam($team) && !$team->subscription())
+                            <x-jet-nav-link href="{{ route('stripe.portal') }}">
                                 {{ __('teams.subscribe') }}
                             </x-jet-nav-link>
                             @endif
-                        @elseif(count(Auth::user()->allTeams()) === 0)
+                        @elseif(count($user->allTeams()) === 0)
                             @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
                                 <x-jet-nav-link href="{{ route('teams.create') }}">
                                     {{ __('content.create_new_team') }}
@@ -38,11 +40,11 @@
                         <x-jet-nav-link href="{{ route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'register']) }}">
                             {{ __('content.register') }}
                         </x-jet-nav-link>
-                        <x-jet-nav-link href="{{ route('pricing') }}" :active="request()->routeIs('pricing')">
+                        <x-jet-nav-link href="https://www.witty.works/pricing">
                             {{ __('teams.pricing') }}
                         </x-jet-nav-link>
                     @endauth
-                </div>
+            </div>
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ml-6">
@@ -56,12 +58,12 @@
                     <x-slot name="trigger">
                         @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
                             <button class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
-                                <img class="h-8 w-8 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
+                                <img class="h-8 w-8 rounded-full object-cover" src="{{ $user->profile_photo_url }}" alt="{{ $user->name }}" />
                             </button>
                         @else
                             <span class="inline-flex rounded-md">
                                 <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition">
-                                    {{ Auth::user()->name }}
+                                    {{ $user->name }}
 
                                     <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                         <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
@@ -87,28 +89,28 @@
 
                         <div class="border-t border-gray-100"></div>
 
-                        @if (Auth::user()->currentTeam)
+                        @if ($team)
                         <!-- Team Management -->
                         <!-- Team Settings -->
-                        <x-jet-dropdown-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}">
+                        <x-jet-dropdown-link href="{{ route('teams.show', $team->id) }}">
                             {{ __('content.team_settings') }}
                         </x-jet-dropdown-link>
 
-                        @if(Auth::user()->currentTeam->subscription())
+                        @if($team->subscription())
                         <x-jet-dropdown-link href="{{ route('stripe.portal') }}">
-                            {{ Auth::user()->currentTeam->subscription()->isPaidByInvoice() ? __('stripe.contact_sales') : __('stripe.billing') }}
+                            {{ $team->subscription()->isPaidByInvoice() ? __('stripe.contact_sales') : __('stripe.billing') }}
                         </x-jet-dropdown-link>
                         @endif
 
-                        <x-jet-dropdown-link href="{{ route('organization-guidelines', Auth::user()->currentTeam->id) }}">
+                        <x-jet-dropdown-link href="{{ route('organization-guidelines', $team->id) }}">
                             {{ __('guidelines.organization_guidelines') }}
                         </x-jet-dropdown-link>
 
-                        <x-jet-dropdown-link href="{{ route('term-replacement', Auth::user()->currentTeam->id) }}">
+                        <x-jet-dropdown-link href="{{ route('term-replacement', $team->id) }}">
                             {{ __('guidelines.term_replacement_list') }}
                         </x-jet-dropdown-link>
 
-                        <x-jet-dropdown-link href="{{ route('false-positive', Auth::user()->currentTeam->id) }}">
+                        <x-jet-dropdown-link href="{{ route('false-positive', $team->id) }}">
                             {{ __('guidelines.false_positive_list') }}
                         </x-jet-dropdown-link>
                         @endif
@@ -165,13 +167,13 @@
             <div class="flex items-center px-4">
                 @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
                     <div class="shrink-0 mr-3">
-                        <img class="h-10 w-10 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
+                        <img class="h-10 w-10 rounded-full object-cover" src="{{ $user->profile_photo_url }}" alt="{{ $user->name }}" />
                     </div>
                 @endif
 
                 <div>
-                    <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-                    <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+                    <div class="font-medium text-base text-gray-800">{{ $user->name }}</div>
+                    <div class="font-medium text-sm text-gray-500">{{ $user->email }}</div>
                 </div>
             </div>
 
@@ -190,27 +192,27 @@
                 @endif
 
                 <!-- Team Management -->
-                @if(Auth::user()->currentTeam)
+                @if($team)
                 <!-- Team Settings -->
-                <x-jet-responsive-nav-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}" :active="request()->routeIs('teams.show')">
+                <x-jet-responsive-nav-link href="{{ route('teams.show', $team->id) }}" :active="request()->routeIs('teams.show')">
                     {{ __('content.team_settings') }}
                 </x-jet-responsive-nav-link>
 
-                @if(Auth::user()->currentTeam->subscription())
+                @if($team->subscription())
                 <x-jet-responsive-nav-link href="{{ route('stripe.portal') }}">
-                    {{ Auth::user()->currentTeam->subscription()->isPaidByInvoice() ? __('stripe.contact_sales') : __('stripe.billing') }}
+                    {{ $team->subscription()->isPaidByInvoice() ? __('stripe.contact_sales') : __('stripe.billing') }}
                 </x-jet-responsive-nav-link>
                 @endif
 
-                <x-jet-responsive-nav-link href="{{ route('organization-guidelines', Auth::user()->currentTeam->id) }}">
+                <x-jet-responsive-nav-link href="{{ route('organization-guidelines', $team->id) }}">
                     {{ __('guidelines.organization_guidelines') }}
                 </x-jet-responsive-nav-link>
 
-                <x-jet-responsive-nav-link href="{{ route('term-replacement', Auth::user()->currentTeam->id) }}">
+                <x-jet-responsive-nav-link href="{{ route('term-replacement', $team->id) }}">
                     {{ __('guidelines.term_replacement_list') }}
                 </x-jet-responsive-nav-link>
 
-                <x-jet-responsive-nav-link href="{{ route('false-positive', Auth::user()->currentTeam->id) }}">
+                <x-jet-responsive-nav-link href="{{ route('false-positive', $team->id) }}">
                     {{ __('guidelines.false_positive_list') }}
                 </x-jet-responsive-nav-link>
 
