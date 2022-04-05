@@ -4,6 +4,8 @@ use App\Http\Controllers\Livewire\GuidelinesController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\SubscribeRedirectController;
+use App\Http\Controllers\StripeController;
+use App\Http\Controllers\WebhookController;
 
 /*
 |------------------
@@ -73,6 +75,8 @@ Route::group(
             return view('dashboard');
         })->name('dashboard');
 
+        Route::get('/pricing', [StripeController::class, 'index'])->name('pricing');
+
         /*
         |------------------
         | JETSTREAM LIVEWIRE
@@ -141,79 +145,23 @@ Route::group(
 
         /*
         |------------------
-        | SPARK
+        | CASHIER
         |------------------
         */
-        Route::get('/spark-redirect', [SubscribeRedirectController::class, 'redirect'])->name('spark.redirect');
 
-        if (config('spark.enabled')) {
-            Route::group([
-                'namespace' => 'Spark\Http\Controllers',
-                'prefix' => 'spark'
-            ], function () {
-                Route::group(['middleware' => config('spark.middleware', ['web', 'auth'])], function () {
-                    // Subscription...
-                    Route::post('/subscription', 'NewSubscriptionController');
-                    Route::put('/subscription', 'UpdateSubscriptionController');
-                    Route::put('/subscription/cancel', 'CancelSubscriptionController');
-                    Route::put('/subscription/resume', 'ResumeSubscriptionController');
-
-                    // Payment Method...
-                    Route::put('/subscription/payment-method', 'UpdatePaymentMethodController');
-
-                    // Billing Information...
-                    Route::put('/billing-information', 'UpdateBillingInformationController');
-
-                    // Receipt Emails...
-                    Route::put('/receipt-emails', 'UpdateReceiptEmailsController');
-
-                    // Apply a Coupon...
-                    Route::put('/coupon', 'ApplyCouponController');
-
-                    // Stripe Setup Intent Tokens...
-                    Route::get('/token', 'StripeTokenController');
-
-                    // Vat Rate Controller...
-                    Route::post('/tax-rate', 'TaxController');
-
-                    // Billing Information...
-                    Route::get('/{type}/{id}/receipts/{receiptId}/download', 'DownloadReceiptController')->name('receipts.download');
-                });
-            });
-
-            Route::group([
-                'middleware' => config('spark.middleware', ['web', 'auth']),
-                'namespace' => 'Spark\Http\Controllers',
-                'prefix' => config('spark.path'),
-            ], function () {
-                Route::get('/{type?}/{id?}', 'BillingPortalController')->name('spark.portal');
-            });
-        }
+        Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+            Route::get('/stripe/portal', [StripeController::class, 'portal'])->name('stripe.portal');
+        });
 
         /*
         |------------------
-        | /SPARK
+        | /CASHIER
         |------------------
         */
     }
 );
 
-/*
-|------------------
-| SPARK
-|------------------
-*/
-
-Route::group([
-    'namespace' => 'Spark\Http\Controllers',
-    'prefix' => 'spark'
-], function () {
-    // Stripe Webhook Controller...
-    Route::post('webhook', 'WebhookController@handleWebhook')->name('spark.webhook');
-});
-
-/*
-|------------------
-| /SPARK
-|------------------
-*/
+Route::post(
+    '/stripe/webhook',
+    [WebhookController::class, 'handleWebhook']
+)->name('cashier.webhook');

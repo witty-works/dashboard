@@ -2,22 +2,27 @@
 
 namespace App\Providers;
 
+use App\Events\OrganizationGuidelinesUpdated;
+use App\Events\SubscriptionCancelled;
+use App\Events\SubscriptionCreated;
+use App\Events\SubscriptionUpdated;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use App\Listeners\PosthogBillingEvent;
+use App\Listeners\PosthogBilling;
 use App\Listeners\PosthogReset;
 use App\Listeners\PostHogUpdateCompany;
-use JoelButcher\Socialstream\Events\ConnectedAccountCreated;
+use App\Listeners\SyncStartRenwalDates;
+use App\Listeners\UpdateOrganizationGuidelines;
+use App\Listeners\UpdateUserLicenses;
 use Laravel\Jetstream\Events\TeamCreated;
 use Laravel\Jetstream\Events\TeamUpdated;
 use Laravel\Jetstream\Events\TeamDeleted;
 use Laravel\Jetstream\Events\TeamMemberAdded;
 use Laravel\Jetstream\Events\TeamMemberRemoved;
-use Spark\Events\SubscriptionCreated;
-use Spark\Events\SubscriptionUpdated;
-use Spark\Events\SubscriptionCancelled;
-use Spark\Events\PaymentSucceeded;
+use Laravel\Cashier\Events\WebhookReceived;
+use SocialiteProviders\AzureADB2C\AzureADB2CExtendSocialite;
+use SocialiteProviders\Manager\SocialiteWasCalled;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -29,12 +34,13 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         TeamMemberAdded::class => [
             PostHogUpdateCompany::class,
-        ],
-        TeamMemberAdded::class => [
-            PostHogUpdateCompany::class,
+            UpdateUserLicenses::class,
+            UpdateOrganizationGuidelines::class,
         ],
         TeamMemberRemoved::class => [
             PostHogUpdateCompany::class,
+            UpdateUserLicenses::class,
+            UpdateOrganizationGuidelines::class,
         ],
         TeamCreated::class => [
             PostHogUpdateCompany::class,
@@ -44,6 +50,7 @@ class EventServiceProvider extends ServiceProvider
         ],
         TeamDeleted::class => [
             PostHogUpdateCompany::class,
+            UpdateUserLicenses::class,
         ],
         Registered::class => [
             SendEmailVerificationNotification::class,
@@ -51,23 +58,26 @@ class EventServiceProvider extends ServiceProvider
         Logout::class => [
             PosthogReset::class,
         ],
+        WebhookReceived::class => [
+            PosthogBilling::class,
+        ],
         SubscriptionCreated::class => [
-            PosthogBillingEvent::class,
+            SyncStartRenwalDates::class,
+            UpdateOrganizationGuidelines::class,
         ],
         SubscriptionUpdated::class => [
-            PosthogBillingEvent::class,
+            SyncStartRenwalDates::class,
+            UpdateOrganizationGuidelines::class,
         ],
         SubscriptionCancelled::class => [
-            PosthogBillingEvent::class,
+            SyncStartRenwalDates::class,
+            UpdateOrganizationGuidelines::class,
         ],
-        PaymentSucceeded::class => [
-            PosthogBillingEvent::class,
+        SocialiteWasCalled::class => [
+            AzureADB2CExtendSocialite::class,
         ],
-        \SocialiteProviders\Manager\SocialiteWasCalled::class => [
-            'SocialiteProviders\\AzureADB2C\\AzureADB2CExtendSocialite@handle',
-        ],
-        \App\Events\OrganizationGuidelinesUpdated::class => [
-            \App\Listeners\OrganizationGuidelinesUpdate::class,
+        OrganizationGuidelinesUpdated::class => [
+            UpdateOrganizationGuidelines::class,
         ],
     ];
 

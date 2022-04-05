@@ -2,7 +2,7 @@
     <x-jet-section-border />
 
     <div class="mt-10 sm:mt-0">
-        <x-jet-form-section submit="updateTeamsUserLicenses">
+        <x-section submit="">
             <x-slot name="title">
                 {{ __('teams.plan_summary') }}
             </x-slot>
@@ -15,11 +15,15 @@
                 <div class="col-span-6 sm:col-span-4">
                     <x-jet-label for="name" value="{{ __('teams.plan_name') }}" />
 
-                    {{ $team->subscribed() ? $team->sparkPlan()->name : __('teams.default_plan_name')}}
+                    @if($team->subscribed())
+                    {{ $team->subscription()->planName() }}
+                    @else
+                    {{ __('stripe.witty_me') }}
 
-                    <a href="{{ route('spark.redirect') }}">
+                    <a href="{{ route('stripe.portal') }}">
                         {{ __('teams.upgrade') }}
                     </a>
+                    @endif
                 </div>
 
                 <div class="col-span-6 sm:col-span-4">
@@ -31,6 +35,23 @@
                         <x-jet-label for="name" value="{{ __('teams.user_licenses') }}" />
 
                         {{ __('teams.total_of_max_used', ['total' => $team->total_user_licenses_count, 'max_count' => $team->user_licenses_count]) }}
+                        @if($team->subscription()->isPaidByInvoice())
+                        <div>
+                            {!! __('teams.more_licenses') !!}
+                        </div>
+                        @elseif ($team->total_user_licenses_count != $team->user_licenses_count)
+                        <div>
+                            @if($team->subscribed())
+                            @if($team->total_user_licenses_count > $team->user_licenses_count)
+                            {{ trans_choice('teams.user_licenses_count_will_be_increased_updated_at', $team->total_user_licenses_count - $team->user_licenses_count, ['diff' => $team->total_user_licenses_count - $team->user_licenses_count, 'in' => $team->subscription()->update_user_licenses_at->diffForHumans()]) }}
+                            @else
+                            {{ trans_choice('teams.user_licenses_count_will_be_decreased_updated_at', $team->user_licenses_count - $team->total_user_licenses_count, ['diff' => $team->user_licenses_count - $team->total_user_licenses_count, 'in' => $team->subscription()->update_user_licenses_at->diffForHumans()]) }}
+                            @endif
+                            @else
+                            {!! trans_choice('teams.please_remove_users_or_upgrade', $team->total_user_licenses_count - $team->user_licenses_count, ['diff' => $team->user_licenses_count - $team->total_user_licenses_count, 'url' => route('stripe.portal')]) !!}
+                            @endif
+                        </div>
+                        @endif
                     </div>
 
                     <div class="mt-5">
@@ -47,41 +68,19 @@
                 </div>
 
                 @if($team->subscribed())
+                @if($team->subscription()->ends_at)
                 <div class="col-span-6 sm:col-span-4">
-                    <x-jet-label for="name" value="{{ __('teams.renewal_date') }}" />
-
+                    <x-jet-label for="name" value="{{ __('teams.end_date') }}" />
                     {{ $team->subscription()->ends_at->toFormattedDateString() }}
                 </div>
-
+                @elseif($team->subscription()->renews_at)
                 <div class="col-span-6 sm:col-span-4">
-                    <x-jet-label for="name" value="{{ __('teams.add_user_licenses') }}" />
-
-                    <x-select id="user_licenses"
-                        :options="App\Http\Livewire\Teams\PlanSummary::USER_LICENSES_STEPS"
-                        class="mt-1 block w-full"
-                        wire:model.defer="user_licenses"
-                        :disabled="! Gate::check('update', $team)" />
-    
-                    <x-jet-input-error for="user_licenses" class="mt-2" />
-
-                    <div class="mt-5">
-                        {!! __('teams.more_licenses', ['url' => route('spark.redirect')]) !!}
-                    </div>
+                    <x-jet-label for="name" value="{{ __('teams.renewal_date') }}" />
+                    {{ $team->subscription()->renews_at->toFormattedDateString() }}
                 </div>
                 @endif
+                @endif
             </x-slot>
-
-            @if ($team->subscribed() && Gate::check('update', $team))
-                <x-slot name="actions">
-                    <x-jet-action-message class="mr-3" on="saved">
-                        {{ __('content.saved') }}
-                    </x-jet-action-message>
-
-                    <x-jet-button>
-                        {{ __('content.save') }}
-                    </x-jet-button>
-                </x-slot>
-            @endif
-        </x-jet-form-section>
+        </x-section>
     </div>
 </div>

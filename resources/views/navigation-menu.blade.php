@@ -19,11 +19,11 @@
 
                         @if (Auth::user()->currentTeam)
                             <!-- Team Settings -->
-                            @if(Auth::user()->ownsTeam(Auth::user()->currentTeam))
-                            <x-jet-nav-link href="{{ route('spark.redirect') }}">
-                                {{ !Auth::user()->currentTeam->subscribed() ? __('teams.subscribe') : __('teams.billing') }}
+                            @if(Auth::user()->ownsTeam(Auth::user()->currentTeam) && !Auth::user()->currentTeam->subscription())
+                            <x-jet-nav-link href="{{ route('pricing') }}">
+                                {{ __('teams.subscribe') }}
                             </x-jet-nav-link>
-                            @endcan
+                            @endif
                         @elseif(count(Auth::user()->allTeams()) === 0)
                             @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
                                 <x-jet-nav-link href="{{ route('teams.create') }}">
@@ -33,7 +33,13 @@
                         @endif
                     @else
                         <x-jet-nav-link href="{{ route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'login']) }}">
-                            {{ __('content.log_in') }} / {{ __('content.register') }}
+                            {{ __('content.log_in') }}
+                        </x-jet-nav-link>
+                        <x-jet-nav-link href="{{ route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'register']) }}">
+                            {{ __('content.register') }}
+                        </x-jet-nav-link>
+                        <x-jet-nav-link href="{{ route('pricing') }}" :active="request()->routeIs('pricing')">
+                            {{ __('teams.pricing') }}
                         </x-jet-nav-link>
                     @endauth
                 </div>
@@ -88,6 +94,12 @@
                             {{ __('content.team_settings') }}
                         </x-jet-dropdown-link>
 
+                        @if(Auth::user()->currentTeam->subscription())
+                        <x-jet-dropdown-link href="{{ route('stripe.portal') }}">
+                            {{ Auth::user()->currentTeam->subscription()->isPaidByInvoice() ? __('stripe.contact_sales') : __('stripe.billing') }}
+                        </x-jet-dropdown-link>
+                        @endif
+
                         <x-jet-dropdown-link href="{{ route('organization-guidelines', Auth::user()->currentTeam->id) }}">
                             {{ __('guidelines.organization_guidelines') }}
                         </x-jet-dropdown-link>
@@ -139,7 +151,10 @@
             </x-jet-responsive-nav-link>
             @else
             <x-jet-responsive-nav-link href="{{ route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'login']) }}">
-                {{ __('content.log_in') }} / {{ __('content.register') }}
+                {{ __('content.log_in') }}
+            </x-jet-responsive-nav-link>
+            <x-jet-responsive-nav-link href="{{ route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'register']) }}">
+                {{ __('content.register') }}
             </x-jet-responsive-nav-link>
             @endauth
         </div>
@@ -180,6 +195,12 @@
                 <x-jet-responsive-nav-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}" :active="request()->routeIs('teams.show')">
                     {{ __('content.team_settings') }}
                 </x-jet-responsive-nav-link>
+
+                @if(Auth::user()->currentTeam->subscription())
+                <x-jet-responsive-nav-link href="{{ route('stripe.portal') }}">
+                    {{ Auth::user()->currentTeam->subscription()->isPaidByInvoice() ? __('stripe.contact_sales') : __('stripe.billing') }}
+                </x-jet-responsive-nav-link>
+                @endif
 
                 <x-jet-responsive-nav-link href="{{ route('organization-guidelines', Auth::user()->currentTeam->id) }}">
                     {{ __('guidelines.organization_guidelines') }}

@@ -129,7 +129,8 @@ return [
     'for_your_security_confirm' => 'For your security, please confirm your password to continue.',
     'whoops' => 'Whoops! Something went wrong.',
     'you_have_been_invited' => 'You have been invited to join the :team team!',
-    'invitation_email_welcome' => 'To accept this invitation, login with your exiting account or register a new account by clicking on the button below:',
+    'invitation_email_welcome' => 'To accept this invitation, register a new account by clicking on the button below:',
+    'invitation_email_login' => 'If you already have an exiting account click the button below:',
     'if_you_did_not_expect' => 'If you did not expect to receive an invitation to this team, you may discard this email.',
     'woops' => 'woops',
     'documentation' => 'Documentation',
@@ -173,7 +174,7 @@ Read more about [Witty](https://www.witty.works/ "Inclusive writing, anywhere, i
     'section_3_text' => 'For Organizations Witty offers an array of services so that whole teams can work with Witty flawlessly, such as:
 * Single-Sign-On
 * Organization language guidelines
-* Organization/Department statistics
+* Coming soon: Organization/Department statistics
 * Unconscious bias awareness session
 * Central control over data privacy
 
@@ -190,4 +191,5 @@ Read more about ROI for [organizations](https://www.witty.works/witty-for-compan
     'team' => 'Team',
     'accepting_invitation_will_result_in_leaving_your_current_team' => 'Accepting an invitation will result in leaving team ":team_name".',
     'contact_support_to_delete_owned_teams' => 'Since you are a team owner, in order to be able to accept an invitation please <a href="mailto:support@witty.works">contact support</a>.',
+    'billing' => 'billing',
 ];

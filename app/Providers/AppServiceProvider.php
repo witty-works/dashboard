@@ -2,8 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\Subscription;
+use App\Models\Team;
 use Illuminate\Support\ServiceProvider;
 use Firebase\JWT\JWT;
+use Laravel\Cashier\Cashier;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +22,8 @@ class AppServiceProvider extends ServiceProvider
         }
 
         JWT::$leeway = 10;
+
+        Cashier::ignoreMigrations();
     }
 
     /**
@@ -28,6 +33,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Cashier::useCustomerModel(Team::class);
+        Cashier::calculateTaxes();
+        Cashier::useSubscriptionModel(Subscription::class);
     }
 }
