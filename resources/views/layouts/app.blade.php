@@ -4,6 +4,9 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
+
+        @include('partials/gtm-header')
+
         <script src="https://js.stripe.com/v3/" defer></script>
 
 
@@ -24,6 +27,7 @@
         @include('partials/posthog')
     </head>
     <body class="font-sans antialiased">
+        @include('partials/gtm-body')
         <x-jet-banner />
 
         <div class="min-h-screen bg-gray-100">
