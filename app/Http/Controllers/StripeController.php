@@ -40,6 +40,7 @@ class StripeController extends Controller
                                 'quantity' => $team->total_user_licenses_count
                             ]],
                             [
+                                'locale' => app()->getLocale(),
                                 'success_url' => $this->teamShowRoute($team),
                                 'cancel_url' => $this->teamShowRoute($team),
                                 'mode' => 'subscription'
@@ -79,7 +80,8 @@ class StripeController extends Controller
             }
 
             return $team->redirectToBillingPortal(
-                $this->teamShowRoute($team)
+                $this->teamShowRoute($team),
+                ['locale' => app()->getLocale()]
             );
         }
 
