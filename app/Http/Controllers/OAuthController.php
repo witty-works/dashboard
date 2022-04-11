@@ -118,7 +118,7 @@ class OAuthController extends BaseOAuthController
 
     protected function returnAccessTokenResponse()
     {
-        return response()->json(['access_token' => $this->getAcessToken()]);
+        return view('browser-login', ['access_token' => $this->getAcessToken()]);
     }
 
     /**
