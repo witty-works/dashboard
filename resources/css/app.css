@@ -35,3 +35,70 @@ a {
 #ww-main-nav-logo {
     margin-top: 4px;
 }
+
+.onboarding-container {
+    background: #FFFFFF;
+    border: 1px solid #CDCFD0;
+    box-sizing: border-box;
+    border-radius: 6px;
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+}
+.onboarding-title {
+    font-family: 'Ibarra Real Nova';
+    font-style: normal;
+    font-size: 27px;
+    line-height: 34px;
+    letter-spacing: -0.025em;    
+    color: #1A1A1A;
+}
+
+.onboarding-tagline {
+    line-height: 22px;
+    color: #1A1A1A;
+}
+
+.onboarding-step-container {
+    background: #FFF8E1;
+    border: 1px solid #EB9F46;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 26px rgba(0, 0, 0, 0.09);
+}
+
+.onboarding-step-container--complete {
+    background: #F1FFF3;
+    border: 1px solid #E8F0D4;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 26px rgba(0, 0, 0, 0.09);
+}
+
+.onboarding-step-container--deactivated {
+    background: #FAFAFA;
+    box-sizing: border-box;
+}
+
+.onboarding-step-title {
+    font-weight: 600;
+    line-height: 22px;
+    color: #1A1A1A;
+}
+
+.onboarding-step-title--deactivated {
+    font-weight: 600;
+    line-height: 22px;
+    color: #CDCFD0;
+}
+
+.onboarding-step-tagline {
+    font-size: 14px;
+    line-height: 17px;    
+    color: #656565;
+}
+
+.onboarding-step-tagline--deactivated {
+    font-size: 14px;
+    line-height: 17px;    
+    color: #CDCFD0;
+}

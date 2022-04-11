@@ -1,50 +1,66 @@
-<div class="p-6 sm:px-20 bg-white border-b border-gray-200">
-    <div class="text-2xl">
-        <h1>{{ __('content.welcome')}}</h1>
-    </div>
-
+<div class="onboarding-container">
     @auth
     @php
         $user = Auth::user();  
         $currentTeam = $user->currentTeam;  
     @endphp
+
     @if(!$currentTeam || $user->can('update', $currentTeam))
-    <div class="mt-6">
-        {!! Str::markdown(__('content.welcome_text')) !!}
-    </div>
-
-    <div class="mt-6">
-        <img src="{{ asset('dashboard.png') }}" />
-
-        <h2>{{ __('content.onboarding_next_steps') }}</h2>
-        <ol>
-            <li>{{ __('content.onboarding_signup_to_witty') }} ✔️</li>  
-            @if ($currentTeam)
-            <li>{{ __('content.onboarding_create_team') }} ✔️</li>
-            @else
-            <li><a href="{{ route('teams.create') }}">{{ __('content.onboarding_create_team') }}</a></li>
-            @endif 
-            @if (!$currentTeam)
-            <li>{{ __('content.onboarding_configure_organization_guidelines') }}</li>
-            @elseif ($currentTeam && $currentTeam->organizationGuidelines)
-            <li>{{ __('content.onboarding_configure_organization_guidelines') }} ✔️</li>
-            @else
-            <li><a href="{{ route('organization-guidelines', $currentTeam->id) }}">{{ __('content.onboarding_configure_organization_guidelines') }}</a></li>
-            @endif 
-            @if (!$currentTeam)
-            <li>{{ __('content.onboarding_invite_users') }}</li>
-            @elseif ($currentTeam && $currentTeam->total_user_licenses_count > 1)
-            <li>{{ __('content.onboarding_invite_users') }} ✔️</li>
-            @else
-            <li><a href="{{ route('teams.show', $currentTeam->id) }}">{{ __('content.onboarding_invite_users') }}</a></li>
-            @endif 
-        </ol>
-        @if (false)
-        {{ __('content.onboarding_install_witty') }}
+        <div class="onboarding-title">{{ __('content.onboarding_finish_setup_title') }}</div>
+        <div class="onboarding-tagline">{{ __('content.onboarding_finish_setup_tagline') }}</div>
+        
+        @if ($currentTeam)
+        <div class="onboarding-step-container--complete">
+            <div class="onboarding-step-title">{{ __('content.onboarding_create_team') }}</div>
+            <div class="onboarding-step-tagline">{{ __('content.onboarding_create_team_tagline') }}</div>
+        </div>
         @else
-        <a href="https://www.witty.works/select-browser">{{ __('content.onboarding_install_witty') }}</a>
+        <a href="{{ route('teams.create') }}">
+            <div class="onboarding-step-container">
+                <div class="onboarding-step-title">{{ __('content.onboarding_create_team') }}</div>
+                <div class="onboarding-step-tagline">{{ __('content.onboarding_create_team_tagline') }}</div>
+            </div>
+        </a>
         @endif 
-    </div>
+
+        @if (!$currentTeam)
+        <div class="onboarding-step-container--deactivated">
+            <div class="onboarding-step-title--deactivated">{{ __('content.onboarding_configure_organization_guidelines') }}</div>
+            <div class="onboarding-step-tagline--deactivated">{{ __('content.onboarding_configure_organization_guidelines_tagline') }}</div>
+        </div>    
+        @elseif ($currentTeam && $currentTeam->organizationGuidelines)
+        <div class="onboarding-step-container--complete">
+            <div class="onboarding-step-title">{{ __('content.onboarding_configure_organization_guidelines') }}</div>
+            <div class="onboarding-step-tagline">{{ __('content.onboarding_configure_organization_guidelines_tagline') }}</div>
+        </div>
+        @else
+        <a href="{{ route('organization-guidelines', $currentTeam->id) }}">
+            <div class="onboarding-step-container--complete">
+                <div class="onboarding-step-title">{{ __('content.onboarding_configure_organization_guidelines') }}</div>
+                <div class="onboarding-step-tagline">{{ __('content.onboarding_configure_organization_guidelines_tagline') }}</div>
+            </div>
+        </a>
+        @endif 
+
+        @if (!$currentTeam)
+        <div class="onboarding-step-container--deactivated">
+            <div class="onboarding-step-title--deactivated">{{ __('content.onboarding_invite_users') }}</div>
+            <div class="onboarding-step-tagline--deactivated">{{ __('content.onboarding_invite_users_tagline') }}</div>
+        </div>    
+        @elseif ($currentTeam && $currentTeam->total_user_licenses_count > 1)
+        <div class="onboarding-step-container--complete">
+            <div class="onboarding-step-title">{{ __('content.onboarding_invite_users') }}</div>
+            <div class="onboarding-step-tagline">{{ __('content.onboarding_invite_users_tagline') }}</div>
+        </div>
+        @else
+        <a href="{{ route('teams.show', $currentTeam->id) }}">
+            <div class="onboarding-step-container--complete">
+                <div class="onboarding-step-title">{{ __('content.onboarding_invite_users') }}</div>
+                <div class="onboarding-step-tagline">{{ __('content.onboarding_invite_users_tagline') }}</div>
+            </div>
+        </a>
+        @endif 
+
     @endif
 
     @if($user->invitations->count())
