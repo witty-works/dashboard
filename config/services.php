@@ -14,52 +14,19 @@ return [
     |
     */
 
-    'mailgun' => [
-        'domain' => env('MAILGUN_DOMAIN'),
-        'secret' => env('MAILGUN_SECRET'),
-        'endpoint' => env('MAILGUN_ENDPOINT', 'api.mailgun.net'),
-    ],
-
-    'postmark' => [
-        'token' => env('POSTMARK_TOKEN'),
-    ],
-
-    'ses' => [
-        'key' => env('AWS_ACCESS_KEY_ID'),
-        'secret' => env('AWS_SECRET_ACCESS_KEY'),
-        'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
-    ],
-
-    'github' => [
-        'client_id' => env('GITHUB_CLIENT_ID'),
-        'client_secret' => env('GITHUB_CLIENT_SECRET'),
-        'redirect' => '/oauth/github/callback',
-    ],
-
-    // https://console.cloud.google.com/apis/credentials?project=witty-dashboard
-    'google' => [
-        'client_id'     => env('GOOGLE_CLIENT_ID'),
-        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
-        'redirect' => '/oauth/google/callback',
-    ],
-
-    // https://developer.linkedin.com/
-    'linkedin' => [
-        'client_id' => env('LINKEDIN_CLIENT_ID'),
-        'client_secret' => env('LINKEDIN_CLIENT_SECRET'),
-        'redirect' => '/oauth/linkedin/callback',
-    ],
-
     'azureadb2c' => [
         'client_id' => env('AADB2C_CLIENT_ID'),
         'client_secret' => env('AADB2C_CLIENT_SECRET'),
         'redirect' => '/oauth/azureadb2c/callback',
         'redirect_template' => '/oauth/azureadb2c/{policy}/callback',
+        'scope' => env('AADB2C_ACCESS_TOKEB_SCOPES'),
         'domain' => env('AADB2C_DOMAIN'),
         'policy' => [
             'login' => env('AADB2C_POLICY'),
             'profile' => env('AADB2C_POLICY_PROFILE'),
             'register' => env('AADB2C_POLICY_REGISTER'),
+            'browser_login' => env('AADB2C_POLICY'),
+            'browser_register' => env('AADB2C_POLICY_REGISTER'),
         ],
     ],
 ];
