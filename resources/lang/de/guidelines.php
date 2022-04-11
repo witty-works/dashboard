@@ -5,7 +5,7 @@ return [
 ',
     'false_positive_label' => 'Füge ein neues Wort hinzu',
     'language_code_label' => 'Sprachcode',
-    'organization_guidelines' => 'Regeln anpassen',
+    'organization_guidelines' => 'Witty Regeln anpassen',
     'manage_organization_guidelines' => 'Organisationsrichtlinien verwalten',
     'manage_organization_guidelines_description' => 'Passe die Regeln an, damit Witty besser deinem Schreibstil entspricht.',
     'german_gender_ending' => 'Deutsche Gender-Endung',
@@ -27,7 +27,7 @@ return [
     'manage_organization_guidelines_english' => 'Im Englischen geschlechtsneutrale Pronomen vorschlagen',
     'manage_organization_guidelines_description_english' => 'Wenn aktiviert, schlägt Witty im Englischen geschlechtsneutrale Pronomen  vor, z. B. "their" anstelle von "his" oder "her".',
     'manage_organization_guidelines_expert_mode' => 'Experten-Modus ',
-    'manage_organization_guidelines_description_expert_mode' => 'Wenn aktiviert, macht Witty auch bei weniger schwerwiegenden Problemen in Bezug auf Diversität und Inklusion Vorschläge. <a href="https://www.witty.works/de/blog/wie-analysiert-witty-rahmenwerk-der-inklusiven-sprache" target="_blank">Mehr dazu</a>.',
+    'manage_organization_guidelines_description_expert_mode' => 'Wenn aktiviert, macht Witty auch bei subtilieren Begriffen in Bezug auf Diversität und Inklusion Vorschläge. <a href="https://www.witty.works/de/blog/wie-analysiert-witty-rahmenwerk-der-inklusiven-sprache" target="_blank">Mehr dazu</a>.',
     'manage_organization_guidelines_german' => 'Wähle die deutsche Gender-Endung',
     'manage_organization_guidelines_description_german' => 'Wähle die deutsche Gender-Endung, die du verwenden möchtest.
 
@@ -58,7 +58,7 @@ Es gibt drei Möglichkeiten:
     'list_false_positives_description' => 'Alle Wörter oder Begriffe in dieser Liste werden nicht hervorgehoben.',
     'list_term_replacements' => 'Liste mit Alternativvorschlägen',
     'list_term_replacements_description' => 'Alle Wörter oder Begriffe in dieser Liste werden immer hervorgehoben.',
-    'enable_expert_mode' => 'Weniger schwerwiegende Probleme hervorheben',
+    'enable_expert_mode' => 'Profi werden',
     'enable_show_inspiration_alternatives' => 'Inspiration für Umformulierungen anzeigen',
     'enable_inclusive' => 'Inklusive Begriffe hervorheben',
     'enable_style' => 'Vorschläge in Bezug auf den Stil machen',

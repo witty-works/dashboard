@@ -12,7 +12,7 @@ return [
     'term_label' => 'Add a new term',
     'replacement_label' => 'Add a new alternative',
     'language_code_label' => 'Language Code',
-    'organization_guidelines' => 'Customize',
+    'organization_guidelines' => 'Customize Witty',
     'manage_organization_guidelines' => 'Manage Organization Guidelines',
     'manage_organization_guidelines_description' => 'Manage suggestions to better fit your writing style.',
     'german_gender_ending' => 'Choose the German gender ending',
@@ -38,7 +38,7 @@ return [
     'manage_organization_guidelines_english' => 'Use gender-neutral pronouns in English',
     'manage_organization_guidelines_description_english' => 'When switched on, Witty suggests using gender-neutral pronouns such as "their" instead of "his" or "her".',
     'manage_organization_guidelines_expert_mode' => 'Expert mode',
-    'manage_organization_guidelines_description_expert_mode' => 'When switched on, Witty highlights also less severe issues about diversity and inclusion.  <a href="https://www.witty.works/en/blog/how-does-witty-analyze" target="_blank">Learn more</a>.',
+    'manage_organization_guidelines_description_expert_mode' => 'When switched on, Witty highlights also more subtle issues about diversity and inclusion. <a href="https://www.witty.works/en/blog/how-does-witty-analyze" target="_blank">Learn more</a>.',
     'manage_organization_guidelines_german' => 'Choose the German Gender ending',
     'manage_organization_guidelines_description_german' => 'Select the German gender ending you use to get suggestions tailored to your language style.
 
@@ -49,7 +49,7 @@ Choose how Witty suggests gendered roles such as job titles. There are three pos
 
 ',
     'manage_organization_guidelines_inclusive' => 'Highlight inclusive terms',
-    'manage_organization_guidelines_description_inclusive' => 'When switched on, Witty highlights inclusive terms. Therefore, no alternatives are offered. <a href="ttps://www.witty.works/en/categories/inclusive" target="_blank">Learn more</a>.',
+    'manage_organization_guidelines_description_inclusive' => 'When switched on, Witty highlights inclusive terms. For these, no alternatives are offered. <a href="ttps://www.witty.works/en/categories/inclusive" target="_blank">Learn more</a>.',
     'manage_organization_guidelines_inspiration' => 'Show inspirations to rephrase entire sentences',
     'manage_organization_guidelines_description_inspiration' => 'When switched on, Witty will make suggestions to  rephrase entire sentences.',
     'show_inspiration_alternatives' => 'Show inspiration for rephrasing',
@@ -61,7 +61,7 @@ Choose how Witty suggests gendered roles such as job titles. There are three pos
     'manage_organization_guidelines_description_style' => 'When switched on, Witty makes suggestions to make your text more understandable, or to give it authenticity or emotionality. <a href="https://www.witty.works/en/categories/style" target="_blank">Learn more</a>.',
     'set_for_all' => 'set for all',
     'enable_singular_they' => 'Enable gender-neutral generic pronouns in English',
-    'enable_expert_mode' => 'Highlight less severe issues',
+    'enable_expert_mode' => 'Become a pro',
     'enable_show_inspiration_alternatives' => 'Enable inspirations',
     'enable_inclusive' => 'Highlight inclusive terms',
     'enable_style' => 'Highlight style issues',
