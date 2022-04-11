@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Socialstream\ResolveSocialiteUser;
 use Laravel\Socialite\AbstractUser;
 use Laravel\Socialite\Two\InvalidStateException;
 use Illuminate\Contracts\Container\BindingResolutionException;
@@ -16,6 +17,7 @@ use JoelButcher\Socialstream\Features;
 use Laravel\Fortify\Features as FortifyFeatures;
 use Laravel\Jetstream\Jetstream;
 use Illuminate\Support\Facades\Auth;
+use Socialite;
 
 class OAuthController extends BaseOAuthController
 {
@@ -29,6 +31,11 @@ class OAuthController extends BaseOAuthController
         session()->put('socialstream.previous_url', back()->getTargetUrl());
 
         return $generator->generate($provider, $policy);
+    }
+
+    public function redirectToProviderBrowserLogin(Request $request, GeneratesProviderRedirect $generator)
+    {
+        return $this->redirectToProvider($request, 'azureadb2c', $generator, 'browser_login');
     }
 
     public function handleProviderCallback(Request $request, string $provider, ResolvesSocialiteUsers $resolver, $policy = 'login')
@@ -92,6 +99,28 @@ class OAuthController extends BaseOAuthController
         return $this->login($user);
     }
 
+    public function handleBrowserLogin(Request $request, ResolvesSocialiteUsers $resolver)
+    {
+        return $this->handleProviderCallback($request, 'azureadb2c', $resolver, 'browser_login');
+    }
+
+    public function handleBrowserLoginCallback(Request $request, ResolvesSocialiteUsers $resolver)
+    {
+        return $this->handleProviderCallback($request, 'azureadb2c', $resolver, 'browser_login');
+    }
+
+    protected function getAcessToken()
+    {
+        $user = Socialite::driver('azureadb2c')->user();
+
+        return $user->accessTokenResponseBody['access_token'] ?? null;
+    }
+
+    protected function returnAccessTokenResponse()
+    {
+        return response()->json(['access_token' => $this->getAcessToken()]);
+    }
+
     /**
      * 
      * @param App\Models\User $user 
@@ -104,19 +133,41 @@ class OAuthController extends BaseOAuthController
      */
     protected function alreadyAuthenticated($user, $account, $provider, $providerAccount)
     {
+        if (ResolveSocialiteUser::isBrowserLogin()) {
+            return $this->returnAccessTokenResponse();
+        }
+
+        $route = route('profile.show');
+
         if ($account && $account->user_id !== $user->id) {
-            return redirect()->route('profile.show');
+            return redirect($route);
         }
 
         if (!$account) {
             $this->createsConnectedAccounts->create($user, $provider, $providerAccount);
 
-            return redirect()->route('profile.show');
+            return redirect($route);
         }
 
         $user->updateName($providerAccount);
         $user->save();
 
-        return redirect()->route('profile.show');
+        return redirect($route);
+    }
+
+    /**
+     * Authenticate the given user and return a login response.
+     *
+     * @param  \Illuminate\Contracts\Auth\Authenticatable|mixed  $user
+     * @return mixed
+     */
+    protected function login($user, $policy = 'login')
+    {
+        $loginResponse = parent::login($user);
+        if (ResolveSocialiteUser::isBrowserLogin()) {
+            return $this->returnAccessTokenResponse();
+        }
+
+        return $loginResponse;
     }
 }

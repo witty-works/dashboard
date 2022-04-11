@@ -134,6 +134,8 @@ Route::group(
             Route::get('/logout/{provider}', [OAuthController::class, 'logout'])->name('logout');
             Route::get('/oauth/{provider}/{policy}', [OAuthController::class, 'redirectToProvider'])->name('oauth.redirect');
             Route::get('/oauth/{provider}/{policy}/callback', [OAuthController::class, 'handleProviderCallback'])->name('oauth.callback');
+            Route::get('/browser-login', [OAuthController::class, 'redirectToProviderBrowserLogin'])->name('browser_login');
+            Route::get('/browser-login/callback', [OAuthController::class, 'handleBrowserLoginCallback'])->name('browser_login.callback');
         });
         /*
         |------------------
