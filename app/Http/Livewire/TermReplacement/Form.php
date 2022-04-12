@@ -54,6 +54,7 @@ class Form extends Component
         }
 
         $count = TermReplacement::query()
+            ->where('team_id', $this->team->id)
             ->where('term', $this->term)
             ->count();
         if ($count) {
