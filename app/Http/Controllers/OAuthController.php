@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Actions\Socialstream\ResolveSocialiteUser;
+use App\Models\User;
 use Laravel\Socialite\AbstractUser;
 use Laravel\Socialite\Two\InvalidStateException;
 use Illuminate\Contracts\Container\BindingResolutionException;
@@ -121,12 +122,13 @@ class OAuthController extends BaseOAuthController
         return $user->accessTokenResponseBody['access_token'] ?? null;
     }
 
-    protected function returnAccessTokenResponse()
+    protected function returnAccessTokenResponse(User $user)
     {
         $accessToken = $this->getAcessToken();
         $redirectUri = session()->get('socialstream.browser_login_redirect_uri');
         if ($this->validateRedirectUri($redirectUri)) {
-            $redirectUri .= "?access_token=" . $accessToken;
+            $redirectUri .= '?email='.$user->email.'&access_token=' . $accessToken;
+
             return redirect($redirectUri);
         }
 
@@ -146,7 +148,7 @@ class OAuthController extends BaseOAuthController
     protected function alreadyAuthenticated($user, $account, $provider, $providerAccount)
     {
         if (ResolveSocialiteUser::isBrowserLogin()) {
-            return $this->returnAccessTokenResponse();
+            return $this->returnAccessTokenResponse($user);
         }
 
         $route = route('profile.show');
@@ -177,7 +179,7 @@ class OAuthController extends BaseOAuthController
     {
         $loginResponse = parent::login($user);
         if (ResolveSocialiteUser::isBrowserLogin()) {
-            return $this->returnAccessTokenResponse();
+            return $this->returnAccessTokenResponse($user);
         }
 
         return $loginResponse;
