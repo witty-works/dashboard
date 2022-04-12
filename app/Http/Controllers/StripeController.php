@@ -85,7 +85,7 @@ class StripeController extends Controller
             );
         }
 
-        return redirect(route('pricing'));
+        return redirect('https://www.witty.works/pricing');
     }
 
     protected function teamShowRoute(Team $team)
