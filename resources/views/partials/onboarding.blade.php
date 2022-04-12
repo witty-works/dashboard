@@ -2,65 +2,82 @@
     @auth
     @php
         $user = Auth::user();  
-        $currentTeam = $user->currentTeam;  
+        $currentTeam = $user->currentTeam;
+
+        $onboardingSteps = [
+            'createTeam' => [
+                    'title' =>  'content.onboarding_create_team',
+                    'tagline' => 'content.onboarding_create_team_tagline',
+                    'state' => 'deactivated',
+                    'link' => false,
+                ],
+            'organizationGuidelines' =>
+                [
+                    'title' => 'content.onboarding_configure_organization_guidelines',
+                    'tagline' => 'content.onboarding_configure_organization_guidelines_tagline',
+                    'state' => 'deactivated',
+                    'link' => false,
+                ],
+            'inviteUsers' =>
+                [
+                    'title' => 'content.onboarding_invite_users',
+                    'tagline' => 'content.onboarding_invite_users_tagline',
+                    'state' => 'deactivated',
+                    'link' => false,
+                ], 
+        ];
     @endphp
 
     @if(!$currentTeam || $user->can('update', $currentTeam))
         <div class="onboarding-title">{{ __('content.onboarding_finish_setup_title') }}</div>
         <div class="onboarding-tagline">{{ __('content.onboarding_finish_setup_tagline') }}</div>
         
-        @if ($currentTeam)
-        <div class="onboarding-step-container--complete">
-            <div class="onboarding-step-title">{{ __('content.onboarding_create_team') }}</div>
-            <div class="onboarding-step-tagline">{{ __('content.onboarding_create_team_tagline') }}</div>
-        </div>
-        @else
-        <a href="{{ route('teams.create') }}">
-            <div class="onboarding-step-container">
-                <div class="onboarding-step-title">{{ __('content.onboarding_create_team') }}</div>
-                <div class="onboarding-step-tagline">{{ __('content.onboarding_create_team_tagline') }}</div>
-            </div>
-        </a>
-        @endif 
+        @php
+        if ($currentTeam) {
+            $onboardingSteps['createTeam']['state'] = 'complete';
+        } else {
+            $onboardingSteps['createTeam']['state'] = 'todo';
+            $onboardingSteps['createTeam']['link'] = route('teams.create');
+        }
 
-        @if (!$currentTeam)
-        <div class="onboarding-step-container--deactivated">
-            <div class="onboarding-step-title--deactivated">{{ __('content.onboarding_configure_organization_guidelines') }}</div>
-            <div class="onboarding-step-tagline--deactivated">{{ __('content.onboarding_configure_organization_guidelines_tagline') }}</div>
-        </div>    
-        @elseif ($currentTeam && $currentTeam->organizationGuidelines)
-        <div class="onboarding-step-container--complete">
-            <div class="onboarding-step-title">{{ __('content.onboarding_configure_organization_guidelines') }}</div>
-            <div class="onboarding-step-tagline">{{ __('content.onboarding_configure_organization_guidelines_tagline') }}</div>
-        </div>
-        @else
-        <a href="{{ route('organization-guidelines', $currentTeam->id) }}">
-            <div class="onboarding-step-container--complete">
-                <div class="onboarding-step-title">{{ __('content.onboarding_configure_organization_guidelines') }}</div>
-                <div class="onboarding-step-tagline">{{ __('content.onboarding_configure_organization_guidelines_tagline') }}</div>
-            </div>
-        </a>
-        @endif 
+        if (!$currentTeam) {
+            $onboardingSteps['organizationGuidelines']['state'] = 'deactivated';
+        } else if ($currentTeam && $currentTeam->organizationGuidelines) {
+            $onboardingSteps['organizationGuidelines']['state'] = 'complete';
+        } else {
+            $onboardingSteps['organizationGuidelines']['state'] = 'todo';
+            $onboardingSteps['organizationGuidelines']['link'] = route('organization-guidelines', $currentTeam->id);
+        }
 
-        @if (!$currentTeam)
-        <div class="onboarding-step-container--deactivated">
-            <div class="onboarding-step-title--deactivated">{{ __('content.onboarding_invite_users') }}</div>
-            <div class="onboarding-step-tagline--deactivated">{{ __('content.onboarding_invite_users_tagline') }}</div>
-        </div>    
-        @elseif ($currentTeam && $currentTeam->total_user_licenses_count > 1)
-        <div class="onboarding-step-container--complete">
-            <div class="onboarding-step-title">{{ __('content.onboarding_invite_users') }}</div>
-            <div class="onboarding-step-tagline">{{ __('content.onboarding_invite_users_tagline') }}</div>
-        </div>
-        @else
-        <a href="{{ route('teams.show', $currentTeam->id) }}">
-            <div class="onboarding-step-container--complete">
-                <div class="onboarding-step-title">{{ __('content.onboarding_invite_users') }}</div>
-                <div class="onboarding-step-tagline">{{ __('content.onboarding_invite_users_tagline') }}</div>
-            </div>
-        </a>
-        @endif 
+        if (!$currentTeam->organizationGuidelines) {
+            $onboardingSteps['inviteUsers']['state'] = 'deactivated';
+        } else if ($currentTeam && $currentTeam->total_user_licenses_count > 1) {
+            $onboardingSteps['inviteUsers']['state'] = 'complete';
+        } else {
+            $onboardingSteps['inviteUsers']['state'] = 'todo';
+            $onboardingSteps['inviteUsers']['link'] = route('teams.show', $currentTeam->id);
+        }
+        @endphp
 
+        <div class="onboarding-steps">
+            @foreach($onboardingSteps as $step)
+            @if ($step['link']) <a href="{{ $step['link'] }}"> @endif
+            <div class="onboarding-step-container--{{ $step['state'] }}">
+                <div class="onboarding-step-text-wrapper">
+                    <div class="onboarding-step-title--{{ $step['state'] }}">{{ __($step['title']) }}</div>
+                    <div class="onboarding-step-tagline--{{ $step['state'] }}">{{ __($step['tagline']) }}</div>
+                </div>
+                <div class="onboarding-step-icon-wrapper">
+                    @if ($step['state'] == 'complete')
+                    <img src="{{ url('svg/check-mark.svg') }}"/>
+                    @else 
+                    <img src="{{ url('svg/arrow-right.svg') }}"/>
+                    @endif
+                </div>
+            </div>
+            @if ($step['link']) </a> @endif
+            @endforeach
+        </div>
     @endif
 
     @if($user->invitations->count())

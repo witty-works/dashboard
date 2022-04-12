@@ -45,7 +45,19 @@ a {
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
+    padding: 2em 3em;
 }
+
+.onboarding-steps {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1em;
+    margin-top: 1em;
+    margin-right: -1.5em;
+}
+
 .onboarding-title {
     font-family: 'Ibarra Real Nova';
     font-style: normal;
@@ -53,45 +65,64 @@ a {
     line-height: 34px;
     letter-spacing: -0.025em;    
     color: #1A1A1A;
+    margin-bottom: 0.2em;
 }
 
 .onboarding-tagline {
     line-height: 22px;
     color: #1A1A1A;
+    margin-bottom: 2em;
 }
 
-.onboarding-step-container {
+.onboarding-step-container--todo {
+    display: flex;
+    flex-direction: row;
     background: #FFF8E1;
     border: 1px solid #EB9F46;
-    box-sizing: border-box;
     box-shadow: 0px 4px 26px rgba(0, 0, 0, 0.09);
+    padding: 1em;
+    margin-right: 1.5em;
+    width: 363px;
 }
 
 .onboarding-step-container--complete {
+    display: flex;
+    flex-direction: row;
     background: #F1FFF3;
     border: 1px solid #E8F0D4;
-    box-sizing: border-box;
     box-shadow: 0px 4px 26px rgba(0, 0, 0, 0.09);
+    padding: 1em;
+    margin-right: 1.5em;
+    width: 363px;
+
 }
 
 .onboarding-step-container--deactivated {
+    display: flex;
+    flex-direction: row;
     background: #FAFAFA;
-    box-sizing: border-box;
+    padding: 1em;
+    margin-right: 1.5em;
+    width: 363px;
 }
 
-.onboarding-step-title {
+
+
+.onboarding-step-title--todo, .onboarding-step-title-complete {
     font-weight: 600;
     line-height: 22px;
     color: #1A1A1A;
+    margin-bottom: 0.2em;
 }
 
 .onboarding-step-title--deactivated {
     font-weight: 600;
     line-height: 22px;
     color: #CDCFD0;
+    margin-bottom: 0.2em;
 }
 
-.onboarding-step-tagline {
+.onboarding-step-tagline--todo, .onboarding-step-tagline--complete {
     font-size: 14px;
     line-height: 17px;    
     color: #656565;
@@ -101,4 +132,14 @@ a {
     font-size: 14px;
     line-height: 17px;    
     color: #CDCFD0;
+}
+.onboarding-step-text-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+.onboarding-step-icon-wrapper {
+    display: flex;
+    margin-right: auto;
+    min-width: 23px;
+    margin-left: 1em;
 }
