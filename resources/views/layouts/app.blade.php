@@ -7,9 +7,6 @@
 
         @include('partials/gtm-header')
 
-        <script src="https://js.stripe.com/v3/" defer></script>
-
-
         <title>{{ config('app.name', 'Laravel') }}</title>
 
         <!-- Fonts -->
