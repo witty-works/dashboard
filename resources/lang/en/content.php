@@ -192,4 +192,5 @@ Read more about ROI for [organizations](https://www.witty.works/witty-for-compan
     'accepting_invitation_will_result_in_leaving_your_current_team' => 'Accepting an invitation will result in leaving team ":team_name".',
     'contact_support_to_delete_owned_teams' => 'Since you are a team owner, in order to be able to accept an invitation please <a href="mailto:support@witty.works">contact support</a>.',
     'billing' => 'billing',
+    'browser_login' => 'Browser Login',
 ];

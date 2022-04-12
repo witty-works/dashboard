@@ -11,8 +11,6 @@ use Laravel\Jetstream\Rules\Role;
 
 class AddTeamMember implements AddsTeamMembers
 {
-    use SameDomainTrait;
-
     /**
      * Add a new team member to the given team.
      *
@@ -54,8 +52,6 @@ class AddTeamMember implements AddsTeamMembers
         ], $this->rules(), [
             'email.exists' => __('We were unable to find a registered user with this email address.'),
         ])->after(
-            $this->ensureOwnerEmailHasSameDomain($team, $email)
-        )->after(
             $this->ensureUserIsNotAlreadyOnTeam($team, $email)
         )->validateWithBag('addTeamMember');
     }
