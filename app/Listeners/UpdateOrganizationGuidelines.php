@@ -23,15 +23,14 @@ class UpdateOrganizationGuidelines
 
         if ($team->subscribed()) {
             $users = $team->allUsers()->pluck('email')->toArray();
-            $plan = $team->subscription()->planId();
         } else {
             $users = [$team->owner->email];
-            $plan = 'witty_me';
             $team->store_context = true;
-            $team->save();
             $falsePositives = array_slice($falsePositives, 0, $team->false_positive_count);
             $termReplacements = array_slice($termReplacements, 0, $team->term_replacement_count);
         }
+
+        $plan = $team->planId();
 
         $organizationGuidelines = OrganizationGuidelines::firstOrNew(['team_id' => $team->id]);
         $suggestion = [];

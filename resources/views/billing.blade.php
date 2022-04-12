@@ -52,7 +52,7 @@
                                 {{ __('stripe.register_now') }}
                             </a>
                         </li>
-                        @elseif ($team->subscribed() && $team->subscription()->planId() === $planName)
+                        @elseif ($team->planId() === $planName)
                         <li>
                             {{ __('stripe.current_plan') }}
                         </li>

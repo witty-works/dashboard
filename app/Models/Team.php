@@ -123,7 +123,7 @@ class Team extends JetstreamTeam
     public function getTermReplacementsCountAttribute()
     {
         if ($this->subscribed() && $this->term_replacements === null) {
-            return config('stripe.plans.' . $this->subscription()->planId() . '.features.term_replacements.count');
+            return config('stripe.plans.' . $this->planId() . '.features.term_replacements.count');
         }
 
         return $this->term_replacements ?? 5;
@@ -142,7 +142,7 @@ class Team extends JetstreamTeam
     public function getFalsePositivesCountAttribute()
     {
         if ($this->subscribed() && $this->false_positives === null) {
-            return config('stripe.plans.' . $this->subscription()->planId() . '.features.false_positives.count');
+            return config('stripe.plans.' . $this->planId() . '.features.false_positives.count');
         }
 
         return $this->false_positives ?? 5;
@@ -161,6 +161,15 @@ class Team extends JetstreamTeam
     public function getStoreContextDisablableAttribute()
     {
         return $this->subscribed() && Gate::check('update', $this);
+    }
+
+    public function planId()
+    {
+        if (!$this->subscribed()) {
+            return 'witty_me';
+        }
+
+        return $this->subscription()->planId();
     }
 
     /**

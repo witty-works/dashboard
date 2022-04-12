@@ -28,6 +28,9 @@ class StoreContext extends Component
         $this->team = $team;
 
         $this->store_context = (bool) $team->store_context;
+        if ($this->team->store_context_disablable) {
+            $this->store_context = true;
+        }
     }
 
     public function updateTeamsStoreContext()
