@@ -39,6 +39,8 @@ class OAuthController extends BaseOAuthController
         $redirectUri = $request->get('redirect_uri');
         if ($this->validateRedirectUri($redirectUri)) {
             session()->put('socialstream.browser_login_redirect_uri', $redirectUri);
+        } else {
+            session()->remove('socialstream.browser_login_redirect_uri');
         }
 
         return $this->redirectToProvider($request, 'azureadb2c', $generator, 'browser_login');
@@ -127,7 +129,7 @@ class OAuthController extends BaseOAuthController
         $accessToken = $this->getAcessToken();
         $redirectUri = session()->get('socialstream.browser_login_redirect_uri');
         if ($this->validateRedirectUri($redirectUri)) {
-            $redirectUri .= '?email='.$user->email.'&access_token=' . $accessToken;
+            $redirectUri .= '?email=' . $user->email . '&access_token=' . $accessToken;
 
             return redirect($redirectUri);
         }
