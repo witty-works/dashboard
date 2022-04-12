@@ -35,6 +35,11 @@ class OAuthController extends BaseOAuthController
 
     public function redirectToProviderBrowserLogin(Request $request, GeneratesProviderRedirect $generator)
     {
+        $redirectUri = $request->get('redirect_uri');
+        if ($this->validateRedirectUri($redirectUri)) {
+            session()->put('socialstream.browser_login_redirect_uri', $redirectUri);
+        }
+
         return $this->redirectToProvider($request, 'azureadb2c', $generator, 'browser_login');
     }
 
@@ -99,14 +104,14 @@ class OAuthController extends BaseOAuthController
         return $this->login($user);
     }
 
-    public function handleBrowserLogin(Request $request, ResolvesSocialiteUsers $resolver)
+    public function handleBrowserLoginCallback(Request $request, ResolvesSocialiteUsers $resolver)
     {
         return $this->handleProviderCallback($request, 'azureadb2c', $resolver, 'browser_login');
     }
 
-    public function handleBrowserLoginCallback(Request $request, ResolvesSocialiteUsers $resolver)
+    protected function validateRedirectUri($redirectUri)
     {
-        return $this->handleProviderCallback($request, 'azureadb2c', $resolver, 'browser_login');
+        return in_array($redirectUri, config('services.azureadb2c.redirect_uri'));
     }
 
     protected function getAcessToken()
@@ -118,7 +123,14 @@ class OAuthController extends BaseOAuthController
 
     protected function returnAccessTokenResponse()
     {
-        return view('browser-login', ['access_token' => $this->getAcessToken()]);
+        $accessToken = $this->getAcessToken();
+        $redirectUri = session()->get('socialstream.browser_login_redirect_uri');
+        if ($this->validateRedirectUri($redirectUri)) {
+            $redirectUri .= "?access_token=" . $accessToken;
+            return redirect($redirectUri);
+        }
+
+        return view('browser-login', ['access_token' => $accessToken]);
     }
 
     /**
