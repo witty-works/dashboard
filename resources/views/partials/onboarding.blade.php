@@ -69,9 +69,9 @@
                 </div>
                 <div class="onboarding-step-icon-wrapper">
                     @if ($step['state'] == 'complete')
-                    <img src="{{ url('svg/check-mark.svg') }}"/>
+                    <img src="{{ url('svg/check-mark.svg') }}" alt="checkmark"/>
                     @else 
-                    <img src="{{ url('svg/arrow-right.svg') }}"/>
+                    <img src="{{ url('svg/arrow-right.svg') }}" alt="arrow"/>
                     @endif
                 </div>
             </div>
