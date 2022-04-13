@@ -44,13 +44,16 @@ class EventServiceProvider extends ServiceProvider
         ],
         TeamCreated::class => [
             PostHogUpdateCompany::class,
+            UpdateOrganizationGuidelines::class,
         ],
         TeamUpdated::class => [
             PostHogUpdateCompany::class,
+            UpdateOrganizationGuidelines::class,
         ],
         TeamDeleted::class => [
             PostHogUpdateCompany::class,
             UpdateUserLicenses::class,
+            UpdateOrganizationGuidelines::class,
         ],
         Registered::class => [
             SendEmailVerificationNotification::class,
