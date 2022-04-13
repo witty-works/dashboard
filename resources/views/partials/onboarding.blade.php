@@ -49,7 +49,7 @@
             $onboardingSteps['organizationGuidelines']['link'] = route('organization-guidelines', $currentTeam->id);
         }
 
-        if (!$currentTeam->organizationGuidelines) {
+        if (!$currentTeam || !$currentTeam->organizationGuidelines) {
             $onboardingSteps['inviteUsers']['state'] = 'deactivated';
         } else if ($currentTeam && $currentTeam->total_user_licenses_count > 1) {
             $onboardingSteps['inviteUsers']['state'] = 'complete';
@@ -116,6 +116,7 @@
     <div class="onboarding-container-col-one">
         <div class="onboarding-title">{{ __('content.onboarding_quickLinks') }}</div>
         <div class="onboarding-quick-links-container">
+            @if($currentTeam)
             <a class="onboarding-iconWrapper" href="{{ route('teams.show', $currentTeam->id) }}">
                 <img src="{{ url('svg/team-setup.svg') }}" alt="team setup"/>
                 <div class="onboarding-icon-description">{{ __('content.onboarding_team_setup') }}</div>
@@ -124,6 +125,7 @@
                 <img src="{{ url('svg/language-guidelines.svg') }}" alt="language guidelines"/>
                 <div class="onboarding-icon-description">{{ __('content.onboarding_language_guidelines') }}</div>
             </a>
+            @endif
             <a class="onboarding-iconWrapper" href="{{ route('stripe.portal') }}">
                 <img src="{{ url('svg/payment-billing.svg') }}" alt="payment"/>
                 <div class="onboarding-icon-description">{{ __('content.onboarding_payment') }}</div>
