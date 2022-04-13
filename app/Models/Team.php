@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Events\OrganizationGuidelinesUpdated;
 use App\Http\Middleware\PostHogMiddleware;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Gate;
@@ -170,24 +169,5 @@ class Team extends JetstreamTeam
         }
 
         return $this->subscription()->planId();
-    }
-
-    /**
-     * Fire a custom model event for the given event.
-     *
-     * @param  string  $event
-     * @param  string  $method
-     * @return mixed|null
-     */
-    protected function fireCustomModelEvent($event, $method)
-    {
-        if (!in_array($event, ['saved', 'deleted', 'restored'])) {
-            return;
-        }
-
-        $result = static::$dispatcher->$method(new OrganizationGuidelinesUpdated($this));
-        if (!is_null($result)) {
-            return $result;
-        }
     }
 }

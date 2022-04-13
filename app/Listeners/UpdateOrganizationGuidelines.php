@@ -3,7 +3,9 @@
 namespace App\Listeners;
 
 use App\Models\OrganizationGuidelines;
+use App\Models\Team;
 use Illuminate\Support\Facades\Http;
+use Laravel\Jetstream\Events\TeamDeleted;
 
 class UpdateOrganizationGuidelines
 {
@@ -11,14 +13,40 @@ class UpdateOrganizationGuidelines
     {
         $team = $event->team;
 
-        $termReplacements = [];
-        foreach ($team->termReplacements as $termReplacement) {
-            $termReplacements[] = [
-                'term' => $termReplacement->term,
-                'alternatives' => [$termReplacement->replacement]
-            ];
+        if ($event instanceof TeamDeleted) {
+            $this->deleteRules($team);
+        } else {
+            $this->updateRules($team);
+        }
+    }
+
+    protected function deleteRules(Team $team)
+    {
+        $endpoint = config('app.organization_guidelines_endpoint');
+        $data = [
+            'organization' => $team->id,
+            'users' => $team->allUsers()->pluck('email')->toArray(),
+        ];
+
+        $endpoint['url'] .= "/delete_rules";
+
+        if (empty($endpoint['user'])) {
+            $response = Http::delete($endpoint['url'], $data);
+        } else {
+            $response = Http::withBasicAuth($endpoint['user'], $endpoint['password'])
+                ->delete($endpoint['url'], $data);
         }
 
+        if (config('app.debug') && $response->failed()) {
+            dd($response->body(), $data);
+        }
+    }
+
+    protected function updateRules(Team $team)
+    {
+        $endpoint = config('app.organization_guidelines_endpoint');
+
+        $termReplacements = $this->getTermReplacements($team);
         $falsePositives = $team->falsePositives()->pluck('false_positive')->toArray();
 
         if ($team->subscribed()) {
@@ -33,6 +61,45 @@ class UpdateOrganizationGuidelines
         $plan = $team->planId();
 
         $organizationGuidelines = OrganizationGuidelines::firstOrNew(['team_id' => $team->id]);
+        $data = $this->getData($organizationGuidelines);
+
+        $data['organization'] = $team->id;
+        $data['name'] = $team->name;
+        $data['store_context'] = $team->store_context;
+        $data['plan'] = $plan;
+        $data['users'] = $users;
+        $data['false_positives'] = $falsePositives;
+        $data['term_replacements'] = $termReplacements;
+
+        $endpoint['url'] .= "/store_rules";
+
+        if (empty($endpoint['user'])) {
+            $response = Http::post($endpoint['url'], $data);
+        } else {
+            $response = Http::withBasicAuth($endpoint['user'], $endpoint['password'])
+                ->post($endpoint['url'], $data);
+        }
+
+        if (config('app.debug') && $response->failed()) {
+            dd($response->body(), $data);
+        }
+    }
+
+    protected function getTermReplacements(Team $team)
+    {
+        $termReplacements = [];
+        foreach ($team->termReplacements as $termReplacement) {
+            $termReplacements[] = [
+                'term' => $termReplacement->term,
+                'alternatives' => [$termReplacement->replacement]
+            ];
+        }
+
+        return $termReplacements;
+    }
+
+    protected function getData(OrganizationGuidelines $organizationGuidelines)
+    {
         $suggestion = [];
         $force = [];
 
@@ -78,29 +145,9 @@ class UpdateOrganizationGuidelines
             }
         }
 
-        $data = [
-            'organization' => $team->id,
-            'name' => $team->name,
-            'plan' => $plan,
-            'store_context' => $team->store_context,
-            'users' => $users,
+        return [
             'forced' => $force,
             'suggestion' => $suggestion,
-            'false_positives' => $falsePositives,
-            'term_replacements' => $termReplacements,
         ];
-
-        $endpoint = config('app.organization_guidelines_endpoint');
-
-        if (empty($endpoint['user'])) {
-            $response = Http::post($endpoint['url'], $data);
-        } else {
-            $response = Http::withBasicAuth($endpoint['user'], $endpoint['password'])
-                ->post($endpoint['url'], $data);
-        }
-
-        if (config('app.debug') && $response->failed()) {
-            dd($response->body(), $data);
-        }
     }
 }
