@@ -125,12 +125,11 @@
                 <img src="{{ url('svg/language-guidelines.svg') }}" alt="language guidelines"/>
                 <div class="onboarding-icon-description">{{ __('content.onboarding_language_guidelines') }}</div>
             </a>
-            @endif
             <a class="onboarding-iconWrapper" href="{{ route('stripe.portal') }}">
                 <img src="{{ url('svg/payment-billing.svg') }}" alt="payment"/>
                 <div class="onboarding-icon-description">{{ __('content.onboarding_payment') }}</div>
             </a>
-
+            @endif
             <a class="onboarding-iconWrapper" href="https://www.witty.works/help">
                 <img src="{{ url('svg/support.svg') }}" alt="support"/>
                 <div class="onboarding-icon-description">{{ __('content.onboarding_support') }}</div>
