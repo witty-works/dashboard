@@ -1,52 +1,83 @@
-<div class="p-6 sm:px-20 bg-white border-b border-gray-200">
-    <div class="text-2xl">
-        <h1>{{ __('content.welcome')}}</h1>
-    </div>
-
+<div class="onboarding-container">
     @auth
     @php
         $user = Auth::user();  
-        $currentTeam = $user->currentTeam;  
+        $currentTeam = $user->currentTeam;
+
+        $onboardingSteps = [
+            'createTeam' => [
+                    'title' =>  'content.onboarding_create_team',
+                    'tagline' => 'content.onboarding_create_team_tagline',
+                    'state' => 'deactivated',
+                    'link' => false,
+                ],
+            'organizationGuidelines' =>
+                [
+                    'title' => 'content.onboarding_configure_organization_guidelines',
+                    'tagline' => 'content.onboarding_configure_organization_guidelines_tagline',
+                    'state' => 'deactivated',
+                    'link' => false,
+                ],
+            'inviteUsers' =>
+                [
+                    'title' => 'content.onboarding_invite_users',
+                    'tagline' => 'content.onboarding_invite_users_tagline',
+                    'state' => 'deactivated',
+                    'link' => false,
+                ], 
+        ];
     @endphp
+
     @if(!$currentTeam || $user->can('update', $currentTeam))
-    <div class="mt-6">
-        {!! Str::markdown(__('content.welcome_text')) !!}
-    </div>
+        <div class="onboarding-title">{{ __('content.onboarding_finish_setup_title') }}</div>
+        <div class="onboarding-tagline">{{ __('content.onboarding_finish_setup_tagline') }}</div>
+        
+        @php
+        if ($currentTeam) {
+            $onboardingSteps['createTeam']['state'] = 'complete';
+        } else {
+            $onboardingSteps['createTeam']['state'] = 'todo';
+            $onboardingSteps['createTeam']['link'] = route('teams.create');
+        }
 
-    <div class="mt-6">
-        <img src="{{ asset('dashboard.png') }}" />
+        if (!$currentTeam) {
+            $onboardingSteps['organizationGuidelines']['state'] = 'deactivated';
+        } else if ($currentTeam && $currentTeam->organizationGuidelines) {
+            $onboardingSteps['organizationGuidelines']['state'] = 'complete';
+        } else {
+            $onboardingSteps['organizationGuidelines']['state'] = 'todo';
+            $onboardingSteps['organizationGuidelines']['link'] = route('organization-guidelines', $currentTeam->id);
+        }
 
-        <h2>{{ __('content.onboarding_next_steps') }}</h2>
-        <ol>
-            <li>{{ __('content.onboarding_signup_to_witty') }} ✔️</li>  
-            @if ($currentTeam)
-            <li>{{ __('content.onboarding_create_team') }} ✔️</li>
-            @else
-            <li><a href="{{ route('teams.create') }}">{{ __('content.onboarding_create_team') }}</a></li>
-            @endif 
-            @if (!$currentTeam)
-            <li>{{ __('content.onboarding_configure_organization_guidelines') }}</li>
-            @elseif ($currentTeam && $currentTeam->organizationGuidelines)
-            <li>{{ __('content.onboarding_configure_organization_guidelines') }} ✔️</li>
-            @else
-            <li><a href="{{ route('organization-guidelines', $currentTeam->id) }}">{{ __('content.onboarding_configure_organization_guidelines') }}</a></li>
-            @endif 
-            @if (!$currentTeam)
-            <li>{{ __('content.onboarding_invite_users') }}</li>
-            @elseif ($currentTeam && $currentTeam->total_user_licenses_count > 1)
-            <li>{{ __('content.onboarding_invite_users') }} ✔️</li>
-            @else
-            <li><a href="{{ route('teams.show', $currentTeam->id) }}">{{ __('content.onboarding_invite_users') }}</a></li>
-            @endif 
-        </ol>
-        @if (false)
-        {{ __('content.onboarding_install_witty') }}
-        @else
-        <a href="https://www.witty.works/select-browser">{{ __('content.onboarding_install_witty') }}</a>
-        @endif 
-    </div>
+        if (!$currentTeam || !$currentTeam->organizationGuidelines) {
+            $onboardingSteps['inviteUsers']['state'] = 'deactivated';
+        } else if ($currentTeam && $currentTeam->total_user_licenses_count > 1) {
+            $onboardingSteps['inviteUsers']['state'] = 'complete';
+        } else {
+            $onboardingSteps['inviteUsers']['state'] = 'todo';
+            $onboardingSteps['inviteUsers']['link'] = route('teams.show', $currentTeam->id);
+        }
+        @endphp
+
+        <div class="onboarding-steps">
+            @foreach($onboardingSteps as $step)
+            <div class="onboarding-step-container onboarding-step-{{ $step['state'] }}">
+                @if ($step['link']) <a href="{{ $step['link'] }}"> @endif
+                    <div class="onboarding-step-text-wrapper">
+                        <div class="onboarding-step-title--{{ $step['state'] }}">{{ __($step['title']) }}</div>
+                        <div class="onboarding-step-tagline--{{ $step['state'] }}">{{ __($step['tagline']) }}</div>
+                    </div>
+                @if ($step['link']) </a> @endif
+                @if ($step['state'] == 'complete')
+                <img class="onboarding-step-icon" src="{{ url('svg/check-mark.svg') }}" alt="checkmark" />
+                @else 
+                <img class="onboarding-step-icon" src="{{ url('svg/arrow-right.svg') }}" alt="arrow"/>
+                @endif
+            </div>
+            @endforeach
+        </div>
     @endif
-
+    
     @if($user->invitations->count())
     <div class="mt-6">
         {{ trans_choice('content.open_invitiations', $user->invitations->count()) }}
@@ -78,6 +109,37 @@
         @endif
     </div>
     @endif
-
     @endauth
 </div>
+
+<div class="onboarding-container--two-col">
+    <div class="onboarding-container-col-one">
+        <div class="onboarding-title">{{ __('content.onboarding_quickLinks') }}</div>
+        <div class="onboarding-quick-links-container">
+            @if($currentTeam)
+            <a class="onboarding-iconWrapper" href="{{ route('teams.show', $currentTeam->id) }}">
+                <img src="{{ url('svg/team-setup.svg') }}" alt="team setup"/>
+                <div class="onboarding-icon-description">{{ __('content.onboarding_team_setup') }}</div>
+            </a>
+            <a class="onboarding-iconWrapper" href="{{ route('organization-guidelines', $currentTeam->id) }}">
+                <img src="{{ url('svg/language-guidelines.svg') }}" alt="language guidelines"/>
+                <div class="onboarding-icon-description">{{ __('content.onboarding_language_guidelines') }}</div>
+            </a>
+            @endif
+            <a class="onboarding-iconWrapper" href="{{ route('stripe.portal') }}">
+                <img src="{{ url('svg/payment-billing.svg') }}" alt="payment"/>
+                <div class="onboarding-icon-description">{{ __('content.onboarding_payment') }}</div>
+            </a>
+
+            <a class="onboarding-iconWrapper" href="https://www.witty.works/help">
+                <img src="{{ url('svg/support.svg') }}" alt="support"/>
+                <div class="onboarding-icon-description">{{ __('content.onboarding_support') }}</div>
+            </a>
+        </div>
+    </div>
+    <div class="onboarding-container-col-two">
+        <div class="onboarding-title">{{ __('content.onboarding_team_stats') }}</div>
+        <img class="onboarding-analytics-img" src="{{ url('svg/analytics-coming-soon.svg') }}" alt="analytics"/>
+    </div>
+</div>
+
