@@ -198,7 +198,7 @@ a {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content:center;
+    justify-content: left;
 }
 
 .onboarding-container-col-one {
