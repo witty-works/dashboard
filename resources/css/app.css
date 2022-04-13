@@ -1,4 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=Lato:wght@100;400;700&display=swap");
+@import url('https://fonts.googleapis.com/css?family=Lato:400,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Ibarra Real Nova:400, 600&display=swap');
 
 @import "tailwindcss/base";
 @import "tailwindcss/components";
@@ -41,25 +42,28 @@ a {
     border: 1px solid #CDCFD0;
     box-sizing: border-box;
     border-radius: 6px;
-    font-family: 'Lato, Arial, Helvetica, sans-serif';
+    font-family: Lato, Arial, Helvetica, sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
     padding: 2em 3em;
+    margin-bottom: 3em;
 }
 
 .onboarding-steps {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
+    flex-wrap: wrap;
     align-items: center;
     margin-bottom: 1em;
     margin-top: 1em;
     margin-right: -1.5em;
+
 }
 
 .onboarding-title {
-    font-family: 'Ibarra Real Nova, Times New Roman, Times, serif';
+    font-family: Ibarra Real Nova, 'Times New Roman', Times, serif;
     font-style: normal;
     font-size: 27px;
     line-height: 34px;
@@ -74,39 +78,36 @@ a {
     margin-bottom: 2em;
 }
 
-.onboarding-step-container--todo {
+.onboarding-step-container {
     display: flex;
     flex-direction: row;
+    justify-content: flex-start;
+    padding: 1em;
+    margin-right: 1.5em;
+    margin-bottom: 1em;
+    width: 350px;
+
+    font-weight: 600;
+    line-height: 22px;
+}
+
+.onboarding-step-todo {
     background: #FFF8E1;
     border: 1px solid #EB9F46;
     box-shadow: 0px 4px 26px rgba(0, 0, 0, 0.09);
-    padding: 1em;
-    margin-right: 1.5em;
-    width: 363px;
 }
 
-.onboarding-step-container--complete {
-    display: flex;
-    flex-direction: row;
+.onboarding-step-complete {
     background: #F1FFF3;
     border: 1px solid #E8F0D4;
     box-shadow: 0px 4px 26px rgba(0, 0, 0, 0.09);
-    padding: 1em;
-    margin-right: 1.5em;
-    width: 363px;
-
 }
 
-.onboarding-step-container--deactivated {
-    display: flex;
-    flex-direction: row;
+.onboarding-step-deactivated {
     background: #FAFAFA;
-    padding: 1em;
-    margin-right: 1.5em;
-    width: 363px;
 }
 
-.onboarding-step-title--todo, .onboarding-step-title-complete {
+.onboarding-step-title--todo, .onboarding-step-title--complete {
     font-weight: 600;
     line-height: 22px;
     color: #1A1A1A;
@@ -137,9 +138,73 @@ a {
     flex-direction: column;
 }
 
-.onboarding-step-icon-wrapper {
+.onboarding-step-icon {
     display: flex;
+    flex-direction: row;
     margin-right: auto;
-    min-width: 23px;
     margin-left: 1em;
+    width: 23px;
+}
+
+.onboarding-links-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1em;
+    padding: 2em 3em;
+
+}
+
+.onboarding-quick-links-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+.onboarding-analytics-img {
+    display: flex;
+    margin-top: 1em;
+}
+
+.onboarding-iconWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-right: 1em;
+    margin-bottom: 1em;
+
+    background: #FFFFFF;
+    border-radius: 16px;
+    font-family: Lato, Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    width: 236px;
+    height: 184px;
+}
+
+.onboarding-icon-description {
+    line-height: 22px;
+    color: #1A1A1A;
+    margin-top: 0.5em;
+}
+
+.onboarding-container--two-col {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content:center;
+}
+
+.onboarding-container-col-one {
+    width: 510px;
+}
+
+.onboarding-container-col-two {
+    width: 700px;
 }
