@@ -161,6 +161,8 @@ Route::group(
     }
 );
 
+Route::get('/refresh-token', [OAuthController::class, 'accessTokenFromRefreshToken'])->name('oauth.refresh_token');
+
 Route::get('/subscribe', [StripeController::class, 'subscribe'])->name('stripe.subscribe');
 
 Route::post(
