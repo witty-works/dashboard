@@ -24,9 +24,7 @@ return [
         'policy' => [
             'login' => env('AADB2C_POLICY'),
             'profile' => env('AADB2C_POLICY_PROFILE'),
-            'register' => env('AADB2C_POLICY_REGISTER'),
             'browser_login' => env('AADB2C_POLICY'),
-            'browser_register' => env('AADB2C_POLICY_REGISTER'),
         ],
         'redirect_uri' => explode(',', env('AADB2C_BROWSER_REDIRECT_URIS')),
     ],

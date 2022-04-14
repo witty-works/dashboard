@@ -182,5 +182,4 @@ Lesen Sie mehr über den ROI für [Organisationen](https://www.witty.works/witty
     'invitation_email_welcome' => 'Um diese Einladung anzunehmen, registrieren Sie ein neues Konto, indem Sie auf die Schaltfläche unten klicken:',
     'team' => 'Team',
     'add_team_member' => 'Teammitglied hinzufügen',
-    'invitation_email_login' => 'Wenn Sie bereits ein bestehendes Konto haben, klicken Sie auf die Schaltfläche unten:',
 ];
