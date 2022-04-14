@@ -55,6 +55,10 @@
         <x-jet-action-message class="mr-3" on="saved">
             {{ __('content.saved') }}
         </x-jet-action-message>
+
+        <x-jet-button>
+            {{ __('content.save') }}
+        </x-jet-button>
     </x-slot>
     @endif
 

@@ -12,11 +12,11 @@ class English extends Component
     use AuthorizesRequests;
 
     public $singular_they;
-    public $singular_they_force;
+    public $english_rules_force;
 
     protected $rules = [
         'singular_they' => 'nullable|boolean',
-        'singular_they_force' => 'nullable|boolean',
+        'english_rules_force' => 'nullable|boolean',
     ];
 
     public $team;
@@ -34,7 +34,7 @@ class English extends Component
         $organizationRule = $this->getOrganizationGuidelines($this->team);
 
         $this->singular_they = (bool) $organizationRule->singular_they;
-        $this->singular_they_force = (bool) $organizationRule->singular_they_force;
+        $this->english_rules_force = (bool) $organizationRule->english_rules_force;
     }
 
     public function updateOrganizationGuidelinesEnglish()
@@ -48,7 +48,7 @@ class English extends Component
         $organizationRule = $this->getOrganizationGuidelines($this->team);
 
         $organizationRule->singular_they = (bool) $this->singular_they;
-        $organizationRule->singular_they_force = (bool) $this->singular_they_force;
+        $organizationRule->english_rules_force = (bool) $this->english_rules_force;
 
         $organizationRule->save();
 
