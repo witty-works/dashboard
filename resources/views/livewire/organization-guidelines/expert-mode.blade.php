@@ -23,9 +23,9 @@
         </div>
     </x-slot>
 
-    @if (Auth::user()->hasTeamPermission($team, 'edit_guidelines'))
-    <x-slot name="actions">
-         <div class="guidelines-form-section">         
+    <x-slot name="save">
+             <!-- TODO:combine preferred_variants_en_force & preferred_variants_de_force -->
+        <div class="guidelines-form-section">         
             <x-jet-input id="expert_mode_force"
                 value="1"
                 type="checkbox"
@@ -36,7 +36,10 @@
 
             <div class="guidelines-form-section-label">{{ __('guidelines.set_for_all') }}</div>
         </div>
+    </x-slot>
 
+    @if (Auth::user()->hasTeamPermission($team, 'edit_guidelines'))
+    <x-slot name="actions">
         <x-jet-action-message class="mr-3" on="saved">
             {{ __('content.saved') }}
         </x-jet-action-message>

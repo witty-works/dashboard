@@ -34,10 +34,9 @@
             <x-jet-input-error for="gendered_roles_format" class="mt-2" />
     </x-slot>
 
-    @if (Auth::user()->hasTeamPermission($team, 'edit_guidelines'))
-    <x-slot name="actions">
-    <!-- TODO: Combine german_gender_ending_force & gendered_roles_format_force -->
-        <div class="guidelines-form-section">
+    <x-slot name="save">
+          <!-- TODO: Combine german_gender_ending_force & gendered_roles_format_force -->
+          <div class="guidelines-form-section">
             <x-jet-input id="german_gender_ending_force"
                 value="1"
                 type="checkbox"
@@ -48,7 +47,11 @@
             />
             <div class="guidelines-form-section-label">{{ __('guidelines.set_for_all') }}</div>
         <div>
+    </x-slot>
+      
 
+    @if (Auth::user()->hasTeamPermission($team, 'edit_guidelines'))
+    <x-slot name="actions">
         <x-jet-action-message class="mr-3" on="saved">
             {{ __('content.saved') }}
         </x-jet-action-message>
