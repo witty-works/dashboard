@@ -19,18 +19,17 @@
                 wire:change="updateOrganizationGuidelinesOrthography()"
                 :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" />
             @endforeach
-
         </div>
     </x-slot>
 
     @if (Auth::user()->hasTeamPermission($team, 'edit_guidelines'))
     <x-slot name="actions">
         <div class="guidelines-form-section">   
-            <x-jet-input id="disabled_categories_force_{{ $category }}"
+            <x-jet-input id="disabled_categories_force_orthography"
                 value="1"
                 type="checkbox"
                 class="guidelines-form-section-toggle"
-                wire:model.defer="disabled_categories_force_{{ $category }}"
+                wire:model.defer="disabled_categories_force_orthography"
                 wire:change="updateOrganizationGuidelinesOrthography()"
                 :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" />  
             <div class="guidelines-form-section-label">{{ __('guidelines.set_for_all') }}</div>

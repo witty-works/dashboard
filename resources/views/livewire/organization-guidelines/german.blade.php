@@ -10,11 +10,10 @@
     <x-slot name="form">  
         <div class="guidelines-form-title">{{ __('guidelines.manage_organization_guidelines_description_german_form_title') }}</div>
         <div class="guidelines-form-tagline">
-            {{ __('guidelines.manage_organization_guidelines_description_german_form_sub_title') }}
-            {{ __('guidelines.learn_more') }}
+            {!! __('guidelines.manage_organization_guidelines_description_german_form_sub_title') !!}
         </div>
 
-            <div class="guidelines-form-section-dropdown-label"> {{ __('guidelines.german_gender_ending') }}</div>
+        <div class="guidelines-form-section-dropdown-label"> {{ __('guidelines.german_gender_ending') }}</div>
             <x-select id="german_gender_ending"
                 :options="\App\Models\OrganizationGuidelines::GERMAN_GENDER_ENDING"
                 class="guidelines-form-section-dropdown"
@@ -36,19 +35,18 @@
 
     @if (Auth::user()->hasTeamPermission($team, 'edit_guidelines'))
     <x-slot name="actions">
-    <!-- TODO: Combine german_gender_ending_force & gendered_roles_format_force -->
         <div class="guidelines-form-section">
-            <x-jet-input id="german_gender_ending_force"
+            <x-jet-input id="german_rules_force"
                 value="1"
                 type="checkbox"
                 class="guidelines-form-section-toggle"
-                wire:model.defer="german_gender_ending_force"
+                wire:model.defer="german_rules_force"
                 wire:change="updateOrganizationGuidelinesGerman()"
                 :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" 
             />
             <div class="guidelines-form-section-label">{{ __('guidelines.set_for_all') }}</div>
-        <div>
-
+        </div>
+    
         <x-jet-action-message class="mr-3" on="saved">
             {{ __('content.saved') }}
         </x-jet-action-message>

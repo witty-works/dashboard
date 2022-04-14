@@ -26,17 +26,16 @@
     @if (Auth::user()->hasTeamPermission($team, 'edit_guidelines'))
     <x-slot name="actions">
         <div class="guidelines-form-section">
-            <x-jet-input id="singular_they_force"
+            <x-jet-input id="english_rules_force"
                 value="1"
                 type="checkbox"
                 class="guidelines-form-section-toggle"
-                wire:model.defer="singular_they_force"
+                wire:model.defer="english_rules_force"
                 wire:change="updateOrganizationGuidelinesEnglish()"
                 :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" 
             />
             <div class="guidelines-form-section-label">{{ __('guidelines.set_for_all') }}</div>
-        <div>
-
+        </div>
         <x-jet-action-message class="mr-3" on="saved">
             {{ __('content.saved') }}
         </x-jet-action-message>

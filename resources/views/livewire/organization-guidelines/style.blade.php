@@ -1,6 +1,6 @@
 <x-jet-form-section submit="updateOrganizationGuidelinesStyle">
     <x-slot name="title">
-        {{ __('guidelines.manage_organization_guidelines_inclusive_and_style') }}
+        {{ __('guidelines.manage_organization_guidelines_style') }}
     </x-slot>
 
     <x-slot name="description">
@@ -21,33 +21,19 @@
                 :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" />
 
             @endforeach
-
-            @foreach(\App\Models\OrganizationGuidelines::DISABLED_CATEGORIES_INCLUSIVE as $category)
-            {{ __('guidelines.enable_' . $category ) }}
-
-            <x-jet-input id="disabled_categories_{{ $category }}"
-                value="1"
-                type="checkbox"
-                class="mt-1 block"
-                wire:model.defer="disabled_categories_{{ $category }}"
-                wire:change="updateOrganizationGuidelinesInclusive()"
-                :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" />
-            @endforeach
-
         </div>
     </x-slot>
 
     @if (Auth::user()->hasTeamPermission($team, 'edit_guidelines'))
     <x-slot name="actions">
-        <!-- TODO: make sure this includes both style and inclusive -->
         <div class="guidelines-form-section">     
         <x-jet-input 
-            id="disabled_categories_force_{{ $category }}"
+            id="disabled_categories_force_style"
             value="1"
             type="checkbox"
             class="guidelines-form-section-toggle"
-            wire:model.defer="disabled_categories_force_{{ $category }}"
-            wire:change="updateOrganizationGuidelinesInclusive()"
+            wire:model.defer="disabled_categories_force_style"
+            wire:change="updateOrganizationGuidelinesStyle()"
             :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" />
             <div class="guidelines-form-section-label">{{ __('guidelines.set_for_all') }}</div>
         </div>

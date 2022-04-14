@@ -25,7 +25,7 @@
 
     @if (Auth::user()->hasTeamPermission($team, 'edit_guidelines'))
     <x-slot name="actions">
-         <div class="guidelines-form-section">         
+        <div class="guidelines-form-section">         
             <x-jet-input id="expert_mode_force"
                 value="1"
                 type="checkbox"
