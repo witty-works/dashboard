@@ -204,7 +204,7 @@ class OAuthController extends BaseOAuthController
     {
         $loginResponse = parent::login($user);
         if (ResolveSocialiteUser::isBrowserLogin()) {
-            return $this->returnAccessTokenResponse($user, Socialite::driver($this->provider));
+            return $this->returnAccessTokenResponse(Socialite::driver($this->provider));
         }
 
         return $loginResponse;
