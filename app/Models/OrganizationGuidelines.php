@@ -31,12 +31,14 @@ class OrganizationGuidelines extends Model
     protected $fillable = [
         'team_id',
         'preferred_variants',
+        'preferred_variants_force',
         'disabled_categories',
         'disabled_categories_force',
     ];
 
     protected $casts = [
         'preferred_variants' => 'json',
+        'preferred_variants_force' => 'json',
         'disabled_categories' => 'json',
         'disabled_categories_force' => 'json',
     ];
@@ -45,6 +47,7 @@ class OrganizationGuidelines extends Model
     {
         $attributes += [
             'preferred_variants' => ['de-DE', 'en-US'],
+            'preferred_variants_force' => [],
             'disabled_categories' => [],
             'disabled_categories_force' => [],
         ];
