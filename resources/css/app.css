@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Lato:400,700&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Ibarra Real Nova:400, 600&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap');
 
 @import "tailwindcss/base";
 @import "tailwindcss/components";
@@ -207,4 +208,94 @@ a {
 
 .onboarding-container-col-two {
     width: 700px;
+}
+
+.guidelines-title {
+    font-family: Ibarra Real Nova, 'Times New Roman', Times, serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 39px;
+    line-height: 49px;
+    letter-spacing: -0.025em;
+    color: #1A1A1A;
+    margin-bottom: 0.2em;
+}
+
+.guidelines-tagline {
+    font-family: Lato, Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    color: #000000;
+}
+
+.guidelines-wrapper {
+    margin-top: 1em;
+}
+
+.guidelines-form-title {
+    font-family: Lato, Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 22px;
+    color: #000000;
+    margin-bottom: 0.5em;
+}
+
+.guidelines-form-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 1em;
+}
+
+.guidelines-form-section-toggle {
+    margin-right: 1em;
+}
+
+.guidelines-form-section-label {
+    font-family: Roboto, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 24px;
+    color: #212529;
+}
+
+.guidelines-form-section-dropdown-label {
+    font-family: Roboto, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #212529;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+}
+
+.guidelines-form-section-dropdown {
+    width: 30%;
+}
+.guidelines-enable-for-all {
+    background: #F1F2F2;
+    border: 1px solid #CDCFD0;
+    box-sizing: border-box;
+    border-bottom-right-radius: 0.375rem;
+    border-bottom-left-radius: 0.375rem;
+    padding: 1.5em;
+    padding-bottom: 1em;
+}
+
+.guidelines-form-tagline {
+    font-family: Lato, Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    color: #000000;
+    margin-bottom: 1em;
 }
