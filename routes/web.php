@@ -125,26 +125,6 @@ Route::group(
 
         /*
         |------------------
-        | SOCIALSTREAM
-        |------------------
-        */
-        Route::group(['middleware' => config('socialstream.middleware', ['web'])], function () {
-            Route::redirect('/login', '/')->name('login');
-            Route::redirect('/register', '/')->name('register');
-            Route::get('/logout/{provider}', [OAuthController::class, 'logout'])->name('logout');
-            Route::get('/oauth/{provider}/{policy}', [OAuthController::class, 'redirectToProvider'])->name('oauth.redirect');
-            Route::get('/oauth/{provider}/{policy}/callback', [OAuthController::class, 'handleProviderCallback'])->name('oauth.callback');
-            Route::get('/browser-login', [OAuthController::class, 'redirectToProviderBrowserLogin'])->name('browser_login');
-            Route::get('/browser-login/callback', [OAuthController::class, 'handleBrowserLoginCallback'])->name('browser_login.callback');
-        });
-        /*
-        |------------------
-        | \SOCIALSTREAM
-        |------------------
-        */
-
-        /*
-        |------------------
         | CASHIER
         |------------------
         */
@@ -161,7 +141,28 @@ Route::group(
     }
 );
 
+
+/*
+|------------------
+| SOCIALSTREAM
+|------------------
+*/
+Route::group(['middleware' => config('socialstream.middleware', ['web'])], function () {
+    Route::redirect('/login', '/')->name('login');
+    Route::redirect('/register', '/')->name('register');
+    Route::get('/logout/{provider}', [OAuthController::class, 'logout'])->name('logout');
+    Route::get('/oauth/{provider}/{policy}', [OAuthController::class, 'redirectToProvider'])->name('oauth.redirect');
+    Route::get('/oauth/{provider}/{policy}/callback', [OAuthController::class, 'handleProviderCallback'])->name('oauth.callback');
+});
+
+Route::get('/browser-login', [OAuthController::class, 'redirectToProviderBrowserLogin'])->name('browser_login');
 Route::get('/refresh-token', [OAuthController::class, 'accessTokenFromRefreshToken'])->name('oauth.refresh_token');
+
+/*
+|------------------
+| \SOCIALSTREAM
+|------------------
+*/
 
 Route::get('/subscribe', [StripeController::class, 'subscribe'])->name('stripe.subscribe');
 

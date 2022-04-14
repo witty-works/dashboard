@@ -125,11 +125,6 @@ class OAuthController extends BaseOAuthController
         return $this->login($user);
     }
 
-    public function handleBrowserLoginCallback(Request $request, ResolvesSocialiteUsers $resolver)
-    {
-        return $this->handleProviderCallback($request, $this->provider, $resolver, 'browser_login');
-    }
-
     protected function validateRedirectUri($redirectUri)
     {
         return in_array($redirectUri, config('services.azureadb2c.redirect_uri'));
