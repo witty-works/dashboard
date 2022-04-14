@@ -23,7 +23,8 @@
         </div>
     </x-slot>
 
-    <x-slot name="save">
+    @if (Auth::user()->hasTeamPermission($team, 'edit_guidelines'))
+    <x-slot name="actions">
         <div class="guidelines-form-section">   
             <x-jet-input id="disabled_categories_force_{{ $category }}"
                 value="1"
@@ -34,10 +35,6 @@
                 :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" />  
             <div class="guidelines-form-section-label">{{ __('guidelines.set_for_all') }}</div>
         </div>
-    </x-slot>
-
-    @if (Auth::user()->hasTeamPermission($team, 'edit_guidelines'))
-    <x-slot name="actions">
         <x-jet-action-message class="mr-3" on="saved">
             {{ __('content.saved') }}
         </x-jet-action-message>

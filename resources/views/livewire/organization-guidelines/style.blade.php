@@ -36,24 +36,21 @@
 
         </div>
     </x-slot>
-    
-    <x-slot name="save">
-       <!-- TODO: make sure this includes both style and inclusive -->
-       <div class="guidelines-form-section">     
-            <x-jet-input 
-                id="disabled_categories_force_{{ $category }}"
-                value="1"
-                type="checkbox"
-                class="guidelines-form-section-toggle"
-                wire:model.defer="disabled_categories_force_{{ $category }}"
-                wire:change="updateOrganizationGuidelinesInclusive()"
-                :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" />
-            <div class="guidelines-form-section-label">{{ __('guidelines.set_for_all') }}</div>
-        </div>
-    </x-slot>
 
     @if (Auth::user()->hasTeamPermission($team, 'edit_guidelines'))
     <x-slot name="actions">
+        <!-- TODO: make sure this includes both style and inclusive -->
+        <div class="guidelines-form-section">     
+        <x-jet-input 
+            id="disabled_categories_force_{{ $category }}"
+            value="1"
+            type="checkbox"
+            class="guidelines-form-section-toggle"
+            wire:model.defer="disabled_categories_force_{{ $category }}"
+            wire:change="updateOrganizationGuidelinesInclusive()"
+            :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" />
+            <div class="guidelines-form-section-label">{{ __('guidelines.set_for_all') }}</div>
+        </div>
         <x-jet-action-message class="mr-3" on="saved">
             {{ __('content.saved') }}
         </x-jet-action-message>
