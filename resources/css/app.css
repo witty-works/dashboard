@@ -241,7 +241,7 @@ a {
     font-size: 18px;
     line-height: 22px;
     color: #000000;
-    margin-bottom: 0.5em;
+    margin-bottom: 1em;
 }
 
 .guidelines-form-section {
@@ -249,8 +249,25 @@ a {
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
+    flex-wrap: nowrap;
+    margin-bottom: 2em;
+}
+
+.guidelines-form-section--apply-for-all {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: nowrap;
+    margin-top: 3em;
+}
+
+.guidelines-form-section-dropdown{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
     flex-wrap: wrap;
-    margin-bottom: 1em;
 }
 
 .guidelines-form-section-toggle {
@@ -266,6 +283,15 @@ a {
     color: #212529;
 }
 
+.guidelines-form-section-label--apply-for-all {
+    font-family: Roboto, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #212529;
+}
+
 .guidelines-form-section-dropdown-label {
     font-family: Roboto, sans-serif;
     font-style: normal;
@@ -277,9 +303,15 @@ a {
     margin-bottom: 0.5em;
 }
 
-.guidelines-form-section-dropdown {
-    width: 30%;
+.guidelines-form-section-dropdown-wrapper {
+    display: flex;
+    flex-direction: column;
 }
+
+.guidelines-form-section-dropdown {
+    width: 255px;
+}
+
 .guidelines-enable-for-all {
     background: #F1F2F2;
     border: 1px solid #CDCFD0;
@@ -299,3 +331,64 @@ a {
     color: #000000;
     margin-bottom: 1em;
 }
+
+.learn-more{
+    color: #9489DB;
+}
+
+/* TOGGLE */
+.switch {
+    position: relative;
+    display: inline-block;
+    min-width: 36px;
+    height: 20px;
+    margin-right: 2em;
+  }
+  
+  .switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    min-width: 16px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  input:checked + .slider {
+    background-color: #5FCA7D;
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(16px);
+    -ms-transform: translateX(16px);
+    transform: translateX(16px);
+  }
+  
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }

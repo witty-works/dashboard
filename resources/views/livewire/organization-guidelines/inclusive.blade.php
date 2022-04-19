@@ -1,37 +1,38 @@
-<x-jet-form-section submit="updateOrganizationGuidelinesExpertMode">
+<x-jet-form-section submit="updateOrganizationGuidelinesInclusive">
     <x-slot name="title">
-        {{ __('guidelines.manage_organization_guidelines_expert_mode') }}
+        {{ __('guidelines.manage_organization_guidelines_inclusive') }}
     </x-slot>
 
     <x-slot name="description">
-        {!! Str::markdown(__('guidelines.manage_organization_guidelines_description_expert_mode')) !!}
+        {!! Str::markdown(__('guidelines.manage_organization_guidelines_description_inclusive')) !!}
     </x-slot>
 
-    <x-slot name="form" submit="updateOrganizationGuidelinesExpertMode">
-        <div class="guidelines-form-title">{{ __('guidelines.manage_organization_guidelines_expert_mode_title') }}</div>
+    <x-slot name="form" submit="updateOrganizationGuidelinesInclusive">
+        @foreach(\App\Models\OrganizationGuidelines::DISABLED_CATEGORIES_INCLUSIVE as $category)
+        <div class="guidelines-form-title">{{ __('guidelines.manage_organization_guidelines_' . $category . '_title') }}</div>
         <div class="guidelines-form-section">
             <label class="switch">
                 <input
-                    id="expert_mode"
+                    id="disabled_categories_{{ $category }}"
                     value="1"
                     type="checkbox"
                     class="guidelines-form-section-toggle"
-                    wire:model.defer="expert_mode"
+                    wire:model.defer="disabled_categories_{{ $category }}"
                     :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')">
                 <span class="slider round"></span>
             </label>
-            <div class="guidelines-form-section-label">{{ __('guidelines.enable_expert_mode') }}</div>            
-            <x-jet-input-error for="expert_mode" class="mt-2" />
+            <div class="guidelines-form-section-label">{{ __('guidelines.enable_' . $category ) }}</div>
         </div>
+        @endforeach
 
         <div class="guidelines-form-section--apply-for-all">
             <label class="switch">
                 <input
-                    id="expert_mode_force"
+                    id="disabled_categories_force_inclusive"
                     value="1"
                     type="checkbox"
                     class="guidelines-form-section-toggle"
-                    wire:model.defer="expert_mode_force"
+                    wire:model.defer="disabled_categories_force_inclusive"
                     :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')">
                 <span class="slider round"></span>
             </label>
@@ -49,6 +50,6 @@
             {{ __('content.save') }}
         </x-jet-button>
     </x-slot>
-    @endif
+@endif
 
 </x-jet-form-section>

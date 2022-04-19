@@ -30,20 +30,25 @@
 
         <x-jet-input-error for="gendered_roles_format" class="mt-2" />
 
-        <x-jet-input id="german_rules_force"
-            value="1"
-            type="checkbox"
-            class="guidelines-form-section-toggle"
-            wire:model.defer="german_rules_force"
-            :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" 
-        />
-        <div class="guidelines-form-section-label">{{ __('guidelines.set_for_all') }}</div>
+        <div class="guidelines-form-section--apply-for-all">
+            <label class="switch">
+                <input
+                    id="german_rules_force"
+                    value="1"
+                    type="checkbox"
+                    class="guidelines-form-section-toggle"
+                    wire:model.defer="german_rules_force"
+                    :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')">
+                <span class="slider round"></span>
+            </label>
+            <div class="guidelines-form-section-label--apply-for-all">{{ __('guidelines.set_for_all') }}</div>
+        </div>
     </x-slot>
 
     @if (Auth::user()->hasTeamPermission($team, 'edit_guidelines'))
     <x-slot name="actions">
         <x-jet-action-message class="mr-3" on="saved">
-            {{ __('content.saved') }}
+            <span class="float-right">{{ __('content.saved') }}</span>
         </x-jet-action-message>
 
         <x-jet-button>

@@ -12,8 +12,6 @@ return [
     'list_false_positives' => 'Liste der ignorierten Wörter',
     'gendered_roles_format' => 'Witty sollte folgende Vorschläge machen',
     'both' => 'beide',
-    'preferred_variants' => 'Ich bevorzuge',
-    'preferred_variants_en' => 'Englisch',
     'preferred_variants_de_DE' => 'Deutsch',
     'preferred_variants_de_AT' => 'Deutsch (Österreich)',
     'preferred_variants_de_CH' => 'Deutsch (Schweiz)',
@@ -64,4 +62,8 @@ Es gibt drei Möglichkeiten:
     'enable_style' => 'Vorschläge in Bezug auf den Stil machen',
     'enable_orthography' => 'Grammatik & Rechtschreibung aktivieren',
     'enable_casing' => 'Gross- & Kleinschreibung aktivieren',
+    'manage_organization_guidelines_expert_mode_title' => 'Inklusions-Profi werden',
+    'manage_organization_guidelines_inclusive_title' => 'Inklusions-Profi werden',
+    'manage_organization_guidelines_style_title' => 'Inklusions-Profi werden',
+    'manage_organization_guidelines_description_language_form_title' => 'Ich bevorzuge',
 ];

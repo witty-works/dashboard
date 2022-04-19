@@ -29,6 +29,10 @@
         </div>
 
         <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
+            @livewire('organization-guidelines.inclusive', ['team' => $team])
+        </div>
+
+        <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
             @livewire('organization-guidelines.style', ['team' => $team])
         </div>
 
