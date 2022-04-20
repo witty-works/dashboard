@@ -78,4 +78,5 @@ return [
     'explanation_label' => 'Explanation (Optional)',
     'url_label' => 'Url with further explanation (Optional)',
     'emoji_label' => 'Emoji (Optional)',
+    'action_label' => 'Action',
 ];
