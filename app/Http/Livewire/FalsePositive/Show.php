@@ -47,6 +47,15 @@ class Show extends Component
         $this->render();
     }
 
+    public function editFalsePositive(FalsePositive $falsePositive)
+    {
+        if (!Auth::user()->hasTeamPermission($this->team, 'edit_guidelines')) {
+            abort(403);
+        }
+
+        $this->emit('edit', $falsePositive->id);
+    }
+
     public function deleteFalsePositive(FalsePositive $falsePositive)
     {
         if (!Auth::user()->hasTeamPermission($this->team, 'edit_guidelines')) {

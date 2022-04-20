@@ -16,7 +16,7 @@
                         <li>refresh_token: {{ $refresh_token }}</li>
                     </ul>
                     @else
-                    {{ __('content.log_failed') }}
+                    {{ __('content.login_failed') }}
                     @endif
                 @else
                 <a href="{{ route('browser_login') }}">

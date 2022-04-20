@@ -89,10 +89,21 @@ class UpdateOrganizationGuidelines
     {
         $termReplacements = [];
         foreach ($team->termReplacements as $termReplacement) {
-            $termReplacements[] = [
+            $termReplacementData = [
                 'term' => $termReplacement->term,
-                'alternatives' => [$termReplacement->replacement]
+                'alternatives' => [$termReplacement->replacement],
             ];
+
+            if ($termReplacement->explanation !== null) {
+                $termReplacementData['explanation'] = [
+                    'text' => $termReplacement->explanation,
+                    'url' => $termReplacement->url,
+                    'icon' => $termReplacement->emoji,
+                ];
+            }
+
+
+            $termReplacements[] = $termReplacementData;
         }
 
         return $termReplacements;
