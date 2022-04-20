@@ -2,12 +2,11 @@
 
 return [
     'false_positive_list' => 'Ignore words',
-    'create_false_positive' => 'Improve your experience by adding words to your personal ignore list.
-',
+    'create_false_positive' => 'Improve your Witty experience by adding words to your personal ignore list.',
     'create_new_false_positive_description' => 'All words added to this list will not be highlighted anymore.',
     'false_positive_label' => 'Ignore word',
     'term_replacement_list' => 'Term replacements',
-    'create_term_replacement' => 'Improve your experience by adding words to your personal term replacement list.',
+    'create_term_replacement' => 'Improve your Witty experience by adding words to your personal term replacement list.',
     'create_new_term_replacement_description' => 'All words added to this list will become highlighted by Witty, and your custom replacement will be shown as a clickable alternative.',
     'term_label' => 'Term',
     'replacement_label' => 'Alternative',
@@ -23,7 +22,7 @@ return [
     'gendered_roles_format' => 'Witty should suggest',
     'inclusive_gender' => 'Only the chosen German gender ending ',
     'both' => 'both',
-    'binary_gender' => 'The female and male form (e.g. "Managerin oder Manager")',
+    'binary_gender' => 'The female and male form (e.g. "Managerin/Manager")',
     'preferred_variants_dialect_de' => 'German Dialect',
     'preferred_variants_dialect_en' => 'English Dialect',
     'preferred_variants_de_DE' => 'German',
@@ -49,7 +48,7 @@ return [
     'manage_organization_guidelines_inclusive_title' => 'How much Witty should highlight?',
     'manage_organization_guidelines_style' => 'Style',
     'manage_organization_guidelines_style_title' => 'How much Witty should highlight?',
-    'manage_organization_guidelines_description_inclusive' => 'Witty highlights inclusive terms. For these, no alternatives are offered. <a href="ttps://www.witty.works/en/categories/inclusive" target="_blank">Learn more</a>.',
+    'manage_organization_guidelines_description_inclusive' => 'Witty highlights inclusive terms. For these, no alternatives are offered. <a href="https://www.witty.works/en/categories/inclusive" target="_blank">Learn more</a>.',
     'manage_organization_guidelines_description_style' => 'Witty makes suggestions to make your text more understandable, or to give it authenticity or emotionality. <a class="learn-more" href="https://www.witty.works/en/categories/style" target="_blank">Learn more</a>.',
     'manage_organization_guidelines_inspiration' => 'Show inspirations to rephrase entire sentences',
     'manage_organization_guidelines_inspiration_title' => 'Inspirations',

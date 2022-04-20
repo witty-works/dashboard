@@ -6,22 +6,22 @@
 
         $onboardingSteps = [
             'createTeam' => [
-                    'title' =>  'content.onboarding_create_team',
-                    'tagline' => 'content.onboarding_create_team_tagline',
+                    'title' =>  __('content.onboarding_create_team'),
+                    'tagline' => __('content.onboarding_create_team_tagline'),
                     'state' => 'deactivated',
                     'link' => false,
                 ],
             'organizationGuidelines' =>
                 [
-                    'title' => 'content.onboarding_configure_organization_guidelines',
-                    'tagline' => 'content.onboarding_configure_organization_guidelines_tagline',
+                    'title' => __('content.onboarding_configure_organization_guidelines'),
+                    'tagline' => __('content.onboarding_configure_organization_guidelines_tagline'),
                     'state' => 'deactivated',
                     'link' => false,
                 ],
             'inviteUsers' =>
                 [
-                    'title' => 'content.onboarding_invite_users',
-                    'tagline' => 'content.onboarding_invite_users_tagline',
+                    'title' => __('content.onboarding_invite_users'),
+                    'tagline' => __('content.onboarding_invite_users_tagline'),
                     'state' => 'deactivated',
                     'link' => false,
                 ], 
@@ -64,8 +64,8 @@
             <div class="onboarding-step-container onboarding-step-{{ $step['state'] }}">
                 @if ($step['link']) <a href="{{ $step['link'] }}"> @endif
                     <div class="onboarding-step-text-wrapper">
-                        <div class="onboarding-step-title--{{ $step['state'] }}">{{ __($step['title']) }}</div>
-                        <div class="onboarding-step-tagline--{{ $step['state'] }}">{{ __($step['tagline']) }}</div>
+                        <div class="onboarding-step-title--{{ $step['state'] }}">{{ $step['title'] }}</div>
+                        <div class="onboarding-step-tagline--{{ $step['state'] }}">{{ $step['tagline'] }}</div>
                     </div>
                 @if ($step['link']) </a> @endif
                 @if ($step['state'] == 'complete')
