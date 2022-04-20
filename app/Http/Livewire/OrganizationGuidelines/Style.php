@@ -4,7 +4,6 @@ namespace App\Http\Livewire\OrganizationGuidelines;
 
 use App\Models\OrganizationGuidelines;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class Style extends Component

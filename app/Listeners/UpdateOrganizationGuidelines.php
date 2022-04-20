@@ -138,9 +138,8 @@ class UpdateOrganizationGuidelines
         }
 
         foreach ($organizationGuidelines->preferred_variants as $variant) {
-            $lang = substr($variant, 0, 2);
             $suggestion['preferred_variants'][] = $variant;
-            if (in_array($lang, $organizationGuidelines->preferred_variants_force)) {
+            if ($organizationGuidelines->preferred_variants_force) {
                 $force['preferred_variants'][] = $variant;
             }
         }
