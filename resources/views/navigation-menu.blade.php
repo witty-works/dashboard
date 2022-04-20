@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
+<nav x-data="{ open: false }" class="navigation-wrapper">
     @php ($user = Auth::user())
     @php ($team = $user ? $user->currentTeam : null)
 <!-- Primary Navigation Menu -->
@@ -13,7 +13,7 @@
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex sm:items-center">
                     @auth
                         <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                             {{ __('content.dashboard') }}
