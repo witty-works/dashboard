@@ -6,22 +6,25 @@ use App\Actions\Socialstream\ResolveSocialiteUser;
 use App\Models\User;
 use Laravel\Socialite\AbstractUser;
 use Laravel\Socialite\Two\InvalidStateException;
+use Laravel\Fortify\Features as FortifyFeatures;
+use Laravel\Jetstream\Jetstream;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\Request;
 use JoelButcher\Socialstream\ConnectedAccount;
 use JoelButcher\Socialstream\Contracts\GeneratesProviderRedirect;
 use JoelButcher\Socialstream\Contracts\ResolvesSocialiteUsers;
 use JoelButcher\Socialstream\Http\Controllers\OAuthController as BaseOAuthController;
-use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use JoelButcher\Socialstream\Socialstream;
 use JoelButcher\Socialstream\Features;
-use Laravel\Fortify\Features as FortifyFeatures;
-use Laravel\Jetstream\Jetstream;
-use Illuminate\Support\Facades\Auth;
+use SocialiteProviders\Manager\Contracts\OAuth2\ProviderInterface;
+use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Socialite;
 
 class OAuthController extends BaseOAuthController
 {
+    protected $provider = 'azureadb2c';
+
     public function logout(string $provider, GeneratesProviderRedirect $generator, $policy = 'login')
     {
         return $generator->logout($provider, $policy);
@@ -43,7 +46,22 @@ class OAuthController extends BaseOAuthController
             session()->remove('socialstream.browser_login_redirect_uri');
         }
 
-        return $this->redirectToProvider($request, 'azureadb2c', $generator, 'browser_login');
+        return $this->redirectToProvider($request, $this->provider, $generator, 'browser_login');
+    }
+
+    public function accessTokenFromRefreshToken(Request $request)
+    {
+        $refreshToken = $request->get('token');
+        if (!$refreshToken) {
+            abort(400, "'refresh_token` parameter empty");
+        }
+
+        $provider = Socialite::driver($this->provider);
+        $provider->setRefreshToken($refreshToken);
+        $provider->setScopes(config('services.azureadb2c.scope'));
+
+        return response()
+            ->json($this->getAccessTokenResponse($provider));
     }
 
     public function handleProviderCallback(Request $request, string $provider, ResolvesSocialiteUsers $resolver, $policy = 'login')
@@ -107,39 +125,39 @@ class OAuthController extends BaseOAuthController
         return $this->login($user);
     }
 
-    public function handleBrowserLoginCallback(Request $request, ResolvesSocialiteUsers $resolver)
-    {
-        return $this->handleProviderCallback($request, 'azureadb2c', $resolver, 'browser_login');
-    }
-
     protected function validateRedirectUri($redirectUri)
     {
         return in_array($redirectUri, config('services.azureadb2c.redirect_uri'));
     }
 
-    protected function getAcessToken()
+    protected function getAccessTokenResponse(ProviderInterface $provider)
     {
-        $user = Socialite::driver('azureadb2c')->user();
+        $socialiteUser = $provider->user();
 
-        return $user->accessTokenResponseBody['access_token'] ?? null;
+        return [
+            'email' => $socialiteUser->user['emails'][0],
+            'refresh_token' => $socialiteUser->accessTokenResponseBody['refresh_token'] ?? null,
+            'access_token' => $socialiteUser->accessTokenResponseBody['access_token'] ?? null,
+        ];
     }
 
-    protected function returnAccessTokenResponse(User $user)
+    protected function returnAccessTokenResponse(ProviderInterface $provider)
     {
-        $accessToken = $this->getAcessToken();
+        $data = $this->getAccessTokenResponse($provider);
+
         $redirectUri = session()->get('socialstream.browser_login_redirect_uri');
         if ($this->validateRedirectUri($redirectUri)) {
-            $redirectUri .= '?email=' . $user->email . '&access_token=' . $accessToken;
+            $redirectUri .= '?' . http_build_query($data);
 
             return redirect($redirectUri);
         }
 
-        return view('browser-login', ['access_token' => $accessToken]);
+        return view('browser-login', $data);
     }
 
     /**
      * 
-     * @param App\Models\User $user 
+     * @param User $user 
      * @param ConnectedAccount $account 
      * @param string $provider 
      * @param AbstractUser $providerAccount 
@@ -150,7 +168,7 @@ class OAuthController extends BaseOAuthController
     protected function alreadyAuthenticated($user, $account, $provider, $providerAccount)
     {
         if (ResolveSocialiteUser::isBrowserLogin()) {
-            return $this->returnAccessTokenResponse($user);
+            return $this->returnAccessTokenResponse(Socialite::driver($provider));
         }
 
         $route = route('profile.show');
@@ -181,7 +199,7 @@ class OAuthController extends BaseOAuthController
     {
         $loginResponse = parent::login($user);
         if (ResolveSocialiteUser::isBrowserLogin()) {
-            return $this->returnAccessTokenResponse($user);
+            return $this->returnAccessTokenResponse(Socialite::driver($this->provider));
         }
 
         return $loginResponse;

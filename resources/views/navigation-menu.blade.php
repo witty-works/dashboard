@@ -35,10 +35,7 @@
                         @endif
                     @else
                         <x-jet-nav-link href="{{ route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'login']) }}">
-                            {{ __('content.log_in') }}
-                        </x-jet-nav-link>
-                        <x-jet-nav-link href="{{ route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'register']) }}">
-                            {{ __('content.register') }}
+                            {{ __('content.log_in') }} / {{ __('content.register') }}
                         </x-jet-nav-link>
                         <x-jet-nav-link href="https://www.witty.works/pricing">
                             {{ __('teams.pricing') }}
@@ -153,10 +150,7 @@
             </x-jet-responsive-nav-link>
             @else
             <x-jet-responsive-nav-link href="{{ route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'login']) }}">
-                {{ __('content.log_in') }}
-            </x-jet-responsive-nav-link>
-            <x-jet-responsive-nav-link href="{{ route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'register']) }}">
-                {{ __('content.register') }}
+                {{ __('content.log_in') }} / {{ __('content.register') }}
             </x-jet-responsive-nav-link>
             @endauth
         </div>

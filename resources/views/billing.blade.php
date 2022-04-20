@@ -48,7 +48,7 @@
                         </li>
                         @elseif(empty($team))
                         <li>
-                            <a class="px-6 py-3 bg-indigo-500 rounded text-white" href="{{ route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'register']) }}">
+                            <a class="px-6 py-3 bg-indigo-500 rounded text-white" href="{{ route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'login']) }}">
                                 {{ __('stripe.register_now') }}
                             </a>
                         </li>
