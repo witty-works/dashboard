@@ -47,6 +47,15 @@ class Show extends Component
         $this->render();
     }
 
+    public function editTermReplacement(TermReplacement $termReplacement)
+    {
+        if (!Auth::user()->hasTeamPermission($this->team, 'edit_guidelines')) {
+            abort(403);
+        }
+
+        $this->emit('edit', $termReplacement->id);
+    }
+
     public function deleteTermReplacement(TermReplacement $termReplacement)
     {
         if (!Auth::user()->hasTeamPermission($this->team, 'edit_guidelines')) {

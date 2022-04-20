@@ -1,4 +1,4 @@
-<x-jet-form-section submit="createFalsePositive">
+<x-jet-form-section submit="storeFalsePositive">
     <x-slot name="title">
         {{ __('guidelines.create_false_positive') }}
     </x-slot>
@@ -15,9 +15,14 @@
         <div class="col-span-6 sm:col-span-4">
             <x-jet-label for="false_positive" value="{!! __('guidelines.false_positive_label') !!}" />
 
+            <x-jet-input id="term_replacement_id"
+                type="hidden" 
+                wire:model.defer="term_replacement_id"
+                autocomplete="term_replacement_id" />
+
             <x-jet-input id="false_positive"
                 type="text" 
-                lass="mt-1 block w-full"
+                class="mt-1 block w-full"
                 wire:model.defer="false_positive"
                 autocomplete="false_positive"
                 :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" />

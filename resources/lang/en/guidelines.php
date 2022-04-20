@@ -5,12 +5,12 @@ return [
     'create_false_positive' => 'Improve your experience by adding words to your personal ignore list.
 ',
     'create_new_false_positive_description' => 'All words added to this list will not be highlighted anymore.',
-    'false_positive_label' => 'Add a new word',
+    'false_positive_label' => 'Ignore word',
     'term_replacement_list' => 'Term replacements',
     'create_term_replacement' => 'Improve your experience by adding words to your personal term replacement list.',
     'create_new_term_replacement_description' => 'All words added to this list will become highlighted by Witty, and your custom replacement will be shown as a clickable alternative.',
-    'term_label' => 'Add a new term',
-    'replacement_label' => 'Add a new alternative',
+    'term_label' => 'Term',
+    'replacement_label' => 'Alternative',
     'language_code_label' => 'Language Code',
     'organization_guidelines' => 'Customize Witty',
     'manage_organization_guidelines' => 'Manage Organization Guidelines',
@@ -75,4 +75,7 @@ return [
     'term_replacement_limit_reached_error' => 'Term replacement limit of :max_count on the current plan reached.',
     'false_positive_already_exists' => 'false positive already exists',
     'term_already_exists' => 'term already exists',
+    'explanation_label' => 'Explanation (Optional)',
+    'url_label' => 'Url with further explanation (Optional)',
+    'emoji_label' => 'Emoji (Optional)',
 ];

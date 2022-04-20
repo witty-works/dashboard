@@ -202,4 +202,6 @@ Read more about ROI for [organizations](https://www.witty.works/witty-for-compan
     'contact_support_to_delete_owned_teams' => 'Since you are a team owner, in order to be able to accept an invitation please <a href="mailto:support@witty.works">contact support</a>.',
     'billing' => 'billing',
     'browser_login' => 'Browser Login',
+    'login_failed' => 'Fogin failed',
+    'edit' => 'edit',
 ];
