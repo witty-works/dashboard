@@ -1,4 +1,6 @@
-@import url("https://fonts.googleapis.com/css2?family=Lato:wght@100;400;700&display=swap");
+@import url('https://fonts.googleapis.com/css?family=Lato:400,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Ibarra Real Nova:400, 600&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap');
 
 @import "tailwindcss/base";
 @import "tailwindcss/components";
@@ -35,3 +37,358 @@ a {
 #ww-main-nav-logo {
     margin-top: 4px;
 }
+
+.onboarding-container {
+    background: #FFFFFF;
+    border: 1px solid #CDCFD0;
+    box-sizing: border-box;
+    border-radius: 6px;
+    font-family: Lato, Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    padding: 2em 3em;
+    margin-bottom: 3em;
+}
+
+.onboarding-steps {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 1em;
+    margin-top: 1em;
+    margin-right: -1.5em;
+
+}
+
+.onboarding-title {
+    font-family: Ibarra Real Nova, 'Times New Roman', Times, serif;
+    font-style: normal;
+    font-size: 27px;
+    line-height: 34px;
+    letter-spacing: -0.025em;    
+    color: #1A1A1A;
+    margin-bottom: 0.2em;
+}
+
+.onboarding-tagline {
+    line-height: 22px;
+    color: #1A1A1A;
+    margin-bottom: 2em;
+}
+
+.onboarding-step-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 1em;
+    margin-right: 1.5em;
+    margin-bottom: 1em;
+    width: 350px;
+
+    font-weight: 600;
+    line-height: 22px;
+}
+
+.onboarding-step-todo {
+    background: #FFF8E1;
+    border: 1px solid #EB9F46;
+    box-shadow: 0px 4px 26px rgba(0, 0, 0, 0.09);
+}
+
+.onboarding-step-complete {
+    background: #F1FFF3;
+    border: 1px solid #E8F0D4;
+    box-shadow: 0px 4px 26px rgba(0, 0, 0, 0.09);
+}
+
+.onboarding-step-deactivated {
+    background: #FAFAFA;
+}
+
+.onboarding-step-title--todo, .onboarding-step-title--complete {
+    font-weight: 600;
+    line-height: 22px;
+    color: #1A1A1A;
+    margin-bottom: 0.2em;
+}
+
+.onboarding-step-title--deactivated {
+    font-weight: 600;
+    line-height: 22px;
+    color: #CDCFD0;
+    margin-bottom: 0.2em;
+}
+
+.onboarding-step-tagline--todo, .onboarding-step-tagline--complete {
+    font-size: 14px;
+    line-height: 17px;    
+    color: #656565;
+}
+
+.onboarding-step-tagline--deactivated {
+    font-size: 14px;
+    line-height: 17px;    
+    color: #CDCFD0;
+}
+
+.onboarding-step-text-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.onboarding-step-icon {
+    display: flex;
+    flex-direction: row;
+    margin-right: auto;
+    margin-left: 1em;
+    width: 23px;
+}
+
+.onboarding-links-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1em;
+    padding: 2em 3em;
+
+}
+
+.onboarding-quick-links-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+.onboarding-analytics-img {
+    display: flex;
+    margin-top: 1em;
+}
+
+.onboarding-iconWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-right: 1em;
+    margin-bottom: 1em;
+
+    background: #FFFFFF;
+    border-radius: 16px;
+    font-family: Lato, Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    width: 236px;
+    height: 184px;
+}
+
+.onboarding-icon-description {
+    line-height: 22px;
+    color: #1A1A1A;
+    margin-top: 0.5em;
+}
+
+.onboarding-container--two-col {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: left;
+}
+
+.onboarding-container-col-one {
+    width: 510px;
+}
+
+.onboarding-container-col-two {
+    width: 700px;
+}
+
+.guidelines-title {
+    font-family: Ibarra Real Nova, 'Times New Roman', Times, serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 39px;
+    line-height: 49px;
+    letter-spacing: -0.025em;
+    color: #1A1A1A;
+    margin-bottom: 0.2em;
+}
+
+.guidelines-tagline {
+    font-family: Lato, Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    color: #000000;
+}
+
+.guidelines-wrapper {
+    margin-top: 1em;
+}
+
+.guidelines-form-title {
+    font-family: Lato, Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 22px;
+    color: #000000;
+    margin-bottom: 1em;
+}
+
+.guidelines-form-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: nowrap;
+    margin-bottom: 2em;
+}
+
+.guidelines-form-section--apply-for-all {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: nowrap;
+    margin-top: 3em;
+}
+
+.guidelines-form-section-dropdown{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.guidelines-form-section-toggle {
+    margin-right: 1em;
+}
+
+.guidelines-form-section-label {
+    font-family: Roboto, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 24px;
+    color: #212529;
+}
+
+.guidelines-form-section-label--apply-for-all {
+    font-family: Roboto, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #212529;
+}
+
+.guidelines-form-section-dropdown-label {
+    font-family: Roboto, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #212529;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+}
+
+.guidelines-form-section-dropdown-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.guidelines-form-section-dropdown {
+    width: 255px;
+}
+
+.guidelines-enable-for-all {
+    background: #F1F2F2;
+    border: 1px solid #CDCFD0;
+    box-sizing: border-box;
+    border-bottom-right-radius: 0.375rem;
+    border-bottom-left-radius: 0.375rem;
+    padding: 1.5em;
+    padding-bottom: 1em;
+}
+
+.guidelines-form-tagline {
+    font-family: Lato, Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    color: #000000;
+    margin-bottom: 1em;
+}
+
+.learn-more{
+    color: #9489DB;
+}
+
+/* TOGGLE */
+.switch {
+    position: relative;
+    display: inline-block;
+    min-width: 36px;
+    height: 20px;
+    margin-right: 2em;
+  }
+  
+  .switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    min-width: 16px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  input:checked + .slider {
+    background-color: #5FCA7D;
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(16px);
+    -ms-transform: translateX(16px);
+    transform: translateX(16px);
+  }
+  
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }

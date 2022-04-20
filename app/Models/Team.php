@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Events\OrganizationGuidelinesUpdated;
 use App\Http\Middleware\PostHogMiddleware;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Gate;
@@ -123,7 +122,7 @@ class Team extends JetstreamTeam
     public function getTermReplacementsCountAttribute()
     {
         if ($this->subscribed() && $this->term_replacements === null) {
-            return config('stripe.plans.' . $this->subscription()->planId() . '.features.term_replacements.count');
+            return config('stripe.plans.' . $this->planId() . '.features.term_replacements.count');
         }
 
         return $this->term_replacements ?? 5;
@@ -142,7 +141,7 @@ class Team extends JetstreamTeam
     public function getFalsePositivesCountAttribute()
     {
         if ($this->subscribed() && $this->false_positives === null) {
-            return config('stripe.plans.' . $this->subscription()->planId() . '.features.false_positives.count');
+            return config('stripe.plans.' . $this->planId() . '.features.false_positives.count');
         }
 
         return $this->false_positives ?? 5;
@@ -163,22 +162,12 @@ class Team extends JetstreamTeam
         return $this->subscribed() && Gate::check('update', $this);
     }
 
-    /**
-     * Fire a custom model event for the given event.
-     *
-     * @param  string  $event
-     * @param  string  $method
-     * @return mixed|null
-     */
-    protected function fireCustomModelEvent($event, $method)
+    public function planId()
     {
-        if (!in_array($event, ['saved', 'deleted', 'restored'])) {
-            return;
+        if (!$this->subscribed()) {
+            return 'witty_me';
         }
 
-        $result = static::$dispatcher->$method(new OrganizationGuidelinesUpdated($this));
-        if (!is_null($result)) {
-            return $result;
-        }
+        return $this->subscription()->planId();
     }
 }

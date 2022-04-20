@@ -14,15 +14,12 @@ class Language extends Component
     public $preferred_variants;
     public $preferred_variants_force;
     public $preferred_variants_de;
-    public $preferred_variants_de_force;
     public $preferred_variants_en;
-    public $preferred_variants_en_force;
 
     protected $rules = [
+        'preferred_variants_force' => 'nullable|boolean',
         'preferred_variants_de' => 'nullable|string|in:both,de-DE,de-AT,de-CH',
-        'preferred_variants_de_force' => 'nullable|boolean',
         'preferred_variants_en' => 'nullable|string|in:both,en-US,en-GB',
-        'preferred_variants_en_force' => 'nullable|boolean',
     ];
 
     public $team;
@@ -40,19 +37,12 @@ class Language extends Component
         $organizationRule = $this->getOrganizationGuidelines($this->team);
 
         $this->preferred_variants = (array) $organizationRule->preferred_variants;
-        $this->preferred_variants_force = (array) $organizationRule->preferred_variants_force;
+        $this->preferred_variants_force = (bool) $organizationRule->preferred_variants_force;
 
         foreach (OrganizationGuidelines::LANGUAGES as $lang) {
             $property = "preferred_variants_" . $lang;
             foreach (constant('App\Models\OrganizationGuidelines::PREFERRED_VARIANTS_' . strtoupper($lang)) as $locale => $trans_key) {
                 if (in_array($locale, $this->preferred_variants)) {
-                    $this->$property = $locale;
-                }
-            }
-
-            $property = "preferred_variants_" . $lang . "_force";
-            foreach (constant('App\Models\OrganizationGuidelines::PREFERRED_VARIANTS_' . strtoupper($lang)) as $locale => $trans_key) {
-                if (in_array($locale, $this->preferred_variants_force)) {
                     $this->$property = $locale;
                 }
             }
@@ -70,16 +60,10 @@ class Language extends Component
         $organizationRule = $this->getOrganizationGuidelines($this->team);
 
         $this->preferred_variants = [];
-        $this->preferred_variants_force = [];
         foreach (OrganizationGuidelines::LANGUAGES as $lang) {
             $property = "preferred_variants_" . $lang;
             if ($this->$property) {
                 $this->preferred_variants[] = $this->$property;
-            }
-
-            $property = "preferred_variants_" . $lang . "_force";
-            if ($this->$property) {
-                $this->preferred_variants_force[] = $lang;
             }
         }
 

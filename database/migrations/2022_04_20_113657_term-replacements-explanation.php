@@ -1,0 +1,36 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::table('term_replacements', function ($table) {
+            $table->string('explanation')->nullable();
+            $table->string('url')->nullable();
+            $table->string('emoji')->nullable();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::table('term_replacements', function ($table) {
+            $table->dropColumn('explanation')->nullable();
+            $table->dropColumn('url')->nullable();
+            $table->dropColumn('emoji')->nullable();
+        });
+    }
+};

@@ -29,7 +29,7 @@
 
     <x-slot name="actions">
         <x-jet-action-message class="mr-3" on="saved">
-            {{ __('content.saved') }}
+            <span class="float-right">{{ __('content.saved') }}</span>
         </x-jet-action-message>
 
         <x-jet-button>

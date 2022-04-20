@@ -129,8 +129,7 @@ return [
     'for_your_security_confirm' => 'For your security, please confirm your password to continue.',
     'whoops' => 'Whoops! Something went wrong.',
     'you_have_been_invited' => 'You have been invited to join the :team team!',
-    'invitation_email_welcome' => 'To accept this invitation, register a new account by clicking on the button below:',
-    'invitation_email_login' => 'If you already have an exiting account click the button below:',
+    'invitation_email_welcome' => 'To accept this invitation, login wthin your existing accoubt or register a new account by clicking on the button below:',
     'if_you_did_not_expect' => 'If you did not expect to receive an invitation to this team, you may discard this email.',
     'woops' => 'woops',
     'documentation' => 'Documentation',
@@ -146,16 +145,26 @@ return [
     'en' => 'English',
     'welcome_text' => 'The dashboard helps you set up Witty and customize it to your needs.',
     'onboarding_next_steps' => 'Next steps to setup your Witty team:',
-    'onboarding_create_team' => 'Create your team',
-    'onboarding_configure_organization_guidelines' => 'Configure the language organization guidelines',
-    'onboarding_invite_users' => 'Invite users to your team',
+    'onboarding_finish_setup_title' => 'Finish setting up your Witty account',
+    'onboarding_finish_setup_tagline' => 'Make the most of Witty by setting up a team and configuring rules for your teammembers',
+    'onboarding_create_team' => '1. Create your team',
+    'onboarding_create_team_tagline' => 'A team allows to manage all preferences for a group of users at once.',
+    'onboarding_configure_organization_guidelines' => '2. Configure language guidelines',
+    'onboarding_configure_organization_guidelines_tagline' => 'Set up the rules and guidelines for your organization.',
+    'onboarding_invite_users' => '3. Invite users to your team',
+    'onboarding_invite_users_tagline' => 'Let other join your organization on Witty and start writing more inclusively together.',
     'onboarding_install_witty' => 'Install the Witty browser extension',
+    'onboarding_quickLinks' => 'Quick Links',
+    'onboarding_team_setup' => 'Team Setup & Members',
+    'onboarding_language_guidelines' => 'Language Guidelines',
+    'onboarding_payment' => 'Payments & Billing',
+    'onboarding_support' => 'Support',
+    'onboarding_team_stats' => 'Your team\'s statistics',
     'open_invitiations' => '{1} You are already the owner a team, but you have been invited to join another team. You can only be in one team. Please decide if you want to accept or reject the invitiation.|{2,*} You have been invited to join several teams, please decide if you want to accept one of these invitiations.',
     'accept_invitiation' => 'accept',
     'reject_invitiation' => 'reject',
     'section_1_title' => 'What is Witty',
-    'section_1_text' => 'Witty is an inclusive writing assistant made for individuals and organizations, bringing you the joy of inclusive writing simple, real-time and fast. It is a Software-as-a-Service that detects unconscious stereotypes in communication. And then guides the writer how to formulate the same content in an inclusive manner. 
-
+    'section_1_text' => 'Witty is an inclusive writing assistant made for individuals and organizations, bringing you the joy of inclusive writing simple, real-time and fast. It is a Software-as-a-Service that detects unconscious stereotypes in communication. And then guides the writer how to formulate the same content in an inclusive manner.
 Witty offers the whole inclusive language logic in English and German. You also receive feedback on orthography and grammar. More languages are planned.
 
 With Witty you become part of the change towards more diversity and inclusion on a daily basis.
@@ -193,4 +202,6 @@ Read more about ROI for [organizations](https://www.witty.works/witty-for-compan
     'contact_support_to_delete_owned_teams' => 'Since you are a team owner, in order to be able to accept an invitation please <a href="mailto:support@witty.works">contact support</a>.',
     'billing' => 'billing',
     'browser_login' => 'Browser Login',
+    'login_failed' => 'Fogin failed',
+    'edit' => 'edit',
 ];

@@ -20,7 +20,6 @@ class PostHogUpdateCompany
         $subscription = $team->subscription();
         if ($subscription) {
             $userCount = $subscription->quantity;
-            $stripe_plan = $subscription->planId();
         }
 
         PostHog::groupIdentify([
@@ -29,7 +28,7 @@ class PostHogUpdateCompany
             'properties' => [
                 'name' => $team->name,
                 'users' => $userCount,
-                'stripe_plan' => $stripe_plan,
+                'stripe_plan' => $team->planId(),
             ]
         ]);
     }

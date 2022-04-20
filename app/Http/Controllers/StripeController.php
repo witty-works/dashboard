@@ -59,7 +59,7 @@ class StripeController extends Controller
     {
         $user = $request->user();
         if (empty($user)) {
-            return redirect(route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'register']));
+            return redirect(route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'login']));
         }
 
         $team = $user->currentTeam;
@@ -73,19 +73,21 @@ class StripeController extends Controller
     public function portal(Request $request)
     {
         $team = $request->user()->currentTeam;
-        $subscription = $team->subscription();
-        if ($subscription) {
-            if ($subscription->isPaidByInvoice()) {
-                return redirect('mailto:sales@witty.works');
-            }
+        if ($team) {
+            $subscription = $team->subscription();
+            if ($subscription) {
+                if ($subscription->isPaidByInvoice()) {
+                    return redirect('mailto:sales@witty.works');
+                }
 
-            return $team->redirectToBillingPortal(
-                $this->teamShowRoute($team),
-                ['locale' => app()->getLocale()]
-            );
+                return $team->redirectToBillingPortal(
+                    $this->teamShowRoute($team),
+                    ['locale' => app()->getLocale()]
+                );
+            }
         }
 
-        return redirect(route('pricing'));
+        return redirect('https://www.witty.works/pricing');
     }
 
     protected function teamShowRoute(Team $team)

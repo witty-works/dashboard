@@ -14,6 +14,9 @@
                 <td class="border px-4 py-2 w-3/4">{{ $false_positive->false_positive }} {{ $false_positive->language_code ? "($false_positive->language_code)" : '' }} </td>
                 @if (Auth::user()->hasTeamPermission($team, 'edit_guidelines'))
                 <td class="border px-4 py-2">
+                    <button wire:click="editFalsePositive({{ $false_positive->id }})" class="bg-gray-100 text-gray-600 px-6 rounded-full">
+                        {{ __('content.edit') }}
+                    </button>
                     <button wire:click="deleteFalsePositive({{ $false_positive->id }})" class="bg-red-100 text-red-600 px-6 rounded-full">
                         {{ __('content.delete_permanently') }}
                     </button>
