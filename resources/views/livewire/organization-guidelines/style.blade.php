@@ -4,26 +4,24 @@
     </x-slot>
 
     <x-slot name="description">
-        {!! Str::markdown(__('guidelines.manage_organization_guidelines_description_style')) !!}
+        
     </x-slot>
 
     <x-slot name="form" submit="updateOrganizationGuidelinesStyle">
-        @foreach(\App\Models\OrganizationGuidelines::DISABLED_CATEGORIES_STYLE as $category)      
-        <div class="guidelines-form-title">{{ __('guidelines.manage_organization_guidelines_' . $category . '_title') }}</div>
+        <div class="guidelines-form-title">{!! Str::markdown(__('guidelines.manage_organization_guidelines_description_style')) !!}</div>
         <div class="guidelines-form-section">     
             <label class="switch">
                 <input
-                    id="disabled_categories_{{ $category }}"
+                    id="disabled_categories_style"
                     value="1"
                     type="checkbox"
                     class="guidelines-form-section-toggle"
-                    wire:model.defer="disabled_categories_{{ $category }}"
+                    wire:model.defer="disabled_categories_style"
                     :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')">
                 <span class="slider round"></span>
             </label>
-            <div class="guidelines-form-section-label">{{ __('guidelines.enable_' . $category ) }}</div>
+            <div class="guidelines-form-section-label">{{ __('guidelines.enable_style' ) }}</div>
         </div>
-        @endforeach
 
         <div class="guidelines-form-section--apply-for-all">
             <label class="switch">

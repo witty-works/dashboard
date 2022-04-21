@@ -8,10 +8,7 @@
     </x-slot>
 
     <x-slot name="form" submit="updateOrganizationGuidelinesGerman">  
-        <div class="guidelines-form-title">{{ __('guidelines.manage_organization_guidelines_description_german_form_title') }}</div>
-        <div class="guidelines-form-tagline">
-            {!! __('guidelines.manage_organization_guidelines_description_german_form_sub_title') !!}
-        </div>
+        <div class="guidelines-form-title">{!! __('guidelines.manage_organization_guidelines_description_german_form_sub_title') !!}</div>
 
         <div class="guidelines-form-section-dropdown-label"> {{ __('guidelines.german_gender_ending') }}</div>
         <x-select id="german_gender_ending"

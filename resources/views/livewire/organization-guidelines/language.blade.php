@@ -4,11 +4,11 @@
     </x-slot>
 
     <x-slot name="description" class="guidelines-tagline">
-        {!! Str::markdown(__('guidelines.manage_organization_guidelines_description_language')) !!}
+        
     </x-slot>
 
     <x-slot name="form" submit="updateOrganizationGuidelinesLanguage">
-        <div class="guidelines-form-title">{{ __('guidelines.manage_organization_guidelines_description_language_form_title') }}</div>  
+        <div class="guidelines-form-title">{!! Str::markdown(__('guidelines.manage_organization_guidelines_description_language')) !!}</div>  
        
         <div class="guidelines-form-section-dropdown-label">{{ __('guidelines.preferred_variants_dialect_en') }}</div>
         <x-select id="preferred_variants_en"
