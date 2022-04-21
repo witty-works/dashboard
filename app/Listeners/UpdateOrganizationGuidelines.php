@@ -24,7 +24,7 @@ class UpdateOrganizationGuidelines
     {
         $endpoint = config('app.organization_guidelines_endpoint');
         $data = [
-            'organization' => $team->id,
+            'id' => $team->id,
             'users' => $team->allUsers()->pluck('email')->toArray(),
         ];
 
@@ -60,16 +60,15 @@ class UpdateOrganizationGuidelines
 
         $plan = $team->planId();
 
-        $organizationGuidelines = OrganizationGuidelines::firstOrNew(['team_id' => $team->id]);
-        $data = $this->getData($organizationGuidelines);
-
-        $data['organization'] = $team->id;
-        $data['name'] = $team->name;
-        $data['store_context'] = $team->store_context;
-        $data['plan'] = $plan;
-        $data['users'] = $users;
-        $data['false_positives'] = $falsePositives;
-        $data['term_replacements'] = $termReplacements;
+        $data = [
+            'id' => $team->id,
+            'name' => $team->name,
+            'plan' => $plan,
+            'users' => $users,
+            'false_positives' => $falsePositives,
+            'term_replacements' => $termReplacements,
+            'config' => $this->getConfig($team),
+        ];
 
         $endpoint['url'] .= "/store_rules";
 
@@ -81,7 +80,7 @@ class UpdateOrganizationGuidelines
         }
 
         if (config('app.debug') && $response->failed()) {
-            dd($response->body(), $data);
+            dd($response->json(), $data);
         }
     }
 
@@ -109,55 +108,52 @@ class UpdateOrganizationGuidelines
         return $termReplacements;
     }
 
-    protected function getData(OrganizationGuidelines $organizationGuidelines)
+    protected function getConfig(Team $team)
     {
-        $suggestion = [];
-        $force = [];
+        $organizationGuidelines = OrganizationGuidelines::firstOrNew(['team_id' => $team->id]);
 
-        $suggestion['maximum_importance'] = $organizationGuidelines->expert_mode ? 3 : 2;
-        if ($organizationGuidelines->expert_mode_force) {
-            $force['maximum_importance'] = $suggestion['maximum_importance'];
-        }
+        $config['store_context'] = [
+            'value' => $team->store_context,
+            'status' => 'force',
+        ];
 
-        $suggestion['singular_they'] = $organizationGuidelines->singular_they ? 'all_pronouns' : 'he_or_she';
-        if ($organizationGuidelines->singular_they_force) {
-            $force['singular_they'] = $suggestion['singular_they'];
-        }
+        $config['maximum_importance'] = [
+            'value' => $organizationGuidelines->expert_mode ? 3 : 2,
+            'status' => $organizationGuidelines->expert_mode_force ? 'force' : 'suggestion',
+        ];
 
-        $suggestion['show_inspiration_alternatives'] = $organizationGuidelines->show_inspiration_alternatives;
-        if ($organizationGuidelines->show_inspiration_alternatives_force) {
-            $force['show_inspiration_alternatives'] = $suggestion['show_inspiration_alternatives'];
-        }
+        $config['singular_they'] = [
+            'value' => $organizationGuidelines->singular_they ? 'all_pronouns' : 'he_or_she',
+            'status' => $organizationGuidelines->singular_they_force ? 'force' : 'suggestion',
+        ];
 
-        $suggestion['gendered_roles_format'] = $organizationGuidelines->gendered_roles_format;
-        if ($organizationGuidelines->gendered_roles_format_force) {
-            $force['gendered_roles_format'] = $suggestion['gendered_roles_format'];
-        }
+        $config['show_inspiration_alternatives'] = [
+            'value' => $organizationGuidelines->show_inspiration_alternatives,
+            'status' => $organizationGuidelines->show_inspiration_alternatives_force ? 'force' : 'suggestion',
+        ];
 
-        $suggestion['german_gender_ending'] = $organizationGuidelines->german_gender_ending;
-        if ($organizationGuidelines->german_gender_ending_force) {
-            $force['german_gender_ending'] = $suggestion['german_gender_ending'];
-        }
+        $config['gendered_roles_format'] = [
+            'value' => $organizationGuidelines->gendered_roles_format,
+            'status' => $organizationGuidelines->gendered_roles_format_force ? 'force' : 'suggestion',
+        ];
+
+        $config['german_gender_ending'] = [
+            'value' => $organizationGuidelines->german_gender_ending,
+            'status' => $organizationGuidelines->german_gender_ending_force ? 'force' : 'suggestion',
+        ];
 
         foreach (OrganizationGuidelines::DISABLED_CATEGORIES as $category) {
-            if (in_array($category, $organizationGuidelines->disabled_categories)) {
-                $suggestion['disabled_categories'][] = $category;
-                if (in_array($category, $organizationGuidelines->disabled_categories_force)) {
-                    $force['disabled_categories'][] = $category;
-                }
-            }
+            $config[$category] = [
+                'value' => !in_array($category, $organizationGuidelines->disabled_categories),
+                'status' => in_array($category, $organizationGuidelines->disabled_categories_force) ? 'force' : 'suggestion',
+            ];
         }
 
-        foreach ($organizationGuidelines->preferred_variants as $variant) {
-            $suggestion['preferred_variants'][] = $variant;
-            if ($organizationGuidelines->preferred_variants_force) {
-                $force['preferred_variants'][] = $variant;
-            }
-        }
-
-        return [
-            'forced' => $force,
-            'suggestion' => $suggestion,
+        $config['preferred_variants'] = [
+            'value' => $organizationGuidelines->preferred_variants,
+            'status' => $organizationGuidelines->preferred_variants_force ? 'force' : 'suggestion',
         ];
+
+        return $config;
     }
 }
