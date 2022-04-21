@@ -431,3 +431,7 @@ input:checked + .slider:before {
     color: white;
     text-decoration: underline;
 }
+
+.navigation-user-info {
+    color: white;
+}
