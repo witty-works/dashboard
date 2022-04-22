@@ -14,13 +14,13 @@ class UpdateOrganizationGuidelines
         $team = $event->team;
 
         if ($event instanceof TeamDeleted) {
-            $this->deleteRules($team);
+            self::deleteRules($team);
         } else {
-            $this->updateRules($team);
+            self::updateRules($team);
         }
     }
 
-    protected function deleteRules(Team $team)
+    static public function deleteRules(Team $team)
     {
         $endpoint = config('app.organization_guidelines_endpoint');
         $data = [
@@ -42,11 +42,11 @@ class UpdateOrganizationGuidelines
         }
     }
 
-    protected function updateRules(Team $team)
+    static public function updateRules(Team $team)
     {
         $endpoint = config('app.organization_guidelines_endpoint');
 
-        $termReplacements = $this->getTermReplacements($team);
+        $termReplacements = self::getTermReplacements($team);
         $falsePositives = $team->falsePositives()->pluck('false_positive')->toArray();
 
         if ($team->subscribed()) {
@@ -67,7 +67,7 @@ class UpdateOrganizationGuidelines
             'users' => $users,
             'false_positives' => $falsePositives,
             'term_replacements' => $termReplacements,
-            'config' => $this->getConfig($team),
+            'config' => self::getConfig($team),
         ];
 
         $endpoint['url'] .= "/store_rules";
@@ -84,7 +84,7 @@ class UpdateOrganizationGuidelines
         }
     }
 
-    protected function getTermReplacements(Team $team)
+    static protected function getTermReplacements(Team $team)
     {
         $termReplacements = [];
         foreach ($team->termReplacements as $termReplacement) {
@@ -108,7 +108,7 @@ class UpdateOrganizationGuidelines
         return $termReplacements;
     }
 
-    protected function getConfig(Team $team)
+    static protected function getConfig(Team $team)
     {
         $organizationGuidelines = OrganizationGuidelines::firstOrNew(['team_id' => $team->id]);
 
