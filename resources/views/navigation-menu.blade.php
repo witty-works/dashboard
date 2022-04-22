@@ -20,11 +20,17 @@
                         </x-jet-nav-link>
 
                         @if ($team)
-                            <!-- Team Settings -->
-                            @if($user->ownsTeam($team) && !$team->subscription())
+
+                            @if($user->ownsTeam($team))
+                            <x-jet-nav-link href="{{ route('language-guidelines', $team->id) }}" :active="request()->routeIs('language-guidelines')">
+                                {{ __('content.onboarding_language_guidelines') }}
+                            </x-jet-nav-link>
+
+                            @if(!$team->subscription())
                             <x-jet-nav-link href="{{ route('stripe.portal') }}">
                                 {{ __('teams.subscribe') }}
                             </x-jet-nav-link>
+                            @endif
                             @endif
                         @elseif(count($user->allTeams()) === 0)
                             @can('create', Laravel\Jetstream\Jetstream::newTeamModel())

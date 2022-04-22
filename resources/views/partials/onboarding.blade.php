@@ -123,27 +123,27 @@ if(!$currentTeam || $user->can('update', $currentTeam)) {
         <div class="onboarding-quick-links-container">
             @if($currentTeam)
             <a class="onboarding-iconWrapper" href="{{ route('teams.show', $currentTeam->id) }}">
-                <img src="{{ url('svg/team-setup.svg') }}" alt="team setup"/>
+                <img src="{{ url('svg/team-setup.svg') }}" alt="{{ __('content.onboarding_team_setup') }}"/>
                 <div class="onboarding-icon-description">{{ __('content.onboarding_team_setup') }}</div>
             </a>
-            <a class="onboarding-iconWrapper" href="{{ route('organization-guidelines', $currentTeam->id) }}">
-                <img src="{{ url('svg/language-guidelines.svg') }}" alt="language guidelines"/>
+            <a class="onboarding-iconWrapper" href="{{ route('language-guidelines', $currentTeam->id) }}">
+                <img src="{{ url('svg/language-guidelines.svg') }}" alt="{{ __('content.onboarding_language_guidelines') }}"/>
                 <div class="onboarding-icon-description">{{ __('content.onboarding_language_guidelines') }}</div>
             </a>
             <a class="onboarding-iconWrapper" href="{{ route('stripe.portal') }}">
-                <img src="{{ url('svg/payment-billing.svg') }}" alt="payment"/>
+                <img src="{{ url('svg/payment-billing.svg') }}" alt="{{ __('content.onboarding_payment') }}"/>
                 <div class="onboarding-icon-description">{{ __('content.onboarding_payment') }}</div>
             </a>
             @endif
             <a class="onboarding-iconWrapper" href="https://www.witty.works/help">
-                <img src="{{ url('svg/support.svg') }}" alt="support"/>
+                <img src="{{ url('svg/support.svg') }}" alt="{{ __('content.onboarding_support') }}"/>
                 <div class="onboarding-icon-description">{{ __('content.onboarding_support') }}</div>
             </a>
         </div>
     </div>
     <div class="onboarding-container-col-two">
         <div class="onboarding-title">{{ __('content.onboarding_team_stats') }}</div>
-        <img class="onboarding-analytics-img" src="{{ url('svg/analytics-coming-soon.svg') }}" alt="analytics"/>
+        <img class="onboarding-analytics-img" src="{{ url('svg/analytics-coming-soon.svg') }}" alt="{{ __('content.onboarding_team_stats') }}"/>
     </div>
 </div>
 

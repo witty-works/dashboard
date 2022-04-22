@@ -204,4 +204,6 @@ Lese mehr über den ROI für [Organisationen](https://www.witty.works/witty-for-
     'onboarding_team_stats' => 'Die Statistiken deines Teams',
     'login_failed' => 'Login scheiterte',
     'edit' => 'bearbeiten',
+    'language_guidelines' => 'Sprachrichtlinien',
+    'introduction_videos' => 'Einführungsvideos',
 ];
