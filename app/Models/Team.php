@@ -157,11 +157,6 @@ class Team extends JetstreamTeam
         return $this->getTotalFalsePositivesCount() >= $this->getFalsePositivesCount();
     }
 
-    public function getCanStoreContextBeDisabled()
-    {
-        return $this->subscribed() && Gate::check('update', $this);
-    }
-
     public function planId()
     {
         if (!$this->subscribed()) {

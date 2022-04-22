@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Teams;
 
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class StoreContext extends Component
@@ -28,7 +29,7 @@ class StoreContext extends Component
         $this->team = $team;
 
         $this->store_context = (bool) $team->store_context;
-        if ($this->team->getCanStoreContextBeDisabled()) {
+        if (!$this->team->subscribed()) {
             $this->store_context = true;
         }
     }
@@ -37,8 +38,12 @@ class StoreContext extends Component
     {
         $this->validate();
 
-        if (!$this->team->getCanStoreContextBeDisabled()) {
+        if (!Auth::user()->hasTeamPermission($this->team, 'update')) {
             abort(403);
+        }
+
+        if (!$this->team->subscribed()) {
+            $this->store_context = true;
         }
 
         $this->team->store_context = (bool) $this->store_context;

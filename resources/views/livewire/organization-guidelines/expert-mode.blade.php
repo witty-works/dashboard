@@ -17,7 +17,7 @@
                     type="checkbox"
                     class="guidelines-form-section-toggle"
                     wire:model.defer="expert_mode"
-                    :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')">
+                    :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines') || !$team->subscribed()">
                 <span class="slider round"></span>
             </label>
             <div class="guidelines-form-section-label">{{ __('guidelines.enable_expert_mode') }}</div>            
@@ -32,7 +32,7 @@
                     type="checkbox"
                     class="guidelines-form-section-toggle"
                     wire:model.defer="expert_mode_force"
-                    :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')">
+                    :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines') || !$team->subscribed()">
                 <span class="slider round"></span>
             </label>
             <div class="guidelines-form-section-label--apply-for-all">{{ __('guidelines.set_for_all') }}</div>

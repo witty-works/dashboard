@@ -23,7 +23,7 @@
             :options="\App\Models\OrganizationGuidelines::GENDERED_ROLES_FORMAT"
             class="guidelines-form-section-dropdown"
             wire:model.defer="gendered_roles_format"
-            :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" />
+            :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines') || !$team->subscribed()" />
 
         <x-jet-input-error for="gendered_roles_format" class="mt-2" />
 
