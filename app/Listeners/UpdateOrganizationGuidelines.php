@@ -55,7 +55,7 @@ class UpdateOrganizationGuidelines
             $users = [$team->owner->email];
             $team->store_context = true;
             $falsePositives = array_slice($falsePositives, 0, $team->false_positive_count);
-            $termReplacements = array_slice($termReplacements, 0, $team->term_replacement_count);
+            $termReplacements = array_slice($termReplacements, 0, $team->getTermReplacementsCount());
         }
 
         $plan = $team->planId();

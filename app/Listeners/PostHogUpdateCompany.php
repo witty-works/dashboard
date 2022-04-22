@@ -15,19 +15,12 @@ class PostHogUpdateCompany
 
         $team = $event->team;
 
-        $userCount = $stripe_plan = null;
-
-        $subscription = $team->subscription();
-        if ($subscription) {
-            $userCount = $subscription->quantity;
-        }
-
         PostHog::groupIdentify([
             'groupType' => PostHogMiddleware::POSTHOG_ORGANIZATION_TYPE,
             'groupKey' => $team->posthogId(),
             'properties' => [
                 'name' => $team->name,
-                'users' => $userCount,
+                'users' => $team->getTotalUserLicensesCount(),
                 'stripe_plan' => $team->planId(),
             ]
         ]);

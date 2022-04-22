@@ -28,7 +28,7 @@ class StoreContext extends Component
         $this->team = $team;
 
         $this->store_context = (bool) $team->store_context;
-        if ($this->team->store_context_disablable) {
+        if ($this->team->getCanStoreContextBeDisabled()) {
             $this->store_context = true;
         }
     }
@@ -37,7 +37,7 @@ class StoreContext extends Component
     {
         $this->validate();
 
-        if (!$this->team->store_context_disablable) {
+        if (!$this->team->getCanStoreContextBeDisabled()) {
             abort(403);
         }
 

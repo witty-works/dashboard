@@ -10,7 +10,7 @@
             <x-slot name="description">
                 {!! Str::markdown(__('teams.store_context_description')) !!}
 
-                @if(!$team->store_context_disablable)
+                @if(!$team->getCanStoreContextBeDisabled())
                 {!! __('teams.store_context_subscription_required', ['url' => route('stripe.portal')]) !!}
                 @endif
             </x-slot>
@@ -24,13 +24,13 @@
                         type="checkbox"
                         class="mt-1 block"
                         wire:model.defer="store_context"
-                        :disabled="!$team->store_context_disablable" />
+                        :disabled="!$team->getCanStoreContextBeDisabled()" />
 
                     <x-jet-input-error for="store_context" class="mt-2" />
                 </div>
             </x-slot>
 
-            @if ($team->store_context_disablable)
+            @if ($team->getCanStoreContextBeDisabled())
                 <x-slot name="actions">
                     <x-jet-action-message class="mr-3" on="saved">
                         <span class="float-right">{{ __('content.saved') }}</span>

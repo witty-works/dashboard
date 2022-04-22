@@ -96,7 +96,7 @@ class Team extends JetstreamTeam
         return PostHogMiddleware::POSTHOG_ID_PREFIX . $this->id;
     }
 
-    public function getUserLicensesCountAttribute()
+    public function getUserLicensesCount()
     {
         if ($this->subscribed()) {
             return $this->subscription()->quantity;
@@ -105,21 +105,21 @@ class Team extends JetstreamTeam
         return config('stripe.plans.witty_me.features.invite_smaller_teams.count');
     }
 
-    public function getTotalUserLicensesCountAttribute()
+    public function getTotalUserLicensesCount()
     {
         return $this->allUsers()->count();
     }
 
-    public function getUserLicensesLimitReachedAttribute()
+    public function getUserLicensesLimitReached()
     {
         if ($this->subscribed() && !$this->subscription()->isPaidByInvoice()) {
             return false;
         }
 
-        return $this->getTotalUserLicensesCountAttribute() >= $this->getUserLicensesCountAttribute();
+        return $this->getTotalUserLicensesCount() >= $this->getUserLicensesCount();
     }
 
-    public function getTermReplacementsCountAttribute()
+    public function getTermReplacementsCount()
     {
         if ($this->subscribed() && $this->term_replacements === null) {
             return config('stripe.plans.' . $this->planId() . '.features.term_replacements.count');
@@ -128,17 +128,17 @@ class Team extends JetstreamTeam
         return $this->term_replacements ?? 5;
     }
 
-    public function getTotalTermReplacementsCountAttribute()
+    public function getTotalTermReplacementsCount()
     {
         return $this->termReplacements()->count();
     }
 
-    public function getTermReplacementsLimitReachedAttribute()
+    public function getTermReplacementsLimitReached()
     {
-        return $this->getTotalTermReplacementsCountAttribute() >= $this->getTermReplacementsCountAttribute();
+        return $this->getTotalTermReplacementsCount() >= $this->getTermReplacementsCount();
     }
 
-    public function getFalsePositivesCountAttribute()
+    public function getFalsePositivesCount()
     {
         if ($this->subscribed() && $this->false_positives === null) {
             return config('stripe.plans.' . $this->planId() . '.features.false_positives.count');
@@ -147,17 +147,17 @@ class Team extends JetstreamTeam
         return $this->false_positives ?? 5;
     }
 
-    public function getTotalFalsePositivesCountAttribute()
+    public function getTotalFalsePositivesCount()
     {
         return $this->falsePositives()->count();
     }
 
-    public function getFalsePositivesLimitReachedAttribute()
+    public function getFalsePositivesLimitReached()
     {
-        return $this->getTotalFalsePositivesCountAttribute() >= $this->getFalsePositivesCountAttribute();
+        return $this->getTotalFalsePositivesCount() >= $this->getFalsePositivesCount();
     }
 
-    public function getStoreContextDisablableAttribute()
+    public function getCanStoreContextBeDisabled()
     {
         return $this->subscribed() && Gate::check('update', $this);
     }

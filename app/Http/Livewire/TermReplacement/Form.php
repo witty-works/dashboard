@@ -90,10 +90,10 @@ class Form extends Component
                 throw ValidationException::withMessages(['term' => $message]);
             }
         } else {
-            if ($this->team->term_replacements_limit_reached) {
+            if ($this->team->getTermReplacementsLimitReached()) {
                 $message = __(
                     'guidelines.term_replacement_limit_reached_error',
-                    ['max_count' => $this->team->term_replacements_count]
+                    ['max_count' => $this->team->getTermReplacementsCount()]
                 );
                 throw ValidationException::withMessages(['term' => $message]);
             }
