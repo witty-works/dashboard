@@ -19,7 +19,7 @@ return [
     'more_licenses' => 'If you like to purchase more licenses, please <a href=":url">contact</a> Witty Works.',
     'what_is_included' => 'What is included in your current plan?',
     'user_limit_reached_error' => 'User limit of :max_count on the current plan reached.',
-    'store_context_subscription_required' => 'To be able to disable storing the context, a <a href=":url">subscription</a> of the "Witty Teams" plan or higher is required.',
+    'store_context_subscription_required' => 'To be able to disable storing the context, a <a href=":url">subscription</a> of "Witty Teams" or higher is required.',
     'user_licenses_count_will_be_increased_updated_at' => '{1} One user license will be added in :in | :diff user licenses will be added in :in',
     'user_licenses_count_will_be_decreased_updated_at' => '{1} One user license will be removed in :in | :diff user license will be removed in :in',
     'please_remove_users_or_upgrade' => '{1} Please remove one user license or <a href=":url">upgrade</a> to re-activate all team members. | Please remove :diff user licenses or <a href=":url">upgrade</a> to re-activate all team members.',

@@ -18,7 +18,7 @@ return [
     'more_licenses' => 'Wenn du weitere Lizenzen erwerben möchtest, <a href=":url">wende</a> dich bitte an Witty Works.',
     'what_is_included' => 'Was ist in deinem aktuellen Plan enthalten?',
     'user_limit_reached_error' => 'Benutzerlimit von :max_count für den aktuellen Plan erreicht.',
-    'store_context_subscription_required' => 'Um das Speichern des Kontexts deaktivieren zu können, ist ein <a href=":url">Abonnement</a> des Plans „Witty Teams“ oder höher erforderlich.',
+    'store_context_subscription_required' => 'Um das Speichern des Kontexts deaktivieren zu können, ist ein <a href=":url">Abonnement</a> von „Witty Teams“ oder höher erforderlich.',
     'pricing' => 'Preise',
     'user_licenses_count_will_be_increased_updated_at' => '{1} Ein:e Benutzer:in wird in :in hinzugefügt | :diff Benutzer:innen werden in :in hinzugefügt',
     'user_licenses_count_will_be_decreased_updated_at' => '{1} Ein:e Benutzer:in wird in :in entfernt | :diff Benutzer:innen werden in :in entfernt',
