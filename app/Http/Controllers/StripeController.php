@@ -37,7 +37,7 @@ class StripeController extends Controller
                         ->checkout(
                             [[
                                 'price' => $planConfig['price_id'],
-                                'quantity' => $team->total_user_licenses_count
+                                'quantity' => $team->getTotalUserLicensesCount()
                             ]],
                             [
                                 'locale' => app()->getLocale(),

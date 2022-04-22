@@ -10,7 +10,7 @@
                 </x-slot>
 
                 <x-slot name="description">
-                    {{ __('content.add_a_new_team_member', ['max_count' => $team->user_licenses_count]) }}
+                    {{ __('content.add_a_new_team_member', ['max_count' => $team->getUserLicensesCount()]) }}
                 </x-slot>
 
                 <x-slot name="form">
@@ -27,8 +27,8 @@
                         <x-jet-input-error for="email" class="mt-2">
                         </x-jet-input-error>
                         <p class="text-sm text-red-600 mt-2">
-                            @if($team->user_licenses_limit_reached)
-                            {{ __('teams.user_limit_reached_error', ['max_count' => $team->user_licenses_count]) }}
+                            @if($team->getUserLicensesLimitReached())
+                            {{ __('teams.user_limit_reached_error', ['max_count' => $team->getUserLicensesCount()]) }}
                             @endif
                         </p>
                     </div>

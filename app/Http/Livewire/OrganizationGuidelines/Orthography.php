@@ -15,12 +15,10 @@ class Orthography extends Component
     public $disabled_categories_force;
     public $disabled_categories_orthography;
     public $disabled_categories_orthography_force;
-    public $disabled_categories_casing;
 
     protected $rules = [
         'disabled_categories_orthography' => 'nullable|boolean',
         'disabled_categories_orthography_force' => 'nullable|boolean',
-        'disabled_categories_casing' => 'nullable|boolean',
     ];
 
     public $team;

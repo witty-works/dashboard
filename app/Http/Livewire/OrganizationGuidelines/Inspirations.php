@@ -67,6 +67,15 @@ class Inspirations extends Component
 
     protected function getOrganizationGuidelines($team)
     {
-        return OrganizationGuidelines::firstOrNew(['team_id' => $team->id]);
+        $organizationRule = OrganizationGuidelines::firstOrNew(['team_id' => $team->id]);
+
+        if (!$this->team->subscribed()) {
+            $this->show_inspiration_alternatives = false;
+            $organizationRule->show_inspiration_alternatives = false;
+            $this->show_inspiration_alternatives_force = false;
+            $organizationRule->show_inspiration_alternatives_force = false;
+        }
+
+        return $organizationRule;
     }
 }

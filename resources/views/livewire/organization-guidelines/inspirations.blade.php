@@ -4,11 +4,11 @@
     </x-slot>
 
     <x-slot name="description">
-        {!! Str::markdown(__('guidelines.manage_organization_guidelines_description_inspiration')) !!}
+        
     </x-slot>
 
     <x-slot name="form" submit="updateOrganizationGuidelinesInspirations">
-        <div class="guidelines-form-title">{{ __('guidelines.manage_organization_guidelines_inspiration_title') }}</div>
+        <div class="guidelines-form-title">{!! Str::markdown(__('guidelines.manage_organization_guidelines_description_inspiration')) !!}</div>
         <div class="guidelines-form-section">
             <label class="switch">
                 <input
@@ -17,7 +17,7 @@
                     type="checkbox"
                     class="guidelines-form-section-toggle"
                     wire:model.defer="show_inspiration_alternatives"
-                    :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')">
+                    :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines') || !$team->subscribed()">
                 <span class="slider round"></span>
             </label>
             <div class="guidelines-form-section-label--apply-for-all">{{ __('guidelines.enable_show_inspiration_alternatives') }}</div>
@@ -31,7 +31,7 @@
                     type="checkbox"
                     class="guidelines-form-section-toggle"
                     wire:model.defer="show_inspiration_alternatives_force"
-                    :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" 
+                    :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines') || !$team->subscribed()" 
                 >
                 <span class="slider round"></span>
             </label>

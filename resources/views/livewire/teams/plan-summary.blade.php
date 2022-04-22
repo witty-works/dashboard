@@ -34,21 +34,21 @@
                     <div class="mt-5">
                         <x-jet-label for="name" value="{{ __('teams.user_licenses') }}" />
 
-                        {{ __('teams.total_of_max_used', ['total' => $team->total_user_licenses_count, 'max_count' => $team->user_licenses_count]) }}
+                        {{ __('teams.total_of_max_used', ['total' => $team->getTotalUserLicensesCount(), 'max_count' => $team->getUserLicensesCount()]) }}
                         @if($team->subscribed() && $team->subscription()->isPaidByInvoice())
                         <div>
                             {!! __('teams.more_licenses') !!}
                         </div>
-                        @elseif ($team->total_user_licenses_count != $team->user_licenses_count)
+                        @elseif ($team->getTotalUserLicensesCount() != $team->getUserLicensesCount())
                         <div>
                             @if($team->subscribed())
-                            @if($team->total_user_licenses_count > $team->user_licenses_count)
-                            {{ trans_choice('teams.user_licenses_count_will_be_increased_updated_at', $team->total_user_licenses_count - $team->user_licenses_count, ['diff' => $team->total_user_licenses_count - $team->user_licenses_count, 'in' => $team->subscription()->update_user_licenses_at->diffForHumans()]) }}
+                            @if($team->getTotalUserLicensesCount() > $team->getUserLicensesCount())
+                            {{ trans_choice('teams.user_licenses_count_will_be_increased_updated_at', $team->getTotalUserLicensesCount() - $team->getUserLicensesCount(), ['diff' => $team->getTotalUserLicensesCount() - $team->getUserLicensesCount(), 'in' => $team->subscription()->update_user_licenses_at->diffForHumans()]) }}
                             @else
-                            {{ trans_choice('teams.user_licenses_count_will_be_decreased_updated_at', $team->user_licenses_count - $team->total_user_licenses_count, ['diff' => $team->user_licenses_count - $team->total_user_licenses_count, 'in' => $team->subscription()->update_user_licenses_at->diffForHumans()]) }}
+                            {{ trans_choice('teams.user_licenses_count_will_be_decreased_updated_at', $team->getUserLicensesCount() - $team->getTotalUserLicensesCount(), ['diff' => $team->getUserLicensesCount() - $team->getTotalUserLicensesCount(), 'in' => $team->subscription()->update_user_licenses_at->diffForHumans()]) }}
                             @endif
                             @else
-                            {!! trans_choice('teams.please_remove_users_or_upgrade', $team->total_user_licenses_count - $team->user_licenses_count, ['diff' => $team->user_licenses_count - $team->total_user_licenses_count, 'url' => route('stripe.portal')]) !!}
+                            {!! trans_choice('teams.please_remove_users_or_upgrade', $team->getTotalUserLicensesCount() - $team->getUserLicensesCount(), ['diff' => $team->getUserLicensesCount() - $team->getTotalUserLicensesCount(), 'url' => route('stripe.portal')]) !!}
                             @endif
                         </div>
                         @endif
@@ -57,13 +57,13 @@
                     <div class="mt-5">
                         <x-jet-label for="name" value="{{ __('teams.term_replacements') }}" />
 
-                        {{ __('teams.total_of_max_used', ['total' => $team->total_term_replacements_count, 'max_count' => $team->term_replacements_count]) }}
+                        {{ __('teams.total_of_max_used', ['total' => $team->getTotalTermReplacementsCount(), 'max_count' => $team->getTermReplacementsCount()]) }}
                     </div>
 
                     <div class="mt-5">
                         <x-jet-label for="name" value="{{ __('teams.false_positives') }}" />
 
-                        {{ __('teams.total_of_max_used', ['total' => $team->total_false_positives_count, 'max_count' => $team->false_positives_count]) }}
+                        {{ __('teams.total_of_max_used', ['total' => $team->getTotalFalsePositivesCount(), 'max_count' => $team->getFalsePositivesCount()]) }}
                     </div>
                 </div>
 

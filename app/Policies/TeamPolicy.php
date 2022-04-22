@@ -77,7 +77,7 @@ class TeamPolicy
      */
     public function addTeamMember(User $user, Team $team)
     {
-        if ($team->user_licenses_limit_reached) {
+        if ($team->getUserLicensesLimitReached()) {
             return false;
         }
 

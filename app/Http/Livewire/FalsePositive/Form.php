@@ -78,10 +78,10 @@ class Form extends Component
                 throw ValidationException::withMessages(['term' => $message]);
             }
         } else {
-            if ($this->team->false_positives_limit_reached) {
+            if ($this->team->getFalsePositivesLimitReached()) {
                 $message = __(
                     'guidelines.false_positive_limit_reached_error',
-                    ['max_count' => $this->team->false_positives_count]
+                    ['max_count' => $this->team->getFalsePositivesCount()]
                 );
                 throw ValidationException::withMessages(['term' => $message]);
             }

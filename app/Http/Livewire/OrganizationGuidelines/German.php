@@ -71,6 +71,13 @@ class German extends Component
 
     protected function getOrganizationGuidelines($team)
     {
-        return OrganizationGuidelines::firstOrNew(['team_id' => $team->id]);
+        $organizationRule = OrganizationGuidelines::firstOrNew(['team_id' => $team->id]);
+
+        if (!$this->team->subscribed()) {
+            $this->gendered_roles_format = 'both';
+            $organizationRule->gendered_roles_format = 'both';
+        }
+
+        return $organizationRule;
     }
 }

@@ -6,8 +6,8 @@
     <x-slot name="description">
         {!! Str::markdown(__('guidelines.create_new_false_positive_description')) !!}
 
-        @if($team->false_positives_limit_reached)
-        {!! __('guidelines.false_positive_limit_reached', ['max_count' => $team->false_positives_count, 'url' => route('stripe.portal')]) !!}
+        @if($team->getFalsePositivesLimitReached())
+        {!! __('guidelines.false_positive_limit_reached', ['max_count' => $team->getFalsePositivesCount(), 'url' => route('stripe.portal')]) !!}
         @endif
     </x-slot>
 

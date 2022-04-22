@@ -67,6 +67,15 @@ class ExpertMode extends Component
 
     protected function getOrganizationGuidelines($team)
     {
-        return OrganizationGuidelines::firstOrNew(['team_id' => $team->id]);
+        $organizationRule = OrganizationGuidelines::firstOrNew(['team_id' => $team->id]);
+
+        if (!$this->team->subscribed()) {
+            $this->expert_mode = false;
+            $organizationRule->expert_mode = false;
+            $this->expert_mode_force = false;
+            $organizationRule->expert_mode_force = false;
+        }
+
+        return $organizationRule;
     }
 }

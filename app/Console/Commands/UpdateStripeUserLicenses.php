@@ -48,8 +48,8 @@ class UpdateStripeUserLicenses extends Command
         foreach ($subscriptions as $subscription) {
             $team = $subscription->owner;
             $oldQuantity = $subscription->quantity;
-            if ($oldQuantity != $team->total_user_licenses_count) {
-                $subscription->updateQuantity($team->total_user_licenses_count);
+            if ($oldQuantity != $team->getTotalUserLicensesCount()) {
+                $subscription->updateQuantity($team->getTotalUserLicensesCount());
                 $messages[] = sprintf('Updated "%s" (%d) from %d to %d', $team->name, $team->id, $oldQuantity, $subscription->quantity);
             } else {
                 $messages[] = sprintf('Checked "%s" (%d)', $team->name, $team->id);

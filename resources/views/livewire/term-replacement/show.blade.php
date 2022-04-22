@@ -9,12 +9,22 @@
 
     <x-slot name="list">
         <table class="table-fixed w-full">
+            <thead>
+                <tr>
+                    <th class="px-4 py-2">{{ __('guidelines.term_label') }}</th>
+                    <th class="px-4 py-2">{{ __('guidelines.replacement_label') }}</th>     
+                    <th class="px-4 py-2">{{ __('guidelines.emoji_label') }}</th>
+                    <th class="px-4 py-2">{{ __('guidelines.action_label') }}s</th>     
+                </tr>
+            </thead>
+            <tbody>
             @foreach ($list as $term_replacement)
             <tr @if($loop->even)class="bg-grey"@endif>
-                <td class="border px-4 py-2 w-2/5">{{ $term_replacement->term }} {{ $term_replacement->emoji ? "($term_replacement->emoji)" : '' }} </td>
-                <td class="border px-4 py-2 w-2/5">{{ $term_replacement->replacement }}</td>
+                <td class="border px-4 py-2 text-center">{{ $term_replacement->term }}</td>
+                <td class="border px-4 py-2 text-center">{{ $term_replacement->replacement }}</td>
+                <td class="border px-4 py-2 text-center">{{ $term_replacement->emoji }}</td>
                 @if (Auth::user()->hasTeamPermission($team, 'edit_guidelines'))
-                <td class="border px-4 py-2">
+                <td class="border px-4 py-2 text-center whitespace-nowrap">
                     <button wire:click="editTermReplacement({{ $term_replacement->id }})" class="bg-gray-100 text-gray-600 px-6 rounded-full">
                         {{ __('content.edit') }}
                     </button>
@@ -25,6 +35,7 @@
                 @endif
             </tr>
             @endforeach
+            </tbody>
         </table>
     </x-slot>
 </x-list-section>
