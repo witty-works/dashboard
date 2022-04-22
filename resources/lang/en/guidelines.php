@@ -2,11 +2,11 @@
 
 return [
     'false_positive_list' => 'Ignore words',
-    'create_false_positive' => 'Improve your Witty experience by adding words to your personal ignore list.',
+    'create_false_positive' => 'Organization custom ignored words',
     'create_new_false_positive_description' => 'All words added to this list will not be highlighted anymore.',
     'false_positive_label' => 'Ignore word',
     'term_replacement_list' => 'Term replacements',
-    'create_term_replacement' => 'Improve your Witty experience by adding words to your personal term replacement list.',
+    'create_term_replacement' => 'Organization custom term replacements',
     'create_new_term_replacement_description' => 'All words added to this list will become highlighted by Witty, and your custom replacement will be shown as a clickable alternative.',
     'term_label' => 'Term',
     'replacement_label' => 'Alternative',
