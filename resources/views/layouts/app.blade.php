@@ -18,6 +18,8 @@
 
         @livewireStyles
 
+        <x-embed-styles />
+
         <!-- Scripts -->
         @include('partials/sentry')    
         <script src="{{ mix('js/app.js') }}" defer></script>

@@ -204,4 +204,6 @@ Read more about ROI for [organizations](https://www.witty.works/witty-for-compan
     'browser_login' => 'Browser Login',
     'login_failed' => 'Login failed',
     'edit' => 'edit',
+    'language_guidelines' => 'Language Guidelines',
+    'introduction_videos' => 'Introduction Videos',
 ];
