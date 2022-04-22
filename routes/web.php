@@ -109,11 +109,15 @@ Route::group(
                         ->middleware(['auth'])
                         ->name('team-invitations.reject');
 
-                    Route::get('/teams/{team}/false-positive', [GuidelinesController::class, 'editFalsePositives'])->name('false-positive');
+                    Route::get('/teams/{team}/ignore-words', [GuidelinesController::class, 'editFalsePositives'])->name('false-positive');
 
-                    Route::get('/teams/{team}/term-replacement', [GuidelinesController::class, 'editTermReplacements'])->name('term-replacement');
+                    Route::get('/teams/{team}/term-replacements', [GuidelinesController::class, 'editTermReplacements'])->name('term-replacement');
 
-                    Route::get('/teams/{team}/organization-guidelines', [GuidelinesController::class, 'editOrganizationGuidelines'])->name('organization-guidelines');
+                    Route::get('/teams/{team}/customize-witty', [GuidelinesController::class, 'editOrganizationGuidelines'])->name('organization-guidelines');
+
+                    Route::get('/teams/{team}/language-guidelines', function () {
+                        return view('language-guidelines');
+                    })->name('language-guidelines');
                 }
             });
         });
