@@ -104,17 +104,17 @@ In `~/.gitconfig` add make sure you have the following setting
 ## Make a release
 
 * Make sure translations are up to date
-* Check https://github.com/witty-works/admin-ui/compare/main...dev
+* Check https://github.com/witty-works/dashboard/compare/main...dev
 * Check that staging works fine
 * Go to the console
-  * `./make-release.sh release` // to start a minor release, replace `release` with `major` to start a major release
-  * `./make-release.sh finish` // use `:wq` to save, use `i` to insert the copied milestone URL and `esc` to get out of insert mode
-  * `./make-release.sh finalize`
+  * `make-release.sh release` // to start a minor release, replace `release` with `major` to start a major release
+  * `make-release.sh finish` // use `:wq` to save, use `i` to insert the copied milestone URL and `esc` to get out of insert mode
+  * `make-release.sh finalize`
 
 ## Make a hotfix
 
 * Go to the console
-  * `./make-release.sh hotfix` // to start a hotfix release
+  * `make-release.sh hotfix` // to start a hotfix release
   * Make your changes, ie. `git commit`, ensure that they work locally, to test remotely use `platform environment:push`
   * Make sure translations are up to date but *do not* run `lando artisan translation:sync_and_purge`
     * Instead manually add the translations for `de` and `fr` if new translations were added for `en`
@@ -123,15 +123,5 @@ In `~/.gitconfig` add make sure you have the following setting
     * To activate the branch on platform.sh run `platform environment:activate`
     * *ATTENTION* This will use production data, so be careful and use your production passwords etc
     * If testing email related features, enable email sending for the hotfix environment on platform.sh
-  * `./make-release.sh finish` // use `:wq` to save, use `i` to insert the copied milestone URL and `esc` to get out of insert mode
-  * `./make-release.sh finalize`
-
-# Synchronize stacks between Rokka organizations
-
-Production Rokka Org: wittyworks-admin-ui
-Develop Rokka Org: wittyworks-admin-ui-dev
-
-```
-cp rokka.yml ~/.rokka.yml
-./vendor/bin/rokka-cli stack:clone-all --source-organization=source destination --overwrite
-```
+  * `make-release.sh finish` // use `:wq` to save, use `i` to insert the copied milestone URL and `esc` to get out of insert mode
+  * `make-release.sh finalize`
