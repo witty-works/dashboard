@@ -93,7 +93,7 @@
                             {{ __('content.team_settings') }}
                         </x-jet-dropdown-link>
 
-                        @if($user->ownsTeam($team) && !$team->subscription())
+                        @if($user->ownsTeam($team) && $team->subscription())
                         <x-jet-dropdown-link href="{{ route('stripe.portal') }}">
                             {{ $team->subscription()->isPaidByInvoice() ? __('stripe.contact_sales') : __('stripe.billing') }}
                         </x-jet-dropdown-link>
