@@ -3,7 +3,6 @@
 use App\Http\Controllers\Livewire\GuidelinesController;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\SubscribeRedirectController;
 use App\Http\Controllers\StripeController;
 use App\Http\Controllers\WebhookController;
 
