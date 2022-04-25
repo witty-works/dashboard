@@ -130,7 +130,7 @@ if(!$currentTeam || $user->can('update', $currentTeam)) {
                 <img src="{{ url('svg/language-guidelines.svg') }}" alt="{{ __('content.onboarding_language_guidelines') }}"/>
                 <div class="onboarding-icon-description">{{ __('content.onboarding_language_guidelines') }}</div>
             </a>
-            @if(Auth::user()->ownsTeam($team))
+            @if(Auth::user()->ownsTeam($currentTeam))
             <a class="onboarding-iconWrapper" href="{{ route('stripe.portal') }}">
                 <img src="{{ url('svg/payment-billing.svg') }}" alt="{{ __('content.onboarding_payment') }}"/>
                 <div class="onboarding-icon-description">{{ __('content.onboarding_payment') }}</div>
