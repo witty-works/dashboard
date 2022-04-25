@@ -4,7 +4,7 @@ return [
     'subscribe' => 'Subscribe',
     'billing' => 'Billing',
     'store_context' => 'Store context',
-    'store_context_description' => 'When switched on, Witty stores a few words before and after the highlighted term. This helps  to improve Witty and to make better suggestions in the future.',
+    'store_context_description' => 'When switched on, Witty in certain situations <a href="https://www.witty.works/trust-and-security">stores a few characters</a> before and after the highlighted term. This helps to improve Witty and to make better suggestions in the future.',
     'plan_summary' => 'Plan summary',
     'plan_summary_description' => 'Plan summary description',
     'plan_name' => 'Current plan name',
@@ -24,4 +24,6 @@ return [
     'user_licenses_count_will_be_decreased_updated_at' => '{1} One user license will be removed in :in | :diff user license will be removed in :in',
     'please_remove_users_or_upgrade' => '{1} Please remove one user license or <a href=":url">upgrade</a> to re-activate all team members. | Please remove :diff user licenses or <a href=":url">upgrade</a> to re-activate all team members.',
     'end_date' => 'end date',
+    'team_owner' => 'Team owner',
+    'upgrade_to_witty_teams' => 'Please upgrade to Witty Teams',
 ];

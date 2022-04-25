@@ -144,7 +144,7 @@ return [
     'welcome_text' => 'Das Dashboard hilft dir, Witty einzurichten und deinen Bedürfnissen anzupassen.',
     'onboarding_next_steps' => 'Nächste Schritte zum Einrichten deines Witty Teams:',
     'onboarding_create_team' => '1. Team Erstellen',
-    'onboarding_configure_organization_guidelines' => '2. Konfigurierung der Organisations-Richtlinien',
+    'onboarding_configure_organization_guidelines' => '2. Konfigurierung der Team-Sprache',
     'onboarding_invite_users' => '3. Benutzer:innen Einladen',
     'section_1_title' => 'Was ist Witty?',
     'section_1_text' => 'Witty ist ein integrativer Schreibassistent für Einzelpersonen und Organisationen, der die Freude am integrativen Schreiben einfach, in Echtzeit und schnell bringt. Es ist ein Software-as-a-Service, der unbewusste Stereotypen in der Kommunikation erkennt. Und führt Autor:innen dann an, wie dieselben Inhalte inklusiv formuliert werden können.
@@ -158,13 +158,13 @@ Lese mehr über [Witty](https://www.witty.works/ "Inklusives Schreiben, überall
     'section_2_text' => 'Das Witty-Dashboard hilft dir, Witty für dein Team einzurichten und zu verwalten. Einmal eingeloggt, verwaltest du folgendes:
 
 * Lade dein Team ein
-* Richten eure ganz eigenen Sprachrichtlinien ein. So stellst du sicher, dass dein gesamtes Team mit der gleichen Markenstimme schreibt.
+* Richten eure ganz eigene Team-Sprache ein. So stellst du sicher, dass dein gesamtes Team mit der gleichen Markenstimme schreibt.
 * Demnächst verfügbar: Lesen und interpretiere Analysen auf Team-, Abteilungs- und Unternehmensebene in Übereinstimmung mit Datenschutzgesetzen.
 * Demnächst verfügbar: Editor – eine einfache Anwendung, die für alle funktioniert, auch für diejenigen, die das Browser-Plug-in (noch) nicht verwenden ',
     'section_3_title' => 'Witty für Teams und Organisationen',
     'section_3_text' => 'Für Organisationen bietet Witty eine Reihe von Dienstleistungen an, damit ganze Teams reibungslos mit Witty arbeiten können, wie zum Beispiel:
 * Einmalige Anmeldung
-* Richtlinien zur Organisationssprache
+* Konfiguriere die Team eigene Sprache
 * Demnächst verfügbar: Statistik der Organisation/Abteilung
 * Sitzung zur Sensibilisierung für unbewusste Voreingenommenheit
 * Zentrale Kontrolle über den Datenschutz
@@ -179,7 +179,7 @@ Lese mehr über Dienstleistungen für [Organisationen](https://www.witty.works/w
 
 Lese mehr über den ROI für [Organisationen](https://www.witty.works/witty-for-companies "Witty for Organizations").',
     'onboarding_signup_to_witty' => 'Meldung für ein Witty-Konto',
-    'invitation_email_welcome' => 'Um diese Einladung anzunehmen, registriere ein neues Konto, indem du auf die Schaltfläche unten klickst:',
+    'invitation_email_welcome' => 'Um diese Einladung anzunehmen, logge dich mit deinem bestehenden Konto ein oder registriere ein neues, indem du auf die Schaltfläche unten klickst:',
     'onboarding_install_witty' => 'Installiere die Witty-Browsererweiterung',
     'open_invitiations' => '{1} Du bist bereits Eigentümer:in eines Teams. Du wurdest aber eingeladen, einem anderen Team beizutreten. Du kannst nur in einem Team sein. Bitte entscheiden dich, ob du die Einladung annehmen oder ablehnen möchtest.|{2,*} Du wurdest eingeladen, mehreren Teams beizutreten, bitte entscheiden dich, ob du eine dieser Einladungen annehmen möchtest.',
     'accept_invitiation' => 'annehmen',
@@ -194,16 +194,16 @@ Lese mehr über den ROI für [Organisationen](https://www.witty.works/witty-for-
     'onboarding_finish_setup_title' => 'Schließe die Einrichtung deines Witty-Kontos ab',
     'onboarding_finish_setup_tagline' => 'Hole das Beste aus Witty heraus, indem du ein Team einrichtest und Regeln für deine Teammitglieder:innen konfigurierst',
     'onboarding_create_team_tagline' => 'Ein Team ermöglicht es, alle Einstellungen für eine Gruppe von Benutzer:innen gleichzeitig zu verwalten.',
-    'onboarding_configure_organization_guidelines_tagline' => 'Richte die Regeln und Richtlinien für deiner Organisation ein.',
+    'onboarding_configure_organization_guidelines_tagline' => 'Legen Sie fest, wie du Sprache in deinem Team verwenden möchten',
     'onboarding_invite_users_tagline' => 'Lasse andere deiner Organisation auf Witty beitreten und beginne, gemeinsam inklusiver zu schreiben.',
     'onboarding_quickLinks' => 'Direkt Links',
-    'onboarding_team_setup' => 'Team-Setup & -Verwaltung',
-    'onboarding_language_guidelines' => 'Sprachrichtlinien',
+    'onboarding_team_setup' => 'Teameinstellungen',
+    'onboarding_language_guidelines' => 'Team-Sprache',
     'onboarding_payment' => 'Zahlungen & Abrechnung',
     'onboarding_support' => 'Unterstützung',
     'onboarding_team_stats' => 'Die Statistiken deines Teams',
     'login_failed' => 'Login scheiterte',
     'edit' => 'bearbeiten',
-    'language_guidelines' => 'Sprachrichtlinien',
+    'language_guidelines' => 'Deine Team-Sprache',
     'introduction_videos' => 'Einführungsvideos',
 ];

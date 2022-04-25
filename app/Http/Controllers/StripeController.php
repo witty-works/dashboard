@@ -8,53 +8,6 @@ use Laravel\Cashier\Cashier;
 
 class StripeController extends Controller
 {
-    public function index(Request $request)
-    {
-        $stripePlans = config('stripe.plans');
-
-        $team = null;
-        $plans = [];
-        if (is_array($stripePlans)) {
-            $user = $request->user();
-            $team = $user ? $user->currentTeam : null;
-
-            foreach ($stripePlans as $planName => $planConfig) {
-                $planConfig['features'] = $planConfig['features'] ?? [];
-                foreach ($planConfig['features'] as $name => $featureConfig) {
-                    $planConfig['features'][$name] = trans_choice(
-                        'stripe.feature_' . $name,
-                        $featureConfig['count'] ?? 0,
-                        $featureConfig
-                    );
-                }
-
-                if (!isset($planConfig['price'])) {
-                    $planConfig['price'] = $this->getPrice($planConfig['price_id'])->unit_amount / 12;
-                }
-
-                if ($planConfig['checkout'] && $team && !$team->subscribed()) {
-                    $planConfig['checkout'] = $team->allowPromotionCodes()
-                        ->checkout(
-                            [[
-                                'price' => $planConfig['price_id'],
-                                'quantity' => $team->getTotalUserLicensesCount()
-                            ]],
-                            [
-                                'locale' => app()->getLocale(),
-                                'success_url' => $this->teamShowRoute($team),
-                                'cancel_url' => $this->teamShowRoute($team),
-                                'mode' => 'subscription'
-                            ]
-                        );
-                }
-
-                $plans[$planName] = $planConfig;
-            }
-        }
-
-        return view('billing', ['team' => $team, 'plans' => $plans]);
-    }
-
     public function subscribe(Request $request)
     {
         $user = $request->user();
@@ -72,8 +25,9 @@ class StripeController extends Controller
 
     public function portal(Request $request)
     {
-        $team = $request->user()->currentTeam;
-        if ($team) {
+        $user = $request->user();
+        $team = $user->currentTeam;
+        if ($team && $user->ownsTeam($team)) {
             $subscription = $team->subscription();
             if ($subscription) {
                 if ($subscription->isPaidByInvoice()) {

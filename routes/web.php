@@ -3,7 +3,6 @@
 use App\Http\Controllers\Livewire\GuidelinesController;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\SubscribeRedirectController;
 use App\Http\Controllers\StripeController;
 use App\Http\Controllers\WebhookController;
 
@@ -115,7 +114,7 @@ Route::group(
 
                     Route::get('/teams/{team}/customize-witty', [GuidelinesController::class, 'editOrganizationGuidelines'])->name('organization-guidelines');
 
-                    Route::get('/teams/{team}/language-guidelines', function () {
+                    Route::get('/teams/{team}/team-language', function () {
                         return view('language-guidelines');
                     })->name('language-guidelines');
                 }

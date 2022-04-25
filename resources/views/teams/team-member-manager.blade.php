@@ -29,6 +29,11 @@
                         <p class="text-sm text-red-600 mt-2">
                             @if($team->getUserLicensesLimitReached())
                             {{ __('teams.user_limit_reached_error', ['max_count' => $team->getUserLicensesCount()]) }}
+                            @if(Auth::user()->ownsTeam($team))
+                            <a href="{{ route('stripe.portal') }}">
+                                {{ __('teams.upgrade') }}
+                            </a>
+                            @endif
                             @endif
                         </p>
                     </div>
@@ -62,11 +67,6 @@
                                             <!-- Role Description -->
                                             <div class="mt-2 text-xs text-gray-600 text-left">
                                                 {{ $role->description }}
-                                                @if(!$team->subscribed() && $role->key !== 'admin')
-                                                <a href="{{ route('stripe.portal') }}">
-                                                    {{ __('teams.upgrade') }}
-                                                </a>                                                    
-                                                @endif
                                             </div>
                                         </div>
                                     </button>

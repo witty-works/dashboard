@@ -4,7 +4,7 @@ return [
     'subscribe' => 'Abonnieren',
     'billing' => 'Abrechnung',
     'store_context' => 'Kontext speichern',
-    'store_context_description' => 'Wenn eingeschaltet, speichert Witty einige Wörter vor und nach dem hervorgehobenen Begriff. So hilfst du mit, Witty zu verbessern, um in Zukunft noch bessere Vorschläge zu machen.',
+    'store_context_description' => 'Wenn eingeschaltet, speichert Witty in bestimmten Situationen <a href="https://www.witty.works/trust-and-security">einige Zeichen</a> vor und nach dem hervorgehobenen Begriff. So hilfst du mit, Witty zu verbessern, um in Zukunft noch bessere Vorschläge zu machen.',
     'plan_summary' => 'Zusammenfassung',
     'plan_summary_description' => 'Zusammenfassende Beschreibung des Plans',
     'plan_name' => 'Name des aktuellen Plans',
@@ -24,4 +24,6 @@ return [
     'user_licenses_count_will_be_decreased_updated_at' => '{1} Ein:e Benutzer:in wird in :in entfernt | :diff Benutzer:innen werden in :in entfernt',
     'please_remove_users_or_upgrade' => '{1} Bitte entferne eine Person oder wechsele deinen <a href=":url">Plan</a>, um alle Teammitglieder:innen zu reaktivieren. | Bitte entferne :diff Personen oder wechsele deinen <a href=":url">Plan</a>, um alle Teammitglieder:innen wieder zu aktivieren.',
     'end_date' => 'Enddatum',
+    'team_owner' => 'Teambesitzer:in',
+    'upgrade_to_witty_teams' => 'Bitte führen einen Planwechsel auf Witty Teams durch',
 ];

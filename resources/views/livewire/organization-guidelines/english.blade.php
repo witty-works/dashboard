@@ -10,34 +10,24 @@
     <x-slot name="form" submit="updateOrganizationGuidelinesEnglish">
         <div class="guidelines-form-title">{{ __('guidelines.manage_organization_guidelines_english_form_title') }}</div>
         <div class="guidelines-form-section">
-            <label class="switch">
-                <input
-                    id="singular_they"
-                    value="1"
-                    type="checkbox"
-                    class="guidelines-form-section-toggle"
-                    wire:model.defer="singular_they"
-                    :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" 
-                >
-                <span class="slider round"></span>
-            </label>
-            <div class="guidelines-form-section-label"> {{ __('guidelines.enable_singular_they') }}</div>
+            <x-jet-checkbox
+                id="singular_they"
+                value="1"
+                :label="__('guidelines.enable_singular_they')"
+                wire:model.defer="singular_they"
+                :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" 
+            />
         </div>
         <x-jet-input-error for="singular_they" class="mt-2" />
 
         <div class="guidelines-form-section--apply-for-all">
-            <label class="switch">
-                <input
-                    id="english_rules_force"
-                    value="1"
-                    type="checkbox"
-                    class="guidelines-form-section-toggle"
-                    wire:model.defer="english_rules_force"
-                    :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" 
-                >
-                <span class="slider round"></span>
-            </label>
-            <div class="guidelines-form-section-label--apply-for-all">{{ __('guidelines.set_for_all') }}</div>
+            <x-jet-checkbox
+                id="english_rules_force"
+                value="1"
+                :label="__('guidelines.set_for_all')"
+                wire:model.defer="english_rules_force"
+                :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" 
+            />
         </div>
 </x-slot>
 

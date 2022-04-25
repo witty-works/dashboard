@@ -10,26 +10,20 @@
             <x-slot name="description">
                 {!! Str::markdown(__('teams.store_context_description')) !!}
 
-                @if(! Auth::user()->hasTeamPermission($team, 'update') || !$team->subscribed())
+                @if(Auth::user()->ownsTeam($team) && !$team->subscribed())
                 {!! __('teams.store_context_subscription_required', ['url' => route('stripe.portal')]) !!}
                 @endif
             </x-slot>
 
             <x-slot name="form">
-                <div class="col-span-6 sm:col-span-4">
-                    <x-jet-label for="name" value="{{ __('teams.store_context') }}" />
-
-                    <label class="switch">
-                        <input
-                            id="store_context"
-                            value="1"
-                            type="checkbox"
-                            class="guidelines-form-section-toggle"
-                            wire:model.defer="store_context"
-                            :disabled="! Auth::user()->hasTeamPermission($team, 'update') || !$team->subscribed()" 
-                        >
-                        <span class="slider round"></span>
-                    </label>
+                <div class="guidelines-form-section">
+                    <x-jet-checkbox
+                        id="store_context"
+                        value="1"
+                        wire:model.defer="store_context"
+                        :label="__('teams.store_context')"
+                        :disabled="! Auth::user()->hasTeamPermission($team, 'update') || !$team->subscribed()" 
+                    />
 
                     <x-jet-input-error for="store_context" class="mt-2" />
                 </div>
