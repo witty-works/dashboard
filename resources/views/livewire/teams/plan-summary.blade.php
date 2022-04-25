@@ -50,12 +50,12 @@
                         @elseif ($team->getTotalUserLicensesCount() != $team->getUserLicensesCount())
                         <div>
                             @if($team->subscribed())
-                            @if($team->getTotalUserLicensesCount() > $team->getUserLicensesCount())
+                                @if($team->getTotalUserLicensesCount() > $team->getUserLicensesCount())
                             {{ trans_choice('teams.user_licenses_count_will_be_increased_updated_at', $team->getTotalUserLicensesCount() - $team->getUserLicensesCount(), ['diff' => $team->getTotalUserLicensesCount() - $team->getUserLicensesCount(), 'in' => $team->subscription()->update_user_licenses_at->diffForHumans()]) }}
-                            @else
+                                @else
                             {{ trans_choice('teams.user_licenses_count_will_be_decreased_updated_at', $team->getUserLicensesCount() - $team->getTotalUserLicensesCount(), ['diff' => $team->getUserLicensesCount() - $team->getTotalUserLicensesCount(), 'in' => $team->subscription()->update_user_licenses_at->diffForHumans()]) }}
-                            @endif
-                            @elseif(Auth::user()->ownsTeam($team))
+                                @endif
+                            @elseif(Auth::user()->ownsTeam($team) && $team->getTotalUserLicensesCount() > $team->getUserLicensesCount())
                             {!! trans_choice('teams.please_remove_users_or_upgrade', $team->getTotalUserLicensesCount() - $team->getUserLicensesCount(), ['diff' => $team->getUserLicensesCount() - $team->getTotalUserLicensesCount(), 'url' => route('stripe.portal')]) !!}
                             @endif
                         </div>
