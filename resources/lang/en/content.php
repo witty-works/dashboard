@@ -137,7 +137,7 @@ return [
     'admin' => 'Administrator',
     'admin_role' => 'Administrator users can manage the team.',
     'user' => 'User',
-    'user_role' => 'Users can use the teams organization language guidelines.',
+    'user_role' => 'Users can use your teams custom language configuration.',
     'actions' => 'Actions',
     'any' => 'any',
     'delete_permanently' => 'delete',
@@ -149,14 +149,14 @@ return [
     'onboarding_finish_setup_tagline' => 'Make the most of Witty by setting up a team and configuring rules for your teammembers',
     'onboarding_create_team' => '1. Create your team',
     'onboarding_create_team_tagline' => 'A team allows to manage all preferences for a group of users at once.',
-    'onboarding_configure_organization_guidelines' => '2. Configure language guidelines',
-    'onboarding_configure_organization_guidelines_tagline' => 'Set up the rules and guidelines for your organization.',
+    'onboarding_configure_organization_guidelines' => '2. Configure team language',
+    'onboarding_configure_organization_guidelines_tagline' => 'Set up your how you want to use language in your team',
     'onboarding_invite_users' => '3. Invite users to your team',
     'onboarding_invite_users_tagline' => 'Let other join your organization on Witty and start writing more inclusively together.',
     'onboarding_install_witty' => 'Install the Witty browser extension',
     'onboarding_quickLinks' => 'Quick Links',
-    'onboarding_team_setup' => 'Team Setup & Members',
-    'onboarding_language_guidelines' => 'Language Guidelines',
+    'onboarding_team_setup' => 'Team Settings',
+    'onboarding_language_guidelines' => 'Team Language',
     'onboarding_payment' => 'Payments & Billing',
     'onboarding_support' => 'Support',
     'onboarding_team_stats' => 'Your team\'s statistics',
@@ -174,15 +174,15 @@ Read more about [Witty](https://www.witty.works/ "Inclusive writing, anywhere, i
     'section_2_text' => 'The Witty dashboard helps you to set up and manage Witty for your team. Once logged, you manage the following: 
 
 * Invite your team members
-* Set up your very own language guidelines. That way you ensure that your whole team writes with the same brand voice.
+* Set up your very own team language. That way you ensure that your whole team writes with the same brand voice.
 * Coming soon: Read and interpret analytics at team, department and company level in accordance with data privacy laws.
 * Coming soon: Editor - a simple application that works for everyone, even those that do not use the browser plugin (yet)        
 ',
     'login_cta' => 'Start by creating your own <a href=":url">login</a>',
     'section_3_title' => 'Witty for Teams and Organizations',
-    'section_3_text' => 'For Organizations Witty offers an array of services so that whole teams can work with Witty flawlessly, such as:
+    'section_3_text' => 'For organizations Witty offers an array of services so that whole teams can work with Witty flawlessly, such as:
 * Single-Sign-On
-* Organization language guidelines
+* Configure shared custom team language
 * Coming soon: Organization/Department statistics
 * Unconscious bias awareness session
 * Central control over data privacy
@@ -204,6 +204,6 @@ Read more about ROI for [organizations](https://www.witty.works/witty-for-compan
     'browser_login' => 'Browser Login',
     'login_failed' => 'Login failed',
     'edit' => 'edit',
-    'language_guidelines' => 'Language Guidelines',
+    'language_guidelines' => 'Your Team Language',
     'introduction_videos' => 'Introduction Videos',
 ];

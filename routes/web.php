@@ -114,7 +114,7 @@ Route::group(
 
                     Route::get('/teams/{team}/customize-witty', [GuidelinesController::class, 'editOrganizationGuidelines'])->name('organization-guidelines');
 
-                    Route::get('/teams/{team}/language-guidelines', function () {
+                    Route::get('/teams/{team}/team-language', function () {
                         return view('language-guidelines');
                     })->name('language-guidelines');
                 }
