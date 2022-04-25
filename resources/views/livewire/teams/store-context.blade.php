@@ -16,18 +16,14 @@
             </x-slot>
 
             <x-slot name="form">
-                <div class="col-span-6 sm:col-span-4">
-                    <label class="switch">
-                        <input
-                            id="store_context"
-                            value="1"
-                            type="checkbox"
-                            class="guidelines-form-section-toggle"
-                            wire:model.defer="store_context"
-                            :disabled="! Auth::user()->hasTeamPermission($team, 'update') || !$team->subscribed()" 
-                        >
-                        <span class="slider round"></span>
-                    </label>
+                <div class="guidelines-form-section">
+                    <x-jet-checkbox
+                        id="store_context"
+                        value="1"
+                        wire:model.defer="store_context"
+                        :label="__('teams.store_context')"
+                        :disabled="! Auth::user()->hasTeamPermission($team, 'update') || !$team->subscribed()" 
+                    />
 
                     <x-jet-input-error for="store_context" class="mt-2" />
                 </div>
