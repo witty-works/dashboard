@@ -4,7 +4,7 @@ return [
     'subscribe' => 'Abonnieren',
     'billing' => 'Abrechnung',
     'store_context' => 'Kontext speichern',
-    'store_context_description' => 'Wenn eingeschaltet, speichert Witty einige Wörter vor und nach dem hervorgehobenen Begriff. So hilfst du mit, Witty zu verbessern, um in Zukunft noch bessere Vorschläge zu machen.',
+    'store_context_description' => 'Wenn eingeschaltet, speichert Witty in bestimmten Situationen <a href="https://www.witty.works/trust-and-security">einige Zeichen</a> vor und nach dem hervorgehobenen Begriff. So hilfst du mit, Witty zu verbessern, um in Zukunft noch bessere Vorschläge zu machen.',
     'plan_summary' => 'Zusammenfassung',
     'plan_summary_description' => 'Zusammenfassende Beschreibung des Plans',
     'plan_name' => 'Name des aktuellen Plans',

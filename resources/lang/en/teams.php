@@ -4,7 +4,7 @@ return [
     'subscribe' => 'Subscribe',
     'billing' => 'Billing',
     'store_context' => 'Store context',
-    'store_context_description' => 'When switched on, Witty stores a few words before and after the highlighted term. This helps  to improve Witty and to make better suggestions in the future.',
+    'store_context_description' => 'When switched on, Witty in certain situations <a href="https://www.witty.works/trust-and-security">stores a few characters</a> before and after the highlighted term. This helps to improve Witty and to make better suggestions in the future.',
     'plan_summary' => 'Plan summary',
     'plan_summary_description' => 'Plan summary description',
     'plan_name' => 'Current plan name',

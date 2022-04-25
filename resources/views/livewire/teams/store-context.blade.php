@@ -17,8 +17,6 @@
 
             <x-slot name="form">
                 <div class="col-span-6 sm:col-span-4">
-                    <x-jet-label for="name" value="{{ __('teams.store_context') }}" />
-
                     <label class="switch">
                         <input
                             id="store_context"
