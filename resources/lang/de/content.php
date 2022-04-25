@@ -179,7 +179,7 @@ Lese mehr über Dienstleistungen für [Organisationen](https://www.witty.works/w
 
 Lese mehr über den ROI für [Organisationen](https://www.witty.works/witty-for-companies "Witty for Organizations").',
     'onboarding_signup_to_witty' => 'Meldung für ein Witty-Konto',
-    'invitation_email_welcome' => 'Um diese Einladung anzunehmen, registriere ein neues Konto, indem du auf die Schaltfläche unten klickst:',
+    'invitation_email_welcome' => 'Um diese Einladung anzunehmen, logge dich mit deinem bestehenden Konto ein oder registriere ein neues, indem du auf die Schaltfläche unten klickst:',
     'onboarding_install_witty' => 'Installiere die Witty-Browsererweiterung',
     'open_invitiations' => '{1} Du bist bereits Eigentümer:in eines Teams. Du wurdest aber eingeladen, einem anderen Team beizutreten. Du kannst nur in einem Team sein. Bitte entscheiden dich, ob du die Einladung annehmen oder ablehnen möchtest.|{2,*} Du wurdest eingeladen, mehreren Teams beizutreten, bitte entscheiden dich, ob du eine dieser Einladungen annehmen möchtest.',
     'accept_invitiation' => 'annehmen',

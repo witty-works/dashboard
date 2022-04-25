@@ -129,7 +129,7 @@ return [
     'for_your_security_confirm' => 'For your security, please confirm your password to continue.',
     'whoops' => 'Whoops! Something went wrong.',
     'you_have_been_invited' => 'You have been invited to join the :team team!',
-    'invitation_email_welcome' => 'To accept this invitation, login wthin your existing accoubt or register a new account by clicking on the button below:',
+    'invitation_email_welcome' => 'To accept this invitation, log in with your existing account or register a new account by clicking on the button below:',
     'if_you_did_not_expect' => 'If you did not expect to receive an invitation to this team, you may discard this email.',
     'woops' => 'woops',
     'documentation' => 'Documentation',
