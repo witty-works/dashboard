@@ -301,6 +301,7 @@ a {
     color: #212529;
     margin-top: 1em;
     margin-bottom: 0.5em;
+    display: flex;
 }
 
 .guidelines-form-section-dropdown-wrapper {
@@ -330,6 +331,11 @@ a {
     line-height: 22px;
     color: #000000;
     margin-bottom: 1em;
+}
+
+.guidelines-form-section-lock {
+    margin-left: 1em;
+    margin-bottom: 0.3em;
 }
 
 .learn-more{

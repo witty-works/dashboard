@@ -27,18 +27,13 @@
         <x-jet-input-error for="preferred_variants_de" class="mt-2" />
     
         <div class="guidelines-form-section--apply-for-all">
-            <label class="switch">
-                <input
-                    id="preferred_variants_force"
-                    value="1"
-                    type="checkbox"
-                    class="guidelines-form-section-toggle"
-                    wire:model.defer="preferred_variants_force"
-                    :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" 
-                >
-                <span class="slider round"></span>
-            </label>
-            <div class="guidelines-form-section-label--apply-for-all">{{ __('guidelines.set_for_all') }}</div>
+            <x-jet-checkbox
+                id="preferred_variants_force"
+                value="1"
+                :label="__('guidelines.set_for_all')"
+                wire:model.defer="preferred_variants_force"
+                :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" 
+            />
         </div>
     </x-slot>
 

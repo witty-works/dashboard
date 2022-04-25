@@ -25,4 +25,5 @@ return [
     'please_remove_users_or_upgrade' => '{1} Bitte entferne eine Person oder wechsele deinen <a href=":url">Plan</a>, um alle Teammitglieder:innen zu reaktivieren. | Bitte entferne :diff Personen oder wechsele deinen <a href=":url">Plan</a>, um alle Teammitglieder:innen wieder zu aktivieren.',
     'end_date' => 'Enddatum',
     'team_owner' => 'Teambesitzer:in',
+    'upgrade_to_witty_teams' => 'Bitte führen einen Planwechsel auf Witty Teams durch',
 ];

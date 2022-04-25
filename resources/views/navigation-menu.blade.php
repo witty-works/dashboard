@@ -24,7 +24,7 @@
                                 {{ __('content.onboarding_language_guidelines') }}
                             </x-jet-nav-link>
 
-                            @if($user->ownsTeam($team) && !$team->subscription())
+                            @if($user->ownsTeam($team) && !$team->subscribed())
                             <x-jet-nav-link href="{{ route('stripe.portal') }}">
                                 {{ __('teams.subscribe') }}
                             </x-jet-nav-link>

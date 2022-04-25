@@ -6,7 +6,7 @@
     <x-slot name="description">
         {!! Str::markdown(__('guidelines.manage_organization_guidelines_description_german')) !!}
 
-        @if(Auth::user()->ownsTeam($team) && !$team->subscription()))
+        @if(Auth::user()->ownsTeam($team) && !$team->subscribed())
             {!! __('guidelines.gendered_roles_format_subscription_required', ['url' => route('stripe.portal')]) !!}
         @endif
     </x-slot>
@@ -22,7 +22,12 @@
             :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" />
         <x-jet-input-error for="german_gender_ending" class="mt-2" />
 
-        <div class="guidelines-form-section-dropdown-label"> {{ __('guidelines.gendered_roles_format') }}</div>
+        <div class="guidelines-form-section-dropdown-label">
+            {{ __('guidelines.gendered_roles_format') }}
+            @if(! Auth::user()->hasTeamPermission($team, 'edit_guidelines') || !$team->subscribed())
+                <img src="{{ asset('svg/options-lock.svg') }}" alt="{{ __('teams.upgrade_to_witty_teams') }}" class="guidelines-form-section-lock p-2" />
+            @endif
+        </div>
         <x-select id="gendered_roles_format"
             :options="\App\Models\OrganizationGuidelines::GENDERED_ROLES_FORMAT"
             class="guidelines-form-section-dropdown"
@@ -32,17 +37,13 @@
         <x-jet-input-error for="gendered_roles_format" class="mt-2" />
 
         <div class="guidelines-form-section--apply-for-all">
-            <label class="switch">
-                <input
-                    id="german_rules_force"
-                    value="1"
-                    type="checkbox"
-                    class="guidelines-form-section-toggle"
-                    wire:model.defer="german_rules_force"
-                    :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')">
-                <span class="slider round"></span>
-            </label>
-            <div class="guidelines-form-section-label--apply-for-all">{{ __('guidelines.set_for_all') }}</div>
+            <x-jet-checkbox
+                id="german_rules_force"
+                value="1"
+                :label="__('guidelines.set_for_all')"
+                wire:model.defer="german_rules_force"
+                :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" 
+            />
         </div>
     </x-slot>
 

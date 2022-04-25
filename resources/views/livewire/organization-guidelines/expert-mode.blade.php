@@ -4,7 +4,7 @@
     </x-slot>
 
     <x-slot name="description">
-        @if(Auth::user()->ownsTeam($team) && !$team->subscription()))
+        @if(Auth::user()->ownsTeam($team) && !$team->subscribed())
             {!! __('guidelines.expert_mode_subscription_required', ['url' => route('stripe.portal')]) !!}
         @endif
     </x-slot>
@@ -12,32 +12,25 @@
     <x-slot name="form" submit="updateOrganizationGuidelinesExpertMode">
         <div class="guidelines-form-title">{!! Str::markdown(__('guidelines.manage_organization_guidelines_description_expert_mode')) !!}</div>
         <div class="guidelines-form-section">
-            <label class="switch">
-                <input
-                    id="expert_mode"
-                    value="1"
-                    type="checkbox"
-                    class="guidelines-form-section-toggle"
-                    wire:model.defer="expert_mode"
-                    :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines') || !$team->subscribed()">
-                <span class="slider round"></span>
-            </label>
-            <div class="guidelines-form-section-label">{{ __('guidelines.enable_expert_mode') }}</div>            
+            <x-jet-checkbox
+                id="english_rules_force"
+                value="1"
+                :label="__('guidelines.enable_expert_mode')"
+                wire:model.defer="expert_mode"
+                :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines') || !$team->subscribed()" 
+            />
+
             <x-jet-input-error for="expert_mode" class="mt-2" />
         </div>
 
         <div class="guidelines-form-section--apply-for-all">
-            <label class="switch">
-                <input
-                    id="expert_mode_force"
-                    value="1"
-                    type="checkbox"
-                    class="guidelines-form-section-toggle"
-                    wire:model.defer="expert_mode_force"
-                    :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines') || !$team->subscribed()">
-                <span class="slider round"></span>
-            </label>
-            <div class="guidelines-form-section-label--apply-for-all">{{ __('guidelines.set_for_all') }}</div>
+            <x-jet-checkbox
+                id="expert_mode_force"
+                value="1"
+                :label="__('guidelines.set_for_all')"
+                wire:model.defer="expert_mode_force"
+                :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines') || !$team->subscribed()" 
+            />
         </div>
     </x-slot>
 

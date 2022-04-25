@@ -25,4 +25,5 @@ return [
     'please_remove_users_or_upgrade' => '{1} Please remove one user license or <a href=":url">upgrade</a> to re-activate all team members. | Please remove :diff user licenses or <a href=":url">upgrade</a> to re-activate all team members.',
     'end_date' => 'end date',
     'team_owner' => 'Team owner',
+    'upgrade_to_witty_teams' => 'Please upgrade to Witty Teams',
 ];
