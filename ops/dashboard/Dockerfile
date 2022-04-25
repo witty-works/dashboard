@@ -12,7 +12,7 @@ COPY . /app
 WORKDIR /app
 
 # enable php extensions
-RUN docker-php-ext-install mysqli pdo pdo_mysql soap
+RUN docker-php-ext-install mysqli pdo pdo_mysql soap bcmath
 
 # run installation
 ENV NVM_VERSION v0.39.0
@@ -27,7 +27,6 @@ RUN composer install --no-ansi --no-dev --no-interaction --no-plugins --no-progr
 RUN . ${NVM_DIR}/nvm.sh \
   && npm ci \
   && npm run production
-
 
 FROM php:8.0-apache as dashboard
 
