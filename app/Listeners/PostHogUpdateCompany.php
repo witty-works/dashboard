@@ -20,7 +20,7 @@ class PostHogUpdateCompany
             'groupKey' => $team->posthogId(),
             'properties' => [
                 'name' => $team->name,
-                'users' => $team->getTotalUserLicensesCount(),
+                'users' => $team->getTotalUserCount(),
                 'stripe_plan' => $team->planId(),
             ]
         ]);

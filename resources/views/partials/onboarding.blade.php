@@ -49,7 +49,7 @@ if(!$currentTeam || $user->can('update', $currentTeam)) {
 
     if (!$currentTeam || !$currentTeam->organizationGuidelines) {
         $onboardingSteps['inviteUsers']['state'] = 'deactivated';
-    } else if ($currentTeam && $currentTeam->getTotalUserLicensesCount() > 1) {
+    } else if ($currentTeam && $currentTeam->getTotalUserCount() > 1) {
         $onboardingSteps['inviteUsers']['state'] = 'complete';
     } else {
         $showOnboardingSteps = true;

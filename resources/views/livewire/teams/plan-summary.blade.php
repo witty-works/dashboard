@@ -42,21 +42,21 @@
                     <div class="mt-5">
                         <x-jet-label for="name" value="{{ __('teams.user_licenses') }}" />
 
-                        {{ __('teams.total_of_max_used', ['total' => $team->getTotalUserLicensesCount(), 'max_count' => $team->getUserLicensesCount()]) }}
+                        {{ __('teams.total_of_max_used', ['total' => $team->getTotalUserCount(), 'max_count' => $team->getUserLicensesCount()]) }}
                         @if($team->subscribed() && $team->subscription()->isPaidByInvoice())
                         <div>
                             {!! __('teams.more_licenses') !!}
                         </div>
-                        @elseif ($team->getTotalUserLicensesCount() != $team->getUserLicensesCount())
+                        @elseif ($team->getTotalUserCount() != $team->getUserLicensesCount())
                         <div>
                             @if($team->subscribed())
-                                @if($team->getTotalUserLicensesCount() > $team->getUserLicensesCount())
-                            {{ trans_choice('teams.user_licenses_count_will_be_increased_updated_at', $team->getTotalUserLicensesCount() - $team->getUserLicensesCount(), ['diff' => $team->getTotalUserLicensesCount() - $team->getUserLicensesCount(), 'in' => $team->subscription()->update_user_licenses_at->diffForHumans()]) }}
+                                @if($team->getTotalUserCount() > $team->getUserLicensesCount())
+                            {{ trans_choice('teams.user_licenses_count_will_be_increased_updated_at', $team->getTotalUserCount() - $team->getUserLicensesCount(), ['diff' => $team->getTotalUserCount() - $team->getUserLicensesCount(), 'in' => $team->subscription()->update_user_licenses_at->diffForHumans()]) }}
                                 @else
-                            {{ trans_choice('teams.user_licenses_count_will_be_decreased_updated_at', $team->getUserLicensesCount() - $team->getTotalUserLicensesCount(), ['diff' => $team->getUserLicensesCount() - $team->getTotalUserLicensesCount(), 'in' => $team->subscription()->update_user_licenses_at->diffForHumans()]) }}
+                            {{ trans_choice('teams.user_licenses_count_will_be_decreased_updated_at', $team->getUserLicensesCount() - $team->getTotalUserCount(), ['diff' => $team->getUserLicensesCount() - $team->getTotalUserCount(), 'in' => $team->subscription()->update_user_licenses_at->diffForHumans()]) }}
                                 @endif
-                            @elseif(Auth::user()->ownsTeam($team) && $team->getTotalUserLicensesCount() > $team->getUserLicensesCount())
-                            {!! trans_choice('teams.please_remove_users_or_upgrade', $team->getTotalUserLicensesCount() - $team->getUserLicensesCount(), ['diff' => $team->getUserLicensesCount() - $team->getTotalUserLicensesCount(), 'url' => route('stripe.portal')]) !!}
+                            @elseif(Auth::user()->ownsTeam($team) && $team->getTotalUserCount() > $team->getUserLicensesCount())
+                            {!! trans_choice('teams.please_remove_users_or_upgrade', $team->getTotalUserCount() - $team->getUserLicensesCount(), ['diff' => $team->getTotalUserCount() - $team->getUserLicensesCount(), 'url' => route('stripe.portal')]) !!}
                             @endif
                         </div>
                         @endif

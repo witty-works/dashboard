@@ -104,7 +104,7 @@ class Team extends JetstreamTeam
         return config('stripe.plans.witty_me.features.invite_smaller_teams.count');
     }
 
-    public function getTotalUserLicensesCount()
+    public function getTotalUserCount()
     {
         return $this->allUsers()->count();
     }
@@ -115,7 +115,7 @@ class Team extends JetstreamTeam
             return false;
         }
 
-        return $this->getTotalUserLicensesCount() >= $this->getUserLicensesCount();
+        return $this->getTotalUserCount() >= $this->getUserLicensesCount();
     }
 
     public function getTermReplacementsCount()
