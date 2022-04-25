@@ -4,7 +4,7 @@
     </x-slot>
 
     <x-slot name="description">
-        @if(! Auth::user()->hasTeamPermission($team, 'edit_guidelines') || !$team->subscribed())
+        @if(Auth::user()->ownsTeam($team) && !$team->subscription()))
             {!! __('guidelines.show_inspiration_alternatives_subscription_required', ['url' => route('stripe.portal')]) !!}
         @endif
     </x-slot>

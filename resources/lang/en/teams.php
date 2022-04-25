@@ -24,4 +24,5 @@ return [
     'user_licenses_count_will_be_decreased_updated_at' => '{1} One user license will be removed in :in | :diff user license will be removed in :in',
     'please_remove_users_or_upgrade' => '{1} Please remove one user license or <a href=":url">upgrade</a> to re-activate all team members. | Please remove :diff user licenses or <a href=":url">upgrade</a> to re-activate all team members.',
     'end_date' => 'end date',
+    'team_owner' => 'Team owner',
 ];

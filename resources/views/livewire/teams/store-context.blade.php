@@ -10,7 +10,7 @@
             <x-slot name="description">
                 {!! Str::markdown(__('teams.store_context_description')) !!}
 
-                @if(! Auth::user()->hasTeamPermission($team, 'update') || !$team->subscribed())
+                @if(Auth::user()->ownsTeam($team) && !$team->subscribed())
                 {!! __('teams.store_context_subscription_required', ['url' => route('stripe.portal')]) !!}
                 @endif
             </x-slot>

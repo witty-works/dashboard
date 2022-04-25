@@ -25,8 +25,9 @@ class StripeController extends Controller
 
     public function portal(Request $request)
     {
-        $team = $request->user()->currentTeam;
-        if ($team) {
+        $user = $request->user();
+        $team = $user->currentTeam;
+        if ($team && $user->ownsTeam($team)) {
             $subscription = $team->subscription();
             if ($subscription) {
                 if ($subscription->isPaidByInvoice()) {

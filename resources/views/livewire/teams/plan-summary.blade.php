@@ -20,10 +20,18 @@
                     @else
                     {{ __('stripe.witty_me') }}
 
+                    @if(Auth::user()->ownsTeam($team))
                     <a href="{{ route('stripe.portal') }}">
                         {{ __('teams.upgrade') }}
                     </a>
                     @endif
+                    @endif
+                </div>
+
+                <div class="col-span-6 sm:col-span-4">
+                    <x-jet-label for="name" value="{{ __('teams.team_owner') }}" />
+
+                    {{ $team->owner->name }} (<a href="mailto:{{ $team->owner->email }}">{{ $team->owner->email }}</a>)
                 </div>
 
                 <div class="col-span-6 sm:col-span-4">
@@ -47,7 +55,7 @@
                             @else
                             {{ trans_choice('teams.user_licenses_count_will_be_decreased_updated_at', $team->getUserLicensesCount() - $team->getTotalUserLicensesCount(), ['diff' => $team->getUserLicensesCount() - $team->getTotalUserLicensesCount(), 'in' => $team->subscription()->update_user_licenses_at->diffForHumans()]) }}
                             @endif
-                            @else
+                            @elseif(Auth::user()->ownsTeam($team))
                             {!! trans_choice('teams.please_remove_users_or_upgrade', $team->getTotalUserLicensesCount() - $team->getUserLicensesCount(), ['diff' => $team->getUserLicensesCount() - $team->getTotalUserLicensesCount(), 'url' => route('stripe.portal')]) !!}
                             @endif
                         </div>
