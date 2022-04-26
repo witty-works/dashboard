@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Actions\Socialstream\ResolveSocialiteUser;
 use App\Models\User;
+use GuzzleHttp\Exception\RequestException;
 use Laravel\Socialite\AbstractUser;
 use Laravel\Socialite\Two\InvalidStateException;
 use Laravel\Fortify\Features as FortifyFeatures;
@@ -56,12 +57,16 @@ class OAuthController extends BaseOAuthController
             abort(400, "'refresh_token` parameter empty");
         }
 
-        $provider = Socialite::driver($this->provider);
-        $provider->setRefreshToken($refreshToken);
-        $provider->setScopes(config('services.azureadb2c.scope'));
+        try {
+            $provider = Socialite::driver($this->provider);
+            $provider->setRefreshToken($refreshToken);
+            $provider->setScopes(config('services.azureadb2c.scope'));
 
-        return response()
-            ->json($this->getAccessTokenResponse($provider));
+            return response()
+                ->json($this->getAccessTokenResponse($provider));
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Not authorized.'], 403);
+        }
     }
 
     public function handleProviderCallback(Request $request, string $provider, ResolvesSocialiteUsers $resolver, $policy = 'login')
