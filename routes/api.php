@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\OAuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +14,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::get('/browser-login', [OAuthController::class, 'redirectToProviderBrowserLogin'])->name('browser_login');
+Route::get('/refresh-token', [OAuthController::class, 'accessTokenFromRefreshToken'])->name('oauth.refresh_token');
