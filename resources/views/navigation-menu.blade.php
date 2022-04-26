@@ -120,6 +120,12 @@
 
                         <div class="border-t border-gray-100"></div>
 
+                        <x-jet-dropdown-link href="https://www.witty.works/form">
+                            {{ __('content.go-to-form') }}
+                        </x-jet-dropdown-link>
+
+                        <div class="border-t border-gray-100"></div>
+
                         <!-- Authentication -->
                         <x-jet-dropdown-link href="{{ route('logout', ['provider' => 'azureadb2c']) }}">
                             {{ __('content.log_out') }}
@@ -217,6 +223,11 @@
                         {{ __('content.create_new_team') }}
                     </x-jet-responsive-nav-link>
                 @endcan
+
+
+                <x-jet-responsive-nav-link href="https://www.witty.works/form">
+                    {{ __('content.go-to-form') }}
+                </x-jet-responsive-nav-link>
 
                 <!-- Authentication -->
                 <x-jet-responsive-nav-link href="{{ route('logout', ['provider' => 'azureadb2c']) }}" @click.prevent="$root.submit();">

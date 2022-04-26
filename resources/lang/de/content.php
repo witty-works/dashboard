@@ -206,4 +206,5 @@ Lese mehr über den ROI für [Organisationen](https://www.witty.works/witty-for-
     'edit' => 'bearbeiten',
     'language_guidelines' => 'Deine Team-Sprache',
     'introduction_videos' => 'Einführungsvideos',
+    'go-to-form' => 'zum Formular',
 ];
