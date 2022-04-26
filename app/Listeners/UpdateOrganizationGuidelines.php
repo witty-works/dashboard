@@ -61,7 +61,7 @@ class UpdateOrganizationGuidelines
         $plan = $team->planId();
 
         $data = [
-            'id' => $team->id,
+            'id' => $team->posthogId(),
             'name' => $team->name,
             'plan' => $plan,
             'users' => $users,
