@@ -1,4 +1,4 @@
-@if (config('posthog.enabled'))
+@if (config('posthog.js_enabled'))
 @php
 $user = Auth::user();
 if ($user) {
