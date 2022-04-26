@@ -9,7 +9,7 @@ class PostHogUpdateCompany
 {
     public function handle($event)
     {
-        if (empty($event->team)) {
+        if (empty($event->team) || !config('posthog.enabled')) {
             return;
         }
 
