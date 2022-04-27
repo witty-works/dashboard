@@ -58,8 +58,8 @@ if(!$currentTeam || $user->can('update', $currentTeam)) {
     }
 }
     $browserExtensionInstalled = true;
-    if(isset($_GET['witty-installed'])) {
-        $browserExtensionInstalled = $_GET['witty-installed'] == 'true' ? true : false;
+    if(isset($_GET['install-witty'])) {
+        $browserExtensionInstalled = false;
     }
 
 @endphp
@@ -67,11 +67,12 @@ if(!$currentTeam || $user->can('update', $currentTeam)) {
 <script>
     window.addEventListener('load', () => {
         const wittyCode = document.querySelector('witty-code');
-        if (wittyCode && !window.location.href.includes("?witty-installed=true")) {       
-            window.location.href = "?witty-installed=true";
+        if (wittyCode && window.location.href.includes("?install-witty")) {     
+            window.history.replaceState({}, '', window.location.href.replace('?install-witty', ''));
+            window.location.reload();
         } 
-        else if (!wittyCode && !window.location.href.includes("?witty-installed=false")) {
-            window.location.href = "?witty-installed=false";
+        else if (!wittyCode && !window.location.href.includes("?install-witty")) {
+            window.location.href = "?install-witty";
         }
     });
 </script>
