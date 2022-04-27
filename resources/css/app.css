@@ -64,6 +64,8 @@ a {
 }
 
 .onboarding-title {
+    display: flex;
+    justify-content: left;
     font-family: Ibarra Real Nova, 'Times New Roman', Times, serif;
     font-style: normal;
     font-size: 27px;
