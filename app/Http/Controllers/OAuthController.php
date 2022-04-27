@@ -12,6 +12,7 @@ use Laravel\Jetstream\Jetstream;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 use JoelButcher\Socialstream\ConnectedAccount;
 use JoelButcher\Socialstream\Contracts\GeneratesProviderRedirect;
 use JoelButcher\Socialstream\Contracts\ResolvesSocialiteUsers;
@@ -40,14 +41,24 @@ class OAuthController extends BaseOAuthController
 
     public function redirectToProviderBrowserLogin(Request $request, GeneratesProviderRedirect $generator)
     {
+        $response = $generator->generate($this->provider, 'browser_login');
+
         $redirectUri = $request->get('redirect_uri');
         if ($this->validateRedirectUri($redirectUri)) {
-            session()->put('socialstream.browser_login_redirect_uri', $redirectUri);
-        } else {
-            session()->remove('socialstream.browser_login_redirect_uri');
+            $targetUrl = $response->getTargetUrl();
+            $url = parse_url($targetUrl);
+            if (!empty($url['query'])) {
+                $result = null;
+                parse_str($url['query'], $result);
+                $result['state'] = $redirectUri;
+
+                $newTargetUrl = $url['scheme'] . '://' . $url['host'] . $url['path'] . '?' . http_build_query($result);
+
+                $response->setTargetUrl($newTargetUrl);
+            }
         }
 
-        return $this->redirectToProvider($request, $this->provider, $generator, 'browser_login');
+        return $response;
     }
 
     public function accessTokenFromRefreshToken(Request $request)
@@ -58,9 +69,8 @@ class OAuthController extends BaseOAuthController
         }
 
         try {
-            $provider = Socialite::driver($this->provider);
+            $provider = self::getProvider($this->provider, 'browser_login');
             $provider->setRefreshToken($refreshToken);
-            $provider->setScopes(config('services.azureadb2c.scope'));
 
             return response()
                 ->json($this->getAccessTokenResponse($provider));
@@ -91,7 +101,7 @@ class OAuthController extends BaseOAuthController
         }
 
         // Registration...
-        if (FortifyFeatures::enabled(FortifyFeatures::registration()) && session()->get('socialstream.previous_url') === route('register') && !$account) {
+        if (FortifyFeatures::enabled(FortifyFeatures::registration()) && ($request->is('api/*') || session()->get('socialstream.previous_url') === route('register')) && !$account) {
             $user = Jetstream::newUserModel()->where('email', $providerAccount->getEmail())->first();
 
             if ($user) {
@@ -150,7 +160,7 @@ class OAuthController extends BaseOAuthController
     {
         $data = $this->getAccessTokenResponse($provider);
 
-        $redirectUri = session()->get('socialstream.browser_login_redirect_uri');
+        $redirectUri = request()->get('state');
         if ($this->validateRedirectUri($redirectUri)) {
             $redirectUri .= '?' . http_build_query($data);
 
@@ -172,8 +182,8 @@ class OAuthController extends BaseOAuthController
      */
     protected function alreadyAuthenticated($user, $account, $provider, $providerAccount)
     {
-        if (ResolveSocialiteUser::isBrowserLogin()) {
-            return $this->returnAccessTokenResponse(Socialite::driver($provider));
+        if (self::isBrowserLogin()) {
+            return $this->returnAccessTokenResponse(self::getProvider($this->provider, 'browser_login'));
         }
 
         $route = route('profile.show');
@@ -203,10 +213,37 @@ class OAuthController extends BaseOAuthController
     protected function login($user, $policy = 'login')
     {
         $loginResponse = parent::login($user);
-        if (ResolveSocialiteUser::isBrowserLogin()) {
-            return $this->returnAccessTokenResponse(Socialite::driver($this->provider));
+        if (self::isBrowserLogin()) {
+            return $this->returnAccessTokenResponse(self::getProvider($this->provider, $policy));
         }
 
         return $loginResponse;
+    }
+
+    static public function isBrowserLogin($policy = null)
+    {
+        $browserLoginPolicies = ['browser_login', 'browser_register'];
+
+        $request = request();
+        foreach ($browserLoginPolicies as $browserLoginPolicy) {
+            if ($request->url() === route('oauth.callback', ['provider' => 'azureadb2c', 'policy' => $browserLoginPolicy])) {
+                $policy = $browserLoginPolicy;
+                break;
+            }
+        }
+
+        return in_array($policy, $browserLoginPolicies);
+    }
+
+    static public function getProvider($provider, $policy = null)
+    {
+        $provider = Socialite::driver($provider);
+
+        if (OAuthController::isBrowserLogin($policy)) {
+            $provider->setScopes(config('services.azureadb2c.scope'));
+            $provider->stateless();
+        }
+
+        return $provider;
     }
 }

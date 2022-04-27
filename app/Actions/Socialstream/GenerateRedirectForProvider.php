@@ -2,8 +2,8 @@
 
 namespace App\Actions\Socialstream;
 
+use App\Http\Controllers\OAuthController;
 use JoelButcher\Socialstream\Contracts\GeneratesProviderRedirect;
-use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
@@ -18,7 +18,9 @@ class GenerateRedirectForProvider implements GeneratesProviderRedirect
      */
     public function generate(string $provider, $policy = 'login')
     {
-        return Socialite::driver($provider)
+        $provider = OAuthController::getProvider($provider, $policy);
+
+        return $provider
             ->with(['policy' => $policy])
             ->redirect();
     }
@@ -35,7 +37,8 @@ class GenerateRedirectForProvider implements GeneratesProviderRedirect
 
         Auth::logout();
 
-        return redirect(Socialite::driver($provider)
-            ->logout(route('dashboard')));
+        $provider = OAuthController::getProvider($provider);
+
+        return redirect($provider->logout(route('dashboard')));
     }
 }
