@@ -120,4 +120,13 @@ return [
     'attributes' => 'attributes',
     'attached' => 'attached',
     'relatable' => 'relatable',
+
+    'attributes' => [
+        'term' => 'term',
+        'replacement' => 'alternative',
+        'explanation' => 'explanation',
+        'url' => 'URL',
+        'emoji' => 'emoji',
+        'false_positive' => 'ignore word',
+    ],
 ];

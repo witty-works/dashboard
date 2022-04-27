@@ -14,7 +14,7 @@ class PosthogReset
      */
     public function handle($event)
     {
-        if (config('posthog.enabled')) {
+        if (config('posthog.js_enabled')) {
             PostHogMiddleware::$reset = true;
         }
     }

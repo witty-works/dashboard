@@ -195,7 +195,7 @@ Lese mehr über den ROI für [Organisationen](https://www.witty.works/witty-for-
     'onboarding_finish_setup_tagline' => 'Hole das Beste aus Witty heraus, indem du ein Team einrichtest und Regeln für deine Teammitglieder:innen konfigurierst',
     'onboarding_create_team_tagline' => 'Ein Team ermöglicht es, alle Einstellungen für eine Gruppe von Benutzer:innen gleichzeitig zu verwalten.',
     'onboarding_configure_organization_guidelines_tagline' => 'Legen Sie fest, wie du Sprache in deinem Team verwenden möchten',
-    'onboarding_invite_users_tagline' => 'Lasse andere deiner Organisation auf Witty beitreten und beginne, gemeinsam inklusiver zu schreiben.',
+    'onboarding_invite_users_tagline' => 'Lasse andere deinem Team auf Witty beitreten und beginne, gemeinsam inklusiver zu schreiben.',
     'onboarding_quickLinks' => 'Direkt Links',
     'onboarding_team_setup' => 'Teameinstellungen',
     'onboarding_language_guidelines' => 'Team-Sprache',
@@ -206,4 +206,8 @@ Lese mehr über den ROI für [Organisationen](https://www.witty.works/witty-for-
     'edit' => 'bearbeiten',
     'language_guidelines' => 'Deine Team-Sprache',
     'introduction_videos' => 'Einführungsvideos',
+    'go-to-form' => 'zum Formular',
+    'onboarding_install_witty_title' => 'Installiere Witty',
+    'onboarding_install_witty_text' => 'Witty ist ein Browser-Plugin, das inklusives Schreiben jederzeit für jeden möglich macht',
+    'onboarding_install_witty_button' => 'Hole dir Witty',
 ];

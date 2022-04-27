@@ -9,7 +9,7 @@ class PostHogUpdateCompany
 {
     public function handle($event)
     {
-        if (empty($event->team)) {
+        if (empty($event->team) || !config('posthog.enabled')) {
             return;
         }
 
@@ -20,7 +20,7 @@ class PostHogUpdateCompany
             'groupKey' => $team->posthogId(),
             'properties' => [
                 'name' => $team->name,
-                'users' => $team->getTotalUserLicensesCount(),
+                'users' => $team->getTotalUserCount(),
                 'stripe_plan' => $team->planId(),
             ]
         ]);

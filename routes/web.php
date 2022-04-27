@@ -158,9 +158,6 @@ Route::group(['middleware' => config('socialstream.middleware', ['web'])], funct
     Route::get('/oauth/{provider}/{policy}/callback', [OAuthController::class, 'handleProviderCallback'])->name('oauth.callback');
 });
 
-Route::get('/browser-login', [OAuthController::class, 'redirectToProviderBrowserLogin'])->name('browser_login');
-Route::get('/refresh-token', [OAuthController::class, 'accessTokenFromRefreshToken'])->name('oauth.refresh_token');
-
 /*
 |------------------
 | \SOCIALSTREAM

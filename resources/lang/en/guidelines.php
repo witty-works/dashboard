@@ -65,10 +65,11 @@ return [
     'false_positive_already_exists' => 'false positive already exists',
     'term_already_exists' => 'term already exists',
     'explanation_label' => 'Explanation (Optional)',
-    'url_label' => 'Url with further explanation (Optional)',
+    'url_label' => 'URL with further explanation (Optional)',
     'emoji_label' => 'Emoji (Optional)',
     'action_label' => 'Action',
     'expert_mode_subscription_required' => 'To be able to enable this features, a <a href=":url">subscription</a> of "Witty Teams" or higher is required.',
     'show_inspiration_alternatives_subscription_required' => 'To be able to enable this features, a <a href=":url">subscription</a> of "Witty Teams" or higher is required.',
     'gendered_roles_format_subscription_required' => 'To be able to set the format Witty should suggest, a <a href=":url">subscription</a> of "Witty Teams" or higher is required.',
+    'emoji_invalid_format' => 'The emoji field may only contain a single emoji character.',
 ];

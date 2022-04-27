@@ -119,5 +119,12 @@ return [
     'accepted_if' => 'accepted if',
     'current_password' => 'current_password',
     'prohibits' => 'prohibits',
-    'attributes' => 'Attribute',
+    'attributes' => [
+        'term' => 'Begriff',
+        'replacement' => 'Alternative',
+        'explanation' => 'Erläuterung',
+        'url' => 'URL',
+        'emoji' => 'Emoji',
+        'false_positive' => 'Wort-Ignorierungen',
+    ],
 ];

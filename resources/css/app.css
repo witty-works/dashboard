@@ -64,6 +64,8 @@ a {
 }
 
 .onboarding-title {
+    display: flex;
+    justify-content: left;
     font-family: Ibarra Real Nova, 'Times New Roman', Times, serif;
     font-style: normal;
     font-size: 27px;
@@ -441,3 +443,55 @@ input:checked + .slider:before {
 .navigation-user-info {
     color: white;
 }
+
+
+.wittyworks-upgrade-banner {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px;
+    margin-bottom: 2em;
+    width: 100%;
+    border: 1px solid transparent;
+    border-radius: 10px;
+  
+    background: linear-gradient(
+          96.78deg,
+          #fef7f8 -6.3%,
+          #fbf6fa 35.9%,
+          #e9f2f5 100.12%
+        )
+        padding-box,
+      linear-gradient(
+          114.59deg,
+          #f06464 1.6%,
+          #f277d0 32.79%,
+          #9489db 71.64%,
+          #37d1e5 101.91%,
+          #5acfb9 131.52%
+        )
+        border-box;
+  }
+  
+  .wittyworks-upgrade-banner-text-container {
+    flex-basis: 75%;
+    color: #9489db;
+  }
+  
+  .wittyworks-upgrade-banner-title {
+    font-weight: 700;
+    margin: 4px 0px;
+  }
+  
+  .wittyworks-upgrade-banner-button {
+    margin-left: auto;
+    display: flex;
+    padding: 10px 15px;
+    background: #9489db;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.14);
+    border-radius: 8px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+  }
