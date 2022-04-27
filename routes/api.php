@@ -15,4 +15,4 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/browser-login', [OAuthController::class, 'redirectToProviderBrowserLogin'])->name('browser_login');
-Route::get('/refresh-token', [OAuthController::class, 'accessTokenFromRefreshToken'])->name('oauth.refresh_token');
+Route::post('/refresh-token', [OAuthController::class, 'accessTokenFromRefreshToken'])->name('oauth.refresh_token');

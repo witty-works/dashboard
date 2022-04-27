@@ -63,7 +63,7 @@ class OAuthController extends BaseOAuthController
 
     public function accessTokenFromRefreshToken(Request $request)
     {
-        $refreshToken = $request->get('token');
+        $refreshToken = $request->input('token');
         if (!$refreshToken) {
             abort(400, "'refresh_token` parameter empty");
         }
