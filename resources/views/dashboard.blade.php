@@ -8,8 +8,10 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div>
+                @include('partials.extension-check')
                 @auth
                 @include('partials.onboarding')
+                @include('partials.quicklinks')
                 @else
                 <x-jet-welcome />
                 @endauth
