@@ -57,7 +57,42 @@ if(!$currentTeam || $user->can('update', $currentTeam)) {
         $onboardingSteps['inviteUsers']['link'] = route('teams.show', $currentTeam->id);
     }
 }
+    $browserExtensionInstalled = true;
+    if(isset($_GET['witty-installed'])) {
+        $browserExtensionInstalled = $_GET['witty-installed'] == 'true' ? true : false;
+    }
+
 @endphp
+
+<script>
+    window.addEventListener('load', () => {
+        const wittyCode = document.querySelector('witty-code');
+        if (wittyCode && !window.location.href.includes("?witty-installed=true")) {       
+            window.location.href = "?witty-installed=true";
+        } 
+        else if (!wittyCode && !window.location.href.includes("?witty-installed=false")) {
+            window.location.href = "?witty-installed=false";
+        }
+    });
+</script>
+
+@if(!$browserExtensionInstalled)
+    <div class='wittyworks-upgrade-banner'>
+        <div class='wittyworks-upgrade-banner-text-container'>
+            <div class='wittyworks-upgrade-banner-title'>
+             {{ __('content.onboarding_install_witty_title') }}
+            </div>
+            <div class='wittyworks-upgrade-banner-text'>
+            {{ __('content.onboarding_install_witty_text') }}
+            </div>
+        </div>
+        <div class='wittyworks-upgrade-banner-button-container'>
+            <a class='wittyworks-upgrade-banner-button' href='https://www.witty.works/select-browser' target='_blank'>
+                {{ __('content.onboarding_install_witty_button') }}
+            </a>
+        </div>
+    </div>
+@endif
 
 @if($showOnboardingSteps)
     <div class="onboarding-container">
