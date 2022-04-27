@@ -125,6 +125,6 @@ return [
         'explanation' => 'Erläuterung',
         'url' => 'URL',
         'emoji' => 'Emoji',
-        'false_positive' => 'Wort-Ignorierungen',
+        'false_positive' => '"Wort ignorieren"',
     ],
 ];
