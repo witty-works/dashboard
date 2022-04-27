@@ -230,7 +230,7 @@
                 </x-jet-responsive-nav-link>
 
                 <!-- Authentication -->
-                <x-jet-responsive-nav-link href="{{ route('logout', ['provider' => 'azureadb2c']) }}" @click.prevent="$root.submit();">
+                <x-jet-responsive-nav-link href="{{ route('logout', ['provider' => 'azureadb2c']) }}">
                     {{ __('content.log_out') }}
                 </x-jet-responsive-nav-link>
 
