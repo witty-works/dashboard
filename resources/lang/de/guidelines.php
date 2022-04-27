@@ -71,4 +71,5 @@ return [
     'expert_mode_subscription_required' => 'Um diese Funktionen aktivieren zu können, ist ein <a href=":url">Abonnement</a> von "Witty Teams" oder höher erforderlich.',
     'show_inspiration_alternatives_subscription_required' => 'Um diese Funktionen aktivieren zu können, ist ein <a href=":url">Abonnement</a> von "Witty Teams" oder höher erforderlich.',
     'gendered_roles_format_subscription_required' => 'Um einzustellen zu können, welche Vorschläge Witty geben soll, ist ein <a href=":url">Abonnement</a> von "Witty Teams" oder höher erforderlich.',
+    'emoji_invalid_format' => 'Emoji darf nur ein einziges Emoji-Zeichen enthalten.',
 ];

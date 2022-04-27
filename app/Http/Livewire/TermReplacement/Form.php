@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use Livewire\Component;
+use function Emoji\is_single_emoji;
 
 class Form extends Component
 {
@@ -28,7 +29,7 @@ class Form extends Component
         'replacement' => 'required|min:1|different:term',
         'explanation' => 'required_with:url,emoji|max:100',
         'url' => 'nullable|url|max:250',
-        'emoji' => 'nullable|max:1|regex:/[\x{1F600}-\x{1F64F}]/u',
+        'emoji' => 'nullable',
         'language_code' => 'nullable|size:2',
     ];
 
@@ -105,6 +106,11 @@ class Form extends Component
         if ($count) {
             $message = __('guidelines.term_already_exists');
             throw ValidationException::withMessages(['term' => $message]);
+        }
+
+        if (!is_single_emoji($this->emoji)) {
+            $message = __('guidelines.emoji_invalid_format');
+            throw ValidationException::withMessages(['emoji' => $message]);
         }
 
         $termReplacement->term = $this->term;
