@@ -207,4 +207,7 @@ Lese mehr über den ROI für [Organisationen](https://www.witty.works/witty-for-
     'language_guidelines' => 'Deine Team-Sprache',
     'introduction_videos' => 'Einführungsvideos',
     'go-to-form' => 'zum Formular',
+    'onboarding_install_witty_title' => 'Installiere Witty',
+    'onboarding_install_witty_text' => 'Witty ist ein Browser-Plugin, das inklusives Schreiben jederzeit für jeden möglich macht',
+    'onboarding_install_witty_button' => 'Hole dir Witty',
 ];
