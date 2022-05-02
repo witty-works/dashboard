@@ -10,7 +10,7 @@ return [
     'german_gender_ending' => 'Deutsche Gender-Endung auswählen',
     'list_false_positives' => 'Liste der ignorierten Wörter',
     'gendered_roles_format' => 'Witty soll folgende Vorschläge machen',
-    'both' => 'beide',
+    'both' => 'Deutsche Gender-Endung und weibliche und männliche Form',
     'preferred_variants_de_DE' => 'Deutsch',
     'preferred_variants_de_AT' => 'Deutsch (Österreich)',
     'preferred_variants_de_CH' => 'Deutsch (Schweiz)',
@@ -72,4 +72,5 @@ return [
     'show_inspiration_alternatives_subscription_required' => 'Um diese Funktionen aktivieren zu können, ist ein <a href=":url">Abonnement</a> von "Witty Teams" oder höher erforderlich.',
     'gendered_roles_format_subscription_required' => 'Um einzustellen zu können, welche Vorschläge Witty geben soll, ist ein <a href=":url">Abonnement</a> von "Witty Teams" oder höher erforderlich.',
     'emoji_invalid_format' => 'Emoji darf nur ein einziges Emoji-Zeichen enthalten.',
+    'none' => 'Nur geschlechtsneutrale Alternativen anzeigen',
 ];
