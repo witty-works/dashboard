@@ -19,6 +19,7 @@ use JoelButcher\Socialstream\Features;
 use SocialiteProviders\Manager\Contracts\OAuth2\ProviderInterface;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Socialite;
+use SocialiteProviders\Manager\Config;
 
 class OAuthController extends BaseOAuthController
 {
@@ -239,6 +240,17 @@ class OAuthController extends BaseOAuthController
         if (OAuthController::isBrowserLogin($policy)) {
             $provider->setScopes(config('services.azureadb2c.scope'));
             $provider->stateless();
+            $config = new Config(
+                config('services.azureadb2c.client_id'),
+                config('services.azureadb2c.client_secret'),
+                config('services.azureadb2c.redirect'),
+                [
+                    'domain' => config('services.azureadb2c.domain'),
+                    'policy' => config('services.azureadb2c.policy'),
+                    'redirect_template' => config('services.azureadb2c.api_redirect_template'),
+                ],
+            );
+            $provider->setConfig($config);
         }
 
         return $provider;
