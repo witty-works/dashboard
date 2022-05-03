@@ -220,11 +220,11 @@ class OAuthController extends BaseOAuthController
 
     static public function isBrowserLogin($policy = null)
     {
-        $browserLoginPolicies = ['browser_login', 'browser_register'];
-
+        $browserLoginPolicies = ['browser_login'];
         $request = request();
         foreach ($browserLoginPolicies as $browserLoginPolicy) {
-            if ($request->url() === route('oauth.callback', ['provider' => 'azureadb2c', 'policy' => $browserLoginPolicy])) {
+            $url = route('browser.callback', ['provider' => 'azureadb2c', 'policy' => $browserLoginPolicy]);
+            if ($request->url() === $url) {
                 $policy = $browserLoginPolicy;
                 break;
             }
