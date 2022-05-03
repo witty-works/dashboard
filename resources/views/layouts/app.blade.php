@@ -45,6 +45,8 @@
             <main>
                 {{ $slot }}
             </main>
+
+            @include('footer')
         </div>
 
         @stack('modals')
