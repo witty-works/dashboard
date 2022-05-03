@@ -6,6 +6,7 @@ use App\Events\OrganizationGuidelinesUpdated;
 use App\Events\SubscriptionCancelled;
 use App\Events\SubscriptionCreated;
 use App\Events\SubscriptionUpdated;
+use App\Events\UserAdded;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -13,8 +14,10 @@ use App\Listeners\PosthogBilling;
 use App\Listeners\PosthogReset;
 use App\Listeners\PostHogUpdateCompany;
 use App\Listeners\SyncStartRenwalDates;
+use App\Listeners\TeamMemberAddedSlackAlert;
 use App\Listeners\UpdateOrganizationGuidelines;
 use App\Listeners\UpdateUserLicenses;
+use App\Listeners\UserAddedSlackAlert;
 use Laravel\Jetstream\Events\TeamCreated;
 use Laravel\Jetstream\Events\TeamUpdated;
 use Laravel\Jetstream\Events\TeamDeleted;
@@ -32,10 +35,14 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
+        UserAdded::class => [
+            UserAddedSlackAlert::class,
+        ],
         TeamMemberAdded::class => [
             PostHogUpdateCompany::class,
             UpdateUserLicenses::class,
             UpdateOrganizationGuidelines::class,
+            TeamMemberAddedSlackAlert::class,
         ],
         TeamMemberRemoved::class => [
             PostHogUpdateCompany::class,
