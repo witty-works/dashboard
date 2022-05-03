@@ -39,7 +39,7 @@ return [
     'log_in' => 'Log in',
     'resend_verification_email' => 'Resend Verification Email',
     'log_out' => 'Log Out',
-    'or' => 'Or',
+    'or' => 'or',
     'dashboard' => 'Dashboard',
     'manage_team' => 'Manage Team',
     'team_settings' => 'Team Settings',

@@ -39,7 +39,7 @@ return [
     'log_in' => 'Anmelden',
     'resend_verification_email' => 'Bestätigungsmail erneut senden',
     'log_out' => 'Abmelden',
-    'or' => 'Oder',
+    'or' => 'oder',
     'dashboard' => 'Dashboard',
     'manage_team' => 'Team verwalten',
     'team_settings' => 'Teameinstellungen',

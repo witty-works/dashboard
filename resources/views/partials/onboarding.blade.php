@@ -83,7 +83,7 @@ if ($user && (!$user->currentTeam || $user->can('update', $user->currentTeam))) 
     @endif
     
     @if($user->invitations->count())
-    <div class="mt-6">
+    <div class="mt-6 onboarding-tagline">
         {{ trans_choice('content.open_invitiations', $user->invitations->count()) }}
         @if($user->ownedTeams()->count())
         <div>
@@ -97,19 +97,26 @@ if ($user && (!$user->currentTeam || $user->can('update', $user->currentTeam))) 
             </strong>
         </div>
         @endif
-        <ul>
+        <div class="onboarding-steps">
+        <div class="onboarding-step-container onboarding-step-todo">
         @foreach($user->invitations as $invitation)
-            <li>
-                {{ $invitation->team->name }}
-                <a href="{{ route('team-invitations.accept', ['invitation' => $invitation]) }}">
-                    {{ __('content.accept_invitiation') }}
-                </a>
-                <a href="{{ route('team-invitations.reject', ['invitation' => $invitation]) }}">
-                    {{ __('content.reject_invitiation') }}
-                </a>
-            </li>
+            <div class="onboarding-step-text-wrapper">
+                <div class="onboarding-step-title--todo">
+                    {{ $invitation->team->name }} - <a href="mailto:{{ $invitation->team->owner->email }}">{{ $invitation->team->owner->email }}</a>
+                </div>
+                <div class="onboarding-step-tagline--todo">
+                    <a href="{{ route('team-invitations.accept', ['invitation' => $invitation]) }}">
+                        {{ __('content.accept_invitiation') }}
+                    </a>
+                    {{ __('content.or') }}
+                    <a href="{{ route('team-invitations.reject', ['invitation' => $invitation]) }}">
+                        {{ __('content.reject_invitiation') }}
+                    </a>
+                </div>
+            </div>
         @endforeach
-        </ul>
+        </div>
+        </div>
         @endif
     </div>
     @endif
