@@ -1,10 +1,9 @@
-@auth
 @php
-$user = Auth::user();
-$currentTeam = $user->currentTeam;
+$showOnboardingSteps = false;
 
-if(!$currentTeam || $user->can('update', $currentTeam)) {
-    $showOnboardingSteps = false;
+$user = Auth::user();
+if ($user && (!$user->currentTeam || $user->can('update', $user->currentTeam))) {
+    $currentTeam = $user->currentTeam;
 
     $onboardingSteps = [
         'createTeam' => [
@@ -57,43 +56,7 @@ if(!$currentTeam || $user->can('update', $currentTeam)) {
         $onboardingSteps['inviteUsers']['link'] = route('teams.show', $currentTeam->id);
     }
 }
-    $browserExtensionInstalled = true;
-    if(isset($_GET['install-witty'])) {
-        $browserExtensionInstalled = false;
-    }
-
 @endphp
-
-<script>
-    window.addEventListener('load', () => {
-        const wittyCode = document.querySelector('witty-code');
-        if (wittyCode && window.location.href.includes("?install-witty")) {     
-            window.history.replaceState({}, '', window.location.href.replace('?install-witty', ''));
-            window.location.reload();
-        } 
-        else if (!wittyCode && !window.location.href.includes("?install-witty")) {
-            window.location.href = "?install-witty";
-        }
-    });
-</script>
-
-@if(!$browserExtensionInstalled)
-    <div class="wittyworks-upgrade-banner">
-        <div class="wittyworks-upgrade-banner-text-container">
-            <div class="wittyworks-upgrade-banner-title">
-             {{ __('content.onboarding_install_witty_title') }}
-            </div>
-            <div class="wittyworks-upgrade-banner-text">
-            {{ __('content.onboarding_install_witty_text') }}
-            </div>
-        </div>
-        <div class="wittyworks-upgrade-banner-button-container">
-            <a class="wittyworks-upgrade-banner-button" href="https://www.witty.works/select-browser" target="_blank" rel="noopener">
-                {{ __('content.onboarding_install_witty_button') }}
-            </a>
-        </div>
-    </div>
-@endif
 
 @if($showOnboardingSteps)
     <div class="onboarding-container">
@@ -151,37 +114,3 @@ if(!$currentTeam || $user->can('update', $currentTeam)) {
     </div>
     @endif
 </div>
-@endauth
-
-<div class="onboarding-container--two-col">
-    <div class="onboarding-container-col-one">
-        <div class="onboarding-title">{{ __('content.onboarding_quickLinks') }}</div>
-        <div class="onboarding-quick-links-container">
-            @if($currentTeam)
-            <a class="onboarding-iconWrapper" href="{{ route('teams.show', $currentTeam->id) }}">
-                <img src="{{ url('svg/team-setup.svg') }}" alt="{{ __('content.onboarding_team_setup') }}"/>
-                <div class="onboarding-icon-description">{{ __('content.onboarding_team_setup') }}</div>
-            </a>
-            <a class="onboarding-iconWrapper" href="{{ route('language-guidelines', $currentTeam->id) }}">
-                <img src="{{ url('svg/language-guidelines.svg') }}" alt="{{ __('content.onboarding_language_guidelines') }}"/>
-                <div class="onboarding-icon-description">{{ __('content.onboarding_language_guidelines') }}</div>
-            </a>
-            @if(Auth::user()->ownsTeam($currentTeam))
-            <a class="onboarding-iconWrapper" href="{{ route('stripe.portal') }}">
-                <img src="{{ url('svg/payment-billing.svg') }}" alt="{{ __('content.onboarding_payment') }}"/>
-                <div class="onboarding-icon-description">{{ __('content.onboarding_payment') }}</div>
-            </a>
-            @endif
-            @endif
-            <a class="onboarding-iconWrapper" href="https://www.witty.works/help">
-                <img src="{{ url('svg/support.svg') }}" alt="{{ __('content.onboarding_support') }}"/>
-                <div class="onboarding-icon-description">{{ __('content.onboarding_support') }}</div>
-            </a>
-        </div>
-    </div>
-    <div class="onboarding-container-col-two">
-        <div class="onboarding-title">{{ __('content.onboarding_team_stats') }}</div>
-        <img class="onboarding-analytics-img" src="{{ url('svg/analytics-coming-soon.svg') }}" alt="{{ __('content.onboarding_team_stats') }}"/>
-    </div>
-</div>
-

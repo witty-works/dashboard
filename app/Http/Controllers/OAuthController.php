@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\Socialstream\ResolveSocialiteUser;
 use App\Models\User;
-use GuzzleHttp\Exception\RequestException;
 use Laravel\Socialite\AbstractUser;
 use Laravel\Socialite\Two\InvalidStateException;
 use Laravel\Fortify\Features as FortifyFeatures;
@@ -12,7 +10,6 @@ use Laravel\Jetstream\Jetstream;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cookie;
 use JoelButcher\Socialstream\ConnectedAccount;
 use JoelButcher\Socialstream\Contracts\GeneratesProviderRedirect;
 use JoelButcher\Socialstream\Contracts\ResolvesSocialiteUsers;
@@ -22,6 +19,7 @@ use JoelButcher\Socialstream\Features;
 use SocialiteProviders\Manager\Contracts\OAuth2\ProviderInterface;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Socialite;
+use SocialiteProviders\Manager\Config;
 
 class OAuthController extends BaseOAuthController
 {
@@ -222,11 +220,11 @@ class OAuthController extends BaseOAuthController
 
     static public function isBrowserLogin($policy = null)
     {
-        $browserLoginPolicies = ['browser_login', 'browser_register'];
-
+        $browserLoginPolicies = ['browser_login'];
         $request = request();
         foreach ($browserLoginPolicies as $browserLoginPolicy) {
-            if ($request->url() === route('oauth.callback', ['provider' => 'azureadb2c', 'policy' => $browserLoginPolicy])) {
+            $url = route('browser.callback', ['provider' => 'azureadb2c', 'policy' => $browserLoginPolicy]);
+            if ($request->url() === $url) {
                 $policy = $browserLoginPolicy;
                 break;
             }
@@ -242,6 +240,17 @@ class OAuthController extends BaseOAuthController
         if (OAuthController::isBrowserLogin($policy)) {
             $provider->setScopes(config('services.azureadb2c.scope'));
             $provider->stateless();
+            $config = new Config(
+                config('services.azureadb2c.client_id'),
+                config('services.azureadb2c.client_secret'),
+                config('services.azureadb2c.redirect'),
+                [
+                    'domain' => config('services.azureadb2c.domain'),
+                    'policy' => config('services.azureadb2c.policy'),
+                    'redirect_template' => config('services.azureadb2c.api_redirect_template'),
+                ],
+            );
+            $provider->setConfig($config);
         }
 
         return $provider;

@@ -108,7 +108,7 @@ class Form extends Component
             throw ValidationException::withMessages(['term' => $message]);
         }
 
-        if (!is_single_emoji($this->emoji)) {
+        if ($this->emoji !== null && !is_single_emoji($this->emoji)) {
             $message = __('guidelines.emoji_invalid_format');
             throw ValidationException::withMessages(['emoji' => $message]);
         }

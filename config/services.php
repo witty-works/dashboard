@@ -19,6 +19,7 @@ return [
         'client_secret' => env('AADB2C_CLIENT_SECRET'),
         'redirect' => '/oauth/azureadb2c/callback',
         'redirect_template' => '/oauth/azureadb2c/{policy}/callback',
+        'api_redirect_template' => '/api/oauth/azureadb2c/{policy}/callback',
         'scope' => env('AADB2C_ACCESS_TOKEN_SCOPES'),
         'domain' => env('AADB2C_DOMAIN'),
         'policy' => [

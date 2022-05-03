@@ -101,7 +101,6 @@ class UpdateOrganizationGuidelines
                 ];
             }
 
-
             $termReplacements[] = $termReplacementData;
         }
 
