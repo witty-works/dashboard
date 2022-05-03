@@ -30,8 +30,7 @@ li {
 }
 
 a {
-    @apply text-blue;
-    @apply font-semibold;
+    color: #9489DB;
 }
 
 #ww-main-nav-logo {
@@ -70,7 +69,7 @@ a {
     font-style: normal;
     font-size: 27px;
     line-height: 34px;
-    letter-spacing: -0.025em;    
+    letter-spacing: -0.025em;
     color: #1A1A1A;
     margin-bottom: 0.2em;
 }
@@ -110,7 +109,8 @@ a {
     background: #FAFAFA;
 }
 
-.onboarding-step-title--todo, .onboarding-step-title--complete {
+.onboarding-step-title--todo,
+.onboarding-step-title--complete {
     font-weight: 600;
     line-height: 22px;
     color: #1A1A1A;
@@ -124,15 +124,16 @@ a {
     margin-bottom: 0.2em;
 }
 
-.onboarding-step-tagline--todo, .onboarding-step-tagline--complete {
+.onboarding-step-tagline--todo,
+.onboarding-step-tagline--complete {
     font-size: 14px;
-    line-height: 17px;    
+    line-height: 17px;
     color: #656565;
 }
 
 .onboarding-step-tagline--deactivated {
     font-size: 14px;
-    line-height: 17px;    
+    line-height: 17px;
     color: #CDCFD0;
 }
 
@@ -168,6 +169,7 @@ a {
     margin-top: 1em;
     margin-bottom: 1em;
 }
+
 .onboarding-analytics-img {
     display: flex;
     margin-top: 1em;
@@ -264,7 +266,7 @@ a {
     margin-top: 3em;
 }
 
-.guidelines-form-section-dropdown{
+.guidelines-form-section-dropdown {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -340,10 +342,6 @@ a {
     margin-bottom: 0.3em;
 }
 
-.learn-more{
-    color: #9489DB;
-}
-
 /* TOGGLE */
 .switch {
     position: relative;
@@ -351,14 +349,14 @@ a {
     min-width: 36px;
     height: 20px;
     margin-right: 2em;
-  }
-  
-.switch input { 
+}
+
+.switch input {
     opacity: 0;
     width: 0;
     height: 0;
 }
-  
+
 .slider {
     position: absolute;
     cursor: pointer;
@@ -370,7 +368,7 @@ a {
     -webkit-transition: .4s;
     transition: .4s;
 }
-  
+
 .slider:before {
     position: absolute;
     content: "";
@@ -382,12 +380,12 @@ a {
     -webkit-transition: .4s;
     transition: .4s;
 }
-  
-input:checked + .slider {
+
+input:checked+.slider {
     background-color: #5FCA7D;
 }
-  
-input:checked + .slider:before {
+
+input:checked+.slider:before {
     -webkit-transform: translateX(16px);
     -ms-transform: translateX(16px);
     transform: translateX(16px);
@@ -395,8 +393,8 @@ input:checked + .slider:before {
 
 .slider.round {
     border-radius: 34px;
-  }
-  
+}
+
 .slider.round:before {
     border-radius: 50%;
 }
@@ -404,15 +402,13 @@ input:checked + .slider:before {
 .navigation-wrapper {
     padding: 12px 24px;
     width: 100%;
-  
-    background: linear-gradient(
-      139.06deg,
-      #f06464 12.41%,
-      #f277d0 51.43%,
-      #9489db 100.03%,
-      #37d1e5 137.9%,
-      #5acfb9 174.94%
-    );
+
+    background: linear-gradient(139.06deg,
+            #f06464 12.41%,
+            #f277d0 51.43%,
+            #9489db 100.03%,
+            #37d1e5 137.9%,
+            #5acfb9 174.94%);
 }
 
 .navigation-link {
@@ -455,36 +451,30 @@ input:checked + .slider:before {
     width: 100%;
     border: 1px solid transparent;
     border-radius: 10px;
-  
-    background: linear-gradient(
-          96.78deg,
-          #fef7f8 -6.3%,
-          #fbf6fa 35.9%,
-          #e9f2f5 100.12%
-        )
-        padding-box,
-      linear-gradient(
-          114.59deg,
-          #f06464 1.6%,
-          #f277d0 32.79%,
-          #9489db 71.64%,
-          #37d1e5 101.91%,
-          #5acfb9 131.52%
-        )
-        border-box;
-  }
-  
-  .wittyworks-upgrade-banner-text-container {
+
+    background: linear-gradient(96.78deg,
+            #fef7f8 -6.3%,
+            #fbf6fa 35.9%,
+            #e9f2f5 100.12%) padding-box,
+        linear-gradient(114.59deg,
+            #f06464 1.6%,
+            #f277d0 32.79%,
+            #9489db 71.64%,
+            #37d1e5 101.91%,
+            #5acfb9 131.52%) border-box;
+}
+
+.wittyworks-upgrade-banner-text-container {
     flex-basis: 75%;
     color: #9489db;
-  }
-  
-  .wittyworks-upgrade-banner-title {
+}
+
+.wittyworks-upgrade-banner-title {
     font-weight: 700;
     margin: 4px 0px;
-  }
-  
-  .wittyworks-upgrade-banner-button {
+}
+
+.wittyworks-upgrade-banner-button {
     margin-left: auto;
     display: flex;
     padding: 10px 15px;
@@ -494,4 +484,4 @@ input:checked + .slider:before {
     color: white;
     font-weight: 600;
     cursor: pointer;
-  }
+}
