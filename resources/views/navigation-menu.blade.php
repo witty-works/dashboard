@@ -161,9 +161,9 @@
             @endauth
         </div>
 
-        @auth
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
+            @auth
             <div class="flex items-center px-4">
                 @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
                     <div class="shrink-0 mr-3">
@@ -176,8 +176,10 @@
                     <div class="font-medium text-sm navigation-user-info ">{{ $user->email }}</div>
                 </div>
             </div>
+            @endauth
 
             <div class="mt-3 space-y-1">
+                @auth
                 <!-- Account Management -->
                 <x-jet-responsive-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')">
                     {{ __('content.profile') }}
@@ -224,14 +226,37 @@
                     </x-jet-responsive-nav-link>
                 @endcan
 
-
                 <x-jet-responsive-nav-link href="https://www.witty.works/form">
                     {{ __('content.go-to-form') }}
                 </x-jet-responsive-nav-link>
 
+                <div class="border-t border-gray-200"></div>
+
                 <!-- Authentication -->
                 <x-jet-responsive-nav-link href="{{ route('logout', ['provider' => 'azureadb2c']) }}">
                     {{ __('content.log_out') }}
+                </x-jet-responsive-nav-link>
+
+                <div class="border-t border-gray-200"></div>
+                @endauth
+
+                <x-jet-responsive-nav-link href="https://www.witty.works/terms">
+                    {{ __('content.terms') }}
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="https://www.witty.works/contact-sales">
+                    {{ __('content.contact') }}
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="https://www.witty.works/demo">
+                    {{ __('content.book-demo') }}
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="https://www.witty.works/privacy">
+                    {{ __('content.privacy') }}
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="https://www.witty.works/trust-and-security">
+                    {{ __('content.trust-and-security') }}
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="https://www.witty.works/impressum">
+                    {{ __('content.imprint') }}
                 </x-jet-responsive-nav-link>
 
                 <div class="border-t border-gray-200"></div>
@@ -241,6 +266,5 @@
                 </div>
             </div>
         </div>
-        @endauth
     </div>
 </nav>

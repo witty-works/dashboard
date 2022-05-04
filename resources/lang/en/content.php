@@ -210,4 +210,10 @@ Read more about ROI for [organizations](https://www.witty.works/witty-for-compan
     'language_guidelines' => 'Your Team Language',
     'introduction_videos' => 'Introduction Videos',
     'go-to-form' => 'Go to form',
+    'terms' => 'Terms',
+    'contact' => 'Contact',
+    'book-demo' => 'Book Demo',
+    'privacy' => 'Privacy',
+    'trust-and-security' => 'Trust & Security',
+    'imprint' => 'Imprint',
 ];
