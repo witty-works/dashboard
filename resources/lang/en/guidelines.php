@@ -73,4 +73,5 @@ return [
     'show_inspiration_alternatives_subscription_required' => 'To be able to enable this features, a <a href=":url">subscription</a> of "Witty Teams" or higher is required.',
     'gendered_roles_format_subscription_required' => 'To be able to set the format Witty should suggest, a <a href=":url">subscription</a> of "Witty Teams" or higher is required.',
     'emoji_invalid_format' => 'The emoji field may only contain a single emoji character.',
+    'emoji_short_label' => 'Emoji',
 ];

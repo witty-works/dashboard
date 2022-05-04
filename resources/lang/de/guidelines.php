@@ -73,4 +73,5 @@ return [
     'gendered_roles_format_subscription_required' => 'Um einzustellen zu können, welche Vorschläge Witty geben soll, ist ein <a href=":url">Abonnement</a> von "Witty Teams" oder höher erforderlich.',
     'emoji_invalid_format' => 'Emoji darf nur ein einziges Emoji-Zeichen enthalten.',
     'none' => 'Nur geschlechtsneutrale Alternativen anzeigen',
+    'emoji_short_label' => 'Emoticon',
 ];
