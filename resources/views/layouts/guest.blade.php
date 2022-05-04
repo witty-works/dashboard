@@ -7,7 +7,7 @@
 
         @include('partials/gtm-header')
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>{{ config('app.name') }}</title>
 
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
@@ -26,6 +26,8 @@
         <div class="font-sans text-gray-900 antialiased">
             <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
                 {{ $slot }}
-        </div>
+
+                @include('footer')
+            </div>
     </body>
 </html>
