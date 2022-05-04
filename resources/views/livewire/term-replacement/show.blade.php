@@ -14,7 +14,9 @@
                     <th class="px-4 py-2">{{ __('guidelines.term_label') }}</th>
                     <th class="px-4 py-2">{{ __('guidelines.replacement_label') }}</th>     
                     <th class="px-4 py-2">{{ __('guidelines.emoji_short_label') }}</th>
-                    <th class="px-4 py-2">{{ __('guidelines.action_label') }}s</th>     
+                    @if (Auth::user()->hasTeamPermission($team, 'edit_guidelines'))
+                    <th class="px-4 py-2">{{ __('guidelines.action_label') }}</th>     
+                    @endif
                 </tr>
             </thead>
             <tbody>
