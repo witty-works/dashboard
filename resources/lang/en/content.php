@@ -216,4 +216,5 @@ Read more about ROI for [organizations](https://www.witty.works/witty-for-compan
     'privacy' => 'Privacy',
     'trust-and-security' => 'Trust & Security',
     'imprint' => 'Imprint',
+    'making_changes_requires_admin_rights' => 'To make changes, admin rights are required. Please contact your team <a href="mailto::email">owner</a>.',
 ];
