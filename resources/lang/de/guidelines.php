@@ -66,7 +66,7 @@ return [
     'manage_organization_guidelines_description_german_form_sub_title' => 'Wähle deine Präferenz für das Gendern aus, um Vorschläge zu erhalten, die auf deinen Sprachstil zugeschnitten sind. <a href="https://www.witty.works/en/blog/gender-inclusive-writing-in-german" target="_blank">Mehr erfahren</a>',
     'explanation_label' => 'Erläuterung (Optional)',
     'url_label' => 'URL mit weiterer Erklärung (Optional)',
-    'emoji_label' => 'Emoticons (Optional)',
+    'emoji_label' => 'Emoticon wie 😟 oder 💡 (Optional), siehe <a href="https://emojipedia.org/" target="_blank">hier</a>',
     'action_label' => 'Aktion',
     'expert_mode_subscription_required' => 'Um diese Funktionen aktivieren zu können, ist ein <a href=":url">Abonnement</a> von "Witty Teams" oder höher erforderlich.',
     'show_inspiration_alternatives_subscription_required' => 'Um diese Funktionen aktivieren zu können, ist ein <a href=":url">Abonnement</a> von "Witty Teams" oder höher erforderlich.',

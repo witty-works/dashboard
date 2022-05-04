@@ -67,7 +67,7 @@ return [
     'term_already_exists' => 'term already exists',
     'explanation_label' => 'Explanation (Optional)',
     'url_label' => 'URL with further explanation (Optional)',
-    'emoji_label' => 'Emoji (Optional)',
+    'emoji_label' => 'Emoji like 😟 or 💡 (Optional), get one <a href="https://emojipedia.org/" target="_blank">here</a>',
     'action_label' => 'Action',
     'expert_mode_subscription_required' => 'To be able to enable this features, a <a href=":url">subscription</a> of "Witty Teams" or higher is required.',
     'show_inspiration_alternatives_subscription_required' => 'To be able to enable this features, a <a href=":url">subscription</a> of "Witty Teams" or higher is required.',
