@@ -6,6 +6,7 @@ use App\Models\OrganizationGuidelines;
 use App\Models\Team;
 use Illuminate\Support\Facades\Http;
 use Laravel\Jetstream\Events\TeamDeleted;
+use RuntimeException;
 
 class UpdateOrganizationGuidelines
 {
@@ -79,8 +80,12 @@ class UpdateOrganizationGuidelines
                 ->post($endpoint['url'], $data);
         }
 
-        if (config('app.debug') && $response->failed()) {
-            dd($response->json(), $data);
+        if ($response->failed()) {
+            if (config('app.debug')) {
+                dd($response->json(), $data);
+            } else {
+                throw new RuntimeException($response->body());
+            }
         }
     }
 
