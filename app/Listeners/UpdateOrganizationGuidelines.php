@@ -117,7 +117,7 @@ class UpdateOrganizationGuidelines
         $orgGuidelines = OrganizationGuidelines::firstOrNew(['team_id' => $team->id]);
 
         $config['store_context'] = [
-            'value' => $team->store_context,
+            'value' => (bool) $team->store_context,
             'status' => 'force',
         ];
 
@@ -132,7 +132,7 @@ class UpdateOrganizationGuidelines
         ];
 
         $config['show_inspiration_alternatives'] = [
-            'value' => $orgGuidelines->show_inspiration_alternatives,
+            'value' => (bool) $orgGuidelines->show_inspiration_alternatives,
             'status' => $orgGuidelines->show_inspiration_alternatives_force ? 'force' : 'suggestion',
         ];
 
