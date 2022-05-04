@@ -4,10 +4,18 @@
             {{ __('guidelines.organization_guidelines') }}
         </h2>
 
+        @if (!Auth::user()->hasTeamPermission($team, 'edit_guidelines'))
+        {!! __('content.making_changes_requires_admin_rights', ['email' => $team->owner->email]) !!}
+        @else
         {{ __('guidelines.manage_organization_guidelines_description') }}
+        @endif
     </x-slot>
 
     <div>
+        <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
+            @livewire('organization-guidelines.language', ['team' => $team])
+        </div>
+
         <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
             @livewire('organization-guidelines.language', ['team' => $team])
         </div>

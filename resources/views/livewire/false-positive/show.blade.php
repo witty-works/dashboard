@@ -12,7 +12,9 @@
             <thead>
                 <tr>
                     <th class="px-4 py-2">{{ __('guidelines.false_positive_label') }}</th>
+                    @if (Auth::user()->hasTeamPermission($team, 'edit_guidelines'))
                     <th class="px-4 py-2">{{ __('guidelines.action_label') }}s</th>     
+                    @endif
                 </tr>
             </thead>
             <tbody>

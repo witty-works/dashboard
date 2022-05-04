@@ -14,7 +14,8 @@ class TeamMemberAddedSlackAlert
 
         $subscription = $event->team->subscription();
         if (!$subscription) {
-            SlackAlert::message("A new team member was added to {$event->team->name}, total count is now at {$event->team->total_user_licenses_count}.");
+            $team = $event->team;
+            SlackAlert::message("A new team member was added to {$team->name}, total count is now at {$team->getTotalUserCount()}.");
         }
     }
 }

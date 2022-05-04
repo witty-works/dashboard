@@ -216,4 +216,5 @@ Lese mehr über den ROI für [Organisationen](https://www.witty.works/witty-for-
     'privacy' => 'Datenschutzerklärung',
     'trust-and-security' => 'Vertrauen & Sicherheit',
     'imprint' => 'Impressum',
+    'making_changes_requires_admin_rights' => 'Um Änderungen vorzunehmen, sind Administrationsrechte erforderlich. Bitte wende dich an die <a href="mailto::email">Teambesitzer:in</a> .',
 ];
