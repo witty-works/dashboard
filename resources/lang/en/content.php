@@ -153,7 +153,7 @@ return [
     'onboarding_configure_organization_guidelines_tagline' => 'Set up how you want to use language in your team',
     'onboarding_invite_users' => '3. Invite users to your team',
     'onboarding_invite_users_tagline' => 'Let other joins your team on Witty and start writing more inclusively together.',
-    'onboarding_install_witty' => 'Install the Witty browser extension',
+    'onboarding_install_witty' => 'Install our Witty browser extension',
     'onboarding_quickLinks' => 'Quick Links',
     'onboarding_team_setup' => 'Team Settings',
     'onboarding_language_guidelines' => 'Team Language',
@@ -173,14 +173,13 @@ Witty offers the whole inclusive language logic in English and German. You also 
 With Witty you become part of the change towards more diversity and inclusion on a daily basis.
 
 Read more about [Witty](https://www.witty.works/ "Inclusive writing, anywhere, in real time").',
-    'section_2_title' => 'What does the Witty Dashboard do?',
-    'section_2_text' => 'The Witty dashboard helps you to set up and manage Witty for your team. Once logged, you manage the following: 
+    'section_2_title' => 'What can you do with Witty Dashboard?',
+    'section_2_text' => 'Witty Dashboard helps you to set up and manage Witty for your team. Once logged, you manage the following: 
 
 * Invite your team members
 * Set up your very own team language. That way you ensure that your whole team writes with the same brand voice.
 * Coming soon: Read and interpret analytics at team, department and company level in accordance with data privacy laws.
-* Coming soon: Editor - a simple application that works for everyone, even those that do not use the browser plugin (yet)        
-',
+* Coming soon: Witty Editor - a simple application that works for everyone, even those that do not use the browser plugin (yet)',
     'login_cta' => 'Start by creating your own <a href=":url">login</a>',
     'section_3_title' => 'Witty for Teams and Organizations',
     'section_3_text' => 'For organizations Witty offers an array of services so that whole teams can work with Witty flawlessly, such as:

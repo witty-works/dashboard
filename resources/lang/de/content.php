@@ -154,13 +154,13 @@ Witty bietet die ganze inklusive Sprachlogik in Englisch und Deutsch an. Außerd
 Mit Witty wirst du täglich Teil des Wandels hin zu mehr Vielfalt und Inklusion.
 
 Lese mehr über [Witty](https://www.witty.works/ "Inklusives Schreiben, überall, in Echtzeit").',
-    'section_2_title' => 'Was macht das Witty Dashboard?',
-    'section_2_text' => 'Das Witty-Dashboard hilft dir, Witty für dein Team einzurichten und zu verwalten. Einmal eingeloggt, verwaltest du folgendes:
+    'section_2_title' => 'Was macht Witty Dashboard?',
+    'section_2_text' => 'Witty Dashboard hilft dir, Witty für dein Team einzurichten und zu verwalten. Einmal eingeloggt, verwaltest du folgendes:
 
 * Lade dein Team ein
 * Richten eure ganz eigene Team-Sprache ein. So stellst du sicher, dass dein gesamtes Team mit der gleichen Markenstimme schreibt.
 * Demnächst verfügbar: Lesen und interpretiere Analysen auf Team-, Abteilungs- und Unternehmensebene in Übereinstimmung mit Datenschutzgesetzen.
-* Demnächst verfügbar: Editor – eine einfache Anwendung, die für alle funktioniert, auch für diejenigen, die das Browser-Plug-in (noch) nicht verwenden ',
+* Demnächst verfügbar: Witty Editor – eine einfache Anwendung, die für alle funktioniert, auch für diejenigen, die das Browser-Plug-in (noch) nicht verwenden ',
     'section_3_title' => 'Witty für Teams und Organisationen',
     'section_3_text' => 'Für Organisationen bietet Witty eine Reihe von Dienstleistungen an, damit ganze Teams reibungslos mit Witty arbeiten können, wie zum Beispiel:
 * Einmalige Anmeldung
@@ -180,7 +180,7 @@ Lese mehr über Dienstleistungen für [Organisationen](https://www.witty.works/w
 Lese mehr über den ROI für [Organisationen](https://www.witty.works/witty-for-companies "Witty for Organizations").',
     'onboarding_signup_to_witty' => 'Meldung für ein Witty-Konto',
     'invitation_email_welcome' => 'Um diese Einladung anzunehmen, logge dich mit deinem bestehenden Konto ein oder registriere ein neues, indem du auf die Schaltfläche unten klickst:',
-    'onboarding_install_witty' => 'Installiere die Witty-Browsererweiterung',
+    'onboarding_install_witty' => 'Installiere unsere Witty-Browsererweiterung',
     'open_invitiations' => '{1} Du bist bereits Eigentümer:in eines Teams. Du wurdest aber eingeladen, einem anderen Team beizutreten. Du kannst nur in einem Team sein. Bitte entscheiden dich, ob du die Einladung annehmen oder ablehnen möchtest.|{2,*} Du wurdest eingeladen, mehreren Teams beizutreten, bitte entscheiden dich, ob du eine dieser Einladungen annehmen möchtest.',
     'accept_invitiation' => 'annehmen',
     'reject_invitiation' => 'ablehnen',
