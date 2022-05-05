@@ -32,7 +32,7 @@
         </div>
     </x-slot>
 
-    @if (Auth::user()->hasTeamPermission($team, 'edit_guidelines'))
+    @if (Auth::user()->hasTeamPermission($team, 'edit_guidelines') && $team->subscribed())
     <x-slot name="actions">
         <x-jet-action-message class="mr-3" on="saved">
             <span class="float-right">{{ __('content.saved') }}</span>
