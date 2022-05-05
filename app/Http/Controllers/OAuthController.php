@@ -64,7 +64,7 @@ class OAuthController extends BaseOAuthController
     {
         $refreshToken = $request->json('token');
         if (!$refreshToken) {
-            abort(400, "'refresh_token` parameter empty");
+            return response()->json(['error' => "'token' parameter empty"], 400);
         }
 
         try {
