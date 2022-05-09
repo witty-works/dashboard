@@ -39,6 +39,20 @@ class StripeController extends Controller
                     ['locale' => app()->getLocale()]
                 );
             }
+
+            return $team
+                ->allowPromotionCodes()
+                ->checkout(
+                    [[
+                        'price' => config('stripe.plans.witty_teams.price_id'),
+                        'quantity' => $team->total_user_licenses_count
+                    ]],
+                    [
+                        'success_url' => $this->teamShowRoute($team),
+                        'cancel_url' => $this->teamShowRoute($team),
+                        'mode' => 'subscription'
+                    ]
+                )->redirect();
         }
 
         return redirect('https://www.witty.works/pricing');
@@ -47,10 +61,5 @@ class StripeController extends Controller
     protected function teamShowRoute(Team $team)
     {
         return route('teams.show', ['team' => $team]);
-    }
-
-    protected function getPrice($priceId)
-    {
-        return Cashier::stripe()->prices->retrieve($priceId, []);
     }
 }
