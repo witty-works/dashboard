@@ -83,12 +83,14 @@ if ($user && (!$user->currentTeam || $user->can('update', $user->currentTeam))) 
     @endif
     
     @if($user->invitations->count())
-    <div class="mt-6 onboarding-tagline">
+    <div class="onboarding-container">
+        <p>
         {{ trans_choice('content.open_invitiations', $user->invitations->count()) }}
+        </p>
         @if($user->ownedTeams()->count())
-        <div>
+        <p>
             {!! __('content.contact_support_to_delete_owned_teams') !!}
-        </div>
+        </p>
         @else
         @if($user->allTeams()->count())
         <div>
