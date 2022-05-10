@@ -28,5 +28,6 @@ return [
             'browser_login' => env('AADB2C_POLICY'),
         ],
         'redirect_uri' => explode(',', env('AADB2C_BROWSER_REDIRECT_URIS')),
+        'validate_redirect_uri_disabled' => env('AADB2C_VALIDATE_EXTENSION_REDIRECT_URI_DISABLED', false)
     ],
 ];
