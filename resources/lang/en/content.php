@@ -164,8 +164,8 @@ return [
     'onboarding_install_witty_text' => 'Witty is a browser plugin that makes inclusive writing possible at any given time for anyone',
     'onboarding_install_witty_button' => 'Get Witty for free',
     'open_invitiations' => '{1} You are already the owner a team, but you have been invited to join another team. You can only be in one team. Please decide if you want to accept or reject the invitiation.|{2,*} You have been invited to join several teams, please decide if you want to accept one of these invitiations.',
-    'accept_invitiation' => 'accept',
-    'reject_invitiation' => 'reject',
+    'accept_invitiation' => 'Accept',
+    'reject_invitiation' => 'Reject',
     'section_1_title' => 'What is Witty',
     'section_1_text' => 'Witty is an inclusive writing assistant made for individuals and organizations, bringing you the joy of inclusive writing simple, real-time and fast. It is a Software-as-a-Service that detects unconscious stereotypes in communication. And then guides the writer how to formulate the same content in an inclusive manner.
 Witty offers the whole inclusive language logic in English and German. You also receive feedback on orthography and grammar. More languages are planned.
