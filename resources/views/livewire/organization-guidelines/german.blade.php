@@ -25,7 +25,7 @@
         <div class="guidelines-form-section-dropdown-label">
             {{ __('guidelines.gendered_roles_format') }}
             @if(! Auth::user()->hasTeamPermission($team, 'edit_guidelines') || !$team->subscribed())
-                <img src="{{ asset('svg/options-lock.svg') }}" alt="{{ __('teams.upgrade_to_witty_teams') }}" class="guidelines-form-section-lock p-2" />
+                <img src="{{ asset('svg/options-lock.svg') }}" alt="{{ __('teams.upgrade_to_witty_teams') }}" title="{{ __('teams.upgrade_to_witty_teams') }}" class="guidelines-form-section-lock p-2" />
             @endif
         </div>
         <x-select id="gendered_roles_format"
