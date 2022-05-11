@@ -212,7 +212,7 @@ Read more about ROI [large organizations] (https://www.witty.works/witty-for-lar
     'edit' => 'edit',
     'language_guidelines' => 'Language Setttings',
     'introduction_videos' => 'Introduction Videos',
-    'go-to-form' => 'Go to form',
+    'go-to-form' => 'Try out Witty here',
     'terms' => 'Terms',
     'contact' => 'Contact',
     'book-demo' => 'Book a demo',
