@@ -121,7 +121,7 @@ return [
     'add_a_new_team_member' => 'Füge deinem Team ein neues Mitglied hinzu, damit ihr zusammenarbeiten könnt. Mit deinem aktuellen Plan kannst du bis zu :max_count Teammitglieder:innen hinzufügen.',
     'please_provide_the_email_address' => 'Bitte gib die E-Mail-Adresse der Person an, die du diesem Team hinzufügen möchtest.',
     'these_people_have_been_invited' => 'Diese Personen wurden in dein Team eingeladen und haben eine Einladungs-E-Mail erhalten. Sie können dem Team beitreten, indem sie die E-Mail-Einladung annehmen.',
-    'all_of_the_people' => 'Alle Leute, die Teil dieses Teams sind.',
+    'all_of_the_people' => 'Alle Personen, die Teil dieses Teams sind.',
     'are_you_sure_you_would_like_to_leave' => 'Möchtest du dieses Team wirklich verlassen?',
     'are_you_sure_you_would_like_to_remove' => 'Möchtest du diese Person wirklich aus dem Team entfernen?',
     'team_information' => 'Der Name und die Besitzerinformationen des Teams.',
@@ -144,10 +144,12 @@ return [
     'welcome_text' => 'Das Dashboard hilft dir, Witty einzurichten und deinen Bedürfnissen anzupassen.',
     'onboarding_next_steps' => 'Nächste Schritte zum Einrichten deines Witty Teams:',
     'onboarding_create_team' => '1. Team Erstellen',
-    'onboarding_configure_organization_guidelines' => '2. Konfigurierung der Team-Sprache',
+    'onboarding_configure_organization_guidelines' => '2. Konfigurierung der Spracheinstellungen',
     'onboarding_invite_users' => '3. Benutzer:innen Einladen',
     'section_1_title' => 'Was ist Witty?',
-    'section_1_text' => 'Witty ist ein integrativer Schreibassistent für Einzelpersonen und Organisationen, der die Freude am integrativen Schreiben einfach, in Echtzeit und schnell bringt. Es ist ein Software-as-a-Service, der unbewusste Stereotypen in der Kommunikation erkennt. Und führt Autor:innen dann an, wie dieselben Inhalte inklusiv formuliert werden können.
+    'section_1_text' => 'Witty ist ein integrativer Schreibassistent für Einzelpersonen und Organisationen, der die Freude am integrativen Schreiben einfach, in Echtzeit und schnell bringt.
+
+Es ist ein Software-as-a-Service, der <b>unbewusste Stereotypen in der Kommunikation erkennen<b> kann. Und führt Autor:innen dann an, wie dieselben Inhalte inklusiv formuliert werden können.
 
 Witty bietet die ganze inklusive Sprachlogik in Englisch und Deutsch an. Außerdem erhalte Feedback zu Rechtschreibung und Grammatik. Weitere Sprachen sind geplant.
 
@@ -158,12 +160,13 @@ Lese mehr über [Witty](https://www.witty.works/ "Inklusives Schreiben, überall
     'section_2_text' => 'Witty Dashboard hilft dir, Witty für dein Team einzurichten und zu verwalten. Einmal eingeloggt, verwaltest du folgendes:
 
 * Lade dein Team ein
-* Richten eure ganz eigene Team-Sprache ein. So stellst du sicher, dass dein gesamtes Team mit der gleichen Markenstimme schreibt.
+* Richten eure Spracheinstellungen ein. So stellst du sicher, dass dein gesamtes Team mit der gleichen Markenstimme schreibt.
 * Demnächst verfügbar: Lesen und interpretiere Analysen auf Team-, Abteilungs- und Unternehmensebene in Übereinstimmung mit Datenschutzgesetzen.
 * Demnächst verfügbar: Witty Editor – eine einfache Anwendung, die für alle funktioniert, auch für diejenigen, die das Browser-Plug-in (noch) nicht verwenden ',
     'section_3_title' => 'Witty für Teams und Organisationen',
     'section_3_text' => 'Für Organisationen bietet Witty eine Reihe von Dienstleistungen an, damit ganze Teams reibungslos mit Witty arbeiten können, wie zum Beispiel:
-* Einmalige Anmeldung
+* Single sign-on Anmeldung
+* Lade dein ganzes Team ein, um einfacher an eurer Spracheinstellungen zusammen zu arbeiten
 * Konfiguriere die Team eigene Sprache
 * Demnächst verfügbar: Statistik der Organisation/Abteilung
 * Sitzung zur Sensibilisierung für unbewusste Voreingenommenheit
@@ -187,7 +190,7 @@ Lese mehr über den ROI für [Organisationen](https://www.witty.works/witty-for-
     'login_cta' => 'Beginne mit der Erstellung deines eigenen <a href=":url">Logins</a>',
     'team' => 'Team',
     'accepting_invitation_will_result_in_leaving_your_current_team' => 'Das Annehmen einer Einladung führt zum Verlassen des Teams „:team_name“.',
-    'contact_support_to_delete_owned_teams' => 'Da du ein:e Teambesitzer:in bist, um Einladungen annehmen zu können, lösche entweder dein aktuelles Team oder wende dich bitte an den <a href="mailto:support@witty.works">Support</a>.',
+    'contact_support_to_delete_owned_teams' => 'Da du ein:e Teambesitzer:in bist, um Einladungen annehmen zu können, <a href=":deleteUrl">lösche</a> entweder dein aktuelles Team oder wende dich bitte an den <a href="mailto:support@witty.works">Support</a>.',
     'add_team_member' => 'Teammitglied hinzufügen',
     'billing' => 'Abrechnung',
     'browser_login' => 'Browser-Anmeldung',
@@ -198,15 +201,15 @@ Lese mehr über den ROI für [Organisationen](https://www.witty.works/witty-for-
     'onboarding_invite_users_tagline' => 'Lasse andere deinem Team auf Witty beitreten und beginne, gemeinsam inklusiver zu schreiben.',
     'onboarding_quickLinks' => 'Direkt Links',
     'onboarding_team_setup' => 'Teameinstellungen',
-    'onboarding_language_guidelines' => 'Team-Sprache',
+    'onboarding_language_guidelines' => 'Spracheinstellungen',
     'onboarding_payment' => 'Zahlungen & Abrechnung',
     'onboarding_support' => 'Unterstützung',
     'onboarding_team_stats' => 'Die Statistiken deines Teams',
     'login_failed' => 'Login scheiterte',
     'edit' => 'bearbeiten',
-    'language_guidelines' => 'Deine Team-Sprache',
+    'language_guidelines' => 'Spracheinstellungen',
     'introduction_videos' => 'Einführungsvideos',
-    'go-to-form' => 'zum Formular',
+    'go-to-form' => 'Probieren Sie Witty hier aus',
     'onboarding_install_witty_title' => 'Installiere Witty',
     'onboarding_install_witty_text' => 'Witty ist ein Browser-Plugin, das inklusives Schreiben jederzeit für jeden möglich macht',
     'onboarding_install_witty_button' => 'Hole dir Witty',

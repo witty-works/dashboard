@@ -43,7 +43,7 @@ return [
     'dashboard' => 'Dashboard',
     'manage_team' => 'Manage Team',
     'team_settings' => 'Team Settings',
-    'create_new_team' => 'Create new team',
+    'create_new_team' => 'Create a new team',
     'switch_teams' => 'Switch Teams',
     'manage_account' => 'Manage Account',
     'profile' => 'My Account',
@@ -73,13 +73,13 @@ return [
     'team_details' => 'Team Details',
     'team_owner' => 'Team Owner',
     'team_name' => 'Team Name',
-    'create_team' => 'Create Team',
-    'delete_team' => 'Delete Team',
-    'add_team_member' => 'Add Team Member',
+    'create_team' => 'Create  a team',
+    'delete_team' => 'Delete team',
+    'add_team_member' => 'Add  a team member',
     'role' => 'Role',
     'add' => 'Add',
-    'pending_team_invitations' => 'Pending Team Invitations',
-    'team_members' => 'Team Members',
+    'pending_team_invitations' => 'Pending team invitations',
+    'team_members' => 'Team members',
     'leave' => 'Leave',
     'manage_role' => 'Manage Role',
     'leave_team' => 'Leave Team',
@@ -121,8 +121,8 @@ return [
     'are_you_sure_want_to_delete_team' => 'Are you sure you want to delete this team? Once a team is deleted, all of its resources and data will be permanently deleted.',
     'add_a_new_team_member' => 'Add new team members to your team, allowing them to collaborate with you. Your current plan allows you to add up to :max_count users.',
     'please_provide_the_email_address' => 'Please provide the email address of the person you would like to add to this team.',
-    'these_people_have_been_invited' => 'These people have been invited to your team and have been sent an invitation email. They may join the team by accepting the email invitation.',
-    'all_of_the_people' => 'All of the people that are part of this team.',
+    'these_people_have_been_invited' => 'These people have been invited to join your team and have received an invitation email from us. They can join the team by accepting the email invitation.',
+    'all_of_the_people' => 'All of the people have joined your team.',
     'are_you_sure_you_would_like_to_leave' => 'Are you sure you would like to leave this team?',
     'are_you_sure_you_would_like_to_remove' => 'Are you sure you would like to remove this person from the team?',
     'team_information' => 'The team\'s name and owner information.',
@@ -133,7 +133,7 @@ return [
     'if_you_did_not_expect' => 'If you did not expect to receive an invitation to this team, you may discard this email.',
     'woops' => 'woops',
     'documentation' => 'Documentation',
-    'welcome' => 'Welcome to Witty Dashboard',
+    'welcome' => 'Welcome to the Witty Dashboard',
     'admin' => 'Administrator',
     'admin_role' => 'Administrator users can manage the team.',
     'user' => 'User',
@@ -146,17 +146,17 @@ return [
     'welcome_text' => 'The dashboard helps you set up Witty and customize it to your needs.',
     'onboarding_next_steps' => 'Next steps to setup your Witty team:',
     'onboarding_finish_setup_title' => 'Finish setting up your Witty account',
-    'onboarding_finish_setup_tagline' => 'Make the most of Witty by setting up a team and configuring rules for your teammembers',
+    'onboarding_finish_setup_tagline' => 'Get the most out of Witty by setting up a team and customizing Witty for your team.',
     'onboarding_create_team' => '1. Create your team',
     'onboarding_create_team_tagline' => 'A team allows you to manage all preferences at once for a group of users.',
-    'onboarding_configure_organization_guidelines' => '2. Configure team language',
+    'onboarding_configure_organization_guidelines' => '2. Configure language settings',
     'onboarding_configure_organization_guidelines_tagline' => 'Set up how you want to use language in your team',
     'onboarding_invite_users' => '3. Invite users to your team',
-    'onboarding_invite_users_tagline' => 'Let other joins your team on Witty and start writing more inclusively together.',
+    'onboarding_invite_users_tagline' => 'Let others join your team and streamline your language settings.',
     'onboarding_install_witty' => 'Install our Witty browser extension',
     'onboarding_quickLinks' => 'Quick Links',
     'onboarding_team_setup' => 'Team Settings',
-    'onboarding_language_guidelines' => 'Team Language',
+    'onboarding_language_guidelines' => 'Language Setttings',
     'onboarding_payment' => 'Payments & Billing',
     'onboarding_support' => 'Support',
     'onboarding_team_stats' => 'Your team\'s statistics',
@@ -166,30 +166,34 @@ return [
     'open_invitiations' => '{1} You are already the owner a team, but you have been invited to join another team. You can only be in one team. Please decide if you want to accept or reject the invitiation.|{2,*} You have been invited to join several teams, please decide if you want to accept one of these invitiations.',
     'accept_invitiation' => 'Accept',
     'reject_invitiation' => 'Reject',
-    'section_1_title' => 'What is Witty',
-    'section_1_text' => 'Witty is an inclusive writing assistant made for individuals and organizations, bringing you the joy of inclusive writing simple, real-time and fast. It is a Software-as-a-Service that detects unconscious stereotypes in communication. And then guides the writer how to formulate the same content in an inclusive manner.
+    'section_1_title' => 'What is Witty?',
+    'section_1_text' => 'Witty is an inclusive writing assistant made for individuals and organizations, bringing you the joy of inclusive writing. Witty is easy, real-time, and fast.
+
+Witty is a Software-as-a-Service that <b>detects unconscious stereotypes in communication</b>, and then guides the writer on how to formulate the same content in an inclusive manner.
+
 Witty offers the whole inclusive language logic in English and German. You also receive feedback on orthography and grammar. More languages are planned.
 
 With Witty you become part of the change towards more diversity and inclusion on a daily basis.
 
 Read more about [Witty](https://www.witty.works/ "Inclusive writing, anywhere, in real time").',
-    'section_2_title' => 'What can you do with Witty Dashboard?',
-    'section_2_text' => 'Witty Dashboard helps you to set up and manage Witty for your team. Once logged, you manage the following: 
+    'section_2_title' => 'What can you do with the Witty Dashboard?',
+    'section_2_text' => 'Witty Dashboard helps you set up and customize Witty for your team. Once you\'re logged in, you can:
 
-* Invite your team members
-* Set up your very own team language. That way you ensure that your whole team writes with the same brand voice.
-* Coming soon: Read and interpret analytics at team, department and company level in accordance with data privacy laws.
-* Coming soon: Witty Editor - a simple application that works for everyone, even those that do not use the browser plugin (yet)',
+* Invite your team members.
+* Set up your language settings. This way you can ensure your entire team writes with the same brand voice.
+* Coming soon: Get access to detailed analytics in compliance with privacy laws.
+* Coming soon: Witty Editor - a simple app that works for everyone, even those who don\'t use the browser plugin.',
     'login_cta' => 'Start by creating your own <a href=":url">login</a>',
     'section_3_title' => 'Witty for Teams and Organizations',
-    'section_3_text' => 'For organizations Witty offers an array of services so that whole teams can work with Witty flawlessly, such as:
-* Single-Sign-On
-* Configure shared custom team language
-* Coming soon: Organization/Department statistics
+    'section_3_text' => 'For organizations, Witty offers a range of services to help entire teams work smoothly with Witty, such as:
+* Single sign-on
+* Invite team members in order to collaborate faster and work together on language settings
+* Streamline your organization use of language
+* Coming soon: detailed analytics
 * Unconscious bias awareness session
-* Central control over data privacy
+* Centralized control over data privacy
 
-Read more about services for [organizations](https://www.witty.works/witty-for-companies "Witty for Organizations").',
+Read more about Services for [large organizations] (https://www.witty.works/witty-for-large-organizations) or [small organizations] (https://www.witty.works/witty-for-small-and-medium-sized-organizations).',
     'section_4_title' => 'Witty’s ROI for Organizations',
     'section_4_text' => 'The use of Witty increases organizations’ competitive advantage. 
 * Reach 100% of target groups instead of only 60%.
@@ -197,21 +201,21 @@ Read more about services for [organizations](https://www.witty.works/witty-for-c
 * Implement [ESG](https://en.wikipedia.org/wiki/Environmental,_social_and_corporate_governance "Environmental, Social, and Governance") and [UNSDG](https://sdgs.un.org/goals "UN Sustainable Development Goals") concretely. 
 * Ensure streamlined brand voice through your whole organization. 
 
-Read more about ROI for [organizations](https://www.witty.works/witty-for-companies "Witty for Organizations").',
+Read more about ROI [large organizations] (https://www.witty.works/witty-for-large-organizations) or [small organizations] (https://www.witty.works/witty-for-small-and-medium-sized-organizations).',
     'onboarding_signup_to_witty' => 'Sign up for a Witty account',
     'team' => 'Team',
     'accepting_invitation_will_result_in_leaving_your_current_team' => 'Accepting an invitation will result in leaving team ":team_name".',
-    'contact_support_to_delete_owned_teams' => 'Since you are a team owner, in order to be able to accept invitations, please <a href="mailto:support@witty.works">contact support</a>.',
+    'contact_support_to_delete_owned_teams' => 'Since you are a team owner, in order to be able to accept invitations, please either <a href=":deleteUrl">delete</a> your team or <a href="mailto:support@witty.works">contact support</a>.',
     'billing' => 'billing',
     'browser_login' => 'Browser Login',
     'login_failed' => 'Login failed',
     'edit' => 'edit',
-    'language_guidelines' => 'Your Team Language',
+    'language_guidelines' => 'Language Setttings',
     'introduction_videos' => 'Introduction Videos',
-    'go-to-form' => 'Go to form',
+    'go-to-form' => 'Try out Witty here',
     'terms' => 'Terms',
     'contact' => 'Contact',
-    'book-demo' => 'Book Demo',
+    'book-demo' => 'Book a demo',
     'privacy' => 'Privacy',
     'trust-and-security' => 'Trust & Security',
     'imprint' => 'Imprint',

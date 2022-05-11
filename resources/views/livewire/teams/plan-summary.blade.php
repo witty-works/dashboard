@@ -41,7 +41,7 @@
                     </div>
                 @elseif ($team->getTotalUserCount() != $team->getUserLicensesCount())
                     <div>
-                        @if($team->subscribed())
+                        @if($team->subscribed() && $team->subscription()->update_user_licenses_at)
                         @if($team->getTotalUserCount() > $team->getUserLicensesCount())
                         {{ trans_choice('teams.user_licenses_count_will_be_increased_updated_at', $team->getTotalUserCount() - $team->getUserLicensesCount(), ['diff' => $team->getTotalUserCount() - $team->getUserLicensesCount(), 'in' => $team->subscription()->update_user_licenses_at->diffForHumans()]) }}
                         @else
