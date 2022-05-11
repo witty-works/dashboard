@@ -161,7 +161,7 @@ class OAuthController extends BaseOAuthController
         $data = $this->getAccessTokenResponse($provider);
 
         $redirectUri = request()->get('state');
-        if ($this->validateRedirectUri($redirectUri)) {
+        if ($redirectUri && $this->validateRedirectUri($redirectUri)) {
             $redirectUri .= '?' . http_build_query($data);
 
             return redirect($redirectUri);
