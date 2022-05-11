@@ -83,14 +83,15 @@ if ($user && (!$user->currentTeam || $user->can('update', $user->currentTeam))) 
     @endif
     
     @if($user->invitations->count())
-    <div class="mt-6 onboarding-tagline">
+    <div class="onboarding-container">
+        <p>
         {{ trans_choice('content.open_invitiations', $user->invitations->count()) }}
+        </p>
         @if($user->ownedTeams()->count())
-        <div>
+        <p>
             {!! __('content.contact_support_to_delete_owned_teams') !!}
-        </div>
-        @else
-        @if($user->allTeams()->count())
+        </p>
+        @elseif($user->allTeams()->count())
         <div>
             <strong>
                 {{ __('content.accepting_invitation_will_result_in_leaving_your_current_team', ['team_name' => $user->allTeams()->first()->name]) }}
@@ -105,10 +106,12 @@ if ($user && (!$user->currentTeam || $user->can('update', $user->currentTeam))) 
                     {{ $invitation->team->name }} - <a href="mailto:{{ $invitation->team->owner->email }}">{{ $invitation->team->owner->email }}</a>
                 </div>
                 <div class="onboarding-step-tagline--todo">
+                    @if(!$user->ownedTeams()->count())
                     <a href="{{ route('team-invitations.accept', ['invitation' => $invitation]) }}">
                         {{ __('content.accept_invitiation') }}
                     </a>
                     {{ __('content.or') }}
+                    @endif
                     <a href="{{ route('team-invitations.reject', ['invitation' => $invitation]) }}">
                         {{ __('content.reject_invitiation') }}
                     </a>
@@ -117,7 +120,6 @@ if ($user && (!$user->currentTeam || $user->can('update', $user->currentTeam))) 
         @endforeach
         </div>
         </div>
-        @endif
     </div>
     @endif
 </div>

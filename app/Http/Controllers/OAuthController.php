@@ -142,7 +142,7 @@ class OAuthController extends BaseOAuthController
 
     protected function validateRedirectUri($redirectUri)
     {
-        return in_array($redirectUri, config('services.azureadb2c.redirect_uri'));
+        return config('services.azureadb2c.validate_redirect_uri_disabled') || in_array($redirectUri, config('services.azureadb2c.redirect_uri'));
     }
 
     protected function getAccessTokenResponse(ProviderInterface $provider)
