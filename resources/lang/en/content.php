@@ -205,7 +205,7 @@ Read more about ROI [large organizations] (https://www.witty.works/witty-for-lar
     'onboarding_signup_to_witty' => 'Sign up for a Witty account',
     'team' => 'Team',
     'accepting_invitation_will_result_in_leaving_your_current_team' => 'Accepting an invitation will result in leaving team ":team_name".',
-    'contact_support_to_delete_owned_teams' => 'Since you are a team owner, in order to be able to accept invitations, please <a href="mailto:support@witty.works">contact support</a>.',
+    'contact_support_to_delete_owned_teams' => 'Since you are a team owner, in order to be able to accept invitations, please either <a href=":deleteUrl">delete</a> your team or <a href="mailto:support@witty.works">contact support</a>.',
     'billing' => 'billing',
     'browser_login' => 'Browser Login',
     'login_failed' => 'Login failed',

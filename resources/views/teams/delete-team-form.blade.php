@@ -1,6 +1,6 @@
 <x-jet-action-section>
     <x-slot name="title">
-        {{ __('content.delete_team') }}
+        <span id="delete-team">{{ __('content.delete_team') }}</span>
     </x-slot>
 
     <x-slot name="description">

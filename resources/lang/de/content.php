@@ -190,7 +190,7 @@ Lese mehr über den ROI für [Organisationen](https://www.witty.works/witty-for-
     'login_cta' => 'Beginne mit der Erstellung deines eigenen <a href=":url">Logins</a>',
     'team' => 'Team',
     'accepting_invitation_will_result_in_leaving_your_current_team' => 'Das Annehmen einer Einladung führt zum Verlassen des Teams „:team_name“.',
-    'contact_support_to_delete_owned_teams' => 'Da du ein:e Teambesitzer:in bist, um Einladungen annehmen zu können, lösche entweder dein aktuelles Team oder wende dich bitte an den <a href="mailto:support@witty.works">Support</a>.',
+    'contact_support_to_delete_owned_teams' => 'Da du ein:e Teambesitzer:in bist, um Einladungen annehmen zu können, <a href=":deleteUrl">lösche</a> entweder dein aktuelles Team oder wende dich bitte an den <a href="mailto:support@witty.works">Support</a>.',
     'add_team_member' => 'Teammitglied hinzufügen',
     'billing' => 'Abrechnung',
     'browser_login' => 'Browser-Anmeldung',
