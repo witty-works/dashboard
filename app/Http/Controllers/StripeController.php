@@ -45,7 +45,7 @@ class StripeController extends Controller
                 ->checkout(
                     [[
                         'price' => config('stripe.plans.witty_teams.price_id'),
-                        'quantity' => $team->total_user_licenses_count
+                        'quantity' => $team->getTotalUserCount()
                     ]],
                     [
                         'success_url' => $this->teamShowRoute($team),

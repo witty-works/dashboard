@@ -128,7 +128,7 @@ class UpdateOrganizationGuidelines
 
         $config['singular_they'] = [
             'value' => $orgGuidelines->singular_they ? 'all_pronouns' : 'he_or_she',
-            'status' => $orgGuidelines->singular_they_force ? 'force' : 'suggestion',
+            'status' => $orgGuidelines->english_rules_force ? 'force' : 'suggestion',
         ];
 
         $config['show_inspiration_alternatives'] = [
@@ -138,12 +138,12 @@ class UpdateOrganizationGuidelines
 
         $config['gendered_roles_format'] = [
             'value' => $orgGuidelines->gendered_roles_format,
-            'status' => $orgGuidelines->gendered_roles_format_force ? 'force' : 'suggestion',
+            'status' => $orgGuidelines->german_rules_force ? 'force' : 'suggestion',
         ];
 
         $config['german_gender_ending'] = [
             'value' => $orgGuidelines->german_gender_ending,
-            'status' => $orgGuidelines->german_gender_ending_force ? 'force' : 'suggestion',
+            'status' => $orgGuidelines->german_rules_force ? 'force' : 'suggestion',
         ];
 
         foreach (OrganizationGuidelines::DISABLED_CATEGORIES as $category) {

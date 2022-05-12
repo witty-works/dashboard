@@ -3,7 +3,7 @@
 
 {{ __('content.invitation_email_welcome') }}
 
-@component('mail::button', ['url' => route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'login'])])
+@component('mail::button', ['url' => route('dashboard')])
 {{ __('content.register') }}
 @endcomponent
 
