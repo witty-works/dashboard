@@ -193,7 +193,7 @@ Read more about [Witty](https://www.witty.works/ "Inclusive writing, anywhere, i
 * Unconscious bias awareness session
 * Centralized control over data privacy
 
-Read more about Services for [large organizations] (https://www.witty.works/witty-for-large-organizations "Witty for large organizsations") or [small organizations] (https://www.witty.works/witty-for-small-and-medium-sized-organizations "Witty for small organizations").',
+Read more about Services for [large organizations](https://www.witty.works/witty-for-large-organizations "Witty for large organizsations") or [small organizations](https://www.witty.works/witty-for-small-and-medium-sized-organizations "Witty for small organizations").',
     'section_4_title' => 'Witty’s ROI for Organizations',
     'section_4_text' => 'The use of Witty increases organizations’ competitive advantage. 
 * Reach 100% of target groups instead of only 60%.
@@ -201,7 +201,7 @@ Read more about Services for [large organizations] (https://www.witty.works/witt
 * Implement [ESG](https://en.wikipedia.org/wiki/Environmental,_social_and_corporate_governance "Environmental, Social, and Governance") and [UNSDG](https://sdgs.un.org/goals "UN Sustainable Development Goals") concretely. 
 * Ensure streamlined brand voice through your whole organization. 
 
-Read more about ROI for [large organizations] (https://www.witty.works/witty-for-large-organizations "Witty for large organizations") or [small and medium sized organizations] (https://www.witty.works/witty-for-small-and-medium-sized-organizations "Witty for small organizations").',
+Read more about ROI for [large organizations](https://www.witty.works/witty-for-large-organizations "Witty for large organizations") or [small and medium sized organizations](https://www.witty.works/witty-for-small-and-medium-sized-organizations "Witty for small organizations").',
     'onboarding_signup_to_witty' => 'Sign up for a Witty account',
     'team' => 'Team',
     'accepting_invitation_will_result_in_leaving_your_current_team' => 'Accepting an invitation will result in leaving team ":team_name".',

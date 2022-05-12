@@ -39,7 +39,7 @@ return [
     'manage_organization_guidelines_description_style' => 'Wenn eingeschaltet, macht Witty Vorschläge, um deinen Text verständlicher zu machen, oder um ihm Authentizität oder Emotionalität zu verleihen. <a href="https://www.witty.works/de/kategorien/stil" target="_blank">Mehr dazu</a>.',
     'false_positive_list' => 'Begriffe ignorieren',
     'create_new_false_positive_description' => 'Alle Wörter, die du dieser Liste hinzufügst, werden in Zukunft nicht mehr hervorgehoben.',
-    'term_replacement_list' => 'Begriffe ersetzen',
+    'term_replacement_list' => 'Begriffsersetzungen',
     'create_term_replacement' => 'Team Wörterbuch',
     'create_new_term_replacement_description' => 'Alle Wörter, die zu dieser Liste hinzugefügt werden, werden von Witty hervorgehoben, und deine Alternative wird vorgeschlagen.',
     'term_label' => 'Begriff',

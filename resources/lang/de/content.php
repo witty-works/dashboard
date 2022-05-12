@@ -171,7 +171,7 @@ Lese mehr über [Witty](https://www.witty.works/ "Inklusives Schreiben, überall
 * Sensibilisierung für unbewusste Vorurteile
 Zentralisierte Kontrolle über den Datenschutz
 
-Lese mehr über [grosse Organisationen] (https://www.witty.works/witty-for-large-organizations "Witty for large organizsations") oder [kleine und mittlere Organisationen] (https://www.witty.works/witty-for-small-and-medium-sized-organizations "Witty for small organizations").',
+Lese mehr über [grosse Organisationen](https://www.witty.works/witty-for-large-organizations "Witty for large organizsations") oder [kleine und mittlere Organisationen](https://www.witty.works/witty-for-small-and-medium-sized-organizations "Witty for small organizations").',
     'section_4_title' => 'Wittys ROI für Organisationen',
     'section_4_text' => 'Der Einsatz von Witty erhöht den Wettbewerbsvorteil von Unternehmen.
 * Erreiche 100 % der Zielgruppen statt nur 60 %.
@@ -179,7 +179,7 @@ Lese mehr über [grosse Organisationen] (https://www.witty.works/witty-for-large
 * [ESG](https://en.wikipedia.org/wiki/Environmental,_social_and_corporate_governance "Umwelt, Soziales und Unternehmensführung") und [UNSDG](https://sdgs.un.org/goals "UN Sustainable Development Goals") konkret umsetzen.
 * Sorge für eine optimierte Markenstimme in deiner gesamten Organisation.
 
-Lese mehr über den ROI für [grosse Organisationen] (https://www.witty.works/witty-for-large-organizations "Witty for large organizsations") oder [kleine und mittlere Organisationen] (https://www.witty.works/witty-for-small-and-medium-sized-organizations "Witty for small organizations").',
+Lese mehr über den ROI für [grosse Organisationen](https://www.witty.works/witty-for-large-organizations "Witty for large organizsations") oder [kleine und mittlere Organisationen](https://www.witty.works/witty-for-small-and-medium-sized-organizations "Witty for small organizations").',
     'onboarding_signup_to_witty' => 'Meldung für ein Witty-Konto',
     'invitation_email_welcome' => 'Um diese Einladung anzunehmen, logge dich mit deinem bestehenden Konto ein oder registriere ein neues, indem du auf die Schaltfläche unten klickst:',
     'onboarding_install_witty' => 'Installiere unsere Witty-Browsererweiterung',
