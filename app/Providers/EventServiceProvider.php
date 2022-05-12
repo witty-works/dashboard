@@ -74,14 +74,17 @@ class EventServiceProvider extends ServiceProvider
         SubscriptionCreated::class => [
             SyncStartRenwalDates::class,
             UpdateOrganizationGuidelines::class,
+            UpdateUserLicenses::class,
         ],
         SubscriptionUpdated::class => [
             SyncStartRenwalDates::class,
             UpdateOrganizationGuidelines::class,
+            UpdateUserLicenses::class,
         ],
         SubscriptionCancelled::class => [
             SyncStartRenwalDates::class,
             UpdateOrganizationGuidelines::class,
+            UpdateUserLicenses::class,
         ],
         SocialiteWasCalled::class => [
             AzureADB2CExtendSocialite::class,
