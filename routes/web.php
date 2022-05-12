@@ -110,7 +110,7 @@ Route::group(
 
                     Route::get('/teams/{team}/ignore-words', [GuidelinesController::class, 'editFalsePositives'])->name('false-positive');
 
-                    Route::get('/teams/{team}/term-replacements', [GuidelinesController::class, 'editTermReplacements'])->name('term-replacement');
+                    Route::get('/teams/{team}/replace-terms', [GuidelinesController::class, 'editTermReplacements'])->name('term-replacement');
 
                     Route::get('/teams/{team}/customize-witty', [GuidelinesController::class, 'editOrganizationGuidelines'])->name('organization-guidelines');
 

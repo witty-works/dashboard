@@ -147,47 +147,46 @@ return [
     'onboarding_configure_organization_guidelines' => '2. Konfiguriere deine Spracheinstellungen',
     'onboarding_invite_users' => '3. Lade Teammitglieder ein',
     'section_1_title' => 'Was ist Witty?',
-    'section_1_text' => 'Witty ist ein integrativer Schreibassistent für Einzelpersonen und Organisationen, der die Freude am integrativen Schreiben einfach, in Echtzeit und schnell bringt.
+    'section_1_text' => 'Witty ist ein **integrativer Schreibassistent** für Einzelpersonen und Organisationen, der Freude am integrativen Schreiben vermittelt. Witty ist einfach und schnell.
 
-Es ist ein Software-as-a-Service, der **unbewusste Stereotypen in der Kommunikation erkennen** kann. Und führt Autor:innen dann an, wie dieselben Inhalte inklusiv formuliert werden können.
+Witty ist eine Software-as-a-Service, die **unbewusste Stereotypen in der Kommunikation überprüft und Alternativen vorschlägt**. 
 
-Witty bietet die ganze inklusive Sprachlogik in Englisch und Deutsch an. Außerdem erhalte Feedback zu Rechtschreibung und Grammatik. Weitere Sprachen sind geplant.
+Witty bietet die gesamte inklusive Sprachlogik auf **Englisch und Deutsch**. Weitere Sprachen sind geplant. Witty gibt auch Feedback zu **Rechtschreibung und Grammatik**. 
 
-Mit Witty wirst du täglich Teil des Wandels hin zu mehr Vielfalt und Inklusion.
-
+Mit Witty trägst du zu mehr Vielfalt und Inklusion bei.
 Lese mehr über [Witty](https://www.witty.works/ "Inklusives Schreiben, überall, in Echtzeit").',
-    'section_2_title' => 'Was macht Witty Dashboard?',
-    'section_2_text' => 'Witty Dashboard hilft dir, Witty für dein Team einzurichten und zu verwalten. Einmal eingeloggt, verwaltest du folgendes:
+    'section_2_title' => 'Was kanns du auf dem Witty Dashboard machen?',
+    'section_2_text' => 'Witty Dashboard hilft dir, Witty für dein Team einzurichten und anzupassen. Sobald du eingeloggt sind, kannst du:
 
-* Lade dein Team ein
-* Richten eure Spracheinstellungen ein. So stellst du sicher, dass dein gesamtes Team mit der gleichen Markenstimme schreibt.
-* Demnächst verfügbar: Lesen und interpretiere Analysen auf Team-, Abteilungs- und Unternehmensebene in Übereinstimmung mit Datenschutzgesetzen.
-* Demnächst verfügbar: Witty Editor – eine einfache Anwendung, die für alle funktioniert, auch für diejenigen, die das Browser-Plug-in (noch) nicht verwenden ',
+* Teammitglieder einladen
+* Spracheinstellungen einrichten. Auf diese Weise kannst du sicherstellen, dass dein gesamtes Team konsistent schreibt.
+* Demnächst verfügbar: Zugang zu **detaillierten Statistiken** in Übereinstimmung mit den Datenschutzgesetzen erhalten.
+* Demnächst verfügbar: Witty Editor - eine einfache App, die auch ohne Browser-Plugin nicht verwenden.',
     'section_3_title' => 'Witty für Teams und Organisationen',
-    'section_3_text' => 'Für Organisationen bietet Witty eine Reihe von Dienstleistungen an, damit ganze Teams reibungslos mit Witty arbeiten können, wie zum Beispiel:
-* Single sign-on Anmeldung
-* Lade dein ganzes Team ein, um einfacher an eurer Spracheinstellungen zusammen zu arbeiten
-* Konfiguriere die Team eigene Sprache
-* Demnächst verfügbar: Statistik der Organisation/Abteilung
-* Sitzung zur Sensibilisierung für unbewusste Voreingenommenheit
-* Zentrale Kontrolle über den Datenschutz
+    'section_3_text' => 'Für Unternehmen bietet Witty eine Reihe an Services, die Teams helfen, optimal mit Witty zu arbeiten, wie z.B:
 
-Lese mehr über Dienstleistungen für [Organisationen](https://www.witty.works/witty-for-companies "Witty for Organizations").',
-    'section_4_title' => 'Wittys ROI für Unternehmen',
+* Einmalige Anmeldung
+* Einladen von Teammitgliedern, um besser zusammenzuarbeiten und konsistenz zu schreiben.
+* Sensibilisierung für unbewusste Vorurteile
+* Sensibilisierung für unbewusste Vorurteile
+Zentralisierte Kontrolle über den Datenschutz
+
+Lese mehr über [grosse Organisationen] (https://www.witty.works/witty-for-large-organizations "Witty for large organizsations") oder [kleine und mittlere Organisationen] (https://www.witty.works/witty-for-small-and-medium-sized-organizations "Witty for small organizations").',
+    'section_4_title' => 'Wittys ROI für Organisationen',
     'section_4_text' => 'Der Einsatz von Witty erhöht den Wettbewerbsvorteil von Unternehmen.
 * Erreiche 100 % der Zielgruppen statt nur 60 %.
 * Vielfalt und Inklusion umsetzen – effizient und effektiv
 * [ESG](https://en.wikipedia.org/wiki/Environmental,_social_and_corporate_governance "Umwelt, Soziales und Unternehmensführung") und [UNSDG](https://sdgs.un.org/goals "UN Sustainable Development Goals") konkret umsetzen.
 * Sorge für eine optimierte Markenstimme in deiner gesamten Organisation.
 
-Lese mehr über den ROI für [Organisationen](https://www.witty.works/witty-for-companies "Witty for Organizations").',
+Lese mehr über den ROI für [grosse Organisationen] (https://www.witty.works/witty-for-large-organizations "Witty for large organizsations") oder [kleine und mittlere Organisationen] (https://www.witty.works/witty-for-small-and-medium-sized-organizations "Witty for small organizations").',
     'onboarding_signup_to_witty' => 'Meldung für ein Witty-Konto',
     'invitation_email_welcome' => 'Um diese Einladung anzunehmen, logge dich mit deinem bestehenden Konto ein oder registriere ein neues, indem du auf die Schaltfläche unten klickst:',
     'onboarding_install_witty' => 'Installiere unsere Witty-Browsererweiterung',
     'open_invitiations' => '{1} Du wurdest eingeladen, einem Team beizutreten. Du kannst nur in einem Team sein. Bitte entscheiden dich, ob du die Einladung annehmen oder ablehnen möchtest.|{2,*} Du wurdest eingeladen, mehreren Teams beizutreten, bitte entscheiden dich, ob du eine dieser Einladungen annehmen möchtest. Du kannst nur in einem Team sein. ',
     'accept_invitiation' => 'Annehmen',
     'reject_invitiation' => 'Ablehnen',
-    'login_cta' => 'Beginne mit der Erstellung deines eigenen <a href=":url">Logins</a>',
+    'login_cta' => 'Erstelel deines eigenes <a href=":url">Login</a>.',
     'team' => 'Team',
     'accepting_invitation_will_result_in_leaving_your_current_team' => 'Das Annehmen einer Einladung führt zum Verlassen des Teams „:team_name“.',
     'contact_support_to_delete_owned_teams' => 'Da du ein:e Teambesitzer:in bist, um Einladungen annehmen zu können, <a href=":deleteUrl">lösche</a> entweder dein aktuelles Team oder wende dich bitte an den <a href="mailto:support@witty.works">Support</a>.',
@@ -209,7 +208,7 @@ Lese mehr über den ROI für [Organisationen](https://www.witty.works/witty-for-
     'edit' => 'bearbeiten',
     'language_guidelines' => 'Spracheinstellungen',
     'introduction_videos' => 'Einführungsvideos',
-    'go-to-form' => 'Probieren Sie Witty hier aus',
+    'go-to-form' => 'Witty hier ausprobieren',
     'onboarding_install_witty_title' => 'Installiere Witty',
     'onboarding_install_witty_text' => 'Witty ist ein Browser-Plugin, das inklusives Schreiben jederzeit für jeden möglich macht',
     'onboarding_install_witty_button' => 'Hole dir Witty',
