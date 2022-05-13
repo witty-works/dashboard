@@ -71,7 +71,7 @@ return [
     'select_a_new_photo' => 'Wähle ein neues Profilfoto',
     'remove_photo' => 'Profilfoto entfernen',
     'team_details' => 'Teamdetails',
-    'team_owner' => 'Team Eigentümer:in',
+    'team_owner' => 'Team-Eigentümer:in',
     'team_name' => 'Team Name',
     'create_team' => 'Team erstellen',
     'delete_team' => 'Team löschen',
@@ -124,10 +124,12 @@ return [
     'all_of_the_people' => 'Alle Personen, die Teil dieses Teams sind.',
     'are_you_sure_you_would_like_to_leave' => 'Möchtest du dieses Team wirklich verlassen?',
     'are_you_sure_you_would_like_to_remove' => 'Möchtest du diese Person wirklich aus dem Team entfernen?',
-    'team_information' => 'Name und Eingentümer:in des Teams',
+    'team_information' => 'Name und Team-Eigentümer:in des Teams',
     'for_your_security_confirm' => 'Zu deiner eigenen Sicherheit, Bestätige dein Passwort, um fortzufahren.',
     'whoops' => 'Hoppla! Etwas ist schief gelaufen.',
-    'you_have_been_invited' => 'Du wurdest eingeladen, dem :team -Team beizutreten!',
+    'you_have_been_invited' => 'Willkommen bei Witty!
+
+Du wurdest von <a href="mailto::email">:name</a> auf <a href="https://www.witty.works/select-browser">Witty</a> eingeladen, dem :team Team beizutreten.',
     'if_you_did_not_expect' => 'Wenn du nicht erwartet hattest, eine Einladung zu diesem Team zu erhalten, kannst du diese E-Mail verwerfen.',
     'woops' => 'hoppla',
     'documentation' => 'Dokumentation',
@@ -181,7 +183,9 @@ Lese mehr über [grosse Organisationen](https://www.witty.works/witty-for-large-
 
 Lese mehr über den ROI für [grosse Organisationen](https://www.witty.works/witty-for-large-organizations "Witty for large organizsations") oder [kleine und mittlere Organisationen](https://www.witty.works/witty-for-small-and-medium-sized-organizations "Witty for small organizations").',
     'onboarding_signup_to_witty' => 'Meldung für ein Witty-Konto',
-    'invitation_email_welcome' => 'Um diese Einladung anzunehmen, logge dich mit deinem bestehenden Konto ein oder registriere ein neues, indem du auf die Schaltfläche unten klickst:',
+    'invitation_email_welcome' => 'Wenn du dem Team beitrittst, erhältst du Zugriff auf die Spracheinstellungen des Teams auf Witty.
+
+Um diese Einladung anzunehmen, melde dich mit deinem bestehenden Konto an oder registriere ein neues Konto, indem du auf die Schaltfläche unten klickst:',
     'onboarding_install_witty' => 'Installiere unsere Witty-Browsererweiterung',
     'open_invitiations' => '{1} Du wurdest eingeladen, einem Team beizutreten. Du kannst nur in einem Team sein. Bitte entscheiden dich, ob du die Einladung annehmen oder ablehnen möchtest.|{2,*} Du wurdest eingeladen, mehreren Teams beizutreten, bitte entscheiden dich, ob du eine dieser Einladungen annehmen möchtest. Du kannst nur in einem Team sein. ',
     'accept_invitiation' => 'Annehmen',
@@ -218,5 +222,12 @@ Lese mehr über den ROI für [grosse Organisationen](https://www.witty.works/wit
     'privacy' => 'Datenschutzerklärung',
     'trust-and-security' => 'Vertrauen & Sicherheit',
     'imprint' => 'Impressum',
-    'making_changes_requires_admin_rights' => 'Um Änderungen vorzunehmen, sind Administrationsrechte erforderlich. Bitte wende dich an die <a href="mailto::email">Teambesitzer:in</a> .',
+    'making_changes_requires_admin_rights' => 'Um Änderungen vorzunehmen, sind Administrationsrechte erforderlich. Bitte wende dich an dein:e <a href="mailto::email">Team-Eigentümer:in</a>.',
+    'already_invited_to_team' => 'Diese:r Benutzer:in wurde bereits in das Team eingeladen.',
+    'already_belongs_to_team' => 'Diese:r Benutzer:in ist schon im Team.',
+    'team_invitation_subject' => ':name hat dich eingeladen, dem :team Team auf Witty beizutreten',
+    'if_you_have_questions' => '<a href="https://www.witty.works/en/help/wittys-help-center">Hier</a> findest du Antworten auf viele Fragen. Du erreichst uns unter <a href="mailto:support@witty.works">support@witty.works</a>. Wir sind hier, um dir bei jedem Schritt auf dem Weg zu helfen.',
+    'have_a_great_day' => 'Wir wünschen dir einen schönen Tag,
+
+Dein Witty-Team',
 ];

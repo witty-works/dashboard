@@ -24,6 +24,6 @@ return [
     'user_licenses_count_will_be_decreased_updated_at' => '{1} Ein:e Lizenz wird in ein paar Munuten entfernt | :diff Lizenzen werden in ein paar Minuten entfernt',
     'please_remove_users_or_upgrade' => '{1} Bitte entferne eine Person oder wechsele deinen <a href=":url">Plan</a>, um alle Teammitglieder:innen zu reaktivieren. | Bitte entferne :diff Personen oder wechsele deinen <a href=":url">Plan</a>, um alle Teammitglieder:innen wieder zu aktivieren.',
     'end_date' => 'Enddatum',
-    'team_owner' => 'Team Eigentümer:in',
+    'team_owner' => 'Team-Eigentümer:in',
     'upgrade_to_witty_teams' => 'Bitte führen einen Planwechsel auf Witty Teams durch',
 ];
