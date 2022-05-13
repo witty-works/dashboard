@@ -186,7 +186,7 @@ Lese mehr über den ROI für [grosse Organisationen](https://www.witty.works/wit
     'open_invitiations' => '{1} Du wurdest eingeladen, einem Team beizutreten. Du kannst nur in einem Team sein. Bitte entscheiden dich, ob du die Einladung annehmen oder ablehnen möchtest.|{2,*} Du wurdest eingeladen, mehreren Teams beizutreten, bitte entscheiden dich, ob du eine dieser Einladungen annehmen möchtest. Du kannst nur in einem Team sein. ',
     'accept_invitiation' => 'Annehmen',
     'reject_invitiation' => 'Ablehnen',
-    'login_cta' => 'Erstelel deines eigenes <a href=":url">Login</a>.',
+    'login_cta' => 'Erstelle deines eigenes <a href=":url">Login</a>.',
     'team' => 'Team',
     'accepting_invitation_will_result_in_leaving_your_current_team' => 'Das Annehmen einer Einladung führt zum Verlassen des Teams „:team_name“.',
     'contact_support_to_delete_owned_teams' => 'Da du ein:e Teambesitzer:in bist, um Einladungen annehmen zu können, <a href=":deleteUrl">lösche</a> entweder dein aktuelles Team oder wende dich bitte an den <a href="mailto:support@witty.works">Support</a>.',
