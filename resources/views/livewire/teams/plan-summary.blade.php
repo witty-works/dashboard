@@ -1,3 +1,4 @@
+<div wire:poll.5000ms>
 <x-jet-section-border />
 <x-jet-form-section  submit="">
     <x-slot name="title">
@@ -77,6 +78,7 @@
             {{ $team->subscription()->renews_at->toFormattedDateString() }}
         </div>
         @endif
-        @endif    
+        @endif
      </x-slot>
 </x-jet-form-section>
+</div>
