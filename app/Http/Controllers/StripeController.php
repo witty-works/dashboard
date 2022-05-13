@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Team;
 use Illuminate\Http\Request;
-use Laravel\Cashier\Cashier;
 
 class StripeController extends Controller
 {
@@ -35,7 +33,7 @@ class StripeController extends Controller
                 }
 
                 return $team->redirectToBillingPortal(
-                    $this->teamShowRoute($team),
+                    route('dashboard'),
                     ['locale' => app()->getLocale()]
                 );
             }
@@ -48,18 +46,13 @@ class StripeController extends Controller
                         'quantity' => $team->getTotalUserCount()
                     ]],
                     [
-                        'success_url' => $this->teamShowRoute($team),
-                        'cancel_url' => $this->teamShowRoute($team),
+                        'success_url' => route('dashboard'),
+                        'cancel_url' => route('teams.show', ['team' => $team]),
                         'mode' => 'subscription'
                     ]
                 )->redirect();
         }
 
         return redirect('https://www.witty.works/pricing');
-    }
-
-    protected function teamShowRoute(Team $team)
-    {
-        return route('teams.show', ['team' => $team]);
     }
 }

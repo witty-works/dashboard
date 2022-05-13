@@ -18,7 +18,7 @@ class German extends Component
     protected $rules = [
         'german_rules_force' => 'nullable|boolean',
         'german_gender_ending' => 'nullable|string|in::in,*in,/in,_in,In,/-in',
-        'gendered_roles_format' => 'nullable|string|in:both,inclusive_gender,binary_gender',
+        'gendered_roles_format' => 'nullable|string|in:both,inclusive_gender,binary_gender,none',
     ];
 
     public $team;
