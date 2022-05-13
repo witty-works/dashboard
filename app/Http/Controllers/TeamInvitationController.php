@@ -27,7 +27,7 @@ class TeamInvitationController extends BaseTeamInvitationController
         if ($user->currentTeam) {
             if ($user->ownsTeam($user->currentTeam)) {
                 return redirect()->route('dashboard')->withErrors(
-                    __('You may not leave a team that you created.')
+                    __('content.cannot_leave_team_you_created')
                 );
             }
 

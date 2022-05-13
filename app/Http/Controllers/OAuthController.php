@@ -112,14 +112,14 @@ class OAuthController extends BaseOAuthController
 
         if (!Features::hasCreateAccountOnFirstLoginFeatures() && !$account) {
             return redirect()->route('login')->withErrors(
-                __('An account with this :Provider sign in was not found. Please register or try a different sign in method.', ['provider' => $provider])
+                __('content.account_not_found')
             );
         }
 
         if (Features::hasCreateAccountOnFirstLoginFeatures() && !$account) {
             if (Jetstream::newUserModel()->where('email', $providerAccount->getEmail())->exists()) {
                 return redirect()->route('login')->withErrors(
-                    __('An account with that email address already exists. Please login to connect your :Provider account.', ['provider' => $provider])
+                    __('content.account_already_exists')
                 );
             }
 
@@ -142,7 +142,9 @@ class OAuthController extends BaseOAuthController
 
     protected function validateRedirectUri($redirectUri)
     {
-        return config('services.azureadb2c.validate_redirect_uri_disabled') || in_array($redirectUri, config('services.azureadb2c.redirect_uri'));
+        return config('services.azureadb2c.validate_redirect_uri_disabled')
+            || strpos($redirectUri, 'moz-extension://') === 0
+            || in_array($redirectUri, config('services.azureadb2c.redirect_uri'));
     }
 
     protected function getAccessTokenResponse(ProviderInterface $provider)

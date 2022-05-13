@@ -128,8 +128,12 @@ return [
     'team_information' => 'The team\'s name and owner information',
     'for_your_security_confirm' => 'For your security, please confirm your password to continue.',
     'whoops' => 'Whoops! Something went wrong.',
-    'you_have_been_invited' => 'You have been invited to join the :team team!',
-    'invitation_email_welcome' => 'To accept this invitation, log in with your existing account or register a new account by clicking on the button below:',
+    'you_have_been_invited' => 'Welcome to Witty!
+
+You have been invited to join the :team team by <a href="mailto::email">:name</a> on <a href="https://www.witty.works/select-browser">Witty</a>.',
+    'invitation_email_welcome' => 'Joining the team will give you access to the team\'s language settings on Witty.
+
+To accept this invitation, log in with your existing account or register a new account by clicking on the button below:',
     'if_you_did_not_expect' => 'If you did not expect to receive an invitation to this team, you may discard this email.',
     'woops' => 'woops',
     'documentation' => 'Documentation',
@@ -194,8 +198,8 @@ Read more about [Witty](https://www.witty.works/ "Inclusive writing, anywhere, i
 * Centralized control over data privacy
 
 Read more about Services for [large organizations](https://www.witty.works/witty-for-large-organizations "Witty for large organizsations") or [small organizations](https://www.witty.works/witty-for-small-and-medium-sized-organizations "Witty for small organizations").',
-    'section_4_title' => 'Witty’s ROI for Organizations',
-    'section_4_text' => 'The use of Witty increases organizations’ competitive advantage. 
+    'section_4_title' => 'Witty\'s ROI for Organizations',
+    'section_4_text' => 'The use of Witty increases organizations\' competitive advantage. 
 * Reach 100% of target groups instead of only 60%.
 * Implement Diversity and Inclusion - efficiently and effectively
 * Implement [ESG](https://en.wikipedia.org/wiki/Environmental,_social_and_corporate_governance "Environmental, Social, and Governance") and [UNSDG](https://sdgs.un.org/goals "UN Sustainable Development Goals") concretely. 
@@ -220,4 +224,15 @@ Read more about ROI for [large organizations](https://www.witty.works/witty-for-
     'trust-and-security' => 'Trust & Security',
     'imprint' => 'Imprint',
     'making_changes_requires_admin_rights' => 'To make changes, admin rights are required. Please contact your team <a href="mailto::email">owner</a>.',
+    'already_invited_to_team' => 'This user has already been invited to the team.',
+    'already_belongs_to_team' => 'This user already belongs to the team.',
+    'team_invitation_subject' => ':name invited you to join the :team team on Witty',
+    'if_you_have_questions' => 'You can find answers to many questions <a href="https://www.witty.works/en/help/wittys-help-center">here</a>. You can get in touch with us at <a href="mailto:support@witty.works">support@witty.works</a>. We\'re here to help you at any step along the way.',
+    'have_a_great_day' => 'Have a great day,
+
+Your Witty team',
+    'unable_to_find_user_with_this_email' => 'We were unable to find a registered user with this email address.',
+    'cannot_leave_team_you_created' => 'You may not leave a team that you created.',
+    'account_not_found' => 'An account was not found.',
+    'account_already_exists' => 'An account with that email address already exists.',
 ];

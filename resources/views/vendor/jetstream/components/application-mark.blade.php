@@ -1,1 +1,1 @@
-<img src="{{ url('svg/witty-logo-white.svg') }}" id="ww-main-nav-logo"/>
+<img src="{{ url('svg/witty-logo-white.svg') }}" id="ww-main-nav-logo" alt="Witty Works"/>
