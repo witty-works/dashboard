@@ -58,7 +58,7 @@ class RemoveTeamMember implements RemovesTeamMembers
     {
         if ($teamMember->id === $team->owner->id) {
             throw ValidationException::withMessages([
-                'team' => [__('You may not leave a team that you created.')],
+                'team' => [__('content.cannot_leave_team_you_created')],
             ])->errorBag('removeTeamMember');
         }
     }

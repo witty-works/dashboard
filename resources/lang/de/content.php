@@ -230,4 +230,8 @@ Um diese Einladung anzunehmen, melde dich mit deinem bestehenden Konto an oder r
     'have_a_great_day' => 'Wir wünschen dir einen schönen Tag,
 
 Dein Witty-Team',
+    'unable_to_find_user_with_this_email' => 'Wir konnten keine:n registrierte:n Benutzer:in mit dieser E-Mail-Adresse finden.',
+    'cannot_leave_team_you_created' => 'Du kannst ein von Ihnen erstelltes Team nicht verlassen.',
+    'account_not_found' => 'Es wurde kein Konto gefunden.',
+    'account_already_exists' => 'Ein Konto mit dieser E-Mail-Adresse ist bereits vorhanden.',
 ];

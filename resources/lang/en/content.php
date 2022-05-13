@@ -231,4 +231,8 @@ Read more about ROI for [large organizations](https://www.witty.works/witty-for-
     'have_a_great_day' => 'Have a great day,
 
 Your Witty team',
+    'unable_to_find_user_with_this_email' => 'We were unable to find a registered user with this email address.',
+    'cannot_leave_team_you_created' => 'You may not leave a team that you created.',
+    'account_not_found' => 'An account was not found.',
+    'account_already_exists' => 'An account with that email address already exists.',
 ];
