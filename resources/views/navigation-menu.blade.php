@@ -240,24 +240,7 @@
                 <div class="border-t border-gray-200"></div>
                 @endauth
 
-                <x-jet-responsive-nav-link href="https://www.witty.works/terms">
-                    {{ __('content.terms') }}
-                </x-jet-responsive-nav-link>
-                <x-jet-responsive-nav-link href="https://www.witty.works/contact-sales">
-                    {{ __('content.contact') }}
-                </x-jet-responsive-nav-link>
-                <x-jet-responsive-nav-link href="https://www.witty.works/demo">
-                    {{ __('content.book-demo') }}
-                </x-jet-responsive-nav-link>
-                <x-jet-responsive-nav-link href="https://www.witty.works/privacy">
-                    {{ __('content.privacy') }}
-                </x-jet-responsive-nav-link>
-                <x-jet-responsive-nav-link href="https://www.witty.works/trust-and-security">
-                    {{ __('content.trust-and-security') }}
-                </x-jet-responsive-nav-link>
-                <x-jet-responsive-nav-link href="https://www.witty.works/impressum">
-                    {{ __('content.imprint') }}
-                </x-jet-responsive-nav-link>
+                @include('partials/footer', ['type' => 'hamburger'])
 
                 <div class="border-t border-gray-200"></div>
 
