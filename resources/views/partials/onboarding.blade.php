@@ -57,33 +57,10 @@ if ($user && (!$user->currentTeam || $user->can('update', $user->currentTeam))) 
     }
 }
 @endphp
-
-@if($showOnboardingSteps)
-    <div class="onboarding-container">
-        <div class="onboarding-title">{{ __('content.onboarding_finish_setup_title') }}</div>
-        <div class="onboarding-tagline">{{ __('content.onboarding_finish_setup_tagline') }}</div>
-
-        <div class="onboarding-steps">
-            @foreach($onboardingSteps as $step)
-            <div class="onboarding-step-container onboarding-step-{{ $step['state'] }}">
-                @if ($step['link']) <a href="{{ $step['link'] }}"> @endif
-                    <div class="onboarding-step-text-wrapper">
-                        <div class="onboarding-step-title--{{ $step['state'] }}">{{ $step['title'] }}</div>
-                        <div class="onboarding-step-tagline--{{ $step['state'] }}">{{ $step['tagline'] }}</div>
-                    </div>
-                @if ($step['link']) </a> @endif
-                @if ($step['state'] == 'complete')
-                <img class="onboarding-step-icon" src="{{ url('svg/check-mark.svg') }}" alt="checkmark" />
-                @else 
-                <img class="onboarding-step-icon" src="{{ url('svg/arrow-right.svg') }}" alt="arrow"/>
-                @endif
-            </div>
-            @endforeach
-        </div>
-    @endif
-    
+ 
     @if($user->invitations->count())
     <div class="onboarding-container">
+        <div class="onboarding-title">{{ __('content.onboarding_invitations') }}</div>
         <p>
         {{ trans_choice('content.open_invitiations', $user->invitations->count()) }}
         </p>
@@ -121,5 +98,29 @@ if ($user && (!$user->currentTeam || $user->can('update', $user->currentTeam))) 
         </div>
         </div>
     </div>
+    @endif
+
+    @if($showOnboardingSteps)
+    <div class="onboarding-container">
+        <div class="onboarding-title">{{ __('content.onboarding_finish_setup_title') }}</div>
+        <div class="onboarding-tagline">{{ __('content.onboarding_finish_setup_tagline') }}</div>
+
+        <div class="onboarding-steps">
+            @foreach($onboardingSteps as $step)
+            <div class="onboarding-step-container onboarding-step-{{ $step['state'] }}">
+                @if ($step['link']) <a href="{{ $step['link'] }}"> @endif
+                    <div class="onboarding-step-text-wrapper">
+                        <div class="onboarding-step-title--{{ $step['state'] }}">{{ $step['title'] }}</div>
+                        <div class="onboarding-step-tagline--{{ $step['state'] }}">{{ $step['tagline'] }}</div>
+                    </div>
+                @if ($step['link']) </a> @endif
+                @if ($step['state'] == 'complete')
+                <img class="onboarding-step-icon" src="{{ url('svg/check-mark.svg') }}" alt="checkmark" />
+                @else 
+                <img class="onboarding-step-icon" src="{{ url('svg/arrow-right.svg') }}" alt="arrow"/>
+                @endif
+            </div>
+            @endforeach
+        </div>
     @endif
 </div>
