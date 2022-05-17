@@ -26,4 +26,5 @@ return [
     'end_date' => 'end date',
     'team_owner' => 'Team owner',
     'upgrade_to_witty_teams' => 'Please upgrade to Witty Teams',
+    'accepted_invitation' => 'Great! You have accepted the invitation to join the :team team.',
 ];

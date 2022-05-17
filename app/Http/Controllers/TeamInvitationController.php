@@ -22,7 +22,7 @@ class TeamInvitationController extends BaseTeamInvitationController
             abort(403, 'Unauthorized action.');
         }
 
-        $result = parent::accept($request, $invitation);
+        $response = parent::accept($request, $invitation);
 
         if ($user->currentTeam) {
             if ($user->ownsTeam($user->currentTeam)) {
@@ -40,7 +40,7 @@ class TeamInvitationController extends BaseTeamInvitationController
             $invitation->delete();
         }
 
-        return $result;
+        return $response->banner(__('teams.accepted_invitation', ['team' => $invitation->team->name]));
     }
 
     /**

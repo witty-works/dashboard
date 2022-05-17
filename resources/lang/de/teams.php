@@ -26,4 +26,5 @@ return [
     'end_date' => 'Enddatum',
     'team_owner' => 'Team-Eigentümer:in',
     'upgrade_to_witty_teams' => 'Bitte führen einen Planwechsel auf Witty Teams durch',
+    'accepted_invitation' => 'Toll! Du hast die Einladung angenommen, dem :team Team beizutreten.',
 ];
