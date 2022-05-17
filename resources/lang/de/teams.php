@@ -26,4 +26,6 @@ return [
     'end_date' => 'Enddatum',
     'team_owner' => 'Team-Eigentümer:in',
     'upgrade_to_witty_teams' => 'Bitte führen einen Planwechsel auf Witty Teams durch',
+    'ask_owner_to_buy_or_leave_to_create_own_team' => 'Bitte frag die:den Teameigentümer:in :name (:email), Witty zu abonnieren, oder verlasse dein aktuelles Team, um ein eigenes Team zu erstellen.',
+    'accepted_invitation' => 'Toll! Du hast die Einladung angenommen, dem :team Team beizutreten.',
 ];

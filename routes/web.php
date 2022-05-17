@@ -74,6 +74,8 @@ Route::group(
             return view('dashboard');
         })->name('dashboard');
 
+        Route::get('/subscribe', [StripeController::class, 'subscribe'])->name('stripe.subscribe');
+
         /*
         |------------------
         | JETSTREAM LIVEWIRE
@@ -163,8 +165,6 @@ Route::group(['middleware' => config('socialstream.middleware', ['web'])], funct
 | \SOCIALSTREAM
 |------------------
 */
-
-Route::get('/subscribe', [StripeController::class, 'subscribe'])->name('stripe.subscribe');
 
 Route::post(
     '/stripe/webhook',
