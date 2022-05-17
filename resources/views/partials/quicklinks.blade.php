@@ -24,7 +24,7 @@ if ($user) {
             </a>
             @endif
             @endif
-            <a class="onboarding-iconWrapper" href="https://www.witty.works/help">
+            <a class="onboarding-iconWrapper" href="https://www.witty.works/onboarding">
                 <img src="{{ url('svg/support.svg') }}" alt="{{ __('content.onboarding_support') }}"/>
                 <div class="onboarding-icon-description">{{ __('content.onboarding_support') }}</div>
             </a>
