@@ -12,7 +12,7 @@
             <x-jet-label value="{{ __('content.team_owner') }}" />
 
             <div class="flex items-center mt-2">
-                {{ $team->owner->name }} - {{ $team->owner->email }}
+                {{ $this->user->name }} - {{ $this->user->email }}
             </div>
         </div>
 
