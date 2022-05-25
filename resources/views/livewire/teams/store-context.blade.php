@@ -4,7 +4,7 @@
     <div class="mt-10 sm:mt-0">
         <x-jet-form-section submit="updateTeamsStoreContext">
             <x-slot name="title">
-                {{ __('teams.store_context') }}
+                {{ __('teams.privacy_settings') }}
             </x-slot>
 
             <x-slot name="description">

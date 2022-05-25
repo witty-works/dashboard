@@ -1,4 +1,3 @@
-<div wire:poll.5000ms>
 <x-jet-section-border />
 <x-jet-form-section  submit="">
     <x-slot name="title">
@@ -6,22 +5,23 @@
     </x-slot>
 
     <x-slot name="description">
-        {!! Str::markdown(__('teams.plan_summary_description')) !!}
     </x-slot>
 
     <x-slot name="form">
         <div class="col-span-6 sm:col-span-4">
             <x-jet-label for="name" value="{{ __('teams.plan_name') }}" />
-            @if($team->subscribed())
-                {{ $team->subscription()->planName() }}
-            @else
-                {{ __('stripe.witty_me') }}
+            <div>
+                {{ $team->subscribed() ? $team->subscription()->planName() : __('stripe.witty_me') }}
+            </div>
 
             @if(Auth::user()->ownsTeam($team))
-            <a href="{{ route('stripe.portal') }}">
-                {{ __('teams.upgrade') }}
-            </a>
-            @endif
+                <a href="{{ route('stripe.portal') }}">
+                    @if($team->subscribed())
+                    {{ $team->subscription()->isPaidByInvoice() ? __('stripe.contact_sales') : __('stripe.billing') }}
+                    @else
+                    {{ __('teams.upgrade') }}
+                    @endif
+                </a>
             @endif
         </div>
 
@@ -81,4 +81,3 @@
         @endif
      </x-slot>
 </x-jet-form-section>
-</div>
