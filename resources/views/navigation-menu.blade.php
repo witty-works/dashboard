@@ -93,11 +93,9 @@
                             {{ __('content.team_settings') }}
                         </x-jet-dropdown-link>
 
-                        @if($user->ownsTeam($team) && $team->subscription())
-                        <x-jet-dropdown-link href="{{ route('stripe.portal') }}">
-                            {{ $team->subscription()->isPaidByInvoice() ? __('stripe.contact_sales') : __('stripe.billing') }}
+                        <x-jet-dropdown-link href="{{ route('teams.subscription', $team->id) }}">
+                            {{ __('teams.subscription') }}
                         </x-jet-dropdown-link>
-                        @endif
 
                         <x-jet-dropdown-link href="{{ route('organization-guidelines', $team->id) }}">
                             {{ __('guidelines.organization_guidelines') }}
@@ -200,11 +198,9 @@
                     {{ __('content.team_settings') }}
                 </x-jet-responsive-nav-link>
 
-                @if($team->subscription())
-                <x-jet-responsive-nav-link href="{{ route('stripe.portal') }}">
-                    {{ $team->subscription()->isPaidByInvoice() ? __('stripe.contact_sales') : __('stripe.billing') }}
+                <x-jet-responsive-nav-link href="{{ route('teams.subscription', $team->id) }}">
+                    {{ __('teams.subscription') }}
                 </x-jet-responsive-nav-link>
-                @endif
 
                 <x-jet-responsive-nav-link href="{{ route('organization-guidelines', $team->id) }}">
                     {{ __('guidelines.organization_guidelines') }}
