@@ -3,6 +3,7 @@
 return [
     'subscribe' => 'Subscribe',
     'billing' => 'Billing',
+    'privacy_settings' => 'Privacy settings',
     'store_context' => 'Store context',
     'store_context_description' => 'When switched on, Witty <a href="https://www.witty.works/trust-and-security">stores some characters</a> before and after the marked term in certain situations. This helps to improve Witty and make better suggestions in the future.',
     'plan_summary' => 'Subscription',
