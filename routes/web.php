@@ -101,7 +101,7 @@ Route::group(
                 if (Jetstream::hasTeamFeatures()) {
                     Route::get('/teams/create', [TeamController::class, 'create'])->name('teams.create');
                     Route::get('/teams/{team}', [TeamController::class, 'show'])->name('teams.show');
-                    Route::put('/current-team', [CurrentTeamController::class, 'update'])->name('current-team.update');
+                    Route::get('/teams/{team}/subscription', [StripeController::class, 'show'])->name('teams.subscription');
 
                     Route::get('/team-invitations/{invitation}', [TeamInvitationController::class, 'accept'])
                         ->middleware(['auth'])

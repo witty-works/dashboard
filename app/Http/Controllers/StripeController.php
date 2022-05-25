@@ -5,9 +5,32 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Laravel\Jetstream\Jetstream;
+use Illuminate\Support\Facades\Gate;
 
 class StripeController extends Controller
 {
+    /**
+     * Show the team management screen.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $teamId
+     * @return \Illuminate\View\View
+     */
+    public function show(Request $request, $teamId)
+    {
+        $team = Jetstream::newTeamModel()->findOrFail($teamId);
+
+        if (Gate::denies('view', $team)) {
+            abort(403);
+        }
+
+        return view('teams.subscription', [
+            'user' => $request->user(),
+            'team' => $team,
+        ]);
+    }
+
     public function subscribe(Request $request)
     {
         $user = $request->user();
