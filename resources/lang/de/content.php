@@ -145,7 +145,7 @@ Du wurdest von <a href="mailto::email">:name</a> auf <a href="https://www.witty.
     'en' => 'Englisch',
     'welcome_text' => 'Das Dashboard hilft dir, Witty einzurichten und deinen Bedürfnissen anzupassen.',
     'onboarding_next_steps' => 'Nächste Schritte zum Einrichten deines Witty Teams:',
-    'onboarding_create_team' => '1. Team Setup',
+    'onboarding_create_team' => '1. Richte dein Team ein',
     'onboarding_configure_organization_guidelines' => '2. Konfiguriere Witty für dein Team',
     'onboarding_invite_users' => '3. Lade Teammitglieder ein',
     'section_1_title' => 'Was ist Witty?',
