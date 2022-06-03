@@ -9,11 +9,11 @@ if ($user) {
         <div class="onboarding-title">{{ __('content.onboarding_quickLinks') }}</div>
         <div class="onboarding-quick-links-container">
             @if($currentTeam)
-            <a class="onboarding-iconWrapper" href="{{ route('teams.show', $currentTeam->id) }}">
+            <a class="onboarding-iconWrapper" href="{{ route('teams.show') }}">
                 <img src="{{ url('svg/team-setup.svg') }}" alt="{{ __('content.onboarding_team_setup') }}"/>
                 <div class="onboarding-icon-description">{{ __('content.onboarding_team_setup') }}</div>
             </a>
-            <a class="onboarding-iconWrapper" href="{{ route('language-guidelines', $currentTeam->id) }}">
+            <a class="onboarding-iconWrapper" href="{{ route('language-guidelines') }}">
                 <img src="{{ url('svg/language-guidelines.svg') }}" alt="{{ __('content.onboarding_language_guidelines') }}"/>
                 <div class="onboarding-icon-description">{{ __('content.onboarding_language_guidelines') }}</div>
             </a>
