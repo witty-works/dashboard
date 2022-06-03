@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers\Livewire;
 
+use App\Http\Controllers\TeamControllerTrait;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
-use Laravel\Jetstream\Jetstream;
 
 class GuidelinesController extends Controller
 {
-    public function editOrganizationGuidelines(Request $request, $teamId)
+    use TeamControllerTrait;
+
+    public function editOrganizationGuidelines(Request $request)
     {
-        $team = Jetstream::newTeamModel()->findOrFail($teamId);
+        $team = $this->getCurrentTeam($request);
 
         if (!Auth::user()->hasTeamPermission($team, 'read')) {
             abort(403);
@@ -23,9 +25,9 @@ class GuidelinesController extends Controller
         ]);
     }
 
-    public function editFalsePositives(Request $request, $teamId)
+    public function editFalsePositives(Request $request)
     {
-        $team = Jetstream::newTeamModel()->findOrFail($teamId);
+        $team = $this->getCurrentTeam($request);
 
         if (!Auth::user()->hasTeamPermission($team, 'read')) {
             abort(403);
@@ -37,9 +39,9 @@ class GuidelinesController extends Controller
         ]);
     }
 
-    public function editTermReplacements(Request $request, $teamId)
+    public function editTermReplacements(Request $request)
     {
-        $team = Jetstream::newTeamModel()->findOrFail($teamId);
+        $team = $this->getCurrentTeam($request);
 
         if (!Auth::user()->hasTeamPermission($team, 'read')) {
             abort(403);

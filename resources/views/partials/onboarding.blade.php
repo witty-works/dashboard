@@ -43,7 +43,7 @@ if ($user && (!$user->currentTeam || $user->can('update', $user->currentTeam))) 
     } else {
         $showOnboardingSteps = true;
         $onboardingSteps['organizationGuidelines']['state'] = 'todo';
-        $onboardingSteps['organizationGuidelines']['link'] = route('organization-guidelines', $currentTeam->id);
+        $onboardingSteps['organizationGuidelines']['link'] = route('organization-guidelines');
     }
 
     if (!$currentTeam || !$currentTeam->organizationGuidelines) {
@@ -53,7 +53,7 @@ if ($user && (!$user->currentTeam || $user->can('update', $user->currentTeam))) 
     } else {
         $showOnboardingSteps = true;
         $onboardingSteps['inviteUsers']['state'] = 'todo';
-        $onboardingSteps['inviteUsers']['link'] = route('teams.show', $currentTeam->id) . '#add-team-member';
+        $onboardingSteps['inviteUsers']['link'] = route('teams.show') . '#add-team-member';
     }
 }
 @endphp
@@ -66,7 +66,7 @@ if ($user && (!$user->currentTeam || $user->can('update', $user->currentTeam))) 
         </p>
         @if($user->ownedTeams()->count())
         <p>
-            {!! __('content.contact_support_to_delete_owned_teams', ['deleteUrl' => route('teams.show', $currentTeam->id) . '#delete-team']) !!}
+            {!! __('content.contact_support_to_delete_owned_teams', ['deleteUrl' => route('teams.show') . '#delete-team']) !!}
         </p>
         @elseif($user->allTeams()->count())
         <div>

@@ -17,20 +17,20 @@ $currentTeam = $user->currentTeam;
                         <div class="onboarding-title">{{ __('content.onboarding_quickLinks') }}</div>
                         <div class="onboarding-quick-links-container">
                             @if($currentTeam)
-                            <a class="onboarding-iconWrapper" href="{{ route('organization-guidelines', $currentTeam->id) }}">
+                            <a class="onboarding-iconWrapper" href="{{ route('organization-guidelines') }}">
                                 <img src="{{ url('svg/language-guidelines.svg') }}" alt="{{ __('content.onboarding_language_guidelines') }}"/>
                                 <div class="onboarding-icon-description">{{ __('guidelines.organization_guidelines') }}</div>
                             </a>
-                            <a class="onboarding-iconWrapper" href="{{ route('term-replacement', $currentTeam->id) }}">
+                            <a class="onboarding-iconWrapper" href="{{ route('term-replacement') }}">
                                 <img src="{{ url('svg/language-guidelines.svg') }}" alt="{{ __('content.onboarding_language_guidelines') }}s"/>
                                 <div class="onboarding-icon-description">{{ __('guidelines.term_replacement_list') }}</div>
                             </a>
-                            <a class="onboarding-iconWrapper" href="{{ route('false-positive', $currentTeam->id) }}">
+                            <a class="onboarding-iconWrapper" href="{{ route('false-positive') }}">
                                 <img src="{{ url('svg/language-guidelines.svg') }}" alt="{{ __('content.onboarding_language_guidelines') }}"/>
                                 <div class="onboarding-icon-description">{{ __('guidelines.false_positive_list') }}</div>
                             </a>
                             @endif
-                            <a class="onboarding-iconWrapper" href="https://www.witty.works/onboarding">
+                            <a class="onboarding-iconWrapper" href="https://www.witty.works/en/help/wittys-help-center">
                                 <img src="{{ url('svg/support.svg') }}" alt="{{ __('content.onboarding_support') }}"/>
                                 <div class="onboarding-icon-description">{{ __('content.onboarding_support') }}</div>
                             </a>
