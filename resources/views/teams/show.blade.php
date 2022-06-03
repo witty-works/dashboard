@@ -15,8 +15,6 @@
 
             @livewire('teams.team-member-manager', ['team' => $team])
 
-            @livewire('teams.store-context', ['team' => $team])
-
             @if (Gate::check('delete', $team) && ! $team->personal_team)
                 <x-jet-section-border />
 
@@ -24,6 +22,8 @@
                     @livewire('teams.delete-team-form', ['team' => $team])
                 </div>
             @endif
+
+            @livewire('teams.store-context', ['team' => $team])
         </div>
     </div>
 </x-app-layout>
