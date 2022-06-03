@@ -30,7 +30,7 @@ $currentTeam = $user->currentTeam;
                                 <div class="onboarding-icon-description">{{ __('guidelines.false_positive_list') }}</div>
                             </a>
                             @endif
-                            <a class="onboarding-iconWrapper" href="https://www.witty.works/onboarding">
+                            <a class="onboarding-iconWrapper" href="https://www.witty.works/en/help/wittys-help-center">
                                 <img src="{{ url('svg/support.svg') }}" alt="{{ __('content.onboarding_support') }}"/>
                                 <div class="onboarding-icon-description">{{ __('content.onboarding_support') }}</div>
                             </a>
