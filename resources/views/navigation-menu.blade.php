@@ -20,7 +20,7 @@
                         </x-jet-nav-link>
 
                         @if ($team)
-                            <x-jet-nav-link href="{{ route('language-guidelines', $team->id) }}" :active="request()->routeIs('language-guidelines')">
+                            <x-jet-nav-link href="{{ route('language-guidelines') }}" :active="request()->routeIs('language-guidelines')">
                                 {{ __('content.onboarding_language_guidelines') }}
                             </x-jet-nav-link>
 
@@ -89,23 +89,23 @@
                         @if ($team)
                         <!-- Team Management -->
                         <!-- Team Settings -->
-                        <x-jet-dropdown-link href="{{ route('teams.show', $team->id) }}">
+                        <x-jet-dropdown-link href="{{ route('teams.show') }}">
                             {{ __('content.team_settings') }}
                         </x-jet-dropdown-link>
 
-                        <x-jet-dropdown-link href="{{ route('teams.subscription', $team->id) }}">
+                        <x-jet-dropdown-link href="{{ route('teams.subscription') }}">
                             {{ __('teams.subscription') }}
                         </x-jet-dropdown-link>
 
-                        <x-jet-dropdown-link href="{{ route('organization-guidelines', $team->id) }}">
+                        <x-jet-dropdown-link href="{{ route('organization-guidelines') }}">
                             {{ __('guidelines.organization_guidelines') }}
                         </x-jet-dropdown-link>
 
-                        <x-jet-dropdown-link href="{{ route('term-replacement', $team->id) }}">
+                        <x-jet-dropdown-link href="{{ route('term-replacement') }}">
                             {{ __('guidelines.term_replacement_list') }}
                         </x-jet-dropdown-link>
 
-                        <x-jet-dropdown-link href="{{ route('false-positive', $team->id) }}">
+                        <x-jet-dropdown-link href="{{ route('false-positive') }}">
                             {{ __('guidelines.false_positive_list') }}
                         </x-jet-dropdown-link>
                         @endif
@@ -194,23 +194,23 @@
                 <!-- Team Management -->
                 @if($team)
                 <!-- Team Settings -->
-                <x-jet-responsive-nav-link href="{{ route('teams.show', $team->id) }}" :active="request()->routeIs('teams.show')">
+                <x-jet-responsive-nav-link href="{{ route('teams.show') }}" :active="request()->routeIs('teams.show')">
                     {{ __('content.team_settings') }}
                 </x-jet-responsive-nav-link>
 
-                <x-jet-responsive-nav-link href="{{ route('teams.subscription', $team->id) }}">
+                <x-jet-responsive-nav-link href="{{ route('teams.subscription') }}">
                     {{ __('teams.subscription') }}
                 </x-jet-responsive-nav-link>
 
-                <x-jet-responsive-nav-link href="{{ route('organization-guidelines', $team->id) }}">
+                <x-jet-responsive-nav-link href="{{ route('organization-guidelines') }}">
                     {{ __('guidelines.organization_guidelines') }}
                 </x-jet-responsive-nav-link>
 
-                <x-jet-responsive-nav-link href="{{ route('term-replacement', $team->id) }}">
+                <x-jet-responsive-nav-link href="{{ route('term-replacement') }}">
                     {{ __('guidelines.term_replacement_list') }}
                 </x-jet-responsive-nav-link>
 
-                <x-jet-responsive-nav-link href="{{ route('false-positive', $team->id) }}">
+                <x-jet-responsive-nav-link href="{{ route('false-positive') }}">
                     {{ __('guidelines.false_positive_list') }}
                 </x-jet-responsive-nav-link>
 

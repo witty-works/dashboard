@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Gate;
 
 class StripeController extends Controller
 {
+    use TeamControllerTrait;
+
     /**
      * Show the team management screen.
      *
@@ -17,9 +19,9 @@ class StripeController extends Controller
      * @param  int  $teamId
      * @return \Illuminate\View\View
      */
-    public function show(Request $request, $teamId)
+    public function show(Request $request)
     {
-        $team = Jetstream::newTeamModel()->findOrFail($teamId);
+        $team = $this->getCurrentTeam($request);
 
         if (Gate::denies('view', $team)) {
             abort(403);
@@ -92,7 +94,7 @@ class StripeController extends Controller
                 ]],
                 [
                     'success_url' => route('dashboard'),
-                    'cancel_url' => route('teams.show', ['team' => $team]),
+                    'cancel_url' => route('teams.show'),
                     'mode' => 'subscription'
                 ]
             )->redirect();

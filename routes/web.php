@@ -11,11 +11,10 @@ use App\Http\Controllers\WebhookController;
 | JETSTREAM LIVEWIRE
 |------------------
 */
-use Laravel\Jetstream\Http\Controllers\CurrentTeamController;
 use App\Http\Controllers\TeamInvitationController;
 use Laravel\Jetstream\Http\Controllers\Livewire\ApiTokenController;
 use Laravel\Jetstream\Http\Controllers\Livewire\PrivacyPolicyController;
-use Laravel\Jetstream\Http\Controllers\Livewire\TeamController;
+use App\Http\Controllers\Livewire\TeamController;
 use Laravel\Jetstream\Http\Controllers\Livewire\TermsOfServiceController;
 use Laravel\Jetstream\Http\Controllers\Livewire\UserProfileController;
 use Laravel\Jetstream\Jetstream;
@@ -99,9 +98,9 @@ Route::group(
 
                 // Teams...
                 if (Jetstream::hasTeamFeatures()) {
-                    Route::get('/teams/create', [TeamController::class, 'create'])->name('teams.create');
-                    Route::get('/teams/{team}', [TeamController::class, 'show'])->name('teams.show');
-                    Route::get('/teams/{team}/subscription', [StripeController::class, 'show'])->name('teams.subscription');
+                    Route::get('/team/create', [TeamController::class, 'create'])->name('teams.create');
+                    Route::get('/team/show', [TeamController::class, 'show'])->name('teams.show');
+                    Route::get('/team/subscription', [StripeController::class, 'show'])->name('teams.subscription');
 
                     Route::get('/team-invitations/{invitation}', [TeamInvitationController::class, 'accept'])
                         ->middleware(['auth'])
@@ -110,13 +109,13 @@ Route::group(
                         ->middleware(['auth'])
                         ->name('team-invitations.reject');
 
-                    Route::get('/teams/{team}/ignore-words', [GuidelinesController::class, 'editFalsePositives'])->name('false-positive');
+                    Route::get('/team/ignore-words', [GuidelinesController::class, 'editFalsePositives'])->name('false-positive');
 
-                    Route::get('/teams/{team}/replace-terms', [GuidelinesController::class, 'editTermReplacements'])->name('term-replacement');
+                    Route::get('/team/replace-terms', [GuidelinesController::class, 'editTermReplacements'])->name('term-replacement');
 
-                    Route::get('/teams/{team}/customize-witty', [GuidelinesController::class, 'editOrganizationGuidelines'])->name('organization-guidelines');
+                    Route::get('/team/customize-witty', [GuidelinesController::class, 'editOrganizationGuidelines'])->name('organization-guidelines');
 
-                    Route::get('/teams/{team}/language-settings', function () {
+                    Route::get('/team/language-settings', function () {
                         return view('language-guidelines');
                     })->name('language-guidelines');
                 }
