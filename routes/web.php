@@ -169,3 +169,8 @@ Route::post(
     '/stripe/webhook',
     [WebhookController::class, 'handleWebhook']
 )->name('cashier.webhook');
+
+
+Route::fallback(function () {
+    return view('errors.404');
+});
