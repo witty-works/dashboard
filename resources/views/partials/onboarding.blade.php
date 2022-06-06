@@ -43,7 +43,7 @@ if ($user && (!$user->currentTeam || $user->can('update', $user->currentTeam))) 
     } else {
         $showOnboardingSteps = true;
         $onboardingSteps['organizationGuidelines']['state'] = 'todo';
-        $onboardingSteps['organizationGuidelines']['link'] = route('organization-guidelines');
+        $onboardingSteps['organizationGuidelines']['link'] = route('language-guidelines');
     }
 
     if (!$currentTeam || !$currentTeam->organizationGuidelines) {

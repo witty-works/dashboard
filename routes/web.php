@@ -65,8 +65,6 @@ Route::group(
         'middleware' => ['localize', 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath']
     ],
     function () {
-
-
         Route::impersonate();
 
         Route::get('/', function () {
@@ -109,15 +107,10 @@ Route::group(
                         ->middleware(['auth'])
                         ->name('team-invitations.reject');
 
-                    Route::get('/team/ignore-words', [GuidelinesController::class, 'editFalsePositives'])->name('false-positive');
-
-                    Route::get('/team/replace-terms', [GuidelinesController::class, 'editTermReplacements'])->name('term-replacement');
-
-                    Route::get('/team/customize-witty', [GuidelinesController::class, 'editOrganizationGuidelines'])->name('organization-guidelines');
-
-                    Route::get('/team/language-settings', function () {
-                        return view('language-guidelines');
-                    })->name('language-guidelines');
+                    Route::redirect('/team/language', '/team/language/customize-witty')->name('language-guidelines');
+                    Route::get('/team/language/customize-witty', [GuidelinesController::class, 'customizeWitty'])->name('customize-witty');
+                    Route::get('/team/language/term-replacements', [GuidelinesController::class, 'termReplacements'])->name('term-replacements');
+                    Route::get('/team/language/ignore-words', [GuidelinesController::class, 'falsePositives'])->name('ignore-words');
                 }
             });
         });

@@ -4,11 +4,6 @@
     </x-slot>
 
     <x-slot name="description">
-        {!! Str::markdown(__('guidelines.create_new_false_positive_description')) !!}
-
-        @if($team->getFalsePositivesLimitReached() && Auth::user()->ownsTeam($team) && !$team->subscribed())
-        {!! __('guidelines.false_positive_limit_reached', ['max_count' => $team->getFalsePositivesCount(), 'url' => route('stripe.portal')]) !!}
-        @endif
     </x-slot>
 
     <x-slot name="form">

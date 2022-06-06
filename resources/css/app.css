@@ -440,6 +440,19 @@ input:checked+.slider:before {
     color: white;
 }
 
+.tab-navigation-link {
+    font-size: 18px;
+}
+
+.tab-navigation-link:hover {
+    text-decoration: underline;
+    background-color: rgb(243 244 246);
+}
+
+.tab-navigation-link-active {
+    text-decoration: underline;
+    background-color: rgb(243 244 246);
+}
 
 .wittyworks-upgrade-banner {
     display: flex;
