@@ -86,7 +86,7 @@ Route::group(
                 Route::get('/privacy-policy', [PrivacyPolicyController::class, 'show'])->name('policy.show');
             }
 
-            Route::group(['middleware' => ['auth:' . config('fortify.guard'), 'verified']], function () {
+            Route::group(['middleware' => ['auth:' . config('fortify.guard')]], function () {
                 // User & Profile...
                 Route::get('/user/profile', [UserProfileController::class, 'show'])
                     ->name('profile.show');
@@ -133,7 +133,7 @@ Route::group(
         |------------------
         */
 
-        Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+        Route::middleware(['auth:sanctum'])->group(function () {
             Route::get('/stripe/portal', [StripeController::class, 'portal'])->name('stripe.portal');
         });
 
