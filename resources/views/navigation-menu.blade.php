@@ -19,7 +19,7 @@
                             {{ __('content.dashboard') }}
                         </x-jet-nav-link>
 
-                        @if ($team)
+                    @if ($team)
                         <x-jet-nav-link href="{{ route('teams.show') }}" :active="request()->routeIs('teams.show')">
                             {{ __('content.team_settings') }}
                         </x-jet-nav-link>
@@ -28,18 +28,12 @@
                             {{ __('content.onboarding_language_guidelines') }}
                         </x-jet-nav-link>
 
-                    @if($user->ownsTeam($team) && !$team->subscribed())
+                        @if($user->ownsTeam($team) && !$team->subscribed())
                             <x-jet-nav-link href="{{ route('stripe.portal') }}" class="inline-flex items-center px-4 py-2 bg-red-500 border border-transparent rounded-md font-semibold tracking-widest hover:bg-red-600 active:bg-red-600 focus:outline-none focus:border-transparent disabled:opacity-25 transition">
                                 {{ __('teams.subscribe') }}
                             </x-jet-nav-link>
-                            @endif
-                        @elseif(count($user->allTeams()) === 0)
-                            @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
-                                <x-jet-nav-link href="{{ route('teams.create') }}">
-                                    {{ __('content.create_new_team') }}
-                                </x-jet-nav-link>
-                            @endcan
                         @endif
+                    @endif
                     @else
                         <x-jet-nav-link href="{{ route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'login']) }}">
                             {{ __('content.log_in') }} / {{ __('content.register') }}
