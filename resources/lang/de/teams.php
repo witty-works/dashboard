@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'subscribe' => 'Abonnieren',
+    'subscribe' => 'Jetzt Kaufen',
     'billing' => 'Abrechnung',
     'store_context' => 'Kontext speichern',
     'store_context_description' => 'Wenn eingeschaltet, speichert Witty in bestimmten Situationen <a href="https://www.witty.works/trust-and-security">einige Zeichen</a> vor und nach dem hervorgehobenen Begriff. So hilfst du mit, Witty zu verbessern, um in Zukunft noch bessere Vorschläge zu machen.',

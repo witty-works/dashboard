@@ -259,4 +259,15 @@ class OAuthController extends BaseOAuthController
 
         return $provider;
     }
+
+    public function mockLogin(Request $request)
+    {
+        if (!config('app.mock_login')) {
+            abort(404);
+        }
+
+        $user = User::where('email', $request->get('email'))->firstOrFail();
+
+        return $this->login($user);
+    }
 }
