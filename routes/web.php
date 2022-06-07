@@ -86,7 +86,7 @@ Route::group(
                 Route::get('/privacy-policy', [PrivacyPolicyController::class, 'show'])->name('policy.show');
             }
 
-            Route::group(['middleware' => ['auth:' . config('fortify.guard'), 'verified']], function () {
+            Route::group(['middleware' => ['auth:' . config('fortify.guard')]], function () {
                 // User & Profile...
                 Route::get('/user/profile', [UserProfileController::class, 'show'])
                     ->name('profile.show');
@@ -133,7 +133,7 @@ Route::group(
         |------------------
         */
 
-        Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+        Route::middleware(['auth:sanctum'])->group(function () {
             Route::get('/stripe/portal', [StripeController::class, 'portal'])->name('stripe.portal');
         });
 
@@ -154,6 +154,7 @@ Route::group(
 Route::group(['middleware' => config('socialstream.middleware', ['web'])], function () {
     Route::redirect('/login', '/')->name('login');
     Route::redirect('/register', '/')->name('register');
+    Route::get('/mock-login', [OAuthController::class, 'mockLogin']);
     Route::get('/logout/{provider}', [OAuthController::class, 'logout'])->name('logout');
     Route::get('/oauth/{provider}/{policy}', [OAuthController::class, 'redirectToProvider'])->name('oauth.redirect');
     Route::get('/oauth/{provider}/{policy}/callback', [OAuthController::class, 'handleProviderCallback'])->name('oauth.callback');
