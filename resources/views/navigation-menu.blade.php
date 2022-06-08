@@ -25,7 +25,7 @@
                         </x-jet-nav-link>
 
                         <x-jet-nav-link href="{{ route('language-guidelines') }}" :active="request()->routeIs('language-guidelines')">
-                            {{ __('content.onboarding_language_guidelines') }}
+                            {{ __('teams.language') }}
                         </x-jet-nav-link>
 
                         @if($user->ownsTeam($team) && !$team->subscribed())
@@ -95,16 +95,8 @@
                             {{ __('teams.subscription') }}
                         </x-jet-dropdown-link>
 
-                        <x-jet-dropdown-link href="{{ route('organization-guidelines') }}">
-                            {{ __('guidelines.organization_guidelines') }}
-                        </x-jet-dropdown-link>
-
-                        <x-jet-dropdown-link href="{{ route('term-replacement') }}">
-                            {{ __('guidelines.term_replacement_list') }}
-                        </x-jet-dropdown-link>
-
-                        <x-jet-dropdown-link href="{{ route('false-positive') }}">
-                            {{ __('guidelines.false_positive_list') }}
+                        <x-jet-dropdown-link href="{{ route('language-guidelines') }}">
+                            {{ __('teams.language') }}
                         </x-jet-dropdown-link>
                         @endif
 
@@ -200,16 +192,8 @@
                     {{ __('teams.subscription') }}
                 </x-jet-responsive-nav-link>
 
-                <x-jet-responsive-nav-link href="{{ route('organization-guidelines') }}">
-                    {{ __('guidelines.organization_guidelines') }}
-                </x-jet-responsive-nav-link>
-
-                <x-jet-responsive-nav-link href="{{ route('term-replacement') }}">
-                    {{ __('guidelines.term_replacement_list') }}
-                </x-jet-responsive-nav-link>
-
-                <x-jet-responsive-nav-link href="{{ route('false-positive') }}">
-                    {{ __('guidelines.false_positive_list') }}
+                <x-jet-responsive-nav-link href="{{ route('language-guidelines') }}">
+                    {{ __('teams.language') }}
                 </x-jet-responsive-nav-link>
 
                 @endif
