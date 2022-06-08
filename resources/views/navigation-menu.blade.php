@@ -19,23 +19,21 @@
                             {{ __('content.dashboard') }}
                         </x-jet-nav-link>
 
-                        @if ($team)
-                            <x-jet-nav-link href="{{ route('language-guidelines') }}" :active="request()->routeIs('language-guidelines')">
-                                {{ __('content.onboarding_language_guidelines') }}
-                            </x-jet-nav-link>
+                    @if ($team)
+                        <x-jet-nav-link href="{{ route('teams.show') }}" :active="request()->routeIs('teams.show')">
+                            {{ __('content.team_settings') }}
+                        </x-jet-nav-link>
 
-                            @if($user->ownsTeam($team) && !$team->subscribed())
-                            <x-jet-nav-link href="{{ route('stripe.portal') }}">
+                        <x-jet-nav-link href="{{ route('language-guidelines') }}" :active="request()->routeIs('language-guidelines')">
+                            {{ __('teams.language') }}
+                        </x-jet-nav-link>
+
+                        @if($user->ownsTeam($team) && !$team->subscribed())
+                            <x-jet-nav-link href="{{ route('stripe.portal') }}" class="inline-flex items-center px-4 py-2 bg-red-500 border border-transparent rounded-md font-semibold tracking-widest hover:bg-red-600 active:bg-red-600 focus:outline-none focus:border-transparent disabled:opacity-25 transition">
                                 {{ __('teams.subscribe') }}
                             </x-jet-nav-link>
-                            @endif
-                        @elseif(count($user->allTeams()) === 0)
-                            @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
-                                <x-jet-nav-link href="{{ route('teams.create') }}">
-                                    {{ __('content.create_new_team') }}
-                                </x-jet-nav-link>
-                            @endcan
                         @endif
+                    @endif
                     @else
                         <x-jet-nav-link href="{{ route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'login']) }}">
                             {{ __('content.log_in') }} / {{ __('content.register') }}
@@ -97,16 +95,8 @@
                             {{ __('teams.subscription') }}
                         </x-jet-dropdown-link>
 
-                        <x-jet-dropdown-link href="{{ route('organization-guidelines') }}">
-                            {{ __('guidelines.organization_guidelines') }}
-                        </x-jet-dropdown-link>
-
-                        <x-jet-dropdown-link href="{{ route('term-replacement') }}">
-                            {{ __('guidelines.term_replacement_list') }}
-                        </x-jet-dropdown-link>
-
-                        <x-jet-dropdown-link href="{{ route('false-positive') }}">
-                            {{ __('guidelines.false_positive_list') }}
+                        <x-jet-dropdown-link href="{{ route('language-guidelines') }}">
+                            {{ __('teams.language') }}
                         </x-jet-dropdown-link>
                         @endif
 
@@ -202,16 +192,8 @@
                     {{ __('teams.subscription') }}
                 </x-jet-responsive-nav-link>
 
-                <x-jet-responsive-nav-link href="{{ route('organization-guidelines') }}">
-                    {{ __('guidelines.organization_guidelines') }}
-                </x-jet-responsive-nav-link>
-
-                <x-jet-responsive-nav-link href="{{ route('term-replacement') }}">
-                    {{ __('guidelines.term_replacement_list') }}
-                </x-jet-responsive-nav-link>
-
-                <x-jet-responsive-nav-link href="{{ route('false-positive') }}">
-                    {{ __('guidelines.false_positive_list') }}
+                <x-jet-responsive-nav-link href="{{ route('language-guidelines') }}">
+                    {{ __('teams.language') }}
                 </x-jet-responsive-nav-link>
 
                 @endif

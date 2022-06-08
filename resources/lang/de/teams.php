@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'subscribe' => 'Abonnieren',
+    'subscribe' => 'Jetzt Kaufen',
     'billing' => 'Abrechnung',
     'store_context' => 'Kontext speichern',
     'store_context_description' => 'Wenn eingeschaltet, speichert Witty in bestimmten Situationen <a href="https://www.witty.works/trust-and-security">einige Zeichen</a> vor und nach dem hervorgehobenen Begriff. So hilfst du mit, Witty zu verbessern, um in Zukunft noch bessere Vorschläge zu machen.',
@@ -11,7 +11,7 @@ return [
     'default_plan_name' => 'Witty Me',
     'renewal_date' => 'Verlängerungsdatum',
     'user_licenses' => 'Benutzer:innen',
-    'term_replacements' => 'Begriffe ersetzen',
+    'term_replacements' => 'Alternativ-Vorschläge',
     'false_positives' => 'Wörter ignorieren',
     'total_of_max_used' => ':total von :max_count verwendet',
     'more_licenses' => 'Wenn du weitere Lizenzen erwerben möchtest, <a href=":url">wende</a> dich bitte an Witty Works.',
@@ -25,8 +25,9 @@ return [
     'end_date' => 'Enddatum',
     'team_owner' => 'Team-Eigentümer:in',
     'upgrade_to_witty_teams' => 'Bitte wechsle auf das Abonnement <a href="https://www.witty.works/pricing" target="_blank">Witty Teams</a>',
-    'ask_owner_to_buy_or_leave_to_create_own_team' => 'Bitte frag die:den Teameigentümer:in :name (:email), Witty zu abonnieren, oder verlasse dein aktuelles Team, um ein eigenes Team zu erstellen.',
+    'ask_owner_to_buy_or_leave_to_create_own_team' => 'Bitte frag die:den Teameigentümer:in :name (:email), Witty Lizenzen zu kaufen, oder verlasse dein aktuelles Team, um ein eigenes Team zu erstellen.',
     'accepted_invitation' => 'Toll! Du hast die Einladung angenommen, dem :team Team beizutreten.',
     'subscription' => 'Team-Abonnement',
     'privacy_settings' => 'Datenschutzeinstellungen',
+    'language' => 'Spracheinstellungen',
 ];

@@ -1,18 +1,18 @@
 <?php
 
 return [
-    'false_positive_list' => 'Ignore words',
+    'false_positives_label' => 'Ignore words',
     'create_false_positive' => 'Team dictionary of ignored words',
     'create_new_false_positive_description' => 'Improve your experience by adding words to this list.
 These words will no longer be highlighted as misspellings.',
     'false_positive_label' => 'Ignore word',
-    'term_replacement_list' => 'Replace terms',
-    'create_term_replacement' => 'Team dictionary',
+    'term_replacements_label' => 'Replace terms',
+    'create_term_replacement' => 'Term replacements',
     'create_new_term_replacement_description' => 'Improve your experience by adding words to your dictionary. All words added to this list will become highlighted by Witty, and your custom replacement will be shown as alternatives.',
     'term_label' => 'Term',
     'replacement_label' => 'Alternative',
     'language_code_label' => 'Language Code',
-    'organization_guidelines' => 'Customize Witty',
+    'customize_witty_label' => 'Customize Witty',
     'manage_organization_guidelines' => 'Manage Organization Guidelines',
     'manage_organization_guidelines_description' => 'Configure Witty to better fit your team\'s writing style.',
     'german_gender_ending' => 'Choose the German gender ending',

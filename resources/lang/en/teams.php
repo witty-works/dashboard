@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'subscribe' => 'Subscribe',
+    'subscribe' => 'Buy Now',
     'billing' => 'Billing',
     'privacy_settings' => 'Privacy settings',
     'store_context' => 'Store context',
@@ -27,6 +27,7 @@ return [
     'end_date' => 'end date',
     'team_owner' => 'Team owner',
     'upgrade_to_witty_teams' => 'Please upgrade to <a href="https://www.witty.works/pricing" target="_blank">Witty Teams</a>',
-    'ask_owner_to_buy_or_leave_to_create_own_team' => 'Please ask the team owner :name (:email) to subscribe to Witty or leave your current team to create own team.',
+    'ask_owner_to_buy_or_leave_to_create_own_team' => 'Please ask the team owner :name (:email) to buy Witty licenses or leave your current team to create own team.',
     'accepted_invitation' => 'Great! You have accepted the invitation to join the :team team.',
+    'language' => 'Team Language',
 ];

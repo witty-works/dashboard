@@ -4,11 +4,6 @@
     </x-slot>
 
     <x-slot name="description">
-        {!! Str::markdown(__('guidelines.create_new_term_replacement_description')) !!}
-
-        @if($team->getFalsePositivesLimitReached() && Auth::user()->ownsTeam($team) && !$team->subscribed())
-        {!! __('guidelines.term_replacement_limit_reached', ['max_count' => $team->getTermReplacementsCount(), 'url' => route('stripe.portal')]) !!}
-        @endif
     </x-slot>
 
     <x-slot name="form">
