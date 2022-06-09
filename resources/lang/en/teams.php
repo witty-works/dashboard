@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'subscribe' => 'Buy Now',
+    'subscribe' => 'Buy now',
     'billing' => 'Billing',
     'privacy_settings' => 'Privacy settings',
     'store_context' => 'Store context',
