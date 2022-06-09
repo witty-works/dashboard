@@ -22,7 +22,7 @@ return [
     'manage_organization_guidelines_english' => 'Englisch',
     'manage_organization_guidelines_description_english' => 'Konfiguration für inklusive Sprache in Englisch.',
     'manage_organization_guidelines_expert_mode' => 'Wie viel soll durch Witty markiert werden?',
-    'manage_organization_guidelines_description_expert_mode' => 'Witty bietet auch Vorschläge zu subtileren Fragen der Diversität und Inklusion. <a href="https://www.witty.works/de/blog/wie-analysiert-witty-rahmenwerk-der-inklusiven-sprache" target="_blank">Mehr dazu</a>.',
+    'manage_organization_guidelines_description_expert_mode' => 'Wenn eingeschaltet, bietet Witty Vorschläge zu subtileren Fragen der Diversität und Inklusion. Witty würde z.Bsp. Hilfe bei Abkürzungen wie ARR oder SaaS bieten.',
     'manage_organization_guidelines_german' => 'Deutsch',
     'manage_organization_guidelines_description_german' => 'Konfiguration für inklusive Sprache in Deutsch.',
     'manage_organization_guidelines_inclusive' => 'Inklusive Begriffe markieren',
