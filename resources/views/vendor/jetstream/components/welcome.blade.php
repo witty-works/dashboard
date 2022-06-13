@@ -33,7 +33,7 @@
                 {!! Str::markdown(__('content.section_2_text')) !!}
 
                 @guest
-                {!! __('content.login_cta', ['url' => route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'login'])]) !!}
+                {!! __('content.login_cta', ['url' => route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'register'])]) !!}
                 @endguest
             </div>
         </div>

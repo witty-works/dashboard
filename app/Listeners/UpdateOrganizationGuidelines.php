@@ -24,22 +24,18 @@ class UpdateOrganizationGuidelines
     static public function deleteRules(Team $team)
     {
         $endpoint = config('app.organization_guidelines_endpoint');
-        $data = [
-            'id' => $team->id,
-            'users' => $team->allUsers()->pluck('email')->toArray(),
-        ];
-
-        $endpoint['url'] .= '/delete_rules';
+        $query = http_build_query(['organization_id' => $team->id]);
+        $endpoint['url'] .= '/delete_rules?'.$query;
 
         if (empty($endpoint['user'])) {
-            $response = Http::delete($endpoint['url'], $data);
+            $response = Http::delete($endpoint['url']);
         } else {
             $response = Http::withBasicAuth($endpoint['user'], $endpoint['password'])
-                ->delete($endpoint['url'], $data);
+                ->delete($endpoint['url']);
         }
 
         if (config('app.debug') && $response->failed()) {
-            dd($response->body(), $data);
+            dd($response->body(), $query);
         }
     }
 
