@@ -235,5 +235,5 @@ Your Witty team',
     'account_not_found' => 'An account was not found.',
     'account_already_exists' => 'An account with that email address already exists.',
     'onboarding_invitations' => 'Open team invitations',
-    'language_guidelines' => 'language guidelines',
+    'witty_for_teams' => 'Witty for Teams',
 ];
