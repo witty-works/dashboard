@@ -10,7 +10,7 @@ class OrganizationGuidelines extends Model
     use HasFactory;
     use OrganizationGuidelinesUpdateTrait;
 
-    const GERMAN_GENDER_ENDING = [':in', '*in', '/in', '_in', 'In', '/-in'];
+    const GERMAN_GENDER_ENDING = ['*in', '_in', ':in', '/in', '/-in', 'In'];
     const GENDERED_ROLES_FORMAT = ['inclusive_gender' => 'guidelines.inclusive_gender', 'both' => 'guidelines.both', 'binary_gender' => 'guidelines.binary_gender',  'none' => 'guidelines.none'];
     const PREFERRED_VARIANTS_EN = ['' => 'guidelines.preferred_variants_none', 'en-US' => 'guidelines.preferred_variants_en_US', 'en-GB' => 'guidelines.preferred_variants_en_GB'];
     const PREFERRED_VARIANTS_DE = ['' => 'guidelines.preferred_variants_none', 'de-DE' => 'guidelines.preferred_variants_de_DE', 'de-CH' => 'guidelines.preferred_variants_de_CH', 'de-AT' => 'guidelines.preferred_variants_de_AT'];
@@ -21,7 +21,7 @@ class OrganizationGuidelines extends Model
     const LANGUAGES = ['en', 'de'];
 
     protected $attributes = [
-        'german_gender_ending' => ':in',
+        'german_gender_ending' => '*in',
         'gendered_roles_format' => 'inclusive_gender',
         'singular_they' => false,
         'expert_mode' => false,
