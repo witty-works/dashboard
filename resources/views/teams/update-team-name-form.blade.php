@@ -18,12 +18,12 @@
         </div>
 
         <!-- Team Name -->
-        <div class="col-span-6 sm:col-span-4">
+        <div class="col-span-6 sm:col-span-4 mt-5">
             <x-jet-label for="name" value="{{ __('content.team_name') }}" />
 
             <x-jet-input id="name"
                         type="text"
-                        class="mt-1 block w-full"
+                        class="mt-2 block w-full"
                         wire:model.defer="state.name"
                         :disabled="! Gate::check('update', $team)" />
 

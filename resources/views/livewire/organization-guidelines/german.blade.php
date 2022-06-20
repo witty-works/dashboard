@@ -14,6 +14,27 @@
     <x-slot name="form" submit="updateOrganizationGuidelinesGerman">  
         <div class="guidelines-form-title">{!! __('guidelines.manage_organization_guidelines_description_german_form_sub_title') !!}</div>
 
+        <div class="guidelines-form-section-dropdown-label pt-5">
+            {{ __('guidelines.gendered_roles_format') }}
+        </div>
+
+        <div class="flex flex-row">
+            <div>
+                <x-select id="gendered_roles_format"
+                :options="\App\Models\OrganizationGuidelines::GENDERED_ROLES_FORMAT"
+                class="guidelines-form-section-dropdown"
+                wire:model.defer="gendered_roles_format"
+                :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines') || !$team->subscribed()" />
+
+                <x-jet-input-error for="gendered_roles_format" class="mt-2" />
+            </div>
+            <div>
+                @if(! Auth::user()->hasTeamPermission($team, 'edit_guidelines') || !$team->subscribed())
+                <img class="guidelines-form-section-lock p-2" src="{{ asset('svg/options-lock.svg') }}" alt="{{ __('teams.upgrade_to_witty_teams') }}" title="{{ __('teams.upgrade_to_witty_teams') }}" />
+                @endif
+            </div>
+          </div>
+
         <div class="guidelines-form-section-dropdown-label"> {{ __('guidelines.german_gender_ending') }}</div>
         <x-select id="german_gender_ending"
             :options="\App\Models\OrganizationGuidelines::GERMAN_GENDER_ENDING"
@@ -21,21 +42,9 @@
             wire:model.defer="german_gender_ending"
             :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" />
         <x-jet-input-error for="german_gender_ending" class="mt-2" />
+    </x-slot>
 
-        <div class="guidelines-form-section-dropdown-label">
-            {{ __('guidelines.gendered_roles_format') }}
-            @if(! Auth::user()->hasTeamPermission($team, 'edit_guidelines') || !$team->subscribed())
-                <img src="{{ asset('svg/options-lock.svg') }}" alt="{{ __('teams.upgrade_to_witty_teams') }}" title="{{ __('teams.upgrade_to_witty_teams') }}" class="guidelines-form-section-lock p-2" />
-            @endif
-        </div>
-        <x-select id="gendered_roles_format"
-            :options="\App\Models\OrganizationGuidelines::GENDERED_ROLES_FORMAT"
-            class="guidelines-form-section-dropdown"
-            wire:model.defer="gendered_roles_format"
-            :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines') || !$team->subscribed()" />
-
-        <x-jet-input-error for="gendered_roles_format" class="mt-2" />
-
+    <x-slot name="actions">
         <div class="guidelines-form-section--apply-for-all">
             <x-jet-checkbox
                 id="german_rules_force"
@@ -45,10 +54,8 @@
                 :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" 
             />
         </div>
-    </x-slot>
 
-    @if (Auth::user()->hasTeamPermission($team, 'edit_guidelines'))
-    <x-slot name="actions">
+        @if (Auth::user()->hasTeamPermission($team, 'edit_guidelines'))
         <x-jet-action-message class="mr-3" on="saved">
             <span class="float-right">{{ __('content.saved') }}</span>
         </x-jet-action-message>
@@ -56,7 +63,7 @@
         <x-jet-button>
             {{ __('content.save') }}
         </x-jet-button>
+        @endif
     </x-slot>
-    @endif
 
 </x-jet-form-section>
