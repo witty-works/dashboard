@@ -30,7 +30,7 @@
             <x-jet-input-error for="term" class="mt-2" />
         </div>
 
-        <div class="col-span-6 sm:col-span-4">
+        <div class="col-span-6 sm:col-span-4 mt-5">
             <x-jet-label for="replacement" value="{!! __('guidelines.replacement_label') !!}" />
 
             <x-jet-input id="replacement"
@@ -43,7 +43,7 @@
             <x-jet-input-error for="replacement" class="mt-2" />
         </div>
 {{--
-        <div class="col-span-6 sm:col-span-4">
+        <div class="col-span-6 sm:col-span-4 mt-5">
             <x-jet-label for="language_code" value="{!! __('guidelines.language_code_label') !!}" />
 
             <x-select id="language_code"
@@ -56,7 +56,7 @@
         </div>
 --}}
 
-        <div class="col-span-6 sm:col-span-4">
+        <div class="col-span-6 sm:col-span-4 mt-5">
             <x-jet-label for="explanation" value="{!! __('guidelines.explanation_label') !!}" />
 
             <x-jet-input id="explanation"
@@ -70,7 +70,7 @@
         </div>
 
 
-        <div class="col-span-6 sm:col-span-4">
+        <div class="col-span-6 sm:col-span-4 mt-5">
             <x-jet-label for="url" value="{!! __('guidelines.url_label') !!}" />
 
             <x-jet-input id="url"
@@ -84,7 +84,7 @@
         </div>
 
 
-        <div class="col-span-6 sm:col-span-4">
+        <div class="col-span-6 sm:col-span-4 mt-5">
             <x-jet-label for="emoji" value="{!! __('guidelines.emoji_label') !!}" />
 
             <x-jet-input id="emoji"

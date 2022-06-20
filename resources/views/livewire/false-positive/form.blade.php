@@ -30,7 +30,7 @@
                 <x-jet-input-error for="false_positive" class="mt-2" />
         </div>
 {{--
-        <div class="col-span-6 sm:col-span-4">
+        <div class="col-span-6 sm:col-span-4 mt-5">
             <x-jet-label for="language_code" value="{!! __('guidelines.language_code_label') !!}" />
 
             <x-select id="language_code"

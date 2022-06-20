@@ -18,7 +18,9 @@
                 :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" 
             />
         </div>
+    </x-slot>
 
+    <x-slot name="actions">
         <div class="guidelines-form-section--apply-for-all">
             <x-jet-checkbox
                 id="disabled_categories_force_orthography"
@@ -28,10 +30,8 @@
                 :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" 
             />
         </div>
-    </x-slot>
 
-    @if (Auth::user()->hasTeamPermission($team, 'edit_guidelines'))
-    <x-slot name="actions">
+        @if (Auth::user()->hasTeamPermission($team, 'edit_guidelines'))
         <x-jet-action-message class="mr-3" on="saved">
             <span class="float-right">{{ __('content.saved') }}</span>
         </x-jet-action-message>
@@ -39,7 +39,7 @@
         <x-jet-button>
             {{ __('content.save') }}
         </x-jet-button>
+        @endif
     </x-slot>
-    @endif
 
 </x-jet-form-section>
