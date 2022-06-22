@@ -101,7 +101,7 @@ class Team extends JetstreamTeam
             return $this->subscription()->quantity;
         }
 
-        return config('stripe.plans.witty_me.features.invite_smaller_teams.count');
+        return $this->user_licenses ?? config('stripe.plans.witty_me.features.invite_smaller_teams.count');
     }
 
     public function getTotalUserCount()
@@ -129,7 +129,7 @@ class Team extends JetstreamTeam
             return config('stripe.plans.' . $this->planId() . '.features.term_replacements.count');
         }
 
-        return $this->term_replacements ?? 5;
+        return $this->term_replacements ?? config('stripe.plans.witty_me.features.term_replacements.count');
     }
 
     public function getTotalTermReplacementsCount()
@@ -148,7 +148,7 @@ class Team extends JetstreamTeam
             return config('stripe.plans.' . $this->planId() . '.features.false_positives.count');
         }
 
-        return $this->false_positives ?? 5;
+        return $this->false_positives ?? config('stripe.plans.witty_me.features.false_positives.count');
     }
 
     public function getTotalFalsePositivesCount()
