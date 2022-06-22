@@ -125,3 +125,19 @@ In `~/.gitconfig` add make sure you have the following setting
     * If testing email related features, enable email sending for the hotfix environment on platform.sh
   * `make-release.sh finish` // use `:wq` to save, use `i` to insert the copied milestone URL and `esc` to get out of insert mode
   * `make-release.sh finalize`
+
+## User management
+
+Make sure the user has "superadmin" rights on:
+https://dashboard.lndo.site/admin/users
+
+There it is possible to give other users superadmin rights or impersonate users.
+
+### Manual SQL queries
+
+To update the default `user_licenses`, `term_replacements` and `false_positives` counts
+please run the following query:
+
+```
+UPDATE teams SET user_licenses = [number of licenses], term_replacements = [number of term replacements], false_positives = [number of false positives] WHERE user_id = [some id];
+```
