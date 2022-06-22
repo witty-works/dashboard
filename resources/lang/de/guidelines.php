@@ -60,7 +60,7 @@ return [
     'preferred_variants_dialect_de' => 'Wir schreiben',
     'preferred_variants_dialect_en' => 'Wir schreiben',
     'manage_organization_guidelines_english_form_title' => 'Witty schlägt vor, geschlechtsneutrale Pronomen wie „their“ anstelle von „his“ oder „her“ zu verwenden.',
-    'manage_organization_guidelines_description_german_form_sub_title' => 'Welche Variante für das Gendern soll Witty verwenden? <a href="https://www.witty.works/en/blog/gender-inclusive-writing-in-german" target="_blank">Mehr erfahren</a>',
+    'manage_organization_guidelines_description_german_form_sub_title' => 'Wie soll Witty mit dem generischen Maskulinum umgehen? <a href="https://www.witty.works/en/blog/gender-inclusive-writing-in-german" target="_blank">Mehr erfahren</a>',
     'explanation_label' => 'Erläuterung (Optional)',
     'url_label' => 'URL mit weiterführenden Erklärungen (Optional)',
     'emoji_label' => 'Emoticon wie 😟 oder 💡 (Optional). <a href="https://emojipedia.org/" target="_blank">Hier</a> kannst du passende Emoticons finden.',
