@@ -11,7 +11,7 @@ return [
     'plan_name' => 'Your current subscription',
     'upgrade' => 'Upgrade to Witty Teams',
     'pricing' => 'Pricing',
-    'default_plan_name' => 'Witty Me',
+    'default_plan_name' => 'Witty Free',
     'renewal_date' => 'Renewal date',
     'user_licenses' => 'User licenses',
     'term_replacements' => 'Term replacements',

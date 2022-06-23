@@ -8,7 +8,7 @@ return [
     'plan_summary' => 'Abonnement Details',
     'plan_name' => 'Dein aktuelles Abonnement ist',
     'upgrade' => 'Upgrade auf Witty Teams',
-    'default_plan_name' => 'Witty Me',
+    'default_plan_name' => 'Witty Free',
     'renewal_date' => 'Verlängerungsdatum',
     'user_licenses' => 'Benutzer*innen',
     'term_replacements' => 'Alternativ-Vorschläge',

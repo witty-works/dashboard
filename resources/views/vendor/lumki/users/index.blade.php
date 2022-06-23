@@ -31,7 +31,7 @@
                                         @if($user->currentTeam && $user->currentteam->subscribed())
                                             {{ $user->currentteam->subscription()->planName() }}
                                         @else
-                                            {{ __('stripe.witty_me')}}
+                                            {{ __('stripe.witty_free')}}
                                         @endif
                                     </td>
                                     <td class="p-2">
