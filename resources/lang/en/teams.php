@@ -30,4 +30,5 @@ return [
     'ask_owner_to_buy_or_leave_to_create_own_team' => 'Please ask the team owner :name (:email) to buy Witty licenses or leave your current team to create own team.',
     'accepted_invitation' => 'Great! You have accepted the invitation to join the :team team.',
     'language' => 'Team Language',
+    'witty_teams_only' => 'Witty Teams Only',
 ];

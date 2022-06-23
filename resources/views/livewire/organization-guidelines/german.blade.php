@@ -28,9 +28,9 @@
 
                 <x-jet-input-error for="gendered_roles_format" class="mt-2" />
             </div>
-            <div>
+            <div class="p-3">
                 @if(! Auth::user()->hasTeamPermission($team, 'edit_guidelines') || !$team->subscribed())
-                <img class="guidelines-form-section-lock p-2" src="{{ asset('svg/options-lock.svg') }}" alt="{{ __('teams.upgrade_to_witty_teams') }}" title="{{ __('teams.upgrade_to_witty_teams') }}" />
+                @include('partials.witty-teams-only')
                 @endif
             </div>
           </div>

@@ -30,4 +30,5 @@ return [
     'subscription' => 'Team-Abonnement',
     'privacy_settings' => 'Datenschutzeinstellungen',
     'language' => 'Spracheinstellungen',
+    'witty_teams_only' => 'Nur Witty Teams',
 ];

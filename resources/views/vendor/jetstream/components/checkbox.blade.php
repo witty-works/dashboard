@@ -3,6 +3,8 @@
     <span class="slider round"></span>
 </label>
 @if($disabled)
-    <img src="{{ asset(app()->getLocale() === 'de' ? 'svg/nur-witty-teams.svg' : 'svg/witty-teams-only.svg') }}" alt="{{ __('teams.upgrade_to_witty_teams') }}" title="{{ __('teams.upgrade_to_witty_teams') }}" class="guidelines-form-section-lock p-2" />
+<div class="p-3 whitespace-nowrap">
+@include('partials.witty-teams-only')
+</div>
 @endif
 <div class="guidelines-form-section-label">{{ $label }}</div>
