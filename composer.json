@@ -9,7 +9,7 @@
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "joelbutcher/socialstream": "^3.2",
-        "kineticamobile/lumki": "dev-main",
+        "kineticamobile/lumki": "^0.1",
         "laravel/cashier": "^13.8.4",
         "laravel/framework": "^9",
         "laravel/jetstream": "^2.4",
