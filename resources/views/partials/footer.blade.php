@@ -11,7 +11,7 @@ $links = [
 @endphp
 @if(isset($type) && $type === 'hamburger')
 @foreach($links as $label => $url)
-<x-jet-responsive-nav-link href="{{ $url }}" target="_blank">
+<x-jet-responsive-nav-link href="{{ $url }}" target="_blank" rel="noopener">
     {{ $label }}
 </x-jet-responsive-nav-link>
 @endforeach
@@ -24,7 +24,7 @@ $links = [
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex sm:items-center">
                     @foreach($links as $label => $url)
-                    <x-jet-nav-link href="{{ $url }}" target="_blank">
+                    <x-jet-nav-link href="{{ $url }}" target="_blank" rel="noopener">
                         {{ $label }}
                     </x-jet-nav-link>
                     @endforeach
