@@ -9,7 +9,7 @@ return [
     'subscription' => 'Team Subscription',
     'plan_summary' => 'Subscription Details',
     'plan_name' => 'Your current subscription',
-    'upgrade' => 'Witty Teams only',
+    'upgrade' => 'Upgrade to Witty Teams',
     'pricing' => 'Pricing',
     'default_plan_name' => 'Witty Me',
     'renewal_date' => 'Renewal date',

@@ -7,7 +7,7 @@ return [
     'store_context_description' => 'Wenn eingeschaltet, speichert Witty in bestimmten Situationen <a href="https://www.witty.works/trust-and-security">einige Zeichen</a> vor und nach dem hervorgehobenen Begriff. So hilfst du mit, Witty zu verbessern, um in Zukunft noch bessere Vorschläge zu machen.',
     'plan_summary' => 'Abonnement Details',
     'plan_name' => 'Dein aktuelles Abonnement ist',
-    'upgrade' => 'Nur Witty Teams',
+    'upgrade' => 'Upgrade auf Witty Teams',
     'default_plan_name' => 'Witty Me',
     'renewal_date' => 'Verlängerungsdatum',
     'user_licenses' => 'Benutzer*innen',
