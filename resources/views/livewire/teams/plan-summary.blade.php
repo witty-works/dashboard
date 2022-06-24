@@ -11,7 +11,7 @@
         <div class="col-span-6 sm:col-span-4">
             <x-jet-label for="name" value="{{ __('teams.plan_name') }}" />
             <div>
-                {{ $team->subscribed() ? $team->subscription()->planName() : __('stripe.witty_me') }}
+                {{ $team->subscribed() ? $team->subscription()->planName() : __('stripe.witty_free') }}
             </div>
 
             @if(Auth::user()->ownsTeam($team))
