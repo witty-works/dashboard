@@ -35,12 +35,12 @@ class Subscription extends CashierSubscription
     public function planId()
     {
         if (!$this->stripe_price) {
-            return 'witty_me';
+            return 'witty_free';
         }
 
         $stripePlans = config('stripe.plans');
         if (empty($stripePlans)) {
-            return 'witty_me';
+            return 'witty_free';
         }
 
         foreach ($stripePlans as $planName => $planConfig) {

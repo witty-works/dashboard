@@ -3,7 +3,7 @@
 return [
 
     'plans' => [
-        'witty_me' => [
+        'witty_free' => [
             'price_id' => env('STRIPE_PRICE_WITTY_ME'),
             'price' => 0,
             'checkout' => false,
@@ -25,7 +25,7 @@ return [
             'checkout' => true,
             'demo' => false,
             'features' => [
-                'witty_me' => [],
+                'witty_free' => [],
                 'invite_larger_teams' => [],
                 'permissions' => [],
                 'advanced_team_analytics' => [],

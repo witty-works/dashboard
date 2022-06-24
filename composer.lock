@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3f534c5297c634d483c661982251f022",
+    "content-hash": "5c182544094d5cf10cf1e78a71d7ef7f",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2163,7 +2163,7 @@
         },
         {
             "name": "kineticamobile/lumki",
-            "version": "dev-main",
+            "version": "v0.1.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kineticamobile/lumki.git",
@@ -2186,7 +2186,6 @@
                 "phpunit/phpunit": "~8.0|~9.0",
                 "sempro/phpunit-pretty-print": "^1.0"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
@@ -12283,7 +12282,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "kineticamobile/lumki": 20,
         "socialiteproviders/azureadb2c": 20,
         "themsaid/laravel-langman": 20,
         "tio/laravel": 20
@@ -12294,5 +12292,5 @@
         "php": "^7.3|^8.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.2.0"
 }
