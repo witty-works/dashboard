@@ -26,7 +26,7 @@ return [
     'please_remove_users_or_upgrade' => '{1} Please remove one user license or <a href=":url">upgrade</a> to re-activate all team members. | Please remove :diff user licenses or <a href=":url">upgrade</a> to re-activate all team members.',
     'end_date' => 'end date',
     'team_owner' => 'Team owner',
-    'upgrade_to_witty_teams' => 'Please upgrade to Witt Teams',
+    'upgrade_to_witty_teams' => 'Please upgrade to Witty Teams',
     'ask_owner_to_buy_or_leave_to_create_own_team' => 'Please ask the team owner :name (:email) to buy Witty licenses or leave your current team to create own team.',
     'accepted_invitation' => 'Great! You have accepted the invitation to join the :team team.',
     'language' => 'Team Language',
