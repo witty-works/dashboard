@@ -23,7 +23,7 @@ class ResolveSocialiteUser implements ResolvesSocialiteUsers
             ->user();
 
         $user->name = $user->nickname = $user->user['nickname'] = $user->user['name'] ?? '';
-        $user->email = $user->user['email'] = $user->user['emails'][0] ?: ($user->user['email'] ?: null);
+        $user->email = $user->user['email'] = $user->user['emails'][0] ?? ($user->user['email'] ?? null);
 
         return $user;
     }
