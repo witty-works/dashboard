@@ -17,6 +17,7 @@ class Team extends JetstreamTeam
         subscribed as protected parentSubscribed;
         subscription as protected parentSubscription;
     }
+    use GuidelinesTrait;
 
     /**
      * The attributes that should be cast.
@@ -70,14 +71,9 @@ class Team extends JetstreamTeam
         return $this->owner->email;
     }
 
-    /**
-     * Get the current team of the user's context.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function organizationGuidelines()
+    public function languageGuidelines()
     {
-        return $this->hasOne(OrganizationGuidelines::class, 'team_id');
+        return $this->hasOne(LanguageGuidelines::class, 'team_id');
     }
 
     public function termReplacements()
@@ -88,6 +84,11 @@ class Team extends JetstreamTeam
     public function falsePositives()
     {
         return $this->hasMany(FalsePositive::class, 'team_id');
+    }
+
+    public function domains()
+    {
+        return $this->hasMany(Domain::class, 'team_id');
     }
 
     public function posthogId()
@@ -125,40 +126,22 @@ class Team extends JetstreamTeam
 
     public function getTermReplacementsCount()
     {
+        $key = '.features.organization_term_replacements.count';
         if ($this->subscribed() && $this->term_replacements === null) {
-            return config('stripe.plans.' . $this->planId() . '.features.term_replacements.count');
+            return config('stripe.plans.' . $this->planId() . $key);
         }
 
-        return $this->term_replacements ?? config('stripe.plans.witty_free.features.term_replacements.count');
-    }
-
-    public function getTotalTermReplacementsCount()
-    {
-        return $this->termReplacements()->count();
-    }
-
-    public function getTermReplacementsLimitReached()
-    {
-        return $this->getTotalTermReplacementsCount() >= $this->getTermReplacementsCount();
+        return $this->term_replacements ?? config('stripe.plans.witty_free' . $key);
     }
 
     public function getFalsePositivesCount()
     {
+        $key = '.features.organization_false_positives.count';
         if ($this->subscribed() && $this->false_positives === null) {
-            return config('stripe.plans.' . $this->planId() . '.features.false_positives.count');
+            return config('stripe.plans.' . $this->planId() . $key);
         }
 
-        return $this->false_positives ?? config('stripe.plans.witty_free.features.false_positives.count');
-    }
-
-    public function getTotalFalsePositivesCount()
-    {
-        return $this->falsePositives()->count();
-    }
-
-    public function getFalsePositivesLimitReached()
-    {
-        return $this->getTotalFalsePositivesCount() >= $this->getFalsePositivesCount();
+        return $this->false_positives ?? config('stripe.plans.witty_free' . $key);
     }
 
     public function planId()

@@ -2,9 +2,13 @@
 
 namespace App\Console\Commands;
 
+use App\Events\UserCreated;
+use App\Listeners\UpdateUserGuidelines;
 use App\Listeners\UpdateOrganizationGuidelines;
+use App\Models\User;
 use App\Models\Team;
 use Illuminate\Console\Command;
+use Laravel\Jetstream\Events\TeamCreated;
 
 class SyncToApi extends Command
 {
@@ -31,12 +35,22 @@ class SyncToApi extends Command
     {
         $this->info('Syncing to NLP API ...');
 
-        $count = 0;
+        $teamCount = 0;
+        $updateOrganizationGuidelines = new UpdateOrganizationGuidelines();
         foreach (Team::query()->cursor() as $team) {
-            UpdateOrganizationGuidelines::updateRules($team);
-            $count++;
+            $updateOrganizationGuidelines->handle(new TeamCreated($team));
+            $teamCount++;
         }
 
-        $this->info("Finished syncing $count teams");
+        $this->info("Finished syncing $teamCount teams");
+
+        $userCount = 0;
+        $updateUserGuidelines = new UpdateUserGuidelines();
+        foreach (User::query()->cursor() as $user) {
+            $updateUserGuidelines->handle(new UserCreated($user));
+            $userCount++;
+        }
+
+        $this->info("Finished syncing $userCount users");
     }
 }

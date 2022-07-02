@@ -25,11 +25,12 @@
             @endif
         </div>
 
-        <div class="mt-5">
+        <div class="mt-5 col-span-6 sm:col-span-4">
             <x-jet-label for="name" value="{{ __('teams.team_owner') }}" />
                 {{ $team->owner->name }} (<a href="mailto:{{ $team->owner->email }}">{{ $team->owner->email }}</a>)
         </div>
-        <div class="mt-5">
+
+        <div class="mt-5 col-span-6 sm:col-span-4">
             <div>
                 {{ __('teams.what_is_included') }}
             </div>
@@ -55,12 +56,12 @@
                 @endif
             </div>
 
-            <div class="mt-5">
+            <div class="mt-5 col-span-6 sm:col-span-4">
                 <x-jet-label for="name" value="{{ __('teams.term_replacements') }}" />
                     {{ __('teams.total_of_max_used', ['total' => $team->getTotalTermReplacementsCount(), 'max_count' => $team->getTermReplacementsCount()]) }}
             </div>
 
-            <div class="mt-5">
+            <div class="mt-5 col-span-6 sm:col-span-4">
                 <x-jet-label for="name" value="{{ __('teams.false_positives') }}" />
                     {{ __('teams.total_of_max_used', ['total' => $team->getTotalFalsePositivesCount(), 'max_count' => $team->getFalsePositivesCount()]) }}
             </div>
@@ -68,12 +69,12 @@
 
         @if($team->subscribed())
         @if($team->subscription()->ends_at)
-        <div class="col-span-6 sm:col-span-4">
+        <div class="mt-5 col-span-6 sm:col-span-4">
             <x-jet-label for="name" value="{{ __('teams.end_date') }}" />
             {{ $team->subscription()->ends_at->toFormattedDateString() }}
         </div>
         @elseif($team->subscription()->renews_at)
-        <div class="col-span-6 sm:col-span-4">
+        <div class="mt-5 col-span-6 sm:col-span-4">
             <x-jet-label for="name" value="{{ __('teams.renewal_date') }}" />
             {{ $team->subscription()->renews_at->toFormattedDateString() }}
         </div>

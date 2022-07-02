@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Events\UserGuidelinesUpdated;
 use App\Events\OrganizationGuidelinesUpdated;
 use App\Events\SubscriptionCancelled;
 use App\Events\SubscriptionCreated;
@@ -16,6 +17,7 @@ use App\Listeners\PostHogUpdateUser;
 use App\Listeners\SyncStartRenwalDates;
 use App\Listeners\TeamMemberAddedSlackAlert;
 use App\Listeners\UpdateOrganizationGuidelines;
+use App\Listeners\UpdateUserGuidelines;
 use App\Listeners\UpdateUserLicenses;
 use App\Listeners\UserAddedSlackAlert;
 use Laravel\Jetstream\Events\TeamCreated;
@@ -38,13 +40,16 @@ class EventServiceProvider extends ServiceProvider
         UserCreated::class => [
             UserAddedSlackAlert::class,
             PostHogUpdateUser::class,
+            UpdateUserGuidelines::class,
         ],
         UserDeleted::class => [
             UserAddedSlackAlert::class,
             PostHogUpdateUser::class,
+            UpdateUserGuidelines::class,
         ],
         UserUpdated::class => [
             PostHogUpdateUser::class,
+            UpdateUserGuidelines::class,
         ],
         TeamMemberAdded::class => [
             PostHogUpdateCompany::class,
@@ -101,6 +106,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         OrganizationGuidelinesUpdated::class => [
             UpdateOrganizationGuidelines::class,
+        ],
+        UserGuidelinesUpdated::class => [
+            UpdateUserGuidelines::class,
         ],
     ];
 

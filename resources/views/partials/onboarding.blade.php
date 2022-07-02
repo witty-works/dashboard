@@ -12,7 +12,7 @@ if ($user && (!$user->currentTeam || $user->can('update', $user->currentTeam))) 
                 'state' => 'deactivated',
                 'link' => false,
             ],
-        'organizationGuidelines' =>
+        'languageGuidelines' =>
             [
                 'title' => __('content.onboarding_configure_organization_guidelines'),
                 'tagline' => __('content.onboarding_configure_organization_guidelines_tagline'),
@@ -40,16 +40,16 @@ if ($user && (!$user->currentTeam || $user->can('update', $user->currentTeam))) 
     }
 
     if (!$currentTeam) {
-        $onboardingSteps['organizationGuidelines']['state'] = 'deactivated';
-    } else if ($currentTeam && $currentTeam->organizationGuidelines) {
-        $onboardingSteps['organizationGuidelines']['state'] = 'complete';
+        $onboardingSteps['languageGuidelines']['state'] = 'deactivated';
+    } else if ($currentTeam && $currentTeam->languageGuidelines) {
+        $onboardingSteps['languageGuidelines']['state'] = 'complete';
     } else {
         $showOnboardingSteps = true;
-        $onboardingSteps['organizationGuidelines']['state'] = 'todo';
-        $onboardingSteps['organizationGuidelines']['link'] = route('language-guidelines');
+        $onboardingSteps['languageGuidelines']['state'] = 'todo';
+        $onboardingSteps['languageGuidelines']['link'] = route('language-guidelines');
     }
 
-    if (!$currentTeam || !$currentTeam->organizationGuidelines) {
+    if (!$currentTeam || !$currentTeam->languageGuidelines) {
         $onboardingSteps['inviteUsers']['state'] = 'deactivated';
     } else if ($currentTeam && $currentTeam->getTotalUserCount() > 1) {
         $onboardingSteps['inviteUsers']['state'] = 'complete';

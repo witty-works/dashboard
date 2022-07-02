@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Livewire\GuidelinesController;
+use App\Http\Controllers\Livewire\OrganizationGuidelinesController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\StripeController;
@@ -15,6 +15,7 @@ use App\Http\Controllers\TeamInvitationController;
 use Laravel\Jetstream\Http\Controllers\Livewire\ApiTokenController;
 use Laravel\Jetstream\Http\Controllers\Livewire\PrivacyPolicyController;
 use App\Http\Controllers\Livewire\TeamController;
+use App\Http\Controllers\Livewire\UserGuidelinesController;
 use Laravel\Jetstream\Http\Controllers\Livewire\TermsOfServiceController;
 use Laravel\Jetstream\Http\Controllers\Livewire\UserProfileController;
 use Laravel\Jetstream\Jetstream;
@@ -107,10 +108,17 @@ Route::group(
                         ->middleware(['auth'])
                         ->name('team-invitations.reject');
 
-                    Route::redirect('/team/language', '/team/language/customize-witty')->name('language-guidelines');
-                    Route::get('/team/language/customize-witty', [GuidelinesController::class, 'customizeWitty'])->name('customize-witty');
-                    Route::get('/team/language/term-replacements', [GuidelinesController::class, 'termReplacements'])->name('term-replacements');
-                    Route::get('/team/language/ignore-words', [GuidelinesController::class, 'falsePositives'])->name('ignore-words');
+                    Route::redirect('/user/language', '/user/language/customize-witty')->name('user.language-guidelines');
+                    Route::get('/user/language/customize-witty', [UserGuidelinesController::class, 'customizeWitty'])->name('user.customize-witty');
+                    Route::get('/user/language/term-replacements', [UserGuidelinesController::class, 'termReplacements'])->name('user.term-replacements');
+                    Route::get('/user/language/ignore-words', [UserGuidelinesController::class, 'falsePositives'])->name('user.ignore-words');
+                    Route::get('/user/language/domains', [UserGuidelinesController::class, 'domains'])->name('user.domains');
+
+                    Route::redirect('/team/language', '/team/language/customize-witty')->name('teams.language-guidelines');
+                    Route::get('/team/language/customize-witty', [OrganizationGuidelinesController::class, 'customizeWitty'])->name('teams.customize-witty');
+                    Route::get('/team/language/term-replacements', [OrganizationGuidelinesController::class, 'termReplacements'])->name('teams.term-replacements');
+                    Route::get('/team/language/ignore-words', [OrganizationGuidelinesController::class, 'falsePositives'])->name('teams.ignore-words');
+                    Route::get('/team/language/domains', [OrganizationGuidelinesController::class, 'domains'])->name('teams.domains');
                 }
             });
         });

@@ -2,7 +2,8 @@
 
 namespace App\Http\Livewire\OrganizationGuidelines;
 
-use App\Models\OrganizationGuidelines;
+use App\Models\GuidelinesInterface;
+use App\Models\LanguageGuidelines;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
@@ -31,12 +32,12 @@ class Inclusive extends Component
      */
     public function mount($team)
     {
-        $this->mountCategories($team, OrganizationGuidelines::DISABLED_CATEGORIES_INCLUSIVE);
+        $this->mountCategories($team, GuidelinesInterface::DISABLED_CATEGORIES_INCLUSIVE);
     }
 
-    public function updateOrganizationGuidelinesInclusive()
+    public function updateLanguageGuidelinesInclusive()
     {
-        return $this->updateCategories(OrganizationGuidelines::DISABLED_CATEGORIES_INCLUSIVE);
+        return $this->updateCategories(GuidelinesInterface::DISABLED_CATEGORIES_INCLUSIVE);
     }
 
     /**
@@ -49,8 +50,8 @@ class Inclusive extends Component
         return view('livewire.organization-guidelines.inclusive');
     }
 
-    protected function getOrganizationGuidelines($team)
+    protected function getLanguageGuidelines($team)
     {
-        return OrganizationGuidelines::firstOrNew(['team_id' => $team->id]);
+        return LanguageGuidelines::firstOrNew(['team_id' => $team->id]);
     }
 }

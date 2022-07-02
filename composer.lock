@@ -6246,12 +6246,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/lsmith77/AzureADB2C.git",
-                "reference": "f7907ffb10c33da94f869df21ee0004c5e02a137"
+                "reference": "660329f49a661d1f6a5f16ad82d2f29d1b5915d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lsmith77/AzureADB2C/zipball/f7907ffb10c33da94f869df21ee0004c5e02a137",
-                "reference": "f7907ffb10c33da94f869df21ee0004c5e02a137",
+                "url": "https://api.github.com/repos/lsmith77/AzureADB2C/zipball/660329f49a661d1f6a5f16ad82d2f29d1b5915d9",
+                "reference": "660329f49a661d1f6a5f16ad82d2f29d1b5915d9",
                 "shasum": ""
             },
             "require": {
@@ -6292,7 +6292,7 @@
             "support": {
                 "source": "https://github.com/lsmith77/AzureADB2C/tree/multiple-policies"
             },
-            "time": "2022-04-13T11:52:11+00:00"
+            "time": "2022-08-05T10:29:08+00:00"
         },
         {
             "name": "socialiteproviders/manager",

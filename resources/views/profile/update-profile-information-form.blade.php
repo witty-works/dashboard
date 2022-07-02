@@ -63,17 +63,46 @@
             <x-jet-label for="email" value="{{ __('content.email') }}" />
             {{ $state['email'] }}
         </div>
-    </x-slot>
 
-    <x-slot name="actions">
-    {{--
-        <x-jet-action-message class="mr-3" on="saved">
-            <span class="float-right">{{ __('content.saved') }}</span>
-        </x-jet-action-message>
+        @php
+            $user = Auth::user();
+            $team = $user->currentTeam;
+        @endphp
 
-        <x-jet-button wire:loading.attr="disabled" wire:target="photo">
-            {{ __('content.save') }}
-        </x-jet-button>
-    --}}
+        <div class="mt-5 col-span-6 sm:col-span-4">
+            <x-jet-label for="name" value="{{ __('teams.plan_name') }}" />
+            <div>
+                {{ $user->subscribed() ? $user->subscription()->planName() : __('stripe.witty_free') }}
+            </div>
+
+            @if($team && $user->ownsTeam($team))
+                <a href="{{ route('stripe.portal') }}">
+                    @if($team->subscribed())
+                    {{ $team->subscription()->isPaidByInvoice() ? __('stripe.contact_sales') : __('stripe.billing') }}
+                    @else
+                    {{ __('teams.upgrade') }}
+                    @endif
+                </a>
+            @endif
+        </div>
+
+        <div class="mt-5 col-span-6 sm:col-span-4">
+            <x-jet-label for="name" value="{{ __('teams.team_owner') }}" />
+                {{ $team->owner->name }} (<a href="mailto:{{ $team->owner->email }}">{{ $team->owner->email }}</a>)
+        </div>
+
+        <div class="mt-5 col-span-6 sm:col-span-4">
+            {{ __('teams.what_is_included') }}
+        </div>
+
+        <div class="mt-5 col-span-6 sm:col-span-4">
+            <x-jet-label for="name" value="{{ __('teams.term_replacements') }}" />
+                {{ __('teams.total_of_max_used', ['total' => $user->getTotalTermReplacementsCount(), 'max_count' => $user->getTermReplacementsCount()]) }}
+        </div>
+
+        <div class="mt-5 col-span-6 sm:col-span-4">
+            <x-jet-label for="name" value="{{ __('teams.false_positives') }}" />
+                {{ __('teams.total_of_max_used', ['total' => $user->getTotalFalsePositivesCount(), 'max_count' => $user->getFalsePositivesCount()]) }}
+        </div>
     </x-slot>
 </x-jet-form-section>
