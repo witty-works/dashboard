@@ -8,8 +8,8 @@
 
 <script>
     window.addEventListener('load', () => {
-        const wittyCode = document.querySelector('witty-code');
-        if (wittyCode && window.location.href.includes("?install-witty")) {     
+        const wittyIsInstalled = document.querySelector('witty-is-installed') || document.querySelector('witty-code');
+        if (wittyIsInstalled && window.location.href.includes("?install-witty")) {
             window.history.replaceState({}, '', window.location.href.replace('?install-witty', ''));
             window.location.reload();
         } 
