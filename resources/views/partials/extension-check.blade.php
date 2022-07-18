@@ -13,7 +13,7 @@
             window.history.replaceState({}, '', window.location.href.replace('?install-witty', ''));
             window.location.reload();
         } 
-        else if (!wittyCode && !window.location.href.includes("?install-witty")) {
+        else if (!wittyIsInstalled && !window.location.href.includes("?install-witty")) {
             window.location.href = "?install-witty";
         }
     });
