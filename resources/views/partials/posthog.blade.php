@@ -1,20 +1,4 @@
 @if (config('posthog.js_enabled'))
-@php
-$user = Auth::user();
-if ($user) {
-    $identifyData = $user->posthogId();
-
-    $userData = [
-        'email' => $user->email,
-        'name' => $user->name,
-    ];
-
-    $team = $user->currentTeam;
-    if ($team) {
-        $companyData = ['name' => $team->name];
-    }
-}
-@endphp
 <script>
     if (window.posthog) {
         window.posthog.init(
@@ -24,26 +8,9 @@ if ($user) {
                 @if (\App\Http\Middleware\PostHogMiddleware::$reset)
                 posthog.reset();
                 @endif
-                @if (!empty($identifyData))
+                @if (!empty(Auth::user()))
                 posthog.identify(
-                    {!! json_encode($identifyData) !!}
-                );
-                @endif
-
-                @if (!empty($userData))
-                posthog.people.set({!! json_encode($userData) !!});
-                posthog.group(
-                    {!! json_encode(\App\Http\Middleware\PostHogMiddleware::POSTHOG_USER_TYPE) !!},
-                    {!! json_encode($identifyData) !!},
-                    {!! json_encode($userData) !!}
-                );
-                @endif
-
-                @if (!empty($team))
-                posthog.group(
-                    {!! json_encode(\App\Http\Middleware\PostHogMiddleware::POSTHOG_ORGANIZATION_TYPE) !!},
-                    {!! json_encode($team->posthogId()) !!},
-                    {!! json_encode($companyData) !!}
+                    {!! json_encode(Auth::user()->posthogId()) !!}
                 );
                 @endif
             }

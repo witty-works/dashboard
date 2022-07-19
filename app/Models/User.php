@@ -129,4 +129,15 @@ class User extends Authenticatable implements MustVerifyEmail
 
         $this->email = $userData['emails'][0] ?? $userData['email'];
     }
+
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'created' => UserCreated::class,
+        'updated' => UserUpdated::class,
+        'deleted' => UserDeleted::class,
+    ];
 }

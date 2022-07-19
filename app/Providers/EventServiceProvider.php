@@ -6,13 +6,15 @@ use App\Events\OrganizationGuidelinesUpdated;
 use App\Events\SubscriptionCancelled;
 use App\Events\SubscriptionCreated;
 use App\Events\SubscriptionUpdated;
-use App\Events\UserAdded;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
+use App\Events\TeamSync;
+use App\Events\UserCreated;
+use App\Events\UserDeleted;
+use App\Events\UserSync;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use App\Listeners\PosthogBilling;
 use App\Listeners\PosthogReset;
 use App\Listeners\PostHogUpdateCompany;
+use App\Listeners\PostHogUpdateUser;
 use App\Listeners\SyncStartRenwalDates;
 use App\Listeners\TeamMemberAddedSlackAlert;
 use App\Listeners\UpdateOrganizationGuidelines;
@@ -35,17 +37,30 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        UserAdded::class => [
+        UserCreated::class => [
             UserAddedSlackAlert::class,
+            PostHogUpdateUser::class,
+        ],
+        UserDeleted::class => [
+            UserAddedSlackAlert::class,
+            PostHogUpdateUser::class,
+        ],
+        UserUpdated::class => [
+            PostHogUpdateUser::class,
+        ],
+        UserSync::class => [
+            PostHogUpdateUser::class,
         ],
         TeamMemberAdded::class => [
             PostHogUpdateCompany::class,
+            PostHogUpdateUser::class,
             UpdateUserLicenses::class,
             UpdateOrganizationGuidelines::class,
             TeamMemberAddedSlackAlert::class,
         ],
         TeamMemberRemoved::class => [
             PostHogUpdateCompany::class,
+            PostHogUpdateUser::class,
             UpdateUserLicenses::class,
             UpdateOrganizationGuidelines::class,
         ],
@@ -62,8 +77,8 @@ class EventServiceProvider extends ServiceProvider
             UpdateUserLicenses::class,
             UpdateOrganizationGuidelines::class,
         ],
-        Registered::class => [
-            SendEmailVerificationNotification::class,
+        TeamSync::class => [
+            PostHogUpdateCompany::class,
         ],
         Logout::class => [
             PosthogReset::class,
@@ -72,16 +87,19 @@ class EventServiceProvider extends ServiceProvider
             PosthogBilling::class,
         ],
         SubscriptionCreated::class => [
+            PostHogUpdateCompany::class,
             SyncStartRenwalDates::class,
             UpdateOrganizationGuidelines::class,
             UpdateUserLicenses::class,
         ],
         SubscriptionUpdated::class => [
+            PostHogUpdateCompany::class,
             SyncStartRenwalDates::class,
             UpdateOrganizationGuidelines::class,
             UpdateUserLicenses::class,
         ],
         SubscriptionCancelled::class => [
+            PostHogUpdateCompany::class,
             SyncStartRenwalDates::class,
             UpdateOrganizationGuidelines::class,
             UpdateUserLicenses::class,
