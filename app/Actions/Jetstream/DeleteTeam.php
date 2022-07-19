@@ -3,6 +3,7 @@
 namespace App\Actions\Jetstream;
 
 use Laravel\Jetstream\Contracts\DeletesTeams;
+use Laravel\Jetstream\Events\TeamMemberRemoved;
 
 class DeleteTeam implements DeletesTeams
 {
@@ -14,6 +15,10 @@ class DeleteTeam implements DeletesTeams
      */
     public function delete($team)
     {
+        foreach ($team->allUsers() as $user) {
+            TeamMemberRemoved::dispatch($team, $user);
+        }
+
         $team->purge();
     }
 }

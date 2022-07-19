@@ -20,6 +20,8 @@ class PostHogUpdateCompany
             'groupKey' => $team->posthogId(),
             'properties' => [
                 'name' => $team->name,
+                'owner' => $team->owner->posthogId(),
+                'impersonate_url' => config('app.url') . '/impersonate/take/' . $team->owner->id,
                 'users' => $team->getTotalUserCount(),
                 'stripe_plan' => $team->planId(),
             ]

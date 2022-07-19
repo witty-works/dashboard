@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\UserAdded;
 use App\Models\User;
 use Laravel\Socialite\AbstractUser;
 use Laravel\Socialite\Two\InvalidStateException;
@@ -124,7 +123,6 @@ class OAuthController extends BaseOAuthController
             }
 
             $user = $this->createsUser->create($provider, $providerAccount);
-            UserAdded::dispatch($user);
 
             return $this->login($user);
         }
