@@ -2,11 +2,13 @@
 
 namespace App\Console\Commands;
 
-use App\Events\UserSync;
-use App\Events\TeamSync;
+use App\Events\UserCreated;
+use App\Listeners\PostHogUpdateCompany;
+use App\Listeners\PostHogUpdateUser;
 use App\Models\User;
 use App\Models\Team;
 use Illuminate\Console\Command;
+use Laravel\Jetstream\Events\TeamCreated;
 use PostHog\PostHog;
 
 class SyncToPosthog extends Command
@@ -46,19 +48,31 @@ class SyncToPosthog extends Command
         $this->info('Syncing to Posthog ...');
 
         $teamCount = 0;
+        $teamFailed = 0;
+
+        $postHogUpdateCompany = new PostHogUpdateCompany();
         foreach (Team::query()->cursor() as $team) {
-            event(new TeamSync($team));
+            if (!$postHogUpdateCompany->handle(new TeamCreated($team))) {
+                $teamFailed++;
+            }
+
             $teamCount++;
         }
 
-        $this->info("Finished syncing $teamCount teams");
+        $this->info("Finished syncing $teamCount teams (failed $teamFailed)");
 
         $userCount = 0;
+        $userFailed = 0;
+
+        $postHogUpdateUser = new PostHogUpdateUser();
         foreach (User::query()->cursor() as $user) {
-            event(new UserSync($user));
+            if (!$postHogUpdateUser->handle(new UserCreated($user))) {
+                $userFailed++;
+            }
+
             $userCount++;
         }
 
-        $this->info("Finished syncing $userCount users");
+        $this->info("Finished syncing $userCount users (failed $userFailed)");
     }
 }

@@ -15,7 +15,7 @@ class PostHogUpdateCompany
 
         $team = $event->team;
 
-        PostHog::groupIdentify([
+        return PostHog::groupIdentify([
             'groupType' => PostHogMiddleware::POSTHOG_ORGANIZATION_TYPE,
             'groupKey' => $team->posthogId(),
             'properties' => [

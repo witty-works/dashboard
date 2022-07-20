@@ -8,7 +8,6 @@ use PostHog\PostHog;
 class PostHogMiddleware
 {
     public const POSTHOG_ID_PREFIX = 'dashboard:';
-    public const POSTHOG_USER_TYPE = 'user';
     public const POSTHOG_ORGANIZATION_TYPE = 'organization';
 
     public static $reset = false;
