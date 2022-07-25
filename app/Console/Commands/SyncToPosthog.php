@@ -18,7 +18,7 @@ class SyncToPosthog extends Command
      *
      * @var string
      */
-    protected $signature = 'posthog:sync';
+    protected $signature = 'posthog:sync {--batch-size=}';
 
     /**
      * The console command description.
@@ -40,9 +40,15 @@ class SyncToPosthog extends Command
             return;
         }
 
+        $options = ['host' => config('posthog.host'), 'debug' => config('posthog.debug')];
+        $batchSize = $this->option('batch-size') ?? false;
+        if ($batchSize) {
+            $options['batch_size'] = $batchSize;
+        }
+
         PostHog::init(
             config('posthog.api_key'),
-            ['host' => config('posthog.host')],
+            $options,
         );
 
         $this->info('Syncing to Posthog ...');

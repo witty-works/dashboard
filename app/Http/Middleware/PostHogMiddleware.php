@@ -17,7 +17,7 @@ class PostHogMiddleware
         if (config('posthog.enabled')) {
             PostHog::init(
                 config('posthog.api_key'),
-                ['host' => config('posthog.host')],
+                ['host' => config('posthog.host'), 'debug' => config('posthog.debug')],
             );
         }
 
