@@ -15,7 +15,7 @@ class PostHogUpdateUser
 
         $user = $event->user;
 
-        PostHog::identify([
+        return PostHog::identify([
             'distinctId' => $user->posthogId(),
             'properties' => [
                 '$groups' => [PostHogMiddleware::POSTHOG_ORGANIZATION_TYPE => $user->posthogTeamId()],

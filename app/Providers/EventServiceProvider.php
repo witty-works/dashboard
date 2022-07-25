@@ -6,10 +6,8 @@ use App\Events\OrganizationGuidelinesUpdated;
 use App\Events\SubscriptionCancelled;
 use App\Events\SubscriptionCreated;
 use App\Events\SubscriptionUpdated;
-use App\Events\TeamSync;
 use App\Events\UserCreated;
 use App\Events\UserDeleted;
-use App\Events\UserSync;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use App\Listeners\PosthogBilling;
 use App\Listeners\PosthogReset;
@@ -48,9 +46,6 @@ class EventServiceProvider extends ServiceProvider
         UserUpdated::class => [
             PostHogUpdateUser::class,
         ],
-        UserSync::class => [
-            PostHogUpdateUser::class,
-        ],
         TeamMemberAdded::class => [
             PostHogUpdateCompany::class,
             PostHogUpdateUser::class,
@@ -76,9 +71,6 @@ class EventServiceProvider extends ServiceProvider
             PostHogUpdateCompany::class,
             UpdateUserLicenses::class,
             UpdateOrganizationGuidelines::class,
-        ],
-        TeamSync::class => [
-            PostHogUpdateCompany::class,
         ],
         Logout::class => [
             PosthogReset::class,
