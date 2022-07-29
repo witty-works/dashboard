@@ -236,4 +236,5 @@ Your Witty team',
     'account_already_exists' => 'An account with that email address already exists.',
     'onboarding_invitations' => 'Open team invitations',
     'witty_for_teams' => 'Witty for Teams',
+    'onboarding_personal_team' => '1. Team automatically created',
 ];
