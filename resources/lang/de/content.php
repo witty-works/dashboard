@@ -235,4 +235,5 @@ Dein Witty-Team',
     'account_already_exists' => 'Ein Konto mit dieser E-Mail-Adresse ist bereits vorhanden.',
     'onboarding_invitations' => 'Offene Team-Einladungen',
     'witty_for_teams' => 'Witty für Teams',
+    'onboarding_personal_team' => '1. Team automatisch erstellt',
 ];

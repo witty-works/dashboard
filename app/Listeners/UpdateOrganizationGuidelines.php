@@ -24,8 +24,12 @@ class UpdateOrganizationGuidelines
     static public function deleteRules(Team $team)
     {
         $endpoint = config('app.organization_guidelines_endpoint');
+        if (empty($endpoint['url'])) {
+            return;
+        }
+
         $query = http_build_query(['organization_id' => $team->id]);
-        $endpoint['url'] .= '/delete_rules?'.$query;
+        $endpoint['url'] .= '/delete_rules?' . $query;
 
         if (empty($endpoint['user'])) {
             $response = Http::delete($endpoint['url']);
@@ -42,6 +46,9 @@ class UpdateOrganizationGuidelines
     static public function updateRules(Team $team)
     {
         $endpoint = config('app.organization_guidelines_endpoint');
+        if (empty($endpoint['url'])) {
+            return;
+        }
 
         $termReplacements = self::getTermReplacements($team);
         $falsePositives = $team->falsePositives()->pluck('false_positive')->toArray();
