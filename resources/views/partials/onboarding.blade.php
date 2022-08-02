@@ -30,6 +30,9 @@ if ($user && (!$user->currentTeam || $user->can('update', $user->currentTeam))) 
 
     if ($currentTeam) {
         $onboardingSteps['createTeam']['state'] = 'complete';
+        if ($currentTeam->personal_team) {
+            $onboardingSteps['createTeam']['title'] = __('content.onboarding_personal_team');
+        }
     } else {
         $showOnboardingSteps = true;
         $onboardingSteps['createTeam']['state'] = 'todo';
