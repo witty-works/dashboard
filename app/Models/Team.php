@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Http\Middleware\PostHogMiddleware;
+use App\Providers\AppServiceProvider;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Laravel\Jetstream\Events\TeamCreated;
 use Laravel\Jetstream\Events\TeamDeleted;
@@ -92,7 +92,7 @@ class Team extends JetstreamTeam
 
     public function posthogId()
     {
-        return PostHogMiddleware::POSTHOG_ID_PREFIX . $this->id;
+        return AppServiceProvider::POSTHOG_ID_PREFIX . $this->id;
     }
 
     public function getUserLicensesCount()
