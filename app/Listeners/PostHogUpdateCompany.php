@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Http\Middleware\PostHogMiddleware;
+use App\Providers\AppServiceProvider;
 use PostHog\PostHog;
 
 class PostHogUpdateCompany
@@ -16,7 +16,7 @@ class PostHogUpdateCompany
         $team = $event->team;
 
         return PostHog::groupIdentify([
-            'groupType' => PostHogMiddleware::POSTHOG_ORGANIZATION_TYPE,
+            'groupType' => AppServiceProvider::POSTHOG_ORGANIZATION_TYPE,
             'groupKey' => $team->posthogId(),
             'properties' => [
                 'name' => $team->name,
