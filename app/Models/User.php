@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Events\UserCreated;
 use App\Events\UserDeleted;
 use App\Events\UserUpdated;
-use App\Http\Middleware\PostHogMiddleware;
+use App\Providers\AppServiceProvider;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -110,7 +110,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function posthogId()
     {
-        return PostHogMiddleware::POSTHOG_ID_PREFIX . $this->id;
+        return AppServiceProvider::POSTHOG_ID_PREFIX . $this->id;
     }
 
     public function posthogTeamId()

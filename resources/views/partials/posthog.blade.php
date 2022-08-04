@@ -5,7 +5,7 @@
             {!! json_encode(config('posthog.api_key')) !!}, {
             api_host: {!! json_encode(config('posthog.host'), JSON_UNESCAPED_SLASHES) !!},
             loaded: function(posthog) {
-                @if (\App\Http\Middleware\PostHogMiddleware::$reset)
+                @if (\App\Providers\AppServiceProvider::$posthog_reset)
                 posthog.reset();
                 @endif
                 @if (!empty(Auth::user()))
