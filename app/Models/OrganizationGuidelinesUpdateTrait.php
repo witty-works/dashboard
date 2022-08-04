@@ -23,7 +23,7 @@ trait OrganizationGuidelinesUpdateTrait
      */
     protected function fireCustomModelEvent($event, $method)
     {
-        if (!in_array($event, ['saved', 'restored'])) {
+        if (!in_array($event, ['saved', 'restored', 'deleted'])) {
             return;
         }
 
