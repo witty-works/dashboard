@@ -7,7 +7,7 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="https://witty.works">
+                    <a href="{{ route('dashboard') }} ">
                         <x-jet-application-mark class="block h-9 w-auto" />
                     </a>
                 </div>
@@ -15,8 +15,8 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex sm:items-center">
                     @auth
-                        <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                            {{ __('content.dashboard') }}
+                        <x-jet-nav-link href="https://www.witty.works/editor" target="_blank" rel="noopener">
+                            {{ __('content.witty_editor') }}
                         </x-jet-nav-link>
 
                     @if ($team)
@@ -111,12 +111,6 @@
 
                         <div class="border-t border-gray-100"></div>
 
-                        <x-jet-dropdown-link href="https://www.witty.works/form">
-                            {{ __('content.go-to-form') }}
-                        </x-jet-dropdown-link>
-
-                        <div class="border-t border-gray-100"></div>
-
                         <!-- Authentication -->
                         <x-jet-dropdown-link href="{{ route('logout', ['provider' => 'azureadb2c']) }}">
                             {{ __('content.log_out') }}
@@ -142,8 +136,8 @@
     <div :class="{'block': open, 'hidden': ! open}" class="hidden lg:hidden">
         <div class="pt-2 pb-3 space-y-1">
             @auth
-            <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                {{ __('content.dashboard') }}
+            <x-jet-responsive-nav-link href="https://www.witty.works/editor" target="_blank" rel="noopener">
+                {{ __('content.witty_editor') }}
             </x-jet-responsive-nav-link>
             @else
             <x-jet-responsive-nav-link href="{{ route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'login']) }}">
@@ -206,10 +200,6 @@
                         {{ __('content.create_new_team') }}
                     </x-jet-responsive-nav-link>
                 @endcan
-
-                <x-jet-responsive-nav-link href="https://www.witty.works/form">
-                    {{ __('content.go-to-form') }}
-                </x-jet-responsive-nav-link>
 
                 <div class="border-t border-gray-200"></div>
 
