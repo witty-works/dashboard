@@ -47,7 +47,7 @@ class AbstractUpdateGuidelines
 
         if ($response->failed()) {
             if (config('app.debug')) {
-                dd($response->json(), $data);
+                dd($response->json(), $data, json_encode($data));
             } else {
                 throw new RuntimeException($response->body());
             }
@@ -98,15 +98,15 @@ class AbstractUpdateGuidelines
         }
 
         $data = [
-            'domains' => [],
+            'list' => [],
         ];
 
         if ($type === 'allow_witty_works') {
             $type = 'allow';
-            $data['domains'][] = 'witty.works';
+            $data['list'][] = 'witty.works';
         } else {
             foreach ($domains as $domain) {
-                $data['domains'][] = $domain->domain;
+                $data['list'][] = $domain->domain;
             }
         }
 
