@@ -215,7 +215,6 @@ Read more about ROI for [large organizations](https://www.witty.works/witty-for-
     'login_failed' => 'Login failed',
     'edit' => 'edit',
     'introduction_videos' => 'Introduction Videos',
-    'go-to-form' => 'Witty Editor',
     'terms' => 'Terms',
     'contact' => 'Contact',
     'book-demo' => 'Book a demo',
@@ -237,4 +236,5 @@ Your Witty team',
     'onboarding_invitations' => 'Open team invitations',
     'witty_for_teams' => 'Witty for Teams',
     'onboarding_personal_team' => '1. Team automatically created',
+    'witty_editor' => 'Witty Editor',
 ];

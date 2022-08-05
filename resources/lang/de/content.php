@@ -211,7 +211,6 @@ Um diese Einladung anzunehmen, melde dich mit deinem bestehenden Konto an oder r
     'login_failed' => 'Login scheiterte',
     'edit' => 'bearbeiten',
     'introduction_videos' => 'Einführungsvideos',
-    'go-to-form' => 'Witty Editor',
     'onboarding_install_witty_title' => 'Installiere Witty',
     'onboarding_install_witty_text' => 'Witty ist ein Browser-Plugin, das inklusives Schreiben jederzeit für jeden möglich macht',
     'onboarding_install_witty_button' => 'Hole dir Witty',
@@ -236,4 +235,5 @@ Dein Witty-Team',
     'onboarding_invitations' => 'Offene Team-Einladungen',
     'witty_for_teams' => 'Witty für Teams',
     'onboarding_personal_team' => '1. Team automatisch erstellt',
+    'witty_editor' => 'Witty Editor',
 ];
