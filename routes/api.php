@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserGuidelinesApiController;
 use App\Http\Controllers\OAuthController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +18,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/browser-login', [OAuthController::class, 'redirectToProviderBrowserLogin'])->name('browser_login');
 Route::post('/refresh-token', [OAuthController::class, 'accessTokenFromRefreshToken'])->name('browser.refresh_token');
 Route::get('/oauth/{provider}/{policy}/callback', [OAuthController::class, 'handleProviderCallback'])->name('browser.callback');
+
+Route::delete('/user/language/domains', [UserGuidelinesApiController::class, 'deleteDomain'])->name('user.domains.delete');
+Route::put('/user/language/domains', [UserGuidelinesApiController::class, 'putDomain'])->name('user.domains.put');

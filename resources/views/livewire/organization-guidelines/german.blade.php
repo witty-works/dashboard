@@ -1,4 +1,4 @@
-<x-jet-form-section submit="updateOrganizationGuidelinesGerman">
+<x-jet-form-section submit="updateLanguageGuidelinesGerman">
     <x-slot name="title">
         {{ __('guidelines.manage_organization_guidelines_german') }}
     </x-slot>
@@ -11,7 +11,7 @@
         @endif
     </x-slot>
 
-    <x-slot name="form" submit="updateOrganizationGuidelinesGerman">  
+    <x-slot name="form" submit="updateLanguageGuidelinesGerman">  
         <div class="guidelines-form-title">{!! __('guidelines.manage_organization_guidelines_description_german_form_sub_title') !!}</div>
 
         <div class="guidelines-form-section-dropdown-label pt-5">
@@ -21,15 +21,15 @@
         <div class="flex flex-row">
             <div>
                 <x-select id="gendered_roles_format"
-                :options="\App\Models\OrganizationGuidelines::GENDERED_ROLES_FORMAT"
+                :options="\App\Models\GuidelinesInterface::GENDERED_ROLES_FORMAT"
                 class="guidelines-form-section-dropdown"
                 wire:model.defer="gendered_roles_format"
-                :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines') || !$team->subscribed()" />
+                :disabled="!$team->subscribed()" />
 
                 <x-jet-input-error for="gendered_roles_format" class="mt-2" />
             </div>
             <div class="p-3">
-                @if(! Auth::user()->hasTeamPermission($team, 'edit_guidelines') || !$team->subscribed())
+                @if(!$team->subscribed())
                 @include('partials.witty-teams-only')
                 @endif
             </div>
@@ -37,10 +37,10 @@
 
         <div class="guidelines-form-section-dropdown-label"> {{ __('guidelines.german_gender_ending') }}</div>
         <x-select id="german_gender_ending"
-            :options="\App\Models\OrganizationGuidelines::GERMAN_GENDER_ENDING"
+            :options="\App\Models\GuidelinesInterface::GERMAN_GENDER_ENDING"
             class="guidelines-form-section-dropdown"
             wire:model.defer="german_gender_ending"
-            :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" />
+        />
         <x-jet-input-error for="german_gender_ending" class="mt-2" />
     </x-slot>
 
@@ -51,7 +51,6 @@
                 value="1"
                 :label="__('guidelines.set_for_all')"
                 wire:model.defer="german_rules_force"
-                :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" 
             />
         </div>
 

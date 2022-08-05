@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\OrganizationGuidelines;
 
-use App\Models\OrganizationGuidelines;
+use App\Models\LanguageGuidelines;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -33,14 +33,14 @@ class German extends Component
     {
         $this->team = $team;
 
-        $organizationRule = $this->getOrganizationGuidelines($this->team);
+        $languageGuidelines = $this->getLanguageGuidelines($this->team);
 
-        $this->german_rules_force = $organizationRule->german_rules_force;
-        $this->german_gender_ending = $organizationRule->german_gender_ending;
-        $this->gendered_roles_format = $organizationRule->gendered_roles_format;
+        $this->german_rules_force = $languageGuidelines->german_rules_force;
+        $this->german_gender_ending = $languageGuidelines->german_gender_ending;
+        $this->gendered_roles_format = $languageGuidelines->gendered_roles_format;
     }
 
-    public function updateOrganizationGuidelinesGerman()
+    public function updateLanguageGuidelinesGerman()
     {
         $this->validate();
 
@@ -48,13 +48,13 @@ class German extends Component
             abort(403);
         }
 
-        $organizationRule = $this->getOrganizationGuidelines($this->team);
+        $languageGuidelines = $this->getLanguageGuidelines($this->team);
 
-        $organizationRule->german_rules_force = $this->german_rules_force;
-        $organizationRule->german_gender_ending = $this->german_gender_ending;
-        $organizationRule->gendered_roles_format = $this->gendered_roles_format;
+        $languageGuidelines->german_rules_force = $this->german_rules_force;
+        $languageGuidelines->german_gender_ending = $this->german_gender_ending;
+        $languageGuidelines->gendered_roles_format = $this->gendered_roles_format;
 
-        $organizationRule->save();
+        $languageGuidelines->save();
 
         $this->emit('saved');
     }
@@ -69,15 +69,15 @@ class German extends Component
         return view('livewire.organization-guidelines.german');
     }
 
-    protected function getOrganizationGuidelines($team)
+    protected function getLanguageGuidelines($team)
     {
-        $organizationRule = OrganizationGuidelines::firstOrNew(['team_id' => $team->id]);
+        $languageGuidelines = LanguageGuidelines::firstOrNew(['team_id' => $team->id]);
 
         if (!$this->team->subscribed()) {
             $this->gendered_roles_format = 'both';
-            $organizationRule->gendered_roles_format = 'both';
+            $languageGuidelines->gendered_roles_format = 'both';
         }
 
-        return $organizationRule;
+        return $languageGuidelines;
     }
 }

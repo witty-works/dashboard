@@ -1,4 +1,4 @@
-<x-jet-form-section submit="updateOrganizationGuidelinesExpertMode">
+<x-jet-form-section submit="updateLanguageGuidelinesExpertMode">
     <x-slot name="title">
         {{ __('guidelines.manage_organization_guidelines_expert_mode') }}
     </x-slot>
@@ -9,7 +9,7 @@
         @endif
     </x-slot>
 
-    <x-slot name="form" submit="updateOrganizationGuidelinesExpertMode">
+    <x-slot name="form" submit="updateLanguageGuidelinesExpertMode">
         <div class="guidelines-form-title">{!! Str::markdown(__('guidelines.manage_organization_guidelines_description_expert_mode')) !!}</div>
         <div class="guidelines-form-section">
             <x-jet-checkbox
@@ -17,7 +17,7 @@
                 value="1"
                 :label="__('guidelines.enable_expert_mode')"
                 wire:model.defer="expert_mode"
-                :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines') || !$team->subscribed()" 
+                :disabled="!$team->subscribed()" 
             />
 
             <x-jet-input-error for="expert_mode" class="mt-2" />
@@ -31,11 +31,10 @@
                 value="1"
                 :label="__('guidelines.set_for_all')"
                 wire:model.defer="expert_mode_force"
-                :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines') || !$team->subscribed()" 
+                :disabled="!$team->subscribed()" 
             />
         </div>
 
-        @if (Auth::user()->hasTeamPermission($team, 'edit_guidelines'))
         <x-jet-action-message class="mr-3" on="saved">
             <span class="float-right">{{ __('content.saved') }}</span>
         </x-jet-action-message>
@@ -43,7 +42,6 @@
         <x-jet-button>
             {{ __('content.save') }}
         </x-jet-button>
-        @endif
     </x-slot>
 
 </x-jet-form-section>

@@ -19,12 +19,16 @@
                             {{ __('content.witty_editor') }}
                         </x-jet-nav-link>
 
-                    @if ($team)
+                        <x-jet-nav-link href="{{ route('user.language-guidelines') }}">
+                            {{ __('guidelines.language') }}
+                        </x-jet-nav-link>
+
+                    @if ($team && Auth::user()->hasTeamPermission($team, 'edit_guidelines'))
                         <x-jet-nav-link href="{{ route('teams.show') }}" :active="request()->routeIs('teams.show')">
                             {{ __('content.team_settings') }}
                         </x-jet-nav-link>
 
-                        <x-jet-nav-link href="{{ route('language-guidelines') }}" :active="request()->routeIs('language-guidelines')">
+                        <x-jet-nav-link href="{{ route('teams.language-guidelines') }}" :active="request()->routeIs('teams.language-guidelines')">
                             {{ __('teams.language') }}
                         </x-jet-nav-link>
 
@@ -87,7 +91,7 @@
 
                         <div class="border-t border-gray-100"></div>
 
-                        @if ($team)
+                        @if ($team && Auth::user()->hasTeamPermission($team, 'edit_guidelines'))
                         <!-- Team Management -->
                         <!-- Team Settings -->
                         <x-jet-dropdown-link href="{{ route('teams.show') }}">
@@ -98,7 +102,7 @@
                             {{ __('teams.subscription') }}
                         </x-jet-dropdown-link>
 
-                        <x-jet-dropdown-link href="{{ route('language-guidelines') }}">
+                        <x-jet-dropdown-link href="{{ route('teams.language-guidelines') }}">
                             {{ __('teams.language') }}
                         </x-jet-dropdown-link>
                         @endif
@@ -170,6 +174,10 @@
                     {{ __('content.profile') }}
                 </x-jet-responsive-nav-link>
 
+                <x-jet-responsive-nav-link href="{{ route('user.language-guidelines') }}">
+                    {{ __('guidelines.language') }}
+                </x-jet-responsive-nav-link>
+
                 @lumki
 
                 @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
@@ -189,7 +197,7 @@
                     {{ __('teams.subscription') }}
                 </x-jet-responsive-nav-link>
 
-                <x-jet-responsive-nav-link href="{{ route('language-guidelines') }}">
+                <x-jet-responsive-nav-link href="{{ route('teams.language-guidelines') }}">
                     {{ __('teams.language') }}
                 </x-jet-responsive-nav-link>
 

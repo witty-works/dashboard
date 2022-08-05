@@ -1,4 +1,4 @@
-<x-jet-form-section submit="updateOrganizationGuidelinesEnglish">
+<x-jet-form-section submit="updateLanguageGuidelinesEnglish">
     <x-slot name="title">
         {{ __('guidelines.manage_organization_guidelines_english') }}
     </x-slot>
@@ -7,7 +7,7 @@
         {!! Str::markdown(__('guidelines.manage_organization_guidelines_description_english')) !!}
     </x-slot>
 
-    <x-slot name="form" submit="updateOrganizationGuidelinesEnglish">
+    <x-slot name="form" submit="updateLanguageGuidelinesEnglish">
         <div class="guidelines-form-title">{{ __('guidelines.manage_organization_guidelines_english_form_title') }}</div>
         <div class="guidelines-form-section">
             <x-jet-checkbox
@@ -15,7 +15,6 @@
                 value="1"
                 :label="__('guidelines.enable_singular_they')"
                 wire:model.defer="singular_they"
-                :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" 
             />
         </div>
         <x-jet-input-error for="singular_they" class="mt-2" />
@@ -28,7 +27,6 @@
                 value="1"
                 :label="__('guidelines.set_for_all')"
                 wire:model.defer="english_rules_force"
-                :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')" 
             />
         </div>
 

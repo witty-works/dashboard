@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\OrganizationGuidelines;
 
-use App\Models\OrganizationGuidelines;
+use App\Models\LanguageGuidelines;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -31,13 +31,13 @@ class Inspirations extends Component
     {
         $this->team = $team;
 
-        $organizationRule = $this->getOrganizationGuidelines($this->team);
+        $languageGuidelines = $this->getLanguageGuidelines($this->team);
 
-        $this->show_inspiration_alternatives = (bool) $organizationRule->show_inspiration_alternatives;
-        $this->show_inspiration_alternatives_force = (bool) $organizationRule->show_inspiration_alternatives_force;
+        $this->show_inspiration_alternatives = (bool) $languageGuidelines->show_inspiration_alternatives;
+        $this->show_inspiration_alternatives_force = (bool) $languageGuidelines->show_inspiration_alternatives_force;
     }
 
-    public function updateOrganizationGuidelinesInspirations()
+    public function updateLanguageGuidelinesInspirations()
     {
         $this->validate();
 
@@ -45,12 +45,12 @@ class Inspirations extends Component
             abort(403);
         }
 
-        $organizationRule = $this->getOrganizationGuidelines($this->team);
+        $languageGuidelines = $this->getLanguageGuidelines($this->team);
 
-        $organizationRule->show_inspiration_alternatives = (bool) $this->show_inspiration_alternatives;
-        $organizationRule->show_inspiration_alternatives_force = (bool) $this->show_inspiration_alternatives_force;
+        $languageGuidelines->show_inspiration_alternatives = (bool) $this->show_inspiration_alternatives;
+        $languageGuidelines->show_inspiration_alternatives_force = (bool) $this->show_inspiration_alternatives_force;
 
-        $organizationRule->save();
+        $languageGuidelines->save();
 
         $this->emit('saved');
     }
@@ -65,17 +65,17 @@ class Inspirations extends Component
         return view('livewire.organization-guidelines.inspirations');
     }
 
-    protected function getOrganizationGuidelines($team)
+    protected function getLanguageGuidelines($team)
     {
-        $organizationRule = OrganizationGuidelines::firstOrNew(['team_id' => $team->id]);
+        $languageGuidelines = LanguageGuidelines::firstOrNew(['team_id' => $team->id]);
 
         if (!$this->team->subscribed()) {
             $this->show_inspiration_alternatives = false;
-            $organizationRule->show_inspiration_alternatives = false;
+            $languageGuidelines->show_inspiration_alternatives = false;
             $this->show_inspiration_alternatives_force = false;
-            $organizationRule->show_inspiration_alternatives_force = false;
+            $languageGuidelines->show_inspiration_alternatives_force = false;
         }
 
-        return $organizationRule;
+        return $languageGuidelines;
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\OrganizationGuidelines;
 
-use App\Models\OrganizationGuidelines;
+use App\Models\LanguageGuidelines;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -31,13 +31,13 @@ class English extends Component
     {
         $this->team = $team;
 
-        $organizationRule = $this->getOrganizationGuidelines($this->team);
+        $languageGuidelines = $this->getLanguageGuidelines($this->team);
 
-        $this->singular_they = (bool) $organizationRule->singular_they;
-        $this->english_rules_force = (bool) $organizationRule->english_rules_force;
+        $this->singular_they = (bool) $languageGuidelines->singular_they;
+        $this->english_rules_force = (bool) $languageGuidelines->english_rules_force;
     }
 
-    public function updateOrganizationGuidelinesEnglish()
+    public function updateLanguageGuidelinesEnglish()
     {
         $this->validate();
 
@@ -45,12 +45,12 @@ class English extends Component
             abort(403);
         }
 
-        $organizationRule = $this->getOrganizationGuidelines($this->team);
+        $languageGuidelines = $this->getLanguageGuidelines($this->team);
 
-        $organizationRule->singular_they = (bool) $this->singular_they;
-        $organizationRule->english_rules_force = (bool) $this->english_rules_force;
+        $languageGuidelines->singular_they = (bool) $this->singular_they;
+        $languageGuidelines->english_rules_force = (bool) $this->english_rules_force;
 
-        $organizationRule->save();
+        $languageGuidelines->save();
 
         $this->emit('saved');
     }
@@ -65,8 +65,8 @@ class English extends Component
         return view('livewire.organization-guidelines.english');
     }
 
-    protected function getOrganizationGuidelines($team)
+    protected function getLanguageGuidelines($team)
     {
-        return OrganizationGuidelines::firstOrNew(['team_id' => $team->id]);
+        return LanguageGuidelines::firstOrNew(['team_id' => $team->id]);
     }
 }

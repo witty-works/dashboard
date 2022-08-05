@@ -22,8 +22,6 @@
                     @livewire('teams.delete-team-form', ['team' => $team])
                 </div>
             @endif
-
-            @livewire('teams.store-context', ['team' => $team])
         </div>
     </div>
 </x-app-layout>

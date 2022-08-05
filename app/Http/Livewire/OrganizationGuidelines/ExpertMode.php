@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\OrganizationGuidelines;
 
-use App\Models\OrganizationGuidelines;
+use App\Models\LanguageGuidelines;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -31,13 +31,13 @@ class ExpertMode extends Component
     {
         $this->team = $team;
 
-        $organizationRule = $this->getOrganizationGuidelines($this->team);
+        $languageGuidelines = $this->getLanguageGuidelines($this->team);
 
-        $this->expert_mode = (bool) $organizationRule->expert_mode;
-        $this->expert_mode_force = (bool) $organizationRule->expert_mode_force;
+        $this->expert_mode = (bool) $languageGuidelines->expert_mode;
+        $this->expert_mode_force = (bool) $languageGuidelines->expert_mode_force;
     }
 
-    public function updateOrganizationGuidelinesExpertMode()
+    public function updateLanguageGuidelinesExpertMode()
     {
         $this->validate();
 
@@ -45,12 +45,12 @@ class ExpertMode extends Component
             abort(403);
         }
 
-        $organizationRule = $this->getOrganizationGuidelines($this->team);
+        $languageGuidelines = $this->getLanguageGuidelines($this->team);
 
-        $organizationRule->expert_mode = (bool) $this->expert_mode;
-        $organizationRule->expert_mode_force = (bool) $this->expert_mode_force;
+        $languageGuidelines->expert_mode = (bool) $this->expert_mode;
+        $languageGuidelines->expert_mode_force = (bool) $this->expert_mode_force;
 
-        $organizationRule->save();
+        $languageGuidelines->save();
 
         $this->emit('saved');
     }
@@ -65,17 +65,17 @@ class ExpertMode extends Component
         return view('livewire.organization-guidelines.expert-mode');
     }
 
-    protected function getOrganizationGuidelines($team)
+    protected function getLanguageGuidelines($team)
     {
-        $organizationRule = OrganizationGuidelines::firstOrNew(['team_id' => $team->id]);
+        $languageGuidelines = LanguageGuidelines::firstOrNew(['team_id' => $team->id]);
 
         if (!$this->team->subscribed()) {
             $this->expert_mode = false;
-            $organizationRule->expert_mode = false;
+            $languageGuidelines->expert_mode = false;
             $this->expert_mode_force = false;
-            $organizationRule->expert_mode_force = false;
+            $languageGuidelines->expert_mode_force = false;
         }
 
-        return $organizationRule;
+        return $languageGuidelines;
     }
 }

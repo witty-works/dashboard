@@ -74,4 +74,7 @@ return [
     'false_positives_label' => 'Wörter ignorieren',
     'term_replacements_label' => 'Alternativ-Vorschläge',
     'customize_witty_label' => 'Konfiguriere Witty',
+    'language' => 'Sprache',
+    'yes' => 'ja',
+    'no' => 'nein',
 ];

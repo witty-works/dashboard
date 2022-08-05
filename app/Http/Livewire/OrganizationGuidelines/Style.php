@@ -2,7 +2,8 @@
 
 namespace App\Http\Livewire\OrganizationGuidelines;
 
-use App\Models\OrganizationGuidelines;
+use App\Models\GuidelinesInterface;
+use App\Models\LanguageGuidelines;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
@@ -31,12 +32,12 @@ class Style extends Component
      */
     public function mount($team)
     {
-        $this->mountCategories($team, OrganizationGuidelines::DISABLED_CATEGORIES_STYLE);
+        $this->mountCategories($team, GuidelinesInterface::DISABLED_CATEGORIES_STYLE);
     }
 
-    public function updateOrganizationGuidelinesStyle()
+    public function updateLanguageGuidelinesStyle()
     {
-        return $this->updateCategories(OrganizationGuidelines::DISABLED_CATEGORIES_STYLE);
+        return $this->updateCategories(GuidelinesInterface::DISABLED_CATEGORIES_STYLE);
     }
 
     /**
@@ -49,8 +50,8 @@ class Style extends Component
         return view('livewire.organization-guidelines.style');
     }
 
-    protected function getOrganizationGuidelines($team)
+    protected function getLanguageGuidelines($team)
     {
-        return OrganizationGuidelines::firstOrNew(['team_id' => $team->id]);
+        return LanguageGuidelines::firstOrNew(['team_id' => $team->id]);
     }
 }
