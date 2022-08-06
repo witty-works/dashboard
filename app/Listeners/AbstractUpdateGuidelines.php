@@ -93,10 +93,6 @@ class AbstractUpdateGuidelines
 
     protected function getDomains($domains, $type)
     {
-        if ($type === 'allow_witty_works') {
-            $type = 'allow';
-        }
-
         $data = [
             'list' => [],
         ];

@@ -39,7 +39,7 @@ class UpdateOrganizationGuidelines extends AbstractUpdateGuidelines
             $team->getFalsePositivesCount()
         );
 
-        $domains = $this->getDomains($team->domains, $team->domain_list_type);
+        $domains = $this->getDomains($team->domains, $team->getDomainListType());
 
         if (!$team->subscribed()) {
             $team->store_context = true;

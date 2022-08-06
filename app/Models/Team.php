@@ -152,4 +152,13 @@ class Team extends JetstreamTeam
 
         return $this->subscription()->planId();
     }
+
+    public function getDomainListType()
+    {
+        if (!$this->languageGuidelines) {
+            return 'deny';
+        }
+
+        return $this->languageGuidelines->domain_list_type;
+    }
 }
