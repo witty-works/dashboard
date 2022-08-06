@@ -43,9 +43,9 @@ class Form extends Component
 
     public function render()
     {
-        $languageGuidelines = LanguageGuidelines::firstOrNew(['team_id' => $this->team->id]);
-
-        return view('livewire.organization-domain.form', ['show' => $languageGuidelines->domain_list_type !== 'allow_witty_works']);
+        return view('livewire.organization-domain.form', [
+            'show' => $this->team->getDomainListType() !== 'allow_witty_works'
+        ]);
     }
 
     public function typeChange()

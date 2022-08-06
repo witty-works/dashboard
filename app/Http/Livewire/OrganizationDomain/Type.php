@@ -28,9 +28,7 @@ class Type extends Component
     public function mount($team)
     {
         $this->team = $team;
-
-        $languageGuidelines = $this->getLanguageGuidelines($this->team);
-        $this->type = $languageGuidelines->domain_list_type;
+        $this->type = $team->getDomainListType();
     }
 
     public function storeDomainType()

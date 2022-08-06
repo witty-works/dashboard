@@ -1,7 +1,7 @@
 @php 
 
-$teamAllowList = !empty($user->currentTeam->languageGuidelines->domain_list_type)
-    && $user->currentTeam->languageGuidelines->domain_list_type !== 'deny'
+$teamAllowList = !empty($user->currentTeam)
+    && $user->currentTeam->getDomainListType() !== 'deny'
 @endphp
 
 @if(!$teamAllowList) 
