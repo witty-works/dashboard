@@ -45,6 +45,8 @@ class UserGuidelines extends Model implements GuidelinesInterface
 
     public function inPlaceUpateArray($element, $column, $enabled)
     {
+        $params = [':id' => $this->id, ':element' => $element, ':element_json' => "\"$element\""];
+
         if ($enabled) {
             $query = "
                 UPDATE language_guidelines
@@ -55,10 +57,12 @@ class UserGuidelines extends Model implements GuidelinesInterface
             $query = "
                 UPDATE language_guidelines
                     SET {$column} = IF({$column} = '{}', :element_json, JSON_ARRAY_APPEND({$column}, '$', :element))
-                WHERE id = :id AND NOT JSON_CONTAINS({$column}, :element_json, '$')
+                WHERE id = :id AND NOT JSON_CONTAINS({$column}, :element_json_2, '$')
             ";
+
+            $params[':element_json_2'] = $params[':element_json'];
         }
 
-        DB::statement($query, [':id' => $this->id, ':element' => $element, ':element_json' => "\"$element\""]);
+        DB::statement($query, $params);
     }
 }
