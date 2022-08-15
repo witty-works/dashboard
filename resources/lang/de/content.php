@@ -193,7 +193,7 @@ Um diese Einladung anzunehmen, melde dich mit deinem bestehenden Konto an oder r
     'login_cta' => 'Erstelle deines eigenes <a href=":url">Login</a>.',
     'team' => 'Team',
     'accepting_invitation_will_result_in_leaving_your_current_team' => 'Das Annehmen einer Einladung führt zum Verlassen des Teams „:team_name“.',
-    'contact_support_to_delete_owned_teams' => 'Du bist bereits Teameigentümer*in. Um Einladungen annehmen zu können, <a href=":deleteUrl">lösche</a> entweder dein aktuelles Team oder wende dich an den <a href="mailto:support@witty.works">Support</a>.',
+    'contact_support_to_delete_owned_teams' => 'Du bist Teameigentümer*in. Um Einladungen annehmen zu können wird dein Team inklusive aller Daten <strong>gelöscht</strong>.',
     'add_team_member' => 'Teammitglied hinzufügen',
     'billing' => 'Abrechnung',
     'browser_login' => 'Browser-Anmeldung',

@@ -24,17 +24,15 @@ class TeamInvitationController extends BaseTeamInvitationController
 
         $response = parent::accept($request, $invitation);
 
+        $user->switchTeam($invitation->team);
+
         if ($user->currentTeam) {
             if ($user->ownsTeam($user->currentTeam)) {
-                return redirect()->route('dashboard')->withErrors(
-                    __('content.cannot_leave_team_you_created')
-                );
+                $user->currentTeam->delete();
+            } else {
+                $user->currentTeam->removeUser($user);
             }
-
-            $user->currentTeam->removeUser($user);
         }
-
-        $user->switchTeam($invitation->team);
 
         foreach ($user->invitations as $invitation) {
             $invitation->delete();
