@@ -38,8 +38,12 @@ class UpdateOrganizationGuidelines
                 ->delete($endpoint['url']);
         }
 
-        if (config('app.debug') && $response->failed()) {
-            dd($response->body(), $query);
+        if ($response->failed() && $response->status() !== 404) {
+            if (config('app.debug')) {
+                dd($response->body(), $query);
+            } else {
+                throw new RuntimeException($response->body());
+            }
         }
     }
 
@@ -83,7 +87,7 @@ class UpdateOrganizationGuidelines
                 ->post($endpoint['url'], $data);
         }
 
-        if ($response->failed()) {
+        if ($response->failed() && $response->status() !== 404) {
             if (config('app.debug')) {
                 dd($response->json(), $data);
             } else {
