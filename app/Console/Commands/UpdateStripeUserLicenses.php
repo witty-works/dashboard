@@ -38,7 +38,7 @@ class UpdateStripeUserLicenses extends Command
                 $query->where('ends_at', '<', Carbon::now())
                     ->orWhereNull('ends_at');
             })
-            ->whereDate('update_user_licenses_at', '>=', Carbon::now());
+            ->where('update_user_licenses_at', '<=', Carbon::now());
 
         $subscriptions = $query
             ->limit(100)
