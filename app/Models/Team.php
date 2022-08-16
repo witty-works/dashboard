@@ -169,4 +169,13 @@ class Team extends JetstreamTeam
 
         return $this->subscription()->planId();
     }
+
+    public function hasLanguageRules()
+    {
+        return $this->getTotalFalsePositivesCount()
+            || $this->getTotalTermReplacementsCount()
+            || $this->getTotalUserWithInvitationsCount() > 1
+            || $this->organizationGuidelines !== null
+        ;
+    }
 }

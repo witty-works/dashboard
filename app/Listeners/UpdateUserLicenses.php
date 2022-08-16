@@ -10,7 +10,12 @@ class UpdateUserLicenses
     {
         $subscription = $event->team->subscription();
         if ($subscription && empty($subscription->update_user_licenses)) {
-            $subscription->update_user_licenses_at = Carbon::now()->addHour();
+            // for new subscriptions wait a week before charging
+            if ($subscription->created_at > Carbon::now()->subMonth()) {
+                $subscription->update_user_licenses_at = Carbon::now()->addWeek();
+            } else {
+                $subscription->update_user_licenses_at = Carbon::now()->addDay();
+            }
             $subscription->save();
         }
     }

@@ -67,7 +67,7 @@ if ($user && (!$user->currentTeam || $user->can('update', $user->currentTeam))) 
         <p>
         {{ trans_choice('content.open_invitiations', $user->invitations->count()) }}
         </p>
-        @if($user->ownedTeams()->count())
+        @if($user->ownedTeams()->count() && $user->ownedTeams()->first()->hasLanguageRules())
         <p>
             {!! __('content.contact_support_to_delete_owned_teams', ['deleteUrl' => route('teams.show') . '#delete-team']) !!}
         </p>
@@ -86,12 +86,10 @@ if ($user && (!$user->currentTeam || $user->can('update', $user->currentTeam))) 
                     {{ $invitation->team->name }} - <a href="mailto:{{ $invitation->team->owner->email }}">{{ $invitation->team->owner->email }}</a>
                 </div>
                 <div class="onboarding-step-tagline--todo">
-                    @if(!$user->ownedTeams()->count())
                     <a href="{{ route('team-invitations.accept', ['invitation' => $invitation]) }}">
                         {{ __('content.accept_invitiation') }}
                     </a>
                     {{ __('content.or') }}
-                    @endif
                     <a href="{{ route('team-invitations.reject', ['invitation' => $invitation]) }}">
                         {{ __('content.reject_invitiation') }}
                     </a>
