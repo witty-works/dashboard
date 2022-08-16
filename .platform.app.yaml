@@ -64,7 +64,7 @@ crons:
         spec: "*/5 * * * *"
         cmd: |
             if [ "$PLATFORM_BRANCH" = main ]; then
-                platform stripe:update-users-licenses
+                php artisan stripe:update-users-licenses
             fi
 
 # The relationships of the application with services or other applications.
