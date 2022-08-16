@@ -161,4 +161,12 @@ class Team extends JetstreamTeam
 
         return $this->languageGuidelines->domain_list_type;
     }
+
+    public function hasLanguageRules()
+    {
+        return $this->getTotalFalsePositivesCount()
+            || $this->getTotalTermReplacementsCount()
+            || $this->getTotalUserWithInvitationsCount() > 1
+            || $this->languageGuidelines !== null;
+    }
 }

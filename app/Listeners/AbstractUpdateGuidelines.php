@@ -8,14 +8,14 @@ use RuntimeException;
 
 class AbstractUpdateGuidelines
 {
-    public function deleteRules($url)
+    public function deleteRules($query)
     {
         $endpoint = config('app.nlp_api_endpoint');
         if (empty($endpoint['url'])) {
             return;
         }
 
-        $endpoint['url'] .= $url;
+        $endpoint['url'] .= $query;
 
         if (empty($endpoint['user'])) {
             $response = Http::delete($endpoint['url']);
@@ -24,8 +24,12 @@ class AbstractUpdateGuidelines
                 ->delete($endpoint['url']);
         }
 
-        if (config('app.debug') && $response->failed()) {
-            dd($response->body(), $url);
+        if ($response->failed() && $response->status() !== 404) {
+            if (config('app.debug')) {
+                dd($response->body(), $query);
+            } else {
+                throw new RuntimeException($response->body());
+            }
         }
     }
 
@@ -45,7 +49,8 @@ class AbstractUpdateGuidelines
                 ->post($endpoint['url'], $data);
         }
 
-        if ($response->failed()) {
+
+        if ($response->failed() && $response->status() !== 404) {
             if (config('app.debug')) {
                 dd($response->json(), $data, json_encode($data));
             } else {
