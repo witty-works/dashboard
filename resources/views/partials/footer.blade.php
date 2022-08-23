@@ -1,6 +1,6 @@
 @php
 $links = [
-    __('content.witty_for_teams') => 'https://www.witty.works/witty_for_teams',
+    __('content.witty_for_teams') => 'https://www.witty.works/team-features',
     __('content.contact') => 'https://www.witty.works/contact-sales',
     __('content.book-demo') => 'https://www.witty.works/demo',
     __('content.trust-and-security') => 'https://www.witty.works/trust-and-security',
