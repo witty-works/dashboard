@@ -41,10 +41,6 @@ class UpdateOrganizationGuidelines extends AbstractUpdateGuidelines
 
         $domains = $this->getDomains($team->domains, $team->getDomainListType());
 
-        if (!$team->subscribed()) {
-            $team->store_context = true;
-        }
-
         $plan = $team->planId();
 
         $data = [
@@ -55,6 +51,17 @@ class UpdateOrganizationGuidelines extends AbstractUpdateGuidelines
             'term_replacements' => $termReplacements,
             'domains' => $domains,
             'config' => self::getConfig(LanguageGuidelines::firstOrNew(['team_id' => $team->id])),
+        ];
+
+        if (!$team->subscribed()) {
+            $storeContext = true;
+        } else {
+            $storeContext = (bool) $team->store_context;
+        }
+
+        $data['config']['store_context'] = [
+            'value' => $storeContext,
+            'status' => 'force',
         ];
 
         $data['config_hash'] = md5(serialize($data));
