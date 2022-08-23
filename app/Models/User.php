@@ -198,6 +198,11 @@ class User extends Authenticatable implements MustVerifyEmail
         }
     }
 
+    public function getNotificationCount()
+    {
+        return $this->invitations->count();
+    }
+
     /**
      * The event map for the model.
      *
