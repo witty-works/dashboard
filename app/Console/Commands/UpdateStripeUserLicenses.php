@@ -38,7 +38,7 @@ class UpdateStripeUserLicenses extends Command
                 $query->where('ends_at', '<', Carbon::now())
                     ->orWhereNull('ends_at');
             })
-            ->where('update_user_licenses_at', '<=', Carbon::now());
+            ->where('update_user_licenses_at', '>=', Carbon::now());
 
         $subscriptions = $query
             ->limit(100)
@@ -49,7 +49,7 @@ class UpdateStripeUserLicenses extends Command
             $team = $subscription->owner;
             $oldQuantity = $subscription->quantity;
             if ($oldQuantity != $team->getTotalUserCount()) {
-                $subscription->updateQuantity($team->getTotalUserCount());
+                $subscription->alwaysInvoice()->updateQuantity($team->getTotalUserCount());
                 $messages[] = sprintf('Updated "%s" (%d) from %d to %d', $team->name, $team->id, $oldQuantity, $subscription->quantity);
             } else {
                 $messages[] = sprintf('Checked "%s" (%d)', $team->name, $team->id);
