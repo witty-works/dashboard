@@ -50,6 +50,7 @@ class UpdateUserGuidelines extends AbstractUpdateGuidelines
             'term_replacements' => $termReplacements,
             'domains' => $domains,
             'config' => self::getConfig(LanguageGuidelines::firstOrNew(['user_id' => $user->id])),
+            'notifications' => $user->getNotificationCount(),
         ];
 
         $data['config_hash'] = md5(serialize($data));
