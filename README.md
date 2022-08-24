@@ -36,6 +36,7 @@ Fetch code from https://github.com/witty-works/dashboard
   * Install the lando certificate in your browser
     * https://docs.lando.dev/config/security.html#certificates
   * Go to the website and create an account
+  * Run `lando artisan lumki:setup`
 
 * Install Platform.sh CLI https://docs.platform.sh/development/cli.html
   * Run `platform login`
