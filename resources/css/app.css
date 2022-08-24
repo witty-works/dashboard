@@ -413,10 +413,9 @@ input:checked+.slider:before {
     border-radius: 50%;
 }
 
-.navigation-wrapper {
+.wittyworks-navigation-content-wrapper {
+    height: 100vh;
     padding: 12px 24px;
-    width: 100%;
-
     background: linear-gradient(139.06deg,
             #f06464 12.41%,
             #f277d0 51.43%,
@@ -515,4 +514,130 @@ input:checked+.slider:before {
 
 .flash-message {
     margin-bottom: 0;
+}
+
+.wittyworks-footer {
+    color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    padding: 1em 1em 1em 25%;
+    font-family: Lato, Arial, Helvetica, sans-serif;
+    background: linear-gradient(139.06deg,
+            #f06464 12.41%,
+            #f277d0 51.43%,
+            #9489db 100.03%,
+            #37d1e5 137.9%,
+            #5acfb9 174.94%);
+}
+
+.wittyworks-footer-section {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    margin-right: 15%;
+}
+
+.wittyworks-footer-section-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 0.5em;
+}
+
+.wittyworks-footer-section-content {
+    font-size: 14px;
+    margin-bottom: 0.5em;
+}
+
+.wittyworks-footer-language-switcher {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 6em;
+    margin-left: auto;
+}
+
+.wittyworks-footer-language-switcher-icon {
+    margin-right: 1em;
+}
+
+.wittyworks-page {
+    display: flex;
+    flex-direction: row;
+}
+
+.wittyworks-page-wrapper {
+    margin-right: 2.5em;
+    margin-top: 1em;
+    width: 75%;
+    margin-left: auto;
+    min-height: 100vh;
+}
+
+.wittyworks-navigation-wrapper {
+    display: flex;
+    position: fixed;
+    top: 0;
+    width: 20%;
+}
+
+.wittyworks-logo {
+    width: 45em;
+}
+
+.wittyworks-navigation-link-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    margin-bottom: 1em;
+    font-weight: bold;
+}
+
+.wittyworks-navigation-icon {
+    margin-right: 1em;
+}
+
+.wittyworks-navigation-bottom-half {
+    position: fixed;
+    bottom: 1em;
+}
+
+.wittyworks-navigation-top-half {
+    margin-top: 2em;
+}
+
+.wittyworks-navigation-sub-wrapper {
+    margin-left: 2.7em;
+    margin-top: -1em;
+    margin-bottom: 1em;
+}
+
+.wittyworks-navigation-sub-link {
+    color: #FFFFFF;
+    font-size: 14px;
+}
+
+.wittyworks-navigation-username {
+    font-size: 12px;
+    color: #FFFFFF;
+    margin-left: 3.5em;
+    margin-top: -1.5em;
+}
+
+.wittyworks-navigation-account-toggl-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1.5em;
+    font-weight: bold;
+    font-size: 22px;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+
+.wittyworks-navigation-account-divider {
+    margin-left: 1em;
+    margin-right: 1em;
 }

@@ -228,6 +228,9 @@ Um diese Einladung anzunehmen, melde dich mit deinem bestehenden Konto an oder r
     'have_a_great_day' => 'Wir wünschen dir einen schönen Tag,
 
 Dein Witty-Team',
+    'more_resouces' => 'More Resources DE',
+    'get_in_touch' => 'Get in touch DE',
+
     'unable_to_find_user_with_this_email' => 'Wir konnten keine*n registrierte*n Benutzer*in mit dieser E-Mail-Adresse finden.',
     'cannot_leave_team_you_created' => 'Du kannst ein von Ihnen erstelltes Team nicht verlassen.',
     'account_not_found' => 'Es wurde kein Konto gefunden.',
@@ -236,4 +239,5 @@ Dein Witty-Team',
     'witty_for_teams' => 'Witty für Teams',
     'onboarding_personal_team' => '1. Team automatisch erstellt',
     'witty_editor' => 'Witty Editor',
+    'academy' => 'Academy DE',
 ];
