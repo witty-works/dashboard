@@ -236,4 +236,7 @@ Dein Witty-Team',
     'witty_for_teams' => 'Witty für Teams',
     'onboarding_personal_team' => '1. Team automatisch erstellt',
     'witty_editor' => 'Witty Editor',
+    'academy' => 'Academy',
+    'more_resouces' => 'More Resouces',
+    'get_in_touch' => 'Get In Touch',
 ];

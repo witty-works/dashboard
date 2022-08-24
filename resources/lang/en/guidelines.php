@@ -105,4 +105,7 @@ Choose if Witty should suggest only the gender ending (e.g. "Mitarbeiter*in"), t
     'list_team_term_replacements_description' => 'All words added to this list will become highlighted by Witty, and your team\'s replacement will be shown as alternatives.',
     'list_team_allow_domains_description' => 'list team allow domains description',
     'list_team_deny_domains_description' => 'Witty is disabled for any domain in this list for your whole team.',
+    'personal_account' => 'Personal',
+    'team_account' => 'Team',
+    'ignore_words_label' => 'Dictionary',
 ];
