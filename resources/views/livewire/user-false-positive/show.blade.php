@@ -19,7 +19,7 @@
             <tbody>
             @foreach ($list as $false_positive)
             <tr @if($loop->even)class="bg-grey"@endif>
-                <td class="border px-4 py-2 text-center">{{ $false_positive->false_positive }} {{ $false_positive->language_code ? "($false_positive->language_code)" : '' }} </td>
+                <td class="border px-4 py-2 text-left">{{ $false_positive->false_positive }} {{ $false_positive->language_code ? "($false_positive->language_code)" : '' }} </td>
                 <td class="border px-4 py-2 text-center">{{ $false_positive->exists_on_team ? __('guidelines.yes') : __('guidelines.no') }} </td>
                 <td class="border px-4 py-2 text-center whitespace-nowrap">
                     <button wire:click="editFalsePositive({{ $false_positive->id }})" class="bg-gray-100 text-gray-600 px-6 rounded-full">

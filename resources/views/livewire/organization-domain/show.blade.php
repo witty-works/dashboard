@@ -22,7 +22,7 @@
                 <tbody>
                 @foreach ($list as $domain)
                 <tr @if($loop->even)class="bg-grey"@endif>
-                    <td class="border px-4 py-2 text-center">{{ $domain->domain }}</td>
+                    <td class="border px-4 py-2 text-left">{{ $domain->domain }}</td>
                     @if (Auth::user()->hasTeamPermission($team, 'edit_guidelines') && empty($hide_actions))
                     <td class="border px-4 py-2 text-center whitespace-nowrap">
                         <button wire:click="editDomain({{ $domain->id }})" class="bg-gray-100 text-gray-600 px-6 rounded-full">
