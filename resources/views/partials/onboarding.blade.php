@@ -43,8 +43,11 @@ if ($user && (!$user->currentTeam || $user->can('update', $user->currentTeam))) 
         $onboardingSteps['languageGuidelines']['state'] = 'deactivated';
     } else if ($currentTeam && $currentTeam->languageGuidelines) {
         $onboardingSteps['languageGuidelines']['state'] = 'complete';
-    } 
-   
+    } else {
+        $showOnboardingSteps = true;
+        $onboardingSteps['languageGuidelines']['state'] = 'todo';
+        $onboardingSteps['languageGuidelines']['link'] = route('teams.language-guidelines');
+    }
 
     if (!$currentTeam || !$currentTeam->languageGuidelines) {
         $onboardingSteps['inviteUsers']['state'] = 'deactivated';

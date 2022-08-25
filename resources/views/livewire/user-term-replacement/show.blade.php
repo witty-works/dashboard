@@ -21,8 +21,8 @@
             <tbody>
             @foreach ($list as $term_replacement)
             <tr @if($loop->even)class="bg-grey"@endif>
-                <td class="border px-4 py-2 text-center">{{ $term_replacement->term }}</td>
-                <td class="border px-4 py-2 text-center">{{ $term_replacement->replacement }}</td>
+                <td class="border px-4 py-2 text-left">{{ $term_replacement->term }}</td>
+                <td class="border px-4 py-2 text-left">{{ $term_replacement->replacement }}</td>
                 <td class="border px-4 py-2 text-center">{{ $term_replacement->emoji }}</td>
                 <td class="border px-4 py-2 text-center">{{ $term_replacement->exists_on_team ? __('guidelines.yes') : __('guidelines.no') }} </td>
                 <td class="border px-4 py-2 text-center whitespace-nowrap">
