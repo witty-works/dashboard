@@ -56,7 +56,7 @@ class Form extends OrganizationForm
             throw ValidationException::withMessages(['term' => $message]);
         }
 
-        TermReplacement::validateEmoji($this->emoji);
+        $this->emoji = TermReplacement::validateEmoji($this->emoji);
 
         $termReplacement->term = $this->term;
         $termReplacement->replacement = $this->replacement;

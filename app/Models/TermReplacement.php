@@ -27,9 +27,13 @@ class TermReplacement extends Model
 
     static public function validateEmoji($emoji)
     {
+        $emoji = trim($emoji);
+
         if ($emoji !== "" && $emoji !== null && !is_single_emoji($emoji)) {
             $message = __('guidelines.emoji_invalid_format');
             throw ValidationException::withMessages(['emoji' => $message]);
         }
+
+        return $emoji;
     }
 }
