@@ -1,7 +1,7 @@
 <x-app-layout>
-    <div class="wittyworks-page">
-        <div class="wittyworks-navigation-wrapper">@livewire('navigation-menu')</div>
-        <div class="wittyworks-page-wrapper">
+    <div class="wittyworks-navigation-wrapper">@livewire('navigation-menu')</div>
+    <div class="wittyworks-page-wrapper">
+        <div class="wittyworks-page">
             @if($team)
                 @if($tab === \App\Http\Controllers\Livewire\OrganizationGuidelinesController::CUSTOMIZE_WITTY)
                     @include('teams/organization-guidelines')

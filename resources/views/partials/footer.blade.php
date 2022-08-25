@@ -30,7 +30,6 @@ $contactLinks = [
         @endforeach
     </div>
     <div class="wittyworks-footer-language-switcher">
-        <img class="wittyworks-footer-language-switcher-icon" src="{{ url('svg/globe.svg') }}" alt="Select language" />
         @include('partials/language-switcher')
     </div>
 </nav>

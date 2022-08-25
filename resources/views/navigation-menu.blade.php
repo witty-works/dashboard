@@ -33,7 +33,7 @@
         <div>
             <div class="wittyworks-navigation-content-wrapper">
 
-                <a href="{{ route('dashboard') }} ">
+                <a href="https://www.witty.works/">
                     <img class="wittyworks-logo" src="{{ url('svg/witty-logo-white.svg') }}" alt="Witty Works" />
                 </a>
 
@@ -41,16 +41,16 @@
                 <!-- LOGGED IN -->
                 <div class="wittyworks-navigation-top-half">
                     <div class="wittyworks-navigation-account-toggl-wrapper">
-                        <div id="personal_account">{{ __('guidelines.personal_account') }}</div>
+                        <div id="personal_account" class="wittyworks-navigation-account-toggl">{{ __('guidelines.personal_account') }}</div>
                         <div class="wittyworks-navigation-account-divider">|</div>
-                        <div id="team_account">{{ __('guidelines.team_account') }}</div>
+                        <div id="team_account" class="wittyworks-navigation-account-toggl">{{ __('guidelines.team_account') }}</div>
                     </div>
 
                     <div id="personal_account_content" style="display:block">
-                        <x-jet-nav-link class="wittyworks-navigation-link-wrapper" href="{{ route('user.language-guidelines') }}">
+                        <div class="wittyworks-navigation-link-wrapper">
                             <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/language.svg') }}" alt="Language" />
                             {{ __('guidelines.language') }}
-                        </x-jet-nav-link>
+                        </div>
 
                         <div class="wittyworks-navigation-sub-wrapper">
                             @foreach($tabs as $key => $route)
@@ -64,13 +64,13 @@
                     <div id='team_account_content' style="display:none">
                         <x-jet-nav-link class="wittyworks-navigation-link-wrapper" href="{{ route('teams.show') }}" :active="request()->routeIs('teams.show')">
                             <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/team.svg') }}" alt="Team Settings" />
-                            {{ __('content.team_settings') }}
+                            {{ __('content.manage_members') }}
                         </x-jet-nav-link>
 
-                        <x-jet-nav-link class="wittyworks-navigation-link-wrapper" href="{{ route('teams.language-guidelines') }}" :active="request()->routeIs('teams.language-guidelines')">
+                        <div class="wittyworks-navigation-link-wrapper">
                             <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/language.svg') }}" alt="Language" />
                             {{ __('teams.language') }}            
-                        </x-jet-nav-link>
+                        </div>
 
                         <div class="wittyworks-navigation-sub-wrapper">
                             @foreach($tabs as $key => $route)
@@ -87,13 +87,13 @@
                         {{ __('content.witty_editor') }}
                     </x-jet-nav-link>
                 
-                    <x-jet-nav-link class="wittyworks-navigation-link-wrapper" href="https://www.witty.works/en/categories">
+                    <x-jet-nav-link class="wittyworks-navigation-link-wrapper" href="https://www.witty.works/en/categories" target="_blank" rel="noopener">
                         <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/bulb.svg') }}" alt="Academy" />
                         {{ __('content.academy') }}
                     </x-jet-nav-link>
 
                     <x-jet-nav-link class="wittyworks-navigation-link-wrapper" href="{{ route('profile.show') }}">
-                        <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/user.svg') }}" alt="Account" />
+                        <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/dollar.svg') }}" alt="Account" />
                         {{ __('content.manage_account') }}
                     </x-jet-nav-link>
 
@@ -110,11 +110,6 @@
                         <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/editor.svg') }}" alt="Editor" />
                         {{ __('content.witty_editor') }}
                     </x-jet-nav-link>
-
-                    <x-jet-nav-link class="wittyworks-navigation-link-wrapper" href="https://www.witty.works/en/categories" target="_blank" rel="noopener">
-                        <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/bulb.svg') }}" alt="Academy" />
-                        {{ __('content.academy') }}
-                    </x-jet-nav-link>
                 </div>
                 <div class="wittyworks-navigation-bottom-half">
                     <x-jet-nav-link class="wittyworks-navigation-link-wrapper" href="https://www.witty.works/pricing" target="_blank" rel="noopener">
@@ -122,13 +117,9 @@
                         {{ __('teams.pricing') }}
                     </x-jet-nav-link>
 
-                    <x-jet-nav-link class="wittyworks-navigation-link-wrapper" href="{{ route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'register']) }}">
-                        <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/register.svg') }}" alt="Witty Works" />
-                        {{ __('content.register') }}
-                    </x-jet-nav-link>
                     <x-jet-nav-link class="wittyworks-navigation-link-wrapper" href="{{ route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'login']) }}">
                         <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/login.svg') }}" alt="Witty Works" />
-                        {{ __('content.log_in') }}
+                        {{ __('content.log_in_register') }}
                     </x-jet-nav-link>
                 </div>
                 @endauth

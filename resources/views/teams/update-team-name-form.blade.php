@@ -1,3 +1,4 @@
+<x-jet-section-border />
 <x-jet-form-section submit="updateTeamName">
     <x-slot name="title">
         {{ __('content.team_name') }}

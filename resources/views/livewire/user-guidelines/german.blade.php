@@ -30,9 +30,7 @@
                 <x-jet-input-error for="gendered_roles_format" class="mt-2" />
             </div>
             <div class="p-3">
-                @if(!$user->subscribed())
-                @include('partials.witty-users-only')
-                @elseif(\App\Models\LanguageGuidelines::isForcedOnTeam(Auth::user(), 'expert_mode'))
+                @if(\App\Models\LanguageGuidelines::isForcedOnTeam(Auth::user(), 'expert_mode'))
                 @include('partials.locked')
                 @endif
             </div>
