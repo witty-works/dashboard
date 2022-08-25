@@ -46,7 +46,7 @@ if ($user && (!$user->currentTeam || $user->can('update', $user->currentTeam))) 
     } else {
         $showOnboardingSteps = true;
         $onboardingSteps['languageGuidelines']['state'] = 'todo';
-        $onboardingSteps['languageGuidelines']['link'] = route('language-guidelines');
+        $onboardingSteps['languageGuidelines']['link'] = route('teams.language-guidelines');
     }
 
     if (!$currentTeam || !$currentTeam->languageGuidelines) {
