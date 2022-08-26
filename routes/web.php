@@ -89,6 +89,9 @@ Route::group(
                 // User & Profile...
                 Route::get('/user/profile', [UserProfileController::class, 'show'])
                     ->name('profile.show');
+                Route::get('/user/academy', function () {
+                    return view('academy');
+                })->name('academy');
 
                 // API...
                 if (Jetstream::hasApiFeatures()) {
@@ -109,16 +112,16 @@ Route::group(
                         ->name('team-invitations.reject');
 
                     Route::redirect('/user/language', '/user/language/customize-witty')->name('user.language-guidelines');
-                    Route::get('/user/language/customize-witty', [UserGuidelinesController::class, 'customizeWitty'])->name('user.customize-witty');
-                    Route::get('/user/language/term-replacements', [UserGuidelinesController::class, 'termReplacements'])->name('user.term-replacements');
-                    Route::get('/user/language/ignore-words', [UserGuidelinesController::class, 'falsePositives'])->name('user.ignore-words');
-                    Route::get('/user/language/domains', [UserGuidelinesController::class, 'domains'])->name('user.domains');
+                    Route::get('/user/language/language-settings', [UserGuidelinesController::class, 'customizeWitty'])->name('user.language-settings');
+                    Route::get('/user/language/dictionary', [UserGuidelinesController::class, 'termReplacements'])->name('user.dictionary');
+                    Route::get('/user/language/ignore-words', [UserGuidelinesController::class, 'falsePositives'])->name('user.ignored-words');
+                    Route::get('/user/language/privacy-settings', [UserGuidelinesController::class, 'domains'])->name('user.privacy-settings');
 
                     Route::redirect('/team/language', '/team/language/customize-witty')->name('teams.language-guidelines');
-                    Route::get('/team/language/customize-witty', [OrganizationGuidelinesController::class, 'customizeWitty'])->name('teams.customize-witty');
-                    Route::get('/team/language/term-replacements', [OrganizationGuidelinesController::class, 'termReplacements'])->name('teams.term-replacements');
-                    Route::get('/team/language/ignore-words', [OrganizationGuidelinesController::class, 'falsePositives'])->name('teams.ignore-words');
-                    Route::get('/team/language/domains', [OrganizationGuidelinesController::class, 'domains'])->name('teams.domains');
+                    Route::get('/team/language/language-settings', [OrganizationGuidelinesController::class, 'customizeWitty'])->name('teams.language-settings');
+                    Route::get('/team/language/dictionary', [OrganizationGuidelinesController::class, 'termReplacements'])->name('teams.dictionary');
+                    Route::get('/team/language/ignored-words', [OrganizationGuidelinesController::class, 'falsePositives'])->name('teams.ignored-words');
+                    Route::get('/team/language/privacy-settings', [OrganizationGuidelinesController::class, 'domains'])->name('teams.privacy-settings');
                 }
             });
         });

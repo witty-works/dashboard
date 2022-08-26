@@ -46,5 +46,4 @@
             {{ __('content.save') }}
         </x-jet-button>
     </x-slot>
-
 </x-jet-form-section>

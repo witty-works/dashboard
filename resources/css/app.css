@@ -413,10 +413,9 @@ input:checked+.slider:before {
     border-radius: 50%;
 }
 
-.navigation-wrapper {
+.wittyworks-navigation-content-wrapper {
+    height: 100vh;
     padding: 12px 24px;
-    width: 100%;
-
     background: linear-gradient(139.06deg,
             #f06464 12.41%,
             #f277d0 51.43%,
@@ -436,8 +435,8 @@ input:checked+.slider:before {
 
 .navigation-link--language {
     font-size: 14px;
-    color: white;
-    margin-right: 2em;
+    color: black;
+    margin-right: 1em;
     cursor: pointer;
 }
 
@@ -446,7 +445,6 @@ input:checked+.slider:before {
 }
 
 .navigation-link-active {
-    color: white;
     text-decoration: underline;
 }
 
@@ -478,6 +476,7 @@ input:checked+.slider:before {
     width: 100%;
     border: 1px solid transparent;
     border-radius: 10px;
+    margin-top: 1em;
 
     background: linear-gradient(96.78deg,
             #fef7f8 -6.3%,
@@ -492,13 +491,16 @@ input:checked+.slider:before {
 }
 
 .wittyworks-upgrade-banner-text-container {
-    flex-basis: 75%;
-    color: #9489db;
+    color: #9489db;    
 }
 
 .wittyworks-upgrade-banner-title {
     font-weight: 700;
     margin: 4px 0px;
+}
+
+.wittyworks-upgrade-banner-text {
+    max-width: 90%;
 }
 
 .wittyworks-upgrade-banner-button {
@@ -515,4 +517,174 @@ input:checked+.slider:before {
 
 .flash-message {
     margin-bottom: 0;
+}
+
+.wittyworks-footer {
+    color: black;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    padding: 1em 1em 1em 23%;
+    font-family: Lato, Arial, Helvetica, sans-serif;
+    background: #ECECEC
+}
+
+.wittyworks-footer-section {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    margin-right: 15%;
+}
+
+.wittyworks-footer-section-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 0.5em;
+}
+
+.wittyworks-footer-section-content {
+    font-size: 14px;
+    margin-bottom: 0.5em;
+    color: black
+}
+
+.wittyworks-footer-language-switcher {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 6em;
+    margin-right: 2em;
+    margin-left: auto;
+}
+
+.wittyworks-page-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: #f5f5f5;
+}
+
+.wittyworks-page {
+    margin-top: 1em;
+    margin-left: 2em;
+    max-width: 60%;
+    min-height: 100vh;
+}
+
+.wittyworks-page-subscription {
+    margin-top: 3.3em;
+    min-width: 58%;
+    min-height: 100vh;
+}
+
+.wittyworks-page-academy {
+    margin-top: 1em;
+    margin-left: 2em;
+    min-width: 58%;
+    min-height: 100vh;
+}
+
+.wittyworks-navigation-wrapper {
+    margin-right: auto;
+    position: fixed;
+    top: 0;
+    width: 15%;
+    min-width: 13em;
+}
+
+.wittyworks-logo {
+    margin-top: 1em;
+}
+
+.wittyworks-navigation-link-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    margin-bottom: 1em;
+    font-weight: bold;
+    color: #FFFFFF;
+    font-size: 18px;
+    cursor: default;
+}
+
+.wittyworks-navigation-icon {
+    margin-right: 1em;
+}
+
+.wittyworks-navigation-bottom-half {
+    position: fixed;
+    bottom: 2em;
+}
+
+.wittyworks-navigation-top-half {
+    margin-top: 2em;
+}
+
+.wittyworks-navigation-sub-wrapper {
+    margin-left: 2.7em;
+    margin-top: -1em;
+    margin-bottom: 1em;
+}
+
+.wittyworks-navigation-sub-link {
+    color: #FFFFFF;
+    font-size: 14px;
+}
+
+.wittyworks-navigation-sub-link:hover {
+    text-decoration: underline;
+}
+
+.wittyworks-navigation-username {
+    font-size: 12px;
+    color: #FFFFFF;
+    margin-left: 3.5em;
+    margin-top: -1.5em;
+}
+
+.wittyworks-navigation-account-toggl-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    margin-bottom: 1.5em;
+    font-weight: bold;
+    font-size: 18px;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+
+.wittyworks-navigation-account-toggl:hover {
+    text-decoration: underline;
+}
+
+.wittyworks-navigation-account-divider {
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+}
+
+.wittyworks-update-account {
+    display: flex;
+    flex-direction: row;
+}
+
+.wittyworks-form-section {
+    margin-bottom: 1em;
+
+}
+
+.wittyworks-subscription-headline {
+    font-size: 21px;
+    margin-bottom: 0.5em;
+}
+
+.wittyworks-form-section-wrapper {
+    margin-bottom: 3em;
+}
+
+.wittyworks-video-wrapper {
+    margin-top: 2em;
+    margin-bottom: 2em;
 }

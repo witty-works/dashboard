@@ -1,7 +1,7 @@
 <x-jet-form-section submit="updateLanguageGuidelinesLanguage">
     <x-slot name="title" class="guidelines-title">
         {{ __('guidelines.manage_organization_guidelines_language') }}
-    </x-slot>
+</x-slot>
 
     <x-slot name="description" class="guidelines-tagline">
         

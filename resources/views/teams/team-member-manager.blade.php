@@ -1,7 +1,5 @@
 <div>
     @if (Gate::check('viewUserCreateForm', $team))
-        <x-jet-section-border />
-
         <!-- Add Team Member -->
         <div class="mt-10 sm:mt-0" id="add-team-member">
             <x-jet-form-section submit="addTeamMember">

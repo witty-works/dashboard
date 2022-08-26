@@ -37,10 +37,10 @@ class UserGuidelinesController extends Controller
         $user = $request->user();
 
         $tabs = [
-            self::CUSTOMIZE_WITTY => 'user.customize-witty',
-            self::TERM_REPLACEMENTS => 'user.term-replacements',
-            self::FALSE_POSITIVES => 'user.ignore-words',
-            self::DOMAINS => 'user.domains',
+            self::CUSTOMIZE_WITTY => 'user.languagae-settings',
+            self::TERM_REPLACEMENTS => 'user.dictionary',
+            self::FALSE_POSITIVES => 'user.ignored-words',
+            self::DOMAINS => 'user.privacy-settings',
         ];
 
         return view('user/language-guidelines', [

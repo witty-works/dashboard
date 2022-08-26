@@ -6,7 +6,7 @@ return [
     'store_context' => 'Kontext speichern',
     'store_context_description' => 'Wenn eingeschaltet, speichert Witty in bestimmten Situationen <a href="https://www.witty.works/trust-and-security">einige Zeichen</a> vor und nach dem hervorgehobenen Begriff. So hilfst du mit, Witty zu verbessern, um in Zukunft noch bessere Vorschläge zu machen.',
     'plan_summary' => 'Abonnement Details',
-    'plan_name' => 'Dein aktuelles Abonnement ist',
+    'plan_name' => 'Aktuelles Abonnement',
     'upgrade' => 'Upgrade auf Witty Teams',
     'default_plan_name' => 'Witty Free',
     'renewal_date' => 'Verlängerungsdatum',
@@ -31,4 +31,5 @@ return [
     'privacy_settings' => 'Datenschutzeinstellungen',
     'language' => 'Spracheinstellungen',
     'witty_teams_only' => 'Nur Witty Teams',
+    'profile' => 'Profil',
 ];

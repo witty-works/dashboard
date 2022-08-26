@@ -1,15 +1,12 @@
-<x-jet-section-border />
 <x-jet-form-section  submit="">
     <x-slot name="title">
         {{ __('teams.plan_summary') }}
     </x-slot>
 
-    <x-slot name="description">
-    </x-slot>
+    <x-slot name="description"></x-slot>
 
     <x-slot name="form">
-        <div class="col-span-6 sm:col-span-4">
-            <x-jet-label for="name" value="{{ __('teams.plan_name') }}" />
+            <x-jet-label for="name" value="{{ __('teams.plan_name') }}" />            
             <div>
                 {{ $team->subscribed() ? $team->subscription()->planName() : __('stripe.witty_free') }}
             </div>
@@ -23,7 +20,7 @@
                     @endif
                 </a>
             @endif
-        </div>
+
 
         <div class="mt-5 col-span-6 sm:col-span-4">
             <x-jet-label for="name" value="{{ __('teams.team_owner') }}" />
