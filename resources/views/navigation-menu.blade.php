@@ -69,7 +69,7 @@
             </x-jet-nav-link>
                 
             <x-jet-nav-link class="wittyworks-navigation-link-wrapper" href="{{ route('academy') }}" alt="Academy" :active="request()->routeIs('academy')">
-                <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/bulb.svg') }}"/>
+                <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/bulb.svg') }}" alt="Academy"/>
                 {{ __('content.academy') }}
             </x-jet-nav-link>
 
