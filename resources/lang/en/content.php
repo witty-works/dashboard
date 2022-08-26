@@ -231,9 +231,8 @@ Read more about ROI for [large organizations](https://www.witty.works/witty-for-
     'have_a_great_day' => 'Have a great day,
 
 Your Witty team',
-    'more_resouces' => 'More Resources',
-    'get_in_touch' => 'Get in touch',
-
+    'more_resouces' => 'More Resouces',
+    'get_in_touch' => 'Get In Touch',
     'unable_to_find_user_with_this_email' => 'We were unable to find a registered user with this email address.',
     'cannot_leave_team_you_created' => 'You may not leave a team that you created.',
     'account_not_found' => 'An account was not found.',
@@ -243,6 +242,5 @@ Your Witty team',
     'onboarding_personal_team' => '1. Team automatically created',
     'witty_editor' => 'Witty Editor',
     'academy' => 'Academy',
-    'more_resouces' => 'More Resouces',
-    'get_in_touch' => 'Get In Touch',
+    'log_in' => 'Login',
 ];

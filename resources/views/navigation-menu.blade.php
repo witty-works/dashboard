@@ -1,9 +1,9 @@
 <?php
     $tabs = [      
-        'language-settings',
-        'dictionary',
-        'ignored-words',
-        'privacy-settings',
+        __('guidelines.language_settings_label') => 'language-settings',
+        __('guidelines.dictionary_label') => 'dictionary',
+        __('guidelines.ignore_words_label') => 'ignored-words',
+        __('guidelines.privacy_settings_label') => 'privacy-settings',
     ];
 ?>
 
@@ -33,9 +33,10 @@
                     <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/language.svg') }}" alt="Language" />
                     {{ __('guidelines.language') }}
                 </div>
+
                 <div class="wittyworks-navigation-sub-wrapper">
-                    @foreach($tabs as $key => $route)
-                    <x-jet-nav-link class="wittyworks-navigation-sub-link" href="{{ route('user.' . $route) }}" :active="request()->routeIs('user.' . $route)">{{ __("guidelines.{$route}_label") }}</x-jet-nav-link>
+                    @foreach($tabs as $label => $route)
+                    <x-jet-nav-link class="wittyworks-navigation-sub-link" href="{{ route('user.' . $route) }}" :active="request()->routeIs('user.' . $route)">{{ $label }}</x-jet-nav-link>
                     <br>
                     @endforeach
                 </div>
@@ -53,8 +54,8 @@
                 </div>
 
                 <div class="wittyworks-navigation-sub-wrapper">
-                    @foreach($tabs as $key => $route)
-                    <x-jet-nav-link class="wittyworks-navigation-sub-link" href="{{ route('teams.' . $route) }}" :active="request()->routeIs('teams.' . $route)">{{ __("guidelines.{$route}_label") }}</x-jet-nav-link>
+                    @foreach($tabs as $label => $route)
+                    <x-jet-nav-link class="wittyworks-navigation-sub-link" href="{{ route('teams.' . $route) }}" :active="request()->routeIs('teams.' . $route)">{{ $label }}</x-jet-nav-link>
                     <br>
                     @endforeach
                 </div>
