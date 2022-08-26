@@ -87,9 +87,11 @@ Route::group(
 
             Route::group(['middleware' => ['auth:' . config('fortify.guard')]], function () {
                 // User & Profile...
-                Route::get('/user/subscription', [UserProfileController::class, 'show'])
-                    ->name('user.subscription');
-                Route::get('/user/academy', function () {return view('academy');})->name('academy');
+                Route::get('/user/profile', [UserProfileController::class, 'show'])
+                    ->name('profile.show');
+                Route::get('/user/academy', function () {
+                    return view('academy');
+                })->name('academy');
 
                 // API...
                 if (Jetstream::hasApiFeatures()) {

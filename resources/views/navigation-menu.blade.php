@@ -48,6 +48,12 @@
                     <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/team.svg') }}" alt="Team Settings" />
                     {{ __('content.manage_members') }}
                 </x-jet-nav-link>
+
+                <x-jet-nav-link class="wittyworks-navigation-link-wrapper" href="{{ route('teams.subscription') }}" :active="request()->routeIs('teams.subscription')">
+                    <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/dollar.svg') }}" alt="Subscription" />
+                    {{ __('content.subscription') }}
+                </x-jet-nav-link>
+    
                 <div class="wittyworks-navigation-link-wrapper">
                     <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/language.svg') }}" alt="Language" />
                     {{ __('teams.language') }}            
@@ -63,19 +69,26 @@
             @endif
         </div>
 
+        @lumki
+
         <div class="wittyworks-navigation-bottom-half">
+            @if($user->ownsTeam($team) && !$team->subscribed())
+            <x-jet-nav-link href="{{ route('stripe.portal') }}" class="wittyworks-navigation-link-wrapper inline-flex items-center px-4 py-2 mb-100 bg-red-500 border border-transparent rounded-md font-semibold tracking-widest hover:bg-red-600 active:bg-red-600 focus:outline-none focus:border-transparent disabled:opacity-25 transition">
+                {{ __('teams.subscribe') }}
+            </x-jet-nav-link>
+            @endif
             <x-jet-nav-link class="wittyworks-navigation-link-wrapper" href="https://www.witty.works/editor" target="_blank" rel="noopener">
                 <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/editor.svg') }}" alt="Editor" />
                 {{ __('content.witty_editor') }}
             </x-jet-nav-link>
                 
             <x-jet-nav-link class="wittyworks-navigation-link-wrapper" href="{{ route('academy') }}" alt="Academy" :active="request()->routeIs('academy')">
-                <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/bulb.svg') }}" alt="Academy"/>
+                <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/bulb.svg') }}" alt="{{ __('content.academy') }}"/>
                 {{ __('content.academy') }}
             </x-jet-nav-link>
 
-            <x-jet-nav-link class="wittyworks-navigation-link-wrapper" href="{{ route(strpos(request()->path(), 'team') !== false ? 'teams.subscription' : 'user.subscription') }}" :active="request()->routeIs('user.subscription')">
-                <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/dollar.svg') }}" alt="Subscription" />
+            <x-jet-nav-link class="wittyworks-navigation-link-wrapper" href="{{ route('profile.show') }}" :active="request()->routeIs('user.subscription')">
+                <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/user.svg') }}" alt="{{ __('content.manage_account') }}" />
                 {{ __('content.manage_account') }}
             </x-jet-nav-link>
 

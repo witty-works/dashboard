@@ -573,7 +573,6 @@ input:checked+.slider:before {
 }
 
 .wittyworks-page-subscription {
-    display: flex;
     margin-top: 3.3em;
     min-width: 58%;
     min-height: 100vh;
@@ -669,9 +668,6 @@ input:checked+.slider:before {
 .wittyworks-update-account {
     display: flex;
     flex-direction: row;
-}
-.wittyworks-update-account-link {
-    margin-left: auto;
 }
 
 .wittyworks-form-section {

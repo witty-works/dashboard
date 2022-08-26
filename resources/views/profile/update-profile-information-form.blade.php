@@ -12,10 +12,8 @@
             <div class="wittyworks-form-section">
                 <x-jet-label for="name" value="{{ __('content.name') }}" />
                 <div class="wittyworks-update-account">
-                    {{ $state['name'] }}
-                    <div class="wittyworks-update-account-link">
-                        {!! __('content.update_your_account_profile', ['profile_url' => route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'profile'])]) !!}
-                    </div>
+                    {{ $state['name'] }}&nbsp;
+                    {!! __('content.update_your_account_profile', ['profile_url' => route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'profile'])]) !!}
                 </div>
 
             </div>
@@ -25,9 +23,6 @@
                 <x-jet-label for="email" value="{{ __('content.email') }}" />
                 <div class="wittyworks-update-account">
                     {{ $state['email'] }}
-                    <div class="wittyworks-update-account-link">
-                        {!! __('content.update_your_account_profile', ['profile_url' => route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'profile'])]) !!}
-                    </div>
                 </div>
             </div>
         </div>
@@ -47,9 +42,6 @@
         <div class="wittyworks-form-section">
         <div class="wittyworks-update-account">
             <x-jet-label for="name" value="{{ __('teams.plan_name') }}" />
-            <div class="wittyworks-update-account-link">
-                {!! __('content.pricing') !!}
-            </div>
         </div>
             <div>
                 {{ $user->subscribed() ? $user->subscription()->planName() : __('stripe.witty_free') }}
@@ -57,9 +49,7 @@
 
             @if($team && $user->ownsTeam($team))
                 <a href="{{ route('stripe.portal') }}">
-                    @if($team->subscribed())
-                    {{ $team->subscription()->isPaidByInvoice() ? __('stripe.contact_sales') : __('stripe.billing') }}
-                    @else
+                    @if(!$team->subscribed())
                     <div class="wittyworks-upgrade-banner">
                         <div class="wittyworks-upgrade-banner-text-container">
                             <div class="wittyworks-upgrade-banner-title">
