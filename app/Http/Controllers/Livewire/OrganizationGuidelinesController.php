@@ -19,10 +19,10 @@ class OrganizationGuidelinesController extends UserGuidelinesController
         }
 
         $tabs = [
-            self::CUSTOMIZE_WITTY => 'teams.customize-witty',
-            self::TERM_REPLACEMENTS => 'teams.term-replacements',
-            self::FALSE_POSITIVES => 'teams.ignore-words',
-            self::DOMAINS => 'teams.domains',
+            self::CUSTOMIZE_WITTY => 'teams.language-settings',
+            self::TERM_REPLACEMENTS => 'teams.dictionary',
+            self::FALSE_POSITIVES => 'teams.ignored-words',
+            self::DOMAINS => 'teams.privacy-settings',
         ];
 
         return view('teams/language-guidelines', [

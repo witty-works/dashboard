@@ -577,13 +577,21 @@ input:checked+.slider:before {
     margin-top: 3.3em;
     min-width: 58%;
     min-height: 100vh;
-
 }
+
+.wittyworks-page-academy {
+    margin-top: 1em;
+    margin-left: 2em;
+    min-width: 58%;
+    min-height: 100vh;
+}
+
 .wittyworks-navigation-wrapper {
     margin-right: auto;
     position: fixed;
     top: 0;
     width: 15%;
+    min-width: 13em;
 }
 
 .wittyworks-logo {
