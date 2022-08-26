@@ -172,42 +172,6 @@ To accept this invitation, log in with your existing account or register a new a
     'open_invitiations' => '{1} You are already the owner of a team, but you have been invited to join another team. You can only be in one team. Please decide if you want to accept or reject the invitiation.|{2,*} You have been invited to join several teams, but you have been invited to join another team. Please decide if you want to accept one of these invitations.',
     'accept_invitiation' => 'Accept',
     'reject_invitiation' => 'Reject',
-    'section_1_title' => 'What is Witty?',
-    'section_1_text' => 'Witty is an **inclusive writing assistant** made for individuals and organizations, bringing you the joy of inclusive writing. Witty is easy, real-time, and fast.
-
-Witty is a Software-as-a-Service that **detects unconscious stereotypes in communication**, and then guides the writer on how to formulate the same content in an inclusive manner.
-
-Witty offers the whole inclusive language logic **in English and German**. More languages are planned. You also receive feedback on **orthography and grammar**. 
-
-With Witty you **become part of the change towards more diversity and inclusion** on a daily basis.
-
-Read more about [Witty](https://www.witty.works/ "Inclusive writing, anywhere, in real time").',
-    'section_2_title' => 'What can you do with the Witty Dashboard?',
-    'section_2_text' => 'Witty Dashboard helps you set up and customize Witty for your team. Once you\'re logged in, you can:
-
-* Invite your team members.
-* Set up your **language settings**. This way you can ensure your entire team writes with the same brand voice.
-* Coming soon: Get access to **detailed analytics** in compliance with privacy laws.
-* Coming soon: Witty Editor - a simple app that works for everyone, even those who don\'t use the browser plugin.',
-    'login_cta' => 'Start by creating your own <a href=":url">login</a>.',
-    'section_3_title' => 'Witty for Teams and Organizations',
-    'section_3_text' => 'For organizations, Witty offers a range of services to help entire teams work smoothly with Witty, such as:
-* Single sign-on
-* Invite team members in order to collaborate faster and work together on language settings
-* Streamline your organization use of language
-* Coming soon: detailed analytics
-* Unconscious bias awareness session
-* Centralized control over data privacy
-
-Read more about Services for [large organizations](https://www.witty.works/witty-for-large-organizations "Witty for large organizsations") or [small organizations](https://www.witty.works/witty-for-small-and-medium-sized-organizations "Witty for small organizations").',
-    'section_4_title' => 'Witty\'s ROI for Organizations',
-    'section_4_text' => 'The use of Witty increases organizations\' competitive advantage. 
-* Reach 100% of target groups instead of only 60%.
-* Implement Diversity and Inclusion - efficiently and effectively
-* Implement [ESG](https://en.wikipedia.org/wiki/Environmental,_social_and_corporate_governance "Environmental, Social, and Governance") and [UNSDG](https://sdgs.un.org/goals "UN Sustainable Development Goals") concretely. 
-* Ensure streamlined brand voice through your whole organization. 
-
-Read more about ROI for [large organizations](https://www.witty.works/witty-for-large-organizations "Witty for large organizations") or [small and medium sized organizations](https://www.witty.works/witty-for-small-and-medium-sized-organizations "Witty for small organizations").',
     'onboarding_signup_to_witty' => 'Sign up for a Witty account',
     'team' => 'Team',
     'accepting_invitation_will_result_in_leaving_your_current_team' => 'If you accept this invitation, you will leave the team ":team_name".',

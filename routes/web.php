@@ -31,6 +31,7 @@ use Laravel\Jetstream\Jetstream;
 |------------------
 */
 use App\Http\Controllers\OAuthController;
+use App\Http\Controllers\WelcomeController;
 /*
 |------------------
 | \SOCIALSTREAM
@@ -68,12 +69,6 @@ Route::group(
     function () {
         Route::impersonate();
 
-        Route::get('/', function () {
-            return view('dashboard');
-        })->name('dashboard');
-
-        Route::get('/subscribe', [StripeController::class, 'subscribe'])->name('stripe.subscribe');
-
         /*
         |------------------
         | JETSTREAM LIVEWIRE
@@ -86,6 +81,10 @@ Route::group(
             }
 
             Route::group(['middleware' => ['auth:' . config('fortify.guard')]], function () {
+                Route::get('/', [WelcomeController::class, 'show'])->name('dashboard');
+
+                Route::get('/subscribe', [StripeController::class, 'subscribe'])->name('stripe.subscribe');
+
                 // User & Profile...
                 Route::get('/user/profile', [UserProfileController::class, 'show'])
                     ->name('profile.show');
@@ -111,13 +110,13 @@ Route::group(
                         ->middleware(['auth'])
                         ->name('team-invitations.reject');
 
-                    Route::redirect('/user/language', '/user/language/customize-witty')->name('user.language-guidelines');
+                    Route::redirect('/user/language', '/user/language/language-settings')->name('user.language-guidelines');
                     Route::get('/user/language/language-settings', [UserGuidelinesController::class, 'customizeWitty'])->name('user.language-settings');
                     Route::get('/user/language/dictionary', [UserGuidelinesController::class, 'termReplacements'])->name('user.dictionary');
                     Route::get('/user/language/ignore-words', [UserGuidelinesController::class, 'falsePositives'])->name('user.ignored-words');
                     Route::get('/user/language/privacy-settings', [UserGuidelinesController::class, 'domains'])->name('user.privacy-settings');
 
-                    Route::redirect('/team/language', '/team/language/customize-witty')->name('teams.language-guidelines');
+                    Route::redirect('/team/language', '/team/language/language-settings')->name('teams.language-guidelines');
                     Route::get('/team/language/language-settings', [OrganizationGuidelinesController::class, 'customizeWitty'])->name('teams.language-settings');
                     Route::get('/team/language/dictionary', [OrganizationGuidelinesController::class, 'termReplacements'])->name('teams.dictionary');
                     Route::get('/team/language/ignored-words', [OrganizationGuidelinesController::class, 'falsePositives'])->name('teams.ignored-words');
@@ -156,7 +155,7 @@ Route::group(
 |------------------
 */
 Route::group(['middleware' => config('socialstream.middleware', ['web'])], function () {
-    Route::redirect('/login', '/')->name('login');
+    Route::redirect('/', '/oauth/azureadb2c/login')->name('login');
     Route::redirect('/register', '/')->name('register');
     Route::get('/mock-login', [OAuthController::class, 'mockLogin']);
     Route::get('/logout/{provider}', [OAuthController::class, 'logout'])->name('logout');
