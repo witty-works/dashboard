@@ -147,40 +147,6 @@ Du wurdest von <a href="mailto::email">:name</a> auf <a href="https://www.witty.
     'onboarding_create_team' => '1. Richte dein Team ein',
     'onboarding_configure_organization_guidelines' => '2. Konfiguriere Witty für dein Team',
     'onboarding_invite_users' => '3. Lade Teammitglieder ein',
-    'section_1_title' => 'Was ist Witty?',
-    'section_1_text' => 'Witty ist ein **integrativer Schreibassistent** für Einzelpersonen und Organisationen, der Freude am integrativen Schreiben vermittelt. Witty ist einfach und schnell.
-
-Witty ist eine Software-as-a-Service, die **unbewusste Stereotypen in der Kommunikation überprüft und Alternativen vorschlägt**. 
-
-Witty bietet die gesamte inklusive Sprachlogik auf **Englisch und Deutsch**. Weitere Sprachen sind geplant. Witty gibt auch Feedback zu **Rechtschreibung und Grammatik**. 
-
-Mit Witty trägst du zu mehr Vielfalt und Inklusion bei.
-Lese mehr über [Witty](https://www.witty.works/ "Inklusives Schreiben, überall, in Echtzeit").',
-    'section_2_title' => 'Was kanns du auf dem Witty Dashboard machen?',
-    'section_2_text' => 'Witty Dashboard hilft dir, Witty für dein Team einzurichten und anzupassen. Sobald du eingeloggt sind, kannst du:
-
-* Teammitglieder einladen
-* Spracheinstellungen einrichten. Auf diese Weise kannst du sicherstellen, dass dein gesamtes Team konsistent schreibt.
-* Demnächst verfügbar: Zugang zu **detaillierten Statistiken** in Übereinstimmung mit den Datenschutzgesetzen erhalten.
-* Demnächst verfügbar: Witty Editor - eine einfache App, die auch ohne Browser-Plugin nicht verwenden.',
-    'section_3_title' => 'Witty für Teams und Organisationen',
-    'section_3_text' => 'Für Unternehmen bietet Witty eine Reihe an Services, die Teams helfen, optimal mit Witty zu arbeiten, wie z.B:
-
-* Einmalige Anmeldung
-* Einladen von Teammitgliedern, um besser zusammenzuarbeiten und konsistenz zu schreiben.
-* Sensibilisierung für unbewusste Vorurteile
-* Sensibilisierung für unbewusste Vorurteile
-Zentralisierte Kontrolle über den Datenschutz
-
-Lese mehr über [grosse Organisationen](https://www.witty.works/witty-for-large-organizations "Witty for large organizsations") oder [kleine und mittlere Organisationen](https://www.witty.works/witty-for-small-and-medium-sized-organizations "Witty for small organizations").',
-    'section_4_title' => 'Wittys ROI für Organisationen',
-    'section_4_text' => 'Der Einsatz von Witty erhöht den Wettbewerbsvorteil von Unternehmen.
-* Erreiche 100 % der Zielgruppen statt nur 60 %.
-* Vielfalt und Inklusion umsetzen – effizient und effektiv
-* [ESG](https://en.wikipedia.org/wiki/Environmental,_social_and_corporate_governance "Umwelt, Soziales und Unternehmensführung") und [UNSDG](https://sdgs.un.org/goals "UN Sustainable Development Goals") konkret umsetzen.
-* Sorge für eine optimierte Markenstimme in deiner gesamten Organisation.
-
-Lese mehr über den ROI für [grosse Organisationen](https://www.witty.works/witty-for-large-organizations "Witty for large organizsations") oder [kleine und mittlere Organisationen](https://www.witty.works/witty-for-small-and-medium-sized-organizations "Witty for small organizations").',
     'onboarding_signup_to_witty' => 'Meldung für ein Witty-Konto',
     'invitation_email_welcome' => 'Wenn du dem Team beitrittst, erhältst du Zugriff auf die Spracheinstellungen des Teams auf Witty.
 
@@ -189,7 +155,6 @@ Um diese Einladung anzunehmen, melde dich mit deinem bestehenden Konto an oder r
     'open_invitiations' => '{1} Du wurdest eingeladen, einem Team beizutreten. Du kannst nur in einem Team sein. Bitte entscheiden dich, ob du die Einladung annehmen oder ablehnen möchtest.|{2,*} Du wurdest eingeladen, mehreren Teams beizutreten. Du kannst nur in einem Team sein. Bitte entscheiden dich, ob du eine dieser Einladungen annehmen möchtest. Du kannst nur in einem Team sein. ',
     'accept_invitiation' => 'Annehmen',
     'reject_invitiation' => 'Ablehnen',
-    'login_cta' => 'Erstelle deines eigenes <a href=":url">Login</a>.',
     'team' => 'Team',
     'accepting_invitation_will_result_in_leaving_your_current_team' => 'Wenn du diese Einladung annimmst, verlässt du das Team „:team_name“.',
     'contact_support_to_delete_owned_teams' => 'Wenn du diese Einladung annimmst, wird dein altesTeam inklusive aller Daten <strong>gelöscht</strong>.',
