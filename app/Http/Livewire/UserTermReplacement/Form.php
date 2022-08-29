@@ -31,7 +31,9 @@ class Form extends OrganizationForm
         if ($this->term_replacement_id) {
             $query->whereNot('id', $this->term_replacement_id);
             $termReplacement = TermReplacement::find($this->term_replacement_id);
+        }
 
+        if (!empty($termReplacement)) {
             if ($this->user->id !== $termReplacement->user_id) {
                 $message = __(
                     'guidelines.term_replacement_error',
