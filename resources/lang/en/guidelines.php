@@ -2,12 +2,12 @@
 
 return [
     'false_positives_label' => 'Ignore words',
-    'create_false_positive' => 'Personal dictionary of ignored words',
+    'create_false_positive' => 'Personal dictionary',
     'create_new_false_positive_description' => 'Improve your experience by adding words to this list.
 These words will no longer be highlighted as misspellings.',
-    'false_positive_label' => 'Ignore word',
+    'false_positive_label' => 'Ignored word',
     'dictionary_label' => 'Dictionary',
-    'create_term_replacement' => 'Term replacements',
+    'create_term_replacement' => 'Team dictionary',
     'create_new_term_replacement_description' => 'Improve your experience by adding words to your dictionary. All words added to this list will become highlighted by Witty, and your custom replacement will be shown as alternatives.',
     'term_label' => 'Term',
     'replacement_label' => 'Alternative',
@@ -100,7 +100,7 @@ Choose if Witty should suggest only the gender ending (e.g. "Mitarbeiter*in"), t
     'type_label' => 'type label',
     'data_collection' => 'Data Collection',
     'list_team_domains' => 'List of disabled domains of your team',
-    'list_team_false_positives' => 'Team dictionary of ignored words',
+    'list_team_false_positives' => 'Team dictionary',
     'list_team_false_positives_description' => 'These words will no longer be highlighted as misspellings for your whole team.',
     'list_team_term_replacements' => 'Your team\'s term replacements',
     'list_team_term_replacements_description' => 'All words added to this list will become highlighted by Witty, and your team\'s replacement will be shown as alternatives.',
