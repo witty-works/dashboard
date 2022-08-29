@@ -8,7 +8,7 @@
                 </x-slot>
 
                 <x-slot name="description">
-                    {{ __('content.add_a_new_team_member', ['max_count' => $team->getUserLicensesCount()]) }}
+                    {{ trans_choice('content.add_a_new_team_member', $team->getUserLicensesCount(), ['max_count' => $team->getUserLicensesCount()]) }}
                 </x-slot>
 
                 <x-slot name="form">
