@@ -1,9 +1,9 @@
 <?php
     $tabs = [      
-        __('guidelines.language_settings_label') => 'language-settings',
-        __('guidelines.dictionary_label') => 'dictionary',
-        __('guidelines.ignore_words_label') => 'ignored-words',
-        __('guidelines.privacy_settings_label') => 'privacy-settings',
+        'language-settings' => __('guidelines.language_settings_label'),
+        'dictionary' => __('guidelines.dictionary_label'),
+        'ignored-words' => __('guidelines.ignore_words_label'),
+        'privacy-settings' => __('guidelines.privacy_settings_label'),
     ];
 ?>
 
@@ -35,7 +35,7 @@
                 </div>
 
                 <div class="wittyworks-navigation-sub-wrapper">
-                    @foreach($tabs as $label => $route)
+                    @foreach($tabs as $route => $label)
                     <x-jet-nav-link class="wittyworks-navigation-sub-link" href="{{ route('user.' . $route) }}" :active="request()->routeIs('user.' . $route)">{{ $label }}</x-jet-nav-link>
                     <br>
                     @endforeach
@@ -60,7 +60,7 @@
                 </div>
 
                 <div class="wittyworks-navigation-sub-wrapper">
-                    @foreach($tabs as $label => $route)
+                    @foreach($tabs as $route => $label)
                     <x-jet-nav-link class="wittyworks-navigation-sub-link" href="{{ route('teams.' . $route) }}" :active="request()->routeIs('teams.' . $route)">{{ $label }}</x-jet-nav-link>
                     <br>
                     @endforeach
