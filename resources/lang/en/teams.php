@@ -17,7 +17,8 @@ return [
     'renewal_date' => 'Renewal date',
     'user_licenses' => 'User licenses',
     'term_replacements' => 'Team dictionary',
-    'false_positives' => 'Ignored words',
+    'false_positives' => 'Ignored words of your team
+',
     'total_of_max_used' => ':total of :max_count are used',
     'more_licenses' => 'If you like to purchase more licenses, please <a href=":url">contact</a> Witty Works.',
     'what_is_included' => 'What is included in your current subscription?',

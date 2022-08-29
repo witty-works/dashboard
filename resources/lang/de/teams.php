@@ -12,7 +12,7 @@ return [
     'renewal_date' => 'Verlängerungsdatum',
     'user_licenses' => 'Benutzer*innen',
     'term_replacements' => 'Team-Wörterbuch',
-    'false_positives' => 'Ignorierte Wörter',
+    'false_positives' => 'Ignorierte Wörter deines Teams',
     'total_of_max_used' => ':total von :max_count werden verwendet',
     'more_licenses' => 'Wenn du weitere Lizenzen erwerben möchtest, <a href=":url">wende</a> dich bitte an Witty Works.',
     'what_is_included' => 'Was ist in deinem aktuellen Abo enthalten?',
