@@ -10,7 +10,7 @@
     </x-slot>
 
     <x-slot name="form" submit="updateLanguageGuidelinesExpertMode">
-        <div class="guidelines-form-title">{!! Str::markdown(__('guidelines.manage_organization_guidelines_description_expert_mode')) !!}</div>
+        <div class="guidelines-form-title">{!! __('guidelines.manage_organization_guidelines_description_expert_mode') !!}</div>
         <div class="guidelines-form-section">
             <x-jet-checkbox
                 id="english_rules_force"

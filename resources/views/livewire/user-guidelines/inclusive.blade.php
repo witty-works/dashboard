@@ -6,7 +6,7 @@
     <x-slot name="description">
     </x-slot>
     <x-slot name="form" submit="updateLanguageGuidelinesInclusive">
-        <div class="guidelines-form-title">{!! Str::markdown(__('guidelines.manage_organization_guidelines_description_inclusive')) !!}</div>
+        <div class="guidelines-form-title">{!! __('guidelines.manage_organization_guidelines_description_inclusive') !!}</div>
         <div class="guidelines-form-section">
             <x-jet-checkbox
                 id="disabled_categories_inclusive"

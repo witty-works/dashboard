@@ -10,7 +10,7 @@
     </x-slot>
 
     <x-slot name="form" submit="updateLanguageGuidelinesInspirations">
-        <div class="guidelines-form-title">{!! Str::markdown(__('guidelines.manage_organization_guidelines_description_inspiration')) !!}</div>
+        <div class="guidelines-form-title">{!! __('guidelines.manage_organization_guidelines_description_inspiration') !!}</div>
         <div class="guidelines-form-section">
             <x-jet-checkbox
                 id="show_inspiration_alternatives"

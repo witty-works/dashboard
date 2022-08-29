@@ -8,7 +8,7 @@
     </x-slot>
 
     <x-slot name="form" submit="updateLanguageGuidelinesEnglish">
-        <div class="guidelines-form-title">{{ __('guidelines.manage_organization_guidelines_english_form_title') }}</div>
+        <div class="guidelines-form-title">{!! __('guidelines.manage_organization_guidelines_english_form_title') !!}</div>
         <div class="guidelines-form-section">
             <x-jet-checkbox
                 id="singular_they"
