@@ -10,7 +10,7 @@
     <x-slot name="form" submit="updateLanguageGuidelinesLanguage">
         <div class="guidelines-form-title">{!! __('guidelines.manage_organization_guidelines_description_language') !!}</div>  
        
-        <div class="guidelines-form-section-dropdown-label">{{ __('guidelines.preferred_variants_dialect_en') }}</div>
+        <div class="guidelines-form-section-dropdown-label">{{ __('guidelines.team_preferred_variants_dialect') }}</div>
         <x-select id="preferred_variants_en"
             :options="App\Models\GuidelinesInterface::PREFERRED_VARIANTS_EN"
             class="guidelines-form-section-dropdown"
@@ -18,7 +18,7 @@
         />
         <x-jet-input-error for="preferred_variants_en" class="mt-2" />
         
-        <div class="guidelines-form-section-dropdown-label">{{ __('guidelines.preferred_variants_dialect_de') }}</div>
+        <div class="guidelines-form-section-dropdown-label">{{ __('guidelines.team_preferred_variants_dialect') }}</div>
         <x-select id="preferred_variants_de"
             :options="App\Models\GuidelinesInterface::PREFERRED_VARIANTS_DE"
             class="guidelines-form-section-dropdown"

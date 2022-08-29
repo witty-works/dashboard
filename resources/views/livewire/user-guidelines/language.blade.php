@@ -11,7 +11,7 @@
         <div class="guidelines-form-title">{!! __('guidelines.manage_organization_guidelines_description_language') !!}</div>  
        
         <div class="guidelines-form-section-dropdown-label pt-5">
-            {{ __('guidelines.preferred_variants_dialect_en') }}
+            {{ __('guidelines.user_preferred_variants_dialect') }}
         </div>
 
         <div class="flex flex-row">
@@ -32,7 +32,7 @@
         </div>
        
         <div class="guidelines-form-section-dropdown-label pt-5">
-            {{ __('guidelines.preferred_variants_dialect_de') }}
+            {{ __('guidelines.user_preferred_variants_dialect') }}
         </div>
 
         <div class="flex flex-row">
