@@ -302,6 +302,7 @@ a {
     margin-top: 1em;
     margin-bottom: 0.5em;
     display: flex;
+    flex-direction: column;
 }
 
 .guidelines-form-section-dropdown-wrapper {
@@ -699,4 +700,13 @@ input:checked+.slider:before {
 .wittyworks-video-wrapper {
     margin-top: 2em;
     margin-bottom: 2em;
+}
+
+.wittyworks-team-name {
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.wittyworks-team-name:hover {
+    text-decoration: none;
 }

@@ -20,9 +20,9 @@ return [
     'list_false_positives_description' => 'Any words or phrases in this list will be not be highlighted.',
     'list_term_replacements' => 'Personal dictionary',
     'list_term_replacements_description' => 'Witty highlights any words in this list and suggests your alternative.',
-    'gendered_roles_format' => 'Witty uses the gender-star as default. Please read why <a href="https://be-hindernisse.org/2022/02/15/mythos-der-doppelpunkt-ist-perfekt-zum-entgendern/" target="_blank">here</a>. In <a href="https://www.witty.works/en/blog/gender-inclusive-writing-in-german" target="_blank">this blog post</a> we explain all gender forms.
+    'gendered_roles_format' => '<span>Witty uses the gender-star as default. Please read why <a href="https://be-hindernisse.org/2022/02/15/mythos-der-doppelpunkt-ist-perfekt-zum-entgendern/" target="_blank">here</a>.</span> <span>In <a href="https://www.witty.works/en/blog/gender-inclusive-writing-in-german" target="_blank">this blog post</a> we explain all gender forms.
 
-Choose if Witty should suggest only the gender ending (e.g. "Mitarbeiter*in"), the female and male form (e.g. "Mitarbeiterin oder Mitarbeiter"), both or gender-neutral alternatives such as "Mitarbeitende".',
+Choose if Witty should suggest only the gender ending (e.g. "Mitarbeiter*in"), the female and male form (e.g. "Mitarbeiterin oder Mitarbeiter"), both or gender-neutral alternatives such as "Mitarbeitende".</span>',
     'inclusive_gender' => 'Suggest the chosen gender ending',
     'both' => 'Suggest both the chosen gender ending and the female and male form',
     'none' => 'Suggest only gender-neutral alternatives',

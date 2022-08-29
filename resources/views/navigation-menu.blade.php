@@ -19,11 +19,10 @@
         <!-- LOGGED IN -->
         <div class="wittyworks-navigation-top-half">
             @if ($team && Auth::user()->hasTeamPermission($team, 'edit_guidelines'))
-            <div class="wittyworks-navigation-account-toggle-wrapper">
-                <x-jet-nav-link class="wittyworks-navigation-link-wrapper" href="{{ route('teams.subscription') }}#updateTeamName">
+            <x-jet-nav-link class="wittyworks-team-name" href="{{ route('teams.subscription') }}#updateTeamName">
                     {{ $team->name }}
                 </x-jet-nav-link>
-
+            <div class="wittyworks-navigation-account-toggle-wrapper">
                 <x-jet-nav-link id="personal_account" class="wittyworks-navigation-account-toggle" href="{{ route('user.language-settings') }}" :active="strpos(request()->path(), 'user') !== false">
                     {{ __('guidelines.personal_account') }}
                 </x-jet-nav-link>
