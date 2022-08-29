@@ -3,6 +3,8 @@
         <div class="wittyworks-page-wrapper">
             <div class="wittyworks-page-subscription">
                 @livewire('teams.plan-summary', ['team' => $team])
+
+                @livewire('teams.update-team-name-form', ['team' => $team])
             </div>
         </div>
     </div>

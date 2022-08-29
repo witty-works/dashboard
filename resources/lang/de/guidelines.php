@@ -8,9 +8,9 @@ return [
     'manage_organization_guidelines_description' => 'Konfiguriere Witty so, dass es besser zum Schreibstil deines Teams passt.',
     'german_gender_ending' => 'Gender-Endung auswählen',
     'list_false_positives' => 'Liste der ignorierten Wörter',
-    'gendered_roles_format' => 'Witty schlägt per Default das Gender-Sternchen vor. Lese <a href="https://be-hindernisse.org/2022/02/15/mythos-der-doppelpunkt-ist-perfekt-zum-entgendern/" target="_blank">hier</a>, weshalb wir diese Alternative empfehlen. In <a href="https://www.witty.works/en/blog/gender-inclusive-writing-in-german" target="_blank">diesem Blogpost</a> erklären wir alle Gender-Endungen.
+    'gendered_roles_format' => '<span>Witty schlägt per Default das Gender-Sternchen vor. Lese <a href="https://be-hindernisse.org/2022/02/15/mythos-der-doppelpunkt-ist-perfekt-zum-entgendern/" target="_blank">hier</a>, weshalb wir diese Alternative empfehlen.</span><span>In <a href="https://www.witty.works/en/blog/gender-inclusive-writing-in-german" target="_blank">diesem Blogpost</a> erklären wir alle Gender-Endungen.
 
-Wähle aus, ob Witty nur die Gender-Ending-Form (z.B. "Mitarbeiter*in"), die weibliche und männliche Form (z.B. "Mitarbeiterin oder Mitarbeiter"), beides oder genderneutrale Alternativen wie "Mitarbeitende" vorschlagen soll.',
+Wähle aus, ob Witty nur die Gender-Ending-Form (z.B. "Mitarbeiter*in"), die weibliche und männliche Form (z.B. "Mitarbeiterin oder Mitarbeiter"), beides oder genderneutrale Alternativen wie "Mitarbeitende" vorschlagen soll.</span>',
     'both' => 'Die gewählte Gender-Endung und die weibliche und männliche Form vorschlagen',
     'preferred_variants_de_DE' => 'Deutsch (🇩🇪 Deutschland)',
     'preferred_variants_de_AT' => 'Deutsch (🇦🇹 Österreich)',

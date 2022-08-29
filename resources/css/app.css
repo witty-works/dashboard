@@ -302,6 +302,7 @@ a {
     margin-top: 1em;
     margin-bottom: 0.5em;
     display: flex;
+    flex-direction: column;
 }
 
 .guidelines-form-section-dropdown-wrapper {
@@ -597,7 +598,7 @@ input:checked+.slider:before {
     margin-top: 1em;
 }
 
-.wittyworks-navigation-link-wrapper {
+.wittyworks-navigation-label-wrapper {
     display: flex;
     flex-direction: row;
     justify-content: left;
@@ -607,6 +608,18 @@ input:checked+.slider:before {
     color: #FFFFFF;
     font-size: 18px;
     cursor: default;
+}
+
+.wittyworks-navigation-link-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    margin-bottom: 1em;
+    font-weight: bold;
+    color: #FFFFFF;
+    font-size: 18px;
+    cursor: pointer;
 }
 
 .wittyworks-navigation-icon {
@@ -644,7 +657,7 @@ input:checked+.slider:before {
     margin-top: -1.5em;
 }
 
-.wittyworks-navigation-account-toggl-wrapper {
+.wittyworks-navigation-account-toggle-wrapper {
     display: flex;
     flex-direction: row;
     justify-content: left;
@@ -656,7 +669,7 @@ input:checked+.slider:before {
     cursor: pointer;
 }
 
-.wittyworks-navigation-account-toggl:hover {
+.wittyworks-navigation-account-toggle:hover {
     text-decoration: underline;
 }
 
@@ -687,4 +700,13 @@ input:checked+.slider:before {
 .wittyworks-video-wrapper {
     margin-top: 2em;
     margin-bottom: 2em;
+}
+
+.wittyworks-team-name {
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.wittyworks-team-name:hover {
+    text-decoration: none;
 }

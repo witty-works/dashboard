@@ -18,19 +18,28 @@
         @auth
         <!-- LOGGED IN -->
         <div class="wittyworks-navigation-top-half">
-            <div class="wittyworks-navigation-account-toggl-wrapper">
-                <x-jet-nav-link id="personal_account" class="wittyworks-navigation-account-toggl" href="{{ route('user.language-settings') }}" :active="strpos(request()->path(), 'user') !== false">
+            @if ($team && Auth::user()->hasTeamPermission($team, 'edit_guidelines'))
+            <x-jet-nav-link class="wittyworks-team-name" href="{{ route('teams.subscription') }}#updateTeamName">
+                    {{ $team->name }}
+                </x-jet-nav-link>
+            <div class="wittyworks-navigation-account-toggle-wrapper">
+                <x-jet-nav-link id="personal_account" class="wittyworks-navigation-account-toggle" href="{{ route('user.language-settings') }}" :active="strpos(request()->path(), 'user') !== false">
                     {{ __('guidelines.personal_account') }}
                 </x-jet-nav-link>
                 <div class="wittyworks-navigation-account-divider">|</div>
-                 <x-jet-nav-link id="team_account" class="wittyworks-navigation-account-toggl"  href="{{ route('teams.language-settings') }}" :active="strpos(request()->path(), 'team') !== false">
+                 <x-jet-nav-link id="team_account" class="wittyworks-navigation-account-toggle"  href="{{ route('teams.language-settings') }}" :active="strpos(request()->path(), 'team') !== false">
                     {{ __('guidelines.team_account') }}
                 </x-jet-nav-link>
             </div>
+            @elseif ($team)
+            <div class="wittyworks-navigation-label-wrapper">
+                {{ $team->name }}
+            </div>
+            @endif
 
             <div id="personal_account_content" style="display: <?=strpos(request()->path(), 'user') !== false ? 'block' : 'none' ?>">
-                <div class="wittyworks-navigation-link-wrapper">
-                    <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/language.svg') }}" alt="Language" />
+                <div class="wittyworks-navigation-label-wrapper">
+                    <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/language.svg') }}" alt="" />
                     {{ __('guidelines.language') }}
                 </div>
 
@@ -43,20 +52,19 @@
             </div>
 
             @if ($team && Auth::user()->hasTeamPermission($team, 'edit_guidelines'))
-            <div></div>
             <div id='team_account_content' style="display: <?=strpos(request()->path(), 'team') !== false ? 'block' : 'none' ?>">
                 <x-jet-nav-link class="wittyworks-navigation-link-wrapper" href="{{ route('teams.show') }}" :active="request()->routeIs('teams.show')">
-                    <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/team.svg') }}" alt="Team Settings" />
+                    <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/team.svg') }}" alt="" />
                     {{ __('content.manage_members') }}
                 </x-jet-nav-link>
 
                 <x-jet-nav-link class="wittyworks-navigation-link-wrapper" href="{{ route('teams.subscription') }}" :active="request()->routeIs('teams.subscription')">
-                    <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/dollar.svg') }}" alt="Subscription" />
+                    <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/dollar.svg') }}" alt="" />
                     {{ __('content.subscription') }}
                 </x-jet-nav-link>
     
-                <div class="wittyworks-navigation-link-wrapper">
-                    <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/language.svg') }}" alt="Language" />
+                <div class="wittyworks-navigation-label-wrapper">
+                    <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/language.svg') }}" alt="" />
                     {{ __('teams.language') }}            
                 </div>
 
@@ -79,22 +87,22 @@
             </x-jet-nav-link>
             @endif
             <x-jet-nav-link class="wittyworks-navigation-link-wrapper" href="https://www.witty.works/editor" target="_blank" rel="noopener">
-                <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/editor.svg') }}" alt="Editor" />
+                <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/editor.svg') }}" alt="" />
                 {{ __('content.witty_editor') }}
             </x-jet-nav-link>
                 
             <x-jet-nav-link class="wittyworks-navigation-link-wrapper" href="{{ route('academy') }}" alt="Academy" :active="request()->routeIs('academy')">
-                <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/bulb.svg') }}" alt="{{ __('content.academy') }}"/>
+                <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/bulb.svg') }}" alt=""/>
                 {{ __('content.academy') }}
             </x-jet-nav-link>
 
             <x-jet-nav-link class="wittyworks-navigation-link-wrapper" href="{{ route('profile.show') }}" :active="request()->routeIs('user.subscription')">
-                <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/user.svg') }}" alt="{{ __('content.manage_account') }}" />
+                <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/user.svg') }}" alt="" />
                 {{ __('content.manage_account') }}
             </x-jet-nav-link>
 
             <x-jet-nav-link class="wittyworks-navigation-link-wrapper" href="{{ route('logout', ['provider' => 'azureadb2c']) }}">
-                <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/logout.svg') }}" alt="Witty Works" />
+                <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/logout.svg') }}" alt="" />
                 {{ __('content.log_out') }}
             </x-jet-nav-link>
             <div class="wittyworks-navigation-username">{{ $user->name }}</div>
@@ -104,18 +112,18 @@
         <!-- LOGGED OUT -->
         <div class="wittyworks-navigation-top-half">
             <x-jet-nav-link class="wittyworks-navigation-link-wrapper" href="https://www.witty.works/editor" target="_blank" rel="noopener">
-                <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/editor.svg') }}" alt="Editor" />
+                <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/editor.svg') }}" alt="" />
                 {{ __('content.witty_editor') }}
             </x-jet-nav-link>
         </div>
         <div class="wittyworks-navigation-bottom-half">
             <x-jet-nav-link class="wittyworks-navigation-link-wrapper" href="https://www.witty.works/pricing" target="_blank" rel="noopener">
-                <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/star.svg') }}" alt="Witty Works" />
+                <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/star.svg') }}" alt="" />
                 {{ __('teams.pricing') }}
             </x-jet-nav-link>
 
             <x-jet-nav-link class="wittyworks-navigation-link-wrapper" href="{{ route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'login']) }}">
-                <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/login.svg') }}" alt="Witty Works" />
+                <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/login.svg') }}" alt="" />
                     {{ __('content.log_in_register') }}
             </x-jet-nav-link>
         </div>

@@ -10,7 +10,7 @@
 
     <x-slot name="form">
         <!-- Team Owner Information -->
-        <div class="col-span-6">
+        <div class="col-span-6" id="updateTeamName">
             <x-jet-label value="{{ __('content.team_owner') }}" />
 
             <div class="flex items-center mt-2">

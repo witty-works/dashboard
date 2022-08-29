@@ -15,7 +15,7 @@
         <div class="guidelines-form-title">{!! __('guidelines.manage_organization_guidelines_description_german_form_sub_title') !!}</div>
 
         <div class="guidelines-form-section-dropdown-label pt-5">
-            {{ __('guidelines.gendered_roles_format') }}
+            {!! __('guidelines.gendered_roles_format') !!}
         </div>
 
         <div class="flex flex-row">

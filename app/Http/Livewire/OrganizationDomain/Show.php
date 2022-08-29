@@ -26,7 +26,7 @@ class Show extends Component
 
     public function render()
     {
-        if (!Auth::user()->hasTeamPermission($this->team, 'edit_guidelines')) {
+        if (!Auth::user()->hasTeamPermission($this->team, 'read')) {
             abort(403);
         }
 

@@ -8,7 +8,7 @@
     </x-slot>
 
     <x-slot name="form" submit="updateLanguageGuidelinesLanguage">
-        <div class="guidelines-form-title">{!! Str::markdown(__('guidelines.manage_organization_guidelines_description_language')) !!}</div>  
+        <div class="guidelines-form-title">{!! __('guidelines.manage_organization_guidelines_description_language') !!}</div>  
        
         <div class="guidelines-form-section-dropdown-label pt-5">
             {{ __('guidelines.preferred_variants_dialect_en') }}
