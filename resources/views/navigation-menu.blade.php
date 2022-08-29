@@ -43,6 +43,7 @@
             </div>
 
             @if ($team && Auth::user()->hasTeamPermission($team, 'edit_guidelines'))
+            <div></div>
             <div id='team_account_content' style="display: <?=strpos(request()->path(), 'team') !== false ? 'block' : 'none' ?>">
                 <x-jet-nav-link class="wittyworks-navigation-link-wrapper" href="{{ route('teams.show') }}" :active="request()->routeIs('teams.show')">
                     <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/team.svg') }}" alt="Team Settings" />

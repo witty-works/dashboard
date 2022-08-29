@@ -96,5 +96,5 @@ Wähle aus, ob Witty nur die Gender-Ending-Form (z.B. "Mitarbeiter*in"), die wei
     'language_settings_label' => 'Spracheinstellungen',
     'privacy_settings_label' => 'Datenschutzeinstellungen',
     'team_account' => 'Team',
-    'ignore_words_label' => 'Wörterbuch',
+    'ignore_words_label' => 'Ignorierte Wörter',
 ];

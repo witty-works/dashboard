@@ -108,5 +108,5 @@ Choose if Witty should suggest only the gender ending (e.g. "Mitarbeiter*in"), t
     'list_team_deny_domains_description' => 'Witty is disabled for any domain in this list for your whole team.',
     'personal_account' => 'Personal',
     'team_account' => 'Team',
-    'ignore_words_label' => 'Dictionary',
+    'ignore_words_label' => 'Ignored Words',
 ];
