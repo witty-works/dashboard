@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\ValidationException;
-use function Emoji\is_single_emoji;
+use function Emoji\detect_emoji;
 
 class TermReplacement extends Model
 {
@@ -27,13 +27,13 @@ class TermReplacement extends Model
 
     static public function validateEmoji($emoji)
     {
-        $emoji = trim($emoji);
+        $parsed_emoji = detect_emoji($emoji);
 
-        if ($emoji !== "" && $emoji !== null && !is_single_emoji($emoji)) {
+        if (count($parsed_emoji) != 1) {
             $message = __('guidelines.emoji_invalid_format');
             throw ValidationException::withMessages(['emoji' => $message]);
         }
 
-        return $emoji;
+        return $parsed_emoji[0]['emoji'];
     }
 }
