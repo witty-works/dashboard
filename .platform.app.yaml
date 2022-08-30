@@ -99,7 +99,7 @@ web:
                 AAccess-Control-Allow-Methods: GET, OPTIONS
                 Access-Control-Allow-Headers: "*"
                 Access-Control-Expose-Headers: "*"
-                Cache-Control: max-age=200
+                # Cache-Control: max-age=200
         "/":
             root: "public"
             index:
