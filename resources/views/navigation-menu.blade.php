@@ -1,15 +1,18 @@
 <?php
-    $tabs = [      
+    $links = [      
         'language-settings' => __('guidelines.language_settings_label'),
         'dictionary' => __('guidelines.dictionary_label'),
         'ignored-words' => __('guidelines.ignore_words_label'),
         'privacy-settings' => __('guidelines.privacy_settings_label'),
     ];
-?>
 
+    $user = Auth::user();
+    $team = $user ? $user->currentTeam : null;
+    $team_edit = $team && Auth::user()->hasTeamPermission($team, 'edit_guidelines');
+    $open_tab = $team_edit && (strpos(request()->path(), 'team') || strpos(request()->path(), 'livewire') !== false)
+        ? 'team' : 'user';
+?>
 <nav x-data="{ open: false }" class="navigation-wrapper">
-    @php ($user = Auth::user())
-    @php ($team = $user ? $user->currentTeam : null)
     <div class="wittyworks-navigation-content-wrapper">
         <a href="https://www.witty.works/">
             <img class="wittyworks-logo" src="{{ url('svg/witty-logo-white.svg') }}" alt="Witty Works" />
@@ -18,16 +21,16 @@
         @auth
         <!-- LOGGED IN -->
         <div class="wittyworks-navigation-top-half">
-            @if ($team && Auth::user()->hasTeamPermission($team, 'edit_guidelines'))
+            @if ($team_edit)
             <x-jet-nav-link class="wittyworks-team-name" href="{{ route('teams.subscription') }}#updateTeamName">
                     {{ $team->name }}
                 </x-jet-nav-link>
             <div class="wittyworks-navigation-account-toggle-wrapper">
-                <x-jet-nav-link id="personal_account" class="wittyworks-navigation-account-toggle" href="{{ route('user.language-settings') }}" :active="strpos(request()->path(), 'user') !== false">
+                <x-jet-nav-link id="personal_account" class="wittyworks-navigation-account-toggle" href="{{ route('user.language-settings') }}" :active="$open_tab === 'user'">
                     {{ __('guidelines.personal_account') }}
                 </x-jet-nav-link>
                 <div class="wittyworks-navigation-account-divider">|</div>
-                 <x-jet-nav-link id="team_account" class="wittyworks-navigation-account-toggle"  href="{{ route('teams.language-settings') }}" :active="strpos(request()->path(), 'team') !== false">
+                 <x-jet-nav-link id="team_account" class="wittyworks-navigation-account-toggle" href="{{ route('teams.language-settings') }}" :active="$open_tab === 'team'">
                     {{ __('guidelines.team_account') }}
                 </x-jet-nav-link>
             </div>
@@ -37,22 +40,24 @@
             </div>
             @endif
 
-            <div id="personal_account_content" style="display: <?=strpos(request()->path(), 'user') !== false ? 'block' : 'none' ?>">
+            @if ($open_tab === 'user')
+            <div id="personal_account_content">
                 <div class="wittyworks-navigation-label-wrapper">
                     <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/language.svg') }}" alt="" />
                     {{ __('guidelines.language') }}
                 </div>
 
                 <div class="wittyworks-navigation-sub-wrapper">
-                    @foreach($tabs as $route => $label)
+                    @foreach($links as $route => $label)
                     <x-jet-nav-link class="wittyworks-navigation-sub-link" href="{{ route('user.' . $route) }}" :active="request()->routeIs('user.' . $route)">{{ $label }}</x-jet-nav-link>
                     <br>
                     @endforeach
                 </div>
             </div>
+            @endif
 
-            @if ($team && Auth::user()->hasTeamPermission($team, 'edit_guidelines'))
-            <div id='team_account_content' style="display: <?=strpos(request()->path(), 'team') !== false ? 'block' : 'none' ?>">
+            @if ($open_tab === 'team')
+            <div id='team_account_content'>
                 <x-jet-nav-link class="wittyworks-navigation-link-wrapper" href="{{ route('teams.show') }}" :active="request()->routeIs('teams.show')">
                     <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/team.svg') }}" alt="" />
                     {{ __('content.manage_members') }}
@@ -69,7 +74,7 @@
                 </div>
 
                 <div class="wittyworks-navigation-sub-wrapper">
-                    @foreach($tabs as $route => $label)
+                    @foreach($links as $route => $label)
                     <x-jet-nav-link class="wittyworks-navigation-sub-link" href="{{ route('teams.' . $route) }}" :active="request()->routeIs('teams.' . $route)">{{ $label }}</x-jet-nav-link>
                     <br>
                     @endforeach
