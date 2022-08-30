@@ -117,7 +117,7 @@ return [
     'permanently_delete_team' => 'Dieses Team endgültig löschen.',
     'once_a_team_is_deleted' => 'Sobald ein Team gelöscht wird, werden alle seine Ressourcen und Daten dauerhaft gelöscht.',
     'are_you_sure_want_to_delete_team' => 'Möchtest du dieses Team wirklich löschen? Sobald ein Team gelöscht wird, werden alle seine Ressourcen und Daten dauerhaft gelöscht.',
-    'add_a_new_team_member' => '{1} Füge deinem Team ein neues Mitglied hinzu, damit ihr zusammenarbeiten könnt. Mit deinem aktuellen Abonnement kannst du maximal ein Teammitglieder hinzufügen. | Füge deinem Team ein neues Mitglied hinzu, damit ihr zusammenarbeiten könnt. Mit deinem aktuellen Abonnement kannst du maximal :max_count Teammitglieder hinzufügen.',
+    'add_a_new_team_member' => '{1} Füge deinem Team ein neues Mitglied hinzu, damit ihr zusammenarbeiten könnt. Mit deinem aktuellen Abonnement kannst du maximal ein Teammitglied hinzufügen. | Füge deinem Team ein neues Mitglied hinzu, damit ihr zusammenarbeiten könnt. Mit deinem aktuellen Abonnement kannst du maximal :max_count Teammitglieder hinzufügen.',
     'please_provide_the_email_address' => 'Bitte gib die E-Mail-Adresse der Person an, die du diesem Team hinzufügen möchtest.',
     'these_people_have_been_invited' => 'Diese Personen wurden in dein Team eingeladen und haben eine Einladungs-E-Mail erhalten. Sie können dem Team beitreten, indem sie die E-Mail-Einladung annehmen.',
     'all_of_the_people' => 'Alle Personen, die Teil dieses Teams sind.',
