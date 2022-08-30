@@ -269,6 +269,7 @@ a {
     justify-content: flex-start;
     align-items: center;
     flex-wrap: wrap;
+    min-width: 50%;
 }
 
 .guidelines-form-section-toggle {
@@ -301,7 +302,18 @@ a {
     line-height: 24px;
     color: #212529;
     margin-top: 1em;
-    margin-bottom: 0.5em;
+    display: flex;
+    flex-direction: column;
+}
+
+.guidelines-form-section-description {
+    font-family: Roboto, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #212529;
+    margin-bottom: 1.5em;
     display: flex;
     flex-direction: column;
 }

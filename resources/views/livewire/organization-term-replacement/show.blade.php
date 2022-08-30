@@ -24,7 +24,7 @@
             <tr @if($loop->even)class="bg-grey"@endif>
                 <td class="border px-4 py-2 text-left">{{ $term_replacement->term }}</td>
                 <td class="border px-4 py-2 text-left">{{ $term_replacement->replacement }}</td>
-                <td class="border px-4 py-2 text-center">{{ $term_replacement->emoji }}</td>
+                <td class="border px-4 py-2 text-left">{{ $term_replacement->emoji }}</td>
                 @if (Auth::user()->hasTeamPermission($team, 'edit_guidelines') && empty($hide_actions))
                 <td class="border px-4 py-2 text-center whitespace-nowrap">
                     <button wire:click="editTermReplacement({{ $term_replacement->id }})" class="bg-gray-100 text-gray-600 px-6 rounded-full">
