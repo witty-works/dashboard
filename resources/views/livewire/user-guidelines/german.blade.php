@@ -14,7 +14,7 @@
     <x-slot name="form" submit="updateLanguageGuidelinesGerman">  
         <div class="guidelines-form-title">{!! __('guidelines.manage_organization_guidelines_description_german_form_sub_title') !!}</div>
 
-        <div class="guidelines-form-section-dropdown-label pt-5">
+        <div class="guidelines-form-section-description">
             {!! __('guidelines.gendered_roles_format') !!}
         </div>
 

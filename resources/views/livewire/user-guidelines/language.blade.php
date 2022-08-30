@@ -10,7 +10,7 @@
     <x-slot name="form" submit="updateLanguageGuidelinesLanguage">
         <div class="guidelines-form-title">{!! __('guidelines.manage_organization_guidelines_description_language') !!}</div>  
        
-        <div class="guidelines-form-section-dropdown-label pt-5">
+        <div class="guidelines-form-section-dropdown-label">
             {{ __('guidelines.user_preferred_variants_dialect') }}
         </div>
 
@@ -31,7 +31,7 @@
             </div>
         </div>
        
-        <div class="guidelines-form-section-dropdown-label pt-5">
+        <div class="guidelines-form-section-dropdown-label">
             {{ __('guidelines.user_preferred_variants_dialect') }}
         </div>
 

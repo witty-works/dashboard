@@ -6,19 +6,21 @@
     <x-slot name="description"></x-slot>
 
     <x-slot name="form">
-            <x-jet-label for="name" value="{{ __('teams.plan_name') }}" />            
+            <x-jet-label class="wittyworks-subscription-headline" for="name" value="{{ __('teams.plan_name') }}" />            
             <div>
                 {{ $team->subscribed() ? $team->subscription()->planName() : __('stripe.witty_free') }}
             </div>
 
             @if(Auth::user()->ownsTeam($team))
-                <a href="{{ route('stripe.portal') }}">
+            <div class="wittyworks-upgrade-button-container">
+                <a class="wittyworks-upgrade-button" href="{{ route('stripe.portal') }}">
                     @if($team->subscribed())
                     {{ $team->subscription()->isPaidByInvoice() ? __('stripe.contact_sales') : __('stripe.billing') }}
                     @else
                     {{ __('teams.upgrade') }}
                     @endif
                 </a>
+            </div>
             @endif
 
 
@@ -28,7 +30,7 @@
         </div>
 
         <div class="mt-5 col-span-6 sm:col-span-4">
-            <div>
+            <div class="wittyworks-subscription-headline">
                 {{ __('teams.what_is_included') }}
             </div>
             <div class="mt-5">

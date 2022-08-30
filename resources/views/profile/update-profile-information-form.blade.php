@@ -46,28 +46,6 @@
             <div>
                 {{ $user->subscribed() ? $user->subscription()->planName() : __('stripe.witty_free') }}
             </div>
-
-            @if($team && $user->ownsTeam($team))
-                <a href="{{ route('stripe.portal') }}">
-                    @if(!$team->subscribed())
-                    <div class="wittyworks-upgrade-banner">
-                        <div class="wittyworks-upgrade-banner-text-container">
-                            <div class="wittyworks-upgrade-banner-title">
-                            {{ __('content.onboarding_install_witty_title') }}
-                            </div>
-                            <div class="wittyworks-upgrade-banner-text">
-                            {{ __('content.onboarding_install_witty_text') }}
-                            </div>
-                        </div>
-                        <div class="wittyworks-upgrade-banner-button-container">
-                            <a class="wittyworks-upgrade-banner-button" href="https://www.witty.works/select-browser" target="_blank" rel="noopener">
-                                {{ __('content.onboarding_install_witty_button') }}
-                            </a>
-                        </div>
-                    </div>
-                    @endif
-                </a>
-            @endif
         </div>
 
         <!-- TODO: add how many team members have been added + button (either add, or upgrade) -->
