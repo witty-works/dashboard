@@ -14,20 +14,17 @@
     <x-slot name="form" submit="updateLanguageGuidelinesGerman">  
         <div class="guidelines-form-title">{!! __('guidelines.manage_organization_guidelines_description_german_form_sub_title') !!}</div>
 
-        <div class="guidelines-form-section-dropdown-label pt-5">
+        <div class="guidelines-form-section-description">
             {!! __('guidelines.gendered_roles_format') !!}
         </div>
 
         <div class="flex flex-row">
-            <div>
-                <x-select id="gendered_roles_format"
+            <x-select id="gendered_roles_format"
                 :options="\App\Models\GuidelinesInterface::GENDERED_ROLES_FORMAT"
                 class="guidelines-form-section-dropdown"
                 wire:model.defer="gendered_roles_format"
                 :disabled="!$team->subscribed()" />
-
-                <x-jet-input-error for="gendered_roles_format" class="mt-2" />
-            </div>
+            <x-jet-input-error for="gendered_roles_format" class="mt-2" />
             <div class="p-3">
                 @if(!$team->subscribed())
                 @include('partials.witty-teams-only')

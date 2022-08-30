@@ -1,7 +1,9 @@
+
 <x-app-layout>
     <div class="wittyworks-navigation-wrapper">@livewire('navigation-menu')</div>
     <div class="wittyworks-page-wrapper">
         <div class="wittyworks-page-academy">
+            @include('partials.extension-check')
             <div class="wittyworks-video-wrapper">
                 <x-embed url="https://www.youtube.com/watch?v=giQrWB9C7Xg" />
             </div>
