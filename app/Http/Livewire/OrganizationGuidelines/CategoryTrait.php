@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\OrganizationGuidelines;
 
+use App\Events\OrganizationGuidelinesUpdated;
 use Illuminate\Support\Facades\Auth;
 
 trait CategoryTrait
@@ -58,5 +59,6 @@ trait CategoryTrait
         $this->disabled_categories_force = $disabled_categories_force;
 
         $this->emit('saved');
+        OrganizationGuidelinesUpdated::dispatch($this->team);
     }
 }
