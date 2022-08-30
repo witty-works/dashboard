@@ -78,7 +78,9 @@ class Form extends Component
         if ($this->domain_id) {
             $query->whereNot('id', $this->domain_id);
             $domain = Domain::find($this->domain_id);
+        }
 
+        if (!empty($domain)) {
             if ($this->team->id !== $domain->team_id) {
                 $message = __(
                     'guidelines.domain_error',

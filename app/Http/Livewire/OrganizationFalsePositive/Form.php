@@ -70,7 +70,9 @@ class Form extends Component
         if ($this->false_positive_id) {
             $query->whereNot('id', $this->false_positive_id);
             $falsePositive = FalsePositive::find($this->false_positive_id);
+        }
 
+        if (!empty($falsePositive)) {
             if ($this->team->id !== $falsePositive->team_id) {
                 $message = __(
                     'guidelines.false_positive_error',

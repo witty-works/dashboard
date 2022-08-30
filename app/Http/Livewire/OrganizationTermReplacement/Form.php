@@ -82,7 +82,9 @@ class Form extends Component
         if ($this->term_replacement_id) {
             $query->whereNot('id', $this->term_replacement_id);
             $termReplacement = TermReplacement::find($this->term_replacement_id);
+        }
 
+        if (!empty($termReplacement)) {
             if ($this->team->id !== $termReplacement->team_id) {
                 $message = __(
                     'guidelines.term_replacement_error',
