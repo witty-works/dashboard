@@ -232,6 +232,7 @@ a {
 
 .guidelines-wrapper {
     margin-top: 1em;
+    margin-bottom: 1em;
 }
 
 .guidelines-form-title {
@@ -501,7 +502,7 @@ input:checked+.slider:before {
 }
 
 .wittyworks-upgrade-banner-text {
-    max-width: 90%;
+    max-width: 100%;
 }
 
 .wittyworks-upgrade-banner-button {
@@ -514,6 +515,27 @@ input:checked+.slider:before {
     color: white;
     font-weight: 600;
     cursor: pointer;
+    min-width: 159px;
+}
+
+.wittyworks-upgrade-button {
+    padding: 10px 15px;
+    background: #9489db;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.14);
+    border-radius: 8px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    min-width: 159px;
+    margin-top: 0.5em;
+}
+
+.wittyworks-upgrade-button-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
 }
 
 .flash-message {
@@ -575,6 +597,7 @@ input:checked+.slider:before {
 
 .wittyworks-page-subscription {
     margin-top: 3.3em;
+    margin-bottom: 3em;
     min-width: 58%;
     min-height: 100vh;
 }
@@ -591,7 +614,7 @@ input:checked+.slider:before {
     position: fixed;
     top: 0;
     width: 15%;
-    min-width: 13em;
+    min-width: 15em;
 }
 
 .wittyworks-logo {
@@ -709,4 +732,8 @@ input:checked+.slider:before {
 
 .wittyworks-team-name:hover {
     text-decoration: none;
+}
+
+.align-left {
+    text-align: left;
 }

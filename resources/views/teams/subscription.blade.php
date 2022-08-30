@@ -2,6 +2,7 @@
     <div class="wittyworks-navigation-wrapper">@livewire('navigation-menu')</div>
         <div class="wittyworks-page-wrapper">
             <div class="wittyworks-page-subscription">
+                @include('partials.extension-check')
                 @livewire('teams.plan-summary', ['team' => $team])
 
                 @livewire('teams.update-team-name-form', ['team' => $team])

@@ -2,6 +2,7 @@
     <div class="wittyworks-navigation-wrapper">@livewire('navigation-menu')</div>
         <div class="wittyworks-page-wrapper">
             <div class="wittyworks-page">
+                @include('partials.extension-check')
                 @if($tab === \App\Http\Controllers\Livewire\UserGuidelinesController::CUSTOMIZE_WITTY)
                     @include('user/user-guidelines')
                 @elseif($tab === \App\Http\Controllers\Livewire\UserGuidelinesController::TERM_REPLACEMENTS)
