@@ -46,7 +46,9 @@ class Form extends OrganizationForm
         if ($this->domain_id) {
             $query->whereNot('id', $this->domain_id);
             $domain = Domain::find($this->domain_id);
+        }
 
+        if (!empty($domain)) {
             if ($this->user->id !== $domain->user_id) {
                 $message = __(
                     'guidelines.domain_error',

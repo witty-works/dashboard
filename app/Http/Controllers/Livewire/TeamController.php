@@ -14,7 +14,6 @@ class TeamController extends Controller
 
     public function show(Request $request)
     {
-        $user = $request->user();
         $team = $this->getCurrentTeam($request);
 
         if (Gate::denies('view', $team)) {

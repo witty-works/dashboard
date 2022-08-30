@@ -42,7 +42,9 @@ class Form extends OrganizationForm
         if ($this->false_positive_id) {
             $query->whereNot('id', $this->false_positive_id);
             $falsePositive = FalsePositive::find($this->false_positive_id);
+        }
 
+        if (!empty($falsePositive)) {
             if ($this->user->id !== $falsePositive->user_id) {
                 $message = __(
                     'guidelines.false_positive_error',
