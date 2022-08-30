@@ -35,27 +35,10 @@
     </style>
 
 </head>
-<body>
-    <div id="background_branding_container" data-tenant-branding-background-color="true">
-        <img id="background_background_image" data-tenant-branding-background="true" src="https://ecad0009.b2clogin.com/default/img/default_signin_illustration_optimized.png" alt="Illustration" aria-hidden="true" />
-    </div>
-    <div class="panel" id="panel">
-        <table class="panel_layout" role="presentation">
-            <tbody>
-                <tr class="panel_layout_row">
-                    <td id="panel_left" />
-                    <td id="panel_center">
-                        <div class="inner_container">
-                            <div class="api_container normaltext">
-                                <h1>custom UI</h1>
-                                <img alt="Company Logo" class="companyLogo" style="display: none;" data-tenant-branding-logo="true" />
-                                <div id="api" role="main"></div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+<body style="background: url(background.png);">
+    <div style="max-width: 25%; background: #fff; margin-left: auto; height: 100%; display: flex; align-items: flex-start; padding-top: 10em">
+        <img src="logo.png" alt="Witty Logo" style="width: 70%; margin-left: auto; margin-right: auto;" data-tenant-branding-logo="true" >
+        <div id="api" role="main"></div>
     </div>
     <script>"use strict";$(document).ready(function () { if (navigator.userAgent.match(/IEMobile\/10\.0/)) { var t = document.createElement("style"); t.appendChild(document.createTextNode("@-ms-viewport{width:auto!important}")), t.appendChild(document.createTextNode("@-ms-viewport{height:auto!important}")), document.getElementsByTagName("head")[0].appendChild(t) } if (navigator.userAgent.match(/MSIE 10/i)) { var e = $("#footer_links_container"); $(e).css("padding-top", "100px") } var o, i = $("#background_background_image"), n = function () { document.body.style.overflow = "hidden", ($(window).width() - 500) / $(window).height() < o ? (i.height($(window).height()), i.width("auto")) : (i.width($(window).width() - 500), i.height("auto")), document.body.style.overflow = "" }; $("<img>").attr("src", i.attr("src")).on("load", function () { o = this.width / this.height, n() }), $(window).resize(function () { n() }), "undefined" != typeof $("#MicrosoftAccountExchange") && $("#MicrosoftAccountExchange").text("Microsoft"), $("*").removeAttr("placeholder") });</script>
 </body>
