@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\OrganizationGuidelines;
 
-use app\Models\GuidelinesInterface;
+use App\Models\GuidelinesInterface;
 use App\Models\LanguageGuidelines;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
@@ -41,7 +41,7 @@ class Language extends Component
         $this->preferred_variants_force = (bool) $languageGuidelines->preferred_variants_force;
 
         foreach (GuidelinesInterface::LANGUAGES as $lang) {
-            $property = "preferred_variants_" . $lang;
+            $property = "preferred_variants_$lang";
             foreach (constant('App\Models\GuidelinesInterface::PREFERRED_VARIANTS_' . strtoupper($lang)) as $locale => $trans_key) {
                 if (in_array($locale, $this->preferred_variants)) {
                     $this->$property = $locale;
@@ -62,7 +62,7 @@ class Language extends Component
 
         $this->preferred_variants = [];
         foreach (GuidelinesInterface::LANGUAGES as $lang) {
-            $property = "preferred_variants_" . $lang;
+            $property = "preferred_variants_$lang";
             if ($this->$property) {
                 $this->preferred_variants[] = $this->$property;
             }

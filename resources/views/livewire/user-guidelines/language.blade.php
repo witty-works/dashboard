@@ -1,10 +1,9 @@
 <x-jet-form-section submit="updateLanguageGuidelinesLanguage">
     <x-slot name="title" class="guidelines-title">
         {{ __('guidelines.manage_organization_guidelines_language') }}
-</x-slot>
+    </x-slot>
 
     <x-slot name="description" class="guidelines-tagline">
-        
     </x-slot>
 
     <x-slot name="form" submit="updateLanguageGuidelinesLanguage">
@@ -22,8 +21,8 @@
                     wire:model.defer="preferred_variants_en"
                     :disabled="\App\Models\LanguageGuidelines::isForcedOnTeam(Auth::user(), 'preferred_variants')"
                 />
-            <x-jet-input-error for="preferred_variants_en" class="mt-2" />
-                </div>
+                <x-jet-input-error for="preferred_variants_en" class="mt-2" />
+            </div>
             <div class="p-3">
                 @if(\App\Models\LanguageGuidelines::isForcedOnTeam(Auth::user(), 'preferred_variants'))
                 @include('partials.locked')
@@ -37,14 +36,14 @@
 
         <div class="flex flex-row">
             <div>
-                <x-select id="preferred_variants_en"
+                <x-select id="preferred_variants_de"
                     :options="App\Models\GuidelinesInterface::PREFERRED_VARIANTS_DE"
                     class="guidelines-form-section-dropdown"
                     wire:model.defer="preferred_variants_de"
                     :disabled="\App\Models\LanguageGuidelines::isForcedOnTeam(Auth::user(), 'preferred_variants')"
                 />
-            <x-jet-input-error for="preferred_variants_de" class="mt-2" />
-                </div>
+                <x-jet-input-error for="preferred_variants_de" class="mt-2" />
+            </div>
             <div class="p-3">
                 @if(\App\Models\LanguageGuidelines::isForcedOnTeam(Auth::user(), 'preferred_variants'))
                 @include('partials.locked')
