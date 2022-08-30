@@ -36,4 +36,5 @@ return [
     'accepted_invitation' => 'Great! You have accepted the invitation to join the :team team.',
     'language' => 'Team Language',
     'witty_teams_only' => 'Witty Teams Only',
+    'locked_by_team' => 'locked by team',
 ];

@@ -112,6 +112,7 @@ Route::group(
 
                     Route::redirect('/user/language', '/user/language/language-settings')->name('user.language-guidelines');
                     Route::get('/user/language/language-settings', [UserGuidelinesController::class, 'customizeWitty'])->name('user.language-settings');
+                    Route::get('/user/language/language-settings/reset', [UserGuidelinesController::class, 'reset'])->name('user.language-settings-reset');
                     Route::get('/user/language/dictionary', [UserGuidelinesController::class, 'termReplacements'])->name('user.dictionary');
                     Route::get('/user/language/ignore-words', [UserGuidelinesController::class, 'falsePositives'])->name('user.ignored-words');
                     Route::get('/user/language/privacy-settings', [UserGuidelinesController::class, 'domains'])->name('user.privacy-settings');

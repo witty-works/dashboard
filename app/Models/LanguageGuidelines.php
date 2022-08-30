@@ -33,6 +33,15 @@ class LanguageGuidelines extends Model
         'disabled_categories_force' => 'json',
     ];
 
+    static protected $syncFields = [
+        'preferred_languages',
+        'preferred_variants',
+        'german_gender_ending',
+        'gendered_roles_format',
+        'singular_they',
+        'show_inspiration_alternatives',
+    ];
+
     public function __construct(array $attributes = [])
     {
         $attributes += [
@@ -75,7 +84,7 @@ class LanguageGuidelines extends Model
             return null;
         }
 
-        return self::where('team_id', $team->id)->firstOrNew();
+        return self::firstOrNew(['team_id' => $team->id]);
     }
 
     static public function isForcedOnTeam(User $user, $section)
@@ -91,5 +100,47 @@ class LanguageGuidelines extends Model
         }
 
         return $teamGuidelines->{$section . '_force'} ? 'locked' : false;
+    }
+
+    static public function doUserGuidelinesTeamDiffer($user)
+    {
+        if (!$user->currentTeam) {
+            return false;
+        }
+
+        $teamLanguageGuidelines = LanguageGuidelines::where('team_id', $user->currentTeam->id)->first();
+        if (!$teamLanguageGuidelines) {
+            return false;
+        }
+
+        $languageGuidelines = LanguageGuidelines::firstOrNew(['user_id' => $user->id]);
+
+        foreach (self::$syncFields as $field) {
+            if ($languageGuidelines->{$field} !== $teamLanguageGuidelines->{$field}) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    static public function resetGuidelinesToTeam($user)
+    {
+        if (!$user->currentTeam) {
+            return;
+        }
+
+        $teamLanguageGuidelines = LanguageGuidelines::where('team_id', $user->currentTeam->id)->first();
+        if (!$teamLanguageGuidelines) {
+            return;
+        }
+
+        $languageGuidelines = LanguageGuidelines::firstOrNew(['user_id' => $user->id]);
+
+        foreach (self::$syncFields as $field) {
+            $languageGuidelines->{$field} = $teamLanguageGuidelines->{$field};
+        }
+
+        $languageGuidelines->save();
     }
 }
