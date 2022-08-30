@@ -5,6 +5,7 @@ namespace App\Listeners;
 use App\Models\LanguageGuidelines;
 use App\Models\Team;
 use Laravel\Jetstream\Events\TeamDeleted;
+use App\Models\GuidelinesInterface;
 
 class UpdateOrganizationGuidelines extends AbstractUpdateGuidelines
 {
@@ -43,6 +44,17 @@ class UpdateOrganizationGuidelines extends AbstractUpdateGuidelines
 
         $plan = $team->planId();
 
+        $guidelines = LanguageGuidelines::firstOrNew(['team_id' => $team->id]);
+        $config = self::getConfig($guidelines);
+        foreach (GuidelinesInterface::DISABLED_CATEGORIES as $category) {
+            $config[$category] = [
+                'value' => !in_array($category, $guidelines->disabled_categories),
+                'status' => null === $guidelines->disabled_categories_force
+                    || in_array($category, $guidelines->disabled_categories_force)
+                    ? 'force' : 'suggestion',
+            ];
+        }
+
         $data = [
             'id' => $team->posthogId(),
             'name' => $team->name,
@@ -50,18 +62,11 @@ class UpdateOrganizationGuidelines extends AbstractUpdateGuidelines
             'false_positives' => $falsePositives,
             'term_replacements' => $termReplacements,
             'domains' => $domains,
-            'config' => self::getConfig(LanguageGuidelines::firstOrNew(['team_id' => $team->id])),
-        ];
-
-        if (!$team->subscribed()) {
-            $storeContext = true;
-        } else {
-            $storeContext = (bool) $team->store_context;
-        }
-
-        $data['config']['store_context'] = [
-            'value' => $storeContext,
-            'status' => 'force',
+            'config' => $config,
+            'store_context' => [
+                'value' => $team->subscribed() ? (bool) $team->store_context : true,
+                'status' => 'force',
+            ]
         ];
 
         $data['config_hash'] = md5(serialize($data));

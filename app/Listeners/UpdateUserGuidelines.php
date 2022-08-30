@@ -41,6 +41,8 @@ class UpdateUserGuidelines extends AbstractUpdateGuidelines
 
         $domains = $this->getDomains($user->domains, 'deny');
 
+        $config = self::getConfig(LanguageGuidelines::firstOrNew(['user_id' => $user->id]));
+
         $data = [
             'id' => $user->posthogId(),
             'email' => $user->email,
@@ -49,7 +51,7 @@ class UpdateUserGuidelines extends AbstractUpdateGuidelines
             'false_positives' => $falsePositives,
             'term_replacements' => $termReplacements,
             'domains' => $domains,
-            'config' => self::getConfig(LanguageGuidelines::firstOrNew(['user_id' => $user->id])),
+            'config' => $config,
             'notifications' => $user->getNotificationCount(),
         ];
 

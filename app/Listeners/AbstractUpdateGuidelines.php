@@ -2,7 +2,6 @@
 
 namespace App\Listeners;
 
-use App\Models\GuidelinesInterface;
 use Illuminate\Support\Facades\Http;
 use RuntimeException;
 
@@ -120,7 +119,7 @@ class AbstractUpdateGuidelines
     {
         $config['maximum_importance'] = [
             'value' => $guidelines->expert_mode ? 3 : 2,
-            'status' => $guidelines->expert_mode_force === false ? 'suggestion' : 'force',
+            'status' => $guidelines->expert_mode_force ? 'force' : 'suggestion',
         ];
 
         $config['singular_they'] = [
@@ -130,31 +129,22 @@ class AbstractUpdateGuidelines
 
         $config['show_inspiration_alternatives'] = [
             'value' => (bool) $guidelines->show_inspiration_alternatives,
-            'status' => $guidelines->show_inspiration_alternatives_force === false ? 'suggestion' : 'force',
+            'status' => $guidelines->show_inspiration_alternatives_force ? 'force' : 'suggestion',
         ];
 
         $config['gendered_roles_format'] = [
             'value' => $guidelines->gendered_roles_format,
-            'status' => $guidelines->german_rules_force === false ? 'suggestion' : 'force',
+            'status' => $guidelines->german_rules_force ? 'force' : 'suggestion',
         ];
 
         $config['german_gender_ending'] = [
             'value' => $guidelines->german_gender_ending,
-            'status' => $guidelines->german_rules_force === false ? 'suggestion' : 'force',
+            'status' => $guidelines->german_rules_force ? 'force' : 'suggestion',
         ];
-
-        foreach (GuidelinesInterface::DISABLED_CATEGORIES as $category) {
-            $config[$category] = [
-                'value' => !in_array($category, $guidelines->disabled_categories),
-                'status' => null === $guidelines->disabled_categories_force
-                    || in_array($category, $guidelines->disabled_categories_force)
-                    ? 'force' : 'suggestion',
-            ];
-        }
 
         $config['preferred_variants'] = [
             'value' => $guidelines->preferred_variants,
-            'status' => $guidelines->preferred_variants_force === false ? 'suggestion' : 'force',
+            'status' => $guidelines->preferred_variants_force ? 'force' : 'suggestion',
         ];
 
         return $config;
