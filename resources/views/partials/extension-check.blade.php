@@ -9,16 +9,21 @@
 <script>
     window.addEventListener('load', () => {
         const wittyIsInstalled = document.querySelector('witty-is-installed') || document.querySelector('witty-code');
-        if (wittyIsInstalled && window.location.href.includes("?install-witty")) {
-            window.history.replaceState({}, '', window.location.href.replace('?install-witty', ''));
-        } 
-        else if (!wittyIsInstalled && !window.location.href.includes("?install-witty")) {
-            window.location.href = "?install-witty";
+        const banner = document.querySelector('#wittyworks-upgrade-banner');
+
+        if(!wittyIsInstalled) {
+            banner.style.display = 'flex';
+            banner.classList.remove('opacity-0');
+            banner.classList.add('opacity-100');
+        } else {
+            banner.style.display = 'none';
+            banner.classList.add('opacity-0');
+
         }
     });
 </script>
 
-    <div class="wittyworks-upgrade-banner" id="wittyworks-upgrade-banner" style="display: <?=strpos(request(), '?install-witty') !== false ? 'flex' : 'none' ?>">
+    <div class="wittyworks-upgrade-banner btn-fade-in bg-teal-500 opacity-0 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded mr-2 transition-all duration-1000 ease-in-out" id="wittyworks-upgrade-banner">
         <div class="wittyworks-upgrade-banner-text-container">
             <div class="wittyworks-upgrade-banner-title">
              {{ __('content.onboarding_install_witty_title') }}
