@@ -141,11 +141,11 @@ Du wurdest von <a href="mailto::email">:name</a> auf <a href="https://www.witty.
     'de' => 'Deutsch (Deutschland)',
     'en' => 'Englisch',
     'welcome_text' => 'Das Dashboard hilft dir, Witty einzurichten und deinen Bedürfnissen anzupassen.',
+    'onboarding_signup_to_witty' => 'Meldung für ein Witty-Konto',
     'invitation_email_welcome' => 'Wenn du dem Team beitrittst, erhältst du Zugriff auf die Spracheinstellungen des Teams auf Witty.
 
 Um diese Einladung anzunehmen, melde dich mit deinem bestehenden Konto an oder registriere ein neues Konto, indem du auf die Schaltfläche unten klickst:',
     'onboarding_install_witty' => 'Installiere unsere Witty-Browsererweiterung',
-    'open_invitiations' => '{1} Du wurdest eingeladen, einem Team beizutreten. Du kannst nur in einem Team sein. Bitte entscheiden dich, ob du die Einladung annehmen oder ablehnen möchtest.|{2,*} Du wurdest eingeladen, mehreren Teams beizutreten. Du kannst nur in einem Team sein. Bitte entscheiden dich, ob du eine dieser Einladungen annehmen möchtest. Du kannst nur in einem Team sein. ',
     'accept_invitiation' => 'Annehmen',
     'reject_invitiation' => 'Ablehnen',
     'team' => 'Team',
@@ -194,7 +194,4 @@ Dein Witty-Team',
     'more_resouces' => 'Weitere Infos',
     'get_in_touch' => 'Kontaktiere uns',
     'academy' => 'Akademie',
-    'invite_team_members_title' => 'invite team members title',
-    'invite_team_members_text' => 'invite team members text',
-    'invite_team_members_button' => 'invite team members button',
 ];

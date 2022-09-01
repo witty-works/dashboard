@@ -32,7 +32,4 @@ return [
     'witty_teams_only' => 'Nur Witty Teams',
     'plan_headline' => 'Abonnement',
     'profile' => 'Profil',
-    'total_of_max_used_licenses' => 'total of max used licenses',
-    'total_of_max_used_dictionary' => 'total of max used dictionary',
-    'total_of_max_used_ignored' => 'total of max used ignored',
 ];
