@@ -3,6 +3,8 @@
         <div class="wittyworks-page-wrapper">
             <div class="wittyworks-page">
                 @include('partials.extension-check')
+                @include('partials.invite-check')
+                @include('partials.invitations')
                 @if($tab === \App\Http\Controllers\Livewire\UserGuidelinesController::CUSTOMIZE_WITTY)
                     @include('user/user-guidelines')
                 @elseif($tab === \App\Http\Controllers\Livewire\UserGuidelinesController::TERM_REPLACEMENTS)

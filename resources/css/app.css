@@ -33,181 +33,10 @@ a {
     color: #9489DB;
 }
 
-.onboarding-container {
-    background: #FFFFFF;
-    border: 1px solid #CDCFD0;
-    box-sizing: border-box;
-    border-radius: 6px;
-    font-family: Lato, Arial, Helvetica, sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 18px;
-    padding: 2em 3em;
-    margin-bottom: 3em;
-}
-
-.onboarding-steps {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-bottom: 1em;
-    margin-top: 1em;
-    margin-right: -1.5em;
-
-}
-
-.onboarding-title {
-    display: flex;
-    justify-content: left;
-    font-family: Ibarra Real Nova, 'Times New Roman', Times, serif;
-    font-style: normal;
-    font-size: 27px;
-    line-height: 34px;
-    letter-spacing: -0.025em;
-    color: #1A1A1A;
-    margin-bottom: 0.2em;
-}
-
-.onboarding-tagline {
-    line-height: 22px;
-    color: #1A1A1A;
-    margin-bottom: 2em;
-}
-
-.onboarding-step-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    padding: 1em;
-    margin-right: 1.5em;
-    margin-bottom: 1em;
-    width: 350px;
-
-    font-weight: 600;
-    line-height: 22px;
-}
-
-.onboarding-step-todo {
-    background: #FFF8E1;
-    border: 1px solid #EB9F46;
-    box-shadow: 0px 4px 26px rgba(0, 0, 0, 0.09);
-}
-
-.onboarding-step-complete {
-    background: #F1FFF3;
-    border: 1px solid #E8F0D4;
-    box-shadow: 0px 4px 26px rgba(0, 0, 0, 0.09);
-}
-
-.onboarding-step-deactivated {
-    background: #FAFAFA;
-}
-
-.onboarding-step-title--todo,
-.onboarding-step-title--complete {
-    font-weight: 600;
-    line-height: 22px;
-    color: #1A1A1A;
-    margin-bottom: 0.2em;
-}
-
-.onboarding-step-title--deactivated {
-    font-weight: 600;
-    line-height: 22px;
-    color: #CDCFD0;
-    margin-bottom: 0.2em;
-}
-
-.onboarding-step-tagline--todo,
-.onboarding-step-tagline--complete {
+.wittyworks-accept-invite-wrapper {
     font-size: 14px;
     line-height: 17px;
     color: #656565;
-}
-
-.onboarding-step-tagline--deactivated {
-    font-size: 14px;
-    line-height: 17px;
-    color: #CDCFD0;
-}
-
-.onboarding-step-text-wrapper {
-    display: flex;
-    flex-direction: column;
-}
-
-.onboarding-step-icon {
-    display: flex;
-    flex-direction: row;
-    margin-right: auto;
-    margin-left: 1em;
-    width: 23px;
-}
-
-.onboarding-links-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 1em;
-    padding: 2em 3em;
-
-}
-
-.onboarding-quick-links-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    flex-wrap: wrap;
-    margin-top: 1em;
-    margin-bottom: 1em;
-}
-
-.onboarding-analytics-img {
-    display: flex;
-    margin-top: 1em;
-}
-
-.onboarding-iconWrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-right: 1em;
-    margin-bottom: 1em;
-
-    background: #FFFFFF;
-    border-radius: 16px;
-    font-family: Lato, Arial, Helvetica, sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 18px;
-    width: 236px;
-    height: 184px;
-}
-
-.onboarding-icon-description {
-    line-height: 22px;
-    color: #1A1A1A;
-    margin-top: 0.5em;
-}
-
-.onboarding-container--two-col {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: left;
-}
-
-.onboarding-container-col-one {
-    width: 510px;
-}
-
-.onboarding-container-col-two {
-    width: 700px;
 }
 
 .guidelines-title {
@@ -519,20 +348,7 @@ input:checked+.slider:before {
     font-weight: normal;
 }
 
-.wittyworks-upgrade-banner-button {
-    margin-left: auto;
-    display: flex;
-    padding: 10px 15px;
-    background: #9489db;
-    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.14);
-    border-radius: 8px;
-    color: white;
-    font-weight: 600;
-    cursor: pointer;
-    min-width: 159px;
-}
-
-.wittyworks-upgrade-button {
+.wittyworks-button {
     padding: 10px 15px;
     background: rgb(240, 100, 100);
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.14);
@@ -541,6 +357,17 @@ input:checked+.slider:before {
     font-weight: 600;
     cursor: pointer;
     margin-top: 0.5em;
+    display: flex;
+}
+
+.wittyworks-button--purple {
+    background: #9489db;
+}
+
+.wittyworks-button--white-purple {
+    color: #9489db;
+    border: #9489db 1.5px solid;
+    background: white;
 }
 
 .wittyworks-upgrade-button-container {
@@ -613,6 +440,7 @@ input:checked+.slider:before {
     margin-bottom: 3em;
     min-width: 58%;
     min-height: 100vh;
+    max-width: 60%;
 }
 
 .wittyworks-page-academy {
@@ -699,6 +527,7 @@ input:checked+.slider:before {
     justify-content: left;
     align-items: center;
     margin-bottom: 1.5em;
+    margin-top: 1em;
     font-weight: bold;
     font-size: 18px;
     color: #FFFFFF;
@@ -754,4 +583,10 @@ input:checked+.slider:before {
 
 .align-left {
     text-align: left;
+}
+
+.wittyworks-accept-invite-team-name {
+    font-weight: 600;
+    color: #9489DB;
+    margin-bottom: 0.3em;
 }

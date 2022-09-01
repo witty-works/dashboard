@@ -3,6 +3,8 @@
     <div class="wittyworks-page-wrapper">
         <div class="wittyworks-page">
             @include('partials.extension-check')
+            @include('partials.invite-check')
+            @include('partials.invitations')
             @if($team)
                 @if($tab === \App\Http\Controllers\Livewire\OrganizationGuidelinesController::CUSTOMIZE_WITTY)
                     @include('teams/organization-guidelines')
@@ -14,7 +16,7 @@
                         @include('teams/domain')
                 @endif
             @else
-            @include('partials.onboarding')
+            @include('partials.invitations')
             @endif
         </div>
     </div>
