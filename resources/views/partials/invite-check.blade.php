@@ -1,8 +1,4 @@
-@php
-$totalUsersWithInvitationCount = $user->currentTeam->getTotalUserWithInvitationsCount();
-@endphp
-
-@if($totalUsersWithInvitationCount == 1 && $team)
+@if($user->currentTeam->getTotalUserWithInvitationsCount() == 1 && $team)
 <div class="wittyworks-upgrade-banner" id="wittyworks-upgrade-banner">
     <div class="wittyworks-upgrade-banner-text-container">
         <div class="wittyworks-upgrade-banner-title">

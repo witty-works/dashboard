@@ -3,7 +3,6 @@
     <div class="wittyworks-page-wrapper">
         <div class="wittyworks-page">
             @include('partials.extension-check')
-            @include('partials.invite-check')
             <x-slot name="header">
                 @if (!Auth::user()->hasTeamPermission($team, 'update'))
                 {!! __('content.making_changes_requires_admin_rights', ['email' => $team->owner->email]) !!}
