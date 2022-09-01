@@ -33,7 +33,7 @@
             </div>
         </div>
         <div class="wittyworks-upgrade-banner-button-container">
-            <a class="wittyworks-upgrade-banner-button" href="https://www.witty.works/select-browser" target="_blank" rel="noopener">
+            <a class="wittyworks-button wittyworks-button--purple" href="https://www.witty.works/select-browser" target="_blank" rel="noopener">
                 {{ __('content.onboarding_install_witty_button') }}
             </a>
         </div>

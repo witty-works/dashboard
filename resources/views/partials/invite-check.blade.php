@@ -16,7 +16,7 @@ $noInvitesSent = Auth::user()->currentTeam->getTotalUserWithInvitationsCount() =
         </div>
     </div>
     <div class="wittyworks-upgrade-banner-button-container">
-        <a class="wittyworks-upgrade-banner-button" href="{{ route('teams.show') }}" target="_blank" rel="noopener">
+        <a class="wittyworks-button wittyworks-button--purple" href="{{ route('teams.show') }}" target="_blank" rel="noopener">
             {{ __('content.invite_team_members_button') }}
         </a>
     </div>
