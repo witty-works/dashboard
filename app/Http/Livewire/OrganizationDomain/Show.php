@@ -26,12 +26,12 @@ class Show extends Component
 
     public function render()
     {
-        if (!Auth::user()->hasTeamPermission($this->team, 'read')) {
+        $user = Auth::user();
+        if (!$user->hasTeamPermission($this->team, 'read')) {
             abort(403);
         }
 
-        $languageGuidelines = LanguageGuidelines::firstOrNew(['team_id' => $this->team->id]);
-
+        $languageGuidelines = LanguageGuidelines::getTeamGuidelines($user);
         if ($languageGuidelines->domain_list_type === 'allow_witty_works') {
             $list = [
                 new Domain(['domain' => 'witty.works'])

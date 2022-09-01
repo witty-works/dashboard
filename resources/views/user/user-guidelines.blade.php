@@ -1,4 +1,6 @@
 <div>
+    @livewire('user-guidelines.intro', ['user' => $user])
+
     <div class="max-w-7xl mx-auto py-10">
         @livewire('user-guidelines.language', ['user' => $user])
     </div>
