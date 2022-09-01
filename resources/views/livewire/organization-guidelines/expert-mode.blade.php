@@ -24,6 +24,7 @@
         </div>
     </x-slot>
 
+    @if($team->subscribed())
     <x-slot name="actions">
         <div class="guidelines-form-section--apply-for-all">
             <x-jet-checkbox
@@ -31,7 +32,6 @@
                 value="1"
                 :label="__('guidelines.set_for_all')"
                 wire:model.defer="expert_mode_force"
-                :disabled="!$team->subscribed()" 
             />
         </div>
 
@@ -43,5 +43,6 @@
             {{ __('content.save') }}
         </x-jet-button>
     </x-slot>
+    @endif
 
 </x-jet-form-section>
