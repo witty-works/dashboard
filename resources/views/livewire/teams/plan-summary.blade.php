@@ -26,16 +26,29 @@
 
         <div class="mt-5 col-span-6 sm:col-span-4">
             <x-jet-label for="name" value="{{ __('teams.team_owner') }}" />
-                {{ $team->owner->name }} (<a href="mailto:{{ $team->owner->email }}">{{ $team->owner->email }}</a>)
+            {{ $team->owner->name }} (<a href="mailto:{{ $team->owner->email }}">{{ $team->owner->email }}</a>)
+            @if($team->subscribed())
+            @if($team->subscription()->ends_at)
+            <div class="mt-5 col-span-6 sm:col-span-4">
+                <x-jet-label for="name" value="{{ __('teams.end_date') }}" />
+                {{ $team->subscription()->ends_at->toFormattedDateString() }}
+            </div>
+            @elseif($team->subscription()->renews_at)
+            <div class="mt-5 col-span-6 sm:col-span-4">
+                <x-jet-label for="name" value="{{ __('teams.renewal_date') }}" />
+                {{ $team->subscription()->renews_at->toFormattedDateString() }}
+            </div>
+            @endif
+            @endif
         </div>
 
-        <div class="mt-5 col-span-6 sm:col-span-4">
+        <div class="mt-5 col-span-6 sm:col-span-4 wittyworks-subscription-section">
             <div class="wittyworks-subscription-headline">
                 {{ __('teams.what_is_included') }}
             </div>
             <div class="mt-5">
                 <x-jet-label for="name" value="{{ __('teams.user_licenses') }}" />
-                {{ __('teams.total_of_max_used', ['total' => $team->getTotalUserCount(), 'max_count' => $team->getUserLicensesCount()]) }}
+                {{ __('teams.total_of_max_used_licenses', ['total' => $team->getTotalUserCount(), 'max_count' => $team->getUserLicensesCount()]) }}
                 @if($team->subscribed() && $team->subscription()->isPaidByInvoice())
                     <div>
                         {!! __('teams.more_licenses') !!}
@@ -57,27 +70,13 @@
 
             <div class="mt-5 col-span-6 sm:col-span-4">
                 <x-jet-label for="name" value="{{ __('teams.term_replacements') }}" />
-                    {{ __('teams.total_of_max_used', ['total' => $team->getTotalTermReplacementsCount(), 'max_count' => $team->getTermReplacementsCount()]) }}
+                    {{ __('teams.total_of_max_used_dictionary', ['total' => $team->getTotalTermReplacementsCount(), 'max_count' => $team->getTermReplacementsCount()]) }}
             </div>
 
             <div class="mt-5 col-span-6 sm:col-span-4">
                 <x-jet-label for="name" value="{{ __('teams.false_positives') }}" />
-                    {{ __('teams.total_of_max_used', ['total' => $team->getTotalFalsePositivesCount(), 'max_count' => $team->getFalsePositivesCount()]) }}
+                    {{ __('teams.total_of_max_used_ignored', ['total' => $team->getTotalFalsePositivesCount(), 'max_count' => $team->getFalsePositivesCount()]) }}
             </div>
         </div>
-
-        @if($team->subscribed())
-        @if($team->subscription()->ends_at)
-        <div class="mt-5 col-span-6 sm:col-span-4">
-            <x-jet-label for="name" value="{{ __('teams.end_date') }}" />
-            {{ $team->subscription()->ends_at->toFormattedDateString() }}
-        </div>
-        @elseif($team->subscription()->renews_at)
-        <div class="mt-5 col-span-6 sm:col-span-4">
-            <x-jet-label for="name" value="{{ __('teams.renewal_date') }}" />
-            {{ $team->subscription()->renews_at->toFormattedDateString() }}
-        </div>
-        @endif
-        @endif
      </x-slot>
 </x-jet-form-section>

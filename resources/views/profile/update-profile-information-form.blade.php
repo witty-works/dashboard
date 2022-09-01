@@ -52,12 +52,12 @@
 
         <div class="wittyworks-form-section">
             <x-jet-label for="name" value="{{ __('teams.term_replacements') }}" />
-                {{ __('teams.total_of_max_used', ['total' => $user->getTotalTermReplacementsCount(), 'max_count' => $user->getTermReplacementsCount()]) }}
+                {{ __('teams.total_of_max_used_dictionary', ['total' => $user->getTotalTermReplacementsCount(), 'max_count' => $user->getTermReplacementsCount()]) }}
         </div>
 
         <div class="wittyworks-form-section">
             <x-jet-label for="name" value="{{ __('teams.false_positives') }}" />
-                {{ __('teams.total_of_max_used', ['total' => $user->getTotalFalsePositivesCount(), 'max_count' => $user->getFalsePositivesCount()]) }}
+                {{ __('teams.total_of_max_used_ignored', ['total' => $user->getTotalFalsePositivesCount(), 'max_count' => $user->getFalsePositivesCount()]) }}
         </div>
     </x-slot>
 </x-jet-form-section>

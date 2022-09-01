@@ -67,7 +67,7 @@ return [
     'expert_mode_subscription_required' => 'Um diese Einstellung anzupassen, ist ein <a href=":url">Abonnement</a> von <a href="https://www.witty.works/witty-for-teams" target="_blank" rel="noopener">Witty Teams</a> erforderlich.',
     'show_inspiration_alternatives_subscription_required' => 'Um diese Einstellung anzupassen, ist ein <a href=":url">Abonnement</a> von <a href="https://www.witty.works/witty-for-teams" target="_blank" rel="noopener">Witty Teams</a> erforderlich.',
     'gendered_roles_format_subscription_required' => 'Um diese Einstellung anzupassen, ist ein <a href=":url">Abonnement</a> von <a href="https://www.witty.works/witty-for-teams" target="_blank" rel="noopener">Witty Teams</a> erforderlich.',
-    'emoji_invalid_format' => 'Emoji darf nur ein einziges Emoji-Zeichen enthalten. Emoji 14.0 ist aktuell noch nicht unterstützt.',
+    'emoji_invalid_format' => 'Emoji darf nur ein einziges Emoji-Zeichen enthalten.',
     'none' => 'Nur geschlechtsneutrale Alternativen vorschlagen',
     'emoji_short_label' => 'Emoticon',
     'false_positives_label' => 'Wörter ignorieren',
