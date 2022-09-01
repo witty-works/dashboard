@@ -5,6 +5,7 @@
         <div class="wittyworks-page-academy">
             @include('partials.extension-check')
             @include('partials.invite-check')
+            @include('partials.onboarding')
             <div class="wittyworks-video-wrapper">
                 <x-embed url="https://www.youtube.com/watch?v=giQrWB9C7Xg" />
             </div>

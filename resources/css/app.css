@@ -755,3 +755,34 @@ input:checked+.slider:before {
 .align-left {
     text-align: left;
 }
+
+.wittyworks-accept-invite-wrapper {
+    background-color: #fff;
+    padding: 1em;
+    width: 25em;
+    border-radius: 10px;
+    margin-left: 1em;
+    margin-top: 1em;
+}
+
+.wittyworks-accept-invite-team-name {
+    font-weight: 600;
+    color: #9489DB;
+    margin-bottom: 0.3em;    
+}
+
+.wittyworks-accept-invite-button {
+    margin-left: auto;
+    display: flex;
+    padding: 10px 15px;
+    background: #9489db;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.14);
+    border-radius: 8px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 1em 2em 1em 2em;
+    align-items: center;
+    justify-content: center;
+
+}

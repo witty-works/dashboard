@@ -4,6 +4,7 @@
         <div class="wittyworks-page">
             @include('partials.extension-check')
             @include('partials.invite-check')
+            @include('partials.onboarding')
             @if($team)
                 @if($tab === \App\Http\Controllers\Livewire\OrganizationGuidelinesController::CUSTOMIZE_WITTY)
                     @include('teams/organization-guidelines')

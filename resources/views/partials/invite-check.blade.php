@@ -1,4 +1,11 @@
-@if($user->currentTeam->getTotalUserWithInvitationsCount() == 1 && $team)
+<?php
+use Illuminate\Support\Facades\Auth;
+
+$teamExists = Auth::user()->currentTeam;
+$noInvitesSent = Auth::user()->currentTeam->getTotalUserWithInvitationsCount() == 1;
+?>
+
+@if($teamExists && $noInvitesSent)
 <div class="wittyworks-upgrade-banner" id="wittyworks-upgrade-banner">
     <div class="wittyworks-upgrade-banner-text-container">
         <div class="wittyworks-upgrade-banner-title">

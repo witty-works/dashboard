@@ -4,6 +4,7 @@
         <div class="wittyworks-page">
             @include('partials.extension-check')
             @include('partials.invite-check')
+            @include('partials.onboarding')
             <x-jet-welcome />
         </div>
     </div>

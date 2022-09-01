@@ -4,6 +4,7 @@
             <div class="wittyworks-page-subscription">
                 @include('partials.extension-check')
                 @include('partials.invite-check')
+                @include('partials.onboarding')
                 @if (Laravel\Fortify\Features::canUpdateProfileInformation())
                     @livewire('profile.update-profile-information-form')
                 @endif
