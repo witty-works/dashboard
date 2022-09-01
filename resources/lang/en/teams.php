@@ -36,5 +36,4 @@ return [
     'accepted_invitation' => 'Great! You have accepted the invitation to join the :team team.',
     'language' => 'Team Language',
     'witty_teams_only' => 'Witty Teams Only',
-    'total_of_max_used' => 'total of max used',
 ];
