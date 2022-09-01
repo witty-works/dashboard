@@ -1,6 +1,6 @@
 <x-jet-form-section submit="updateProfileInformation">
         <x-slot name="title">
-            {{ __('content.subscription') }}
+            {{ __('content.manage_account') }}
         </x-slot>
 
         <x-slot name="description"></x-slot>
@@ -32,7 +32,7 @@
             $team = $user->currentTeam;
         @endphp
 
-        <div class="wittyworks-subscription-headline">{{ __('teams.plan_headline') }}</div>
+        <div class="wittyworks-subscription-headline">{{ __('teams.team_plan_headline') }}</div>
 
         <div class="wittyworks-form-section">
             <x-jet-label for="name" value="{{ __('teams.team_owner') }}" />

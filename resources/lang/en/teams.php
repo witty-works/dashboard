@@ -10,6 +10,7 @@ return [
     'plan_summary' => 'Your Subscription',
     'plan_name' => 'Current plan',
     'plan_headline' => 'Subscription',
+    'team_plan_headline' => 'Team Subscription',
     'profile' => 'Profile',
     'upgrade' => 'Upgrade to Witty Teams',
     'pricing' => 'Pricing',
