@@ -511,10 +511,12 @@ input:checked+.slider:before {
 .wittyworks-upgrade-banner-title {
     font-weight: 700;
     margin: 4px 0px;
+    font-size: 18px;
 }
 
 .wittyworks-upgrade-banner-text {
     max-width: 100%;
+    font-weight: normal;
 }
 
 .wittyworks-upgrade-banner-button {
@@ -532,13 +534,12 @@ input:checked+.slider:before {
 
 .wittyworks-upgrade-button {
     padding: 10px 15px;
-    background: #9489db;
+    background: rgb(240, 100, 100);
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.14);
     border-radius: 8px;
     color: white;
     font-weight: 600;
     cursor: pointer;
-    min-width: 159px;
     margin-top: 0.5em;
 }
 
@@ -726,6 +727,11 @@ input:checked+.slider:before {
 .wittyworks-subscription-headline {
     font-size: 21px;
     margin-bottom: 0.5em;
+    color:#000000;
+}
+
+.wittyworks-subscription-section {
+    margin-top: 3em;
 }
 
 .wittyworks-form-section-wrapper {
