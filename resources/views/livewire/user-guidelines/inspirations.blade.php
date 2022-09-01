@@ -22,7 +22,7 @@
         </div>
     </x-slot>
 
-    @if(!$user->subscribed() || !\App\Models\LanguageGuidelines::isForcedOnTeam(Auth::user(), 'show_inspiration_alternatives'))
+    @if($user->subscribed() && !\App\Models\LanguageGuidelines::isForcedOnTeam(Auth::user(), 'show_inspiration_alternatives'))
     <x-slot name="actions">
        <x-jet-action-message class="mr-3" on="saved">
             <span class="float-right">{{ __('content.saved') }}</span>
