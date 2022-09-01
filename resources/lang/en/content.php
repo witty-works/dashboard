@@ -206,4 +206,7 @@ Your Witty team',
     'witty_editor' => 'Witty Editor',
     'academy' => 'Academy',
     'log_in' => 'Login',
+    'invite_team_members_title' => 'invite team members title',
+    'invite_team_members_text' => 'invite team members text',
+    'invite_team_members_button' => 'invite team members button',
 ];

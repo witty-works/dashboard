@@ -3,6 +3,7 @@
     <div class="wittyworks-page-wrapper">
         <div class="wittyworks-page">
             @include('partials.extension-check')
+            @include('partials.invite-check')
             <x-jet-welcome />
         </div>
     </div>

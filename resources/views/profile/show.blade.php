@@ -3,6 +3,7 @@
         <div class="wittyworks-page-wrapper">
             <div class="wittyworks-page-subscription">
                 @include('partials.extension-check')
+                @include('partials.invite-check')
                 @if (Laravel\Fortify\Features::canUpdateProfileInformation())
                     @livewire('profile.update-profile-information-form')
                 @endif

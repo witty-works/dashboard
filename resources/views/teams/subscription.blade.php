@@ -3,6 +3,7 @@
         <div class="wittyworks-page-wrapper">
             <div class="wittyworks-page-subscription">
                 @include('partials.extension-check')
+                @include('partials.invite-check')
                 @livewire('teams.plan-summary', ['team' => $team])
 
                 <x-jet-section-border />
