@@ -17,10 +17,10 @@ trait CategoryTrait
         $this->disabled_categories_force = (array) $languageGuidelines->disabled_categories_force;
 
         foreach ($categories as $category) {
-            $property = "disabled_categories_" . $category;
+            $property = "disabled_categories_$category";
             $this->$property = !in_array($category, $this->disabled_categories);
 
-            $property = "disabled_categories_force_" . $category;
+            $property = "disabled_categories_force_$category";
             $this->$property = in_array($category, $this->disabled_categories_force);
         }
     }
@@ -38,7 +38,7 @@ trait CategoryTrait
         $disabled_categories = [];
         $disabled_categories_force = [];
         foreach ($categories as $category) {
-            $property = "disabled_categories_" . $category;
+            $property = "disabled_categories_$category";
 
             $languageGuidelines->inPlaceUpateArray($category, 'disabled_categories', $this->$property);
 
@@ -46,7 +46,7 @@ trait CategoryTrait
                 $disabled_categories[] = $category;
             }
 
-            $property = "disabled_categories_force_" . $category;
+            $property = "disabled_categories_force_$category";
 
             $languageGuidelines->inPlaceUpateArray($category, 'disabled_categories_force', !$this->$property);
 
