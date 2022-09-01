@@ -38,7 +38,7 @@
 
                     <!-- Role -->
                     @if (count($this->roles) > 0)
-                        <div class="col-span-6 lg:col-span-4">
+                        <div class="col-span-6 lg:col-span-4" wire:init="$set('addTeamMemberForm.role', 'admin')">
                             <x-jet-label for="role" value="{{ __('content.role') }}" />
                             <x-jet-input-error for="role" class="mt-2" />
 
