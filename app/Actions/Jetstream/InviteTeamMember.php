@@ -32,15 +32,16 @@ class InviteTeamMember implements InvitesTeamMembers
         $this->validate($team, $email, $role);
 
         InvitingTeamMember::dispatch($team, $email, $role);
-        $user = User::where('email', $email)->first();
-        if ($user) {
-            UserGuidelinesUpdated::dispatch($user);
-        }
 
         $invitation = $team->teamInvitations()->create([
             'email' => $email,
             'role' => $role,
         ]);
+
+        $user = User::where('email', $email)->first();
+        if ($user) {
+            UserGuidelinesUpdated::dispatch($user);
+        }
 
         Mail::to($email)->send(new TeamInvitation($invitation));
     }
