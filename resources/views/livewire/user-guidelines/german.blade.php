@@ -24,14 +24,16 @@
                     :options="\App\Models\GuidelinesInterface::GENDERED_ROLES_FORMAT"
                     class="guidelines-form-section-dropdown"
                     wire:model.defer="gendered_roles_format"
-                    :disabled="!$user->subscribed() || \App\Models\LanguageGuidelines::isForcedOnTeam(Auth::user(), 'expert_mode')"
+                    :disabled="!$user->subscribed() || \App\Models\LanguageGuidelines::isForcedOnTeam(Auth::user(), 'german_rules')"
                 />
 
                 <x-jet-input-error for="gendered_roles_format" class="mt-2" />
             </div>
             <div class="p-3">
-                @if(\App\Models\LanguageGuidelines::isForcedOnTeam(Auth::user(), 'expert_mode'))
+                @if(\App\Models\LanguageGuidelines::isForcedOnTeam(Auth::user(), 'german_rules'))
                 @include('partials.locked')
+                @elseif(!$user->subscribed())
+                @include('partials.witty-teams-only')
                 @endif
             </div>
         </div>
@@ -52,7 +54,7 @@
                 <x-jet-input-error for="german_gender_ending" class="mt-2" />
             </div>
             <div class="p-3">
-                @if(\App\Models\LanguageGuidelines::isForcedOnTeam(Auth::user(), 'expert_mode'))
+                @if(\App\Models\LanguageGuidelines::isForcedOnTeam(Auth::user(), 'german_rules'))
                 @include('partials.locked')
                 @endif
             </div>
