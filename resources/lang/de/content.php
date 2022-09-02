@@ -194,4 +194,7 @@ Dein Witty-Team',
     'more_resouces' => 'Weitere Infos',
     'get_in_touch' => 'Kontaktiere uns',
     'academy' => 'Akademie',
+    'invite_team_members_title' => 'Lade deine Teammitglieder ein',
+    'invite_team_members_text' => 'Fangt an, gemeinsam inklusive zu schreiben.',
+    'invite_team_members_button' => 'Lade deine Teammitglieder ein',
 ];

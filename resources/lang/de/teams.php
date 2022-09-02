@@ -32,4 +32,5 @@ return [
     'witty_teams_only' => 'Nur Witty Teams',
     'plan_headline' => 'Abonnement',
     'profile' => 'Profil',
+    'locked_by_team' => 'Diese Funktion wird von deiner*m Team-Admin gesetzt.',
 ];
