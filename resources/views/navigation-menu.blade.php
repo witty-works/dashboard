@@ -21,26 +21,28 @@
         @auth
         <!-- LOGGED IN -->
         <div class="wittyworks-navigation-top-half">
-            <x-jet-nav-link class="wittyworks-team-name" href="{{ route('profile.show') }}">
+            <x-jet-nav-link class="wittyworks-navigation-item" href="{{ route('profile.show') }}">
                 {{ $user->name}}
             </x-jet-nav-link>
             @if ($team_edit)
+            <br />
             <x-jet-nav-link class="wittyworks-team-name" href="{{ route('teams.subscription') }}#updateTeamName">
-                - {{ $team->name }}
+                {{ $team->name }}
             </x-jet-nav-link>
             @elseif ($team)
+            <br />
             <div class="wittyworks-navigation-label-wrapper">
-                - {{ $team->name }}
+                {{ $team->name }}
             </div>
             @endif
 
             @if ($team_edit)
             <div class="wittyworks-navigation-account-toggle-wrapper">
-                <x-jet-nav-link id="personal_account" class="wittyworks-navigation-account-toggle" href="{{ route('user.language-settings') }}" :active="$open_tab === 'user'">
+                <x-jet-nav-link id="personal_account" class="wittyworks-navigation-item" href="{{ route('user.language-settings') }}" :active="$open_tab === 'user'">
                     {{ __('guidelines.personal_account') }}
                 </x-jet-nav-link>
                 <div class="wittyworks-navigation-account-divider">|</div>
-                 <x-jet-nav-link id="team_account" class="wittyworks-navigation-account-toggle" href="{{ route('teams.language-settings') }}" :active="$open_tab === 'team'">
+                 <x-jet-nav-link id="team_account" class="wittyworks-navigation-item" href="{{ route('teams.language-settings') }}" :active="$open_tab === 'team'">
                     {{ __('guidelines.team_account') }}
                 </x-jet-nav-link>
             </div>

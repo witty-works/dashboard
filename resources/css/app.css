@@ -534,7 +534,7 @@ input:checked+.slider:before {
     cursor: pointer;
 }
 
-.wittyworks-navigation-account-toggle:hover {
+.wittyworks-navigation-item:hover {
     text-decoration: underline;
 }
 
@@ -578,7 +578,7 @@ input:checked+.slider:before {
 }
 
 .wittyworks-team-name:hover {
-    text-decoration: none;
+    text-decoration: underline;
 }
 
 .align-left {
