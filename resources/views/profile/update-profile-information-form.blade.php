@@ -34,10 +34,12 @@
 
         <div class="wittyworks-subscription-headline">{{ __('teams.team_plan_headline') }}</div>
 
+        @if($team)
         <div class="wittyworks-form-section">
             <x-jet-label for="name" value="{{ __('teams.team_owner') }}" />
                 {{ $team->owner->name }} (<a href="mailto:{{ $team->owner->email }}">{{ $team->owner->email }}</a>)
         </div>
+        @endif
 
         <div class="wittyworks-form-section">
         <div class="wittyworks-update-account">
