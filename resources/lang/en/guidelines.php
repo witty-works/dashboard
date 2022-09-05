@@ -105,7 +105,7 @@ Choose if Witty should suggest only the gender ending (e.g. "Mitarbeiter*in"), t
     'personal_account' => 'Personal',
     'team_account' => 'Team',
     'ignore_words_label' => 'Ignored Words',
-    'reset_to_team_suggestions_title' => 'reset to team suggestions title',
-    'reset_to_team_suggestions_description' => 'reset to team suggestions descriptopn',
-    'reset_to_team' => 'reset to team',
+    'reset_to_team_suggestions_title' => 'Reset all language settings',
+    'reset_to_team_suggestions_description' => 'You can reset all language settings to the settings recommended by your team owner.',
+    'reset_to_team' => 'Reset all language settings',
 ];

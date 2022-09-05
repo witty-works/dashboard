@@ -156,7 +156,8 @@ To accept this invitation, log in with your existing account or register a new a
     'onboarding_support' => 'Support',
     'onboarding_team_stats' => 'Your team\'s statistics',
     'onboarding_install_witty_title' => 'Install Witty',
-    'onboarding_install_witty_text' => 'Witty is an AI-powered browser plugin that helps you to write inclusively.',
+    'onboarding_install_witty_text' => 'Witty is an AI-powered browser plugin that helps you to write inclusively.
+You haven\'t installed Witty yet. Install it now!',
     'onboarding_install_witty_button' => 'Get Witty for free',
     'accept_invitiation' => 'Accept',
     'reject_invitiation' => 'Reject',

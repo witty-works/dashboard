@@ -104,4 +104,7 @@ return [
     'ignore_words_label' => 'Ignorierte Wörter',
     'team_preferred_variants_dialect' => 'Wir schreiben auf',
     'user_preferred_variants_dialect' => 'Ich schreibe auf',
+    'reset_to_team_suggestions_title' => 'Spracheinstellungen zurücksetzen',
+    'reset_to_team_suggestions_description' => 'Du kannst alle Spracheinstellungen auf die von deinem Team-Admin empfohlenen Einstellungen zurücksetzen.',
+    'reset_to_team' => 'Alle Spracheinstellungen zurücksetzen',
 ];

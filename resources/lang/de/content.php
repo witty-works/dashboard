@@ -164,7 +164,8 @@ Um diese Einladung anzunehmen, melde dich mit deinem bestehenden Konto an oder r
     'edit' => 'bearbeiten',
     'introduction_videos' => 'Einführungsvideos',
     'onboarding_install_witty_title' => 'Installiere Witty',
-    'onboarding_install_witty_text' => 'Witty ist ein Browser-Plugin, das Ihnen hilft, inklusiv zu schreiben.',
+    'onboarding_install_witty_text' => 'Witty ist ein Browser-Plugin, das dir hilft, inklusiv zu schreiben.
+Du hast Witty noch nicht installiert. Installiere Witty jetzt!',
     'onboarding_install_witty_button' => 'Witty kostenlos runterladen',
     'terms' => 'Nutzungsbedingungen',
     'contact' => 'Kontakt',
