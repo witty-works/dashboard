@@ -145,9 +145,9 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function updateName($userData)
     {
-        if (empty($userData['nickname'])) {
+        if (!empty($userData['name'])) {
             $this->name = $userData['name'];
-        } else {
+        } elseif (!empty($userData['nickname'])) {
             $this->name = $userData['nickname'];
         }
 

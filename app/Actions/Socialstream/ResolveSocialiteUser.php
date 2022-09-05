@@ -4,7 +4,6 @@ namespace App\Actions\Socialstream;
 
 use App\Http\Controllers\OAuthController;
 use JoelButcher\Socialstream\Contracts\ResolvesSocialiteUsers;
-use Laravel\Socialite\Facades\Socialite;
 
 class ResolveSocialiteUser implements ResolvesSocialiteUsers
 {
