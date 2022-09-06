@@ -150,7 +150,7 @@ class OAuthController extends BaseOAuthController
         $socialiteUser = $provider->user();
 
         return [
-            'email' => $socialiteUser->user['emails'][0],
+            'email' => User::getEmailFromProvider($socialiteUser->user),
             'refresh_token' => $socialiteUser->accessTokenResponseBody['refresh_token'] ?? null,
             'access_token' => $socialiteUser->accessTokenResponseBody['access_token'] ?? null,
         ];

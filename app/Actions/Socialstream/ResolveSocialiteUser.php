@@ -3,6 +3,7 @@
 namespace App\Actions\Socialstream;
 
 use App\Http\Controllers\OAuthController;
+use App\Models\User;
 use JoelButcher\Socialstream\Contracts\ResolvesSocialiteUsers;
 
 class ResolveSocialiteUser implements ResolvesSocialiteUsers
@@ -22,7 +23,10 @@ class ResolveSocialiteUser implements ResolvesSocialiteUsers
             ->user();
 
         $user->name = $user->nickname = $user->user['nickname'] = $user->user['name'] ?? '';
-        $user->email = $user->user['email'] = $user->user['emails'][0] ?? ($user->user['email'] ?? null);
+        $user->user['email'] = User::getEmailFromProvider($user->user);
+        if (!empty($user->user['email'])) {
+            $user->email = $user->user['email'];
+        }
 
         return $user;
     }

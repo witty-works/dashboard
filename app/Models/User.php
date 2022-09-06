@@ -143,6 +143,14 @@ class User extends Authenticatable implements MustVerifyEmail
         return null;
     }
 
+    static public function getEmailFromProvider($userData)
+    {
+        return $userData['otherMails'][0]
+            ?? $userData['emails'][0]
+            ?? $userData['email']
+            ?? null;
+    }
+
     public function updateName($userData)
     {
         if (!empty($userData['name'])) {
@@ -151,7 +159,10 @@ class User extends Authenticatable implements MustVerifyEmail
             $this->name = $userData['nickname'];
         }
 
-        $this->email = $userData['emails'][0] ?? $userData['email'];
+        $email = self::getEmailFromProvider($userData);
+        if (!empty($email)) {
+            $this->email = $email;
+        }
     }
 
     public function subscribed($name = 'witty', $price = null)
