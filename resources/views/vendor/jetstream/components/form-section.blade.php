@@ -7,7 +7,7 @@
     </x-jet-section-title>
 
     <div class="guidelines-wrapper">
-        <form wire:submit.prevent="{{ $submit }}">
+        <form wire:submit.prevent="{{ $submit }}" class="w-full">
             <div class="px-4 py-5 bg-white sm:p-6 shadow {{ isset($actions) ? 'sm:rounded-tl-md sm:rounded-tr-md' : 'sm:rounded-md' }}">
                 {{ $form }}
             </div>
