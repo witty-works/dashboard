@@ -13,7 +13,7 @@
 
             @if(Auth::user()->ownsTeam($team))
             <div class="wittyworks-upgrade-button-container">
-                <a class="wittyworks-upgrade-button" href="{{ route('stripe.portal') }}">
+                <a class="wittyworks-button wittyworks-button--purple" href="{{ route('stripe.portal') }}">
                     @if($team->subscribed())
                     {{ $team->subscription()->isPaidByInvoice() ? __('stripe.contact_sales') : __('stripe.billing') }}
                     @else
