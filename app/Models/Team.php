@@ -71,6 +71,11 @@ class Team extends JetstreamTeam
         return $this->owner->email;
     }
 
+    public function stripeName()
+    {
+        return $this->owner->name;
+    }
+
     public function languageGuidelines()
     {
         return $this->hasOne(LanguageGuidelines::class, 'team_id');
