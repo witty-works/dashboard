@@ -18,9 +18,9 @@ class WelcomeController extends Controller
     public function show(Request $request)
     {
         $user = $request->user();
-         if ($user->invitations->count()) {
-            return view('dashboard');
-         }
+        if (!$user) {
+            return redirect()->route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'login']);
+        }
 
         $team = $this->getCurrentTeam($request);
         if ($team) {

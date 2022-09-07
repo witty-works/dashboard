@@ -156,7 +156,7 @@ Route::group(
 |------------------
 */
 Route::group(['middleware' => config('socialstream.middleware', ['web'])], function () {
-    Route::redirect('/', '/oauth/azureadb2c/login')->name('login');
+    Route::get('/', [WelcomeController::class, 'show'])->name('login');
     Route::redirect('/register', '/')->name('register');
     Route::get('/mock-login', [OAuthController::class, 'mockLogin']);
     Route::get('/logout/{provider}', [OAuthController::class, 'logout'])->name('logout');
