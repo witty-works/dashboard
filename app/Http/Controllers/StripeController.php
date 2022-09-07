@@ -53,7 +53,7 @@ class StripeController extends Controller
             return $response;
         }
 
-        return redirect(route('dashboard'))->banner(
+        return redirect()->route('login')->banner(
             __('teams.ask_owner_to_buy_or_leave_to_create_own_team', ['name' => $team->owner->name, 'email' => $team->owner->email]),
         );
     }
@@ -83,7 +83,7 @@ class StripeController extends Controller
             }
 
             return $team->redirectToBillingPortal(
-                route('dashboard'),
+                route('login'),
                 ['locale' => app()->getLocale()]
             );
         }
@@ -96,7 +96,7 @@ class StripeController extends Controller
                     'quantity' => $team->getTotalUserCount()
                 ]],
                 [
-                    'success_url' => route('dashboard'),
+                    'success_url' => route('login'),
                     'cancel_url' => route('teams.show'),
                     'mode' => 'subscription'
                 ]

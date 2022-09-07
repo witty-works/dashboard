@@ -81,7 +81,7 @@ Route::group(
             }
 
             Route::group(['middleware' => ['auth:' . config('fortify.guard')]], function () {
-                Route::get('/', [WelcomeController::class, 'show'])->name('dashboard');
+                Route::get('/', [WelcomeController::class, 'show']);
 
                 Route::get('/subscribe', [StripeController::class, 'subscribe'])->name('stripe.subscribe');
 
