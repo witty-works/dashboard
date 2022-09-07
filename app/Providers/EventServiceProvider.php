@@ -18,7 +18,6 @@ use App\Listeners\SyncStartRenwalDates;
 use App\Listeners\TeamMemberAddedSlackAlert;
 use App\Listeners\UpdateOrganizationGuidelines;
 use App\Listeners\UpdateUserGuidelines;
-use App\Listeners\UpdateUserLicenses;
 use App\Listeners\UserAddedSlackAlert;
 use Laravel\Jetstream\Events\TeamCreated;
 use Laravel\Jetstream\Events\TeamUpdated;
@@ -54,14 +53,12 @@ class EventServiceProvider extends ServiceProvider
         TeamMemberAdded::class => [
             PostHogUpdateCompany::class,
             PostHogUpdateUser::class,
-            UpdateUserLicenses::class,
             UpdateOrganizationGuidelines::class,
             TeamMemberAddedSlackAlert::class,
         ],
         TeamMemberRemoved::class => [
             PostHogUpdateCompany::class,
             PostHogUpdateUser::class,
-            UpdateUserLicenses::class,
             UpdateOrganizationGuidelines::class,
         ],
         TeamCreated::class => [
@@ -74,7 +71,6 @@ class EventServiceProvider extends ServiceProvider
         ],
         TeamDeleted::class => [
             PostHogUpdateCompany::class,
-            UpdateUserLicenses::class,
             UpdateOrganizationGuidelines::class,
         ],
         Logout::class => [
@@ -87,19 +83,16 @@ class EventServiceProvider extends ServiceProvider
             PostHogUpdateCompany::class,
             SyncStartRenwalDates::class,
             UpdateOrganizationGuidelines::class,
-            UpdateUserLicenses::class,
         ],
         SubscriptionUpdated::class => [
             PostHogUpdateCompany::class,
             SyncStartRenwalDates::class,
             UpdateOrganizationGuidelines::class,
-            UpdateUserLicenses::class,
         ],
         SubscriptionCancelled::class => [
             PostHogUpdateCompany::class,
             SyncStartRenwalDates::class,
             UpdateOrganizationGuidelines::class,
-            UpdateUserLicenses::class,
         ],
         SocialiteWasCalled::class => [
             AzureADB2CExtendSocialite::class,
