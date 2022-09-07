@@ -8,6 +8,7 @@
         "bensampo/laravel-embed": "^1.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
+        "hubspot/api-client": "^8.3",
         "joelbutcher/socialstream": "^3.2",
         "kineticamobile/lumki": "^0.1",
         "laravel/cashier": "^13.8.4",
