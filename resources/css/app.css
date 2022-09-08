@@ -615,8 +615,13 @@ input:checked+.slider:before {
     flex-direction: row;
     justify-content: flex-start;
     align-items: flex-end;
+    flex-wrap: wrap;
 }
 
-.wittyworks-license-dropdown {
+.wittyworks-margin-right {
     margin-right: 1em;
+}
+
+.wittyworks-margin-top {
+    margin-top: 1em;
 }

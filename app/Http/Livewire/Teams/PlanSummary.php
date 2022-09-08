@@ -6,6 +6,8 @@ use Auth;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 use Illuminate\Validation\ValidationException;
+use Laravel\Cashier\Cashier;
+use Money\Currency;
 
 class PlanSummary extends Component
 {
@@ -25,9 +27,11 @@ class PlanSummary extends Component
         $this->team = $team;
 
         $subscription = $this->team->subscription();
-        $this->licenseCount = $subscription
+        $licenseCount = $subscription
             ? $subscription->quantity
             : $team->getTotalUserWithInvitationsCount();
+
+        $this->licenseCount = $this->convertLicenseCountToString($licenseCount);
     }
 
     public function updateLicenses()
@@ -37,23 +41,25 @@ class PlanSummary extends Component
         }
 
         $requiredLicenses = $this->team->getTotalUserWithInvitationsCount();
-        if (!in_array($this->licenseCount, $this->getLicenseOptions($requiredLicenses))) {
+        $licenseOptions = $this->getLicenseOptions($requiredLicenses);
+        if (!isset($licenseOptions[$this->licenseCount])) {
             $message = __('teams.license_count_error');
             throw ValidationException::withMessages(['license_count' => $message]);
         }
 
-        if ($this->licenseCount < $requiredLicenses) {
+        $licenseCount = $this->parseLicenseCountFromString($this->licenseCount);
+        if ($licenseCount < $requiredLicenses) {
             $message = __('teams.license_count_too_small_error');
             throw ValidationException::withMessages(['license_count' => $message]);
         }
 
         $subscription = $this->team->subscription();
         if (!$subscription) {
-            return $this->team->subscribe($this->licenseCount)->redirect();
+            return $this->team->subscribe($licenseCount)->redirect();
         }
 
-        if ($subscription->quantity != $this->licenseCount) {
-            $subscription->alwaysInvoice()->updateQuantity($this->licenseCount);
+        if ($subscription->quantity != $licenseCount) {
+            $subscription->alwaysInvoice()->updateQuantity($licenseCount);
             $subscription->syncStartRenewalAt();
             $this->emit('saved');
         }
@@ -66,17 +72,37 @@ class PlanSummary extends Component
      */
     public function render()
     {
-        return view('livewire.teams.plan-summary', ['licenseOptions' => $this->getLicenseOptions($this->licenseCount)]);
+        return view('livewire.teams.plan-summary', ['licenseOptions' => $this->getLicenseOptions($this->team->getTotalUserWithInvitationsCount())]);
+    }
+
+    protected function convertLicenseCountToString($licenseCount)
+    {
+        return "$licenseCount-licenses";
+    }
+
+    protected function parseLicenseCountFromString($licenseCount)
+    {
+        return intval($licenseCount);
     }
 
     protected function getLicenseOptions($licenseCount)
     {
-        $licenseOptions = range(max(5, $licenseCount), 200, 5);
+        $keys = range(max(10, $licenseCount), 150, 5);
 
-        $count = 4;
+        $count = 9;
         while ($count >= $licenseCount) {
-            array_unshift($licenseOptions, $count);
+            array_unshift($keys, $count);
             $count--;
+        }
+
+        $licenseOptions = [];
+        foreach ($keys as $key) {
+            $licenseCount = $this->convertLicenseCountToString($key);
+            $params = [
+                'count' => $key,
+                'amount' => Cashier::formatAmount(18000 * $key, new Currency('USD'), config('app.locale'))
+            ];
+            $licenseOptions[$licenseCount] = __('teams.amount_per_year', $params);
         }
 
         return $licenseOptions;

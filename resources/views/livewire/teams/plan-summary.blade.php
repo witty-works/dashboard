@@ -12,31 +12,35 @@
             </div>
 
             @if(Auth::user()->ownsTeam($team))
+            @if($team->subscribed())
             <div class="wittyworks-upgrade-button-container">
                 <a class="wittyworks-button wittyworks-button--purple" href="{{ route('stripe.portal') }}">
-                    @if($team->subscribed())
                     {{ $team->subscription()->isPaidByInvoice() ? __('stripe.contact_sales') : __('stripe.billing') }}
-                    @else
-                    {{ __('teams.upgrade') }}
-                    @endif
                 </a>
             </div>
+            @endif
 
-            <x-jet-label for="license_count" value="{{ __('teams.license_count_label') }}" />
+            
+            <x-jet-label class="wittyworks-margin-top" for="license_count" value="{{ __('teams.license_count_label') }}" />
+            
             <div class="wittyworks-license-dropdown-container">
                 <x-select id="license_count"
                     :options="$licenseOptions"
                     wire:model.defer="licenseCount"
-                    class="wittyworks-license-dropdown"
+                    class="wittyworks-margin-right"
                 />
-                <x-jet-input-error for="license_count" class="mt-2" />
+
                 <x-jet-button>
-                    {{ __('content.save') }}
+                    {{ $team->subscribed() ? __('content.save') : __('teams.upgrade') }}
                 </x-jet-button>
+
+                <x-jet-input-error for="license_count" class="mt-2" />
+
                 <x-jet-action-message class="mr-3" on="saved">
                     <span class="float-right">{{ __('content.saved') }}</span>
-                </x-jet-action-message>        
+                </x-jet-action-message>       
             </div>
+               
         @endif
 
         <div class="mt-5 col-span-6 sm:col-span-4">

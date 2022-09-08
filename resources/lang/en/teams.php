@@ -38,4 +38,5 @@ return [
     'license_count_too_small_error' => 'Please increase the license count or remove licensed seats.',
     'license_count_label' => 'License management',
     'add_licenses' => 'Add more licenses',
+    'amount_per_year' => ':count licenses - :amount per year',
 ];
