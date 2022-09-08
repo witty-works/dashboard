@@ -60,12 +60,6 @@ crons:
             if [ "$PLATFORM_BRANCH" = main ]; then
                 platform backup:create --yes --no-wait --live
             fi
-    update-users-licenses:
-        spec: "*/5 * * * *"
-        cmd: |
-            if [ "$PLATFORM_BRANCH" = main ]; then
-                php artisan stripe:update-users-licenses
-            fi
     hubspot-sync:
         spec: "*/10 * * * *"
         cmd: |

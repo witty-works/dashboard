@@ -1,4 +1,4 @@
-<x-jet-form-section  submit="">
+<x-jet-form-section submit="updateLicenses">
     <x-slot name="title">
         {{ __('teams.plan_summary') }}
     </x-slot>
@@ -12,17 +12,36 @@
             </div>
 
             @if(Auth::user()->ownsTeam($team))
+            @if($team->subscribed())
             <div class="wittyworks-upgrade-button-container">
                 <a class="wittyworks-button wittyworks-button--purple" href="{{ route('stripe.portal') }}">
-                    @if($team->subscribed())
                     {{ $team->subscription()->isPaidByInvoice() ? __('stripe.contact_sales') : __('stripe.billing') }}
-                    @else
-                    {{ __('teams.upgrade') }}
-                    @endif
                 </a>
             </div>
             @endif
 
+            
+            <x-jet-label class="wittyworks-margin-top" for="license_count" value="{{ __('teams.license_count_label') }}" />
+            
+            <div class="wittyworks-license-dropdown-container">
+                <x-select id="license_count"
+                    :options="$licenseOptions"
+                    wire:model.defer="licenseCount"
+                    class="wittyworks-margin-right"
+                />
+
+                <x-jet-button>
+                    {{ $team->subscribed() ? __('content.save') : __('teams.upgrade') }}
+                </x-jet-button>
+
+                <x-jet-action-message class="inline-block" on="saved">
+                    {{ __('content.saved') }}
+                </x-jet-action-message>
+
+                <x-jet-input-error for="license_count" class="mt-2" />
+            </div>
+               
+        @endif
 
         <div class="mt-5 col-span-6 sm:col-span-4">
             <x-jet-label for="name" value="{{ __('teams.team_owner') }}" />
@@ -52,18 +71,6 @@
                 @if($team->subscribed() && $team->subscription()->isPaidByInvoice())
                     <div>
                         {!! __('teams.more_licenses') !!}
-                    </div>
-                @elseif ($team->getTotalUserCount() != $team->getUserLicensesCount())
-                    <div>
-                        @if($team->subscribed() && $team->subscription()->update_user_licenses_at)
-                        @if($team->getTotalUserCount() > $team->getUserLicensesCount())
-                        {{ trans_choice('teams.user_licenses_count_will_be_increased_updated_at', $team->getTotalUserCount() - $team->getUserLicensesCount(), ['diff' => $team->getTotalUserCount() - $team->getUserLicensesCount(), 'dateDiff' => $team->subscription()->update_user_licenses_at->diffForHumans()]) }}
-                        @else
-                        {{ trans_choice('teams.user_licenses_count_will_be_decreased_updated_at', $team->getUserLicensesCount() - $team->getTotalUserCount(), ['diff' => $team->getUserLicensesCount() - $team->getTotalUserCount(), 'dateDiff' => $team->subscription()->update_user_licenses_at->diffForHumans()]) }}
-                        @endif
-                        @elseif(Auth::user()->ownsTeam($team) && $team->getTotalUserCount() > $team->getUserLicensesCount())
-                        {!! trans_choice('teams.please_remove_users_or_upgrade', $team->getTotalUserCount() - $team->getUserLicensesCount(), ['diff' => $team->getTotalUserCount() - $team->getUserLicensesCount(), 'url' => route('stripe.portal')]) !!}
-                        @endif
                     </div>
                 @endif
             </div>

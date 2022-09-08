@@ -14,7 +14,6 @@ class Subscription extends CashierSubscription
         'ends_at',
         'trial_ends_at',
         'updated_at',
-        'update_user_licenses_at',
     ];
 
     public function syncStartRenewalAt()

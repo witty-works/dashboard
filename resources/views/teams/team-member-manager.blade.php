@@ -28,8 +28,8 @@
                             @if($team->getUserLicensesLimitReached())
                             {{ __('teams.user_limit_reached_error', ['max_count' => $team->getUserLicensesCount()]) }}
                             @if(Auth::user()->ownsTeam($team))
-                            <a href="{{ route('stripe.portal') }}">
-                                {{ __('teams.upgrade') }}
+                            <a href="{{ route('teams.subscription') }}">
+                                {{ __('teams.add_licenses') }}
                             </a>
                             @endif
                             @endif

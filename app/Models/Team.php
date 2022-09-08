@@ -122,10 +122,6 @@ class Team extends JetstreamTeam
 
     public function getUserLicensesLimitReached()
     {
-        if ($this->subscribed() && !$this->subscription()->isPaidByInvoice()) {
-            return false;
-        }
-
         return $this->getTotalUserWithInvitationsCount() >= $this->getUserLicensesCount();
     }
 
@@ -173,5 +169,26 @@ class Team extends JetstreamTeam
             || $this->getTotalTermReplacementsCount()
             || $this->getTotalUserWithInvitationsCount() > 1
             || $this->languageGuidelines !== null;
+    }
+
+    public function subscribe($licenseCount = null)
+    {
+        if (!$this->subscribed()) {
+            $licenseCount = $licenseCount ?? $this->getTotalUserWithInvitationsCount();
+
+            return $this
+                ->allowPromotionCodes()
+                ->checkout(
+                    [[
+                        'price' => config('stripe.plans.witty_teams.price_id'),
+                        'quantity' => $licenseCount
+                    ]],
+                    [
+                        'success_url' => route('teams.subscription'),
+                        'cancel_url' => route('teams.subscription'),
+                        'mode' => 'subscription'
+                    ]
+                );
+        }
     }
 }
