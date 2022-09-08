@@ -2,8 +2,7 @@
     <div class="wittyworks-navigation-wrapper">@livewire('navigation-menu')</div>
     <div class="wittyworks-page-wrapper">
         <div class="wittyworks-page lg:ml-20">
-            @include('partials.extension-check')
-            @include('partials.invitations')
+            @include('partials.banners', ['hideInviteCheck' => true])
             <x-slot name="header">
                 @if (!Auth::user()->hasTeamPermission($team, 'update'))
                 {!! __('content.making_changes_requires_admin_rights', ['email' => $team->owner->email]) !!}
