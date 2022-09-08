@@ -88,6 +88,10 @@ Route::group(
                 // User & Profile...
                 Route::get('/user/profile', [UserProfileController::class, 'show'])
                     ->name('profile.show');
+
+                Route::get('/user/mailing', [WelcomeController::class, 'mailingConsent'])
+                    ->name('user.mailing_consent');
+
                 Route::get('/user/academy', function () {
                     return view('academy');
                 })->name('academy');

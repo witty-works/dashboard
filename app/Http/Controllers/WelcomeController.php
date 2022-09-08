@@ -33,4 +33,27 @@ class WelcomeController extends Controller
 
         return redirect('https://chrome.google.com/webstore/detail/witty/meojhlodfiihbjkcnehkdcgncnhgagog');
     }
+
+    public function mailingConsent(Request $request)
+    {
+        $user = $request->user();
+        if ($user) {
+            $user->has_consented_to_mailing = true;
+            $user->save();
+
+            if ($user->hubspot_id) {
+                $data = [
+                    'has_consented_to_mailing' => 'Yes',
+                ];
+
+                $hubspot = \HubSpot\Factory::createWithAccessToken(config('hubspot.access_token'));
+                $newProperties = new \HubSpot\Client\Crm\Contacts\Model\SimplePublicObjectInput();
+                $newProperties->setProperties($data);
+
+                $hubspot->crm()->contacts()->basicApi()->update($user->hubspot_id, $newProperties);
+            }
+        }
+
+        return redirect()->back();
+    }
 }

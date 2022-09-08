@@ -3,9 +3,7 @@
     <div class="wittyworks-navigation-wrapper">@livewire('navigation-menu')</div>
     <div class="wittyworks-page-wrapper">
         <div class="wittyworks-page-academy lg:ml-20">
-            @include('partials.extension-check')
-            @include('partials.invite-check')
-            @include('partials.invitations')
+            @include('partials.banners')
             <div class="wittyworks-video-wrapper">
                 <x-embed url="https://www.youtube.com/watch?v=giQrWB9C7Xg" />
             </div>
