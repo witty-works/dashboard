@@ -98,14 +98,22 @@ web:
     commands:
         start: php artisan clear-compiled && php artisan config:cache && /usr/sbin/php-fpm8.0-zts
     locations:
-        "/azure-ad-b2c":
+        "/prod/azure-ad-b2c":
+            root: "azure-ad-b2c"
+            headers:
+                Access-Control-Allow-Origin: "https://wittyworks.b2clogin.com"
+                AAccess-Control-Allow-Methods: GET, OPTIONS
+                Access-Control-Allow-Headers: "*"
+                Access-Control-Expose-Headers: "*"
+                Cache-Control: max-age=200
+        "/dev/azure-ad-b2c":
             root: "azure-ad-b2c"
             headers:
                 Access-Control-Allow-Origin: "https://wittyworksdev.b2clogin.com"
                 AAccess-Control-Allow-Methods: GET, OPTIONS
                 Access-Control-Allow-Headers: "*"
                 Access-Control-Expose-Headers: "*"
-                # Cache-Control: max-age=200
+                Cache-Control: max-age=200
         "/":
             root: "public"
             index:
