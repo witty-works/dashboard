@@ -197,4 +197,7 @@ Dein Witty-Team',
     'invite_team_members_title' => 'Lade deine Teammitglieder ein',
     'invite_team_members_text' => 'Fangt an, gemeinsam inklusive zu schreiben.',
     'invite_team_members_button' => 'Lade deine Teammitglieder ein',
+    'mailing_consent_title' => 'Erhalte Produktneuheiten',
+    'mailing_consent_text' => 'Ich stimme zu, wichtige Produkt-Updates und Nachrichten zum Thema inklusive Sprach zu erhalten.',
+    'mailing_consent_button' => 'Abonnieren',
 ];
