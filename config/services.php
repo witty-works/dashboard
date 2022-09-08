@@ -24,7 +24,6 @@ return [
         'domain' => env('AADB2C_DOMAIN'),
         'policy' => [
             'login' => env('AADB2C_POLICY'),
-            'register' => env('AADB2C_POLICY_REGISTER'),
             'profile' => env('AADB2C_POLICY_PROFILE'),
             'browser_login' => env('AADB2C_POLICY'),
         ],
