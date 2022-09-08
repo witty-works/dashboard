@@ -149,7 +149,7 @@ Um diese Einladung anzunehmen, melde dich mit deinem bestehenden Konto an oder r
     'accept_invitiation' => 'Annehmen',
     'reject_invitiation' => 'Ablehnen',
     'team' => 'Team',
-    'accepting_invitation_will_result_in_leaving_your_current_team' => 'Wenn du diese Einladung annimmst, verlässt du das Team „:team_name“.',
+    'accepting_invitation_will_result_in_leaving_your_current_team' => 'Möchtest Du die Einladung für das Team „:invite_team_name“ von <a href="mailto:invite_user_email" target="_blank" rel="noopener">:invite_user_email</a> annehmen und das Team „:team_name“ verlassen?',
     'contact_support_to_delete_owned_teams' => 'Wenn du diese Einladung annimmst, wird dein altesTeam inklusive aller Daten <strong>gelöscht</strong>.',
     'add_team_member' => 'Teammitglied hinzufügen',
     'billing' => 'Abrechnung',

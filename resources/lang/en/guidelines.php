@@ -74,7 +74,7 @@ Choose if Witty should suggest only the gender ending (e.g. "Mitarbeiter*in"), t
     'action_label' => 'Action',
     'expert_mode_subscription_required' => 'To customize this setting, a <a href=":url">subscription</a> of <a href="https://www.witty.works/witty-for-teams" target="_blank" rel="noopener">Witty Teams</a> or higher is required.',
     'show_inspiration_alternatives_subscription_required' => 'To customize this setting, a <a href=":url">subscription</a> of <a href="https://www.witty.works/witty-for-teams" target="_blank" rel="noopener">Witty Teams</a> or higher is required.',
-    'gendered_roles_format_subscription_required' => 'To customize this setting, a <a href=":url">subscription</a> of <a href="https://www.witty.works/witty-for-teams" target= rel="noopener">Witty Teams</a> or higher is required.',
+    'gendered_roles_format_subscription_required' => 'To customize this setting, a <a href=":url">subscription</a> of <a href="https://www.witty.works/witty-for-teams" target= rel="noopener">Witty Teams</a> is required.',
     'emoji_invalid_format' => 'The emoji field may only contain a single emoji character.',
     'emoji_short_label' => 'Emoji',
     'language' => 'Customize Witty',
