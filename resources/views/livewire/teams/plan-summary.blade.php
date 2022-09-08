@@ -22,20 +22,17 @@
                 </a>
             </div>
 
-            <div class="wittyworks-upgrade-button-container">
-                <x-jet-label for="license_count" value="{{ __('teams.license_count_label') }}" />
-
+            <x-jet-label for="license_count" value="{{ __('teams.license_count_label') }}" />
+            <div class="wittyworks-license-dropdown-container">
                 <x-select id="license_count"
                     :options="$licenseOptions"
                     wire:model.defer="licenseCount"
+                    class="wittyworks-license-dropdown"
                 />
-
                 <x-jet-input-error for="license_count" class="mt-2" />
-
                 <x-jet-button>
                     {{ __('content.save') }}
                 </x-jet-button>
-
                 <x-jet-action-message class="mr-3" on="saved">
                     <span class="float-right">{{ __('content.saved') }}</span>
                 </x-jet-action-message>        

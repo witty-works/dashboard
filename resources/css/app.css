@@ -392,6 +392,7 @@ input:checked+.slider:before {
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    margin-bottom: 1em;
 }
 
 .flash-message {
@@ -607,4 +608,15 @@ input:checked+.slider:before {
     font-weight: 600;
     color: #9489DB;
     margin-bottom: 0.3em;
+}
+
+.wittyworks-license-dropdown-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-end;
+}
+
+.wittyworks-license-dropdown {
+    margin-right: 1em;
 }
