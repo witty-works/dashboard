@@ -62,6 +62,9 @@ class PlanSummary extends Component
             $subscription->alwaysInvoice()->updateQuantity($licenseCount);
             $subscription->syncStartRenewalAt();
             $this->emit('saved');
+        } else {
+            $message = __('teams.license_count_did_not_change');
+            throw ValidationException::withMessages(['license_count' => $message]);
         }
     }
 

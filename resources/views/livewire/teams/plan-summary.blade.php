@@ -34,11 +34,11 @@
                     {{ $team->subscribed() ? __('content.save') : __('teams.upgrade') }}
                 </x-jet-button>
 
-                <x-jet-input-error for="license_count" class="mt-2" />
+                <x-jet-action-message class="inline-block" on="saved">
+                    {{ __('content.saved') }}
+                </x-jet-action-message>
 
-                <x-jet-action-message class="mr-3" on="saved">
-                    <span class="float-right">{{ __('content.saved') }}</span>
-                </x-jet-action-message>       
+                <x-jet-input-error for="license_count" class="mt-2" />
             </div>
                
         @endif
