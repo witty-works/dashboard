@@ -39,5 +39,5 @@ return [
     'license_count_label' => 'License management',
     'add_licenses' => 'Add more licenses',
     'amount_per_year' => ':count licenses - :amount per year',
-    'license_count_did_not_change' => 'was not license count did not change.',
+    'license_count_did_not_change' => 'The license count was not changed.',
 ];

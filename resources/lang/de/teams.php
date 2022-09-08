@@ -34,4 +34,10 @@ return [
     'total_of_max_used_ignored' => ':total von :max_count möglichen Einträgen in die Liste ignorierter Wörter wurden gemacht ',
     'locked_by_team' => 'Diese Funktion wird von deiner*m Team-Admin gesetzt.',
     'team_plan_headline' => 'Team-Abonnement',
+    'license_count_error' => 'Beim Aktualisieren der Lizenzanzahl ist ein Fehler aufgetreten.',
+    'license_count_too_small_error' => 'Bitte erhöhe die Anzahl der Lizenzen oder entferne Personen aus dem Team.',
+    'license_count_label' => 'Lizenzverwaltung',
+    'add_licenses' => 'Füge weitere Lizenzen hinzu',
+    'amount_per_year' => ':count-Lizenzen – :amount pro Jahr',
+    'license_count_did_not_change' => 'Die Lizenzanzahl wurde nicht geändert.',
 ];
