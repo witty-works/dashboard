@@ -38,6 +38,9 @@ class WelcomeController extends Controller
     {
         $user = $request->user();
         if ($user) {
+            $user->has_consented_to_mailing = true;
+            $user->save();
+
             $user->syncHubspot();
         }
 
