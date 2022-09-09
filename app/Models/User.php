@@ -214,6 +214,32 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->invitations->count();
     }
 
+    public function getHubspotData()
+    {
+        return [
+            'has_witty_account' => 'Yes',
+            'has_consented_to_mailing' => $this->has_consented_to_mailing ? 'Yes' : 'No',
+            'has_accessed_stripe' => $this->has_accessed_stripe ? 'Yes' : 'No',
+        ];
+    }
+
+    public function syncHubspot()
+    {
+        if (!$this->hubspot_id) {
+            return false;
+        }
+
+        $data = $this->getHubspotData();
+
+        $hubspot = \HubSpot\Factory::createWithAccessToken(config('hubspot.access_token'));
+        $newProperties = new \HubSpot\Client\Crm\Contacts\Model\SimplePublicObjectInput();
+        $newProperties->setProperties($data);
+
+        $hubspot->crm()->contacts()->basicApi()->update($this->hubspot_id, $newProperties);
+
+        return true;
+    }
+
     /**
      * The event map for the model.
      *
