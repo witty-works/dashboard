@@ -38,7 +38,7 @@
                     {{ __('content.saved') }}
                 </x-jet-action-message>
 
-                <x-jet-input-error for="license_count" class="mt-2" />
+                <x-jet-input-error for="license_count" class="ml-2" />
             </div>
                
         @endif

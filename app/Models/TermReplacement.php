@@ -27,6 +27,11 @@ class TermReplacement extends Model
 
     static public function validateEmoji($emoji)
     {
+        $emoji = trim($emoji);
+        if (empty($emoji)) {
+            return $emoji;
+        }
+
         $parsed_emoji = detect_emoji($emoji);
 
         if (count($parsed_emoji) != 1) {
