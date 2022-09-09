@@ -39,7 +39,7 @@
                                             {{ $user->currentTeam->name }}
                                             (
                                             {{ ($user->currentTeam->owner->id === $user->id ? 'Owner, ' : '') }}
-                                            {{ __('teams.total_of_max_used_licenses', ['total' => $user->currentTeam->getTotalUserCount(), 'max_count' => $user->currentTeam->getUserLicensesCount()]) }}
+                                            {{ __('teams.total_of_max_used_licenses', ['total' => $user->currentTeam->getTotalUserWithInvitationsCount(), 'max_count' => $user->currentTeam->getUserLicensesCount()]) }}
                                             )
                                         @endif
                                     </td>

@@ -19,7 +19,7 @@ return [
     'user_licenses' => 'User licenses',
     'term_replacements' => 'Team dictionary',
     'false_positives' => 'Ignored words of your team',
-    'total_of_max_used_licenses' => ':total of :max_count team invitations have been sent',
+    'total_of_max_used_licenses' => ':total of :max_count user licenses have been assigned',
     'total_of_max_used_dictionary' => ':total of :max_count possible entries in the team dictionary are used',
     'total_of_max_used_ignored' => ':total of :max_count possible ignored words are used',
     'more_licenses' => 'If you like to purchase more licenses, please <a href=":url">contact</a> Witty Works.',
