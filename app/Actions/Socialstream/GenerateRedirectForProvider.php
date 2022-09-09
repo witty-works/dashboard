@@ -39,6 +39,6 @@ class GenerateRedirectForProvider implements GeneratesProviderRedirect
 
         $provider = OAuthController::getProvider($provider);
 
-        return redirect($provider->logout(route('dashboard')));
+        return redirect($provider->logout(route('login')));
     }
 }

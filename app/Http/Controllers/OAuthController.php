@@ -133,6 +133,8 @@ class OAuthController extends BaseOAuthController
 
         $user->forceFill([
             'current_connected_account_id' => $account->id,
+            'has_consented_to_terms_of_service' => $providerAccount->user['extension_TermsOfUseConsented'] ?? null,
+            'has_consented_to_mailing' => boolval($providerAccount->user['extension_MailingConsented'] ?? null),
         ])->save();
 
         return $this->login($user);
@@ -150,7 +152,7 @@ class OAuthController extends BaseOAuthController
         $socialiteUser = $provider->user();
 
         return [
-            'email' => $socialiteUser->user['emails'][0] ?? $socialiteUser->user['email'],
+            'email' => User::getEmailFromProvider($socialiteUser->user),
             'refresh_token' => $socialiteUser->accessTokenResponseBody['refresh_token'] ?? null,
             'access_token' => $socialiteUser->accessTokenResponseBody['access_token'] ?? null,
         ];

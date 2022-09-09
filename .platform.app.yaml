@@ -60,11 +60,17 @@ crons:
             if [ "$PLATFORM_BRANCH" = main ]; then
                 platform backup:create --yes --no-wait --live
             fi
-    update-users-licenses:
-        spec: "*/5 * * * *"
+    hubspot-sync:
+        spec: "*/10 * * * *"
         cmd: |
             if [ "$PLATFORM_BRANCH" = main ]; then
-                php artisan stripe:update-users-licenses
+                php artisan hubspot:sync --batch-size=10
+            fi
+    posthog-sync:
+        spec: "*/30 * * * *"
+        cmd: |
+            if [ "$PLATFORM_BRANCH" = main ]; then
+                php artisan posthog:sync --batch-size=10
             fi
 
 # The relationships of the application with services or other applications.
@@ -92,6 +98,22 @@ web:
     commands:
         start: php artisan clear-compiled && php artisan config:cache && /usr/sbin/php-fpm8.0-zts
     locations:
+        "/prod/azure-ad-b2c":
+            root: "azure-ad-b2c"
+            headers:
+                Access-Control-Allow-Origin: "https://wittyworks.b2clogin.com"
+                AAccess-Control-Allow-Methods: GET, OPTIONS
+                Access-Control-Allow-Headers: "*"
+                Access-Control-Expose-Headers: "*"
+                Cache-Control: max-age=200
+        "/dev/azure-ad-b2c":
+            root: "azure-ad-b2c"
+            headers:
+                Access-Control-Allow-Origin: "https://wittyworksdev.b2clogin.com"
+                AAccess-Control-Allow-Methods: GET, OPTIONS
+                Access-Control-Allow-Headers: "*"
+                Access-Control-Expose-Headers: "*"
+                Cache-Control: max-age=200
         "/":
             root: "public"
             index:

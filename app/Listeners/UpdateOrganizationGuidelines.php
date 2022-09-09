@@ -2,169 +2,77 @@
 
 namespace App\Listeners;
 
-use App\Models\OrganizationGuidelines;
+use App\Models\LanguageGuidelines;
 use App\Models\Team;
-use Illuminate\Support\Facades\Http;
 use Laravel\Jetstream\Events\TeamDeleted;
-use RuntimeException;
+use App\Models\GuidelinesInterface;
 
-class UpdateOrganizationGuidelines
+class UpdateOrganizationGuidelines extends AbstractUpdateGuidelines
 {
     public function handle($event)
     {
         $team = $event->team;
 
         if ($event instanceof TeamDeleted) {
-            self::deleteRules($team);
+            $url = '/organization/rules?' . http_build_query(['organization_id' => $team->posthogId()]);
+            $this->deleteRules($url);
         } else {
-            self::updateRules($team);
+            $url = '/organization/rules';
+            $data = $this->getData($team);
+
+            $this->updateRules($url, $data);
+
+            return $data;
         }
     }
 
-    static public function deleteRules(Team $team)
+    public function getData(Team $team)
     {
-        $endpoint = config('app.organization_guidelines_endpoint');
-        if (empty($endpoint['url'])) {
-            return;
-        }
+        $termReplacements = $this->getTermReplacements(
+            $team->termReplacements,
+            $team->subscribed(),
+            $team->getTermReplacementsCount()
+        );
 
-        $query = http_build_query(['organization_id' => $team->id]);
-        $endpoint['url'] .= '/delete_rules?' . $query;
+        $falsePositives = $this->getFalsePositives(
+            $team->falsePositives,
+            $team->subscribed(),
+            $team->getFalsePositivesCount()
+        );
 
-        if (empty($endpoint['user'])) {
-            $response = Http::delete($endpoint['url']);
-        } else {
-            $response = Http::withBasicAuth($endpoint['user'], $endpoint['password'])
-                ->delete($endpoint['url']);
-        }
-
-        if ($response->failed() && $response->status() !== 404) {
-            if (config('app.debug')) {
-                dd($response->body(), $query);
-            } else {
-                throw new RuntimeException($response->body());
-            }
-        }
-    }
-
-    static public function updateRules(Team $team)
-    {
-        $endpoint = config('app.organization_guidelines_endpoint');
-        if (empty($endpoint['url'])) {
-            return;
-        }
-
-        $termReplacements = self::getTermReplacements($team);
-        $falsePositives = $team->falsePositives()->pluck('false_positive')->toArray();
-
-        if ($team->subscribed()) {
-            $users = $team->allUsers()->pluck('email')->toArray();
-        } else {
-            $users = [$team->owner->email];
-            $team->store_context = true;
-            $falsePositives = array_slice($falsePositives, 0, $team->false_positive_count);
-            $termReplacements = array_slice($termReplacements, 0, $team->getTermReplacementsCount());
-        }
+        $domains = $this->getDomains($team->domains, $team->getDomainListType());
 
         $plan = $team->planId();
+
+        $guidelines = LanguageGuidelines::firstOrNew(['team_id' => $team->id]);
+        $config = self::getConfig($guidelines);
+        foreach (GuidelinesInterface::DISABLED_CATEGORIES as $category) {
+            $config[$category] = [
+                'value' => !in_array($category, $guidelines->disabled_categories),
+                'status' => null === $guidelines->disabled_categories_force
+                    || in_array($category, $guidelines->disabled_categories_force)
+                    ? 'force' : 'suggestion',
+            ];
+        }
 
         $data = [
             'id' => $team->posthogId(),
             'name' => $team->name,
             'plan' => $plan,
-            'users' => $users,
             'false_positives' => $falsePositives,
             'term_replacements' => $termReplacements,
-            'config' => self::getConfig($team),
+            'domains' => $domains,
+            'config' => $config,
+            'store_context' => [
+                'value' => $team->subscribed() ? (bool) $team->store_context : true,
+                'status' => 'force',
+            ]
         ];
 
-        $endpoint['url'] .= '/store_rules';
+        $data['config_hash'] = md5(serialize($data));
+        $team->config_hash = $data['config_hash'];
+        $team->saveQuietly();
 
-        if (empty($endpoint['user'])) {
-            $response = Http::post($endpoint['url'], $data);
-        } else {
-            $response = Http::withBasicAuth($endpoint['user'], $endpoint['password'])
-                ->post($endpoint['url'], $data);
-        }
-
-        if ($response->failed() && $response->status() !== 404) {
-            if (config('app.debug')) {
-                dd($response->json(), $data);
-            } else {
-                throw new RuntimeException($response->body());
-            }
-        }
-    }
-
-    static protected function getTermReplacements(Team $team)
-    {
-        $termReplacements = [];
-        foreach ($team->termReplacements as $termReplacement) {
-            $termReplacementData = [
-                'term' => $termReplacement->term,
-                'alternatives' => [$termReplacement->replacement],
-            ];
-
-            if ($termReplacement->explanation !== null) {
-                $termReplacementData['explanation'] = [
-                    'text' => $termReplacement->explanation,
-                    'url' => $termReplacement->url,
-                    'icon' => $termReplacement->emoji,
-                ];
-            }
-
-            $termReplacements[] = $termReplacementData;
-        }
-
-        return $termReplacements;
-    }
-
-    static protected function getConfig(Team $team)
-    {
-        $orgGuidelines = OrganizationGuidelines::firstOrNew(['team_id' => $team->id]);
-
-        $config['store_context'] = [
-            'value' => (bool) $team->store_context,
-            'status' => 'force',
-        ];
-
-        $config['maximum_importance'] = [
-            'value' => $orgGuidelines->expert_mode ? 3 : 2,
-            'status' => $orgGuidelines->expert_mode_force ? 'force' : 'suggestion',
-        ];
-
-        $config['singular_they'] = [
-            'value' => $orgGuidelines->singular_they ? 'all_pronouns' : 'he_or_she',
-            'status' => $orgGuidelines->english_rules_force ? 'force' : 'suggestion',
-        ];
-
-        $config['show_inspiration_alternatives'] = [
-            'value' => (bool) $orgGuidelines->show_inspiration_alternatives,
-            'status' => $orgGuidelines->show_inspiration_alternatives_force ? 'force' : 'suggestion',
-        ];
-
-        $config['gendered_roles_format'] = [
-            'value' => $orgGuidelines->gendered_roles_format,
-            'status' => $orgGuidelines->german_rules_force ? 'force' : 'suggestion',
-        ];
-
-        $config['german_gender_ending'] = [
-            'value' => $orgGuidelines->german_gender_ending,
-            'status' => $orgGuidelines->german_rules_force ? 'force' : 'suggestion',
-        ];
-
-        foreach (OrganizationGuidelines::DISABLED_CATEGORIES as $category) {
-            $config[$category] = [
-                'value' => !in_array($category, $orgGuidelines->disabled_categories),
-                'status' => in_array($category, $orgGuidelines->disabled_categories_force) ? 'force' : 'suggestion',
-            ];
-        }
-
-        $config['preferred_variants'] = [
-            'value' => $orgGuidelines->preferred_variants,
-            'status' => $orgGuidelines->preferred_variants_force ? 'force' : 'suggestion',
-        ];
-
-        return $config;
+        return $data;
     }
 }

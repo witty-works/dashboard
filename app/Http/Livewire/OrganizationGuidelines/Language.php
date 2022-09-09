@@ -2,7 +2,8 @@
 
 namespace App\Http\Livewire\OrganizationGuidelines;
 
-use App\Models\OrganizationGuidelines;
+use App\Models\GuidelinesInterface;
+use App\Models\LanguageGuidelines;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -34,14 +35,14 @@ class Language extends Component
     {
         $this->team = $team;
 
-        $organizationRule = $this->getOrganizationGuidelines($this->team);
+        $languageGuidelines = $this->getLanguageGuidelines($this->team);
 
-        $this->preferred_variants = (array) $organizationRule->preferred_variants;
-        $this->preferred_variants_force = (bool) $organizationRule->preferred_variants_force;
+        $this->preferred_variants = (array) $languageGuidelines->preferred_variants;
+        $this->preferred_variants_force = (bool) $languageGuidelines->preferred_variants_force;
 
-        foreach (OrganizationGuidelines::LANGUAGES as $lang) {
-            $property = "preferred_variants_" . $lang;
-            foreach (constant('App\Models\OrganizationGuidelines::PREFERRED_VARIANTS_' . strtoupper($lang)) as $locale => $trans_key) {
+        foreach (GuidelinesInterface::LANGUAGES as $lang) {
+            $property = "preferred_variants_$lang";
+            foreach (constant('App\Models\GuidelinesInterface::PREFERRED_VARIANTS_' . strtoupper($lang)) as $locale => $trans_key) {
                 if (in_array($locale, $this->preferred_variants)) {
                     $this->$property = $locale;
                 }
@@ -49,7 +50,7 @@ class Language extends Component
         }
     }
 
-    public function updateOrganizationGuidelinesLanguage()
+    public function updateLanguageGuidelinesLanguage()
     {
         $this->validate();
 
@@ -57,20 +58,20 @@ class Language extends Component
             abort(403);
         }
 
-        $organizationRule = $this->getOrganizationGuidelines($this->team);
+        $languageGuidelines = $this->getLanguageGuidelines($this->team);
 
         $this->preferred_variants = [];
-        foreach (OrganizationGuidelines::LANGUAGES as $lang) {
-            $property = "preferred_variants_" . $lang;
+        foreach (GuidelinesInterface::LANGUAGES as $lang) {
+            $property = "preferred_variants_$lang";
             if ($this->$property) {
                 $this->preferred_variants[] = $this->$property;
             }
         }
 
-        $organizationRule->preferred_variants = $this->preferred_variants;
-        $organizationRule->preferred_variants_force = $this->preferred_variants_force;
+        $languageGuidelines->preferred_variants = $this->preferred_variants;
+        $languageGuidelines->preferred_variants_force = $this->preferred_variants_force;
 
-        $organizationRule->save();
+        $languageGuidelines->save();
 
         $this->emit('saved');
     }
@@ -85,8 +86,8 @@ class Language extends Component
         return view('livewire.organization-guidelines.language');
     }
 
-    protected function getOrganizationGuidelines($team)
+    protected function getLanguageGuidelines($team)
     {
-        return OrganizationGuidelines::firstOrNew(['team_id' => $team->id]);
+        return LanguageGuidelines::firstOrNew(['team_id' => $team->id]);
     }
 }

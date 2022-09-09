@@ -90,7 +90,7 @@ return [
     'prohibited_unless' => 'The :attribute field is prohibited unless :other is in :values.',
     'regex' => ':attribute Format ist ungültig.',
     'relatable' => 'This :attribute may not be associated with this resource.',
-    'required' => ':attribute muss ausgefüllt werden.',
+    'required' => 'Bitte fülle das Feld ":attribute" aus.',
     'required_if' => ':attribute muss ausgefüllt werden, wenn :other den Wert :value hat.',
     'required_unless' => ':attribute muss ausgefüllt werden, wenn :other nicht den Wert :values hat.',
     'required_with' => ':attribute muss ausgefüllt werden, wenn :values ausgefüllt wurde.',

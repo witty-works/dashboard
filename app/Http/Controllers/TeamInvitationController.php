@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UserGuidelinesUpdated;
 use Laravel\Jetstream\TeamInvitation;
 use Illuminate\Http\Request;
 use Laravel\Jetstream\Http\Controllers\TeamInvitationController as BaseTeamInvitationController;
@@ -38,6 +39,8 @@ class TeamInvitationController extends BaseTeamInvitationController
             $invitation->delete();
         }
 
+        UserGuidelinesUpdated::dispatch($user);
+
         return $response->banner(__('teams.accepted_invitation', ['team' => $invitation->team->name]));
     }
 
@@ -55,6 +58,8 @@ class TeamInvitationController extends BaseTeamInvitationController
         }
 
         $invitation->delete();
+
+        UserGuidelinesUpdated::dispatch($request->user());
 
         return back(303);
     }

@@ -30,22 +30,20 @@ return [
     'confirm_password' => 'Confirm Password',
     'terms_of_service' => 'Terms of Service',
     'privacy_policy' => 'Privacy Policy',
-    'register' => 'Register',
     'reset_password' => 'Reset Password',
     'code' => 'Code',
     'recovery_code' => 'Recovery Code',
     'use_a_recovery_code' => 'Use a recovery code',
     'use_an_authentication_code' => 'Use an authentication code',
-    'log_in' => 'Log in',
+    'log_in_register' => 'Sign in / Sign up',
     'resend_verification_email' => 'Resend Verification Email',
     'log_out' => 'Log Out',
-    'or' => 'or',
     'dashboard' => 'Dashboard',
     'manage_team' => 'Manage Team',
-    'team_settings' => 'Team Settings',
+    'manage_members' => 'Manage members',
     'create_new_team' => 'Create a new team',
     'switch_teams' => 'Switch Teams',
-    'manage_account' => 'Manage Account',
+    'manage_account' => 'My Account',
     'profile' => 'My Account',
     'connected_accounts' => 'Connected Accounts',
     'use_avatar_as_profile_photo' => 'Use Avatar as Profile Photo',
@@ -67,6 +65,7 @@ return [
     'update_password' => 'Update Password',
     'current_password' => 'Current Password',
     'profile_information' => 'Profile Information',
+    'subscription' => 'Subscription',
     'photo' => 'Photo',
     'select_a_new_photo' => 'Select A New Photo',
     'remove_photo' => 'Remove Photo',
@@ -115,14 +114,15 @@ return [
     'when_2fa_is_enabled' => 'When two factor authentication is enabled, you will be prompted for a secure, random token during authentication. You may retrieve this token from your phone\'s Google Authenticator application.',
     '2fa_is_now_enabled' => 'Two factor authentication is now enabled. Scan the following QR code using your phone\'s authenticator application.',
     'store_recovery_codes' => 'Store these recovery codes in a secure password manager. They can be used to recover access to your account if your  device is lost.',
-    'update_your_account_profile' => 'Update your name and email <a href=":profile_url"><strong>here</strong></a>.',
+    'update_your_account_profile' => '<a href=":profile_url"><strong>update</strong></a>',
+    'pricing' => '<a href="https://www.witty.works/pricing"><strong>pricing</strong></a>',
     'permanently_delete_team' => 'Permanently delete this team.',
     'once_a_team_is_deleted' => 'Once a team is deleted, all of its resources and data will be permanently deleted.',
     'are_you_sure_want_to_delete_team' => 'Are you sure you want to delete this team? Once a team is deleted, all of its resources and data will be permanently deleted.',
-    'add_a_new_team_member' => 'Add new team members to your team, allowing them to collaborate with you. Your current subscription allows you to add up to :max_count users.',
+    'add_a_new_team_member' => '{1} Add new team members to your team, allowing them to collaborate with you. Your current subscription allows you to add up to one user. | Add new team members to your team, allowing them to collaborate with you. Your current subscription allows you to add up to :max_count users.',
     'please_provide_the_email_address' => 'Please provide the email address of the person you would like to add to this team.',
     'these_people_have_been_invited' => 'These people have been invited to join your team and have received an invitation email from us. They can join the team by accepting the email invitation.',
-    'all_of_the_people' => 'All of the people have joined your team.',
+    'all_of_the_people' => 'These people have joined your team.',
     'are_you_sure_you_would_like_to_leave' => 'Are you sure you would like to leave this team?',
     'are_you_sure_you_would_like_to_remove' => 'Are you sure you would like to remove this person from the team?',
     'team_information' => 'The team\'s name and owner information',
@@ -148,15 +148,6 @@ To accept this invitation, log in with your existing account or register a new a
     'de' => 'Standard German',
     'en' => 'English',
     'welcome_text' => 'The dashboard helps you set up Witty and customize it to your needs.',
-    'onboarding_next_steps' => 'Next steps to setup your Witty team:',
-    'onboarding_finish_setup_title' => 'Finish setting up your Witty account',
-    'onboarding_finish_setup_tagline' => 'Get the most out of Witty by setting up a team and customizing Witty for your team.',
-    'onboarding_create_team' => '1. Setup your team',
-    'onboarding_create_team_tagline' => 'A team allows you to manage all preferences at once for a group of users.',
-    'onboarding_configure_organization_guidelines' => '2. Customize Witty for your team',
-    'onboarding_configure_organization_guidelines_tagline' => 'Set up how you want to use language in your team.',
-    'onboarding_invite_users' => '3. Invite users to your team',
-    'onboarding_invite_users_tagline' => 'Let others join your team and streamline your language settings.',
     'onboarding_install_witty' => 'Install our Witty browser extension',
     'onboarding_quickLinks' => 'Quick Links',
     'onboarding_team_setup' => 'Team Settings',
@@ -165,51 +156,14 @@ To accept this invitation, log in with your existing account or register a new a
     'onboarding_support' => 'Support',
     'onboarding_team_stats' => 'Your team\'s statistics',
     'onboarding_install_witty_title' => 'Install Witty',
-    'onboarding_install_witty_text' => 'Witty is a browser plugin that makes inclusive writing possible at any given time for anyone',
+    'onboarding_install_witty_text' => 'You haven\'t installed Witty yet. Install it now!',
     'onboarding_install_witty_button' => 'Get Witty for free',
-    'open_invitiations' => '{1} You are already the owner of a team, but you have been invited to join another team. You can only be in one team. Please decide if you want to accept or reject the invitiation.|{2,*} You have been invited to join several teams, but you have been invited to join another team. Please decide if you want to accept one of these invitations.',
     'accept_invitiation' => 'Accept',
     'reject_invitiation' => 'Reject',
-    'section_1_title' => 'What is Witty?',
-    'section_1_text' => 'Witty is an **inclusive writing assistant** made for individuals and organizations, bringing you the joy of inclusive writing. Witty is easy, real-time, and fast.
-
-Witty is a Software-as-a-Service that **detects unconscious stereotypes in communication**, and then guides the writer on how to formulate the same content in an inclusive manner.
-
-Witty offers the whole inclusive language logic **in English and German**. More languages are planned. You also receive feedback on **orthography and grammar**. 
-
-With Witty you **become part of the change towards more diversity and inclusion** on a daily basis.
-
-Read more about [Witty](https://www.witty.works/ "Inclusive writing, anywhere, in real time").',
-    'section_2_title' => 'What can you do with the Witty Dashboard?',
-    'section_2_text' => 'Witty Dashboard helps you set up and customize Witty for your team. Once you\'re logged in, you can:
-
-* Invite your team members.
-* Set up your **language settings**. This way you can ensure your entire team writes with the same brand voice.
-* Coming soon: Get access to **detailed analytics** in compliance with privacy laws.
-* Coming soon: Witty Editor - a simple app that works for everyone, even those who don\'t use the browser plugin.',
-    'login_cta' => 'Start by creating your own <a href=":url">login</a>.',
-    'section_3_title' => 'Witty for Teams and Organizations',
-    'section_3_text' => 'For organizations, Witty offers a range of services to help entire teams work smoothly with Witty, such as:
-* Single sign-on
-* Invite team members in order to collaborate faster and work together on language settings
-* Streamline your organization use of language
-* Coming soon: detailed analytics
-* Unconscious bias awareness session
-* Centralized control over data privacy
-
-Read more about Services for [large organizations](https://www.witty.works/witty-for-large-organizations "Witty for large organizsations") or [small organizations](https://www.witty.works/witty-for-small-and-medium-sized-organizations "Witty for small organizations").',
-    'section_4_title' => 'Witty\'s ROI for Organizations',
-    'section_4_text' => 'The use of Witty increases organizations\' competitive advantage. 
-* Reach 100% of target groups instead of only 60%.
-* Implement Diversity and Inclusion - efficiently and effectively
-* Implement [ESG](https://en.wikipedia.org/wiki/Environmental,_social_and_corporate_governance "Environmental, Social, and Governance") and [UNSDG](https://sdgs.un.org/goals "UN Sustainable Development Goals") concretely. 
-* Ensure streamlined brand voice through your whole organization. 
-
-Read more about ROI for [large organizations](https://www.witty.works/witty-for-large-organizations "Witty for large organizations") or [small and medium sized organizations](https://www.witty.works/witty-for-small-and-medium-sized-organizations "Witty for small organizations").',
     'onboarding_signup_to_witty' => 'Sign up for a Witty account',
     'team' => 'Team',
-    'accepting_invitation_will_result_in_leaving_your_current_team' => 'Accepting an invitation will result in leaving team ":team_name".',
-    'contact_support_to_delete_owned_teams' => 'You are a team owner. When accepting an invitation, your team including all data will be <strong>deleted</strong>.',
+    'contact_support_to_delete_owned_teams' => 'You are already the owner of a team, but you have been invited to join another team. You can only be in one team. If you accept this invitation, your old team including all data will be <strong>deleted</strong>.',
+    'accepting_invitation_will_result_in_leaving_your_current_team' => 'Do you want to accept the invitation for team ":invite_team_name" by <a href="mailto:invite_user_email" target="_blank" rel="noopener">:invite_user_email</a> and leave the team ":team_name".',
     'billing' => 'billing',
     'browser_login' => 'Browser Login',
     'login_failed' => 'Login failed',
@@ -229,12 +183,22 @@ Read more about ROI for [large organizations](https://www.witty.works/witty-for-
     'have_a_great_day' => 'Have a great day,
 
 Your Witty team',
+    'more_resouces' => 'More Resources',
+    'get_in_touch' => 'Get In Touch',
     'unable_to_find_user_with_this_email' => 'We were unable to find a registered user with this email address.',
     'cannot_leave_team_you_created' => 'You may not leave a team that you created.',
     'account_not_found' => 'An account was not found.',
     'account_already_exists' => 'An account with that email address already exists.',
     'onboarding_invitations' => 'Open team invitations',
     'witty_for_teams' => 'Witty for Teams',
-    'onboarding_personal_team' => '1. Team automatically created',
     'witty_editor' => 'Witty Editor',
+    'academy' => 'Academy',
+    'log_in' => 'Login',
+    'invite_team_members_title' => 'Invite team members',
+    'invite_team_members_text' => 'Start writing inclusively together.',
+    'invite_team_members_button' => 'Invite team members',
+    'mailing_consent_title' => 'Get Product News',
+    'mailing_consent_text' => 'I agree to receive important product updates and inclusive language news.',
+    'mailing_consent_button' => 'Subscribe',
+    'renew' => 'Resume Subscription',
 ];

@@ -1,0 +1,27 @@
+@php 
+
+$teamAllowList = !empty($user->currentTeam)
+    && $user->currentTeam->getDomainListType() !== 'deny'
+@endphp
+
+@if(!$teamAllowList) 
+<div>
+    <div class="max-w-7xl mx-auto py-10">
+        @livewire('user-domain.form', ['user' => $user])
+    </div>
+</div>
+
+<div>
+    <div class="max-w-7xl mx-auto py-10">
+        @livewire('user-domain.show', ['user' => $user])
+    </div>
+</div>
+@endif
+
+@if($user->currentTeam)
+<div>
+    <div class="max-w-7xl mx-auto py-10">
+        @livewire('organization-domain.show', ['team' => $user->currentTeam, 'hide_actions' => true])
+    </div>
+</div>
+@endif

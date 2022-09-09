@@ -30,7 +30,6 @@ return [
     'confirm_password' => 'Passwort bestätigen',
     'terms_of_service' => 'Terms of Service',
     'privacy_policy' => 'Datenschutzerklärung',
-    'register' => 'Registrieren',
     'reset_password' => 'Passwort Zurücksetzen',
     'code' => 'Code',
     'recovery_code' => 'Wiederherstellungscode',
@@ -39,13 +38,11 @@ return [
     'log_in' => 'Anmelden',
     'resend_verification_email' => 'Bestätigungsmail erneut senden',
     'log_out' => 'Abmelden',
-    'or' => 'oder',
     'dashboard' => 'Dashboard',
     'manage_team' => 'Team verwalten',
-    'team_settings' => 'Team-Einstellungen',
     'create_new_team' => 'Erstelle ein Team',
     'switch_teams' => 'Team wechseln',
-    'manage_account' => 'Konto verwalten',
+    'manage_account' => 'Mein Konto',
     'profile' => 'Mein Profil',
     'connected_accounts' => 'Verbundene Konten',
     'use_avatar_as_profile_photo' => 'Avatar als Profilfoto verwenden',
@@ -114,11 +111,11 @@ return [
     'when_2fa_is_enabled' => 'Wenn die Zwei-Faktor-Authentifizierung aktiviert ist, wirst du während der Authentifizierung zur Eingabe eines sicheren, zufälligen Tokens aufgefordert. Du kannst dieses Token über die Google Authenticator-Anwendung deines Telefons abrufen.',
     '2fa_is_now_enabled' => 'Die Zwei-Faktor-Authentifizierung ist jetzt aktiviert. Scanne den folgenden QR-Code mit der Authentifizierungsanwendung deines Telefons.',
     'store_recovery_codes' => 'Speicher diese Wiederherstellungscodes in einem sicheren Passwort-Manager. Sie können verwendet werden, um den Zugriff auf dein Konto wiederherzustellen, wenn dein Gerät verloren geht.',
-    'update_your_account_profile' => 'Aktualisiere deinen Namen und dein Passwort <a href=":profile_url"><strong>hier</strong></a>.',
+    'update_your_account_profile' => '<a href=":profile_url"><strong>aktualisieren</strong></a>',
     'permanently_delete_team' => 'Dieses Team endgültig löschen.',
     'once_a_team_is_deleted' => 'Sobald ein Team gelöscht wird, werden alle seine Ressourcen und Daten dauerhaft gelöscht.',
     'are_you_sure_want_to_delete_team' => 'Möchtest du dieses Team wirklich löschen? Sobald ein Team gelöscht wird, werden alle seine Ressourcen und Daten dauerhaft gelöscht.',
-    'add_a_new_team_member' => 'Füge deinem Team ein neues Mitglied hinzu, damit ihr zusammenarbeiten könnt. Mit deinem aktuellen Abonnement kannst du maximal :max_count Teammitglieder hinzufügen.',
+    'add_a_new_team_member' => '{1} Füge deinem Team ein neues Mitglied hinzu, damit ihr zusammenarbeiten könnt. Mit deinem aktuellen Abonnement kannst du maximal ein Teammitglied hinzufügen. | Füge deinem Team ein neues Mitglied hinzu, damit ihr zusammenarbeiten könnt. Mit deinem aktuellen Abonnement kannst du maximal :max_count Teammitglieder hinzufügen.',
     'please_provide_the_email_address' => 'Bitte gib die E-Mail-Adresse der Person an, die du diesem Team hinzufügen möchtest.',
     'these_people_have_been_invited' => 'Diese Personen wurden in dein Team eingeladen und haben eine Einladungs-E-Mail erhalten. Sie können dem Team beitreten, indem sie die E-Mail-Einladung annehmen.',
     'all_of_the_people' => 'Alle Personen, die Teil dieses Teams sind.',
@@ -144,64 +141,19 @@ Du wurdest von <a href="mailto::email">:name</a> auf <a href="https://www.witty.
     'de' => 'Deutsch (Deutschland)',
     'en' => 'Englisch',
     'welcome_text' => 'Das Dashboard hilft dir, Witty einzurichten und deinen Bedürfnissen anzupassen.',
-    'onboarding_next_steps' => 'Nächste Schritte zum Einrichten deines Witty Teams:',
-    'onboarding_create_team' => '1. Richte dein Team ein',
-    'onboarding_configure_organization_guidelines' => '2. Konfiguriere Witty für dein Team',
-    'onboarding_invite_users' => '3. Lade Teammitglieder ein',
-    'section_1_title' => 'Was ist Witty?',
-    'section_1_text' => 'Witty ist ein **integrativer Schreibassistent** für Einzelpersonen und Organisationen, der Freude am integrativen Schreiben vermittelt. Witty ist einfach und schnell.
-
-Witty ist eine Software-as-a-Service, die **unbewusste Stereotypen in der Kommunikation überprüft und Alternativen vorschlägt**. 
-
-Witty bietet die gesamte inklusive Sprachlogik auf **Englisch und Deutsch**. Weitere Sprachen sind geplant. Witty gibt auch Feedback zu **Rechtschreibung und Grammatik**. 
-
-Mit Witty trägst du zu mehr Vielfalt und Inklusion bei.
-Lese mehr über [Witty](https://www.witty.works/ "Inklusives Schreiben, überall, in Echtzeit").',
-    'section_2_title' => 'Was kanns du auf dem Witty Dashboard machen?',
-    'section_2_text' => 'Witty Dashboard hilft dir, Witty für dein Team einzurichten und anzupassen. Sobald du eingeloggt sind, kannst du:
-
-* Teammitglieder einladen
-* Spracheinstellungen einrichten. Auf diese Weise kannst du sicherstellen, dass dein gesamtes Team konsistent schreibt.
-* Demnächst verfügbar: Zugang zu **detaillierten Statistiken** in Übereinstimmung mit den Datenschutzgesetzen erhalten.
-* Demnächst verfügbar: Witty Editor - eine einfache App, die auch ohne Browser-Plugin nicht verwenden.',
-    'section_3_title' => 'Witty für Teams und Organisationen',
-    'section_3_text' => 'Für Unternehmen bietet Witty eine Reihe an Services, die Teams helfen, optimal mit Witty zu arbeiten, wie z.B:
-
-* Einmalige Anmeldung
-* Einladen von Teammitgliedern, um besser zusammenzuarbeiten und konsistenz zu schreiben.
-* Sensibilisierung für unbewusste Vorurteile
-* Sensibilisierung für unbewusste Vorurteile
-Zentralisierte Kontrolle über den Datenschutz
-
-Lese mehr über [grosse Organisationen](https://www.witty.works/witty-for-large-organizations "Witty for large organizsations") oder [kleine und mittlere Organisationen](https://www.witty.works/witty-for-small-and-medium-sized-organizations "Witty for small organizations").',
-    'section_4_title' => 'Wittys ROI für Organisationen',
-    'section_4_text' => 'Der Einsatz von Witty erhöht den Wettbewerbsvorteil von Unternehmen.
-* Erreiche 100 % der Zielgruppen statt nur 60 %.
-* Vielfalt und Inklusion umsetzen – effizient und effektiv
-* [ESG](https://en.wikipedia.org/wiki/Environmental,_social_and_corporate_governance "Umwelt, Soziales und Unternehmensführung") und [UNSDG](https://sdgs.un.org/goals "UN Sustainable Development Goals") konkret umsetzen.
-* Sorge für eine optimierte Markenstimme in deiner gesamten Organisation.
-
-Lese mehr über den ROI für [grosse Organisationen](https://www.witty.works/witty-for-large-organizations "Witty for large organizsations") oder [kleine und mittlere Organisationen](https://www.witty.works/witty-for-small-and-medium-sized-organizations "Witty for small organizations").',
     'onboarding_signup_to_witty' => 'Meldung für ein Witty-Konto',
     'invitation_email_welcome' => 'Wenn du dem Team beitrittst, erhältst du Zugriff auf die Spracheinstellungen des Teams auf Witty.
 
 Um diese Einladung anzunehmen, melde dich mit deinem bestehenden Konto an oder registriere ein neues Konto, indem du auf die Schaltfläche unten klickst:',
     'onboarding_install_witty' => 'Installiere unsere Witty-Browsererweiterung',
-    'open_invitiations' => '{1} Du wurdest eingeladen, einem Team beizutreten. Du kannst nur in einem Team sein. Bitte entscheiden dich, ob du die Einladung annehmen oder ablehnen möchtest.|{2,*} Du wurdest eingeladen, mehreren Teams beizutreten. Du kannst nur in einem Team sein. Bitte entscheiden dich, ob du eine dieser Einladungen annehmen möchtest. Du kannst nur in einem Team sein. ',
     'accept_invitiation' => 'Annehmen',
     'reject_invitiation' => 'Ablehnen',
-    'login_cta' => 'Erstelle deines eigenes <a href=":url">Login</a>.',
     'team' => 'Team',
-    'accepting_invitation_will_result_in_leaving_your_current_team' => 'Das Annehmen einer Einladung führt zum Verlassen des Teams „:team_name“.',
-    'contact_support_to_delete_owned_teams' => 'Du bist Teameigentümer*in. Um Einladungen annehmen zu können wird dein Team inklusive aller Daten <strong>gelöscht</strong>.',
+    'accepting_invitation_will_result_in_leaving_your_current_team' => 'Möchtest Du die Einladung für das Team „:invite_team_name“ von <a href="mailto:invite_user_email" target="_blank" rel="noopener">:invite_user_email</a> annehmen und das Team „:team_name“ verlassen?',
+    'contact_support_to_delete_owned_teams' => 'Wenn du diese Einladung annimmst, wird dein altesTeam inklusive aller Daten <strong>gelöscht</strong>.',
     'add_team_member' => 'Teammitglied hinzufügen',
     'billing' => 'Abrechnung',
     'browser_login' => 'Browser-Anmeldung',
-    'onboarding_finish_setup_title' => 'Schließe die Einrichtung deines Witty-Kontos ab',
-    'onboarding_finish_setup_tagline' => 'Hole das Beste aus Witty heraus, indem du ein Team einrichtest und Regeln für deine Teammitglieder konfigurierst.',
-    'onboarding_create_team_tagline' => 'Ein Team ermöglicht es, die Einstellungen für alle Teammitglieder gleichzeitig zu verwalten.',
-    'onboarding_configure_organization_guidelines_tagline' => 'Legen fest, welche Sprachregeln du in deinem Team verwenden möchtest.',
-    'onboarding_invite_users_tagline' => 'Lasse andere in dein Team ein, um konsistent inklusive zu schreiben.',
     'onboarding_quickLinks' => 'Die wichtigsten Links',
     'onboarding_team_setup' => 'Team-Einstellungen',
     'onboarding_language_guidelines' => 'Spracheinstellungen',
@@ -212,13 +164,13 @@ Um diese Einladung anzunehmen, melde dich mit deinem bestehenden Konto an oder r
     'edit' => 'bearbeiten',
     'introduction_videos' => 'Einführungsvideos',
     'onboarding_install_witty_title' => 'Installiere Witty',
-    'onboarding_install_witty_text' => 'Witty ist ein Browser-Plugin, das inklusives Schreiben jederzeit für jeden möglich macht',
-    'onboarding_install_witty_button' => 'Hole dir Witty',
+    'onboarding_install_witty_text' => 'Du hast Witty noch nicht installiert. Installiere Witty jetzt!',
+    'onboarding_install_witty_button' => 'Witty kostenlos runterladen',
     'terms' => 'Nutzungsbedingungen',
     'contact' => 'Kontakt',
     'book-demo' => 'Demo buchen',
     'privacy' => 'Datenschutzerklärung',
-    'trust-and-security' => 'Vertrauen & Sicherheit',
+    'trust-and-security' => 'Sicherheit',
     'imprint' => 'Impressum',
     'making_changes_requires_admin_rights' => 'Um Änderungen vorzunehmen, sind Administrationsrechte erforderlich. Bitte wende dich an dein*e <a href="mailto::email">Team-Eigentümer*in</a>.',
     'already_invited_to_team' => 'Diese*r Benutzer*in wurde bereits in das Team eingeladen.',
@@ -234,6 +186,19 @@ Dein Witty-Team',
     'account_already_exists' => 'Ein Konto mit dieser E-Mail-Adresse ist bereits vorhanden.',
     'onboarding_invitations' => 'Offene Team-Einladungen',
     'witty_for_teams' => 'Witty für Teams',
-    'onboarding_personal_team' => '1. Team automatisch erstellt',
     'witty_editor' => 'Witty Editor',
+    'log_in_register' => 'Anmelden / Registrieren',
+    'manage_members' => 'Team verwalten',
+    'subscription' => 'Abonnement',
+    'pricing' => '<a href="https://www.witty.works/pricing"><strong>pricing</strong></a>',
+    'more_resouces' => 'Weitere Infos',
+    'get_in_touch' => 'Kontaktiere uns',
+    'academy' => 'Akademie',
+    'invite_team_members_title' => 'Lade deine Teammitglieder ein',
+    'invite_team_members_text' => 'Fangt an, gemeinsam inklusive zu schreiben.',
+    'invite_team_members_button' => 'Lade deine Teammitglieder ein',
+    'mailing_consent_title' => 'Erhalte Produktneuheiten',
+    'mailing_consent_text' => 'Ich stimme zu, wichtige Produkt-Updates und Nachrichten zum Thema inklusive Sprach zu erhalten.',
+    'mailing_consent_button' => 'Abonnieren',
+    'renew' => 'Abonnement fortsetzen',
 ];

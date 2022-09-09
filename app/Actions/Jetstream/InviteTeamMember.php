@@ -2,6 +2,7 @@
 
 namespace App\Actions\Jetstream;
 
+use App\Events\UserGuidelinesUpdated;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -10,6 +11,7 @@ use Laravel\Jetstream\Contracts\InvitesTeamMembers;
 use Laravel\Jetstream\Events\InvitingTeamMember;
 use Laravel\Jetstream\Jetstream;
 use App\Mail\TeamInvitation;
+use App\Models\User;
 use Laravel\Jetstream\Rules\Role;
 
 class InviteTeamMember implements InvitesTeamMembers
@@ -35,6 +37,11 @@ class InviteTeamMember implements InvitesTeamMembers
             'email' => $email,
             'role' => $role,
         ]);
+
+        $user = User::where('email', $email)->first();
+        if ($user) {
+            UserGuidelinesUpdated::dispatch($user);
+        }
 
         Mail::to($email)->send(new TeamInvitation($invitation));
     }

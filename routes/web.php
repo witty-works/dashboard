@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Livewire\GuidelinesController;
+use App\Http\Controllers\Livewire\OrganizationGuidelinesController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\StripeController;
@@ -15,6 +15,7 @@ use App\Http\Controllers\TeamInvitationController;
 use Laravel\Jetstream\Http\Controllers\Livewire\ApiTokenController;
 use Laravel\Jetstream\Http\Controllers\Livewire\PrivacyPolicyController;
 use App\Http\Controllers\Livewire\TeamController;
+use App\Http\Controllers\Livewire\UserGuidelinesController;
 use Laravel\Jetstream\Http\Controllers\Livewire\TermsOfServiceController;
 use Laravel\Jetstream\Http\Controllers\Livewire\UserProfileController;
 use Laravel\Jetstream\Jetstream;
@@ -30,6 +31,7 @@ use Laravel\Jetstream\Jetstream;
 |------------------
 */
 use App\Http\Controllers\OAuthController;
+use App\Http\Controllers\WelcomeController;
 /*
 |------------------
 | \SOCIALSTREAM
@@ -67,12 +69,6 @@ Route::group(
     function () {
         Route::impersonate();
 
-        Route::get('/', function () {
-            return view('dashboard');
-        })->name('dashboard');
-
-        Route::get('/subscribe', [StripeController::class, 'subscribe'])->name('stripe.subscribe');
-
         /*
         |------------------
         | JETSTREAM LIVEWIRE
@@ -85,9 +81,20 @@ Route::group(
             }
 
             Route::group(['middleware' => ['auth:' . config('fortify.guard')]], function () {
+                Route::get('/', [WelcomeController::class, 'show']);
+
+                Route::get('/subscribe', [StripeController::class, 'subscribe'])->name('stripe.subscribe');
+
                 // User & Profile...
                 Route::get('/user/profile', [UserProfileController::class, 'show'])
                     ->name('profile.show');
+
+                Route::get('/user/mailing', [WelcomeController::class, 'mailingConsent'])
+                    ->name('user.mailing_consent');
+
+                Route::get('/user/academy', function () {
+                    return view('academy');
+                })->name('academy');
 
                 // API...
                 if (Jetstream::hasApiFeatures()) {
@@ -107,10 +114,18 @@ Route::group(
                         ->middleware(['auth'])
                         ->name('team-invitations.reject');
 
-                    Route::redirect('/team/language', '/team/language/customize-witty')->name('language-guidelines');
-                    Route::get('/team/language/customize-witty', [GuidelinesController::class, 'customizeWitty'])->name('customize-witty');
-                    Route::get('/team/language/term-replacements', [GuidelinesController::class, 'termReplacements'])->name('term-replacements');
-                    Route::get('/team/language/ignore-words', [GuidelinesController::class, 'falsePositives'])->name('ignore-words');
+                    Route::redirect('/user/language', '/user/language/language-settings')->name('user.language-guidelines');
+                    Route::get('/user/language/language-settings', [UserGuidelinesController::class, 'customizeWitty'])->name('user.language-settings');
+                    Route::get('/user/language/language-settings/reset', [UserGuidelinesController::class, 'reset'])->name('user.language-settings-reset');
+                    Route::get('/user/language/dictionary', [UserGuidelinesController::class, 'termReplacements'])->name('user.dictionary');
+                    Route::get('/user/language/ignore-words', [UserGuidelinesController::class, 'falsePositives'])->name('user.ignored-words');
+                    Route::get('/user/language/privacy-settings', [UserGuidelinesController::class, 'domains'])->name('user.privacy-settings');
+
+                    Route::redirect('/team/language', '/team/language/language-settings')->name('teams.language-guidelines');
+                    Route::get('/team/language/language-settings', [OrganizationGuidelinesController::class, 'customizeWitty'])->name('teams.language-settings');
+                    Route::get('/team/language/dictionary', [OrganizationGuidelinesController::class, 'termReplacements'])->name('teams.dictionary');
+                    Route::get('/team/language/ignored-words', [OrganizationGuidelinesController::class, 'falsePositives'])->name('teams.ignored-words');
+                    Route::get('/team/language/privacy-settings', [OrganizationGuidelinesController::class, 'domains'])->name('teams.privacy-settings');
                 }
             });
         });
@@ -145,7 +160,7 @@ Route::group(
 |------------------
 */
 Route::group(['middleware' => config('socialstream.middleware', ['web'])], function () {
-    Route::redirect('/login', '/')->name('login');
+    Route::get('/', [WelcomeController::class, 'show'])->name('login');
     Route::redirect('/register', '/')->name('register');
     Route::get('/mock-login', [OAuthController::class, 'mockLogin']);
     Route::get('/logout/{provider}', [OAuthController::class, 'logout'])->name('logout');

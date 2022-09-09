@@ -34,6 +34,7 @@ class User extends Authenticatable implements MustVerifyEmail
     use Notifiable;
     use SetsProfilePhotoFromUrl;
     use TwoFactorAuthenticatable;
+    use GuidelinesTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -108,6 +109,26 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsTo(Jetstream::teamModel(), 'current_team_id');
     }
 
+    public function languageGuidelines()
+    {
+        return $this->hasOne(LanguageGuidelines::class, 'user_id');
+    }
+
+    public function termReplacements()
+    {
+        return $this->hasMany(TermReplacement::class, 'user_id');
+    }
+
+    public function falsePositives()
+    {
+        return $this->hasMany(FalsePositive::class, 'user_id');
+    }
+
+    public function domains()
+    {
+        return $this->hasMany(Domain::class, 'user_id');
+    }
+
     public function posthogId()
     {
         return AppServiceProvider::POSTHOG_ID_PREFIX . $this->id;
@@ -122,15 +143,75 @@ class User extends Authenticatable implements MustVerifyEmail
         return null;
     }
 
+    static public function getEmailFromProvider($userData)
+    {
+        return $userData['otherMails'][0]
+            ?? $userData['emails'][0]
+            ?? $userData['email']
+            ?? null;
+    }
+
     public function updateName($userData)
     {
-        if (empty($userData['nickname'])) {
+        if (!empty($userData['name'])) {
             $this->name = $userData['name'];
-        } else {
+        } elseif (!empty($userData['nickname'])) {
             $this->name = $userData['nickname'];
         }
 
-        $this->email = $userData['emails'][0] ?? $userData['email'];
+        $email = self::getEmailFromProvider($userData);
+        if (!empty($email)) {
+            $this->email = $email;
+        }
+    }
+
+    public function subscribed($name = 'witty', $price = null)
+    {
+        $team = $this->currentTeam;
+        if ($team) {
+            return $team->subscribed($name, $price);
+        }
+    }
+
+    public function subscription($name = 'witty')
+    {
+        $team = $this->currentTeam;
+        if ($team) {
+            return $team->subscription($name);
+        }
+    }
+
+    public function getTermReplacementsCount()
+    {
+        $key = '.features.user_term_replacements.count';
+        if ($this->subscribed() && $this->term_replacements === null) {
+            return config('stripe.plans.' . $this->planId() . $key);
+        }
+
+        return $this->term_replacements ?? config('stripe.plans.witty_free' . $key);
+    }
+
+    public function getFalsePositivesCount()
+    {
+        $key = '.features.user_false_positives.count';
+        if ($this->subscribed() && $this->false_positives === null) {
+            return config('stripe.plans.' . $this->planId() . $key);
+        }
+
+        return $this->false_positives ?? config('stripe.plans.witty_free' . $key);
+    }
+
+    public function planId()
+    {
+        $team = $this->currentTeam;
+        if ($team) {
+            return $team->planId();
+        }
+    }
+
+    public function getNotificationCount()
+    {
+        return $this->invitations->count();
     }
 
     /**

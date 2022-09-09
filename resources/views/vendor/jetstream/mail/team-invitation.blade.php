@@ -3,8 +3,8 @@
 
 {!! __('content.invitation_email_welcome') !!}
 
-@component('mail::button', ['url' => route('dashboard')])
-{!! __('content.register') !!}
+@component('mail::button', ['url' => route('login')])
+{!! __('content.log_in_register') !!}
 @endcomponent
 
 {!! __('content.if_you_did_not_expect') !!}

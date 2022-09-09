@@ -1,7 +1,5 @@
 <div>
     @if (Gate::check('viewUserCreateForm', $team))
-        <x-jet-section-border />
-
         <!-- Add Team Member -->
         <div class="mt-10 sm:mt-0" id="add-team-member">
             <x-jet-form-section submit="addTeamMember">
@@ -10,7 +8,7 @@
                 </x-slot>
 
                 <x-slot name="description">
-                    {{ __('content.add_a_new_team_member', ['max_count' => $team->getUserLicensesCount()]) }}
+                    {{ trans_choice('content.add_a_new_team_member', $team->getUserLicensesCount(), ['max_count' => $team->getUserLicensesCount()]) }}
                 </x-slot>
 
                 <x-slot name="form">
@@ -30,8 +28,8 @@
                             @if($team->getUserLicensesLimitReached())
                             {{ __('teams.user_limit_reached_error', ['max_count' => $team->getUserLicensesCount()]) }}
                             @if(Auth::user()->ownsTeam($team))
-                            <a href="{{ route('stripe.portal') }}">
-                                {{ __('teams.upgrade') }}
+                            <a href="{{ route('teams.subscription') }}">
+                                {{ __('teams.add_licenses') }}
                             </a>
                             @endif
                             @endif
@@ -40,7 +38,7 @@
 
                     <!-- Role -->
                     @if (count($this->roles) > 0)
-                        <div class="col-span-6 lg:col-span-4">
+                        <div class="col-span-6 lg:col-span-4" wire:init="$set('addTeamMemberForm.role', 'admin')">
                             <x-jet-label for="role" value="{{ __('content.role') }}" />
                             <x-jet-input-error for="role" class="mt-2" />
 
