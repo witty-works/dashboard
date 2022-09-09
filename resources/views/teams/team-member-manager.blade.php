@@ -103,7 +103,7 @@
         <div class="mt-10 sm:mt-0">
             <x-jet-action-section>
                 <x-slot name="title">
-                    {{ __('content.pending_team_invitations') }}
+                    {{ __('content.pending_team_invitations', ['count' => $team->teamInvitations->count()]) }}
                 </x-slot>
 
                 <x-slot name="description">
@@ -140,7 +140,7 @@
         <div class="mt-10 sm:mt-0">
             <x-jet-action-section>
                 <x-slot name="title">
-                    {{ __('content.team_members') }}
+                    {{ __('content.team_members', ['count' => $team->users->count()]) }}
                 </x-slot>
 
                 <x-slot name="description">

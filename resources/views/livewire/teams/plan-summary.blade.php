@@ -67,7 +67,7 @@
             </div>
             <div class="mt-5">
                 <x-jet-label for="name" value="{{ __('teams.user_licenses') }}" />
-                {{ __('teams.total_of_max_used_licenses', ['total' => $team->getTotalUserCount(), 'max_count' => $team->getUserLicensesCount()]) }}
+                {{ __('teams.total_of_max_used_licenses', ['total' => $team->getTotalUserWithInvitationsCount(), 'max_count' => $team->getUserLicensesCount()]) }}
                 @if($team->subscribed() && $team->subscription()->isPaidByInvoice())
                     <div>
                         {!! __('teams.more_licenses') !!}
