@@ -171,24 +171,25 @@ class Team extends JetstreamTeam
             || $this->languageGuidelines !== null;
     }
 
-    public function subscribe($licenseCount = null)
+    public function redirectToCheckout($licenseCount = null)
     {
-        if (!$this->subscribed()) {
-            $licenseCount = $licenseCount ?? $this->getTotalUserWithInvitationsCount();
-
-            return $this
-                ->allowPromotionCodes()
-                ->checkout(
-                    [[
-                        'price' => config('stripe.plans.witty_teams.price_id'),
-                        'quantity' => $licenseCount
-                    ]],
-                    [
-                        'success_url' => route('teams.subscription'),
-                        'cancel_url' => route('teams.subscription'),
-                        'mode' => 'subscription'
-                    ]
-                );
+        $subscriptionRoute = route('teams.subscription');
+        if (!$this->subscribed() && !$this->subscription()->canceled()) {
+            return false;
         }
+
+        return $this
+            ->allowPromotionCodes()
+            ->checkout(
+                [[
+                    'price' => config('stripe.plans.witty_teams.price_id'),
+                    'quantity' => $licenseCount ?? $this->getTotalUserWithInvitationsCount()
+                ]],
+                [
+                    'success_url' => $subscriptionRoute,
+                    'cancel_url' => $subscriptionRoute,
+                    'mode' => 'subscription'
+                ]
+            )->redirect();
     }
 }

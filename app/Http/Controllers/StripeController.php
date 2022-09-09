@@ -84,6 +84,6 @@ class StripeController extends Controller
             );
         }
 
-        return $team->subscribe()->redirect();
+        return $team->redirectToCheckout();
     }
 }

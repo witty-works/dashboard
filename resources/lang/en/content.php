@@ -200,4 +200,5 @@ Your Witty team',
     'mailing_consent_title' => 'Get Product News',
     'mailing_consent_text' => 'I agree to receive important product updates and inclusive language news.',
     'mailing_consent_button' => 'Subscribe',
+    'renew' => 'Resume Subscription',
 ];

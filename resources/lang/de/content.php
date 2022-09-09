@@ -200,4 +200,5 @@ Dein Witty-Team',
     'mailing_consent_title' => 'Erhalte Produktneuheiten',
     'mailing_consent_text' => 'Ich stimme zu, wichtige Produkt-Updates und Nachrichten zum Thema inklusive Sprach zu erhalten.',
     'mailing_consent_button' => 'Abonnieren',
+    'renew' => 'Abonnement fortsetzen',
 ];

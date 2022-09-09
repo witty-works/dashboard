@@ -31,7 +31,7 @@
                 />
 
                 <x-jet-button>
-                    {{ $team->subscribed() ? __('content.save') : __('teams.upgrade') }}
+                    {{ $team->subscribed() ? ($team->subscription()->canceled() ? __('content.renew') : __('content.save')) : __('teams.upgrade') }}
                 </x-jet-button>
 
                 <x-jet-action-message class="inline-block" on="saved">

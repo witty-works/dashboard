@@ -53,11 +53,12 @@ class PlanSummary extends Component
             throw ValidationException::withMessages(['license_count' => $message]);
         }
 
-        $subscription = $this->team->subscription();
-        if (!$subscription) {
-            return $this->team->subscribe($licenseCount)->redirect();
+        $checkOut = $this->team->redirectToCheckout($licenseCount);
+        if ($checkOut) {
+            return $checkOut;
         }
 
+        $subscription = $this->team->subscription();
         if ($subscription->quantity != $licenseCount) {
             $subscription->alwaysInvoice()->updateQuantity($licenseCount);
             $subscription->syncStartRenewalAt();
