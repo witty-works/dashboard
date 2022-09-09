@@ -42,15 +42,14 @@ class SyncToHubspot extends Command
         $userCount = 0;
 
         foreach (User::whereNull('hubspot_id')->cursor() as $user) {
-            $data = [
-                'has_witty_account' => 'Yes',
-                'email' => $user->email,
-                'has_consented_to_mailing' => $user->has_consented_to_mailing ? 'Yes' : 'No',
-            ];
+            $data = $this->getHubspotData();
 
             try {
+                $newData = $data;
+                $newData['email'] = $user->email;
+
                 $contactInput = new \HubSpot\Client\Crm\Contacts\Model\SimplePublicObjectInput();
-                $contactInput->setProperties($data);
+                $contactInput->setProperties($newData);
 
                 $contact = $hubspot->crm()->contacts()->basicApi()->create($contactInput);
                 $contactId = $contact['id'];
