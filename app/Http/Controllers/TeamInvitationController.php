@@ -25,15 +25,18 @@ class TeamInvitationController extends BaseTeamInvitationController
 
         $response = parent::accept($request, $invitation);
 
-        $user->switchTeam($invitation->team);
-
-        if ($user->currentTeam) {
-            if ($user->ownsTeam($user->currentTeam)) {
-                $user->currentTeam->delete();
+        $currentTeam = $user->currentTeam;
+        if ($currentTeam) {
+            if ($user->ownsTeam($currentTeam)) {
+                if ($currentTeam->subscribed() && !$currentTeam->subscription()->canceled()) {
+                    $currentTeam->subscription()->cancel();
+                }
             } else {
-                $user->currentTeam->removeUser($user);
+                $currentTeam->removeUser($user);
             }
         }
+
+        $user->switchTeam($invitation->team);
 
         foreach ($user->invitations as $invitation) {
             $invitation->delete();

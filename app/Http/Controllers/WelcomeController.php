@@ -22,16 +22,12 @@ class WelcomeController extends Controller
             return redirect()->route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'login']);
         }
 
-        $team = $this->getCurrentTeam($request);
-        if ($team) {
-            if ($user->ownsTeam($team) || $user->hasTeamPermission($team, 'update')) {
-                return redirect()->route('teams.language-guidelines');
-            }
-
-            return redirect()->route('user.language-guidelines');
+        $team = $user->currentTeam;
+        if ($team && $user->ownsTeam($team) || $user->hasTeamPermission($team, 'update')) {
+            return redirect()->route('teams.language-guidelines');
         }
 
-        return redirect('https://chrome.google.com/webstore/detail/witty/meojhlodfiihbjkcnehkdcgncnhgagog');
+        return redirect()->route('user.language-guidelines');
     }
 
     public function mailingConsent(Request $request)
