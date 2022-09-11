@@ -133,8 +133,7 @@ class OAuthController extends BaseOAuthController
 
         $user->forceFill([
             'current_connected_account_id' => $account->id,
-            'has_consented_to_terms_of_service' => $providerAccount->user['extension_TermsOfUseConsented'] ?? null,
-            'has_consented_to_mailing' => boolval($providerAccount->user['extension_MailingConsented'] ?? null),
+            'has_consented_to_terms_of_service' => $providerAccount->user['extension_termsOfUseConsentDateTime'] ?? null,
         ])->save();
 
         return $this->login($user);
