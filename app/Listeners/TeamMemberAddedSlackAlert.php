@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use Illuminate\Support\Facades\App;
 use Spatie\SlackAlerts\Facades\SlackAlert;
 
 class TeamMemberAddedSlackAlert
@@ -15,7 +16,7 @@ class TeamMemberAddedSlackAlert
         $subscription = $event->team->subscription();
         if (!$subscription) {
             $team = $event->team;
-            SlackAlert::message("A new team member '{$event->user->email}' was added to '{$team->name}' ('{$team->owner->email}'), total count is now at {$team->getTotalUserCount()}.");
+            SlackAlert::message(App::environment()." - A new team member '{$event->user->email}' was added to '{$team->name}' ('{$team->owner->email}'), total count is now at {$team->getTotalUserCount()}.");
         }
     }
 }

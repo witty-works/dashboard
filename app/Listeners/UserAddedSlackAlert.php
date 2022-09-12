@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use Illuminate\Support\Facades\App;
 use Spatie\SlackAlerts\Facades\SlackAlert;
 
 class UserAddedSlackAlert
@@ -12,6 +13,6 @@ class UserAddedSlackAlert
             return;
         }
 
-        SlackAlert::message("A new user was added {$event->user->email}.");
+        SlackAlert::message(App::environment() . " - A new user was added {$event->user->email}.");
     }
 }
