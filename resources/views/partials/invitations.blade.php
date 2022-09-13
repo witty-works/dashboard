@@ -1,17 +1,27 @@
 <div class="wittyworks-upgrade-banner">
     <div class="wittyworks-upgrade-banner-text-container">
         <div class="wittyworks-upgrade-banner-text">
-            @if($user->ownedTeams()->count() && $user->ownedTeams()->first()->hasLanguageRules())
-                <div>
-                    {!! __('content.contact_support_to_delete_owned_teams', ['deleteUrl' => route('teams.show') . '#delete-team']) !!}
-                </div>
-                <br />
+            <div>
+                {!! __('content.accepting_invitation_will_result_in_leaving_your_current_team', ['team_name' => $user->currentTeam->name, 'invite_team_name' => $user->invitations[0]->team->name, 'invite_user_email' => $user->invitations[0]->team->owner->email]) !!}
+            </div>
+
+            @if($user->ownsTeam($user->currentTeam) && $user->currentTeam->subscribed())
+            <br />
+
+            @if($user->invitations[0]->team->subscribed())
+            <div>
+                {!! __('content.accepting_invitation_will_cancel') !!}
+            </div>
+            @else
+            <div>
+                {!! __('content.accepting_invitation_will_cancel_and_downgrade') !!}
+            </div>
             @endif
 
-            <div>
-                {!! __('content.accepting_invitation_will_result_in_leaving_your_current_team', ['team_name' => $user->allTeams()->first()->name, 'invite_team_name' => $user->invitations[0]->team->name, 'invite_user_email' => $user->invitations[0]->team->owner->email]) !!}
-            </div>
-    </div>
+            @endif
+
+            <br />
+        </div>
     </div>
     <div>
         <div class="wittyworks-accept-invite-wrapper">
