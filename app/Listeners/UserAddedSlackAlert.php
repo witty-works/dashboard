@@ -13,6 +13,6 @@ class UserAddedSlackAlert
             return;
         }
 
-        SlackAlert::message(App::environment() . " - A new user was added {$event->user->email}.");
+        SlackAlert::message(getenv('PLATFORM_ENVIRONMENT') . " - A new user was added {$event->user->email}.");
     }
 }
