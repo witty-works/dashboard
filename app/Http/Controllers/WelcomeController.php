@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UserUpdated;
+use App\Listeners\UpdateUserGuidelines;
 use Illuminate\Http\Request;
 
 class WelcomeController extends Controller
@@ -38,6 +40,9 @@ class WelcomeController extends Controller
             $user->save();
 
             $user->syncHubspot();
+
+            $updateUserGuidelines = new UpdateUserGuidelines();
+            $updateUserGuidelines->handle(new UserUpdated($user));
         }
 
         return redirect()->back();
