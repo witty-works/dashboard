@@ -99,7 +99,11 @@ class OAuthController extends BaseOAuthController
         }
 
         // Registration...
-        if (FortifyFeatures::enabled(FortifyFeatures::registration()) && ($request->is('api/*') || session()->get('socialstream.previous_url') === route('register')) && !$account) {
+        if (
+            FortifyFeatures::enabled(FortifyFeatures::registration())
+            && ($request->is('api/*') || session()->get('socialstream.previous_url') === route('register'))
+            && !$account
+        ) {
             $user = Jetstream::newUserModel()->where('email', $providerAccount->getEmail())->first();
 
             if ($user) {
@@ -116,13 +120,14 @@ class OAuthController extends BaseOAuthController
         }
 
         if (Features::hasCreateAccountOnFirstLoginFeatures() && !$account) {
-            if (Jetstream::newUserModel()->where('email', $providerAccount->getEmail())->exists()) {
-                return redirect()->route('login')->withErrors(
-                    __('content.account_already_exists')
+            $user = Jetstream::newUserModel()->where('email', $providerAccount->getEmail())->first();
+            if ($user) {
+                $user->switchConnectedAccount(
+                    $this->createsConnectedAccounts->create($user, $provider, $providerAccount)
                 );
+            } else {
+                $user = $this->createsUser->create($provider, $providerAccount);
             }
-
-            $user = $this->createsUser->create($provider, $providerAccount);
 
             return $this->login($user);
         }
