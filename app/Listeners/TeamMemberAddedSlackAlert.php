@@ -16,7 +16,7 @@ class TeamMemberAddedSlackAlert
         $subscription = $event->team->subscription();
         if (!$subscription) {
             $team = $event->team;
-            SlackAlert::message(App::environment()." - A new team member '{$event->user->email}' was added to '{$team->name}' ('{$team->owner->email}'), total count is now at {$team->getTotalUserCount()}.");
+            SlackAlert::message(getenv('PLATFORM_ENVIRONMENT') . " - A new team member '{$event->user->email}' was added to '{$team->name}' ('{$team->owner->email}'), total count is now at {$team->getTotalUserCount()}.");
         }
     }
 }
