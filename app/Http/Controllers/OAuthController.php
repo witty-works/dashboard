@@ -136,9 +136,24 @@ class OAuthController extends BaseOAuthController
 
         $this->updatesConnectedAccounts->update($user, $account, $provider, $providerAccount);
 
+        $has_consented_to_terms_of_service = null;
+        if (!empty($providerAccount->user['extension_termsOfUseConsentDateTime'])) {
+            $has_consented_to_terms_of_service = $providerAccount->user['extension_termsOfUseConsentDateTime'];
+        } elseif ($user) {
+            $has_consented_to_terms_of_service = $user->has_consented_to_terms_of_service;
+        }
+
+        $has_consented_to_mailing = null;
+        if (!empty($providerAccount->user['extension_MailingConsented'])) {
+            $has_consented_to_mailing = $providerAccount->user['extension_MailingConsented'] === 'Yes';
+        } elseif ($user) {
+            $has_consented_to_mailing = $user->has_consented_to_mailing;
+        }
+
         $user->forceFill([
             'current_connected_account_id' => $account->id,
-            'has_consented_to_terms_of_service' => $providerAccount->user['extension_termsOfUseConsentDateTime'] ?? null,
+            'has_consented_to_mailing' => $has_consented_to_mailing,
+            'has_consented_to_terms_of_service' => $has_consented_to_terms_of_service,
         ])->save();
 
         return $this->login($user);
