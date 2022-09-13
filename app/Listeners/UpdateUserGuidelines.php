@@ -53,6 +53,7 @@ class UpdateUserGuidelines extends AbstractUpdateGuidelines
             'domains' => $domains,
             'config' => $config,
             'notifications' => $user->getNotificationCount(),
+            'has_consented_to_mailing' => (bool) $user->has_consented_to_mailing,
         ];
 
         $data['config_hash'] = md5(serialize($data));

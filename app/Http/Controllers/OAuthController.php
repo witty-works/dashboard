@@ -99,7 +99,11 @@ class OAuthController extends BaseOAuthController
         }
 
         // Registration...
-        if (FortifyFeatures::enabled(FortifyFeatures::registration()) && ($request->is('api/*') || session()->get('socialstream.previous_url') === route('register')) && !$account) {
+        if (
+            FortifyFeatures::enabled(FortifyFeatures::registration())
+            && ($request->is('api/*') || session()->get('socialstream.previous_url') === route('register'))
+            && !$account
+        ) {
             $user = Jetstream::newUserModel()->where('email', $providerAccount->getEmail())->first();
 
             if ($user) {
@@ -115,27 +119,36 @@ class OAuthController extends BaseOAuthController
             );
         }
 
-        if (Features::hasCreateAccountOnFirstLoginFeatures() && !$account) {
-            if (Jetstream::newUserModel()->where('email', $providerAccount->getEmail())->exists()) {
-                return redirect()->route('login')->withErrors(
-                    __('content.account_already_exists')
-                );
-            }
+        $userData = [];
 
-            $user = $this->createsUser->create($provider, $providerAccount);
-
-            return $this->login($user);
+        if (!empty($providerAccount->user['extension_termsOfUseConsentDateTime'])) {
+            $userData['has_consented_to_terms_of_service'] = $providerAccount->user['extension_termsOfUseConsentDateTime'];
         }
 
-        $user = $account->user;
+        if (!$account) {
+            $user = Jetstream::newUserModel()->where('email', $providerAccount->getEmail())->first();
+            if ($user) {
+                $user->switchConnectedAccount(
+                    $this->createsConnectedAccounts->create($user, $provider, $providerAccount)
+                );
+            } else {
+                $user = $this->createsUser->create($provider, $providerAccount);
+            }
 
-        $this->updatesConnectedAccounts->update($user, $account, $provider, $providerAccount);
+            if (!empty($providerAccount->user['extension_MailingConsented'])) {
+                $userData['has_consented_to_mailing'] = $providerAccount->user['extension_MailingConsented'] === 'Yes';
+            }
+        } else {
+            $user = $account->user;
 
-        $user->forceFill([
-            'current_connected_account_id' => $account->id,
-            'has_consented_to_terms_of_service' => $providerAccount->user['extension_TermsOfUseConsented'] ?? null,
-            'has_consented_to_mailing' => boolval($providerAccount->user['extension_MailingConsented'] ?? null),
-        ])->save();
+            $this->updatesConnectedAccounts->update($user, $account, $provider, $providerAccount);
+
+            $userData['current_connected_account_id'] = $account->id;
+        }
+
+        if (!empty($userData)) {
+            $user->forceFill($userData)->save();
+        }
 
         return $this->login($user);
     }

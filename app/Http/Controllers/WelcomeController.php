@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UserUpdated;
+use App\Listeners\UpdateUserGuidelines;
 use Illuminate\Http\Request;
 
 class WelcomeController extends Controller
@@ -22,16 +24,12 @@ class WelcomeController extends Controller
             return redirect()->route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'login']);
         }
 
-        $team = $this->getCurrentTeam($request);
-        if ($team) {
-            if ($user->ownsTeam($team) || $user->hasTeamPermission($team, 'update')) {
-                return redirect()->route('teams.language-guidelines');
-            }
-
-            return redirect()->route('user.language-guidelines');
+        $team = $user->currentTeam;
+        if ($team && $user->ownsTeam($team) || $user->hasTeamPermission($team, 'update')) {
+            return redirect()->route('teams.language-guidelines');
         }
 
-        return redirect('https://chrome.google.com/webstore/detail/witty/meojhlodfiihbjkcnehkdcgncnhgagog');
+        return redirect()->route('user.language-guidelines');
     }
 
     public function mailingConsent(Request $request)
@@ -42,6 +40,9 @@ class WelcomeController extends Controller
             $user->save();
 
             $user->syncHubspot();
+
+            $updateUserGuidelines = new UpdateUserGuidelines();
+            $updateUserGuidelines->handle(new UserUpdated($user));
         }
 
         return redirect()->back();
