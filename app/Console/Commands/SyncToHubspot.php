@@ -42,7 +42,7 @@ class SyncToHubspot extends Command
         $userCount = 0;
 
         foreach (User::whereNull('hubspot_id')->cursor() as $user) {
-            $data = $this->getHubspotData();
+            $data = $user->getHubspotData();
 
             try {
                 $newData = $data;
