@@ -125,10 +125,6 @@ class OAuthController extends BaseOAuthController
             $userData['has_consented_to_terms_of_service'] = $providerAccount->user['extension_termsOfUseConsentDateTime'];
         }
 
-        if (!empty($providerAccount->user['extension_MailingConsented'])) {
-            $userData['has_consented_to_mailing'] = $providerAccount->user['extension_MailingConsented'] === 'Yes';
-        }
-
         if (!$account) {
             $user = Jetstream::newUserModel()->where('email', $providerAccount->getEmail())->first();
             if ($user) {
@@ -137,6 +133,10 @@ class OAuthController extends BaseOAuthController
                 );
             } else {
                 $user = $this->createsUser->create($provider, $providerAccount);
+            }
+
+            if (!empty($providerAccount->user['extension_MailingConsented'])) {
+                $userData['has_consented_to_mailing'] = $providerAccount->user['extension_MailingConsented'] === 'Yes';
             }
         } else {
             $user = $account->user;
