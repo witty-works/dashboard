@@ -200,4 +200,6 @@ Dein Witty-Team',
     'mailing_consent_text' => 'Ich stimme zu, wichtige Produkt-Updates und Nachrichten zum Thema inklusive Sprach zu erhalten.',
     'mailing_consent_button' => 'Abonnieren',
     'renew' => 'Abonnement fortsetzen',
+    'accepting_invitation_will_cancel' => 'Durch Annehmen dieser Einladung, wird das aktuelle Abonnement gekündigt.',
+    'accepting_invitation_will_cancel_and_downgrade' => 'Wenn Sie diese Einladung annehmen, wird Ihr aktuelles Abonnement gekündigt und Sie werden auf den Witty Free-Plan herabgestuft.',
 ];
