@@ -31,19 +31,26 @@ class DomainStats extends Command
      */
     public function handle()
     {
-        $results = DB::select("select COUNT(*) as count, RIGHT(email, LENGTH(email)-INSTR(email, '@')) as domain FROM users GROUP BY domain ORDER BY domain");
-        $html = "Domain Counts (for domains that had changes)";
-        $html.= "<ul>";
+        $results = DB::select("SELECT COUNT(*) as count, RIGHT(email, LENGTH(email)-INSTR(email, '@')) as domain FROM users GROUP BY domain ORDER BY domain");
+        $html = "Domain Counts (for domains that had new users in the last 24h)";
+        $html .= "<ul>";
+
+        $count = 0;
         foreach ($results as $result) {
-            $created_count = DB::select("select COUNT(*) as count FROM users WHERE email LIKE '%@{$result->domain}' AND created_at > DATE_SUB(NOW(), INTERVAL 1 DAY) GROUP BY created_at");
+            $created_count = DB::select("SELECT COUNT(*) as count FROM users WHERE email LIKE '%@{$result->domain}' AND created_at > DATE_SUB(NOW(), INTERVAL 1 DAY) GROUP BY created_at");
             if (empty($created_count[0])) {
                 continue;
             }
 
+            $team_count = DB::select("SELECT COUNT(*) as count FROM users WHERE email LIKE '%@{$result->domain}' GROUP BY current_team_id");
+
             $created_count = $created_count[0]->count;
-            $html.= "<li>{$result->domain}: {$result->count} (added {$created_count})</li>";
+            $team_count = $team_count[0]->count;
+            $html .= "<li>{$result->domain}: {$result->count} in {$team_count} different teams (added {$created_count})</li>";
+
+            $count++;
         }
-        $html.= "</ul>";
+        $html .= "</ul>";
 
         Mail::send([], [], function (Message $message) use ($html) {
             $message->to('sales@witty.works')
@@ -51,5 +58,7 @@ class DomainStats extends Command
                 ->from('support@witty.works')
                 ->html($html);
         });
+
+        $this->info("Send email for $count domains with new users.");
     }
 }
