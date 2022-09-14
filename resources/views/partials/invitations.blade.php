@@ -1,40 +1,25 @@
 <div class="wittyworks-upgrade-banner">
-    <div class="wittyworks-upgrade-banner-text-container">
-        <div class="wittyworks-upgrade-banner-text">
-            <div>
-                {!! __('content.accepting_invitation_will_result_in_leaving_your_current_team', ['team_name' => $user->currentTeam->name, 'invite_team_name' => $user->invitations[0]->team->name, 'invite_user_email' => $user->invitations[0]->team->owner->email]) !!}
-            </div>
-
-            @if($user->ownsTeam($user->currentTeam) && $user->currentTeam->subscribed())
-            <br />
-
-            @if($user->invitations[0]->team->subscribed())
-            <div>
-                {!! __('content.accepting_invitation_will_cancel') !!}
-            </div>
-            @else
-            <div>
-                {!! __('content.accepting_invitation_will_cancel_and_downgrade') !!}
-            </div>
-            @endif
-
-            @endif
-
-            <br />
+    <div class="wittyworks-invite-banner-text">
+        {!! __('content.accepting_invitation_will_result_in_leaving_your_current_team', ['team_name' => $user->currentTeam->name, 'invite_team_name' => $user->invitations[0]->team->name, 'invite_user_email' => $user->invitations[0]->team->owner->email]) !!}
+        @if($user->ownsTeam($user->currentTeam) && $user->currentTeam->subscribed())
+        <br />
+        @if($user->invitations[0]->team->subscribed())
+        {!! __('content.accepting_invitation_will_cancel') !!}
+        @else
+        {!! __('content.accepting_invitation_will_cancel_and_downgrade') !!}
+        @endif
+        @endif
         </div>
-    </div>
-    <div>
-        <div class="wittyworks-accept-invite-wrapper">
-            <div class="wittyworks-upgrade-banner-button-container">
-                <a class="wittyworks-button wittyworks-button--purple" href="{{ route('team-invitations.accept', ['invitation' => $user->invitations[0]]) }}">
-                    {{ __('content.accept_invitiation') }}
-                </a>
-            </div>
-            <div class="wittyworks-upgrade-banner-button-container">
-                <a class="wittyworks-button wittyworks-button--white-purple" href="{{ route('team-invitations.reject', ['invitation' => $user->invitations[0]]) }}">
-                    {{ __('content.reject_invitiation') }}
-                </a>
-            </div>
+    <div class="wittyworks-accept-invite-wrapper">
+        <div class="wittyworks-upgrade-banner-button-container">
+            <a class="wittyworks-button wittyworks-button--purple" href="{{ route('team-invitations.accept', ['invitation' => $user->invitations[0]]) }}">
+                {{ __('content.accept_invitiation') }}
+            </a>
+        </div>
+        <div class="wittyworks-upgrade-banner-button-container">
+            <a class="wittyworks-button wittyworks-button--white-purple" href="{{ route('team-invitations.reject', ['invitation' => $user->invitations[0]]) }}">
+                {{ __('content.reject_invitiation') }}
+            </a>
         </div>
     </div>
 </div>

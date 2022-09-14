@@ -349,21 +349,23 @@ input:checked+.slider:before {
             #5acfb9 131.52%) border-box;
 }
 
-.wittyworks-upgrade-banner-text-container {
-    color: #9489db;
-}
-
 .wittyworks-upgrade-banner-title {
     font-weight: 700;
     margin: 4px 0px;
     font-size: 18px;
+    color: #9489db;
 }
 
 .wittyworks-upgrade-banner-text {
-    max-width: 100%;
     font-weight: normal;
+    color: #9489db;
 }
 
+.wittyworks-invite-banner-text {
+    max-width: 80%;
+    font-weight: normal;
+    color: #9489db;
+}
 .wittyworks-button {
     padding: 10px 15px;
     background: rgb(240, 100, 100);
