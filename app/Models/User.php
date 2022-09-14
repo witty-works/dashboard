@@ -220,6 +220,7 @@ class User extends Authenticatable implements MustVerifyEmail
             'has_witty_account' => 'Yes',
             'has_consented_to_mailing' => $this->has_consented_to_mailing ? 'Yes' : 'No',
             'has_accessed_stripe' => $this->has_accessed_stripe ? 'Yes' : 'No',
+            'impersonate_url' => config('app.url') . '/impersonate/take/' . $this->id,
         ];
     }
 
