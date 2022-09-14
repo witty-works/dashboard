@@ -207,4 +207,7 @@ Your Witty team',
     'renew' => 'Resume Subscription',
     'accepting_invitation_will_cancel' => 'Accepting this invitation will cancel your current subscription.',
     'accepting_invitation_will_cancel_and_downgrade' => 'Accepting this invitation will cancel your current subscription and downgrade you to the Witty Free plan.',
+    'onboarding_login_witty_title' => 'Please log into Witty',
+    'onboarding_login_witty_text' => 'In order to use Witty, please sign into the Witty browser extension.',
+    'onboarding_login_witty_button' => 'Sign into Witty',
 ];
