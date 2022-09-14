@@ -19,7 +19,7 @@ class TeamInvitationController extends BaseTeamInvitationController
     public function accept(Request $request, TeamInvitation $invitation)
     {
         $user = $request->user();
-        if ($user->email !== $invitation->email) {
+        if (strtolower($user->email) !== strtolower($invitation->email)) {
             abort(403, 'Unauthorized action.');
         }
 
