@@ -124,10 +124,16 @@ return [
     'team_information' => 'Name und Team-Eigentümer*in des Teams',
     'for_your_security_confirm' => 'Zu deiner eigenen Sicherheit, Bestätige dein Passwort, um fortzufahren.',
     'whoops' => 'Hoppla! Etwas ist schief gelaufen.',
-    'you_have_been_invited' => 'Willkommen bei Witty!
+    'you_have_been_invited' => 'Willkommen bei <a href="https://www.witty.works/">Witty</a>!
 
-Du wurdest von <a href="mailto::email">:name</a> auf <a href="https://www.witty.works/select-browser">Witty</a> eingeladen, dem :team Team beizutreten.',
-    'if_you_did_not_expect' => 'Wenn du nicht erwartet hattest, eine Einladung zu diesem Team zu erhalten, kannst du diese E-Mail verwerfen.',
+:name hat dich zum Team ":team" eingeladen!
+
+So kannst du deinem Team beitreten:
+
+- Lade das <a href="https://www.witty.works/download">Witty-Plugin</a> herunter
+- <a href="https://www.witty.works/register">Registriere dich oder logge dich ein</a>. 
+- Gehen zum <a href="https://dashboard.witty.works/">Dashboard</a> und akzeptiere die Einladung',
+    'if_you_did_not_expect' => 'Wenn du diese Einladung nicht annehmen willst, sind keine weiteren Schritte erforderlich.',
     'woops' => 'hoppla',
     'documentation' => 'Dokumentation',
     'welcome' => 'Willkommen beim Witty Dashboard',
@@ -142,9 +148,7 @@ Du wurdest von <a href="mailto::email">:name</a> auf <a href="https://www.witty.
     'en' => 'Englisch',
     'welcome_text' => 'Das Dashboard hilft dir, Witty einzurichten und deinen Bedürfnissen anzupassen.',
     'onboarding_signup_to_witty' => 'Meldung für ein Witty-Konto',
-    'invitation_email_welcome' => 'Wenn du dem Team beitrittst, erhältst du Zugriff auf die Spracheinstellungen des Teams auf Witty.
-
-Um diese Einladung anzunehmen, melde dich mit deinem bestehenden Konto an oder registriere ein neues Konto, indem du auf die Schaltfläche unten klickst:',
+    'invitation_email_welcome' => 'Wenn du dem Team beitreten, hast du Zugriff auf die Spracheinstellungen des Teams in Witty.',
     'onboarding_install_witty' => 'Installiere unsere Witty-Browsererweiterung',
     'accept_invitiation' => 'Annehmen',
     'reject_invitiation' => 'Ablehnen',
@@ -175,7 +179,8 @@ Um diese Einladung anzunehmen, melde dich mit deinem bestehenden Konto an oder r
     'already_invited_to_team' => 'Diese*r Benutzer*in wurde bereits in das Team eingeladen.',
     'already_belongs_to_team' => 'Diese*r Benutzer*in ist schon im Team.',
     'team_invitation_subject' => ':name hat dich eingeladen, dem :team Team auf Witty beizutreten',
-    'if_you_have_questions' => '<a href="https://www.witty.works/en/help/wittys-help-center">Hier</a> findest du Antworten auf viele Fragen. Du erreichst uns unter <a href="mailto:support@witty.works">support@witty.works</a>. Wir sind hier, um dir bei jedem Schritt auf dem Weg zu helfen.',
+    'if_you_have_questions' => 'P.S. Brauchst du Hilfe oder hast du Fragen?
+<a href="https://www.witty.works/en/help/wittys-help-center">Hier</a> findest du Antworten auf viele Fragen. Du erreichst uns unter <a href="mailto:support@witty.works">support@witty.works</a>. Wir sind hier, um dir bei jedem Schritt auf dem Weg zu helfen.',
     'have_a_great_day' => 'Wir wünschen dir einen schönen Tag,
 
 Dein Witty-Team',

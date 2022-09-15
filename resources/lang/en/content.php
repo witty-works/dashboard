@@ -128,13 +128,17 @@ return [
     'team_information' => 'The team\'s name and owner information',
     'for_your_security_confirm' => 'For your security, please confirm your password to continue.',
     'whoops' => 'Whoops! Something went wrong.',
-    'you_have_been_invited' => 'Welcome to Witty!
+    'you_have_been_invited' => 'Welcome to <a href="https://www.witty.works/">Witty</a>!
 
-You have been invited to join the :team team by <a href="mailto::email">:name</a> on <a href="https://www.witty.works/select-browser">Witty</a>.',
-    'invitation_email_welcome' => 'Joining the team will give you access to the team\'s language settings on Witty.
+:name has invited you to join team ":team"!
 
-To accept this invitation, log in with your existing account or register a new account by clicking on the button below:',
-    'if_you_did_not_expect' => 'If you did not expect to receive an invitation to this team, you may discard this email.',
+Here is how you can join your team:
+
+- <a href="https://www.witty.works/download">Download</a> the Witty plugin
+- Log in or register. To do so, follow <a href="https://www.witty.works/welcome">these quick onboarding steps</a>.
+- Go to the <a href="https://dashboard.witty.works/">dashboard</a> and accept the invitation',
+    'invitation_email_welcome' => 'When you join the team, you will have access to the team\'s language settings in Witty.',
+    'if_you_did_not_expect' => 'If you do not want to accept the invitation, no further steps are required.',
     'woops' => 'woops',
     'documentation' => 'Documentation',
     'welcome' => 'Welcome to the Witty Dashboard',
@@ -178,7 +182,8 @@ To accept this invitation, log in with your existing account or register a new a
     'already_invited_to_team' => 'This user has already been invited to the team.',
     'already_belongs_to_team' => 'This user already belongs to the team.',
     'team_invitation_subject' => ':name invited you to join the :team team on Witty',
-    'if_you_have_questions' => 'You can find answers to many questions <a href="https://www.witty.works/en/help/wittys-help-center">here</a>. You can get in touch with us at <a href="mailto:support@witty.works">support@witty.works</a>. We\'re here to help you at any step along the way.',
+    'if_you_have_questions' => 'P.S. Need support or have any questions? 
+You can find answers to many questions <a href="https://www.witty.works/en/help/wittys-help-center">here</a>. You can get in touch with us at <a href="mailto:support@witty.works">support@witty.works</a>. We\'re here to help you at any step along the way.',
     'have_a_great_day' => 'Have a great day,
 
 Your Witty team',
