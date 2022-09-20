@@ -206,6 +206,8 @@ return [
         SocialiteProviders\Manager\ServiceProvider::class,
         Themsaid\Langman\LangmanServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
+        Mailjet\LaravelMailjet\MailjetServiceProvider::class,
+
 
     ],
 
@@ -262,6 +264,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
         'Debugbar' => Barryvdh\Debugbar\Facades\Debugbar::class,
+        'Mailjet' => Mailjet\LaravelMailjet\Facades\Mailjet::class,
     ],
 
 ];
