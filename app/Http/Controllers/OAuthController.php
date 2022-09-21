@@ -153,11 +153,25 @@ class OAuthController extends BaseOAuthController
         return $this->login($user);
     }
 
+    protected function checkAllowedRedirectUri($redirectUri)
+    {
+        $allowedRedirectUris = config('services.azureadb2c.redirect_uri');
+        if (is_array($allowedRedirectUris)) {
+            foreach ($allowedRedirectUris as $uri) {
+                if (strpos($redirectUri, $uri) === 0) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
     protected function validateRedirectUri($redirectUri)
     {
         return config('services.azureadb2c.validate_redirect_uri_disabled')
             || strpos($redirectUri, 'moz-extension://') === 0
-            || in_array($redirectUri, config('services.azureadb2c.redirect_uri'));
+            || $this->checkAllowedRedirectUri($redirectUri);
     }
 
     protected function getAccessTokenResponse(ProviderInterface $provider)
