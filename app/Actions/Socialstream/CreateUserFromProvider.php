@@ -2,7 +2,7 @@
 
 namespace App\Actions\Socialstream;
 
-use App\Models\Team;
+use App\Http\Middleware\SwitchToTeam;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use JoelButcher\Socialstream\Contracts\CreatesConnectedAccounts;
@@ -56,6 +56,8 @@ class CreateUserFromProvider implements CreatesUserFromProvider
                 $user->switchConnectedAccount(
                     $this->createsConnectedAccounts->create($user, $provider, $providerUser)
                 );
+
+                SwitchToTeam::ensureTeam($user);
             });
         });
     }
