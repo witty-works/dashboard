@@ -32,20 +32,24 @@ class SwitchToTeam
                 // prefer invited teams
                 $user->switchTeam($teams->first());
             } elseif (!$user->currentTeam) {
-                $ownedTeams = $user->ownedTeams();
-
-                // every user should own a personal team
-                if (!$ownedTeams->count()) {
-                    $ownedTeams->save(Team::forceCreate([
-                        'user_id' => $user->id,
-                        'name' => explode(' ', $user->name, 2)[0] . "'s Team",
-                        'personal_team' => true,
-                    ]));
-                }
-
-                // fallback to the personal owned team
-                $user->switchTeam($ownedTeams->first());
+                self::ensureTeam($user);
             }
         }
+    }
+
+    static public function ensureTeam(User $user)
+    {
+        $ownedTeams = $user->ownedTeams();
+
+        if (!$ownedTeams->count()) {
+            $user->ownedTeams()->save(Team::forceCreate([
+                'user_id' => $user->id,
+                'name' => explode(' ', $user->name, 2)[0] . "'s Team",
+                'personal_team' => true,
+            ]));
+        }
+
+        // fallback to the personal owned team
+        $user->switchTeam($ownedTeams->first());
     }
 }
