@@ -42,7 +42,7 @@ class DomainStats extends Command
                 continue;
             }
 
-            $team_count = DB::select("SELECT COUNT(*) as count FROM users WHERE email LIKE '%@{$result->domain}' GROUP BY current_team_id");
+            $team_count = DB::select("SELECT COUNT(DISTINCT current_team_id) as count FROM users WHERE email LIKE '%@{$result->domain}'");
 
             $created_count = $created_count[0]->count;
             $team_count = $team_count[0]->count;
