@@ -173,9 +173,8 @@ class Team extends JetstreamTeam
 
     public function redirectToCheckout($licenseCount = null)
     {
-        $user = $this->owner;
-        $user->has_accessed_stripe = true;
-        $user->syncHubspot();
+        $this->owner->has_accessed_stripe = true;
+        $this->owner->save();
 
         $subscriptionRoute = route('teams.subscription');
         if ($this->subscribed() && !$this->subscription()->canceled()) {

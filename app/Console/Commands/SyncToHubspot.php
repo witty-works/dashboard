@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Jobs\SyncUserToHubSpot;
 use App\Models\User;
 use Illuminate\Console\Command;
 
@@ -12,7 +13,7 @@ class SyncToHubspot extends Command
      *
      * @var string
      */
-    protected $signature = 'hubspot:sync {--batch-size=}';
+    protected $signature = 'hubspot:sync';
 
     /**
      * The console command description.
@@ -34,63 +35,14 @@ class SyncToHubspot extends Command
             return;
         }
 
-        $hubspot = \HubSpot\Factory::createWithAccessToken(config('hubspot.access_token'));
+        $this->info('Queuing syncing to Hubspot ...');
 
-        $this->info('Syncing to HubSpot ...');
-
-        $batchSize = $this->option('batch-size') ?? false;
         $userCount = 0;
-
         foreach (User::whereNull('hubspot_id')->cursor() as $user) {
-            $data = $user->getHubspotData();
-
-            try {
-                $newData = $data;
-                $newData['email'] = $user->email;
-
-                $contactInput = new \HubSpot\Client\Crm\Contacts\Model\SimplePublicObjectInput();
-                $contactInput->setProperties($newData);
-
-                $contact = $hubspot->crm()->contacts()->basicApi()->create($contactInput);
-                $contactId = $contact['id'];
-            } catch (\HubSpot\Client\Crm\Contacts\ApiException $e) {
-                $filter = new \HubSpot\Client\Crm\Contacts\Model\Filter();
-                $filter
-                    ->setOperator('EQ')
-                    ->setPropertyName('email')
-                    ->setValue($user->email);
-
-                $filterGroup = new \HubSpot\Client\Crm\Contacts\Model\FilterGroup();
-                $filterGroup->setFilters([$filter]);
-
-                $searchRequest = new \HubSpot\Client\Crm\Contacts\Model\PublicObjectSearchRequest();
-                $searchRequest->setFilterGroups([$filterGroup]);
-
-                // @var CollectionResponseWithTotalSimplePublicObject $contactsPage
-                $contactsPage = $hubspot->crm()->contacts()->searchApi()->doSearch($searchRequest);
-                if ($contactsPage->getTotal()) {
-                    $contactId = $contactsPage->getResults()[0]['id'];
-
-                    $newProperties = new \HubSpot\Client\Crm\Contacts\Model\SimplePublicObjectInput();
-                    $newProperties->setProperties($data);
-
-                    $hubspot->crm()->contacts()->basicApi()->update($contactId, $newProperties);
-                } else {
-                    $contactId = 0;
-                }
-            }
-
-            $user->hubspot_id = $contactId;
-            $user->save();
+            /** @var \App\Models\User $user */
+            dispatch(new SyncUserToHubSpot($user));
 
             $userCount++;
-
-            if ($batchSize !== false) {
-                $batchSize--;
-                if ($batchSize <= 0) {
-                    break;
-                }
-            }
         }
 
         $this->info("Finished syncing $userCount users");
