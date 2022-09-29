@@ -76,7 +76,7 @@ crons:
         spec: "55 0 * * *"
         cmd: |
             if [ "$PLATFORM_BRANCH" = main ]; then
-                php artisan statistics:user-domains
+                php artisan statistics
             fi
 
 # The relationships of the application with services or other applications.
