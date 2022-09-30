@@ -2,7 +2,7 @@
 
 namespace App\Actions\Jetstream;
 
-use App\Events\UserGuidelinesUpdated;
+use App\Jobs\SyncUserToNlpApi;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -40,7 +40,8 @@ class InviteTeamMember implements InvitesTeamMembers
 
         $user = User::where('email', $email)->first();
         if ($user) {
-            UserGuidelinesUpdated::dispatch($user);
+            // update notification count
+            dispatch(new SyncUserToNlpApi($user, 'high'));
         }
 
         Mail::to($email)->send(new TeamInvitation($invitation));

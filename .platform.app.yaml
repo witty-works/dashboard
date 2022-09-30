@@ -60,18 +60,6 @@ crons:
             if [ "$PLATFORM_BRANCH" = main ]; then
                 platform backup:create --yes --no-wait --live
             fi
-    hubspot-sync:
-        spec: "*/10 * * * *"
-        cmd: |
-            if [ "$PLATFORM_BRANCH" = main ]; then
-                php artisan hubspot:sync --batch-size=10
-            fi
-    posthog-sync:
-        spec: "*/30 * * * *"
-        cmd: |
-            if [ "$PLATFORM_BRANCH" = main ]; then
-                php artisan posthog:sync --batch-size=10
-            fi
     generate-statistics:
         spec: "55 0 * * *"
         cmd: |
@@ -113,3 +101,12 @@ web:
             rules:
                 "^/(css|js)/app.(css|js)":
                     expires: 2m
+
+workers:
+    queue:
+        commands:
+            start: |
+                php artisan queue:work --queue=high,medium,low,default
+        disk: 256
+        relationships:
+            database: "rdbms:mysql"

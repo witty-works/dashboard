@@ -1,42 +1,26 @@
 <?php
 
-namespace App\Listeners;
+namespace App\Jobs;
 
 use Illuminate\Support\Facades\Http;
-use RuntimeException;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 
-class AbstractUpdateGuidelines
+abstract class AbstractSyncToNlpApi implements ShouldQueue
 {
-    public function deleteRules($query)
-    {
-        $endpoint = config('app.nlp_api_endpoint');
-        if (empty($endpoint['url'])) {
-            return;
-        }
-
-        $endpoint['url'] .= $query;
-
-        if (empty($endpoint['user'])) {
-            $response = Http::delete($endpoint['url']);
-        } else {
-            $response = Http::withBasicAuth($endpoint['user'], $endpoint['password'])
-                ->delete($endpoint['url']);
-        }
-
-        if ($response->failed() && $response->status() !== 404) {
-            if (config('app.debug')) {
-                dd($response->body(), $query);
-            } else {
-                throw new RuntimeException($response->body());
-            }
-        }
-    }
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public function updateRules($url, $data)
     {
         $endpoint = config('app.nlp_api_endpoint');
         if (empty($endpoint['url'])) {
-            return;
+            Log::debug("Endpoint URL not set, otherwise would update: $url ({$data['id']})");
+
+            return 0;
         }
 
         $endpoint['url'] .= $url;
@@ -48,14 +32,11 @@ class AbstractUpdateGuidelines
                 ->post($endpoint['url'], $data);
         }
 
-
         if ($response->failed() && $response->status() !== 404) {
-            if (config('app.debug')) {
-                dd($response->json(), $data, json_encode($data));
-            } else {
-                throw new RuntimeException($response->body());
-            }
+            return -1;
         }
+
+        return 0;
     }
 
     protected function getFalsePositives($falsePositives, $subscribed, $count)

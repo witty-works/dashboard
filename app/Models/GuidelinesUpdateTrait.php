@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\Events\UserGuidelinesUpdated;
-use App\Events\OrganizationGuidelinesUpdated;
+use App\Jobs\SyncOrganizationToNlpApi;
+use App\Jobs\SyncUserToNlpApi;
 use Illuminate\Database\Eloquent\Concerns\HasEvents;
 use Laravel\Jetstream\Jetstream;
 
@@ -35,15 +35,9 @@ trait GuidelinesUpdateTrait
         }
 
         if ($this->user) {
-            $result = static::$dispatcher->$method(new UserGuidelinesUpdated($this->user));
-            if (!is_null($result)) {
-                return $result;
-            }
+            dispatch(new SyncUserToNlpApi($this->user, 'high'));
         } elseif ($this->team) {
-            $result = static::$dispatcher->$method(new OrganizationGuidelinesUpdated($this->team));
-            if (!is_null($result)) {
-                return $result;
-            }
+            dispatch(new SyncOrganizationToNlpApi($this->team, 'high'));
         }
     }
 }

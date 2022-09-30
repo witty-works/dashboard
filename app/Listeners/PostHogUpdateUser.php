@@ -2,26 +2,14 @@
 
 namespace App\Listeners;
 
-use App\Providers\AppServiceProvider;
-use PostHog\PostHog;
+use App\Jobs\SyncUserToPosthog;
 
 class PostHogUpdateUser
 {
     public function handle($event)
     {
-        if (empty($event->user) || !config('posthog.enabled')) {
-            return;
+        if (!empty($event->user)) {
+            dispatch(new SyncUserToPosthog($event->user));
         }
-
-        $user = $event->user;
-
-
-        return PostHog::identify([
-            'distinctId' => $user->posthogId(),
-            'properties' => [
-                '$groups' => [AppServiceProvider::POSTHOG_ORGANIZATION_TYPE => $user->posthogTeamId()],
-                'impersonate_url' => config('app.url') . '/impersonate/take/' . $user->id,
-            ]
-        ]);
     }
 }
