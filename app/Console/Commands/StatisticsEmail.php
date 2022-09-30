@@ -56,7 +56,7 @@ class StatisticsEmail extends Command
 
         $html .= "<h2>Users created by week of year</h2>";
         $html .= "<ul>";
-        $users_created_by_week = DB::select("SELECT DATE_FORMAT(created_at, '%Y-%v') AS year_week_num, COUNT(*) AS count FROM users GROUP BY year_week_num ORDER BY year_week_num");
+        $users_created_by_week = DB::select("SELECT DATE_FORMAT(created_at, '%Y-%v') AS year_week_num, COUNT(*) AS count FROM users WHERE email NOT LIKE '%@witty.works' GROUP BY year_week_num ORDER BY year_week_num");
         foreach ($users_created_by_week as $result) {
             $html .= "<li>{$result->year_week_num}: {$result->count}</li>";
         }
@@ -76,7 +76,7 @@ class StatisticsEmail extends Command
 
         $html .= "<h2>Paid users created by week of year</h2>";
         $html .= "<ul>";
-        $paid_users_created_by_week = DB::select("SELECT DATE_FORMAT(users.created_at, '%Y-%v') AS year_week_num, teams.id, teams.name, COUNT(*) AS count FROM users INNER JOIN teams ON users.current_team_id = teams.id WHERE EXISTS (SELECT * FROM subscriptions WHERE subscriptions.team_id = users.current_team_id AND personal_team = 1) GROUP BY teams.id, teams.name, year_week_num ORDER BY teams.id, year_week_num");
+        $paid_users_created_by_week = DB::select("SELECT DATE_FORMAT(users.created_at, '%Y-%v') AS year_week_num, teams.id, teams.name, COUNT(*) AS count FROM users INNER JOIN teams ON users.current_team_id = teams.id WHERE email NOT LIKE '%@witty.works' AND EXISTS (SELECT * FROM subscriptions WHERE subscriptions.team_id = users.current_team_id AND personal_team = 1) GROUP BY teams.id, teams.name, year_week_num ORDER BY teams.id, year_week_num");
         foreach ($paid_users_created_by_week as $result) {
             $html .= "<li>{$result->name} (id: {$result->id}) - {$result->year_week_num}: {$result->count}</li>";
         }
@@ -86,7 +86,7 @@ class StatisticsEmail extends Command
 
         $html .= "<h2>Paid invited users created by week of year</h2>";
         $html .= "<ul>";
-        $invited_paid_users_created_by_week = DB::select("SELECT DATE_FORMAT(team_invitations.created_at, '%Y-%v') AS year_week_num, teams.id, teams.name, COUNT(*) AS count FROM team_invitations INNER JOIN teams ON team_invitations.team_id = teams.id INNER JOIN subscriptions ON teams.id = subscriptions.team_id WHERE personal_team = 1 GROUP BY teams.id, teams.name, year_week_num ORDER BY teams.id, year_week_num");
+        $invited_paid_users_created_by_week = DB::select("SELECT DATE_FORMAT(team_invitations.created_at, '%Y-%v') AS year_week_num, teams.id, teams.name, COUNT(*) AS count FROM team_invitations INNER JOIN teams ON team_invitations.team_id = teams.id INNER JOIN subscriptions ON teams.id = subscriptions.team_id WHERE email NOT LIKE '%@witty.works' AND personal_team = 1 GROUP BY teams.id, teams.name, year_week_num ORDER BY teams.id, year_week_num");
         foreach ($invited_paid_users_created_by_week as $result) {
             $html .= "<li>{$result->name} (id: {$result->id}) - {$result->year_week_num}: {$result->count}</li>";
         }
