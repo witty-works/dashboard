@@ -1,15 +1,15 @@
 <x-jet-form-section submit="updateLanguageGuidelinesLanguage">
-    <x-slot name="title" class="guidelines-title">
+    <x-slot name="title" class="ibarra-sub-title-h2">
         {{ __('guidelines.manage_organization_guidelines_language') }}
     </x-slot>
 
-    <x-slot name="description" class="guidelines-tagline">
+    <x-slot name="description" class="lato-paragraph-text-p">
     </x-slot>
 
     <x-slot name="form" submit="updateLanguageGuidelinesLanguage">
-        <div class="guidelines-form-title">{!! __('guidelines.manage_organization_guidelines_description_language') !!}</div>  
+        <div class="lato-paragraph-text-p margin-bottom">{!! __('guidelines.manage_organization_guidelines_description_language') !!}</div>  
        
-        <div class="guidelines-form-section-dropdown-label">
+        <div class="lato-small-text-p">
             {{ __('guidelines.user_preferred_variants_dialect') }}
         </div>
 
@@ -17,7 +17,7 @@
             <div>
                 <x-select id="preferred_variants_en"
                     :options="App\Models\GuidelinesInterface::PREFERRED_VARIANTS_EN"
-                    class="guidelines-form-section-dropdown"
+                    class="guidelines-form-section-dropdown margin-bottom"
                     wire:model.defer="preferred_variants_en"
                     :disabled="\App\Models\LanguageGuidelines::isForcedOnTeam(Auth::user(), 'preferred_variants')"
                 />
@@ -30,7 +30,7 @@
             </div>
         </div>
        
-        <div class="guidelines-form-section-dropdown-label">
+        <div class="lato-small-text-p">
             {{ __('guidelines.user_preferred_variants_dialect') }}
         </div>
 
@@ -38,7 +38,7 @@
             <div>
                 <x-select id="preferred_variants_de"
                     :options="App\Models\GuidelinesInterface::PREFERRED_VARIANTS_DE"
-                    class="guidelines-form-section-dropdown"
+                    class="guidelines-form-section-dropdown lato-small-text-p"
                     wire:model.defer="preferred_variants_de"
                     :disabled="\App\Models\LanguageGuidelines::isForcedOnTeam(Auth::user(), 'preferred_variants')"
                 />

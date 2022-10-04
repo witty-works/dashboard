@@ -9,18 +9,16 @@
 
     <x-slot name="form">
         <!-- Team Owner Information -->
-        <div class="col-span-6" id="updateTeamName">
+        <div id="updateTeamName">
             <x-jet-label value="{{ __('content.team_owner') }}" />
-
-            <div class="flex items-center mt-2">
+            <div class="lato-small-text-p margin-bottom">
                 {{ $team->owner->name }} - {{ $team->owner->email }}
             </div>
         </div>
 
         <!-- Team Name -->
-        <div class="col-span-6 sm:col-span-4 mt-5">
+        <div>
             <x-jet-label for="name" value="{{ __('content.team_name') }}" />
-
             <x-jet-input id="name"
                         type="text"
                         class="mt-2 block w-full"

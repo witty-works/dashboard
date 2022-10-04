@@ -6,11 +6,6 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-p {
-    @apply text-black;
-    @apply mb-3;
-}
-
 ol,
 ul {
     margin: 1em;
@@ -33,46 +28,191 @@ a {
     color: #9489DB;
 }
 
+/* FONTS */
+.ibarra-sub-title-h2 {
+    font-family: Ibarra Real Nova, 'Times New Roman', Times, serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 44px;
+    line-height: 49px;
+    color: #000000;
+    margin-bottom: 0.1em;
+} 
+
+.lato-small-paragraph-title-h4 {
+    font-family: Lato, Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: 600 !important;
+    font-size: 22px !important;
+    line-height: 28px !important;    
+    color: #000000;
+}
+
+.lato-paragraph-text-p {
+    font-family: Lato, Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 30px;    
+    color: #000000;
+}
+
+.lato-paragraph-text-p-red {
+    font-family: Lato, Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 30px;    
+    color: #f06464;
+}
+
+.lato-paragraph-text-p-purple {
+    font-family: Lato, Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 30px;    
+    color: #9489DB;
+}
+
+.  {
+    font-family: Lato, Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px !important;
+    line-height: 30px !important;;    
+    color: #000000;
+}
+
+.footer-links {
+    font-family: Lato, Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: 400 !important;
+    font-size: 16px !important;
+    line-height: 30px !important;
+    color: #000000 !important;
+}
+
+.footer-links:hover {
+    text-decoration: underline;
+}
+
+/* BUTTONS */
+.button {
+  display: flex;
+  padding: 10px 15px;
+  gap: 10px;
+  font-family: Lato, Arial, Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 14px;
+  margin-right: 1em;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  cursor: pointer;
+}
+
+.primary-button-red {
+  background: #f06464;
+  border-radius: 8px;
+  color: #ffffff;
+}
+
+.secondary-button-red {
+  background: #ffffff;
+  border: 1px solid #f06464;
+  border-radius: 8px;
+  color: #f06464;
+}
+
+.primary-button-purple {
+    background: #9489db;
+    border-radius: 8px;
+    color: #ffffff;
+  }
+  
+.secondary-button-purple {
+    background: #ffffff;
+    border: 1px solid #9489db;
+    border-radius: 8px;
+    color: #9489db;
+  }
+
+/* BACKGROUNDS */
+.strong-gradient-background {
+  background: linear-gradient(
+        96.78deg,
+        #fef7f8 -6.3%,
+        #fbf6fa 35.9%,
+        #e9f2f5 100.12%
+      )
+      padding-box,
+    linear-gradient(
+        114.59deg,
+        #f06464 1.6%,
+        #f277d0 32.79%,
+        #9489db 71.64%,
+        #37d1e5 101.91%,
+        #5acfb9 131.52%
+      )
+      border-box;
+}
+
+.light-grey-background {
+  background: #eeeeee !important;
+}
+
+.dark-grey-background {
+  background: #dddddd !important;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1em;
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+}
+
+.container-row {
+    display: flex;
+    flex-direction: row !important;
+    flex-wrap: wrap;
+  }
+
+.max-width-80 {
+    max-width: 80%;
+}
+
+.border-radius-top {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.border-radius-bottom {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.border-radius {
+    border-radius: 8px !important;
+}
+/* ////////////////// */
+
+.margin-right {
+    margin-right: 1em;
+}
+
+.margin-bottom {
+    margin-bottom: 1em !important;
+}
+
 .wittyworks-accept-invite-wrapper {
     font-size: 14px;
     line-height: 17px;
     color: #656565;
-}
-
-.guidelines-title {
-    font-family: Ibarra Real Nova, 'Times New Roman', Times, serif;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 39px;
-    line-height: 49px;
-    letter-spacing: -0.025em;
-    color: #1A1A1A;
-    margin-bottom: 0.2em;
-}
-
-.guidelines-tagline {
-    font-family: Lato, Arial, Helvetica, sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 22px;
-    color: #000000;
-}
-
-.guidelines-wrapper {
-    margin-top: 1em;
-    margin-bottom: 1em;
-    display: flex;
-}
-
-.guidelines-form-title {
-    font-family: Lato, Arial, Helvetica, sans-serif;
-    font-style: normal;
-    font-weight: 700;
-    font-size: 18px;
-    line-height: 22px;
-    color: #000000;
-    margin-bottom: 1em;
 }
 
 .guidelines-form-section {
@@ -81,7 +221,7 @@ a {
     justify-content: flex-start;
     align-items: center;
     flex-wrap: nowrap;
-    margin-bottom: 2em;
+    margin-top: 1em;
 }
 
 .guidelines-form-section--apply-for-all {
@@ -90,7 +230,6 @@ a {
     justify-content: flex-start;
     align-items: center;
     flex-wrap: nowrap;
-    margin-bottom: 2em;
 }
 
 .guidelines-form-section-dropdown {
@@ -99,53 +238,10 @@ a {
     justify-content: flex-start;
     align-items: center;
     flex-wrap: wrap;
-    min-width: 50%;
 }
 
 .guidelines-form-section-toggle {
     margin-right: 1em;
-}
-
-.guidelines-form-section-label {
-    font-family: Roboto, sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 24px;
-    color: #212529;
-}
-
-.guidelines-form-section-label--apply-for-all {
-    font-family: Roboto, sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 24px;
-    color: #212529;
-}
-
-.guidelines-form-section-dropdown-label {
-    font-family: Roboto, sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 24px;
-    color: #212529;
-    margin-top: 1em;
-    display: flex;
-    flex-direction: column;
-}
-
-.guidelines-form-section-description {
-    font-family: Roboto, sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 24px;
-    color: #212529;
-    margin-bottom: 1.5em;
-    display: flex;
-    flex-direction: column;
 }
 
 .guidelines-form-section-dropdown-wrapper {
@@ -155,16 +251,6 @@ a {
 
 .guidelines-form-section-dropdown {
     width: 255px;
-}
-
-.guidelines-enable-for-all {
-    background: #F1F2F2;
-    border: 1px solid #CDCFD0;
-    box-sizing: border-box;
-    border-bottom-right-radius: 0.375rem;
-    border-bottom-left-radius: 0.375rem;
-    padding: 1.5em;
-    padding-bottom: 1em;
 }
 
 .guidelines-form-tagline {
@@ -361,55 +447,16 @@ input:checked+.slider:before {
     color: #9489db;
 }
 
-.wittyworks-invite-banner-text {
-    max-width: 80%;
-    font-weight: normal;
-    color: #9489db;
-}
-.wittyworks-button {
-    padding: 10px 15px;
-    background: rgb(240, 100, 100);
-    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.14);
-    border-radius: 8px;
-    color: white;
-    font-weight: 600;
-    cursor: pointer;
-    margin-top: 0.5em;
-    display: flex;
-}
-
-.wittyworks-button--purple {
-    background: #9489db;
-}
-
-.wittyworks-button--white-purple {
-    color: #9489db;
-    border: #9489db 1.5px solid;
-    background: white;
-}
-
-.wittyworks-upgrade-button-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    margin-bottom: 1em;
-}
-
 .flash-message {
     margin-bottom: 0;
 }
 
 .wittyworks-footer {
-    color: black;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: left;
-    padding: 0em 1em 1em 23%;
-    font-family: Lato, Arial, Helvetica, sans-serif;
-    background: #ECECEC
+    padding: 1em 1em 1em 23%;
 }
 
 .wittyworks-footer-section {
@@ -419,18 +466,6 @@ input:checked+.slider:before {
     margin-right: 15%;
 }
 
-.wittyworks-footer-section-title {
-    font-size: 18px;
-    font-weight: 700;
-    margin-bottom: 0.5em;
-    margin-top: 1em;
-}
-
-.wittyworks-footer-section-content {
-    font-size: 14px;
-    margin-bottom: 0.5em;
-    color: black
-}
 
 .wittyworks-footer-language-switcher {
     display: flex;
@@ -489,9 +524,7 @@ input:checked+.slider:before {
     justify-content: left;
     align-items: center;
     margin-bottom: 1em;
-    font-weight: bold;
-    color: #FFFFFF;
-    font-size: 18px;
+    color: #FFFFFF !important;
     cursor: default;
 }
 
@@ -501,9 +534,7 @@ input:checked+.slider:before {
     justify-content: left;
     align-items: center;
     margin-bottom: 1em;
-    font-weight: bold;
-    color: #FFFFFF;
-    font-size: 18px;
+    color: #FFFFFF !important;
     cursor: pointer;
 }
 
@@ -527,8 +558,7 @@ input:checked+.slider:before {
 }
 
 .wittyworks-navigation-sub-link {
-    color: #FFFFFF;
-    font-size: 14px;
+    color: #FFFFFF !important;
 }
 
 .wittyworks-navigation-sub-link:hover {
@@ -536,9 +566,8 @@ input:checked+.slider:before {
 }
 
 .wittyworks-navigation-username {
-    font-size: 12px;
-    color: #FFFFFF;
-    margin-left: 3.5em;
+    color: #FFFFFF !important;
+    margin-left: 2.6em;
     margin-top: -1.5em;
 }
 
@@ -564,24 +593,8 @@ input:checked+.slider:before {
     margin-right: 0.5em;
 }
 
-.wittyworks-update-account {
-    display: flex;
-    flex-direction: row;
-}
-
 .wittyworks-form-section {
     margin-bottom: 1em;
-
-}
-
-.wittyworks-subscription-headline {
-    font-size: 21px;
-    margin-bottom: 0.5em;
-    color: #000000;
-}
-
-.wittyworks-subscription-section {
-    margin-top: 3em;
 }
 
 .wittyworks-form-section-wrapper {
@@ -594,7 +607,6 @@ input:checked+.slider:before {
 }
 
 .wittyworks-team-name {
-    font-size: 14px;
     cursor: pointer;
 }
 

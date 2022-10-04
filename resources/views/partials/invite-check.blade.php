@@ -8,7 +8,7 @@
         </div>
     </div>
     <div class="wittyworks-upgrade-banner-button-container">
-        <a class="wittyworks-button wittyworks-button--purple" href="{{ route('teams.show') }}">
+        <a class="button primary-button-purple" href="{{ route('teams.show') }}">
             {{ __('content.invite_team_members_button') }}
         </a>
     </div>

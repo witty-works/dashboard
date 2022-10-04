@@ -12,17 +12,16 @@
     </x-slot>
 
     <x-slot name="form" submit="updateLanguageGuidelinesGerman">  
-        <div class="guidelines-form-title">{!! __('guidelines.manage_organization_guidelines_description_german_form_sub_title') !!}</div>
 
-        <div class="guidelines-form-section-description">
-            {!! __('guidelines.gendered_roles_format') !!}
-        </div>
+        <div class="margin-bottom">{!! __('guidelines.gendered_roles_format') !!}</div>
+
+        <div class="lato-small-text-p">{!! __('guidelines.manage_organization_guidelines_description_german_form_sub_title') !!}</div>
 
         <div class="flex flex-row">
             <div>
                 <x-select id="gendered_roles_format"
                     :options="\App\Models\GuidelinesInterface::GENDERED_ROLES_FORMAT"
-                    class="guidelines-form-section-dropdown"
+                    class="guidelines-form-section-dropdown margin-bottom"
                     wire:model.defer="gendered_roles_format"
                     :disabled="!$user->subscribed() || \App\Models\LanguageGuidelines::isForcedOnTeam(Auth::user(), 'german_rules')"
                 />
@@ -38,7 +37,7 @@
             </div>
         </div>
 
-        <div class="guidelines-form-section-dropdown-label">
+        <div class="lato-small-text-p">
             {{ __('guidelines.german_gender_ending') }}
         </div>
 
