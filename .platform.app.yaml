@@ -104,6 +104,7 @@ web:
 
 workers:
     queue:
+        size: 'S'
         commands:
             start: |
                 php artisan queue:work --queue=high,medium,low,default
