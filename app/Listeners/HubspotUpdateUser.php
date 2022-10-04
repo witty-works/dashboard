@@ -2,23 +2,21 @@
 
 namespace App\Listeners;
 
-use App\Events\AbstractSubscription;
-use App\Events\UserEvent;
 use App\Jobs\SyncUserToHubSpot;
-use Laravel\Jetstream\Events\TeamEvent;
+use App\Models\User;
 
 class HubspotUpdateUser
 {
     public function handle($event)
     {
-        if ($event instanceof UserEvent) {
+        if (!empty($event->user)) {
             $user = $event->user;
-        } elseif ($event instanceof TeamEvent || $event instanceof AbstractSubscription) {
+        } elseif (!empty($event->team)) {
             $user = $event->team->owner;
-        } else {
-            return;
         }
 
-        dispatch(new SyncUserToHubSpot($user));
+        if ($user instanceof User) {
+            dispatch(new SyncUserToHubSpot($user));
+        }
     }
 }
