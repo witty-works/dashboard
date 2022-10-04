@@ -108,4 +108,6 @@ Choose if Witty should suggest only the gender ending (e.g. "Mitarbeiter*in"), t
     'reset_to_team_suggestions_title' => 'Reset all language settings',
     'reset_to_team_suggestions_description' => 'You can reset all language settings to the settings recommended by your team owner.',
     'reset_to_team' => 'Reset all language settings',
+    'manage_organization_guidelines_description_simple_language' => 'Enable experimental support for "plain language" (<a href="https://en.wikipedia.org/wiki/Leichte_Sprache" target="_blank" rel="noopener">Leichte Sprache</a>), which is currently supported in "High German" only. It is version of German intended to be easier to understand for people with lower German or reading competences in general.',
+    'simple_language' => 'Plain Language',
 ];

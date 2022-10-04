@@ -103,6 +103,11 @@ abstract class AbstractSyncToNlpApi implements ShouldQueue
             'status' => $guidelines->expert_mode_force ? 'force' : 'suggestion',
         ];
 
+        $config['simple_language'] = [
+            'value' => (bool) $guidelines->simple_language,
+            'status' => $guidelines->expert_mode_force ? 'force' : 'suggestion',
+        ];
+
         $config['singular_they'] = [
             'value' => $guidelines->singular_they ? 'all_pronouns' : 'he_or_she',
             'status' => $guidelines->english_rules_force === false ? 'suggestion' : 'force',

@@ -12,10 +12,12 @@ class ExpertMode extends Component
     use AuthorizesRequests;
 
     public $expert_mode;
+    public $simple_language;
     public $expert_mode_force;
 
     protected $rules = [
         'expert_mode' => 'nullable|boolean',
+        'simple_language' => 'nullable|boolean',
         'expert_mode_force' => 'nullable|boolean',
     ];
 
@@ -34,6 +36,7 @@ class ExpertMode extends Component
         $languageGuidelines = $this->getLanguageGuidelines($this->team);
 
         $this->expert_mode = (bool) $languageGuidelines->expert_mode;
+        $this->simple_language = (bool) $languageGuidelines->simple_language;
         $this->expert_mode_force = (bool) $languageGuidelines->expert_mode_force;
     }
 
@@ -48,6 +51,7 @@ class ExpertMode extends Component
         $languageGuidelines = $this->getLanguageGuidelines($this->team);
 
         $languageGuidelines->expert_mode = (bool) $this->expert_mode;
+        $languageGuidelines->simple_language = (bool) $this->simple_language;
         $languageGuidelines->expert_mode_force = (bool) $this->expert_mode_force;
 
         $languageGuidelines->save();
@@ -72,6 +76,8 @@ class ExpertMode extends Component
         if (!$this->team->subscribed()) {
             $this->expert_mode = false;
             $languageGuidelines->expert_mode = false;
+            $this->simple_language = false;
+            $languageGuidelines->simple_language = false;
             $this->expert_mode_force = false;
             $languageGuidelines->expert_mode_force = false;
         }
