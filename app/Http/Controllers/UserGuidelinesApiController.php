@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\UserUpdated;
-use App\Listeners\UpdateUserGuidelines;
+use App\Jobs\SyncUserToNlpApi;
 use App\Models\ConnectedAccount;
 use App\Models\Domain;
 use App\Models\User;
@@ -26,7 +25,9 @@ class UserGuidelinesApiController extends Controller
             abort(404);
         }
 
-        return $this->getResponse($user);
+        dispatch(new SyncUserToNlpApi($user, 'high'));
+
+        return response()->noContent();
     }
 
     public function putDomain(Request $request)
@@ -41,7 +42,9 @@ class UserGuidelinesApiController extends Controller
             ['user_id', 'domain']
         );
 
-        return $this->getResponse($user);
+        dispatch(new SyncUserToNlpApi($user, 'high'));
+
+        return response()->noContent();
     }
 
     protected function getUser(Request $request)
@@ -60,13 +63,5 @@ class UserGuidelinesApiController extends Controller
         }
 
         return $connectedUser->user;
-    }
-
-    protected function getResponse(User $user)
-    {
-        $updateUserGuidelines = new UpdateUserGuidelines();
-        $config = $updateUserGuidelines->handle(new UserUpdated($user));
-
-        return response()->json(['config' => $config]);
     }
 }

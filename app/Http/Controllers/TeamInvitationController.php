@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\UserGuidelinesUpdated;
+use App\Jobs\SyncUserToNlpApi;
 use Laravel\Jetstream\TeamInvitation;
 use Illuminate\Http\Request;
 use Laravel\Jetstream\Http\Controllers\TeamInvitationController as BaseTeamInvitationController;
@@ -42,7 +42,8 @@ class TeamInvitationController extends BaseTeamInvitationController
             $invitation->delete();
         }
 
-        UserGuidelinesUpdated::dispatch($user);
+        // update notification count
+        dispatch(new SyncUserToNlpApi($user, 'high'));
 
         return $response->banner(__('teams.accepted_invitation', ['team' => $invitation->team->name]));
     }
@@ -62,7 +63,8 @@ class TeamInvitationController extends BaseTeamInvitationController
 
         $invitation->delete();
 
-        UserGuidelinesUpdated::dispatch($request->user());
+        // update notification count
+        dispatch(new SyncUserToNlpApi($request->user(), 'high'));
 
         return back(303);
     }

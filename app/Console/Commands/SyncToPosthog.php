@@ -2,14 +2,11 @@
 
 namespace App\Console\Commands;
 
-use App\Events\UserCreated;
-use App\Listeners\PostHogUpdateCompany;
-use App\Listeners\PostHogUpdateUser;
+use App\Jobs\SyncOrganizationToPosthog;
+use App\Jobs\SyncUserToPosthog;
 use App\Models\User;
 use App\Models\Team;
 use Illuminate\Console\Command;
-use Laravel\Jetstream\Events\TeamCreated;
-use PostHog\PostHog;
 
 class SyncToPosthog extends Command
 {
@@ -18,7 +15,7 @@ class SyncToPosthog extends Command
      *
      * @var string
      */
-    protected $signature = 'posthog:sync {--batch-size=}';
+    protected $signature = 'posthog:sync';
 
     /**
      * The console command description.
@@ -40,45 +37,24 @@ class SyncToPosthog extends Command
             return;
         }
 
-        $options = ['host' => config('posthog.host'), 'debug' => config('posthog.debug')];
-        $batchSize = $this->option('batch-size') ?? false;
-        if ($batchSize) {
-            $options['batch_size'] = $batchSize;
-        }
-
-        PostHog::init(
-            config('posthog.api_key'),
-            $options,
-        );
-
-        $this->info('Syncing to Posthog ...');
+        $this->info('Queuing syncing to Posthog ...');
 
         $teamCount = 0;
-        $teamFailed = 0;
-
-        $postHogUpdateCompany = new PostHogUpdateCompany();
         foreach (Team::query()->cursor() as $team) {
-            if (!$postHogUpdateCompany->handle(new TeamCreated($team))) {
-                $teamFailed++;
-            }
-
+            /** @var \App\Models\Team $team */
+            dispatch(new SyncOrganizationToPosthog($team));
             $teamCount++;
         }
 
-        $this->info("Finished syncing $teamCount teams (failed $teamFailed)");
+        $this->info("Finished syncing $teamCount teams");
 
         $userCount = 0;
-        $userFailed = 0;
-
-        $postHogUpdateUser = new PostHogUpdateUser();
         foreach (User::query()->cursor() as $user) {
-            if (!$postHogUpdateUser->handle(new UserCreated($user))) {
-                $userFailed++;
-            }
-
+            /** @var \App\Models\User $user */
+            dispatch(new SyncUserToPosthog($user));
             $userCount++;
         }
 
-        $this->info("Finished syncing $userCount users (failed $userFailed)");
+        $this->info("Finished syncing $userCount users");
     }
 }

@@ -62,6 +62,16 @@ class StatisticsEmail extends Command
         }
         $html .= "</ul>";
 
+        $this->info("Fetching teams with at least one invited/member users ..");
+
+        $html .= "<h2>Team with at least one invited/member user</h2>";
+        $html .= "<ul>";
+        $team_subscriptions_created_by_week = DB::select("SELECT SUM(subcount)+1 AS count, team_id, name FROM (SELECT COUNT(*) as subcount, team_id FROM team_user GROUP BY team_id UNION SELECT COUNT(*) as subcount, team_id FROM team_invitations GROUP BY team_id) AS counts INNER JOIN teams ON counts.team_id = teams.id GROUP BY team_id, name");
+        foreach ($team_subscriptions_created_by_week as $result) {
+            $html .= "<li>{$result->name} (id: {$result->team_id}): {$result->count}</li>";
+        }
+        $html .= "</ul>";
+
         $this->info("Fetching team suscriptions created ..");
 
         $html .= "<h2>Team subscription created by week of year</h2>";

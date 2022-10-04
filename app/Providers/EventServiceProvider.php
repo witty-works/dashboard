@@ -2,17 +2,16 @@
 
 namespace App\Providers;
 
-use App\Events\UserGuidelinesUpdated;
-use App\Events\OrganizationGuidelinesUpdated;
 use App\Events\SubscriptionCancelled;
 use App\Events\SubscriptionCreated;
 use App\Events\SubscriptionUpdated;
 use App\Events\UserCreated;
 use App\Events\UserDeleted;
+use App\Listeners\HubspotUpdateUser;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use App\Listeners\PosthogBilling;
 use App\Listeners\PosthogReset;
-use App\Listeners\PostHogUpdateCompany;
+use App\Listeners\PostHogUpdateOrganization;
 use App\Listeners\PostHogUpdateUser;
 use App\Listeners\SyncStartRenwalDates;
 use App\Listeners\TeamMemberAddedSlackAlert;
@@ -37,41 +36,48 @@ class EventServiceProvider extends ServiceProvider
      */
     protected $listen = [
         UserCreated::class => [
-            UserAddedSlackAlert::class,
-            PostHogUpdateUser::class,
             UpdateUserGuidelines::class,
+            HubspotUpdateUser::class,
+            PostHogUpdateUser::class,
+            UserAddedSlackAlert::class,
         ],
         UserDeleted::class => [
-            UserAddedSlackAlert::class,
-            PostHogUpdateUser::class,
             UpdateUserGuidelines::class,
+            HubspotUpdateUser::class,
+            PostHogUpdateUser::class,
         ],
         UserUpdated::class => [
-            PostHogUpdateUser::class,
             UpdateUserGuidelines::class,
+            HubspotUpdateUser::class,
+            PostHogUpdateUser::class,
         ],
         TeamMemberAdded::class => [
-            PostHogUpdateCompany::class,
-            PostHogUpdateUser::class,
             UpdateOrganizationGuidelines::class,
+            HubspotUpdateUser::class,
+            PostHogUpdateUser::class,
+            PostHogUpdateOrganization::class,
             TeamMemberAddedSlackAlert::class,
         ],
         TeamMemberRemoved::class => [
-            PostHogUpdateCompany::class,
-            PostHogUpdateUser::class,
             UpdateOrganizationGuidelines::class,
+            HubspotUpdateUser::class,
+            PostHogUpdateUser::class,
+            PostHogUpdateOrganization::class,
         ],
         TeamCreated::class => [
-            PostHogUpdateCompany::class,
             UpdateOrganizationGuidelines::class,
+            HubspotUpdateUser::class,
+            PostHogUpdateOrganization::class,
         ],
         TeamUpdated::class => [
-            PostHogUpdateCompany::class,
             UpdateOrganizationGuidelines::class,
+            HubspotUpdateUser::class,
+            PostHogUpdateOrganization::class,
         ],
         TeamDeleted::class => [
-            PostHogUpdateCompany::class,
             UpdateOrganizationGuidelines::class,
+            HubspotUpdateUser::class,
+            PostHogUpdateOrganization::class,
         ],
         Logout::class => [
             PosthogReset::class,
@@ -80,28 +86,25 @@ class EventServiceProvider extends ServiceProvider
             PosthogBilling::class,
         ],
         SubscriptionCreated::class => [
-            PostHogUpdateCompany::class,
-            SyncStartRenwalDates::class,
             UpdateOrganizationGuidelines::class,
+            HubspotUpdateUser::class,
+            PostHogUpdateOrganization::class,
+            SyncStartRenwalDates::class,
         ],
         SubscriptionUpdated::class => [
-            PostHogUpdateCompany::class,
-            SyncStartRenwalDates::class,
             UpdateOrganizationGuidelines::class,
+            HubspotUpdateUser::class,
+            PostHogUpdateOrganization::class,
+            SyncStartRenwalDates::class,
         ],
         SubscriptionCancelled::class => [
-            PostHogUpdateCompany::class,
-            SyncStartRenwalDates::class,
             UpdateOrganizationGuidelines::class,
+            HubspotUpdateUser::class,
+            PostHogUpdateOrganization::class,
+            SyncStartRenwalDates::class,
         ],
         SocialiteWasCalled::class => [
             AzureADB2CExtendSocialite::class,
-        ],
-        OrganizationGuidelinesUpdated::class => [
-            UpdateOrganizationGuidelines::class,
-        ],
-        UserGuidelinesUpdated::class => [
-            UpdateUserGuidelines::class,
         ],
     ];
 

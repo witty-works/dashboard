@@ -214,31 +214,34 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->invitations->count();
     }
 
-    public function getHubspotData()
+    public function getHubspotData($booleanAsStrings = false)
     {
-        return [
-            'has_witty_account' => 'Yes',
-            'has_consented_to_mailing' => $this->has_consented_to_mailing ? 'Yes' : 'No',
-            'has_accessed_stripe' => $this->has_accessed_stripe ? 'Yes' : 'No',
-            'impersonate_url' => config('app.url') . '/impersonate/take/' . $this->id,
-        ];
-    }
+        $true = $booleanAsStrings ? 'Yes' : true;
+        $false = $booleanAsStrings ? 'No' : false;
 
-    public function syncHubspot()
-    {
-        if (!$this->hubspot_id) {
-            return false;
+        $data = [
+            'has_witty_account' => $true,
+            'has_consented_to_mailing' => $this->has_consented_to_mailing ? $true : $false,
+            'has_accessed_stripe' => $this->has_accessed_stripe ? $true : $false,
+            'witty_plan' => $this->planId(),
+            'impersonate_url' => config('app.url') . '/impersonate/take/' . $this->id,
+            'has_team_language_rules' => $false,
+            'team_role' => '',
+            'invited_team_member_count' => 0,
+            'team_member_count' => 0,
+        ];
+
+        if ($this->currentTeam) {
+            $data['has_team_language_rules'] = $this->currentTeam->hasLanguageRules() ? $true : $false;
+            $data['team_role'] = $this->ownsTeam($this->currentTeam) ? 'owner' : $this->teamRole($this->currentTeam)->name;
+
+            if ($this->ownsTeam($this->currentTeam)) {
+                $data['invited_team_member_count'] = $this->currentTeam->teamInvitations()->count();
+                $data['team_member_count'] = $this->currentTeam->getTotalUserCount();
+            }
         }
 
-        $data = $this->getHubspotData();
-
-        $hubspot = \HubSpot\Factory::createWithAccessToken(config('hubspot.access_token'));
-        $newProperties = new \HubSpot\Client\Crm\Contacts\Model\SimplePublicObjectInput();
-        $newProperties->setProperties($data);
-
-        $hubspot->crm()->contacts()->basicApi()->update($this->hubspot_id, $newProperties);
-
-        return true;
+        return $data;
     }
 
     /**

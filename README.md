@@ -54,6 +54,7 @@ Fetch code from https://github.com/witty-works/dashboard
 * Run via Lando (Docker)
   * Run `lando start`
   * Run `lando npm run watch`
+  * Run `lando artisan queue:listen --queue=high,medium,low,default`
 
 * Goto `https://dashboard.lndo.site`
 
