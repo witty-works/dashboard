@@ -181,7 +181,7 @@ Here is how you can join your team:
     'making_changes_requires_admin_rights' => 'To make changes, admin rights are required. Please contact your team <a href="mailto::email">owner</a>.',
     'already_invited_to_team' => 'This user has already been invited to the team.',
     'already_belongs_to_team' => 'This user already belongs to the team.',
-    'team_invitation_subject' => ':name invited you to join the :team team on Witty',
+    'team_invitation_subject' => ':name invited you to join :team on Witty',
     'if_you_have_questions' => 'P.S. Need support or have any questions? 
 You can find answers to many questions <a href="https://www.witty.works/en/help/wittys-help-center">here</a>. You can get in touch with us at <a href="mailto:support@witty.works">support@witty.works</a>. We\'re here to help you at any step along the way.',
     'have_a_great_day' => 'Have a great day,

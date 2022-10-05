@@ -2,21 +2,25 @@
 
 namespace App\Listeners;
 
+use App\Events\AbstractSubscription;
 use App\Jobs\SyncUserToPosthog;
-use App\Models\User;
 
 class PostHogUpdateUser
 {
     public function handle($event)
     {
         if (!empty($event->user)) {
-            $user = $event->user;
-        } elseif (!empty($event->team)) {
-            $user = $event->team->owner;
+            dispatch(new SyncUserToPosthog($event->user));
         }
 
-        if ($user instanceof User) {
-            dispatch(new SyncUserToPosthog($user));
+        if (!empty($event->team)) {
+            dispatch(new SyncUserToPosthog($event->team->owner));
+
+            if ($event instanceof AbstractSubscription) {
+                foreach ($event->team->users as $user) {
+                    dispatch(new SyncUserToPosthog($user));
+                }
+            }
         }
     }
 }

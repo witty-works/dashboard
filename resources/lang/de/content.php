@@ -178,7 +178,7 @@ So kannst du deinem Team beitreten:
     'making_changes_requires_admin_rights' => 'Um Änderungen vorzunehmen, sind Administrationsrechte erforderlich. Bitte wende dich an dein*e <a href="mailto::email">Team-Eigentümer*in</a>.',
     'already_invited_to_team' => 'Diese*r Benutzer*in wurde bereits in das Team eingeladen.',
     'already_belongs_to_team' => 'Diese*r Benutzer*in ist schon im Team.',
-    'team_invitation_subject' => ':name hat dich eingeladen, dem :team Team auf Witty beizutreten',
+    'team_invitation_subject' => ':name hat dich eingeladen, ihrem Team auf Witty beizutreten',
     'if_you_have_questions' => 'P.S. Brauchst du Hilfe oder hast du Fragen?
 <a href="https://www.witty.works/en/help/wittys-help-center">Hier</a> findest du Antworten auf viele Fragen. Du erreichst uns unter <a href="mailto:support@witty.works">support@witty.works</a>. Wir sind hier, um dir bei jedem Schritt auf dem Weg zu helfen.',
     'have_a_great_day' => 'Wir wünschen dir einen schönen Tag,
@@ -207,4 +207,7 @@ Dein Witty-Team',
     'renew' => 'Abonnement fortsetzen',
     'accepting_invitation_will_cancel' => 'Durch Annehmen dieser Einladung, wird das aktuelle Abonnement gekündigt.',
     'accepting_invitation_will_cancel_and_downgrade' => 'Wenn Sie diese Einladung annehmen, wird Ihr aktuelles Abonnement gekündigt und Sie werden auf den Witty Free-Plan herabgestuft.',
+    'onboarding_login_witty_title' => 'Bitte melden Dich bei Witty an',
+    'onboarding_login_witty_text' => 'Um Witty zu verwenden, melde Dich bitte bei der Witty-Browsererweiterung an.',
+    'onboarding_login_witty_button' => 'Melden dich bei Witty an',
 ];

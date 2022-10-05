@@ -2,21 +2,25 @@
 
 namespace App\Listeners;
 
+use App\Events\AbstractSubscription;
 use App\Jobs\SyncUserToHubSpot;
-use App\Models\User;
 
 class HubspotUpdateUser
 {
     public function handle($event)
     {
         if (!empty($event->user)) {
-            $user = $event->user;
-        } elseif (!empty($event->team)) {
-            $user = $event->team->owner;
+            dispatch(new SyncUserToHubSpot($event->user));
         }
 
-        if ($user instanceof User) {
-            dispatch(new SyncUserToHubSpot($user));
+        if (!empty($event->team)) {
+            dispatch(new SyncUserToHubSpot($event->team->owner));
+
+            if ($event instanceof AbstractSubscription) {
+                foreach ($event->team->users as $user) {
+                    dispatch(new SyncUserToHubSpot($user));
+                }
+            }
         }
     }
 }
