@@ -11,7 +11,7 @@
         "hubspot/api-client": "^8.3",
         "joelbutcher/socialstream": "^3.2",
         "kineticamobile/lumki": "^0.1",
-        "laravel/cashier": "^13.8.4",
+        "laravel/cashier": "^14.0",
         "laravel/framework": "^9",
         "laravel/jetstream": "^2.4",
         "laravel/sanctum": "^2.11",
