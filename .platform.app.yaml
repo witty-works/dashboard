@@ -46,6 +46,7 @@ hooks:
         php artisan route:trans:cache
         php artisan view:cache
         php artisan migrate --force
+        php artisan google-fonts:fetch
 
 crons:
     snapshot:
@@ -104,7 +105,7 @@ web:
 
 workers:
     queue:
-        size: 'S'
+        size: "S"
         commands:
             start: |
                 php artisan queue:work --queue=high,medium,low,default
