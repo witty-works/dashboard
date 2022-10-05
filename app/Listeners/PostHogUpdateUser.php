@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Events\AbstractSubscription;
 use App\Jobs\SyncUserToPosthog;
 
 class PostHogUpdateUser
@@ -14,6 +15,12 @@ class PostHogUpdateUser
 
         if (!empty($event->team)) {
             dispatch(new SyncUserToPosthog($event->team->owner));
+
+            if ($event instanceof AbstractSubscription) {
+                foreach ($event->team->users as $user) {
+                    dispatch(new SyncUserToPosthog($user));
+                }
+            }
         }
     }
 }

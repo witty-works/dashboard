@@ -67,16 +67,19 @@ class EventServiceProvider extends ServiceProvider
         TeamCreated::class => [
             UpdateOrganizationGuidelines::class,
             HubspotUpdateUser::class,
+            PostHogUpdateUser::class,
             PostHogUpdateOrganization::class,
         ],
         TeamUpdated::class => [
             UpdateOrganizationGuidelines::class,
             HubspotUpdateUser::class,
+            PostHogUpdateUser::class,
             PostHogUpdateOrganization::class,
         ],
         TeamDeleted::class => [
             UpdateOrganizationGuidelines::class,
             HubspotUpdateUser::class,
+            PostHogUpdateUser::class,
             PostHogUpdateOrganization::class,
         ],
         Logout::class => [
@@ -88,18 +91,21 @@ class EventServiceProvider extends ServiceProvider
         SubscriptionCreated::class => [
             UpdateOrganizationGuidelines::class,
             HubspotUpdateUser::class,
+            PostHogUpdateUser::class,
             PostHogUpdateOrganization::class,
             SyncStartRenwalDates::class,
         ],
         SubscriptionUpdated::class => [
             UpdateOrganizationGuidelines::class,
             HubspotUpdateUser::class,
+            PostHogUpdateUser::class,
             PostHogUpdateOrganization::class,
             SyncStartRenwalDates::class,
         ],
         SubscriptionCancelled::class => [
             UpdateOrganizationGuidelines::class,
             HubspotUpdateUser::class,
+            PostHogUpdateUser::class,
             PostHogUpdateOrganization::class,
             SyncStartRenwalDates::class,
         ],
