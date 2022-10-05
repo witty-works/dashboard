@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Console\Commands\SyncToHubspot;
-use App\Console\Commands\SyncToPosthog;
+use App\Jobs\SyncUserToHubSpot;
 use App\Jobs\SyncUserToNlpApi;
+use App\Jobs\SyncUserToPosthog;
 use Laravel\Jetstream\TeamInvitation;
 use Illuminate\Http\Request;
 use Laravel\Jetstream\Http\Controllers\TeamInvitationController as BaseTeamInvitationController;
@@ -41,8 +41,8 @@ class TeamInvitationController extends BaseTeamInvitationController
         $user->switchTeam($invitation->team);
 
         foreach ($user->invitations as $invitation) {
-            dispatch(new SyncToHubspot($invitation->team->owner));
-            dispatch(new SyncToPosthog($invitation->team->owner));
+            dispatch(new SyncUserToHubSpot($invitation->team->owner));
+            dispatch(new SyncUserToPosthog($invitation->team->owner));
 
             $invitation->delete();
         }
@@ -66,8 +66,8 @@ class TeamInvitationController extends BaseTeamInvitationController
             abort(403, 'Unauthorized action.');
         }
 
-        dispatch(new SyncToHubspot($invitation->team->owner));
-        dispatch(new SyncToPosthog($invitation->team->owner));
+        dispatch(new SyncUserToHubSpot($invitation->team->owner));
+        dispatch(new SyncUserToPosthog($invitation->team->owner));
 
         $invitation->delete();
 
