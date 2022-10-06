@@ -6,16 +6,20 @@
         <x-slot name="description">{{ $description }}</x-slot>
     </x-jet-section-title>
 
-    <div class="guidelines-wrapper">
+    <div>
         <form wire:submit.prevent="{{ $submit }}" class="w-full">
-            <div class="px-4 py-5 bg-white sm:p-6 shadow {{ isset($actions) ? 'sm:rounded-tl-md sm:rounded-tr-md' : 'sm:rounded-md' }}">
-                {{ $form }}
-            </div>
-
+    
             @if (isset($actions))
-                <div class="guidelines-enable-for-all">
+                <div class="container border-radius-top">
+                    {{ $form }}
+                </div>
+                <div class="container light-grey-background border-radius-bottom">
                     {{ $actions }}
                 </div>
+            @else
+            <div class="container border-radius">
+                {{ $form }}
+            </div>
             @endif
         </form>
     </div>

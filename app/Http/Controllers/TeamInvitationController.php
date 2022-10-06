@@ -66,10 +66,10 @@ class TeamInvitationController extends BaseTeamInvitationController
             abort(403, 'Unauthorized action.');
         }
 
+        $invitation->delete();
+
         dispatch(new SyncUserToHubSpot($invitation->team->owner));
         dispatch(new SyncUserToPosthog($invitation->team->owner));
-
-        $invitation->delete();
 
         // update notification count
         dispatch(new SyncUserToNlpApi($request->user(), 'high'));

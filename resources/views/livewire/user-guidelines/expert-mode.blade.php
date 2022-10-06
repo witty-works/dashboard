@@ -10,7 +10,7 @@
     </x-slot>
 
     <x-slot name="form" submit="updateLanguageGuidelinesExpertMode">
-        <div class="guidelines-form-title">{!! __('guidelines.manage_organization_guidelines_description_expert_mode') !!}</div>
+        <div class="lato-paragraph-text-p">{!! __('guidelines.manage_organization_guidelines_description_expert_mode') !!}</div>
         <div class="guidelines-form-section">
             <x-jet-checkbox
                 id="english_rules_force"
@@ -21,6 +21,19 @@
             />
 
             <x-jet-input-error for="expert_mode" class="mt-2" />
+        </div>
+
+        <div class="guidelines-form-title">{!! __('guidelines.manage_organization_guidelines_description_simple_language') !!}</div>
+        <div class="guidelines-form-section">
+            <x-jet-checkbox
+                id="simple_language"
+                value="1"
+                :label="__('guidelines.simple_language')"
+                wire:model.defer="simple_language"
+                :disabled="!$user->subscribed() ? true : \App\Models\LanguageGuidelines::isForcedOnTeam(Auth::user(), 'expert_mode')"
+            />
+
+            <x-jet-input-error for="simple_language" class="mt-2" />
         </div>
     </x-slot>
 

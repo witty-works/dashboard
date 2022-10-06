@@ -13,18 +13,18 @@
 
                 <x-slot name="form">
                     <div class="col-span-6">
-                        <div class="max-w-xl text-sm text-gray-600">
+                        <div class="lato-paragraph-text-p margin-bottom">
                             {{ __('content.please_provide_the_email_address') }}
                         </div>
                     </div>
 
                     <!-- Member Email -->
-                    <div class="col-span-6 sm:col-span-4">
-                        <x-jet-label for="email" value="{{ __('content.email') }}" />
+                    <div>
+                        <x-jet-label class="lato-small-text-p" for="email" value="{{ __('content.email') }}" />
                         <x-jet-input id="email" type="email" class="mt-1 block w-full" wire:model.defer="addTeamMemberForm.email" disabled="{{ !Gate::check('addTeamMember', $team) }}" />
                         <x-jet-input-error for="email" class="mt-2">
                         </x-jet-input-error>
-                        <p class="text-sm text-red-600 mt-2">
+                        <p class="lato-small-text-p margin-bottom">
                             @if($team->getUserLicensesLimitReached())
                             {{ __('teams.user_limit_reached_error', ['max_count' => $team->getUserLicensesCount()]) }}
                             @if(Auth::user()->ownsTeam($team))
@@ -39,7 +39,7 @@
                     <!-- Role -->
                     @if (count($this->roles) > 0)
                         <div class="col-span-6 lg:col-span-4" wire:init="$set('addTeamMemberForm.role', 'admin')">
-                            <x-jet-label for="role" value="{{ __('content.role') }}" />
+                            <x-jet-label class="lato-small-text-p" for="role" value="{{ __('content.role') }}" />
                             <x-jet-input-error for="role" class="mt-2" />
 
                             <div class="relative z-0 mt-1 border border-gray-200 rounded-lg">
@@ -56,7 +56,7 @@
                                         <div class="{{ isset($addTeamMemberForm['role']) && $addTeamMemberForm['role'] !== $role->key ? 'opacity-50' : '' }}">
                                             <!-- Role Name -->
                                             <div class="flex items-center">
-                                                <div class="text-sm text-gray-600 {{ $addTeamMemberForm['role'] == $role->key ? 'font-semibold' : '' }}">
+                                                <div class="text-sm text-gray-600 lato-small-text-p {{ $addTeamMemberForm['role'] == $role->key ? 'font-semibold' : '' }}">
                                                     {{ $role->name }}
                                                     @if(!$selectable)
                                                     -
@@ -67,12 +67,12 @@
                                                 </div>
 
                                                 @if ($addTeamMemberForm['role'] == $role->key)
-                                                    <svg class="ml-2 h-5 w-5 text-green-400" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                                    <svg class="ml-2 h-5 w-5 text-green-400 lato-small-text-p" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                                 @endif
                                             </div>
 
                                             <!-- Role Description -->
-                                            <div class="mt-2 text-xs text-gray-600 text-left">
+                                            <div class="mt-2 lato-small-text-p text-left">
                                                 {{ $role->description }}
                                             </div>
                                         </div>
@@ -114,12 +114,12 @@
                     <div class="space-y-6">
                         @foreach ($team->teamInvitations as $invitation)
                             <div class="flex items-center justify-between">
-                                <div class="text-gray-600">{{ $invitation->email }}</div>
+                                <div class="lato-paragraph-text-p">{{ $invitation->email }}</div>
 
                                 <div class="flex items-center">
                                     @if (Gate::check('removeTeamMember', $team))
                                         <!-- Cancel Team Invitation -->
-                                        <button class="cursor-pointer ml-6 text-sm text-red-500 focus:outline-none"
+                                        <button class="cursor-pointer ml-6 lato-paragraph-text-p-red"
                                                             wire:click="cancelTeamInvitation({{ $invitation->id }})">
                                             {{ __('content.cancel') }}
                                         </button>

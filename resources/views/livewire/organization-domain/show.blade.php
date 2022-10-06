@@ -13,22 +13,22 @@
             <table class="table-fixed w-full">
                 <thead>
                     <tr>
-                        <th class="px-4 py-2">{{ __('guidelines.domain_label') }}</th>
+                        <th class="py-2 lato-paragraph-text-p">{{ __('guidelines.domain_label') }}</th>
                         @if (Auth::user()->hasTeamPermission($team, 'edit_guidelines') && empty($hide_actions))
-                        <th class="px-4 py-2">{{ __('guidelines.action_label') }}</th>
+                        <th class="py-2 lato-paragraph-text-p">{{ __('guidelines.action_label') }}</th>
                         @endif
                     </tr>
                 </thead>
                 <tbody>
                 @foreach ($list as $domain)
                 <tr @if($loop->even)class="bg-grey"@endif>
-                    <td class="border px-4 py-2 text-left">{{ $domain->domain }}</td>
+                    <td class="border py-2 text-left">{{ $domain->domain }}</td>
                     @if (Auth::user()->hasTeamPermission($team, 'edit_guidelines') && empty($hide_actions))
-                    <td class="border px-4 py-2 text-center whitespace-nowrap">
-                        <button wire:click="editDomain({{ $domain->id }})" class="bg-gray-100 text-gray-600 px-6 rounded-full">
+                    <td class="border py-2 text-center container-row">
+                        <button wire:click="editDomain({{ $domain->id }})" class="button primary-button-red ">
                             {{ __('content.edit') }}
                         </button>
-                        <button wire:click="deleteDomain({{ $domain->id }})" class="bg-red-100 text-red-600 px-6 rounded-full">
+                        <button wire:click="deleteDomain({{ $domain->id }})" class="button secondary-button-red ">
                             {{ __('content.delete_permanently') }}
                         </button>
                     </td>

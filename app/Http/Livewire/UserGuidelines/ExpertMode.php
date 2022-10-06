@@ -11,9 +11,11 @@ class ExpertMode extends Component
     use AuthorizesRequests, AttributeTrait;
 
     public $expert_mode;
+    public $simple_language;
 
     protected $rules = [
         'expert_mode' => 'nullable|boolean',
+        'simple_language' => 'nullable|boolean',
     ];
 
     public $user;
@@ -35,6 +37,13 @@ class ExpertMode extends Component
             $languageGuidelines,
             'expert_mode'
         );
+
+        $this->simple_language = (bool) $this->mountAttribute(
+            $this->user,
+            $languageGuidelines,
+            'simple_language',
+            'expert_mode'
+        );
     }
 
     public function updateLanguageGuidelinesExpertMode()
@@ -44,6 +53,7 @@ class ExpertMode extends Component
         $languageGuidelines = $this->getLanguageGuidelines($this->user);
 
         $languageGuidelines->expert_mode = (bool) $this->expert_mode;
+        $languageGuidelines->simple_language = (bool) $this->simple_language;
 
         $languageGuidelines->save();
 
@@ -65,6 +75,8 @@ class ExpertMode extends Component
         $languageGuidelines = LanguageGuidelines::firstOrNew(['user_id' => $user->id]);
 
         if (!$this->user->subscribed()) {
+            $this->simple_language = false;
+            $languageGuidelines->simple_language = false;
             $this->expert_mode = false;
             $languageGuidelines->expert_mode = false;
         }

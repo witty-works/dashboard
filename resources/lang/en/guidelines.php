@@ -20,7 +20,7 @@ return [
     'list_false_positives_description' => 'Witty will no longer highlight any word in this list for you.',
     'list_term_replacements' => 'Personal dictionary',
     'list_term_replacements_description' => 'Witty suggests your alternative for each term in this list.',
-    'gendered_roles_format' => '<span>Witty uses the gender-star as default. Please read why <a href="https://be-hindernisse.org/2022/02/15/mythos-der-doppelpunkt-ist-perfekt-zum-entgendern/" target="_blank">here</a>.</span> <span>In <a href="https://www.witty.works/en/blog/gender-inclusive-writing-in-german" target="_blank">this blog post</a> we explain all gender forms.
+    'gendered_roles_format' => '<span class="lato-paragraph-text-p">Witty uses the gender-star as default. Please read why <a href="https://be-hindernisse.org/2022/02/15/mythos-der-doppelpunkt-ist-perfekt-zum-entgendern/" target="_blank">here</a>.</span> <span class="lato-paragraph-text-p">In <a href="https://www.witty.works/en/blog/gender-inclusive-writing-in-german" target="_blank">this blog post</a> we explain all gender forms.
 
 Choose if Witty should suggest only the gender ending (e.g. "Mitarbeiter*in"), the female and male form (e.g. "Mitarbeiterin oder Mitarbeiter"), both or gender-neutral alternatives such as "Mitarbeitende".</span>',
     'inclusive_gender' => 'Suggest the chosen gender ending',
@@ -108,4 +108,6 @@ Choose if Witty should suggest only the gender ending (e.g. "Mitarbeiter*in"), t
     'reset_to_team_suggestions_title' => 'Reset all language settings',
     'reset_to_team_suggestions_description' => 'You can reset all language settings to the settings recommended by your team owner.',
     'reset_to_team' => 'Reset all language settings',
+    'manage_organization_guidelines_description_simple_language' => 'Enable experimental support for "plain language" (<a href="https://en.wikipedia.org/wiki/Leichte_Sprache" target="_blank" rel="noopener">Leichte Sprache</a>), which is currently supported in "High German" only. It is version of German intended to be easier to understand for people with lower German or reading competences in general.',
+    'simple_language' => 'Plain Language',
 ];

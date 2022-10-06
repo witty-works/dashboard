@@ -1,10 +1,10 @@
-<div class="md:col-span-1 flex justify-between">
-    <div class="px-4 sm:px-0">
-        <div class="guidelines-title">{{ $title }}</div>
-        <div class="guidelines-tagline">{{ $description }}</div>
+<div>
+    <div>
+        <div class="ibarra-sub-title-h2">{{ $title }}</div>
+        <div class="lato-paragraph-text-p">{{ $description }}</div>
     </div>
 
-    <div class="px-4 sm:px-0">
+    <div>
         {{ $aside ?? '' }}
     </div>
 </div>

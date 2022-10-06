@@ -1,7 +1,5 @@
 <?php
 
-use Laravel\Cashier\Invoices\DompdfInvoiceRenderer;
-
 return [
 
     /*
@@ -99,7 +97,7 @@ return [
     */
 
     'invoices' => [
-        'renderer' => env('CASHIER_INVOICE_RENDERER', DompdfInvoiceRenderer::class),
+        'renderer' => env('CASHIER_INVOICE_RENDERER'),
 
         'options' => [
             // Supported: 'letter', 'legal', 'A4'

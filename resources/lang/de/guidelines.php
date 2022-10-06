@@ -107,4 +107,6 @@ return [
     'reset_to_team_suggestions_title' => 'Spracheinstellungen zurücksetzen',
     'reset_to_team_suggestions_description' => 'Du kannst alle Spracheinstellungen auf die von deinem Team-Admin empfohlenen Einstellungen zurücksetzen.',
     'reset_to_team' => 'Alle Spracheinstellungen zurücksetzen',
+    'manage_organization_guidelines_description_simple_language' => 'Experimentelle Unterstützung für <a href="https://de.wikipedia.org/wiki/Leichte_Sprache" target="_blank" rel="noopener">Leichte Sprache</a> aktivieren, die derzeit nur in "Hochdeutsch" unterstützt wird. Es ist eine Version des Deutschen, die für Menschen mit geringeren Deutschkenntnissen oder reduzierten Lesekompetenz leichter verständlich ist.',
+    'simple_language' => 'Leichte Sprache',
 ];
