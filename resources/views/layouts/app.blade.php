@@ -23,6 +23,7 @@
         <!-- Scripts -->
         @include('partials/sentry')    
         <script src="{{ mix('js/app.js') }}" defer></script>
+        @include('partials/hubspot')
         @include('partials/posthog')
     </head>
     <body class="font-sans antialiased">
