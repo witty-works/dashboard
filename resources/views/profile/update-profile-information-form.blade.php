@@ -7,23 +7,18 @@
 
         <x-slot name="form">  
         <div class="wittyworks-form-section-wrapper">
-        <div class="wittyworks-subscription-headline">{{ __('teams.profile') }}</div>
+            <div class="lato-small-paragraph-title-h4">{{ __('teams.profile') }}</div>
             <!-- Name -->
-            <div class="wittyworks-form-section">
-                <x-jet-label for="name" value="{{ __('content.name') }}" />
-                <div class="wittyworks-update-account">
-                    {{ $state['name'] }}&nbsp;
-                    {!! __('content.update_your_account_profile', ['profile_url' => route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'profile'])]) !!}
-                </div>
-
+            <x-jet-label for="name" value="{{ __('content.name') }}" />
+            <div class="container-row lato-small-text-p margin-bottom">
+                {{ $state['name'] }}&nbsp;
+                {!! __('content.update_your_account_profile', ['profile_url' => route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'profile'])]) !!}
             </div>
 
             <!-- Email -->
-            <div class="wittyworks-form-section">
-                <x-jet-label for="email" value="{{ __('content.email') }}" />
-                <div class="wittyworks-update-account">
-                    {{ $state['email'] }}
-                </div>
+            <x-jet-label for="email" value="{{ __('content.email') }}"/>
+            <div class="container-row lato-small-text-p">
+                {{ $state['email'] }}
             </div>
         </div>
 
@@ -32,34 +27,29 @@
             $team = $user->currentTeam;
         @endphp
 
-        <div class="wittyworks-subscription-headline">{{ __('teams.team_plan_headline') }}</div>
+        <div class="lato-small-paragraph-title-h4">{{ __('teams.team_plan_headline') }}</div>
 
         @if($team)
-        <div class="wittyworks-form-section">
-            <x-jet-label for="name" value="{{ __('teams.team_owner') }}" />
+            <x-jet-label for="name" value="{{ __('teams.team_owner') }}" class="lato-paragraph-text-p"/>
+            <div class="lato-small-text-p margin-bottom">
                 {{ $team->owner->name }} (<a href="mailto:{{ $team->owner->email }}">{{ $team->owner->email }}</a>)
-        </div>
+            </div>
         @endif
-
-        <div class="wittyworks-form-section">
-        <div class="wittyworks-update-account">
-            <x-jet-label for="name" value="{{ __('teams.plan_name') }}" />
-        </div>
-            <div>
+            <x-jet-label for="name" value="{{ __('teams.plan_name') }}" class="lato-paragraph-text-p" />
+            <div class="lato-small-text-p margin-bottom">
                 {{ $user->subscribed() ? $user->subscription()->planName() : __('stripe.witty_free') }}
             </div>
-        </div>
 
         <!-- TODO: add how many team members have been added + button (either add, or upgrade) -->
 
-        <div class="wittyworks-form-section">
-            <x-jet-label for="name" value="{{ __('teams.term_replacements') }}" />
+            <x-jet-label for="name" value="{{ __('teams.term_replacements') }}" class="lato-paragraph-text-p"/>
+            <div class="lato-small-text-p margin-bottom">
                 {{ __('teams.total_of_max_used_dictionary', ['total' => $user->getTotalTermReplacementsCount(), 'max_count' => $user->getTermReplacementsCount()]) }}
-        </div>
+            </div>
 
-        <div class="wittyworks-form-section">
-            <x-jet-label for="name" value="{{ __('teams.false_positives') }}" />
+            <x-jet-label for="name" value="{{ __('teams.false_positives') }}" class="lato-paragraph-text-p"/>
+            <div class="lato-small-text-p">
                 {{ __('teams.total_of_max_used_ignored', ['total' => $user->getTotalFalsePositivesCount(), 'max_count' => $user->getFalsePositivesCount()]) }}
-        </div>
+            </div>
     </x-slot>
 </x-jet-form-section>

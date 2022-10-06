@@ -38,7 +38,7 @@
         </div>
     </div>
     <div class="wittyworks-upgrade-banner-button-container">
-        <a class="wittyworks-button wittyworks-button--purple" href="https://www.witty.works/select-browser" target="_blank" rel="noopener">
+        <a class="button primary-button-purple" href="https://www.witty.works/select-browser" target="_blank" rel="noopener">
             {{ __('content.onboarding_install_witty_button') }}
         </a>
     </div>
@@ -54,7 +54,7 @@
         </div>
     </div>
     <div class="wittyworks-upgrade-banner-button-container">
-        <a id="login-witty-url" class="wittyworks-button wittyworks-button--purple" href="">
+        <a id="login-witty-url" class="button primary-button-purple" href="">
             {{ __('content.onboarding_login_witty_button') }}
         </a>
     </div>

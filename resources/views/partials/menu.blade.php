@@ -23,28 +23,28 @@
         @auth
         <!-- LOGGED IN -->
         <div class="wittyworks-navigation-top-half">
-            <x-jet-nav-link class="wittyworks-navigation-item" href="{{ route('profile.show') }}">
+            <x-jet-nav-link class="wittyworks-navigation-item lato-small-paragraph-title-h4" href="{{ route('profile.show') }}">
                 {{ $user->name}}
             </x-jet-nav-link>
             @if ($team_edit)
             <br />
-            <x-jet-nav-link class="wittyworks-team-name" href="{{ route('teams.subscription') }}#updateTeamName">
+            <x-jet-nav-link class="wittyworks-team-name lato-paragraph-text-p " href="{{ route('teams.subscription') }}#updateTeamName">
                 {{ $team->name }}
             </x-jet-nav-link>
             @elseif ($team)
             <br />
-            <div class="wittyworks-navigation-label-wrapper">
+            <div class="wittyworks-navigation-label-wrapper lato-paragraph-text-p">
                 {{ $team->name }}
             </div>
             @endif
 
             @if ($team_edit)
             <div class="wittyworks-navigation-account-toggle-wrapper">
-                <x-jet-nav-link id="personal_account" class="wittyworks-navigation-item" href="{{ route('user.language-settings') }}" :active="$open_tab === 'user'">
+                <x-jet-nav-link id="personal_account" class="wittyworks-navigation-item lato-small-paragraph-title-h4" href="{{ route('user.language-settings') }}" :active="$open_tab === 'user'">
                     {{ __('guidelines.personal_account') }}
                 </x-jet-nav-link>
                 <div class="wittyworks-navigation-account-divider">|</div>
-                 <x-jet-nav-link id="team_account" class="wittyworks-navigation-item" href="{{ route('teams.language-settings') }}" :active="$open_tab === 'team'">
+                 <x-jet-nav-link id="team_account" class="wittyworks-navigation-item lato-small-paragraph-title-h4" href="{{ route('teams.language-settings') }}" :active="$open_tab === 'team'">
                     {{ __('guidelines.team_account') }}
                 </x-jet-nav-link>
             </div>
@@ -52,19 +52,19 @@
 
             @if ($open_tab === 'user')
             <div id="personal_account_content">
-                <x-jet-nav-link class="wittyworks-navigation-link-wrapper" href="{{ route('profile.show') }}" :active="request()->routeIs('user.subscription')">
+                <x-jet-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('profile.show') }}" :active="request()->routeIs('user.subscription')">
                     <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/user.svg') }}" alt="" />
                     {{ __('content.manage_account') }}
                 </x-jet-nav-link>
     
-                <div class="wittyworks-navigation-label-wrapper">
+                <div class="wittyworks-navigation-label-wrapper lato-paragraph-text-p">
                     <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/language.svg') }}" alt="" />
                     {{ __('guidelines.language') }}
                 </div>
 
                 <div class="wittyworks-navigation-sub-wrapper">
                     @foreach($links as $route => $label)
-                    <x-jet-nav-link class="wittyworks-navigation-sub-link" href="{{ route('user.' . $route) }}" :active="request()->routeIs('user.' . $route)">{{ $label }}</x-jet-nav-link>
+                    <x-jet-nav-link class="wittyworks-navigation-sub-link lato-small-text-p" href="{{ route('user.' . $route) }}" :active="request()->routeIs('user.' . $route)">{{ $label }}</x-jet-nav-link>
                     <br>
                     @endforeach
                 </div>
@@ -83,14 +83,14 @@
                     {{ __('content.subscription') }}
                 </x-jet-nav-link>
     
-                <div class="wittyworks-navigation-label-wrapper">
+                <div class="wittyworks-navigation-label-wrapper lato-paragraph-text-p">
                     <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/language.svg') }}" alt="" />
                     {{ __('teams.language') }}            
                 </div>
 
                 <div class="wittyworks-navigation-sub-wrapper">
                     @foreach($links as $route => $label)
-                    <x-jet-nav-link class="wittyworks-navigation-sub-link" href="{{ route('teams.' . $route) }}" :active="request()->routeIs('teams.' . $route)">{{ $label }}</x-jet-nav-link>
+                    <x-jet-nav-link class="wittyworks-navigation-sub-link lato-small-text-p" href="{{ route('teams.' . $route) }}" :active="request()->routeIs('teams.' . $route)">{{ $label }}</x-jet-nav-link>
                     <br>
                     @endforeach
                 </div>
@@ -100,21 +100,21 @@
         </div>
 
         <div class="wittyworks-navigation-bottom-half">
-            <x-jet-nav-link class="wittyworks-navigation-link-wrapper" href="https://www.witty.works/editor" target="_blank" rel="noopener">
+            <x-jet-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="https://www.witty.works/editor" target="_blank" rel="noopener">
                 <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/editor.svg') }}" alt="" />
                 {{ __('content.witty_editor') }}
             </x-jet-nav-link>
                 
-            <x-jet-nav-link class="wittyworks-navigation-link-wrapper" href="{{ route('academy') }}" alt="Academy" :active="request()->routeIs('academy')">
+            <x-jet-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('academy') }}" alt="Academy" :active="request()->routeIs('academy')">
                 <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/bulb.svg') }}" alt=""/>
                 {{ __('content.academy') }}
             </x-jet-nav-link>
 
-            <x-jet-nav-link class="wittyworks-navigation-link-wrapper" href="{{ route('logout', ['provider' => 'azureadb2c']) }}">
+            <x-jet-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('logout', ['provider' => 'azureadb2c']) }}">
                 <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/logout.svg') }}" alt="" />
                 {{ __('content.log_out') }}
             </x-jet-nav-link>
-            <div class="wittyworks-navigation-username">{{ $user->name }}</div>
+            <div class="wittyworks-navigation-username lato-small-text-p">{{ $user->name }}</div>
         </div>
                 
         @else

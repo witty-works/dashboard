@@ -8,7 +8,7 @@
     </x-slot>
 
     <x-slot name="form" submit="updateLanguageGuidelinesStyle">
-        <div class="guidelines-form-title">{!! __('guidelines.manage_organization_guidelines_description_style') !!}</div>
+        <div class="lato-paragraph-text-p">{!! __('guidelines.manage_organization_guidelines_description_style') !!}</div>
         <div class="guidelines-form-section">     
             <x-jet-checkbox
                 id="disabled_categories_style"

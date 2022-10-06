@@ -164,7 +164,7 @@ So kannst du deinem Team beitreten:
     'onboarding_support' => 'Unterstützung',
     'onboarding_team_stats' => 'Die Statistiken deines Teams',
     'login_failed' => 'Login scheiterte',
-    'edit' => 'bearbeiten',
+    'edit' => 'Bearbeiten',
     'introduction_videos' => 'Einführungsvideos',
     'onboarding_install_witty_title' => 'Installiere Witty',
     'onboarding_install_witty_text' => 'Du hast Witty noch nicht installiert. Installiere Witty jetzt!',
