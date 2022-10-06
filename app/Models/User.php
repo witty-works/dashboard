@@ -214,6 +214,20 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->invitations->count();
     }
 
+    public function getFirstNameAttribute()
+    {
+        $split = explode(' ', $this->name);
+
+        return array_shift($split);
+    }
+
+    public function getLastNameAttribute()
+    {
+        $split = explode(' ', $this->name);
+
+        return  implode(' ', $split);
+    }
+
     public function getHubspotData($booleanAsStrings = false)
     {
         $true = $booleanAsStrings ? 'Yes' : true;

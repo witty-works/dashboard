@@ -1,12 +1,19 @@
 @if (config('hubspot.js_enabled'))
 <script type="text/javascript">
     function onConversationsAPIReady() {
-      console.log(`HubSpot Conversations API: ${window.HubSpotConversations}`);
+      window.HubSpotConversations.widget.load();
     }
     /*
       configure window.hsConversationsSettings if needed.
     */
-    window.hsConversationsSettings = {};
+    window.hsConversationsSettings = {
+      @if($user && Session::has('hubspot_identification_token'))
+      identificationEmail: "{{ $user->email }}",
+      identificationToken: "{{ Session::get('hubspot_identification_token') }}",
+      @endif
+      loadImmediately: false
+    };
+
     /*
      If external API methods are already available, use them.
     */
