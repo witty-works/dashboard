@@ -7,7 +7,7 @@
       configure window.hsConversationsSettings if needed.
     */
     window.hsConversationsSettings = {
-      @if($user && Session::has('hubspot_identification_token'))
+      @if(!empty($user) && Session::has('hubspot_identification_token'))
       identificationEmail: "{{ $user->email }}",
       identificationToken: "{{ Session::get('hubspot_identification_token') }}",
       @endif
