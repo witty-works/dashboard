@@ -78,7 +78,7 @@ Choose if Witty should suggest only the gender ending (e.g. "Mitarbeiter*in"), t
     'emoji_invalid_format' => 'The emoji field may only contain a single emoji character.',
     'emoji_short_label' => 'Emoji',
     'language' => 'Customize Witty',
-    'exists_on_team_label' => 'Your team has already set this',
+    'exists_on_team_label' => 'Already set on team',
     'domain_already_exists' => 'This URL has already been added.',
     'create_domain' => 'Add a domain',
     'domain_limit_reached' => 'You have reached the domain limit.',

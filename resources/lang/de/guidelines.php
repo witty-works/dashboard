@@ -8,8 +8,8 @@ return [
     'manage_organization_guidelines_description' => 'Konfiguriere Witty so, dass es besser zum Schreibstil deines Teams passt.',
     'german_gender_ending' => 'Gender-Endung auswählen',
     'list_false_positives' => 'Ignorierte Wörter',
-    'gendered_roles_format' => '<span>Witty schlägt per Default das Gender-Sternchen vor. Lese <a href="https://be-hindernisse.org/2022/02/15/mythos-der-doppelpunkt-ist-perfekt-zum-entgendern/" target="_blank">hier</a>, weshalb wir diese Alternative empfehlen. In <a href="https://www.witty.works/en/blog/gender-inclusive-writing-in-german" target="_blank">diesem Blogpost</a> erklären wir alle Gender-Endungen.</span>
-<span>Wähle aus, ob Witty nur die Gender-Ending-Form (z.B. "Mitarbeiter*in"), die weibliche und männliche Form (z.B. "Mitarbeiterin oder Mitarbeiter"), beides oder genderneutrale Alternativen wie "Mitarbeitende" vorschlagen soll.</span>',
+    'gendered_roles_format' => '<span class="lato-paragraph-text-p">Witty schlägt per Default das Gender-Sternchen vor. Lese <a href="https://be-hindernisse.org/2022/02/15/mythos-der-doppelpunkt-ist-perfekt-zum-entgendern/" target="_blank">hier</a>, weshalb wir diese Alternative empfehlen. In <a href="https://www.witty.works/en/blog/gender-inclusive-writing-in-german" target="_blank">diesem Blogpost</a> erklären wir alle Gender-Endungen.</span>
+<span class="lato-paragraph-text-p">Wähle aus, ob Witty nur die Gender-Ending-Form (z.B. "Mitarbeiter*in"), die weibliche und männliche Form (z.B. "Mitarbeiterin oder Mitarbeiter"), beides oder genderneutrale Alternativen wie "Mitarbeitende" vorschlagen soll.</span><span class="lato-paragraph-text-p">',
     'both' => 'Die gewählte Gender-Endung und die weibliche und männliche Form vorschlagen',
     'preferred_variants_de_DE' => 'Deutsch (🇩🇪 Deutschland)',
     'preferred_variants_de_AT' => 'Deutsch (🇦🇹 Österreich)',
@@ -72,7 +72,7 @@ return [
     'emoji_short_label' => 'Emoticon',
     'false_positives_label' => 'Wörter ignorieren',
     'language' => 'Witty anpassen',
-    'exists_on_team_label' => 'Dein Team hat dies bereits konfiguriert',
+    'exists_on_team_label' => 'Hat das Team bereits festgelegt',
     'domain_already_exists' => 'Diese URL wurde bereits hinzugefügt.',
     'create_domain' => 'Füge eine URL hinzu',
     'domain_limit_reached' => 'Du hast das Limit an möglichen URLs erreicht.',
