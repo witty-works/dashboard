@@ -5,6 +5,7 @@ namespace App\Http\Livewire\UserDomain;
 use App\Models\Domain;
 use Illuminate\Validation\ValidationException;
 use App\Http\Livewire\OrganizationDomain\Form as OrganizationForm;
+use Illuminate\Support\Facades\Auth;
 
 class Form extends OrganizationForm
 {
@@ -25,7 +26,7 @@ class Form extends OrganizationForm
      */
     public function mount($user)
     {
-        $this->user = $user;
+        $this->user = Auth::user();
     }
 
     public function render()

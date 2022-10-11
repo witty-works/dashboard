@@ -4,6 +4,7 @@ namespace App\Http\Livewire\UserTermReplacement;
 
 use App\Models\TermReplacement;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class Show extends Component
@@ -14,9 +15,9 @@ class Show extends Component
 
     public $user;
 
-    public function mount($user)
+    public function mount()
     {
-        $this->user = $user;
+        $this->user = Auth::user();
     }
 
     public function render()

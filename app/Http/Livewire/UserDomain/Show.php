@@ -4,6 +4,7 @@ namespace App\Http\Livewire\UserDomain;
 
 use App\Models\Domain;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class Show extends Component
@@ -25,9 +26,9 @@ class Show extends Component
      * @param  mixed  $userGuidelines
      * @return void
      */
-    public function mount($user)
+    public function mount()
     {
-        $this->user = $user;
+        $this->user = Auth::user();
     }
 
     public function render()
