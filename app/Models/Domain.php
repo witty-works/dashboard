@@ -29,7 +29,7 @@ class Domain extends Model
             return false;
         }
 
-        return self::where('team_id', $team->id)->where('domain', $this->term)->exists();
+        return self::where('team_id', $team->id)->where('domain', $this->domain)->exists();
     }
 
 
