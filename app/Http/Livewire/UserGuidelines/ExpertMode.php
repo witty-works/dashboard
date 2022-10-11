@@ -4,6 +4,7 @@ namespace App\Http\Livewire\UserGuidelines;
 
 use App\Models\LanguageGuidelines;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class ExpertMode extends Component
@@ -28,7 +29,7 @@ class ExpertMode extends Component
      */
     public function mount($user)
     {
-        $this->user = $user;
+        $this->user = Auth::user();
 
         $languageGuidelines = $this->getLanguageGuidelines($this->user);
 

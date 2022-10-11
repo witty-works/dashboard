@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\UserGuidelines;
 
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class Intro extends Component
@@ -21,7 +22,7 @@ class Intro extends Component
      */
     public function mount($user)
     {
-        $this->user = $user;
+        $this->user = Auth::user();
     }
 
     /**
