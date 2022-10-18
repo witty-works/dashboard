@@ -5,6 +5,7 @@ namespace App\Http\Livewire\UserFalsePositive;
 use App\Models\FalsePositive;
 use Illuminate\Validation\ValidationException;
 use App\Http\Livewire\OrganizationFalsePositive\Form as OrganizationForm;
+use Illuminate\Support\Facades\Auth;
 
 class Form extends OrganizationForm
 {
@@ -23,7 +24,7 @@ class Form extends OrganizationForm
      */
     public function mount($user)
     {
-        $this->user = $user;
+        $this->user = Auth::user();
     }
 
     public function render()

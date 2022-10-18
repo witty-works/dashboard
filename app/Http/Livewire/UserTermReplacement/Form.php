@@ -4,6 +4,7 @@ namespace App\Http\Livewire\UserTermReplacement;
 
 use App\Models\TermReplacement;
 use App\Http\Livewire\OrganizationTermReplacement\Form as OrganizationForm;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
 class Form extends OrganizationForm
@@ -12,7 +13,7 @@ class Form extends OrganizationForm
 
     public function mount($user)
     {
-        $this->user = $user;
+        $this->user = Auth::user();
     }
 
     public function render()

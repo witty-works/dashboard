@@ -37,6 +37,7 @@ class UserGuidelinesController extends Controller
                 $languageGuidelines->save();
             }
         }
+
         return redirect()->route('user.language-settings');
     }
 

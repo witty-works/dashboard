@@ -143,7 +143,7 @@ So kannst du deinem Team beitreten:
     'user' => 'Benutzer*innen',
     'actions' => 'Aktionen',
     'any' => 'alle',
-    'delete_permanently' => 'löschen',
+    'delete_permanently' => 'Löschen',
     'de' => 'Deutsch (Deutschland)',
     'en' => 'Englisch',
     'welcome_text' => 'Das Dashboard hilft dir, Witty einzurichten und deinen Bedürfnissen anzupassen.',
