@@ -53,8 +53,11 @@ class ExpertMode extends Component
 
         $languageGuidelines = $this->getLanguageGuidelines($this->user);
 
-        $languageGuidelines->expert_mode = (bool) $this->expert_mode;
         $languageGuidelines->simple_language = (bool) $this->simple_language;
+        if ($languageGuidelines->simple_language) {
+            $this->expert_mode = true;
+        }
+        $languageGuidelines->expert_mode = (bool) $this->expert_mode;
 
         $languageGuidelines->save();
 
