@@ -31,6 +31,11 @@ class LanguageGuidelines extends Model
         'preferred_variants' => 'json',
         'disabled_categories' => 'json',
         'disabled_categories_force' => 'json',
+        'expert_mode_force' => 'boolean',
+        'english_rules_force' => 'boolean',
+        'german_rules_force' => 'boolean',
+        'show_inspiration_alternatives_force' => 'boolean',
+        'preferred_variants_force' => 'boolean',
     ];
 
     static protected $syncFields = [

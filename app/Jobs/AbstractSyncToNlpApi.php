@@ -100,12 +100,12 @@ abstract class AbstractSyncToNlpApi implements ShouldQueue
     {
         $config['maximum_importance'] = [
             'value' => $guidelines->expert_mode ? 3 : 2,
-            'status' => $guidelines->expert_mode_force ? 'force' : 'suggestion',
+            'status' => $guidelines->expert_mode_force === false ? 'suggestion' : 'force',
         ];
 
         $config['simple_language'] = [
             'value' => (bool) $guidelines->simple_language,
-            'status' => $guidelines->expert_mode_force ? 'force' : 'suggestion',
+            'status' => $guidelines->expert_mode_force === false ? 'suggestion' : 'force',
         ];
 
         $config['singular_they'] = [
@@ -115,22 +115,22 @@ abstract class AbstractSyncToNlpApi implements ShouldQueue
 
         $config['show_inspiration_alternatives'] = [
             'value' => (bool) $guidelines->show_inspiration_alternatives,
-            'status' => $guidelines->show_inspiration_alternatives_force ? 'force' : 'suggestion',
+            'status' => $guidelines->show_inspiration_alternatives_force === false ? 'suggestion' : 'force',
         ];
 
         $config['gendered_roles_format'] = [
             'value' => $guidelines->gendered_roles_format,
-            'status' => $guidelines->german_rules_force ? 'force' : 'suggestion',
+            'status' => $guidelines->german_rules_force === false ? 'suggestion' : 'force',
         ];
 
         $config['german_gender_ending'] = [
             'value' => $guidelines->german_gender_ending,
-            'status' => $guidelines->german_rules_force ? 'force' : 'suggestion',
+            'status' => $guidelines->german_rules_force === false ? 'suggestion' : 'force',
         ];
 
         $config['preferred_variants'] = [
             'value' => $guidelines->preferred_variants,
-            'status' => $guidelines->preferred_variants_force ? 'force' : 'suggestion',
+            'status' => $guidelines->preferred_variants_force === false ? 'suggestion' : 'force',
         ];
 
         return $config;
