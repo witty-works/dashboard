@@ -36,7 +36,6 @@ class LanguageGuidelines extends Model
         'german_rules_force' => 'boolean',
         'show_inspiration_alternatives_force' => 'boolean',
         'preferred_variants_force' => 'boolean',
-        'disabled_categories_force' => 'boolean',
     ];
 
     static protected $syncFields = [
