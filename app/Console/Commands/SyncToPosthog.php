@@ -6,16 +6,15 @@ use App\Jobs\SyncOrganizationToPosthog;
 use App\Jobs\SyncUserToPosthog;
 use App\Models\User;
 use App\Models\Team;
-use Illuminate\Console\Command;
 
-class SyncToPosthog extends Command
+class SyncToPosthog extends AbstractSyncCommand
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'posthog:sync';
+    protected $signature = 'posthog:sync {--ids=} {--team-ids=}';
 
     /**
      * The console command description.
@@ -39,8 +38,14 @@ class SyncToPosthog extends Command
 
         $this->info('Queuing syncing to Posthog ...');
 
+        $query = Team::query();
+        $query = $this->filterQueryByIds($query, 'team-ids');
+        if (!$query) {
+            return 1;
+        }
+
         $teamCount = 0;
-        foreach (Team::query()->cursor() as $team) {
+        foreach ($query->cursor() as $team) {
             /** @var \App\Models\Team $team */
             dispatch(new SyncOrganizationToPosthog($team));
             $teamCount++;
@@ -48,8 +53,14 @@ class SyncToPosthog extends Command
 
         $this->info("Finished syncing $teamCount teams");
 
+        $query = User::query();
+        $query = $this->filterQueryByIds($query);
+        if (!$query) {
+            return 1;
+        }
+
         $userCount = 0;
-        foreach (User::query()->cursor() as $user) {
+        foreach ($query->cursor() as $user) {
             /** @var \App\Models\User $user */
             dispatch(new SyncUserToPosthog($user));
             $userCount++;
