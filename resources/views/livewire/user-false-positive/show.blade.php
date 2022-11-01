@@ -1,4 +1,5 @@
 <x-list-section>
+    @if($list->count())
     <x-slot name="title">
         {{ __('guidelines.list_false_positives') }}
     </x-slot>
@@ -31,7 +32,8 @@
                 </td>
             </tr>
             @endforeach
-        </tbody>
+            </tbody>
         </table>
     </x-slot>
+    @endif
 </x-list-section>
