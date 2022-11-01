@@ -34,7 +34,7 @@ class WelcomeController extends Controller
     {
         $user = $request->user();
         if ($user) {
-            $user->has_consented_to_mailing = true;
+            $user->has_consented_to_mailing = (bool)$request->get('consent', 0);
             $user->save();
         }
 

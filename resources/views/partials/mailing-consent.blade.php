@@ -7,9 +7,14 @@
             {{ __('content.mailing_consent_text') }}
         </div>
     </div>
+
     <div class="wittyworks-upgrade-banner-button-container">
-        <a class="button primary-button-purple" href="{{ route('user.mailing_consent') }}">
+        <a class="button primary-button-purple" href="{{ route('user.mailing_consent') }}?consent=1">
             {{ __('content.mailing_consent_button') }}
+        </a>
+
+        <a href="{{ route('user.mailing_consent') }}?consent=0">
+            {{ __('content.mailing_consent_reject') }}
         </a>
     </div>
 </div>
