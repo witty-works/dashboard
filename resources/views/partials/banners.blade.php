@@ -15,6 +15,6 @@ $showMailing = !$user->has_consented_to_mailing;
 @include('partials.invite-check')
 @elseif($showMailing && !Route::is('profile.show'))
 @include('partials.mailing-consent', ['user' => $user])
-@elseif(!$team->subscribed() && !Route::is('teams.subscription'))
+@elseif(!$team->subscribed())
 @include('partials.subscribe-banner', ['user' => $user])
 @endif
