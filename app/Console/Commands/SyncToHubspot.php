@@ -4,16 +4,15 @@ namespace App\Console\Commands;
 
 use App\Jobs\SyncUserToHubSpot;
 use App\Models\User;
-use Illuminate\Console\Command;
 
-class SyncToHubspot extends Command
+class SyncToHubspot extends AbstractSyncCommand
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'hubspot:sync';
+    protected $signature = 'hubspot:sync {--ids=}';
 
     /**
      * The console command description.
@@ -37,8 +36,14 @@ class SyncToHubspot extends Command
 
         $this->info('Queuing syncing to Hubspot ...');
 
+        $query = User::whereNull('hubspot_id');
+        $query = $this->filterQueryByIds($query);
+        if (!$query) {
+            return 1;
+        }
+
         $userCount = 0;
-        foreach (User::whereNull('hubspot_id')->cursor() as $user) {
+        foreach ($query->cursor() as $user) {
             /** @var \App\Models\User $user */
             dispatch(new SyncUserToHubSpot($user));
 
