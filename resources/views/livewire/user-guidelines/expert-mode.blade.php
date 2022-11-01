@@ -5,7 +5,7 @@
 
     <x-slot name="description">
         @if(!$user->subscribed())
-            {!! __('guidelines.expert_mode_subscription_required', ['url' => route('stripe.portal')]) !!}
+            {!! __('guidelines.expert_mode_subscription_required', ['url' => route('teams.subscription')]) !!}
         @endif
     </x-slot>
 
