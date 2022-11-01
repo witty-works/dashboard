@@ -5,7 +5,7 @@
 
     <x-slot name="description">
         @if($team->getFalsePositivesLimitReached() && Auth::user()->ownsTeam($team) && !$team->subscribed())
-           {!! __('guidelines.term_replacement_limit_reached', ['max_count' => $team->getTermReplacementsCount(), 'url' => route('stripe.portal')]) !!}
+           {!! __('guidelines.term_replacement_limit_reached', ['max_count' => $team->getTermReplacementsCount(), 'url' => route('teams.subscription')]) !!}
         @else
             {!! Str::markdown(__('guidelines.create_new_term_replacement_description')) !!}
         @endif
