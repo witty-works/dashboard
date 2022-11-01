@@ -8,7 +8,7 @@
             {!! Str::markdown(__('teams.store_context_description')) !!}
 
             @if(Auth::user()->ownsTeam($team) && !$team->subscribed())
-            {!! __('teams.store_context_subscription_required', ['url' => route('stripe.portal')]) !!}
+            {!! __('teams.store_context_subscription_required', ['url' => route('teams.subscription')]) !!}
             @endif
         </x-slot>
 
