@@ -29,27 +29,32 @@
 
         <div class="lato-small-paragraph-title-h4">{{ __('teams.team_plan_headline') }}</div>
 
+        <x-jet-label for="name" value="{{ __('teams.plan_name') }}" class="lato-paragraph-text-p" />
+        <div class="lato-small-text-p margin-bottom">
+            {{ $user->subscribed() ? $user->subscription()->planName() : __('stripe.witty_free') }}
+
+            @if(!Auth::user()->ownsTeam($team))
+                {{ __('teams.to_upgrade_contact_owner') }}
+            @endif
+        </div>
+
         @if($team)
             <x-jet-label for="name" value="{{ __('teams.team_owner') }}" class="lato-paragraph-text-p"/>
             <div class="lato-small-text-p margin-bottom">
                 {{ $team->owner->name }} (<a href="mailto:{{ $team->owner->email }}">{{ $team->owner->email }}</a>)
             </div>
         @endif
-            <x-jet-label for="name" value="{{ __('teams.plan_name') }}" class="lato-paragraph-text-p" />
-            <div class="lato-small-text-p margin-bottom">
-                {{ $user->subscribed() ? $user->subscription()->planName() : __('stripe.witty_free') }}
-            </div>
 
         <!-- TODO: add how many team members have been added + button (either add, or upgrade) -->
 
-            <x-jet-label for="name" value="{{ __('teams.term_replacements') }}" class="lato-paragraph-text-p"/>
-            <div class="lato-small-text-p margin-bottom">
-                {{ __('teams.total_of_max_used_dictionary', ['total' => $user->getTotalTermReplacementsCount(), 'max_count' => $user->getTermReplacementsCount()]) }}
-            </div>
+        <x-jet-label for="name" value="{{ __('teams.term_replacements') }}" class="lato-paragraph-text-p"/>
+        <div class="lato-small-text-p margin-bottom">
+            {{ __('teams.total_of_max_used_dictionary', ['total' => $user->getTotalTermReplacementsCount(), 'max_count' => $user->getTermReplacementsCount()]) }}
+        </div>
 
-            <x-jet-label for="name" value="{{ __('teams.false_positives') }}" class="lato-paragraph-text-p"/>
-            <div class="lato-small-text-p">
-                {{ __('teams.total_of_max_used_ignored', ['total' => $user->getTotalFalsePositivesCount(), 'max_count' => $user->getFalsePositivesCount()]) }}
-            </div>
+        <x-jet-label for="name" value="{{ __('teams.false_positives') }}" class="lato-paragraph-text-p"/>
+        <div class="lato-small-text-p">
+            {{ __('teams.total_of_max_used_ignored', ['total' => $user->getTotalFalsePositivesCount(), 'max_count' => $user->getFalsePositivesCount()]) }}
+        </div>
     </x-slot>
 </x-jet-form-section>
