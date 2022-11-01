@@ -285,4 +285,7 @@ Your Witty team',
 
     'mailing_consent_reject' => 'I do not want to stay uptodate in Witty news',
     'upgrade_title' => 'upgrade title',
+    'upgrade_text' => 'upgrade text',
+    'upgrade_ask_owner_text' => 'upgrade ask owner text',
+    'upgrade_button' => 'upgrade button',
 ];
