@@ -248,7 +248,7 @@ class User extends Authenticatable implements MustVerifyEmail
         ];
 
         if ($this->currentTeam) {
-            $data['team_dashboard_id'] = $this->team->posthogId();
+            $data['team_dashboard_id'] = $this->currentTeam->posthogId();
             $data['has_team_language_rules'] = $this->currentTeam->hasLanguageRules() ? $true : $false;
             $data['team_role'] = $this->ownsTeam($this->currentTeam)
                 ? 'owner' : $this->teamRole($this->currentTeam)->name;
