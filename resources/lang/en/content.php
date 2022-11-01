@@ -247,4 +247,7 @@ Your Witty team',
     'title_words_opened_doughnut_chart_month' => 'Top Words opened (month)',
     'title_words_ignored_doughnut_chart_month' => 'Top Words ignored (month)',
     'title_words_bar_chart_month' => 'Top Words opened (month)',
+    'upgrade_text' => 'upgrade text',
+    'upgrade_ask_owner_text' => 'upgrade ask owner text',
+    'upgrade_button' => 'upgrade button',
 ];
