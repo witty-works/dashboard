@@ -1,4 +1,5 @@
 <x-list-section>
+    @if($list->count())
     <x-slot name="title">
         {{ __('guidelines.list_term_replacements') }}
     </x-slot>
@@ -38,4 +39,5 @@
             </tbody>
         </table>
     </x-slot>
+    @endif
 </x-list-section>
