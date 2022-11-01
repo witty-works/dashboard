@@ -210,4 +210,6 @@ Your Witty team',
     'onboarding_login_witty_title' => 'Please log into Witty',
     'onboarding_login_witty_text' => 'In order to use Witty, please sign into the Witty browser extension.',
     'onboarding_login_witty_button' => 'Sign into Witty',
+    'mailing_consent_reject' => 'I do not want to stay uptodate in Witty news',
+    'upgrade_title' => 'upgrade title',
 ];
