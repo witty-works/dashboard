@@ -15,4 +15,6 @@ $showMailing = $user->has_consented_to_mailing === null;
 @include('partials.invite-check')
 @elseif($showMailing)
 @include('partials.mailing-consent', ['user' => $user])
+@elseif(!$team->subscribed())
+@include('partials.subscribe-banner', ['user' => $user])
 @endif
