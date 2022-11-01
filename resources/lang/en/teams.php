@@ -40,4 +40,5 @@ return [
     'add_licenses' => 'Add more licenses',
     'amount_per_year' => ':count licenses - :amount per year',
     'license_count_did_not_change' => 'The license count was not changed.',
+    'to_upgrade_contact_owner' => '(to upgrade contact your team owner)',
 ];
