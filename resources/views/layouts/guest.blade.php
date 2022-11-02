@@ -32,5 +32,6 @@
 
                 @include('partials.footer')
             </div>
+        @include('partials/helphero')
     </body>
 </html>
