@@ -37,7 +37,11 @@
             $team = $user->currentTeam;
         @endphp
 
-        <div class="lato-small-paragraph-title-h4">{{ __('teams.team_plan_headline') }}</div>
+        <div class="lato-small-paragraph-title-h4">{{ __('teams.plan_name') }}</div>
+
+        <div class="lato-small-text-p margin-bottom">
+            {{ $user->subscribed() ? $user->subscription()->planName() : __('stripe.witty_free') }}
+        </div>
 
         <x-jet-label for="name" value="{{ __('teams.plan_name') }}" class="lato-paragraph-text-p" />
         <div class="lato-small-text-p margin-bottom">
@@ -54,10 +58,6 @@
                 {{ $team->owner->name }} (<a href="mailto:{{ $team->owner->email }}">{{ $team->owner->email }}</a>)
             </div>
         @endif
-            <x-jet-label for="name" value="{{ __('teams.plan_name') }}" />
-            <div class="lato-small-text-p margin-bottom">
-                {{ $user->subscribed() ? $user->subscription()->planName() : __('stripe.witty_free') }}
-            </div>
 
             <x-jet-label for="name" value="{{ __('teams.term_replacements') }}"/>
             <div class="lato-small-text-p margin-bottom">
