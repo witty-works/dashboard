@@ -239,19 +239,16 @@ class User extends Authenticatable implements MustVerifyEmail
             'has_accessed_stripe' => $this->has_accessed_stripe ? $true : $false,
             'witty_plan' => $this->planId(),
             'dashboard_id' => $this->posthogId(),
-            'team_dashboard_id' => null,
+            'team_dashboard_id' => $this->posthogTeamId(),
             'impersonate_url' => config('app.url') . '/impersonate/take/' . $this->id,
             'has_team_language_rules' => $false,
-            'team_role' => '',
+            'team_role' => $this->teamRole(),
             'invited_team_member_count' => 0,
             'team_member_count' => 0,
         ];
 
         if ($this->currentTeam) {
-            $data['team_dashboard_id'] = $this->currentTeam->posthogId();
             $data['has_team_language_rules'] = $this->currentTeam->hasLanguageRules() ? $true : $false;
-            $data['team_role'] = $this->ownsTeam($this->currentTeam)
-                ? 'owner' : $this->teamRole($this->currentTeam)->name;
 
             if ($this->ownsTeam($this->currentTeam)) {
                 $data['invited_team_member_count'] = $this->currentTeam->teamInvitations()->count();
