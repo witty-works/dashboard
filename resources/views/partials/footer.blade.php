@@ -14,7 +14,7 @@ $contactLinks = [
 
 <nav class="wittyworks-footer light-grey-background">
     <div class="wittyworks-footer-section">
-        <div class="lato-small-paragraph-title-h4">{{ __('content.more_resouces') }}</div>
+        <div class="lato-small-paragraph-title-h4 margin-bottom">{{ __('content.more_resouces') }}</div>
         @foreach($resourceLinks as $label => $url)
         <x-jet-nav-link class="footer-links" href="{{ $url }}" target="_blank" rel="noopener">
             {{ $label }}
@@ -22,7 +22,7 @@ $contactLinks = [
         @endforeach
     </div>
     <div class="wittyworks-footer-section">
-        <div class="lato-small-paragraph-title-h4">{{ __('content.get_in_touch') }}</div>
+        <div class="lato-small-paragraph-title-h4 margin-bottom">{{ __('content.get_in_touch') }}</div>
         @foreach($contactLinks as $label => $url)
         <x-jet-nav-link class="footer-links" href="{{ $url }}" target="_blank" rel="noopener">
             {{ $label }}

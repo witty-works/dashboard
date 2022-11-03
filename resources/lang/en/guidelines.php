@@ -36,7 +36,8 @@ Choose if Witty should suggest only the gender ending (e.g. "Mitarbeiter*in"), t
     'preferred_variants_en_GB' => 'English (🇬🇧 Great Britain)',
     'preferred_variants_none' => ' - ',
     'disabled_categories_orthography' => 'Highlight grammar & spelling mistakes',
-    'set_for_all' => 'Make this selection mandatory for all members of my team. If switched off, team members can overwrite this setting.',
+    'set_for_all' => 'Make this selection mandatory for all members of my team.
+    If switched off, team members can overwrite this setting.',
     'manage_organization_guidelines_english' => 'English',
     'manage_organization_guidelines_description_english' => 'Configuration for inclusive language in English.',
     'manage_organization_guidelines_english_form_title' => 'Suggests using gender-neutral pronouns such as "their" instead of "his" or "her".',

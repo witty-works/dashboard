@@ -1,7 +1,7 @@
 <div>
     @if (Gate::check('viewUserCreateForm', $team))
         <!-- Add Team Member -->
-        <div class="mt-10 sm:mt-0" id="add-team-member">
+        <div class="max-w-7xl mx-auto py-10" id="add-team-member">
             <x-jet-form-section submit="addTeamMember">
                 <x-slot name="title">
                     {{ __('content.add_team_member') }}
@@ -24,16 +24,21 @@
                         <x-jet-input id="email" type="email" class="mt-1 block w-full" wire:model.defer="addTeamMemberForm.email" disabled="{{ !Gate::check('addTeamMember', $team) }}" />
                         <x-jet-input-error for="email" class="mt-2">
                         </x-jet-input-error>
-                        <p class="lato-small-text-p margin-bottom">
-                            @if($team->getUserLicensesLimitReached())
-                            {{ __('teams.user_limit_reached_error', ['max_count' => $team->getUserLicensesCount()]) }}
+
+                        @if($team->getUserLicensesLimitReached())
+                        <p class="lato-small-text-p margin-bottom limit-reached">
+
+                            {{ __('teams.user_limit_reached_error', ['max_count' => $team->getUserLicensesCount()-1]) }}
+
                             @if(Auth::user()->ownsTeam($team))
-                            <a href="{{ route('teams.subscription') }}">
+                            <a class="button primary-button-red" href="{{ route('teams.subscription') }}">
                                 {{ __('teams.add_licenses') }}
                             </a>
                             @endif
-                            @endif
+
+
                         </p>
+                        @endif
                     </div>
 
                     <!-- Role -->
@@ -56,7 +61,7 @@
                                         <div class="{{ isset($addTeamMemberForm['role']) && $addTeamMemberForm['role'] !== $role->key ? 'opacity-50' : '' }}">
                                             <!-- Role Name -->
                                             <div class="flex items-center">
-                                                <div class="text-sm text-gray-600 lato-small-text-p {{ $addTeamMemberForm['role'] == $role->key ? 'font-semibold' : '' }}">
+                                                <div class="lato-paragraph-text-p lato-small-paragraph-title-h4 {{ $addTeamMemberForm['role'] == $role->key ? 'font-semibold' : '' }}">
                                                     {{ $role->name }}
                                                     @if(!$selectable)
                                                     -
@@ -100,7 +105,7 @@
         <x-jet-section-border />
 
         <!-- Team Member Invitations -->
-        <div class="mt-10 sm:mt-0">
+        <div class="max-w-7xl mx-auto py-10">
             <x-jet-action-section>
                 <x-slot name="title">
                     {{ __('content.pending_team_invitations', ['count' => $team->teamInvitations->count()]) }}
@@ -137,7 +142,7 @@
         <x-jet-section-border />
 
         <!-- Manage Team Members -->
-        <div class="mt-10 sm:mt-0">
+        <div class="max-w-7xl mx-auto py-10">
             <x-jet-action-section>
                 <x-slot name="title">
                     {{ __('content.team_members', ['count' => $team->users->count()]) }}
