@@ -512,10 +512,8 @@ input:checked+.slider:before {
 }
 
 .wittyworks-page-subscription {
-    margin-top: 3.3em;
-    margin-bottom: 3em;
+    margin-bottom: 2em;
     min-width: 58%;
-    min-height: 100vh;
     max-width: 60%;
 }
 
@@ -772,4 +770,8 @@ input:checked+.slider:before {
 .limit-reached {
   color: #f06464;
   margin: 1rem 0;
+}
+
+.red {
+  color: #f06464;
 }

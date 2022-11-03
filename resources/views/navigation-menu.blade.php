@@ -1,4 +1,3 @@
-
 <nav x-data="{ open: false }" class="navigation-wrapper">
     <!-- navigation on large screens -->
     <div class="wittyworks-navigation-content-wrapper hidden lg:flex">
@@ -20,5 +19,3 @@
         @include('partials.menu')
     </div>
 </nav>
-
-
