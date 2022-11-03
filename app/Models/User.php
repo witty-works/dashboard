@@ -242,7 +242,7 @@ class User extends Authenticatable implements MustVerifyEmail
             'team_dashboard_id' => $this->posthogTeamId(),
             'impersonate_url' => config('app.url') . '/impersonate/take/' . $this->id,
             'has_team_language_rules' => $false,
-            'team_role' => $this->teamRole(),
+            'team_role' => $this->teamRole($this->currentTeam),
             'invited_team_member_count' => 0,
             'team_member_count' => 0,
         ];
