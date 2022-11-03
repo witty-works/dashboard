@@ -37,13 +37,7 @@
             $team = $user->currentTeam;
         @endphp
 
-        <div class="lato-small-paragraph-title-h4">{{ __('teams.plan_name') }}</div>
-
-        <div class="lato-small-text-p margin-bottom">
-            {{ $user->subscribed() ? $user->subscription()->planName() : __('stripe.witty_free') }}
-        </div>
-
-        <x-jet-label for="name" value="{{ __('teams.plan_name') }}" class="lato-paragraph-text-p" />
+        <x-jet-label class="lato-small-paragraph-title-h4" for="name" value="{{ __('teams.plan_name') }}" />            
         <div class="lato-small-text-p margin-bottom">
             {{ $user->subscribed() ? $user->subscription()->planName() : __('stripe.witty_free') }}
 
