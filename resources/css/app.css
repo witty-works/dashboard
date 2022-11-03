@@ -775,3 +775,12 @@ input:checked+.slider:before {
     align-items: center;
     margin-top: 10em;
   }
+[type='radio'] {
+    margin: 0 0.5rem 0 0;
+    vertical-align: middle;
+}
+
+.limit-reached {
+  color: #f06464;
+  margin: 1rem 0;
+}
