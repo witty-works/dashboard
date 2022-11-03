@@ -6,9 +6,7 @@
     <x-slot name="description"></x-slot>
 
     <x-slot name="form">
-        <x-jet-label class="lato-small-paragraph-title-h4" for="name" value="{{ __('teams.team_plan_headline') }}" />            
-
-        <x-jet-label for="name" value="{{ __('teams.plan_name') }}" class="lato-paragraph-text-p" />
+        <x-jet-label class="lato-small-paragraph-title-h4" for="name" value="{{ __('teams.plan_name') }}" />            
         <div class="lato-small-text-p margin-bottom">
             {{ $team->subscribed() ? $team->subscription()->planName() : __('stripe.witty_free') }}
 
