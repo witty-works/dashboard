@@ -23,7 +23,7 @@ return [
     'total_of_max_used_ignored' => ':total of :max_count possible ignored words are used',
     'more_licenses' => 'If you like to purchase more licenses, please <a href=":url">contact</a> Witty Works.',
     'what_is_included' => 'What is included in your current subscription?',
-    'user_limit_reached_error' => 'User limit of :max_count on the current subscription reached.',
+    'user_limit_reached_error' => 'You can only invite :max_count team members with your current plan. Do you want to invite more? Then upgrade.',
     'store_context_subscription_required' => 'To customize this setting, a <a href=":url">subscription</a> of <a href="https://www.witty.works/witty-for-teams" target="_blank" rel="noopener">Witty Teams</a> or higher is required.',
     'end_date' => 'end date',
     'team_owner' => 'Team owner',
