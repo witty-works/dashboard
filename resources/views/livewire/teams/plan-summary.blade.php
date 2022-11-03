@@ -6,13 +6,13 @@
     <x-slot name="description"></x-slot>
 
     <x-slot name="form">
-        <x-jet-label class="lato-small-paragraph-title-h4" for="name" value="{{ __('teams.plan_name') }}" />            
+        <x-jet-label class="lato-small-paragraph-title-h4" for="name" value="{{ __('teams.plan_name') }}" />
         <div class="lato-small-text-p margin-bottom">
             {{ $team->subscribed() ? $team->subscription()->planName() : __('stripe.witty_free') }}
 
             @if(!Auth::user()->ownsTeam($team))
                 {{ __('teams.to_upgrade_contact_owner') }}
-            @endif    
+            @endif
         </div>
 
         @if(Auth::user()->ownsTeam($team))
@@ -24,7 +24,7 @@
         </div>
         @endif
 
-        
+
         <x-jet-label for="license_count" value="{{ __('teams.license_count_label') }}" />
         <div class="wittyworks-license-dropdown-container">
             <x-select id="license_count"
@@ -33,7 +33,7 @@
                 class="wittyworks-margin-right margin-bottom"
             />
 
-            <x-jet-button>
+            <x-jet-button class="wittyworks-margin-right margin-bottom">
                 {{ $team->subscribed() ? ($team->subscription()->canceled() ? __('content.renew') : __('content.save')) : __('teams.upgrade') }}
             </x-jet-button>
 
@@ -43,10 +43,10 @@
 
             <x-jet-input-error for="license_count" class="ml-2" />
         </div>
-            
+
         @endif
 
-        <x-jet-label for="name" value="{{ __('teams.team_owner') }}" />
+        <x-jet-label for="name" class="lato-small-paragraph-title-h4" value="{{ __('teams.team_owner') }}" />
         <div class="lato-small-text-p margin-bottom">
             {{ $team->owner->name }} (<a href="mailto:{{ $team->owner->email }}">{{ $team->owner->email }}</a>)
         </div>
