@@ -40,4 +40,5 @@ return [
     'add_licenses' => 'Füge weitere Lizenzen hinzu',
     'amount_per_year' => ':count-Lizenzen – :amount pro Jahr',
     'license_count_did_not_change' => 'Die Lizenzanzahl wurde nicht geändert.',
+    'to_upgrade_contact_owner' => '(für ein Upgrade wende dich an deine Team-Eigentümer*in)',
 ];
