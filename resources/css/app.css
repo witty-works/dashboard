@@ -32,15 +32,15 @@ a {
     font-size: 44px;
     line-height: 49px;
     color: #000000;
-    margin-bottom: 0.1em;
-} 
+    margin-bottom: 0.3em;
+}
 
 .lato-small-paragraph-title-h4 {
     font-family: Lato, Arial, Helvetica, sans-serif;
     font-style: normal;
     font-weight: 600 !important;
     font-size: 22px !important;
-    line-height: 28px !important;    
+    line-height: 28px !important;
     color: #000000;
 }
 
@@ -49,7 +49,7 @@ a {
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
-    line-height: 30px;    
+    line-height: 30px;
     color: #000000;
 }
 
@@ -58,7 +58,7 @@ a {
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
-    line-height: 30px;    
+    line-height: 30px;
     color: #f06464;
 }
 
@@ -67,7 +67,7 @@ a {
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
-    line-height: 30px;    
+    line-height: 30px;
     color: #9489DB;
 }
 
@@ -76,7 +76,7 @@ a {
     font-style: normal;
     font-weight: 400;
     font-size: 16px !important;
-    line-height: 30px !important;;    
+    line-height: 30px !important;;
     color: #000000;
 }
 
@@ -113,6 +113,7 @@ a {
   background: #f06464;
   border-radius: 8px;
   color: #ffffff;
+  width: max-content;
 }
 
 .secondary-button-red {
@@ -120,19 +121,22 @@ a {
   border: 1px solid #f06464;
   border-radius: 8px;
   color: #f06464;
+  width: max-content;
 }
 
 .primary-button-purple {
     background: #9489db;
     border-radius: 8px;
     color: #ffffff;
+    width: max-content;
   }
-  
+
 .secondary-button-purple {
     background: #ffffff;
     border: 1px solid #9489db;
     border-radius: 8px;
     color: #9489db;
+    width: max-content;
   }
 
 /* BACKGROUNDS */
@@ -460,6 +464,8 @@ input:checked+.slider:before {
     flex-direction: column;
     align-items: left;
     margin-right: 15%;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
 }
 
 
@@ -634,4 +640,15 @@ input:checked+.slider:before {
 
 .wittyworks-margin-top {
     margin-top: 1em;
+}
+
+
+[type='radio'] {
+    margin: 0 0.5rem 0 0;
+    vertical-align: middle;
+}
+
+.limit-reached {
+  color: #f06464;
+  margin: 1rem 0;
 }

@@ -21,9 +21,9 @@
             <tbody>
             @foreach ($list as $domain)
             <tr @if($loop->even)class="bg-grey"@endif>
-                <td class="border py-2 text-left">{{ $domain->domain }}</td>
+                <td class="border px-4 py-2 text-left">{{ $domain->domain }}</td>
                 @if (Auth::user()->hasTeamPermission($team, 'edit_guidelines') && empty($hide_actions))
-                <td class="border py-2 text-center container-row">
+                <td class="border px-4 py-2 text-center container-row">
                     <button wire:click="editDomain({{ $domain->id }})" class="button primary-button-red ">
                         {{ __('content.edit') }}
                     </button>

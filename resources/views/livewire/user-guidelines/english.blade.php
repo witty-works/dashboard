@@ -6,6 +6,7 @@
     <x-slot name="description">
         {!! Str::markdown(__('guidelines.manage_organization_guidelines_description_english')) !!}
     </x-slot>
+    
 
     <x-slot name="form" submit="updateLanguageGuidelinesEnglish">
         <div class="lato-paragraph-text-p">{!! __('guidelines.manage_organization_guidelines_english_form_title') !!}</div>

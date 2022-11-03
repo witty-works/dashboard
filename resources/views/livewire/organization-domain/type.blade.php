@@ -10,17 +10,16 @@
     <x-slot name="form">
         <div class="col-span-6 sm:col-span-4">
             @foreach (\App\Models\Domain::TYPES as $type => $label)
-            <div>
+            <div class="margin-bottom">
             <x-jet-input name="type"
-                type="radio" 
-                class="mt-1"
+                type="radio"
                 wire:model.defer="type"
                 value="{{ $type }}"
             />
             {{ __($label) }}
             </div>
             @endforeach
-    
+
             <x-jet-input-error for="type" class="mt-2" />
         </div>
 
