@@ -22,8 +22,8 @@ class StripeController extends Controller
     {
         $team = $this->getCurrentTeam($request);
 
-        if (Gate::denies('view', $team)) {
-            abort(403);
+        if (!$request->user()->hasTeamPermission($team, 'edit_guidelines')) {
+            return redirect(route('profile.show'));
         }
 
         return view('teams.subscription', [
