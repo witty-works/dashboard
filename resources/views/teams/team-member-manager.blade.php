@@ -80,7 +80,7 @@
                                             </div>
 
                                             @if(!$selectable)
-                                              <a class="button secondary-button-red" href="{{ route('stripe.portal') }}">
+                                              <a class="button secondary-button-red" href="{{ route('teams.subscription') }}">
                                                   {{ __('teams.upgrade') }}
                                               </a>
                                             @endif

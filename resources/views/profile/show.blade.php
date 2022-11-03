@@ -6,8 +6,11 @@
                 @if (Laravel\Fortify\Features::canUpdateProfileInformation())
                     @livewire('profile.update-profile-information-form')
                 @endif
+
                 @cannot('update', Auth::user()->currentTeam)
                 <div>
+                    @livewire('teams.plan-summary', ['team' => Auth::user()->currentTeam])
+
                     @livewire('teams.team-member-manager', ['team' => Auth::user()->currentTeam])
                 </div>
                 @endcannot
