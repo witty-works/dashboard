@@ -25,8 +25,6 @@ class TeamInvitationController extends BaseTeamInvitationController
             abort(403, 'Unauthorized action.');
         }
 
-        $response = parent::accept($request, $invitation);
-
         $currentTeam = $user->currentTeam;
         if ($currentTeam) {
             if ($user->ownsTeam($currentTeam)) {
@@ -38,13 +36,13 @@ class TeamInvitationController extends BaseTeamInvitationController
             }
         }
 
+        $response = parent::accept($request, $invitation);
+
         $user->switchTeam($invitation->team);
 
         foreach ($user->invitations as $invitation) {
             dispatch(new SyncUserToHubSpot($invitation->team->owner));
             dispatch(new SyncUserToPosthog($invitation->team->owner));
-
-            $invitation->delete();
         }
 
         // update notification count
