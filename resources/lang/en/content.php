@@ -183,7 +183,7 @@ Here is how you can join your team:
     'already_invited_to_team' => 'This user has already been invited to the team.',
     'already_belongs_to_team' => 'This user already belongs to the team.',
     'team_invitation_subject' => ':name invited you to join :team on Witty',
-    'if_you_have_questions' => 'P.S. Need support or have any questions? 
+    'if_you_have_questions' => 'P.S. Need support or have any questions?
 You can find answers to many questions <a href="https://www.witty.works/en/help/wittys-help-center">here</a>. You can get in touch with us at <a href="mailto:support@witty.works">support@witty.works</a>. We\'re here to help you at any step along the way.',
     'have_a_great_day' => 'Have a great day,
 
@@ -203,15 +203,15 @@ Your Witty team',
     'invite_team_members_text' => 'Start writing inclusively together.',
     'invite_team_members_button' => 'Invite team members',
     'mailing_consent_title' => 'Get Product News',
-    'mailing_consent_text' => 'I agree to receive important product updates and inclusive language news.',
-    'mailing_consent_button' => 'Subscribe',
+    'mailing_consent_text' => 'I would love to receive important product updates and inclusive language news.',
+    'mailing_consent_button' => 'Yes',
     'renew' => 'Resume Subscription',
     'accepting_invitation_will_cancel' => 'Accepting this invitation will cancel your current subscription.',
     'accepting_invitation_will_cancel_and_downgrade' => 'Accepting this invitation will cancel your current subscription and downgrade you to the Witty Free plan.',
     'onboarding_login_witty_title' => 'Please log into Witty',
     'onboarding_login_witty_text' => 'In order to use Witty, please sign into the Witty browser extension.',
     'onboarding_login_witty_button' => 'Sign into Witty',
-    'mailing_consent_reject' => 'I do not want to stay uptodate in Witty news',
+    'mailing_consent_reject' => 'No',
     'upgrade_title' => 'upgrade title',
 
     #analytics
