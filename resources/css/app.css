@@ -639,3 +639,23 @@ input:checked+.slider:before {
 .wittyworks-margin-top {
     margin-top: 1em;
 }
+
+
+/* ANALYTICS */
+.wittyworks-analytics-page-wrapper {
+    /* display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center; */
+    background-color: #f5f5f5;
+}
+
+.wittyworks-analytics-chart-large {
+    max-width: 1000px;
+}
+.wittyworks-analytics-chart-medium {
+    max-width: 450px;
+}
+.wittyworks-analytics-chart-small {
+    max-width: 300px;
+}
