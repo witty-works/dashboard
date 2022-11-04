@@ -19,7 +19,7 @@ return [
      * out certain notifications. The given callable will receive the notification. If the callable
      * return false, the notification will not be sent.
      */
-    'notificationFilter' => null,
+    'notificationFilter' => [App\Notifications\FailedJobNotification::class, 'notificationFilter'],
 
     /*
      * The channels to which the notification will be sent.
