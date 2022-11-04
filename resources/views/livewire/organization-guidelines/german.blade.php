@@ -5,10 +5,6 @@
 
     <x-slot name="description">
         {!! Str::markdown(__('guidelines.manage_organization_guidelines_description_german')) !!}
-
-        @if(Auth::user()->ownsTeam($team) && !$team->subscribed())
-            {!! __('guidelines.gendered_roles_format_subscription_required', ['url' => route('teams.subscription')]) !!}
-        @endif
     </x-slot>
 
     <x-slot name="form" submit="updateLanguageGuidelinesGerman">
