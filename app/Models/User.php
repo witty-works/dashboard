@@ -19,6 +19,7 @@ use Lab404\Impersonate\Models\Impersonate;
 use Laravel\Jetstream\HasTeams;
 use Laravel\Jetstream\Jetstream;
 use Laravel\Sanctum\HasApiTokens;
+use Laravel\Jetstream\Role;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -233,6 +234,13 @@ class User extends Authenticatable implements MustVerifyEmail
         $true = $booleanAsStrings ? 'Yes' : true;
         $false = $booleanAsStrings ? 'No' : false;
 
+        $teamRole = $this->teamRole($this->currentTeam);
+        if ($teamRole instanceof Role) {
+            $teamRole = $teamRole->name;
+        } else {
+            $teamRole = null;
+        }
+
         $data = [
             'has_witty_account' => $true,
             'has_consented_to_mailing' => $this->has_consented_to_mailing ? $true : $false,
@@ -242,7 +250,7 @@ class User extends Authenticatable implements MustVerifyEmail
             'team_dashboard_id' => $this->posthogTeamId(),
             'impersonate_url' => config('app.url') . '/impersonate/take/' . $this->id,
             'has_team_language_rules' => $false,
-            'team_role' => $this->teamRole($this->currentTeam),
+            'team_role' => $this->teamRole($this->currentTeam)->name,
             'invited_team_member_count' => 0,
             'team_member_count' => 0,
         ];
