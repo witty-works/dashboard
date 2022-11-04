@@ -784,3 +784,25 @@ input:checked+.slider:before {
   color: #f06464;
   margin: 1rem 0;
 }
+
+.red {
+  color: #f06464;
+}
+/* ANALYTICS */
+.wittyworks-analytics-page-wrapper {
+    /* display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center; */
+    background-color: #f5f5f5;
+}
+
+.wittyworks-analytics-chart-large {
+    max-width: 1000px;
+}
+.wittyworks-analytics-chart-medium {
+    max-width: 450px;
+}
+.wittyworks-analytics-chart-small {
+    max-width: 300px;
+}
