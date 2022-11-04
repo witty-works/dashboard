@@ -25,11 +25,7 @@ class AnalyticsController extends Controller
 
     public function user(Request $request)
     {
-        $postHogId = $request->user()->posthogId();
-        $postHogId = $request->get('id', 'DEV_APP_ID');
-        if ($postHogId !== 'DEV_APP_ID') {
-            $postHogId = AppServiceProvider::POSTHOG_ID_PREFIX . $postHogId;
-        }
+        $postHogId = $this->getPostHogUserId($request);
 
         $properties = [
             'type' => 'AND',
@@ -46,10 +42,28 @@ class AnalyticsController extends Controller
         return $this->fetchAndRender($request, $properties);
     }
 
+    public function userApi(Request $request)
+    {
+        $postHogId = $this->getPostHogUserId($request);
+
+        $properties = [
+            'type' => 'AND',
+            'values' => [
+                [
+                    'key' => 'request__id',
+                    'value' => $postHogId,
+                    'operator' => 'exact',
+                    'type' => 'event',
+                ]
+            ]
+        ];
+
+        return $this->fetchJson($request, $properties);
+    }
+
     public function organization(Request $request)
     {
-        $postHogId = $request->user()->currentTeam->posthogId();
-        $postHogId = AppServiceProvider::POSTHOG_ID_PREFIX . $request->get('id', '17');
+        $postHogId = $this->getPostHogOrganizationId($request);
 
         $properties = [
             'type' => 'AND',
@@ -64,6 +78,44 @@ class AnalyticsController extends Controller
         ];
 
         return $this->fetchAndRender($request, $properties);
+    }
+
+    public function organizationApi(Request $request)
+    {
+        $postHogId = $this->getPostHogOrganizationId($request);
+
+        $properties = [
+            'type' => 'AND',
+            'values' => [
+                [
+                    'key' => 'response__groupId',
+                    'value' => $postHogId,
+                    'operator' => 'exact',
+                    'type' => 'event',
+                ]
+            ]
+        ];
+
+        return $this->fetchJson($request, $properties);
+    }
+
+    protected function getPostHogUserId(Request $request)
+    {
+        //$postHogId = $request->user()->posthogId();
+        $postHogId = $request->get('id', 'DEV_APP_ID');
+        if ($postHogId !== 'DEV_APP_ID') {
+            $postHogId = AppServiceProvider::POSTHOG_ID_PREFIX . $postHogId;
+        }
+
+        return $postHogId;
+    }
+
+    protected function getPostHogOrganizationId(Request $request)
+    {
+        //$postHogId = $request->user()->currentTeam->posthogId();
+        $postHogId = AppServiceProvider::POSTHOG_ID_PREFIX . $request->get('id', '17');
+
+        return $postHogId;
     }
 
     protected function fetchData($filter)
@@ -169,5 +221,37 @@ class AnalyticsController extends Controller
             'topSubcategories' => $topSubcategories,
             'topWords' => $topWords,
         ]);
+    }
+
+    protected function fetchJson(Request $request, $properties)
+    {
+        $chart = $request->get('chart');
+        switch ($chart) {
+            case 'dau':
+                $events = ['check', 'popover_open', 'alternative', 'ignore'];
+                $data = $this->fetchEventData($events, $properties, 'dau');
+                break;
+            case 'total':
+                $events = ['check', 'popover_open', 'alternative', 'ignore'];
+                $data = $this->fetchEventData($events, $properties);
+                break;
+            case 'topSubcategories':
+                $events = ['popover_open', 'alternative', 'ignore'];
+                $data = $this->fetchBreakdown($events, $properties, 'response__data__subcategory');
+                break;
+            case 'topWords':
+                $events = ['popover_open', 'alternative', 'ignore'];
+                $data = $this->fetchBreakdown($events, $properties, 'response__data_text');
+                break;
+            default:
+                return response()->json([ 'error' => 400, 'message' => "Unsupported chart type '$chart'"], 400);
+                break;
+        }
+
+        if ($this->refresh) {
+            return redirect()->to($request->fullUrlWithQuery(['refresh' => null]));
+        }
+
+        return response()->json($data);
     }
 }
