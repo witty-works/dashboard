@@ -15,7 +15,7 @@ return [
     'ignored-words_label' => 'Ignored Words',
     'manage_organization_guidelines' => 'Manage Organization Guidelines',
     'manage_organization_guidelines_description' => 'Configure Witty to better fit your team\'s writing style.',
-    'german_gender_ending' => 'Choose the gender ending',
+    'german_gender_ending' => 'Description for the german gender ending ..',
     'list_false_positives' => 'Ignored words',
     'list_false_positives_description' => 'Witty will no longer highlight any word in this list for you.',
     'list_term_replacements' => 'Personal dictionary',
@@ -108,4 +108,5 @@ Choose if Witty should suggest only the gender ending (e.g. "Mitarbeiter*in"), t
     'reset_to_team' => 'Reset all language settings',
     'manage_organization_guidelines_description_simple_language' => 'Enables experimental support for "plain language" (<a href="https://en.wikipedia.org/wiki/Leichte_Sprache" target="_blank" rel="noopener">Leichte Sprache</a>), which is currently supported in German only.',
     'simple_language' => 'Plain Language',
+    'manage_organization_guidelines_description_german_gender_ending_sub_title' => 'Choose the gender ending',
 ];
