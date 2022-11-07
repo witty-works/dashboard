@@ -45,6 +45,7 @@ return [
     'switch_teams' => 'Switch Teams',
     'manage_account' => 'My Account',
     'profile' => 'My Account',
+    'analytics' => 'Analytics',
     'connected_accounts' => 'Connected Accounts',
     'use_avatar_as_profile_photo' => 'Use Avatar as Profile Photo',
     'remove' => 'Remove',

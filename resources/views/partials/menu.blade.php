@@ -68,6 +68,11 @@
                     <br>
                     @endforeach
                 </div>
+
+                <x-jet-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('user_analytics') }}" :active="request()->routeIs('user_analytics')">
+                    <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/analytics.svg') }}" alt="analytics" />
+                    {{ __('content.analytics') }}
+                </x-jet-nav-link>
             </div>
             @endif
 

@@ -39,6 +39,17 @@ a {
     margin-bottom: 0.1em;
 } 
 
+.ibarra-sub-title-h2-purple {
+    font-family: Ibarra Real Nova, 'Times New Roman', Times, serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 44px;
+    line-height: 49px;
+    color: #9489DB;
+    margin-bottom: 0.1em;
+} 
+
+
 .lato-small-paragraph-title-h4 {
     font-family: Lato, Arial, Helvetica, sans-serif;
     font-style: normal;
@@ -47,6 +58,17 @@ a {
     line-height: 28px !important;    
     color: #000000;
 }
+
+
+.lato-small-paragraph-title-h4-purple {
+    font-family: Lato, Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: 600 !important;
+    font-size: 22px !important;
+    line-height: 28px !important;    
+    color: #9489DB;
+}
+
 
 .lato-paragraph-text-p {
     font-family: Lato, Arial, Helvetica, sans-serif;
@@ -73,15 +95,6 @@ a {
     font-size: 18px;
     line-height: 30px;    
     color: #9489DB;
-}
-
-.  {
-    font-family: Lato, Arial, Helvetica, sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px !important;
-    line-height: 30px !important;;    
-    color: #000000;
 }
 
 .footer-links {
@@ -179,6 +192,12 @@ a {
 .container-row {
     display: flex;
     flex-direction: row !important;
+    flex-wrap: wrap;   
+  }
+
+  .container-column {
+    display: flex;
+    flex-direction: column !important;
     flex-wrap: wrap;
   }
 
@@ -618,6 +637,10 @@ input:checked+.slider:before {
     text-align: left;
 }
 
+.align-center {
+    text-align: center;
+}
+
 .wittyworks-accept-invite-team-name {
     font-weight: 600;
     color: #9489DB;
@@ -642,20 +665,22 @@ input:checked+.slider:before {
 
 
 /* ANALYTICS */
-.wittyworks-analytics-page-wrapper {
-    /* display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center; */
-    background-color: #f5f5f5;
+.wittyworks-analytics-chart-extra-large {
+    max-width: 1000px;
 }
 
 .wittyworks-analytics-chart-large {
-    max-width: 1000px;
+    max-width: 400;
 }
+
 .wittyworks-analytics-chart-medium {
-    max-width: 450px;
+    max-width: 410px;
+}
+.wittyworks-analytics-chart-medium-radar {
+    max-width: 600px;
+
 }
 .wittyworks-analytics-chart-small {
-    max-width: 300px;
+    max-width: 195px;
+    min-height: 150px;
 }
