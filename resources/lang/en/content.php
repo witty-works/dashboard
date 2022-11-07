@@ -143,7 +143,7 @@ Here is how you can join your team:
     'documentation' => 'Documentation',
     'welcome' => 'Welcome to the Witty Dashboard',
     'admin' => 'Administrator',
-    'admin_role' => 'Administrator users can manage the team.',
+    'admin_role' => 'Administrators can manage the team.',
     'user' => 'User',
     'user_role' => 'Users can use your teams custom language configuration.',
     'actions' => 'Actions',
