@@ -6,7 +6,6 @@ return [
     'language_code_label' => 'Sprachcode',
     'manage_organization_guidelines' => 'Organisationsrichtlinien verwalten',
     'manage_organization_guidelines_description' => 'Konfiguriere Witty so, dass es besser zum Schreibstil deines Teams passt.',
-    'german_gender_ending' => 'Gender-Endung auswählen',
     'list_false_positives' => 'Ignorierte Wörter',
     'gendered_roles_format' => '<span class="lato-paragraph-text-p">Witty schlägt per Default das Gender-Sternchen vor. Lese <a href="https://be-hindernisse.org/2022/02/15/mythos-der-doppelpunkt-ist-perfekt-zum-entgendern/" target="_blank">hier</a>, weshalb wir diese Alternative empfehlen. In <a href="https://www.witty.works/en/blog/gender-inclusive-writing-in-german" target="_blank">diesem Blogpost</a> erklären wir alle Gender-Endungen.</span>
 <span class="lato-paragraph-text-p">Wähle aus, ob Witty nur die Gender-Ending-Form (z.B. "Mitarbeiter*in"), die weibliche und männliche Form (z.B. "Mitarbeiterin oder Mitarbeiter"), beides oder genderneutrale Alternativen wie "Mitarbeitende" vorschlagen soll.</span><span class="lato-paragraph-text-p">',
@@ -106,4 +105,5 @@ return [
     'reset_to_team' => 'Alle Spracheinstellungen zurücksetzen',
     'manage_organization_guidelines_description_simple_language' => 'Experimentelle Unterstützung für <a href="https://de.wikipedia.org/wiki/Leichte_Sprache" target="_blank" rel="noopener">Leichte Sprache</a> (Zur Zeit nur für Deutsch möglich).',
     'simple_language' => 'Leichte Sprache',
+    'manage_organization_guidelines_description_german_gender_ending_sub_title' => 'Gender-Endung auswählen',
 ];
