@@ -5,7 +5,7 @@
 
     <x-slot name="description">
         @if($team->getFalsePositivesLimitReached() && Auth::user()->ownsTeam($team) && !$team->subscribed())
-            {!! __('guidelines.false_positive_limit_reached', ['max_count' => $team->getFalsePositivesCount(), 'url' => route('stripe.portal')]) !!}
+            {!! __('guidelines.false_positive_limit_reached', ['max_count' => $team->getFalsePositivesCount(), 'url' => route('teams.subscription')]) !!}
         @else
             {!! Str::markdown(__('guidelines.create_new_false_positive_description')) !!}
         @endif

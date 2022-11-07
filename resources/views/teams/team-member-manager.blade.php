@@ -60,7 +60,7 @@
                                                     {{ $role->name }}
                                                     @if(!$selectable)
                                                     -
-                                                    <a href="{{ route('stripe.portal') }}">
+                                                    <a href="{{ route('teams.subscription') }}">
                                                         {{ __('teams.upgrade') }}
                                                     </a>
                                                     @endif
