@@ -776,19 +776,20 @@ input:checked+.slider:before {
   color: #f06464;
 }
 /* ANALYTICS */
-.wittyworks-analytics-page-wrapper {
-    /* display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center; */
-    background-color: #f5f5f5;
+.wittyworks-analytics-chart-extra-large {
+    max-width: 1000px;
 }
 
 .wittyworks-analytics-chart-large {
-    max-width: 1000px;
+    max-width: 400;
 }
+
 .wittyworks-analytics-chart-medium {
-    max-width: 450px;
+    max-width: 410px;
+}
+.wittyworks-analytics-chart-medium-radar {
+    max-width: 600px;
+
 }
 .wittyworks-analytics-chart-small {
     max-width: 300px;
