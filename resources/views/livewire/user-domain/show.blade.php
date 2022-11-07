@@ -1,4 +1,5 @@
 <x-list-section>
+    @if($list->count())
     <x-slot name="title">
         {{ __('guidelines.list_domains') }}
     </x-slot>
@@ -34,4 +35,5 @@
             </tbody>
         </table>
     </x-slot>
+    @endif
 </x-list-section>
