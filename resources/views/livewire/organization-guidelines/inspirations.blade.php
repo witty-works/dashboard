@@ -4,9 +4,6 @@
     </x-slot>
 
     <x-slot name="description">
-        @if(Auth::user()->ownsTeam($team) && !$team->subscribed())
-            {!! __('guidelines.show_inspiration_alternatives_subscription_required', ['url' => route('teams.subscription')]) !!}
-        @endif
     </x-slot>
 
     <x-slot name="form" submit="updateLanguageGuidelinesInspirations">

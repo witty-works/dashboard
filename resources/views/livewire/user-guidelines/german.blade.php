@@ -5,14 +5,9 @@
 
     <x-slot name="description">
         {!! Str::markdown(__('guidelines.manage_organization_guidelines_description_german')) !!}
-
-        @if(!$user->subscribed())
-            {!! __('guidelines.gendered_roles_format_subscription_required', ['url' => route('teams.subscription')]) !!}
-        @endif
     </x-slot>
 
     <x-slot name="form" submit="updateLanguageGuidelinesGerman">  
-
         <div class="margin-bottom">{!! __('guidelines.gendered_roles_format') !!}</div>
 
         <div class="lato-small-text-p">{!! __('guidelines.manage_organization_guidelines_description_german_form_sub_title') !!}</div>
@@ -37,10 +32,11 @@
             </div>
         </div>
 
-        <div class="lato-small-text-p">
-            {{ __('guidelines.german_gender_ending') }}
+        <div class="margin-bottom">
+            {!! __('guidelines.german_gender_ending') !!}
         </div>
 
+        <div class="lato-small-text-p">{!! __('guidelines.manage_organization_guidelines_description_german_gender_ending_sub_title') !!}</div>
         <div class="flex flex-row">
             <div>
                 <x-select id="german_gender_ending"
@@ -58,7 +54,6 @@
                 @endif
             </div>
         </div>
-          
     </x-slot>
 
     @if(!\App\Models\LanguageGuidelines::isForcedOnTeam(Auth::user(), 'german_rules'))
