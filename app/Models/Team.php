@@ -171,6 +171,15 @@ class Team extends JetstreamTeam
             || $this->languageGuidelines !== null;
     }
 
+    public function hasConfiguredPrivacy()
+    {
+        if ($this->hasLanguageRules() && $this->languageGuidelines->domain_list_type === 'allow_witty_works') {
+            return true;
+        }
+
+        return (bool) $this->domains()->count();
+    }
+
     public function redirectToCheckout($licenseCount = null)
     {
         $this->owner->has_accessed_stripe = true;
