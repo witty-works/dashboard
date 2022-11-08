@@ -134,7 +134,7 @@ class AnalyticsController extends Controller
         });
     }
 
-    protected function fetchEventData($events, $properties, $math = 'total')
+    protected function fetchEventData($events, $properties, $interval, $math = 'total')
     {
         $filter = [
             'events' => [
@@ -144,7 +144,7 @@ class AnalyticsController extends Controller
                 ]
             ],
             'filter_test_accounts' => false,
-            'date_from' => '-30d',
+            'date_from' => $interval,
         ];
 
         $data = [];
@@ -162,7 +162,7 @@ class AnalyticsController extends Controller
         return $data;
     }
 
-    protected function fetchBreakdown($events, $properties, $breakdown, $math = 'total')
+    protected function fetchBreakdown($events, $properties, $breakdown, $interval, $math = 'total')
     {
         $properties['values'][] = [
             'key' => 'request__data_category',
@@ -179,7 +179,7 @@ class AnalyticsController extends Controller
                 ]
             ],
             'filter_test_accounts' => false,
-            'date_from' => '-30d',
+            'date_from' => $interval,
             'display' => 'ActionsBarValue',
             'breakdown' => $breakdown,
         ];
@@ -202,14 +202,16 @@ class AnalyticsController extends Controller
 
     protected function fetchAndRender(Request $request, $properties)
     {
+        $interval = $this->fetchInterval($request);
+
         $events = ['check', 'popover_open', 'alternative', 'ignore'];
-        $dataDau = $this->fetchEventData($events, $properties, 'dau');
-        $dataTotal = $this->fetchEventData($events, $properties);
+        $dataDau = $this->fetchEventData($events, $properties, $interval, 'dau');
+        $dataTotal = $this->fetchEventData($events, $properties, $interval);
 
         $events = ['popover_open', 'alternative', 'ignore'];
-        $topSubcategories = $this->fetchBreakdown($events, $properties, 'response__data__subcategory');
+        $topSubcategories = $this->fetchBreakdown($events, $properties, 'response__data__subcategory', $interval);
 
-        $topWords = $this->fetchBreakdown($events, $properties, 'response__data_text');
+        $topWords = $this->fetchBreakdown($events, $properties, 'response__data_text', $interval);
 
         if ($this->refresh) {
             return redirect()->to($request->fullUrlWithQuery(['refresh' => null]));
@@ -225,26 +227,27 @@ class AnalyticsController extends Controller
 
     protected function fetchJson(Request $request, $properties)
     {
+        $interval = $this->fetchInterval($request);
         $chart = $request->get('chart');
         switch ($chart) {
             case 'dau':
                 $events = ['check', 'popover_open', 'alternative', 'ignore'];
-                $data = $this->fetchEventData($events, $properties, 'dau');
+                $data = $this->fetchEventData($events, $properties, $interval, 'dau');
                 break;
             case 'total':
                 $events = ['check', 'popover_open', 'alternative', 'ignore'];
-                $data = $this->fetchEventData($events, $properties);
+                $data = $this->fetchEventData($events, $properties, $interval);
                 break;
             case 'topSubcategories':
                 $events = ['popover_open', 'alternative', 'ignore'];
-                $data = $this->fetchBreakdown($events, $properties, 'response__data__subcategory');
+                $data = $this->fetchBreakdown($events, $properties, 'response__data__subcategory', $interval);
                 break;
             case 'topWords':
                 $events = ['popover_open', 'alternative', 'ignore'];
-                $data = $this->fetchBreakdown($events, $properties, 'response__data_text');
+                $data = $this->fetchBreakdown($events, $properties, 'response__data_text', $interval);
                 break;
             default:
-                return response()->json([ 'error' => 400, 'message' => "Unsupported chart type '$chart'"], 400);
+                return response()->json(['error' => 400, 'message' => "Unsupported chart type '$chart'"], 400);
                 break;
         }
 
@@ -253,5 +256,14 @@ class AnalyticsController extends Controller
         }
 
         return response()->json($data);
+    }
+
+    protected function fetchInterval(Request $request)
+    {
+        $maxDays = 30;
+        $interval = $request->get('interval', $maxDays);
+        $interval = min($maxDays, $interval);
+
+        return "-{$interval}d";
     }
 }
