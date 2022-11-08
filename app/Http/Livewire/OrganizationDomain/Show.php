@@ -5,6 +5,7 @@ namespace App\Http\Livewire\OrganizationDomain;
 use App\Models\Domain;
 use App\Models\LanguageGuidelines;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -33,9 +34,9 @@ class Show extends Component
 
         $languageGuidelines = LanguageGuidelines::getTeamGuidelines($user);
         if ($languageGuidelines->domain_list_type === 'allow_witty_works') {
-            $list = [
+            $list = new Collection([
                 new Domain(['domain' => 'witty.works'])
-            ];
+            ]);
         } else {
             $list = Domain::all()->where('team_id', $this->team->id)->sortByDesc('created_at');
         }
