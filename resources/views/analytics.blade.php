@@ -67,9 +67,9 @@
     }
 
     async function getCharttData(chart, interval = 30) {
-        let analyticsUrl = 'https://dashboard.lndo.site/api/user/analytics?refresh=1&chart=';
+        let analyticsUrl = '/api/user/analytics?refresh=1&chart=';
         if (window.location.href.includes('team')) {
-            analyticsUrl = 'https://dashboard.lndo.site/api/team/analytics?refresh=1&chart=';
+            analyticsUrl = '/api/team/analytics?refresh=1&chart=';
         }
         const response = await fetch(
             analyticsUrl + chart + '&interval=' + interval);
@@ -509,6 +509,7 @@
     <div class="wittyworks-navigation-wrapper">@livewire('navigation-menu')</div>
         <div class="wittyworks-page-wrapper">
             <div class="wittyworks-page lg:ml-20">
+                @include('partials.banners')
 
                 <div class="ibarra-sub-title-h2">{{ __('content.activity') }}</div>
                 <div class="wittyworks-form-section container border-radius">

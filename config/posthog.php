@@ -9,4 +9,7 @@ return [
     'debug' => env('POSTHOG_DEBUG', false),
     'project_id' => env('POSTHOG_PROJECT_ID'),
     'personal_api_key' => env('POSTHOG_PERSONAL_API_KEY'),
+    'insights_cache_time' => env('POSTHOG_INSIGHTS_CACHE_TIME', 3600),
+    'dashboard_user_id_override' => env('POSTHOG_DASHBOARD_USER_ID'),
+    'dashboard_team_id_override' => env('POSTHOG_DASHBOARD_TEAM_ID'),
 ];
