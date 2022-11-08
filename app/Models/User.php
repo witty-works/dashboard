@@ -242,6 +242,7 @@ class User extends Authenticatable implements MustVerifyEmail
         }
 
         $data = [
+            'witty_account_created_at' => $this->created_at,
             'has_witty_account' => $true,
             'has_consented_to_mailing' => $this->has_consented_to_mailing ? $true : $false,
             'has_accessed_stripe' => $this->has_accessed_stripe ? $true : $false,
@@ -249,19 +250,24 @@ class User extends Authenticatable implements MustVerifyEmail
             'dashboard_id' => $this->posthogId(),
             'team_dashboard_id' => $this->posthogTeamId(),
             'impersonate_url' => config('app.url') . '/impersonate/take/' . $this->id,
+            'dictionary_count' => $this->termReplacements->count(),
+            'ignore_count' => $this->falsePositives->count(),
             'has_team_language_rules' => $false,
+            'has_team_privacy_set' => $false,
             'team_role' => $this->teamRole($this->currentTeam)->name,
             'invited_team_member_count' => 0,
             'team_member_count' => 0,
+            'team_dictionary_count' => 0,
+            'team_ignore_count' => 0,
         ];
 
-        if ($this->currentTeam) {
+        if ($this->currentTeam && $this->ownsTeam($this->currentTeam)) {
             $data['has_team_language_rules'] = $this->currentTeam->hasLanguageRules() ? $true : $false;
-
-            if ($this->ownsTeam($this->currentTeam)) {
-                $data['invited_team_member_count'] = $this->currentTeam->teamInvitations()->count();
-                $data['team_member_count'] = $this->currentTeam->getTotalUserCount();
-            }
+            $data['has_team_privacy_set'] = $this->currentTeam->hasConfiguredPrivacy() ? $true : $false;
+            $data['team_dictionary_count'] = $this->currentTeam->termReplacements->count();
+            $data['team_ignore_count'] = $this->currentTeam->falsePositives->count();
+            $data['invited_team_member_count'] = $this->currentTeam->teamInvitations()->count();
+            $data['team_member_count'] = $this->currentTeam->getTotalUserCount();
         }
 
         return $data;
