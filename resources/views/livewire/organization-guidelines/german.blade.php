@@ -49,7 +49,7 @@
                 <x-jet-input-error for="german_gender_ending" class="mt-2" />
             </div>
         </div>
-     </x-slot>
+    </x-slot>
 
     <x-slot name="actions">
         <div class="guidelines-form-section--apply-for-all">

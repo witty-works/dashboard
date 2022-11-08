@@ -23,6 +23,7 @@ Route::get('/oauth/{provider}/{policy}/callback', [OAuthController::class, 'hand
 Route::delete('/user/language/domains', [UserGuidelinesApiController::class, 'deleteDomain'])->name('user.domains.delete');
 Route::put('/user/language/domains', [UserGuidelinesApiController::class, 'putDomain'])->name('user.domains.put');
 
-
-Route::get('/user/analytics', [AnalyticsController::class, 'userApi'])->name('api_user_analytics');
-Route::get('/team/analytics', [AnalyticsController::class, 'organizationApi'])->name('api_team_analytics');
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('/user/analytics', [AnalyticsController::class, 'userApi'])->name('api_user_analytics');
+    Route::get('/team/analytics', [AnalyticsController::class, 'organizationApi'])->name('api_team_analytics');
+});

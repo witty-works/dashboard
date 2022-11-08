@@ -25,51 +25,31 @@ class AnalyticsController extends Controller
 
     public function user(Request $request)
     {
-        $postHogId = $this->getPostHogUserId($request);
-
-        $properties = [
-            'type' => 'AND',
-            'values' => [
-                [
-                    'key' => 'request__id',
-                    'value' => $postHogId,
-                    'operator' => 'exact',
-                    'type' => 'event',
-                ]
-            ]
-        ];
-
-        return $this->fetchAndRender($request, $properties);
-    }
-
-    public function userApi(Request $request)
-    {
-        $postHogId = $this->getPostHogUserId($request);
-
-        $properties = [
-            'type' => 'AND',
-            'values' => [
-                [
-                    'key' => 'request__id',
-                    'value' => $postHogId,
-                    'operator' => 'exact',
-                    'type' => 'event',
-                ]
-            ]
-        ];
-
-        return $this->fetchJson($request, $properties);
+        return view('analytics');
     }
 
     public function organization(Request $request)
     {
-        $postHogId = $this->getPostHogOrganizationId($request);
+        return view('analytics');
+    }
+
+    public function userApi(Request $request)
+    {
+        if (empty($request->user())) {
+            abort(403);
+        }
+
+
+        $postHogId = config('posthog.dashboard_user_id_override');
+        if (empty($postHogId)) {
+            $postHogId = $request->user()->posthogId();
+        }
 
         $properties = [
             'type' => 'AND',
             'values' => [
                 [
-                    'key' => 'response__groupId',
+                    'key' => 'request__id',
                     'value' => $postHogId,
                     'operator' => 'exact',
                     'type' => 'event',
@@ -77,12 +57,19 @@ class AnalyticsController extends Controller
             ]
         ];
 
-        return $this->fetchAndRender($request, $properties);
+        return $this->fetchJson($request, $properties);
     }
 
     public function organizationApi(Request $request)
     {
-        $postHogId = $this->getPostHogOrganizationId($request);
+        if (empty($request->user()) || empty($request->user()->currentTeam)) {
+            abort(403);
+        }
+
+        $postHogId = config('posthog.dashboard_team_id_override');
+        if (empty($postHogId)) {
+            $postHogId = $request->user()->currentTeam->posthogId();
+        }
 
         $properties = [
             'type' => 'AND',
@@ -97,25 +84,6 @@ class AnalyticsController extends Controller
         ];
 
         return $this->fetchJson($request, $properties);
-    }
-
-    protected function getPostHogUserId(Request $request)
-    {
-        //$postHogId = $request->user()->posthogId();
-        $postHogId = $request->get('id', 'DEV_APP_ID');
-        if ($postHogId !== 'DEV_APP_ID') {
-            $postHogId = AppServiceProvider::POSTHOG_ID_PREFIX . $postHogId;
-        }
-
-        return $postHogId;
-    }
-
-    protected function getPostHogOrganizationId(Request $request)
-    {
-        //$postHogId = $request->user()->currentTeam->posthogId();
-        $postHogId = AppServiceProvider::POSTHOG_ID_PREFIX . $request->get('id', '17');
-
-        return $postHogId;
     }
 
     protected function fetchData($filter)
@@ -125,10 +93,9 @@ class AnalyticsController extends Controller
             Cache::forget($key);
         }
 
-        return Cache::remember($key, 3600, function () use ($filter) {
+        return Cache::remember($key, config('posthog.insights_cache_time'), function () use ($filter) {
             $response = Http::withToken($this->personalApiKey)
                 ->post($this->url, $filter);
-
 
             return $response->collect()->all();
         });
@@ -156,7 +123,7 @@ class AnalyticsController extends Controller
                 $data['days'] = $response['result'][0]['days'];
                 $data['events'][$event] = array_combine($response['result'][0]['days'], $response['result'][0]['data']);
             }
-            $data['last_refresh'][$event] = $response['last_refresh'];
+            $data['last_refresh'][$event] = $response['last_refresh'] ?? null;
         }
 
         return $data;
@@ -193,36 +160,11 @@ class AnalyticsController extends Controller
                 foreach ($response['result'] as $value) {
                     $data['events'][$event][$value['breakdown_value']] = $value['aggregated_value'];
                 }
-                $data['last_refresh'][$event] = $response['last_refresh'];
+                $data['last_refresh'][$event] = $response['last_refresh'] ?? null;
             }
         }
 
         return $data;
-    }
-
-    protected function fetchAndRender(Request $request, $properties)
-    {
-        $interval = $this->fetchInterval($request);
-
-        $events = ['check', 'popover_open', 'alternative', 'ignore'];
-        $dataDau = $this->fetchEventData($events, $properties, $interval, 'dau');
-        $dataTotal = $this->fetchEventData($events, $properties, $interval);
-
-        $events = ['popover_open', 'alternative', 'ignore'];
-        $topSubcategories = $this->fetchBreakdown($events, $properties, 'response__data__subcategory', $interval);
-
-        $topWords = $this->fetchBreakdown($events, $properties, 'response__data_text', $interval);
-
-        if ($this->refresh) {
-            return redirect()->to($request->fullUrlWithQuery(['refresh' => null]));
-        }
-
-        return view('analytics', [
-            'dataDau' => $dataDau,
-            'dataTotal' => $dataTotal,
-            'topSubcategories' => $topSubcategories,
-            'topWords' => $topWords,
-        ]);
     }
 
     protected function fetchJson(Request $request, $properties)

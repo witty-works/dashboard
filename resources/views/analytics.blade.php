@@ -67,9 +67,9 @@
     }
 
     async function getCharttData(chart, interval = 30) {
-        let analyticsUrl = 'https://dashboard.lndo.site/api/user/analytics?refresh=1&chart=';
+        let analyticsUrl = '/api/user/analytics?refresh=1&chart=';
         if (window.location.href.includes('team')) {
-            analyticsUrl = 'https://dashboard.lndo.site/api/team/analytics?refresh=1&chart=';
+            analyticsUrl = '/api/team/analytics?refresh=1&chart=';
         }
         const response = await fetch(
             analyticsUrl + chart + '&interval=' + interval);
