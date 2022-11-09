@@ -40,11 +40,67 @@
         return formattedDate;
     }
 
-    async function getCharttData(chart) {
-        const response = await fetch('https://dashboard.lndo.site/api/user/analytics?refresh=1&chart=' + chart);
+    async function getCharttData(chart, interval = 30) {
+        const response = await fetch(
+            'https://dashboard.lndo.site/api/user/analytics?refresh=1&chart=' + chart + '&interval=' + interval);
         const data = await response.json();
         return data;
     }
+
+
+    function createBarChart(chartId, xValues, yValues, text, display, singeColor) {
+        new Chart(chartId, {
+            type: "bar",
+            data: {
+                labels: xValues,
+                datasets: [{
+                    data: yValues,
+                    backgroundColor: singeColor ? colors[10] : colors,
+                    fill: false,
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                title: {
+                display: true,
+                text: text,
+                fontSize: 16,
+                fontStyle: 'normal'
+                },
+                scales:{
+                    xAxes: [{
+                        display: display
+                    }],
+                },
+                legend: {
+                    display: display,
+                }
+            }
+        });
+    }
+
+    function createDoughnutChart(chartId, xValues, yValues, text) {
+        new Chart(chartId, {
+                type: "doughnut",
+                data: {
+                    labels: xValues,
+                    datasets: [{
+                    backgroundColor: [colors[6], colors[8], colors[10],colors[12], colors[14]],
+                    data: yValues
+                    }]
+                },
+                options: {
+                    legend: {display: false},
+                    title: {
+                    display: true,
+                    text: text,
+                    fontSize: 16,
+                    fontStyle: 'normal'
+                    }
+                }
+        });
+    }
+
 
     getCharttData('total').then(data => {
         const xValuesCheck = [];
@@ -160,147 +216,116 @@
                 }
             });
 
-            new Chart("eventsCheckChart", {
-                type: "bar",
-                data: {
-                    labels: xValuesCheckWeek,
-                    datasets: [{
-                        data: yValuesCheckWeek,
-                        backgroundColor: colors[10],
-                        fill: false,
-                    }]
-                },
-                options: {
-                    maintainAspectRatio: false,
-                    title: {
-                    display: true,
-                    text: 'Check (week)',
-                    fontSize: 16,
-                    fontStyle: 'normal'
-                    },
-                    scales:{
-                        xAxes: [{
-                            display: false //this will remove only the label
-                        }],
-                    },
-                    legend: {
-                        display: false,
-                    }
-                }
-            });
+            createBarChart(
+                "eventsCheckChart",
+                xValuesCheckWeek,
+                yValuesCheckWeek,
+                "Check (week)",
+                false,
+                true
+            );
 
-            new Chart("eventsPopoverChart", {
-                type: "bar",
-                data: {
-                    labels: xValuesCheckWeek,
-                    datasets: [{
-                        data: yValuesPopoverOpenWeek,
-                        backgroundColor: colors[10],
-                        fill: false,
-                    }]
-                },
-                options: {
-                    maintainAspectRatio: false,
-                    title: {
-                    display: true,
-                    text: 'Popover Open (week)',
-                    fontSize: 16,
-                    fontStyle: 'normal'
-                    },
-                    scales:{
-                        xAxes: [{
-                            display: false //this will remove only the label
-                        }],
-                    },
-                    legend: {
-                        display: false,
-                    }
-                }
-            });
-        
-            new Chart("eventsIgnoreChart", {
-                type: "bar",
-                data: {
-                    labels: xValuesCheckWeek,
-                    datasets: [{
-                        data: yValuesIgnoreWeek,
-                        backgroundColor: colors[10],
-                        fill: false,
-                    },
-                ]
-                },
-                options: {
-                    maintainAspectRatio: false,
-                    title: {
-                    display: true,
-                    text: 'Ignore (week)',
-                    fontSize: 16,
-                    fontStyle: 'normal'
-                    },
-                    scales:{
-                        xAxes: [{
-                            display: false //this will remove only the label
-                        }],
-                    },
-                    legend: {
-                        display: false,
-                    }
-                }
-            });
+            createBarChart(
+                "eventsPopoverChart",
+                xValuesCheckWeek,
+                yValuesPopoverOpenWeek,
+                "Popover Open (week)",
+                false,
+                true
+            );
 
-            new Chart("eventsAlternativeChart", {
-                type: "bar",
-                data: {
-                    labels: xValuesCheckWeek,
-                    datasets: [{
-                        data: yValuesAlternativeWeek,
-                        backgroundColor: colors[10],
-                        fill: false,
-                    }]
-                },
-                options: {
-                    maintainAspectRatio: false,
-                    title: {
-                    display: true,
-                    text: 'Alternative (week)',
-                    fontSize: 16,
-                    fontStyle: 'normal'
-                    },
-                    scales:{
-                        xAxes: [{
-                            display: false //this will remove only the label
-                        }],
-                    },
-                    legend: {
-                        display: false,
-                    },
-                }
-            });
+            createBarChart(
+                "eventsIgnoreChart",
+                xValuesCheckWeek,
+                yValuesIgnoreWeek,
+                "Ignore (week)",
+                false,
+                true
+            );
 
-            new Chart("requestRatiosChartDoughnut", {
-                type: "doughnut",
-                data: {
-                    labels: ['Check', 'Popover Open', 'Ignore', 'Alternative'],
-                    datasets: [{
-                        backgroundColor: [colors[8], colors[10],colors[12], colors[14]],
-                        data: weeklyEvents
-                    }]
-                },
-                options: {
-                    legend: {display: false},
-                    title: {
-                        display: true,
-                        text: "Event ratio (week)",
-                        fontSize: 16,
-                        fontStyle: 'normal'
-                    }
-                }
-            });
+            createBarChart(
+                "eventsAlternativeChart",
+                xValuesCheckWeek,
+                yValuesAlternativeWeek,
+                "Alternative (week)",
+                false,
+                true
+            );
+
+            createDoughnutChart(
+                "requestRatiosChartDoughnut",
+                ['Check', 'Popover Open', 'Ignore', 'Alternative'],
+                weeklyEvents,
+                "Event ratio (week previous)"
+            );
     
             document.getElementById("loadingIconActivity").style.display = "none";
             document.getElementById("activityChartWrapper").style.visibility = "visible";
         }
     });
+
+    getCharttData('topSubcategories', 7).then(data => {
+        const xTopSubCategoriesWeek = [];
+        const yTopSubCategoriesWeek = [];
+        const yTopSubCategoriesTwoWeeks = [];
+        const openedWeek = Object.entries(data.events.popover_open).sort((a, b) => b[1] - a[1]).slice(0, 8);
+        for (const [key, value] of openedWeek) {
+            if (key && value) {
+                xTopSubCategoriesWeek.push(key);
+                yTopSubCategoriesWeek.push(value);
+            }
+        }
+
+        getCharttData('topSubcategories', 14).then(data => {
+        const openedTwoWeeks = data.events.popover_open;
+        for (const [key, value] of Object.entries(openedTwoWeeks)) {
+            if (!xTopSubCategoriesWeek.includes(key)) {
+                delete openedTwoWeeks[key];
+            }
+        }
+
+        for (const [key, value] of openedWeek) {
+            if (key && value && openedTwoWeeks[key]) {
+                yTopSubCategoriesTwoWeeks.push(openedTwoWeeks[key] - value);
+            } else {
+                yTopSubCategoriesTwoWeeks.push(0);
+            }
+        }
+
+        const dataCategories = {
+                labels:
+                    xTopSubCategoriesWeek,
+                datasets: [{
+                    label: 'Categories Last Week',
+                    data: yTopSubCategoriesTwoWeeks,
+                    fill: true,
+                    backgroundColor: colors[10],
+                    borderColor: colors[7],
+                }, {
+                    label: 'Categories This Week',
+                    data: yTopSubCategoriesWeek,
+                    fill: true,
+                    backgroundColor: colors[13],
+                    borderColor: colors[10],
+                }]
+                };
+    
+            new Chart("categoriesRadar", {
+                type: 'radar',
+                    data: dataCategories,
+                    options: {
+                        elements: {
+                        line: {
+                            borderWidth: 1
+                        }
+                    }
+                },
+            });
+            document.getElementById("loadingIconTopCatagories").style.display = "none";
+            document.getElementById("topCategoriesChartWrapper").style.visibility = "visible";
+        });
+    });
+
 
     getCharttData('topSubcategories').then(data => {
         const xValuesTopSubCategoriesIgnored = [];
@@ -310,8 +335,6 @@
 
         const ignored = data.events.ignore;
         const opened = data.events.popover_open;
-
-        console.log(data);
 
         for (const [key, value] of Object.entries(ignored)) {
             xValuesTopSubCategoriesIgnored.push(key);
@@ -331,106 +354,92 @@
         const xValuesTopSubCategoriesOpenedCutDoughnut = xValuesTopSubCategoriesOpened.slice(0, 5);
         const yValuesTopSubCategoriesOpenedCutDoughnut = yValuesTopSubCategoriesOpened.slice(0, 5);
 
-                new Chart("topSubCategoriesChart", {
-                type: "bar",
-                data: {
-                    labels: xValuesTopSubCategoriesOpenedCut,
-                    datasets: [{
-                    backgroundColor: colors,
-                    data: yValuesTopSubCategoriesOpenedCut
-                    }]
-                },
-                options: {
-                    legend: {display: false},
-                    title: {
-                    display: true,
-                    text: "Top Subcategories opened (month)",
-                    fontSize: 16,
-                    fontStyle: 'normal',
-                    }
-                }
-                });
+        createBarChart(
+            "topSubCategoriesChart",
+            xValuesTopSubCategoriesOpenedCut,
+            yValuesTopSubCategoriesOpenedCut,
+            "Top Subcategories opened (month)",
+            false,
+            false
+        );
 
-                new Chart("topSubCategoriesOpenedChartDoughnut", {
-                type: "doughnut",
-                data: {
-                    labels: xValuesTopSubCategoriesOpenedCutDoughnut,
-                    datasets: [{
-                    backgroundColor: [colors[6], colors[8], colors[10],colors[12], colors[14]],
-                    data: yValuesTopSubCategoriesOpenedCutDoughnut
-                    }]
-                },
-                options: {
-                    legend: {display: false},
-                    title: {
-                    display: true,
-                    text: "Top Subcategories opened",
-                    fontSize: 16,
-                    fontStyle: 'normal'
-                    }
-                }
-                });
-             
-                new Chart("topSubCategoriesIgnoredChartDoughnut", {
-                type: "doughnut",
-                data: {
-                    labels: xValuesTopSubCategoriesIgnoredCutDoughnut,
-                    datasets: [{
-                    backgroundColor: [colors[6], colors[8], colors[10],colors[12], colors[14]],
-                    data: yValuesTopSubCategoriesIgnoredCutDoughnut
-                    }]
-                },
-                options: {
-                    legend: {display: false},
-                    title: {
-                    display: true,
-                    text: "Top Subcategories ignored",
-                    fontSize: 16,
-                    fontStyle: 'normal'
-                    }
-                }
-                });
-                
-                const dataCategories = { 
-                labels: [
-                    'Eating',
-                    'Drinking',
-                    'Sleeping',
-                    'Designing',
-                    'Coding',
-                    'Cycling',
-                    'Running'
-                ],
+        createDoughnutChart(
+            "topSubCategoriesOpenedChartDoughnut",
+            xValuesTopSubCategoriesOpenedCutDoughnut,
+            yValuesTopSubCategoriesOpenedCutDoughnut,
+            "Top Subcategories opened (month)"
+        );
+    
+        createDoughnutChart(
+            "topSubCategoriesIgnoredChartDoughnut",
+            xValuesTopSubCategoriesIgnoredCutDoughnut,
+            yValuesTopSubCategoriesIgnoredCutDoughnut,
+            "Top Subcategories ignored (month)"
+        );
+                         
+    });
+
+    getCharttData('topWords', 7).then(data => {
+        const xTopWordsWeek = [];
+        const yTopWordsWeek = [];
+        const yTopWordsTwoWeeks = [];
+        const openedWeek = Object.entries(data.events.popover_open).sort((a, b) => b[1] - a[1]).slice(0, 8);
+        for (const [key, value] of openedWeek) {
+            if (key && value) {
+                xTopWordsWeek.push(key);
+                yTopWordsWeek.push(value);
+            }
+        }
+
+        getCharttData('topWords', 14).then(data => {
+        const openedTwoWeeks = data.events.popover_open;
+        for (const [key, value] of Object.entries(openedTwoWeeks)) {
+            if (!xTopWordsWeek.includes(key)) {
+                delete openedTwoWeeks[key];
+            }
+        }
+        for (const [key, value] of openedWeek) {
+            if (key && value && openedTwoWeeks[key]) {
+                yTopWordsTwoWeeks.push(openedTwoWeeks[key] - value);
+            } else if (key && value) {
+                yTopWordsTwoWeeks.push(0);
+            }
+        }
+
+        const dataCategories = {
+                labels:
+                    xTopWordsWeek,
                 datasets: [{
-                    label: 'Categories Last Week',
-                    data: [65, 59, 90, 81, 56, 55, 40],
+                    label: 'Words Last Week',
+                    data: yTopWordsTwoWeeks,
                     fill: true,
                     backgroundColor: colors[10],
                     borderColor: colors[7],
                 }, {
-                    label: 'Categories This Week',
-                    data: [28, 48, 40, 19, 96, 27, 100],
+                    label: 'Words This Week',
+                    data: yTopWordsWeek,
                     fill: true,
                     backgroundColor: colors[13],
-                    borderColor: colors[16],
+                    borderColor: colors[10],
                 }]
                 };
     
-            new Chart("categoriesRadar", {
+            new Chart("wordsRadar", {
                 type: 'radar',
                     data: dataCategories,
                     options: {
                         elements: {
                         line: {
-                            borderWidth: 3
+                            borderWidth: 1
                         }
                     }
                 },
             });
-
-            document.getElementById("loadingIconTopCatagories").style.display = "none";
-            document.getElementById("topCategoriesChartWrapper").style.visibility = "visible";
+            document.getElementById("loadingIconTopWords").style.display = "none";
+            document.getElementById("topWordsChartWrapper").style.visibility = "visible";
+        });
     });
+
 
     getCharttData('topWords').then(data => {
         const xValuesTopWordsIgnored = [];
@@ -458,122 +467,41 @@
         const xValuesTopWordsOpenedCutDoughnut = xValuesTopWordsOpened.slice(0, 5);
         const yValuesTopWordsOpenedCutDoughnut = yValuesTopWordsOpened.slice(0, 5);
 
-    
+            createDoughnutChart(
+                "topWordsChartDoughnut",
+                xValuesTopWordsOpenedCutDoughnut,
+                yValuesTopWordsOpenedCutDoughnut,
+                "Top Words opened (month)"
+            );
 
-             // <!-- TODO: radar how the categories changed over time -->
-             const dataWords = { 
-                labels: [
-                    'Eating',
-                    'Drinking',
-                    'Sleeping',
-                    'Designing',
-                    'Coding',
-                    'Cycling',
-                    'Running'
-                ],
-                datasets: [{
-                    label: 'Words Last Week',
-                    data: [65, 59, 90, 81, 56, 55, 40],
-                    fill: true,
-                    backgroundColor: colors[10],
-                    borderColor: colors[7],
-                }, {
-                    label: 'Words This Week',
-                    data: [28, 48, 40, 19, 96, 27, 100],
-                    fill: true,
-                    backgroundColor: colors[13],
-                    borderColor: colors[16],
-                }]
-                };
-    
-                new Chart("wordsRadar", {
-                type: 'radar',
-                    data: dataWords,
-                    options: {
-                        elements: {
-                        line: {
-                            borderWidth: 3
-                        }
-                        }
-                    },
-                    });
-            
+            createDoughnutChart(
+                "topWordsChartDoughnutWeek",
+                xValuesTopWordsIgnoredCutDoughnut,
+                yValuesTopWordsIgnoredCutDoughnut,
+                "Top Words ignored (month)"
+            );
+           
+            createBarChart(
+                "topWordsChart",
+                xValuesTopWordsOpenedCut,
+                yValuesTopWordsOpenedCut,
+                "Top words opened",
+                false,
+                false
+            );
 
-            new Chart("topWordsChartDoughnut", {
-            type: "doughnut",
-            data: {
-                labels: xValuesTopWordsOpenedCutDoughnut,
-                datasets: [{
-                backgroundColor: [colors[3], colors[6], colors[9],colors[12], colors[14]],
-                data: yValuesTopWordsOpenedCutDoughnut
-                }]
-            },
-            options: {
-                legend: {display: false},
-                title: {
-                display: true,
-                text: "Top Words Opened",
-                fontSize: 16,
-                fontStyle: 'normal'
-                }
-            }
-            });
-
-
-            new Chart("topWordsChartDoughnutWeek", {
-            type: "doughnut",
-            data: {
-                labels: xValuesTopWordsIgnoredCutDoughnut,
-                datasets: [{
-                backgroundColor: [colors[3], colors[6], colors[9],colors[12], colors[14]],
-                data: yValuesTopWordsIgnoredCutDoughnut
-                }]
-            },
-            options: {
-                legend: {display: false},
-                title: {
-                display: true,
-                text: "Top Words Ignored",
-                fontSize: 16,
-                fontStyle: 'normal'
-                }
-            }
-            });
-
-            new Chart("topWordsChart", {
-            type: "bar",
-            data: {
-                labels: xValuesTopWordsOpenedCut,
-                datasets: [{
-                backgroundColor: colors,
-                data: yValuesTopWordsOpenedCut
-                }]
-            },
-            options: {
-                legend: {display: false},
-                title: {
-                display: true,
-                text: "Top Words opened",
-                fontSize: 16,
-                fontStyle: 'normal'
-                }
-            }
-            });
-            document.getElementById("loadingIconTopWords").style.display = "none";
-            document.getElementById("topWordsChartWrapper").style.visibility = "visible";
     });
+
 </script>
-
-
 
 <x-app-layout>
     <div class="wittyworks-navigation-wrapper">@livewire('navigation-menu')</div>
         <div class="wittyworks-page-wrapper">
-            <div class="wittyworks-page lg:ml-20" style="width: 100%;">
+            <div class="wittyworks-page lg:ml-20">
 
                 <div class="ibarra-sub-title-h2">Activity</div>
                 <div class="wittyworks-form-section container border-radius">
-                    <div id="loadingIconActivity" class="loading-icon-wrapper">
+                    <div id="loadingIconActivity" class="loading-icon-wrapper" style="width: 100%">
                         <div class="lds-grid">
                             <div></div>
                             <div></div>
@@ -586,7 +514,7 @@
                             <div></div>
                         </div>
                     </div>
-                    <div id="activityChartWrapper" style="visibility: hidden;">
+                    <div id="activityChartWrapper" style="visibility: hidden; width: 100%">
                         <div class="container-row wittyworks-margin-top">
                             <div class="container-column" style="margin-left: 2em;">
                                 <div class="container-row" style="align-items: center">
@@ -657,7 +585,7 @@
 
                 <div class="ibarra-sub-title-h2 wittyworks-margin-top">Top Categories</div>
                 <div class="wittyworks-form-section container border-radius">
-                    <div id="loadingIconTopCatagories" class="loading-icon-wrapper">
+                    <div id="loadingIconTopCatagories" class="loading-icon-wrapper"  style="width: 100%">
                         <div class="lds-grid">
                             <div></div>
                             <div></div>
@@ -700,7 +628,7 @@
 
                 <div class="ibarra-sub-title-h2 wittyworks-margin-top">Top words</div>
                     <div class="wittyworks-form-section container border-radius">
-                        <div id="loadingIconTopWords" class="loading-icon-wrapper">
+                        <div id="loadingIconTopWords" class="loading-icon-wrapper" style="width: 100%">
                             <div class="lds-grid">
                                 <div></div>
                                 <div></div>
