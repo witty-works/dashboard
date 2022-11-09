@@ -775,26 +775,3 @@ input:checked+.slider:before {
     align-items: center;
     margin-top: 10em;
   }
-.wittyworks-analytics-page-wrapper {
-    /* display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center; */
-    background-color: #f5f5f5;
-}
-
-.wittyworks-analytics-chart-large {
-    max-width: 400;
-}
-
-.wittyworks-analytics-chart-medium {
-    max-width: 410px;
-}
-.wittyworks-analytics-chart-medium-radar {
-    max-width: 600px;
-
-}
-.wittyworks-analytics-chart-small {
-    max-width: 195px;
-    min-height: 150px;
-}
