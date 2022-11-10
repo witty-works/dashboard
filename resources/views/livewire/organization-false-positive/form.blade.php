@@ -12,7 +12,7 @@
     </x-slot>
 
     <x-slot name="form">
-        <div class="col-span-6 sm:col-span-4">
+        <div class="w-full col-span-6 sm:col-span-4">
             <x-jet-label for="false_positive" value="{!! __('guidelines.false_positive_label') !!}" />
 
             <x-jet-input id="term_replacement_id"
@@ -31,7 +31,7 @@
                 <x-jet-input-error for="false_positive" class="mt-2" />
         </div>
 {{--
-        <div class="col-span-6 sm:col-span-4 mt-5">
+        <div class="w-full col-span-6 sm:col-span-4 mt-5">
             <x-jet-label for="language_code" value="{!! __('guidelines.language_code_label') !!}" />
 
             <x-select id="language_code"

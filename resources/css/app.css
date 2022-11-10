@@ -488,6 +488,7 @@ input:checked+.slider:before {
 
 .wittyworks-page {
     margin-top: 1em;
+    width: 100%;
     max-width: 60%;
     min-height: 100vh;
 }

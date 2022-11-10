@@ -63,15 +63,6 @@
 
 
         @if(Auth::user()->ownsTeam($team))
-        @if($team->subscribed())
-        <div class="lato-small-text-p margin-bottom">
-            <a class="button primary-button-purple" href="{{ route('teams.subscription') }}">
-                {{ $team->subscription()->isPaidByInvoice() ? __('stripe.contact_sales') : __('stripe.billing') }}
-            </a>
-        </div>
-        @endif
-
-
         <x-jet-label for="license_count" class="lato-small-paragraph-title-h4 mt-4" value="{{ __('teams.license_count_label') }}" />
         <div class="wittyworks-license-dropdown-container  margin-bottom">
             <x-select id="license_count"
@@ -91,8 +82,14 @@
             <x-jet-input-error for="license_count" class="ml-2" />
         </div>
 
+        @if($team->subscribed())
+        <div class="lato-small-text-p margin-bottom">
+            <a class="button primary-button-purple" href="{{ route('stripe.portal') }}">
+                {{ $team->subscription()->isPaidByInvoice() ? __('stripe.contact_sales') : __('stripe.billing') }}
+            </a>
+        </div>
         @endif
 
-
+        @endif
      </x-slot>
 </x-jet-form-section>
