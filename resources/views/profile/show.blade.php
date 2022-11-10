@@ -8,7 +8,7 @@
                 @endif
 
                 @cannot('update', Auth::user()->currentTeam)
-                <div>
+                <div class="py-10">
                     @livewire('teams.plan-summary', ['team' => Auth::user()->currentTeam])
 
                     @livewire('teams.team-member-manager', ['team' => Auth::user()->currentTeam])
