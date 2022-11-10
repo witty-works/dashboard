@@ -663,20 +663,6 @@ input:checked+.slider:before {
     margin-top: 1em;
 }
 
-
-[type='radio'] {
-    margin: 0 0.5rem 0 0;
-    vertical-align: middle;
-}
-
-.limit-reached {
-  color: #f06464;
-  margin: 1rem 0;
-}
-
-.red {
-  color: #f06464;
-}
 /* ANALYTICS */
 .wittyworks-analytics-chart-extra-large {
     max-width: 1000px;
@@ -788,12 +774,12 @@ input:checked+.slider:before {
 .red {
   color: #f06464;
 }
-/* ANALYTICS */
+
 .wittyworks-analytics-page-wrapper {
-    /* display: flex;
+    display: flex;
     flex-direction: row;
     justify-content: center;
-    align-items: center; */
+    align-items: center;
     background-color: #f5f5f5;
 }
 

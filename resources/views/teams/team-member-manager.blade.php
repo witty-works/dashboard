@@ -43,21 +43,6 @@
                         <x-jet-input id="email" type="email" class="mt-1 block w-full" wire:model.defer="addTeamMemberForm.email" disabled="{{ !Gate::check('addTeamMember', $team) }}" />
                         <x-jet-input-error for="email" class="mt-2">
                         </x-jet-input-error>
-
-                        @if($team->getUserLicensesLimitReached())
-                        <p class="lato-small-text-p margin-bottom limit-reached">
-
-                            {{ __('teams.user_limit_reached_error', ['max_count' => $team->getUserLicensesCount()-1]) }}
-
-                            @if(Auth::user()->ownsTeam($team))
-                            <a class="button primary-button-red" href="{{ route('teams.subscription') }}">
-                                {{ __('teams.add_licenses') }}
-                            </a>
-                            @endif
-
-
-                        </p>
-                        @endif
                     </div>
 
                     <!-- Role -->
