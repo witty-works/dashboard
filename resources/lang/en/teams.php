@@ -24,7 +24,6 @@ return [
     'more_licenses' => 'If you like to purchase more licenses, please <a href=":url">contact</a> Witty Works.',
     'what_is_included' => 'Usage',
     'user_limit_reached_error' => 'Benutzerlimit von :max_count für den aktuellen Abonnement erreicht.',
-    'store_context_subscription_required' => 'To customize this setting, a <a href=":url">subscription</a> of <a href="https://www.witty.works/witty-for-teams" target="_blank" rel="noopener">Witty Teams</a> or higher is required.',
     'end_date' => 'Your plan end on ',
     'team_owner' => 'Team owner',
     'upgrade_to_witty_teams' => 'Please upgrade to Witty Teams',
