@@ -4,7 +4,7 @@ $team = $user->currentTeam;
 
 $showInviteCheck = empty($hideInviteCheck) && $team && $team->getTotalUserWithInvitationsCount() <= 1;
 $showInvitations = $user->invitations->count();
-$showMailing = !$user->has_consented_to_mailing;
+$showMailing = $user->has_consented_to_mailing === null;
 @endphp
 
 @include('partials.extension-check')

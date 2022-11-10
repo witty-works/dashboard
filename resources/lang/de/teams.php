@@ -15,7 +15,7 @@ return [
     'false_positives' => 'Ignorierte Wörter deines Teams',
     'more_licenses' => 'Wenn du weitere Lizenzen erwerben möchtest, <a href=":url">wende</a> dich bitte an Witty Works.',
     'what_is_included' => 'Was ist in deinem aktuellen Abo enthalten?',
-    'user_limit_reached_error' => 'Du kannst mit deinem aktuellen Abo nur :max_count Team-Mitglieder einladen. Möchtest du mehr einladen? Dann mache eine Upgrade.',
+    'user_limit_reached_error' => 'Benutzerlimit von :max_count für den aktuellen Abonnement erreicht.',
     'pricing' => 'Preise',
     'end_date' => 'Enddatum',
     'team_owner' => 'Team-Eigentümer*in',
