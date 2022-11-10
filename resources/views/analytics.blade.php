@@ -1,6 +1,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 <script>
-      const colors = [
+    const colors = [
         "#241c5b",
         "#33277f",
         "#3a2c91",
@@ -17,6 +17,32 @@
         "#d4d0f1",
         "#dfdcf4",
     ];
+
+    const xValuesCheck = [];
+    const yValuesCheck = [];
+    const xValuesPopoverOpen = [];
+    const yValuesPopoverOpen = [];
+    const xValuesIgnore = [];
+    const yValuesIgnore = [];
+    const xValuesAlternative = [];
+    const yValuesAlternative = [];
+
+    const xTopSubCategoriesWeek = [];
+    const yTopSubCategoriesWeek = [];
+    const yTopSubCategoriesTwoWeeks = [];
+
+    const xValuesTopSubCategoriesIgnored = [];
+    const yValuesTopSubCategoriesIgnored = [];
+    const xValuesTopSubCategoriesOpened = [];
+    const yValuesTopSubCategoriesOpened = [];
+
+    const xValuesTopWordsIgnored = [];
+    const yValuesTopWordsIgnored = [];
+    const xValuesTopWordsOpened = [];
+    const yValuesTopWordsOpened = [];
+
+    Chart.defaults.global.defaultFontFamily = 'Lato';
+    Chart.defaults.global.defaultFontColor = '#000000';
 
     function getWittyStreak (yValuesCheck) {
         let checkDaysInRow = 0;
@@ -41,8 +67,12 @@
     }
 
     async function getCharttData(chart, interval = 30) {
+        let analyticsUrl = 'https://dashboard.lndo.site/api/user/analytics?refresh=1&chart=';
+        if (window.location.href.includes('team')) {
+            analyticsUrl = 'https://dashboard.lndo.site/api/team/analytics?refresh=1&chart=';
+        }
         const response = await fetch(
-            'https://dashboard.lndo.site/api/user/analytics?refresh=1&chart=' + chart + '&interval=' + interval);
+            analyticsUrl + chart + '&interval=' + interval);
         const data = await response.json();
         return data;
     }
@@ -101,17 +131,7 @@
         });
     }
 
-
     getCharttData('total').then(data => {
-        const xValuesCheck = [];
-        const yValuesCheck = [];
-        const xValuesPopoverOpen = [];
-        const yValuesPopoverOpen = [];
-        const xValuesIgnore = [];
-        const yValuesIgnore = [];
-        const xValuesAlternative = [];
-        const yValuesAlternative = [];
-
         const events = data.events;
         for (const [event, value] of Object.entries(events)) {
             if (event === 'check') {
@@ -142,7 +162,6 @@
             const yValuesPopoverOpenWeek = yValuesPopoverOpen.slice(-7);
             const yValuesIgnoreWeek = yValuesIgnore.slice(-7);
             const yValuesAlternativeWeek = yValuesAlternative.slice(-7);
-
 
             //PREVIOUS WEEK
             const yValuesCheckWeekPrevious = yValuesCheck.slice(-14, -7);
@@ -175,10 +194,7 @@
             document.getElementById("changeInPopoverPercentage").innerHTML = changeInPopoverPercentage >= 0 ? `+${changeInPopoverPercentage}%&nbsp;` : `${changeInPopoverPercentage}% &nbsp;`;
             document.getElementById("changeInIgnorePercentage").innerHTML = changeInIgnorePercentage >= 0 ? `+${changeInIgnorePercentage}%&nbsp;` : `${changeInIgnorePercentage}% &nbsp;`;
             document.getElementById("changeInAlternativePercentage").innerHTML = changeInAlternativePercentage >= 0 ? `+${changeInAlternativePercentage}%&nbsp;` : `${changeInAlternativePercentage}% &nbsp;`;
-            document.getElementById("checkDaysInRow").innerHTML = getWittyStreak(yValuesCheck);
-
-            Chart.defaults.global.defaultFontFamily = 'Lato';
-            Chart.defaults.global.defaultFontColor = '#000000';
+            document.getElementById("checkDaysInRow").innerHTML = getWittyStreak(yValuesCheck) + '&nbsp';
 
             new Chart("eventsChart", {
                 type: "line",
@@ -188,28 +204,28 @@
                         data: yValuesCheck,
                         borderColor: colors[3],
                         fill: false,
-                        label: 'Check',
+                        label: "<?php echo __('content.check_label_line_chart') ?>",
                         }, {
                         data: yValuesPopoverOpen,
                         borderColor: colors[6],
                         fill: false,
-                        label: 'Popover Open',
+                        label: "<?php echo __('content.popover_label_line_chart') ?>",
                         }, {
                         data: yValuesIgnore,
                         borderColor: colors[9],
                         fill: false,
-                        label: 'Ignore',
+                        label:  "<?php echo __('content.ignored_label_line_chart') ?>",
                         },{
                         data: yValuesAlternative,
                         borderColor: colors[12],
                         fill: false,
-                        label: 'Alternative',
+                        label: "<?php echo __('content.alternative_label_line_chart') ?>",
                     }]
                 },
                 options: {
                     title: {
                     display: true,
-                    text: 'Events',
+                    text: "<?php echo __('content.title_line_chart') ?>",
                     fontSize: 16,
                     fontStyle: 'normal'
                     }
@@ -220,7 +236,7 @@
                 "eventsCheckChart",
                 xValuesCheckWeek,
                 yValuesCheckWeek,
-                "Check (week)",
+                "<?php echo __('content.title_bar_chart_check') ?>",
                 false,
                 true
             );
@@ -229,7 +245,7 @@
                 "eventsPopoverChart",
                 xValuesCheckWeek,
                 yValuesPopoverOpenWeek,
-                "Popover Open (week)",
+                "<?php echo __('content.title_bar_chart_popover') ?>",
                 false,
                 true
             );
@@ -238,7 +254,7 @@
                 "eventsIgnoreChart",
                 xValuesCheckWeek,
                 yValuesIgnoreWeek,
-                "Ignore (week)",
+                "<?php echo __('content.title_bar_chart_ignored') ?>",
                 false,
                 true
             );
@@ -247,16 +263,21 @@
                 "eventsAlternativeChart",
                 xValuesCheckWeek,
                 yValuesAlternativeWeek,
-                "Alternative (week)",
+                "<?php echo __('content.title_bar_chart_alternative') ?>",
                 false,
                 true
             );
 
             createDoughnutChart(
                 "requestRatiosChartDoughnut",
-                ['Check', 'Popover Open', 'Ignore', 'Alternative'],
+                [
+                "<?php echo __('content.check_doughnut_chart_event_ratio') ?>",
+                "<?php echo __('content.popover_doughnut_chart_event_ratio') ?>",
+                "<?php echo __('content.ignored_doughnut_chart_event_ratio') ?>",
+                "<?php echo __('content.alternative_doughnut_chart_event_ratio') ?>"
+                ],
                 weeklyEvents,
-                "Event ratio (week previous)"
+                "<?php echo __('content.title_doughnut_chart_event_ratio') ?>",
             );
     
             document.getElementById("loadingIconActivity").style.display = "none";
@@ -265,9 +286,6 @@
     });
 
     getCharttData('topSubcategories', 7).then(data => {
-        const xTopSubCategoriesWeek = [];
-        const yTopSubCategoriesWeek = [];
-        const yTopSubCategoriesTwoWeeks = [];
         const openedWeek = Object.entries(data.events.popover_open).sort((a, b) => b[1] - a[1]).slice(0, 8);
         for (const [key, value] of openedWeek) {
             if (key && value) {
@@ -291,25 +309,25 @@
                 yTopSubCategoriesTwoWeeks.push(0);
             }
         }
-
+        let formattedLabels = xTopSubCategoriesWeek.map(x => x.replace(/_/g, ' '));
+        formattedLabels = formattedLabels.map(x => x.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();}));
         const dataCategories = {
-                labels:
-                    xTopSubCategoriesWeek,
+                labels: formattedLabels,
                 datasets: [{
-                    label: 'Categories Last Week',
+                    label: "<?php echo __('content.title_categories_radar_chart_last_week') ?>",
                     data: yTopSubCategoriesTwoWeeks,
                     fill: true,
                     backgroundColor: colors[10],
                     borderColor: colors[7],
                 }, {
-                    label: 'Categories This Week',
+                    label: "<?php echo __('content.title_categories_radar_chart_current_week') ?>",
                     data: yTopSubCategoriesWeek,
                     fill: true,
                     backgroundColor: colors[13],
                     borderColor: colors[10],
                 }]
                 };
-    
+  
             new Chart("categoriesRadar", {
                 type: 'radar',
                     data: dataCategories,
@@ -328,11 +346,6 @@
 
 
     getCharttData('topSubcategories').then(data => {
-        const xValuesTopSubCategoriesIgnored = [];
-        const yValuesTopSubCategoriesIgnored = [];
-        const xValuesTopSubCategoriesOpened = [];
-        const yValuesTopSubCategoriesOpened = [];
-
         const ignored = data.events.ignore;
         const opened = data.events.popover_open;
 
@@ -358,7 +371,7 @@
             "topSubCategoriesChart",
             xValuesTopSubCategoriesOpenedCut,
             yValuesTopSubCategoriesOpenedCut,
-            "Top Subcategories opened (month)",
+            "<?php echo __('content.title_categories_bar_chart_month') ?>",
             false,
             false
         );
@@ -367,14 +380,15 @@
             "topSubCategoriesOpenedChartDoughnut",
             xValuesTopSubCategoriesOpenedCutDoughnut,
             yValuesTopSubCategoriesOpenedCutDoughnut,
-            "Top Subcategories opened (month)"
+            "<?php echo __('content.title_categories_opened_doughnut_chart_month') ?>",
+
         );
     
         createDoughnutChart(
             "topSubCategoriesIgnoredChartDoughnut",
             xValuesTopSubCategoriesIgnoredCutDoughnut,
             yValuesTopSubCategoriesIgnoredCutDoughnut,
-            "Top Subcategories ignored (month)"
+            "<?php echo __('content.title_categories_ignored_doughnut_chart_month') ?>",
         );
                          
     });
@@ -406,31 +420,34 @@
             }
         }
 
+        let formattedLabels = xTopWordsWeek.map(x => x.replace(/_/g, ' '));
+        formattedLabels = formattedLabels.map(x => x.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();}));
+
         const dataCategories = {
-                labels:
-                    xTopWordsWeek,
-                datasets: [{
-                    label: 'Words Last Week',
-                    data: yTopWordsTwoWeeks,
-                    fill: true,
-                    backgroundColor: colors[10],
-                    borderColor: colors[7],
-                }, {
-                    label: 'Words This Week',
-                    data: yTopWordsWeek,
-                    fill: true,
-                    backgroundColor: colors[13],
-                    borderColor: colors[10],
-                }]
-                };
+            labels:
+            formattedLabels,
+            datasets: [{
+                label: "<?php echo __('content.title_words_radar_chart_last_week') ?>",
+                data: yTopWordsTwoWeeks,
+                fill: true,
+                backgroundColor: colors[10],
+                borderColor: colors[7],
+            }, {
+                label: "<?php echo __('content.title_words_radar_chart_current_week') ?>",
+                data: yTopWordsWeek,
+                fill: true,
+                backgroundColor: colors[13],
+                borderColor: colors[10],
+            }]
+        };
     
-            new Chart("wordsRadar", {
-                type: 'radar',
-                    data: dataCategories,
-                    options: {
-                        elements: {
-                        line: {
-                            borderWidth: 1
+        new Chart("wordsRadar", {
+            type: 'radar',
+            data: dataCategories,
+            options: {
+                elements: {
+                    line: {
+                        borderWidth: 1
                         }
                     }
                 },
@@ -442,10 +459,6 @@
 
 
     getCharttData('topWords').then(data => {
-        const xValuesTopWordsIgnored = [];
-        const yValuesTopWordsIgnored = [];
-        const xValuesTopWordsOpened = [];
-        const yValuesTopWordsOpened = [];
         const ignored = data.events.ignore;
         const opened = data.events.popover_open;
 
@@ -467,31 +480,29 @@
         const xValuesTopWordsOpenedCutDoughnut = xValuesTopWordsOpened.slice(0, 5);
         const yValuesTopWordsOpenedCutDoughnut = yValuesTopWordsOpened.slice(0, 5);
 
-            createDoughnutChart(
-                "topWordsChartDoughnut",
-                xValuesTopWordsOpenedCutDoughnut,
-                yValuesTopWordsOpenedCutDoughnut,
-                "Top Words opened (month)"
-            );
+        createDoughnutChart(
+            "topWordsChartDoughnut",
+            xValuesTopWordsOpenedCutDoughnut,
+            yValuesTopWordsOpenedCutDoughnut,
+            "<?php echo __('content.title_words_opened_doughnut_chart_month') ?>",
+        );
 
-            createDoughnutChart(
-                "topWordsChartDoughnutWeek",
-                xValuesTopWordsIgnoredCutDoughnut,
-                yValuesTopWordsIgnoredCutDoughnut,
-                "Top Words ignored (month)"
-            );
-           
-            createBarChart(
-                "topWordsChart",
-                xValuesTopWordsOpenedCut,
-                yValuesTopWordsOpenedCut,
-                "Top words opened",
-                false,
-                false
-            );
-
+        createDoughnutChart(
+            "topWordsChartDoughnutWeek",
+            xValuesTopWordsIgnoredCutDoughnut,
+            yValuesTopWordsIgnoredCutDoughnut,
+            "<?php echo __('content.title_words_ignored_doughnut_chart_month') ?>",
+        );
+       
+        createBarChart(
+            "topWordsChart",
+            xValuesTopWordsOpenedCut,
+            yValuesTopWordsOpenedCut,
+            "<?php echo __('content.title_words_bar_chart_month') ?>",
+            false,
+            false
+        );
     });
-
 </script>
 
 <x-app-layout>
@@ -499,7 +510,7 @@
         <div class="wittyworks-page-wrapper">
             <div class="wittyworks-page lg:ml-20">
 
-                <div class="ibarra-sub-title-h2">Activity</div>
+                <div class="ibarra-sub-title-h2">{{ __('content.activity') }}</div>
                 <div class="wittyworks-form-section container border-radius">
                     <div id="loadingIconActivity" class="loading-icon-wrapper" style="width: 100%">
                         <div class="lds-grid">
@@ -519,7 +530,7 @@
                             <div class="container-column" style="margin-left: 2em;">
                                 <div class="container-row" style="align-items: center">
                                     <div id="checkDaysInRow" class="ibarra-sub-title-h2-purple"></div>
-                                    <div class="lato-small-text-p">&nbsp; Days Witty writing streak</div>
+                                    <div class="lato-small-text-p">{{ __('content.writing_streak') }}</div>
                                 </div>
 
                                 <div class="container-row  wittyworks-margin-top" >
@@ -527,21 +538,21 @@
                                         id="changeInCheckPercentage"
                                         class="lato-small-paragraph-title-h4-purple">
                                     </div>
-                                    <div class="lato-small-text-p">Check requests (week)</div>
+                                    <div class="lato-small-text-p">{{ __('content.check_requests_week') }}</div>
                                 </div>
-
+                                
                                 <div class="container-row" >
                                     <div id="changeInPopoverPercentage"
                                         class="lato-small-paragraph-title-h4-purple">
                                     </div>
-                                    <div class="lato-small-text-p">Popover Open (week)</div>
+                                    <div class="lato-small-text-p">{{ __('content.popover_open_week') }}</div>
                                 </div>
 
                                 <div class="container-row" >
                                     <div id="changeInAlternativePercentage"
                                         class="lato-small-paragraph-title-h4-purple">
                                     </div>
-                                    <div class="lato-small-text-p">Alternative clicked (week)</div>
+                                    <div class="lato-small-text-p">{{ __('content.alternative_clicked_week') }}</div>
                                 </div>
 
                                 <div class="container-row">
@@ -549,7 +560,7 @@
                                         id="changeInIgnorePercentage"
                                         class="lato-small-paragraph-title-h4-purple">
                                     </div>
-                                    <div class="lato-small-text-p margin-bottom">Ignored words (week)</div>
+                                    <div class="lato-small-text-p margin-bottom">{{ __('content.ignored_words_week') }}</div>
                                 </div>
                                 
                             </div>
@@ -583,7 +594,7 @@
                     </div>
                 </div>
 
-                <div class="ibarra-sub-title-h2 wittyworks-margin-top">Top Categories</div>
+                <div class="ibarra-sub-title-h2 wittyworks-margin-top">{{ __('content.top_categories') }}</div>
                 <div class="wittyworks-form-section container border-radius">
                     <div id="loadingIconTopCatagories" class="loading-icon-wrapper"  style="width: 100%">
                         <div class="lds-grid">
@@ -626,7 +637,7 @@
                     </div>
                 </div>
 
-                <div class="ibarra-sub-title-h2 wittyworks-margin-top">Top words</div>
+                <div class="ibarra-sub-title-h2 wittyworks-margin-top">{{ __('content.top_words') }}</div>
                     <div class="wittyworks-form-section container border-radius">
                         <div id="loadingIconTopWords" class="loading-icon-wrapper" style="width: 100%">
                             <div class="lds-grid">
