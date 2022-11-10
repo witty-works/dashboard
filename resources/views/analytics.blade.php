@@ -163,7 +163,6 @@
             const yValuesIgnoreWeek = yValuesIgnore.slice(-7);
             const yValuesAlternativeWeek = yValuesAlternative.slice(-7);
 
-
             //PREVIOUS WEEK
             const yValuesCheckWeekPrevious = yValuesCheck.slice(-14, -7);
             const xValuesCheckWeekPrevious = xValuesCheck.slice(-14, -7);
