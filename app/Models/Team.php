@@ -173,7 +173,7 @@ class Team extends JetstreamTeam
 
     public function hasConfiguredPrivacy()
     {
-        if ($this->hasLanguageRules() && $this->languageGuidelines->domain_list_type === 'allow_witty_works') {
+        if ($this->languageGuidelines && $this->languageGuidelines->domain_list_type === 'allow_witty_works') {
             return true;
         }
 
