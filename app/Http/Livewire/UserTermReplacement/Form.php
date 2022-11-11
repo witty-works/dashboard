@@ -4,11 +4,14 @@ namespace App\Http\Livewire\UserTermReplacement;
 
 use App\Models\TermReplacement;
 use App\Http\Livewire\OrganizationTermReplacement\Form as OrganizationForm;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
 class Form extends OrganizationForm
 {
+    use AuthorizesRequests;
+
     public $user;
 
     public function mount($user)

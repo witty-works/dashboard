@@ -5,10 +5,13 @@ namespace App\Http\Livewire\UserDomain;
 use App\Models\Domain;
 use Illuminate\Validation\ValidationException;
 use App\Http\Livewire\OrganizationDomain\Form as OrganizationForm;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
 
 class Form extends OrganizationForm
 {
+    use AuthorizesRequests;
+
     protected $listeners = ['edit'];
 
     /**
