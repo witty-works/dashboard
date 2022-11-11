@@ -4,7 +4,7 @@ return [
 
     'plans' => [
         'witty_free' => [
-            'price_id' => env('STRIPE_PRICE_WITTY_ME'),
+            'price_id' => env('STRIPE_PRICE_WITTY_FREE'),
             'price' => 0,
             'checkout' => false,
             'features' => [
