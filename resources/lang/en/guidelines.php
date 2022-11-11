@@ -107,4 +107,8 @@ only the gender ending (e.g. "Mitarbeiter*in"), the female and male form (e.g. "
     'manage_organization_guidelines_description_simple_language' => 'Enables experimental support for "plain language" (<a href="https://en.wikipedia.org/wiki/Leichte_Sprache" target="_blank" rel="noopener">Leichte Sprache</a>), which is currently supported in German only.',
     'simple_language' => 'Plain Language',
     'manage_organization_guidelines_description_german_gender_ending_sub_title' => 'Choose the gender ending',
+    'team_analytics_description' => 'Team analytics makes it possible to see trends in how your team uses Witty to see where the team is excelling and where potentially more work needs to be done towards inclusive language and more importantly inclusive culture.',
+    'team_analytics_subscription_upgrade' => 'An opt-out of team analytics requires a <a href=":url">subscription</a>.',
+    'team_analytics_subscription_required' => 'An opt-out of team analytics requires a subscription.',
+    'team_analytics' => 'Participate',
 ];

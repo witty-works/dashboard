@@ -1,10 +1,15 @@
-@php 
+<div>
+    <div class="max-w-7xl mx-auto py-10">
+        @livewire('team-analytics', ['user' => $user])
+    </div>
+</div>
 
+@php 
 $teamAllowList = !empty($user->currentTeam)
     && $user->currentTeam->getDomainListType() !== 'deny'
 @endphp
 
-@if(!$teamAllowList) 
+@if(!$teamAllowList)
 <div>
     <div class="max-w-7xl mx-auto py-10">
         @livewire('user-domain.form', ['user' => $user])
