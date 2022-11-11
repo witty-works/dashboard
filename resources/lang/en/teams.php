@@ -23,7 +23,7 @@ return [
     'total_of_max_used_ignored' => ':total of :max_count possible ignored words are used',
     'more_licenses' => 'If you like to purchase more licenses, please <a href=":url">contact</a> Witty Works.',
     'what_is_included' => 'Usage',
-    'user_limit_reached_error' => 'You can only invite :max_count team members with your current plan. Do you want to invite more? Then upgrade.',
+    'user_limit_reached_error' => 'Do you want to invite more then :max_count team members? Then upgrade.',
     'end_date' => 'Your plan end on ',
     'team_owner' => 'Team owner',
     'upgrade_to_witty_teams' => 'Please upgrade to Witty Teams',

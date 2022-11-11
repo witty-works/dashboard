@@ -11,7 +11,7 @@
 
         <x-slot name="form">
             <!-- Token Name -->
-            <div class="col-span-6 sm:col-span-4">
+            <div class="w-full col-span-6 sm:col-span-4">
                 <x-jet-label for="name" value="{{ __('content.token_name') }}" />
                 <x-jet-input id="name" type="text" class="mt-1 block w-full" wire:model.defer="createApiTokenForm.name" autofocus />
                 <x-jet-input-error for="name" class="mt-2" />

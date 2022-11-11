@@ -8,7 +8,7 @@
     </x-slot>
 
     <x-slot name="form">
-        <div class="col-span-6 sm:col-span-4">
+        <div class="w-full col-span-6 sm:col-span-4">
             @foreach (\App\Models\Domain::TYPES as $type => $label)
             <div class="margin-bottom">
             <x-jet-input name="type"
