@@ -33,9 +33,9 @@
                     </div>
 
                     <!-- Member Email -->
-                    <div class="margin-bottom">
+                    <div class="w-full margin-bottom">
                         <x-jet-label class="lato-small-text-p" for="email" value="{{ __('content.email') }}" />
-                        <x-jet-input id="email" type="email" class="mt-1 block w-full" wire:model.defer="addTeamMemberForm.email" disabled="{{ !Gate::check('addTeamMember', $team) }}" />
+                        <x-jet-input id="email" type="email" class=" mt-1 block w-full" wire:model.defer="addTeamMemberForm.email" disabled="{{ !Gate::check('addTeamMember', $team) }}" />
                         <x-jet-input-error for="email" class="mt-2">
                         </x-jet-input-error>
                     </div>

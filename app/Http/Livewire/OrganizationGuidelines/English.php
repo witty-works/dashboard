@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\OrganizationGuidelines;
 
+use App\Http\Livewire\HelpHeroTrait;
 use App\Models\LanguageGuidelines;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
@@ -10,6 +11,7 @@ use Livewire\Component;
 class English extends Component
 {
     use AuthorizesRequests;
+    use HelpHeroTrait;
 
     public $singular_they;
     public $english_rules_force;
@@ -53,6 +55,7 @@ class English extends Component
         $languageGuidelines->save();
 
         $this->emit('saved');
+        $this->updateHelpHero();
     }
 
     /**

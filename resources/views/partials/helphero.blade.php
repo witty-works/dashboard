@@ -9,6 +9,10 @@
         HelpHero.anonymous();
         @else
         HelpHero.identify({!! json_encode($user->posthogId()) !!}, {!! json_encode($user->getHubspotData()) !!});
+        window.addEventListener('helpHeroUpdate', (e) => {
+          HelpHero.reset();
+          HelpHero.identify({!! json_encode($user->posthogId()) !!}, e.detail.helpHeroData);
+        });
         @endif
     }
 </script>
