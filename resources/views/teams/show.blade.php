@@ -10,7 +10,7 @@
             </x-slot>
 
             <div>
-                    @livewire('teams.team-member-manager', ['team' => $team])
+                @livewire('teams.team-member-manager', ['team' => $team])
             </div>
         </div>
     </div>
