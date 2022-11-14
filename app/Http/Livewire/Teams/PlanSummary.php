@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Teams;
 
+use App\Http\Livewire\HelpHeroTrait;
 use Auth;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
@@ -12,6 +13,7 @@ use Money\Currency;
 class PlanSummary extends Component
 {
     use AuthorizesRequests;
+    use HelpHeroTrait;
 
     public $team;
     public $licenseCount;
@@ -63,6 +65,7 @@ class PlanSummary extends Component
             $subscription->alwaysInvoice()->updateQuantity($licenseCount);
             $subscription->syncStartRenewalAt();
             $this->emit('saved');
+            $this->updateHelpHero();
         } else {
             $message = __('teams.license_count_did_not_change');
             throw ValidationException::withMessages(['license_count' => $message]);

@@ -11,7 +11,7 @@
                 <div class="py-10">
                     @livewire('teams.plan-summary', ['team' => Auth::user()->currentTeam])
 
-                    @livewire('teams.team-member-manager', ['team' => Auth::user()->currentTeam])
+                    @livewire('teams.team-member-manager-help-hero', ['team' => Auth::user()->currentTeam])
                 </div>
                 @endcannot
             </div>

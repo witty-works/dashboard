@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\OrganizationGuidelines;
 
+use App\Http\Livewire\HelpHeroTrait;
 use App\Models\LanguageGuidelines;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
@@ -10,6 +11,7 @@ use Livewire\Component;
 class German extends Component
 {
     use AuthorizesRequests;
+    use HelpHeroTrait;
 
     public $german_rules_force;
     public $german_gender_ending;
@@ -57,6 +59,7 @@ class German extends Component
         $languageGuidelines->save();
 
         $this->emit('saved');
+        $this->updateHelpHero();
     }
 
     /**

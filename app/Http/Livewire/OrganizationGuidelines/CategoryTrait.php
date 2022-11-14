@@ -2,11 +2,14 @@
 
 namespace App\Http\Livewire\OrganizationGuidelines;
 
+use App\Http\Livewire\HelpHeroTrait;
 use App\Jobs\SyncOrganizationToNlpApi;
 use Illuminate\Support\Facades\Auth;
 
 trait CategoryTrait
 {
+    use HelpHeroTrait;
+
     public function mountCategories($team, $categories)
     {
         $this->team = $team;
@@ -59,6 +62,7 @@ trait CategoryTrait
         $this->disabled_categories_force = $disabled_categories_force;
 
         $this->emit('saved');
+        $this->updateHelpHero();
 
         dispatch(new SyncOrganizationToNlpApi($this->team, 'high'));
     }

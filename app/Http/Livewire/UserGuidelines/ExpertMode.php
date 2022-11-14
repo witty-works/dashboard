@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\UserGuidelines;
 
+use App\Http\Livewire\HelpHeroTrait;
 use App\Models\LanguageGuidelines;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
@@ -10,6 +11,7 @@ use Livewire\Component;
 class ExpertMode extends Component
 {
     use AuthorizesRequests, AttributeTrait;
+    use HelpHeroTrait;
 
     public $expert_mode;
     public $simple_language;
@@ -62,6 +64,7 @@ class ExpertMode extends Component
         $languageGuidelines->save();
 
         $this->emit('saved');
+        $this->updateHelpHero();
     }
 
     /**

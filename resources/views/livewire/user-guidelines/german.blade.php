@@ -7,7 +7,7 @@
         {!! Str::markdown(__('guidelines.manage_organization_guidelines_description_german')) !!}
     </x-slot>
 
-    <x-slot name="form" submit="updateLanguageGuidelinesGerman">  
+    <x-slot name="form" submit="updateLanguageGuidelinesGerman">
         <div class="margin-bottom">{!! __('guidelines.gendered_roles_format') !!}</div>
 
         <div class="lato-small-text-p">{!! __('guidelines.manage_organization_guidelines_description_german_form_sub_title') !!}</div>
@@ -23,13 +23,15 @@
 
                 <x-jet-input-error for="gendered_roles_format" class="mt-2" />
             </div>
-            <div class="p-3">
-                @if(\App\Models\LanguageGuidelines::isForcedOnTeam(Auth::user(), 'german_rules'))
-                @include('partials.locked')
-                @elseif(!$user->subscribed())
+
+            @if(\App\Models\LanguageGuidelines::isForcedOnTeam(Auth::user(), 'german_rules'))
+              @include('partials.locked')
+            @elseif(!$user->subscribed())
+              <div class="p-3">
                 @include('partials.witty-teams-only')
-                @endif
-            </div>
+              </div>
+            @endif
+
         </div>
 
         <div class="margin-bottom">
@@ -48,11 +50,9 @@
 
                 <x-jet-input-error for="german_gender_ending" class="mt-2" />
             </div>
-            <div class="p-3">
-                @if(\App\Models\LanguageGuidelines::isForcedOnTeam(Auth::user(), 'german_rules'))
-                @include('partials.locked')
-                @endif
-            </div>
+            @if(\App\Models\LanguageGuidelines::isForcedOnTeam(Auth::user(), 'german_rules'))
+              @include('partials.locked')
+            @endif
         </div>
     </x-slot>
 

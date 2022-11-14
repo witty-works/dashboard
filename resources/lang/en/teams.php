@@ -31,7 +31,7 @@ return [
     'accepted_invitation' => 'Great! You have accepted the invitation to join the :team team.',
     'language' => 'Team Language',
     'witty_teams_only' => 'Witty Teams Only',
-    'locked_by_team' => 'This function is locked by your team administrator.',
+    'locked_by_team' => 'This setting has been locked by your team administrator.',
     'license_count_error' => 'There was an error updating the license count.',
     'license_count_too_small_error' => 'Please increase the license count or remove licensed seats.',
     'license_count_label' => 'Change subscription',
