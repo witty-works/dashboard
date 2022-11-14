@@ -7,7 +7,7 @@
         {!! Str::markdown(__('guidelines.manage_organization_guidelines_description_german')) !!}
     </x-slot>
 
-    <x-slot name="form" submit="updateLanguageGuidelinesGerman">  
+    <x-slot name="form" submit="updateLanguageGuidelinesGerman">
         <div class="margin-bottom">
             {!! __('guidelines.gendered_roles_format') !!}
         </div>
@@ -24,11 +24,13 @@
 
                 <x-jet-input-error for="gendered_roles_format" class="mt-2" />
             </div>
-            <div class="p-3">
-                @if(!$team->subscribed())
+
+            @if(!$team->subscribed())
+              <div class="p-3">
                 @include('partials.witty-teams-only')
-                @endif
-            </div>
+              </div>
+            @endif
+
         </div>
 
         <div class="margin-bottom">
