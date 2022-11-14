@@ -5,11 +5,13 @@
 
 <div class="lato-small-text-p">{{ $label }}</div>
 @if(!empty($disabled))
-<div class="p-3 whitespace-nowrap">
-@if($disabled === 'locked')
-    @include('partials.locked')
-@else
-    @include('partials.witty-teams-only')
-@endif
-</div>
+
+  @if($disabled === 'locked')
+      @include('partials.locked')
+  @else
+      <div class="p-3 whitespace-nowrap">
+        @include('partials.witty-teams-only')
+      </div>
+  @endif
+
 @endif

@@ -7,8 +7,8 @@
     </x-slot>
 
     <x-slot name="form" submit="updateLanguageGuidelinesLanguage">
-        <div class="lato-paragraph-text-p margin-bottom">{!! __('guidelines.manage_organization_guidelines_description_language') !!}</div>  
-       
+        <div class="lato-paragraph-text-p margin-bottom">{!! __('guidelines.manage_organization_guidelines_description_language') !!}</div>
+
         <div class="lato-small-text-p">
             {{ __('guidelines.user_preferred_variants_dialect') }}
         </div>
@@ -23,13 +23,11 @@
                 />
                 <x-jet-input-error for="preferred_variants_en" class="mt-2" />
             </div>
-            <div class="p-3">
-                @if(\App\Models\LanguageGuidelines::isForcedOnTeam(Auth::user(), 'preferred_variants'))
-                @include('partials.locked')
-                @endif
-            </div>
+            @if(\App\Models\LanguageGuidelines::isForcedOnTeam(Auth::user(), 'preferred_variants'))
+              @include('partials.locked')
+            @endif
         </div>
-       
+
         <div class="lato-small-text-p">
             {{ __('guidelines.user_preferred_variants_dialect') }}
         </div>
@@ -44,11 +42,10 @@
                 />
                 <x-jet-input-error for="preferred_variants_de" class="mt-2" />
             </div>
-            <div class="p-3">
-                @if(\App\Models\LanguageGuidelines::isForcedOnTeam(Auth::user(), 'preferred_variants'))
-                @include('partials.locked')
-                @endif
-            </div>
+            @if(\App\Models\LanguageGuidelines::isForcedOnTeam(Auth::user(), 'preferred_variants'))
+              @include('partials.locked')
+            @endif
+
         </div>
     </x-slot>
 
