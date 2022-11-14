@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\UserDomain;
 
+use App\Http\Livewire\HelpHeroTrait;
 use App\Models\Domain;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
@@ -10,6 +11,7 @@ use Livewire\Component;
 class Show extends Component
 {
     use AuthorizesRequests;
+    use HelpHeroTrait;
 
     protected $listeners = ['saved'];
 
@@ -41,6 +43,7 @@ class Show extends Component
     public function saved()
     {
         $this->render();
+        $this->updateHelpHero();
     }
 
     public function editDomain(Domain $domain)
@@ -51,5 +54,6 @@ class Show extends Component
     public function deleteDomain(Domain $domain)
     {
         $domain->delete();
+        $this->updateHelpHero();
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\OrganizationFalsePositive;
 
+use App\Http\Livewire\HelpHeroTrait;
 use App\Models\FalsePositive;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
@@ -10,6 +11,7 @@ use Livewire\Component;
 class Show extends Component
 {
     use AuthorizesRequests;
+    use HelpHeroTrait;
 
     protected $listeners = ['saved'];
 
@@ -37,6 +39,7 @@ class Show extends Component
     public function saved()
     {
         $this->render();
+        $this->updateHelpHero();
     }
 
     public function editFalsePositive(FalsePositive $falsePositive)
@@ -55,5 +58,6 @@ class Show extends Component
         }
 
         $falsePositive->delete();
+        $this->updateHelpHero();
     }
 }

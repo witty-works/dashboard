@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\OrganizationGuidelines;
 
+use App\Http\Livewire\HelpHeroTrait;
 use App\Models\GuidelinesInterface;
 use App\Models\LanguageGuidelines;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -11,6 +12,7 @@ use Livewire\Component;
 class Language extends Component
 {
     use AuthorizesRequests;
+    use HelpHeroTrait;
 
     public $preferred_variants;
     public $preferred_variants_force;
@@ -74,6 +76,7 @@ class Language extends Component
         $languageGuidelines->save();
 
         $this->emit('saved');
+        $this->updateHelpHero();
     }
 
     /**
