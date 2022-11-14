@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Jobs\SyncUserToNlpApi;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -43,10 +44,11 @@ class TeamAnalytics extends Component
         }
 
         $this->user->team_analytics = (bool) $this->team_analytics;
-
         $this->user->save();
 
         $this->emit('saved');
+
+        dispatch(new SyncUserToNlpApi($this->user, 'high'));
     }
 
     /**
