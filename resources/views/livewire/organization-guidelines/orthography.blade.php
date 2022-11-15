@@ -1,4 +1,4 @@
-<x-jet-form-section submit="updateLanguageGuidelinesOrthography">
+<x-jet-form-section class="max-w-7xl mx-auto py-10" submit="updateLanguageGuidelinesOrthography">
     <x-slot name="title">
         {{ __('guidelines.manage_organization_guidelines_orthography') }}
     </x-slot>

@@ -1,6 +1,6 @@
-@props(['submit'])
-
-<div>
+@props(['submit', 'class' => "", 'enabled' => true])
+@if($enabled)
+<div class="{{ $class }}">
     <x-jet-section-title>
         <x-slot name="title">{{ $title }}</x-slot>
         <x-slot name="description">{{ $description }}</x-slot>
@@ -24,3 +24,6 @@
         </form>
     </div>
 </div>
+@else
+    <div></div>
+@endif

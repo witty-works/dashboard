@@ -7,6 +7,7 @@ use App\Models\GuidelinesInterface;
 use App\Models\LanguageGuidelines;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 
 class Language extends Component
@@ -62,13 +63,22 @@ class Language extends Component
 
         $languageGuidelines = $this->getLanguageGuidelines($this->team);
 
-        $this->preferred_variants = [];
+        $preferredVariants = [];
+        $oneEnabled = false;
         foreach (GuidelinesInterface::LANGUAGES as $lang) {
             $property = "preferred_variants_$lang";
             if ($this->$property) {
-                $this->preferred_variants[] = $this->$property;
+                $preferredVariants[] = $this->$property;
+                $oneEnabled = true;
             }
         }
+
+        if (!$oneEnabled) {
+            $message = __('guidelines.enable_at_least_one_variant');
+            throw ValidationException::withMessages(['preferred_variants' => $message]);
+        }
+
+        $this->preferred_variants = $preferredVariants;
 
         $languageGuidelines->preferred_variants = $this->preferred_variants;
         $languageGuidelines->preferred_variants_force = $this->preferred_variants_force;

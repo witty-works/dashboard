@@ -13,6 +13,9 @@ class English extends Component
     use AuthorizesRequests, AttributeTrait;
     use HelpHeroTrait;
 
+    protected $listeners = ['saved'];
+
+    public $enabled;
     public $singular_they;
 
     protected $rules = [
@@ -30,8 +33,20 @@ class English extends Component
     public function mount($user)
     {
         $this->user = Auth::user();
+        $this->enabled = false;
 
         $languageGuidelines = $this->getLanguageGuidelines($this->user);
+
+        $preferred_variants = $this->mountAttribute(
+            $this->user,
+            $languageGuidelines,
+            'preferred_variants'
+        );
+        foreach ($preferred_variants as $variant) {
+            if (strpos($variant, 'en') === 0) {
+                $this->enabled = true;
+            }
+        }
 
         $this->singular_they = (bool) $this->mountAttribute(
             $this->user,
@@ -63,6 +78,12 @@ class English extends Component
     public function render()
     {
         return view('livewire.user-guidelines.english');
+    }
+
+    public function saved()
+    {
+        $this->mount($this->user);
+        $this->render();
     }
 
     protected function getLanguageGuidelines($user)

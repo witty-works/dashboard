@@ -1,23 +1,13 @@
 <div>
     @livewire('user-guidelines.intro', ['user' => $user])
 
-    <div class="max-w-7xl mx-auto py-10">
-        @livewire('user-guidelines.language', ['user' => $user])
-    </div>
+    @livewire('user-guidelines.language', ['user' => $user])
 
-    <div class="max-w-7xl mx-auto py-10">
-        @livewire('user-guidelines.english', ['user' => $user])
-    </div>
+    @livewire('user-guidelines.english', ['user' => $user])
 
-    <div class="max-w-7xl mx-auto py-10">
-        @livewire('user-guidelines.german', ['user' => $user])
-    </div>
+    @livewire('user-guidelines.german', ['user' => $user])
 
-    <div class="max-w-7xl mx-auto py-10">
-        @livewire('user-guidelines.expert-mode', ['user' => $user])
-    </div>
+    @livewire('user-guidelines.expert-mode', ['user' => $user])
 
-    <div class="max-w-7xl mx-auto py-10">
-        @livewire('user-guidelines.inspirations', ['user' => $user])
-    </div>
+    @livewire('user-guidelines.inspirations', ['user' => $user])
 </div>
