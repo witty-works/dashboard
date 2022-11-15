@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Events\UserCreated;
 use App\Events\UserDeleted;
 use App\Events\UserUpdated;
-use App\Providers\AppServiceProvider;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -65,6 +64,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'team_analytics' => 'boolean',
     ];
 
     /**
@@ -132,7 +132,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function posthogId()
     {
-        return AppServiceProvider::POSTHOG_ID_PREFIX . $this->id;
+        return 'dashboard-user:' . $this->id;
     }
 
     public function posthogTeamId()

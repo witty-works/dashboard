@@ -25,22 +25,17 @@
 
                 </x-slot>
 
-
                 <x-slot name="form">
-
-
                     <div class="col-span-6">
                         <div class="lato-paragraph-text-p margin-bottom">
                             {{ __('content.please_provide_the_email_address') }}
                         </div>
                     </div>
 
-
-
                     <!-- Member Email -->
-                    <div class="margin-bottom">
+                    <div class="w-full margin-bottom">
                         <x-jet-label class="lato-small-text-p" for="email" value="{{ __('content.email') }}" />
-                        <x-jet-input id="email" type="email" class="mt-1 block w-full" wire:model.defer="addTeamMemberForm.email" disabled="{{ !Gate::check('addTeamMember', $team) }}" />
+                        <x-jet-input id="email" type="email" class=" mt-1 block w-full" wire:model.defer="addTeamMemberForm.email" disabled="{{ !Gate::check('addTeamMember', $team) }}" />
                         <x-jet-input-error for="email" class="mt-2">
                         </x-jet-input-error>
                     </div>
@@ -92,7 +87,6 @@
                     @endif
                 </x-slot>
 
-
                 <x-slot name="actions">
                     <x-jet-action-message class="mr-3" on="saved">
                         {{ __('content.added') }}
@@ -113,7 +107,7 @@
         <div class="max-w-7xl mx-auto py-10">
             <x-jet-action-section>
                 <x-slot name="title">
-                    {{ __('content.pending_team_invitations', ['count' => $team->teamInvitations->count()]) }}
+                    {{ trans_choice('content.pending_team_invitations', $team->teamInvitations->count(), ['count' => $team->teamInvitations->count()]) }}
                 </x-slot>
 
                 <x-slot name="description">
@@ -150,7 +144,7 @@
         <div class="max-w-7xl mx-auto py-10">
             <x-jet-action-section>
                 <x-slot name="title">
-                    {{ __('content.team_members', ['count' => $team->users->count()]) }}
+                    {{ trans_choice('content.team_members', $team->users->count(), ['count' => $team->users->count()]) }}
                 </x-slot>
 
                 <x-slot name="description">

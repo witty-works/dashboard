@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Providers\AppServiceProvider;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Laravel\Jetstream\Events\TeamCreated;
 use Laravel\Jetstream\Events\TeamDeleted;
@@ -98,7 +97,7 @@ class Team extends JetstreamTeam
 
     public function posthogId()
     {
-        return AppServiceProvider::POSTHOG_ID_PREFIX . $this->id;
+        return 'dashboard-team:' . $this->id;
     }
 
     public function getUserLicensesCount()

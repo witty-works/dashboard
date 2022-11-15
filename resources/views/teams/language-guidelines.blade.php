@@ -11,7 +11,7 @@
                 @elseif($tab === \App\Http\Controllers\Livewire\OrganizationGuidelinesController::FALSE_POSITIVES)
                     @include('teams/false-positive')
                 @elseif($tab === \App\Http\Controllers\Livewire\OrganizationGuidelinesController::DOMAINS)
-                        @include('teams/domain')
+                    @include('teams/domain')
                 @endif
             @else
             @include('partials.invitations')

@@ -12,7 +12,7 @@
         </x-slot>
 
     <x-slot name="form">
-        <div class="col-span-6 sm:col-span-4">
+        <div class="w-full col-span-6 sm:col-span-4">
             <x-jet-label for="term" value="{!! __('guidelines.term_label') !!}" />
 
             <x-jet-input id="term_replacement_id"
@@ -31,7 +31,7 @@
             <x-jet-input-error for="term" class="mt-2" />
         </div>
 
-        <div class="col-span-6 sm:col-span-4 mt-5">
+        <div class="w-full col-span-6 sm:col-span-4 mt-5">
             <x-jet-label for="replacement" value="{!! __('guidelines.replacement_label') !!}" />
 
             <x-jet-input id="replacement"
@@ -45,7 +45,7 @@
             <x-jet-input-error for="replacement" class="mt-2" />
         </div>
 {{--
-        <div class="col-span-6 sm:col-span-4 mt-5">
+        <div class="w-full col-span-6 sm:col-span-4 mt-5">
             <x-jet-label for="language_code" value="{!! __('guidelines.language_code_label') !!}" />
 
             <x-select id="language_code"
@@ -59,11 +59,11 @@
         </div>
 --}}
 
-        <div class="col-span-6 sm:col-span-4 mt-5">
+        <div class="w-full col-span-6 sm:col-span-4 mt-5">
             <x-jet-label for="explanation" value="{!! __('guidelines.explanation_label') !!}" />
 
             <x-jet-input id="explanation"
-                type="text" 
+                type="textarea" 
                 class="mt-1 block w-full"
                 wire:model.defer="explanation"
                 autocomplete="explanation"
@@ -74,7 +74,7 @@
         </div>
 
 
-        <div class="col-span-6 sm:col-span-4 mt-5">
+        <div class="w-full col-span-6 sm:col-span-4 mt-5">
             <x-jet-label for="url" value="{!! __('guidelines.url_label') !!}" />
 
             <x-jet-input id="url"
@@ -88,7 +88,7 @@
         </div>
 
 
-        <div class="col-span-6 sm:col-span-4 mt-5">
+        <div class="w-full col-span-6 sm:col-span-4 mt-5">
             <x-jet-label for="emoji" value="{!! __('guidelines.emoji_label') !!}" />
 
             <x-jet-input id="emoji"
