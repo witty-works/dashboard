@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\OrganizationDomain;
 
 use App\Models\Domain;
-use App\Models\LanguageGuidelines;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;

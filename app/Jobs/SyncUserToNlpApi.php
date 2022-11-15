@@ -57,6 +57,7 @@ class SyncUserToNlpApi extends AbstractSyncToNlpApi
             'config' => $config,
             'notifications' => $user->getNotificationCount(),
             'has_consented_to_mailing' => (bool) $user->has_consented_to_mailing,
+            'team_analytics' => $user->subscribed() ? $user->team_analytics !== false : true,
         ];
 
         $data['config_hash'] = md5(serialize($data));

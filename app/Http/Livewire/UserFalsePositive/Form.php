@@ -5,10 +5,13 @@ namespace App\Http\Livewire\UserFalsePositive;
 use App\Models\FalsePositive;
 use Illuminate\Validation\ValidationException;
 use App\Http\Livewire\OrganizationFalsePositive\Form as OrganizationForm;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
 
 class Form extends OrganizationForm
 {
+    use AuthorizesRequests;
+
     /**
      * The user instance.
      *

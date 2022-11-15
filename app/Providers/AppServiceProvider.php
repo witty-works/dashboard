@@ -11,7 +11,6 @@ use PostHog\PostHog;
 
 class AppServiceProvider extends ServiceProvider
 {
-    public const POSTHOG_ID_PREFIX = 'dashboard:';
     public const POSTHOG_ORGANIZATION_TYPE = 'organization';
 
     public static $posthog_reset = false;
