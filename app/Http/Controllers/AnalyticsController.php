@@ -193,10 +193,6 @@ class AnalyticsController extends Controller
                 break;
         }
 
-        if ($this->refresh) {
-            return redirect()->to($request->fullUrlWithQuery(['refresh' => null]));
-        }
-
         return response()->json($data);
     }
 

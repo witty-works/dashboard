@@ -70,6 +70,7 @@
                 <div class="wittyworks-navigation-sub-wrapper">
                     @foreach($links as $route => $label)
                     <x-jet-nav-link class="wittyworks-navigation-sub-link lato-small-text-p" href="{{ route('user.' . $route) }}" :active="request()->routeIs('user.' . $route)">{{ $label }}</x-jet-nav-link>
+                    <br />
                     @endforeach
                 </div>
             </div>
@@ -100,7 +101,7 @@
                 <div class="wittyworks-navigation-sub-wrapper">
                     @foreach($links as $route => $label)
                     <x-jet-nav-link class="wittyworks-navigation-sub-link lato-small-text-p" href="{{ route('teams.' . $route) }}" :active="request()->routeIs('teams.' . $route)">{{ $label }}</x-jet-nav-link>
-                    <br>
+                    <br />
                     @endforeach
                 </div>
             </div>
