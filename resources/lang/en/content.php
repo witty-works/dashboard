@@ -215,6 +215,6 @@ Your Witty team',
     'upgrade_text' => 'If you want to invite more team members or customize Witty further, please upgrade.',
     'upgrade_ask_owner_text' => 'If you want to invite more team members or customize Witty further, simply subscribe to a plan.
 
-Ask your team administrator to upgrade to <a href="https://www.witty.works/pricing" target="_blank">Witty Teams</a>.',
+Ask your team administrators to upgrade to <a href="https://www.witty.works/pricing" target="_blank">Witty Teams</a>.',
     'upgrade_button' => 'Upgrade',
 ];

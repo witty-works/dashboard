@@ -31,7 +31,7 @@ return [
     'total_of_max_used_licenses' => ':total von :max_count Benutzerlizenzen wurden zugewiesen',
     'total_of_max_used_dictionary' => ':total von :max_count möglichen Einträgen in das Team-Wörterbuch wurden gemacht',
     'total_of_max_used_ignored' => ':total von :max_count möglichen Einträgen in die Liste ignorierter Wörter wurden gemacht ',
-    'locked_by_team' => 'Diese Funktion wird von deiner*m Team-Admin gesetzt.',
+    'locked_by_team' => 'Diese Einstellung wurde von deinen Team-Administratoren gesperrt.',
     'license_count_error' => 'Beim Aktualisieren der Lizenzanzahl ist ein Fehler aufgetreten.',
     'license_count_too_small_error' => 'Bitte erhöhe die Anzahl der Lizenzen oder entferne Personen aus dem Team.',
     'license_count_label' => 'Abo anpassen',

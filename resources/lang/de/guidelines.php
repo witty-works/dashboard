@@ -106,8 +106,6 @@ return [
     'manage_organization_guidelines_description_simple_language' => 'Experimentelle Unterstützung für <a href="https://de.wikipedia.org/wiki/Leichte_Sprache" target="_blank" rel="noopener">Leichte Sprache</a> (Zur Zeit nur für Deutsch möglich).',
     'simple_language' => 'Leichte Sprache',
     'manage_organization_guidelines_description_german_gender_ending_sub_title' => 'Gender-Endung auswählen',
-    'team_analytics_description' => 'Teamanalysen ermöglichen es, Trends zu erkennen, wie dein Team Witty verwendet, um zu sehen, wo das Team hervorragend ist und wo mehr Arbeit in Richtung einer integrativen Sprache und, was noch wichtiger ist, einer integrativen Kultur erforderlich ist.',
-    'team_analytics_subscription_upgrade' => 'Um bei Team Analytics nicht mitmachen zu können ist ein <a href=":url">Abonnement</a> erforderlich.<a href=":url">',
-    'team_analytics_subscription_required' => 'Um bei Team Analytics nicht mitmachen zu können ist ein Abonnement erforderlich.',
+    'team_analytics_description' => 'Team-Analysen ermöglichen es, Trends zu erkennen, wie dein Team Witty verwendet, um zu sehen, wo das Team hervorragend ist und wo mehr Arbeit in Richtung einer inklusiven Sprache und, was noch wichtiger ist, einer inklusiven Kultur erforderlich ist.',
     'team_analytics' => 'Mitmachen',
 ];
