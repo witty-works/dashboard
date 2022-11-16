@@ -6,14 +6,6 @@
 
         <x-slot name="description">
             {!! Str::markdown(__('guidelines.team_analytics_description')) !!}
-
-            @if(!$user->subscribed())
-            @if($user->ownsTeam($user->currentTeam))
-            {!! __('guidelines.team_analytics_subscription_upgrade', ['url' => route('stripe.portal')]) !!}
-            @else
-            {!! __('guidelines.team_analytics_subscription_required') !!}
-            @endif
-            @endif
         </x-slot>
 
         <x-slot name="form">

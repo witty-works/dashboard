@@ -215,7 +215,7 @@ Dein Witty-Team',
     'upgrade_text' => 'Wenn du mehr Teammitglieder einladen oder Witty weiter anpassen möchtest, passe dein Abo an.',
     'upgrade_ask_owner_text' => 'Wenn du mehr Teammitglieder einladen oder Witty weiter anpassen möchtest, passe dein Abo on.
 
-Bitte deine*n Team-Administrator*in, auf <a href="https://www.witty.works/pricing" target="_blank">Witty Teams</a> zu wechseln.',
+Bitte deine Team-Administratoren, auf <a href="https://www.witty.works/pricing" target="_blank">Witty Teams</a> zu wechseln.',
     'upgrade_button' => 'Abo anpassen',
     'refresh_data' => 'Refresh data',
     'last_refreshed' => 'Last refreshed',
