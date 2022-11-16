@@ -252,4 +252,7 @@ Ask your team administrator to upgrade to <a href="https://www.witty.works/prici
     'title_words_opened_doughnut_chart_month' => 'Top Words opened (month)',
     'title_words_ignored_doughnut_chart_month' => 'Top Words ignored (month)',
     'title_words_bar_chart_month' => 'Top Words opened (month)',
+    'refresh_data' => 'Refresh data',
+    'last_refreshed' => 'Last refreshed',
+    'refresh_data_blocked' => 'You can refresh every 3 minutes',
 ];

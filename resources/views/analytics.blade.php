@@ -1,5 +1,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 <script>
+    function load_charts(refresh) {
     const colors = [
         "#241c5b",
         "#33277f",
@@ -67,9 +68,9 @@
     }
 
     async function getCharttData(chart, interval = 30) {
-        let analyticsUrl = '/api/user/analytics?refresh=1&chart=';
+        let analyticsUrl = '/api/user/analytics?refresh=' + refresh + '&chart=';
         if (window.location.href.includes('team')) {
-            analyticsUrl = '/api/team/analytics?refresh=1&chart=';
+            analyticsUrl = '/api/team/analytics?refresh=' + refresh + '&chart=';
         }
         const response = await fetch(
             analyticsUrl + chart + '&interval=' + interval);
@@ -133,6 +134,8 @@
 
     getCharttData('total').then(data => {
         const events = data.events;
+        const lastRefresh = new Date((data.last_refresh.check))
+        const lastRefreshFormatted = lastRefresh.getDate() + "." + (lastRefresh.getMonth() + 1) + "." + lastRefresh.getFullYear() + " " + lastRefresh.getHours() + ":" + lastRefresh.getMinutes();
         for (const [event, value] of Object.entries(events)) {
             if (event === 'check') {
                for (const [date, count] of Object.entries(value)) {
@@ -195,6 +198,14 @@
             document.getElementById("changeInIgnorePercentage").innerHTML = changeInIgnorePercentage >= 0 ? `+${changeInIgnorePercentage}%&nbsp;` : `${changeInIgnorePercentage}% &nbsp;`;
             document.getElementById("changeInAlternativePercentage").innerHTML = changeInAlternativePercentage >= 0 ? `+${changeInAlternativePercentage}%&nbsp;` : `${changeInAlternativePercentage}% &nbsp;`;
             document.getElementById("checkDaysInRow").innerHTML = getWittyStreak(yValuesCheck) + '&nbsp';
+
+            const lastRefreshMinutes = Math.floor((new Date() - lastRefresh) / 60000);
+
+            if (lastRefreshMinutes > 3) {
+                document.getElementById("lastRefresh").innerHTML = '<?php echo __('content.last_refreshed') ?> &nbsp;' + lastRefreshFormatted + '&nbsp; &nbsp; <a class="button primary-button-red" onclick="load_charts(true)"><?php echo __('content.refresh_data') ?></a>';
+            } else {
+                document.getElementById("lastRefresh").innerHTML = '<?php echo __('content.last_refreshed') ?> &nbsp;' + lastRefreshFormatted + '&nbsp; &nbsp; <a class="button secondary-button-red wittyworks-margin-right" style="cursor:not-allowed"><?php echo __('content.refresh_data') ?></a><span class="tooltiptext"><?php echo __('content.refresh_data_blocked') ?></span>';
+            }
 
             new Chart("eventsChart", {
                 type: "line",
@@ -317,14 +328,14 @@
                     label: "<?php echo __('content.title_categories_radar_chart_last_week') ?>",
                     data: yTopSubCategoriesTwoWeeks,
                     fill: true,
-                    backgroundColor: colors[10],
-                    borderColor: colors[7],
+                    backgroundColor: 'hsla(247, 52.8%, 75.9%, 0.5)',
+                    borderColor: 'hsla(248, 53.2%, 60.6%, 0.5)'
                 }, {
                     label: "<?php echo __('content.title_categories_radar_chart_current_week') ?>",
                     data: yTopSubCategoriesWeek,
                     fill: true,
-                    backgroundColor: colors[13],
-                    borderColor: colors[10],
+                    backgroundColor: 'hsla(247, 54.1%, 88.0%, 0.5)',
+                    borderColor: 'hsla(247, 52.8%, 75.9%, 0.5)'
                 }]
                 };
   
@@ -335,7 +346,9 @@
                         elements: {
                         line: {
                             borderWidth: 1
-                        }
+                        },
+                        opacity: 0.5
+
                     }
                 },
             });
@@ -430,14 +443,15 @@
                 label: "<?php echo __('content.title_words_radar_chart_last_week') ?>",
                 data: yTopWordsTwoWeeks,
                 fill: true,
-                backgroundColor: colors[10],
-                borderColor: colors[7],
+                backgroundColor: 'hsla(247, 52.8%, 75.9%, 0.5)',
+                    borderColor: 'hsla(248, 53.2%, 60.6%, 0.5)'
             }, {
                 label: "<?php echo __('content.title_words_radar_chart_current_week') ?>",
                 data: yTopWordsWeek,
                 fill: true,
-                backgroundColor: colors[13],
-                borderColor: colors[10],
+                backgroundColor: 'hsla(247, 54.1%, 88.0%, 0.5)',
+                    borderColor: 'hsla(247, 52.8%, 75.9%, 0.5)'
+    
             }]
         };
     
@@ -503,13 +517,15 @@
             false
         );
     });
+};
+load_charts(false);
 </script>
 
 <x-app-layout>
     <div class="wittyworks-navigation-wrapper">@livewire('navigation-menu')</div>
         <div class="wittyworks-page-wrapper">
             <div class="wittyworks-page lg:ml-20">
-
+                <div id="lastRefresh" class="lato-small-text-p wittyworks-margin-right container-row tooltip" style="align-items: center;"></div>
                 <div class="ibarra-sub-title-h2">{{ __('content.activity') }}</div>
                 <div class="wittyworks-form-section container border-radius">
                     <div id="loadingIconActivity" class="loading-icon-wrapper" style="width: 100%">
@@ -567,7 +583,7 @@
                             <canvas
                                 id="requestRatiosChartDoughnut"
                                 class="wittyworks-analytics-chart-medium"
-                                style="margin-left: auto; margin-right: -5em">
+                                style="margin-left: auto;">
                             </canvas>
                         </div>
                         <div class="container-row wittyworks-margin-top">
@@ -576,18 +592,22 @@
                         <div class="container-row wittyworks-margin-top">
                             <canvas
                                 id="eventsCheckChart"
+                                style="max-width: 195px"
                                 class="wittyworks-analytics-chart-small wittyworks-margin-right">
                             </canvas>
                             <canvas
                                 id="eventsPopoverChart"
+                                style="max-width: 195px"
                                 class="wittyworks-analytics-chart-small wittyworks-margin-right">
                             </canvas>
                             <canvas
                                 id="eventsIgnoreChart"
+                                style="max-width: 195px"
                                 class="wittyworks-analytics-chart-small wittyworks-margin-right">
                             </canvas>
                             <canvas
                                 id="eventsAlternativeChart"
+                                style="max-width: 195px"
                                 class="wittyworks-analytics-chart-small">
                             </canvas>
                         </div>
@@ -611,11 +631,11 @@
                     </div>
 
                     <div id="topCategoriesChartWrapper" style="visibility: hidden; width: 100%">
-                        <div class="container-row wittyworks-margin-top">
+                        <div class="chart-container-row wittyworks-margin-top">
                             <canvas
                                 id="categoriesRadar"
                                 class="wittyworks-analytics-chart-medium-radar"
-                                style="margin-left: -5em">
+                            >
                             </canvas>
                             <div class="container-column">
                                 <canvas
@@ -631,7 +651,7 @@
                         <div class="container-row wittyworks-margin-top">
                             <canvas
                                 id="topSubCategoriesChart"
-                                class="wittyworks-analytics-chart-extra-large wittyworks-margin-top">
+                                class="wittyworks-analytics-chart-top wittyworks-margin-top">
                             </canvas>
                         </div>
                     </div>
@@ -653,11 +673,10 @@
                             </div>
                         </div>
                         <div id="topWordsChartWrapper" style="visibility: hidden; width: 100%">
-                            <div class="container-row wittyworks-margin-top">
+                            <div class="chart-container-row wittyworks-margin-top">
                                 <canvas
                                     id="wordsRadar"
-                                    class="wittyworks-analytics-chart-medium-radar"
-                                    style="margin-left: -5em;">
+                                    class="wittyworks-analytics-chart-medium-radar">
                                 </canvas>
                                 <div class="container-column">
                                      <canvas
@@ -673,7 +692,7 @@
                             <div class="container-row wittyworks-margin-top">
                                 <canvas
                                     id="topWordsChart"
-                                    class="wittyworks-analytics-chart-extra-large wittyworks-margin-top">
+                                    class="wittyworks-analytics-chart-top wittyworks-margin-top">
                                 </canvas>
                             </div>
                         </div>

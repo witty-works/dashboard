@@ -669,6 +669,11 @@ input:checked+.slider:before {
     max-width: 1000px;
 }
 
+.wittyworks-analytics-chart-top {
+    max-width: 1000px;
+    max-height: 200px;
+}
+
 .wittyworks-analytics-chart-large {
     max-width: 400;
 }
@@ -677,14 +682,20 @@ input:checked+.slider:before {
     max-width: 410px;
 }
 .wittyworks-analytics-chart-medium-radar {
-    max-width: 600px;
-
+    max-width: 500px;
 }
 .wittyworks-analytics-chart-small {
     max-width: 195px;
     min-height: 150px;
     max-height: 150px;
 }
+
+.chart-container-row {
+    display: flex;
+    flex-direction: row !important;
+    flex-wrap: wrap; 
+    justify-content: flex-start
+  }
 
 /* LOADING SPINNER */
 .lds-grid {
@@ -755,13 +766,14 @@ input:checked+.slider:before {
     }
   }
   
-  .loading-icon-wrapper {
+.loading-icon-wrapper {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    margin-top: 10em;
-  }
+    margin-top: 31em;
+}
+
 [type='radio'] {
     margin: 0 0.5rem 0 0;
     vertical-align: middle;
@@ -793,3 +805,16 @@ input:checked+.slider:before {
 .wittyworks-analytics-chart-small {
     max-width: 300px;
 }
+  
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 200px;
+    background-color: #ffffff;
+    border-radius: 6px;
+    padding: 10px;
+    z-index: 1;
+  }
+  
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+  }

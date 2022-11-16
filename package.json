@@ -22,7 +22,6 @@
     },
     "dependencies": {
         "@sentry/browser": "^6.19.7",
-        "@sentry/tracing": "^6.19.7",
-        "chart.js": "^3.9.1"
+        "@sentry/tracing": "^6.19.7"
     }
 }
