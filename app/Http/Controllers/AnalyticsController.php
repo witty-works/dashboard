@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Providers\AppServiceProvider;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Cache;
@@ -98,7 +99,7 @@ class AnalyticsController extends Controller
                 ->post($this->url, $filter);
 
             $data = $response->collect()->all();
-            $data['last_refresh'] = LARAVEL_START;
+            $data['last_refresh'] = Carbon::now();
             return $data;
         });
     }
@@ -122,7 +123,12 @@ class AnalyticsController extends Controller
 
             $response = $this->fetchData($filter);
             if (isset($response['result'][0])) {
-                $data['days'] = $response['result'][0]['days'];
+                $days = [];
+                foreach ($response['result'][0]['days'] as $date) {
+                    $date = new Carbon($date);
+                    $days[] = $date->format('jS \o\f M');
+                }
+                $response['result'][0]['days'] = $days;
                 $data['events'][$event] = array_combine($response['result'][0]['days'], $response['result'][0]['data']);
             }
             $data['last_refresh'] = $response['last_refresh'];
@@ -185,6 +191,17 @@ class AnalyticsController extends Controller
             case 'topSubcategories':
                 $events = ['popover_open', 'alternative', 'ignore'];
                 $data = $this->fetchBreakdown($events, $properties, 'response__data__subcategory', $interval);
+                foreach ($events as $event) {
+                    if (!empty($data['events'][$event])) {
+                        $subcategories = [];
+                        foreach ($data['events'][$event] as $subcategory => $count) {
+                            $subcategory = ucwords(str_replace('_', ' ', $subcategory));
+                            $subcategories[$subcategory] = $count;
+                        }
+                        $data['events'][$event] = $subcategories;
+                    }
+                    
+                }
                 break;
             case 'topWords':
                 $events = ['popover_open', 'alternative', 'ignore'];
