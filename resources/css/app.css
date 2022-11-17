@@ -35,6 +35,17 @@ a {
     margin-bottom: 0.3em;
 }
 
+.ibarra-sub-title-h2-purple {
+    font-family: Ibarra Real Nova, 'Times New Roman', Times, serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 44px;
+    line-height: 49px;
+    color: #9489DB;
+    margin-bottom: 0.1em;
+} 
+
+
 .lato-small-paragraph-title-h4 {
     font-family: Lato, Arial, Helvetica, sans-serif;
     font-style: normal;
@@ -43,6 +54,17 @@ a {
     line-height: 28px !important;
     color: #000000;
 }
+
+
+.lato-small-paragraph-title-h4-purple {
+    font-family: Lato, Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: 600 !important;
+    font-size: 22px !important;
+    line-height: 28px !important;    
+    color: #9489DB;
+}
+
 
 .lato-paragraph-text-p {
     font-family: Lato, Arial, Helvetica, sans-serif;
@@ -69,15 +91,6 @@ a {
     font-size: 18px;
     line-height: 30px;
     color: #9489DB;
-}
-
-.  {
-    font-family: Lato, Arial, Helvetica, sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px !important;
-    line-height: 30px !important;;
-    color: #000000;
 }
 
 .footer-links {
@@ -179,6 +192,12 @@ a {
 .container-row {
     display: flex;
     flex-direction: row !important;
+    flex-wrap: wrap; 
+  }
+
+  .container-column {
+    display: flex;
+    flex-direction: column !important;
     flex-wrap: wrap;
   }
 
@@ -619,6 +638,10 @@ input:checked+.slider:before {
     text-align: left;
 }
 
+.align-center {
+    text-align: center;
+}
+
 .wittyworks-accept-invite-team-name {
     font-weight: 600;
     color: #9489DB;
@@ -641,6 +664,116 @@ input:checked+.slider:before {
     margin-top: 1em;
 }
 
+/* ANALYTICS */
+.wittyworks-analytics-chart-extra-large {
+    max-width: 1000px;
+}
+
+.wittyworks-analytics-chart-top {
+    max-width: 1000px;
+    min-height: 300px;
+    min-height: 300px;
+}
+
+.wittyworks-analytics-chart-large {
+    max-width: 400;
+}
+
+.wittyworks-analytics-chart-medium {
+    max-width: 410px;
+}
+.wittyworks-analytics-chart-medium-radar {
+    max-width: 500px;
+}
+.wittyworks-analytics-chart-small {
+    max-width: 195px;
+    min-height: 150px;
+    max-height: 150px;
+}
+
+.chart-container-row {
+    display: flex;
+    flex-direction: row !important;
+    flex-wrap: wrap; 
+    justify-content: flex-start
+  }
+
+/* LOADING SPINNER */
+.lds-grid {
+    display: inline-block;
+    position: relative;
+    width: 70px;
+    height: 70px;
+  }
+  .lds-grid div {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #9489DB;
+    animation: lds-grid 1.2s linear infinite;
+  }
+  .lds-grid div:nth-child(1) {
+    top: 8px;
+    left: 8px;
+    animation-delay: 0s;
+  }
+  .lds-grid div:nth-child(2) {
+    top: 8px;
+    left: 32px;
+    animation-delay: -0.4s;
+  }
+  .lds-grid div:nth-child(3) {
+    top: 8px;
+    left: 56px;
+    animation-delay: -0.8s;
+  }
+  .lds-grid div:nth-child(4) {
+    top: 32px;
+    left: 8px;
+    animation-delay: -0.4s;
+  }
+  .lds-grid div:nth-child(5) {
+    top: 32px;
+    left: 32px;
+    animation-delay: -0.8s;
+  }
+  .lds-grid div:nth-child(6) {
+    top: 32px;
+    left: 56px;
+    animation-delay: -1.2s;
+  }
+  .lds-grid div:nth-child(7) {
+    top: 56px;
+    left: 8px;
+    animation-delay: -0.8s;
+  }
+  .lds-grid div:nth-child(8) {
+    top: 56px;
+    left: 32px;
+    animation-delay: -1.2s;
+  }
+  .lds-grid div:nth-child(9) {
+    top: 56px;
+    left: 56px;
+    animation-delay: -1.6s;
+  }
+  @keyframes lds-grid {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+  
+.loading-icon-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 31em;
+}
 
 [type='radio'] {
     margin: 0 0.5rem 0 0;
@@ -654,4 +787,22 @@ input:checked+.slider:before {
 
 .red {
   color: #f06464;
+}
+
+.wittyworks-analytics-page-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: #f5f5f5;
+}
+
+.wittyworks-analytics-chart-large {
+    max-width: 1000px;
+}
+.wittyworks-analytics-chart-medium {
+    max-width: 450px;
+}
+.wittyworks-analytics-chart-small {
+    max-width: 300px;
 }
