@@ -202,9 +202,9 @@
             const lastRefreshMinutes = Math.floor((new Date() - lastRefresh) / 60000);
 
             if (lastRefreshMinutes > 3) {
-                document.getElementById("lastRefresh").innerHTML = '<?php echo __('content.last_refreshed') ?> &nbsp;' + lastRefreshFormatted + '&nbsp; &nbsp; <a class="button primary-button-red" onclick="load_charts(true)"><?php echo __('content.refresh_data') ?></a>';
+                document.getElementById("lastRefresh").innerHTML = '{{ __('content.last_refreshed') }} &nbsp;' + lastRefreshFormatted + '&nbsp; &nbsp; <a class="button primary-button-red" onclick="load_charts(true)">{{ __('content.refresh_data') }}</a>';
             } else {
-                document.getElementById("lastRefresh").innerHTML = '<?php echo __('content.last_refreshed') ?> &nbsp;' + lastRefreshFormatted + '&nbsp; &nbsp; <a class="button secondary-button-red wittyworks-margin-right" style="cursor:not-allowed"><?php echo __('content.refresh_data') ?></a><span class="tooltiptext"><?php echo __('content.refresh_data_blocked') ?></span>';
+                document.getElementById("lastRefresh").innerHTML = '{{ __('content.last_refreshed') }} &nbsp;' + lastRefreshFormatted + '&nbsp; &nbsp; <a class="button secondary-button-red wittyworks-margin-right" style="cursor:not-allowed">{{ __('content.refresh_data') }}</a><span class="tooltiptext">{{ __('content.refresh_data_blocked') }}</span>';
             }
 
             new Chart("eventsChart", {
@@ -215,28 +215,28 @@
                         data: yValuesCheck,
                         borderColor: colors[3],
                         fill: false,
-                        label: "<?php echo __('content.check_label_line_chart') ?>",
+                        label: "{{ __('content.check_label_line_chart') }}",
                         }, {
                         data: yValuesPopoverOpen,
                         borderColor: colors[6],
                         fill: false,
-                        label: "<?php echo __('content.popover_label_line_chart') ?>",
+                        label: "{{ __('content.popover_label_line_chart') }}",
                         }, {
                         data: yValuesIgnore,
                         borderColor: colors[9],
                         fill: false,
-                        label:  "<?php echo __('content.ignored_label_line_chart') ?>",
+                        label:  "{{ __('content.ignored_label_line_chart') }}",
                         },{
                         data: yValuesAlternative,
                         borderColor: colors[12],
                         fill: false,
-                        label: "<?php echo __('content.alternative_label_line_chart') ?>",
+                        label: "{{ __('content.alternative_label_line_chart') }}",
                     }]
                 },
                 options: {
                     title: {
                     display: true,
-                    text: "<?php echo __('content.title_line_chart') ?>",
+                    text: "{{ __('content.title_line_chart') }}",
                     fontSize: 16,
                     fontStyle: 'normal'
                     }
@@ -247,7 +247,7 @@
                 "eventsCheckChart",
                 xValuesCheckWeek,
                 yValuesCheckWeek,
-                "<?php echo __('content.title_bar_chart_check') ?>",
+                "{{ __('content.title_bar_chart_check') }}",
                 false,
                 true
             );
@@ -256,7 +256,7 @@
                 "eventsPopoverChart",
                 xValuesCheckWeek,
                 yValuesPopoverOpenWeek,
-                "<?php echo __('content.title_bar_chart_popover') ?>",
+                "{{ __('content.title_bar_chart_popover') }}",
                 false,
                 true
             );
@@ -265,7 +265,7 @@
                 "eventsIgnoreChart",
                 xValuesCheckWeek,
                 yValuesIgnoreWeek,
-                "<?php echo __('content.title_bar_chart_ignored') ?>",
+                "{{ __('content.title_bar_chart_ignored') }}",
                 false,
                 true
             );
@@ -274,7 +274,7 @@
                 "eventsAlternativeChart",
                 xValuesCheckWeek,
                 yValuesAlternativeWeek,
-                "<?php echo __('content.title_bar_chart_alternative') ?>",
+                "{{ __('content.title_bar_chart_alternative') }}",
                 false,
                 true
             );
@@ -282,13 +282,13 @@
             createDoughnutChart(
                 "requestRatiosChartDoughnut",
                 [
-                "<?php echo __('content.check_doughnut_chart_event_ratio') ?>",
-                "<?php echo __('content.popover_doughnut_chart_event_ratio') ?>",
-                "<?php echo __('content.ignored_doughnut_chart_event_ratio') ?>",
-                "<?php echo __('content.alternative_doughnut_chart_event_ratio') ?>"
+                "{{ __('content.check_doughnut_chart_event_ratio') }}",
+                "{{ __('content.popover_doughnut_chart_event_ratio') }}",
+                "{{ __('content.ignored_doughnut_chart_event_ratio') }}",
+                "{{ __('content.alternative_doughnut_chart_event_ratio') }}"
                 ],
                 weeklyEvents,
-                "<?php echo __('content.title_doughnut_chart_event_ratio') ?>",
+                "{{ __('content.title_doughnut_chart_event_ratio') }}",
             );
     
             document.getElementById("loadingIconActivity").style.display = "none";
@@ -325,13 +325,13 @@
         const dataCategories = {
                 labels: formattedLabels,
                 datasets: [{
-                    label: "<?php echo __('content.title_categories_radar_chart_last_week') ?>",
+                    label: "{{ __('content.title_categories_radar_chart_last_week') }}",
                     data: yTopSubCategoriesTwoWeeks,
                     fill: true,
                     backgroundColor: 'hsla(247, 52.8%, 75.9%, 0.5)',
                     borderColor: 'hsla(248, 53.2%, 60.6%, 0.5)'
                 }, {
-                    label: "<?php echo __('content.title_categories_radar_chart_current_week') ?>",
+                    label: "{{ __('content.title_categories_radar_chart_current_week') }}",
                     data: yTopSubCategoriesWeek,
                     fill: true,
                     backgroundColor: 'hsla(247, 54.1%, 88.0%, 0.5)',
@@ -384,7 +384,7 @@
             "topSubCategoriesChart",
             xValuesTopSubCategoriesOpenedCut,
             yValuesTopSubCategoriesOpenedCut,
-            "<?php echo __('content.title_categories_bar_chart_month') ?>",
+            "{{ __('content.title_categories_bar_chart_month') }}",
             false,
             false
         );
@@ -393,7 +393,7 @@
             "topSubCategoriesOpenedChartDoughnut",
             xValuesTopSubCategoriesOpenedCutDoughnut,
             yValuesTopSubCategoriesOpenedCutDoughnut,
-            "<?php echo __('content.title_categories_opened_doughnut_chart_month') ?>",
+            "{{ __('content.title_categories_opened_doughnut_chart_month') }}",
 
         );
     
@@ -401,7 +401,7 @@
             "topSubCategoriesIgnoredChartDoughnut",
             xValuesTopSubCategoriesIgnoredCutDoughnut,
             yValuesTopSubCategoriesIgnoredCutDoughnut,
-            "<?php echo __('content.title_categories_ignored_doughnut_chart_month') ?>",
+            "{{ __('content.title_categories_ignored_doughnut_chart_month') }}",
         );
                          
     });
@@ -440,13 +440,13 @@
             labels:
             formattedLabels,
             datasets: [{
-                label: "<?php echo __('content.title_words_radar_chart_last_week') ?>",
+                label: "{{ __('content.title_words_radar_chart_last_week') }}",
                 data: yTopWordsTwoWeeks,
                 fill: true,
                 backgroundColor: 'hsla(247, 52.8%, 75.9%, 0.5)',
                     borderColor: 'hsla(248, 53.2%, 60.6%, 0.5)'
             }, {
-                label: "<?php echo __('content.title_words_radar_chart_current_week') ?>",
+                label: "{{ __('content.title_words_radar_chart_current_week') }}",
                 data: yTopWordsWeek,
                 fill: true,
                 backgroundColor: 'hsla(247, 54.1%, 88.0%, 0.5)',
@@ -498,21 +498,21 @@
             "topWordsChartDoughnut",
             xValuesTopWordsOpenedCutDoughnut,
             yValuesTopWordsOpenedCutDoughnut,
-            "<?php echo __('content.title_words_opened_doughnut_chart_month') ?>",
+            "{{ __('content.title_words_opened_doughnut_chart_month') }}",
         );
 
         createDoughnutChart(
             "topWordsChartDoughnutWeek",
             xValuesTopWordsIgnoredCutDoughnut,
             yValuesTopWordsIgnoredCutDoughnut,
-            "<?php echo __('content.title_words_ignored_doughnut_chart_month') ?>",
+            "{{ __('content.title_words_ignored_doughnut_chart_month') }}",
         );
        
         createBarChart(
             "topWordsChart",
             xValuesTopWordsOpenedCut,
             yValuesTopWordsOpenedCut,
-            "<?php echo __('content.title_words_bar_chart_month') ?>",
+            "{{ __('content.title_words_bar_chart_month') }}",
             false,
             false
         );
