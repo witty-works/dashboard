@@ -97,7 +97,9 @@ class AnalyticsController extends Controller
             $response = Http::withToken($this->personalApiKey)
                 ->post($this->url, $filter);
 
-            return $response->collect()->all();
+            $data = $response->collect()->all();
+            $data['last_refresh'] = LARAVEL_START;
+            return $data;
         });
     }
 
@@ -123,7 +125,7 @@ class AnalyticsController extends Controller
                 $data['days'] = $response['result'][0]['days'];
                 $data['events'][$event] = array_combine($response['result'][0]['days'], $response['result'][0]['data']);
             }
-            $data['last_refresh'][$event] = $response['last_refresh'] ?? null;
+            $data['last_refresh'] = $response['last_refresh'];
         }
 
         return $data;
@@ -160,7 +162,7 @@ class AnalyticsController extends Controller
                 foreach ($response['result'] as $value) {
                     $data['events'][$event][$value['breakdown_value']] = $value['aggregated_value'];
                 }
-                $data['last_refresh'][$event] = $response['last_refresh'] ?? null;
+                $data['last_refresh'] = $response['last_refresh'];
             }
         }
 
@@ -173,11 +175,11 @@ class AnalyticsController extends Controller
         $chart = $request->get('chart');
         switch ($chart) {
             case 'dau':
-                $events = ['popover_open', 'alternative', 'ignore', 'learning_bites'];
+                $events = ['check', 'popover_open', 'alternative', 'ignore', 'learning_bites'];
                 $data = $this->fetchEventData($events, $properties, $interval, 'dau');
                 break;
             case 'total':
-                $events = ['popover_open', 'alternative', 'ignore', 'learning_bites'];
+                $events = ['check', 'popover_open', 'alternative', 'ignore', 'learning_bites'];
                 $data = $this->fetchEventData($events, $properties, $interval);
                 break;
             case 'topSubcategories':
