@@ -671,7 +671,8 @@ input:checked+.slider:before {
 
 .wittyworks-analytics-chart-top {
     max-width: 1000px;
-    max-height: 200px;
+    min-height: 300px;
+    min-height: 300px;
 }
 
 .wittyworks-analytics-chart-large {
@@ -767,7 +768,7 @@ input:checked+.slider:before {
   }
   
 .loading-icon-wrapper {
-    display: flex !important;
+    display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;

@@ -1,6 +1,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js" rossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script> 
+<script>
     function load_charts(refresh) {
         if (refresh) {
             document.getElementById('lastRefresh').style.visibility = 'hidden';
@@ -39,6 +39,8 @@
     const yValuesIgnore = [];
     const xValuesAlternative = [];
     const yValuesAlternative = [];
+    const xValuesLearningBites = [];
+    const yValuesLearningBites = [];
 
     const xTopSubCategoriesWeek = [];
     const yTopSubCategoriesWeek = [];
@@ -48,11 +50,15 @@
     const yValuesTopSubCategoriesIgnored = [];
     const xValuesTopSubCategoriesOpened = [];
     const yValuesTopSubCategoriesOpened = [];
+    const xValuesTopSubCategoriesAlternative = [];
+    const yValuesTopSubCategoriesAlternative = [];
 
     const xValuesTopWordsIgnored = [];
     const yValuesTopWordsIgnored = [];
     const xValuesTopWordsOpened = [];
     const yValuesTopWordsOpened = [];
+    const xValuesTopWordsAlternative = [];
+    const yValuesTopWordsAlternative = [];
 
     Chart.defaults.global.defaultFontFamily = 'Lato';
     Chart.defaults.global.defaultFontColor = '#000000';
@@ -69,16 +75,6 @@
         return checkDaysInRow;
     }
 
-    function formattedDate (xValuesCheck) {
-        const formattedDate = xValuesCheck.map(function(x) {
-            year = x.split("-")[0];
-            month = x.split("-")[1];
-            day = x.split("-")[2];
-            return day + "." + month;
-        });
-        return formattedDate;
-    }
-
     async function getCharttData(chart, interval = 30) {
         let analyticsUrl = '/api/user/analytics?refresh=' + refresh + '&chart=';
         if (window.location.href.includes('team')) {
@@ -89,7 +85,6 @@
         const data = await response.json();
         return data;
     }
-
 
     function createBarChart(chartId, xValues, yValues, text, display, singeColor) {
         new Chart(chartId, {
@@ -117,6 +112,13 @@
                 },
                 legend: {
                     display: display,
+                },
+                legend: {
+                    display: false
+                },
+                tooltips: {
+                    label: false
+                    
                 }
             }
         });
@@ -148,6 +150,7 @@
         const events = data.events;
         const lastRefresh = new Date() //TODO: add refresh from endpoint
         let lastRefreshFormatted = moment(lastRefresh).fromNow();
+        console.log(data)
 
         for (const [event, value] of Object.entries(events)) {
             if (event === 'check') {
@@ -169,6 +172,11 @@
                 for (const [date, count] of Object.entries(value)) {
                     xValuesPopoverOpen.push(date);
                     yValuesPopoverOpen.push(count);
+                }
+            } else if (event === 'learning_bites') {
+                for (const [date, count] of Object.entries(value)) {
+                    xValuesLearningBites.push(date);
+                    yValuesLearningBites.push(count);
                 }
             }
 
@@ -206,7 +214,8 @@
             const changeInIgnorePercentage = (((totalWeeklyIgnore - totalWeeklyIgnorePrevious) / (totalWeeklyIgnorePrevious == 0 ? 1 : totalWeeklyIgnorePrevious)) * 100).toFixed(2);
             const changeInAlternativePercentage = (((totalWeeklyAlternative - totalWeeklyAlternativePrevious) / (totalWeeklyAlternativePrevious == 0 ? 1 : totalWeeklyAlternativePrevious)) * 100).toFixed(2);
 
-            document.getElementById("changeInCheckPercentage").innerHTML = changeInCheckPercentage >= 0 ? `+${changeInCheckPercentage}%&nbsp;` : `${changeInCheckPercentage}% &nbsp;`;
+            
+            document.getElementById("changeInLearningBitesPercentage").innerHTML = 'placeholder &nbsp';
             document.getElementById("changeInPopoverPercentage").innerHTML = changeInPopoverPercentage >= 0 ? `+${changeInPopoverPercentage}%&nbsp;` : `${changeInPopoverPercentage}% &nbsp;`;
             document.getElementById("changeInIgnorePercentage").innerHTML = changeInIgnorePercentage >= 0 ? `+${changeInIgnorePercentage}%&nbsp;` : `${changeInIgnorePercentage}% &nbsp;`;
             document.getElementById("changeInAlternativePercentage").innerHTML = changeInAlternativePercentage >= 0 ? `+${changeInAlternativePercentage}%&nbsp;` : `${changeInAlternativePercentage}% &nbsp;`;
@@ -232,12 +241,12 @@
             new Chart("eventsChart", {
                 type: "line",
                 data: {
-                    labels: formattedDate(xValuesCheck),
+                    labels: xValuesPopoverOpen,
                     datasets: [{
-                        data: yValuesCheck,
+                        data: yValuesLearningBites,
                         borderColor: colors[3],
                         fill: false,
-                        label: "{{ __('content.check_label_line_chart') }}",
+                        label: "{{ __('content.learning_bites_label_line_chart') }}",
                         }, {
                         data: yValuesPopoverOpen,
                         borderColor: colors[6],
@@ -342,10 +351,8 @@
                 yTopSubCategoriesTwoWeeks.push(0);
             }
         }
-        let formattedLabels = xTopSubCategoriesWeek.map(x => x.replace(/_/g, ' '));
-        formattedLabels = formattedLabels.map(x => x.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();}));
         const dataCategories = {
-                labels: formattedLabels,
+                labels: xTopSubCategoriesWeek,
                 datasets: [{
                     label: "{{ __('content.title_categories_radar_chart_last_week') }}",
                     data: yTopSubCategoriesTwoWeeks,
@@ -383,6 +390,7 @@
     getCharttData('topSubcategories').then(data => {
         const ignored = data.events.ignore;
         const opened = data.events.popover_open;
+        const alternative = data.events.alternative;
 
         for (const [key, value] of Object.entries(ignored)) {
             xValuesTopSubCategoriesIgnored.push(key);
@@ -394,28 +402,35 @@
             yValuesTopSubCategoriesOpened.push(value);
         }
 
+        for (const [key, value] of Object.entries(alternative)) {
+            xValuesTopSubCategoriesAlternative.push(key);
+            yValuesTopSubCategoriesAlternative.push(value);
+        }
+
         const xValuesTopSubCategoriesIgnoredCutDoughnut = xValuesTopSubCategoriesIgnored.slice(0, 5);
         const yValuesTopSubCategoriesIgnoredCutDoughnut = yValuesTopSubCategoriesIgnored.slice(0, 5);
 
         const xValuesTopSubCategoriesOpenedCut = xValuesTopSubCategoriesOpened.slice(0, 15);
         const yValuesTopSubCategoriesOpenedCut = yValuesTopSubCategoriesOpened.slice(0, 15);
-        const xValuesTopSubCategoriesOpenedCutDoughnut = xValuesTopSubCategoriesOpened.slice(0, 5);
-        const yValuesTopSubCategoriesOpenedCutDoughnut = yValuesTopSubCategoriesOpened.slice(0, 5);
+
+        const xValuesTopSubCategoriesAlternativeCutDoughnut = xValuesTopSubCategoriesAlternative.slice(0, 5);
+        const yValuesTopSubCategoriesAlternativeCutDoughnut = yValuesTopSubCategoriesAlternative.slice(0, 5);
+    
 
         createBarChart(
             "topSubCategoriesChart",
             xValuesTopSubCategoriesOpenedCut,
             yValuesTopSubCategoriesOpenedCut,
             "{{ __('content.title_categories_bar_chart_month') }}",
-            false,
+            true,
             false
         );
 
         createDoughnutChart(
             "topSubCategoriesOpenedChartDoughnut",
-            xValuesTopSubCategoriesOpenedCutDoughnut,
-            yValuesTopSubCategoriesOpenedCutDoughnut,
-            "{{ __('content.title_categories_opened_doughnut_chart_month') }}",
+            xValuesTopSubCategoriesAlternativeCutDoughnut,
+            yValuesTopSubCategoriesAlternativeCutDoughnut,
+            "{{ __('content.title_categories_alternative_doughnut_chart_month') }}",
 
         );
     
@@ -455,12 +470,9 @@
             }
         }
 
-        let formattedLabels = xTopWordsWeek.map(x => x.replace(/_/g, ' '));
-        formattedLabels = formattedLabels.map(x => x.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();}));
-
         const dataCategories = {
             labels:
-            formattedLabels,
+            xTopWordsWeek,
             datasets: [{
                 label: "{{ __('content.title_words_radar_chart_last_week') }}",
                 data: yTopWordsTwoWeeks,
@@ -497,6 +509,7 @@
     getCharttData('topWords').then(data => {
         const ignored = data.events.ignore;
         const opened = data.events.popover_open;
+        const alternative = data.events.alternative;
 
         for (const [key, value] of Object.entries(ignored)) {
             xValuesTopWordsIgnored.push(key);
@@ -508,19 +521,25 @@
             yValuesTopWordsOpened.push(value);
         }
 
+        for (const [key, value] of Object.entries(alternative)) {
+            xValuesTopWordsAlternative.push(key);
+            yValuesTopWordsAlternative.push(value);
+        }
+
         const xValuesTopWordsIgnoredCutDoughnut = xValuesTopWordsIgnored.slice(0, 5);
         const yValuesTopWordsIgnoredCutDoughnut = yValuesTopWordsIgnored.slice(0, 5);
 
         const xValuesTopWordsOpenedCut = xValuesTopWordsOpened.slice(0, 15);
         const yValuesTopWordsOpenedCut = yValuesTopWordsOpened.slice(0, 15);
-        const xValuesTopWordsOpenedCutDoughnut = xValuesTopWordsOpened.slice(0, 5);
-        const yValuesTopWordsOpenedCutDoughnut = yValuesTopWordsOpened.slice(0, 5);
+     
+        const xValuesTopWordsAlternativeCutDoughnut = xValuesTopWordsAlternative.slice(0, 5);
+        const yValuesTopWordsAlternativeCutDoughnut = yValuesTopWordsAlternative.slice(0, 5);
 
         createDoughnutChart(
             "topWordsChartDoughnut",
-            xValuesTopWordsOpenedCutDoughnut,
-            yValuesTopWordsOpenedCutDoughnut,
-            "{{ __('content.title_words_opened_doughnut_chart_month') }}",
+            xValuesTopWordsAlternativeCutDoughnut,
+            yValuesTopWordsAlternativeCutDoughnut,
+            "{{ __('content.title_words_alternative_doughnut_chart_month') }}",
         );
 
         createDoughnutChart(
@@ -535,7 +554,7 @@
             xValuesTopWordsOpenedCut,
             yValuesTopWordsOpenedCut,
             "{{ __('content.title_words_bar_chart_month') }}",
-            false,
+            true,
             false
         );
     });
@@ -573,10 +592,10 @@ load_charts(false);
 
                                 <div class="container-row  wittyworks-margin-top" >
                                     <div
-                                        id="changeInCheckPercentage"
+                                        id="changeInLearningBitesPercentage"
                                         class="lato-small-paragraph-title-h4-purple">
                                     </div>
-                                    <div class="lato-small-text-p">{{ __('content.check_requests_week') }}</div>
+                                    <div class="lato-small-text-p">{{ __('content.learning_bites_requests_week') }}</div>
                                 </div>
                                 
                                 <div class="container-row" >
