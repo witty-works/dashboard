@@ -218,6 +218,6 @@ Dein Witty-Team',
 Bitte deine Team-Administratoren, auf <a href="https://www.witty.works/pricing" target="_blank">Witty Teams</a> zu wechseln.',
     'upgrade_button' => 'Abo anpassen',
     'refresh_data' => 'Refresh data',
-    'last_refreshed' => 'Last refreshed',
+    'last_refreshed' => 'Last refreshed:',
     'refresh_data_blocked' => 'You can refresh every 3 minutes',
 ];

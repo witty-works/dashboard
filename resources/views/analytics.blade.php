@@ -1,6 +1,18 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-<script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js" rossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script> 
     function load_charts(refresh) {
+        if (refresh) {
+            document.getElementById('lastRefresh').style.visibility = 'hidden';
+            document.getElementById("loadingIconActivity").style.display = "flex";
+            document.getElementById("activityChartWrapper").style.visibility = "hidden";
+
+            document.getElementById("loadingIconTopWords").style.display = "flex";
+            document.getElementById("topWordsChartWrapper").style.visibility = "hidden";
+
+            document.getElementById("loadingIconTopCatagories").style.display = "flex";
+            document.getElementById("topCategoriesChartWrapper").style.visibility = "hidden";
+        }
     const colors = [
         "#241c5b",
         "#33277f",
@@ -134,8 +146,9 @@
 
     getCharttData('total').then(data => {
         const events = data.events;
-        const lastRefresh = new Date((data.last_refresh.check))
-        const lastRefreshFormatted = lastRefresh.getDate() + "." + (lastRefresh.getMonth() + 1) + "." + lastRefresh.getFullYear() + " " + lastRefresh.getHours() + ":" + lastRefresh.getMinutes();
+        const lastRefresh = new Date() //TODO: add refresh from endpoint
+        let lastRefreshFormatted = moment(lastRefresh).fromNow();
+
         for (const [event, value] of Object.entries(events)) {
             if (event === 'check') {
                for (const [date, count] of Object.entries(value)) {
@@ -199,13 +212,22 @@
             document.getElementById("changeInAlternativePercentage").innerHTML = changeInAlternativePercentage >= 0 ? `+${changeInAlternativePercentage}%&nbsp;` : `${changeInAlternativePercentage}% &nbsp;`;
             document.getElementById("checkDaysInRow").innerHTML = getWittyStreak(yValuesCheck) + '&nbsp';
 
-            const lastRefreshMinutes = Math.floor((new Date() - lastRefresh) / 60000);
+            //updateSection function
+            function updateSection() {
+                const lastRefreshMinutes = Math.floor((new Date() - lastRefresh) / 60000);
+                lastRefreshFormatted = moment(lastRefresh).fromNow();
+                if (lastRefreshMinutes >= 3) {
+                    return document.getElementById("lastRefresh").innerHTML = '{{ __('content.last_refreshed') }} &nbsp;' + lastRefreshFormatted + '&nbsp; &nbsp; <a class="button primary-button-red" onclick="load_charts(true)">{{ __('content.refresh_data') }}</a>';
+                } else {
+                    return document.getElementById("lastRefresh").innerHTML = '{{ __('content.last_refreshed') }} &nbsp;' + lastRefreshFormatted;
+                }
+            };
 
-            if (lastRefreshMinutes > 3) {
-                document.getElementById("lastRefresh").innerHTML = '{{ __('content.last_refreshed') }} &nbsp;' + lastRefreshFormatted + '&nbsp; &nbsp; <a class="button primary-button-red" onclick="load_charts(true)">{{ __('content.refresh_data') }}</a>';
-            } else {
-                document.getElementById("lastRefresh").innerHTML = '{{ __('content.last_refreshed') }} &nbsp;' + lastRefreshFormatted + '&nbsp; &nbsp; <a class="button secondary-button-red wittyworks-margin-right" style="cursor:not-allowed">{{ __('content.refresh_data') }}</a><span class="tooltiptext">{{ __('content.refresh_data_blocked') }}</span>';
-            }
+            updateSection();
+            setInterval(function() {
+                updateSection()
+            }, 30000);
+            document.getElementById('lastRefresh').style.visibility = 'visible';
 
             new Chart("eventsChart", {
                 type: "line",
@@ -525,7 +547,7 @@ load_charts(false);
     <div class="wittyworks-navigation-wrapper">@livewire('navigation-menu')</div>
         <div class="wittyworks-page-wrapper">
             <div class="wittyworks-page lg:ml-20">
-                <div id="lastRefresh" class="lato-small-text-p wittyworks-margin-right container-row tooltip" style="align-items: center;"></div>
+                <div id="lastRefresh" class="lato-small-text-p wittyworks-margin-right container-row" style="visibility: hidden; align-items: center;"></div>
                 <div class="ibarra-sub-title-h2">{{ __('content.activity') }}</div>
                 <div class="wittyworks-form-section container border-radius">
                     <div id="loadingIconActivity" class="loading-icon-wrapper" style="width: 100%">
