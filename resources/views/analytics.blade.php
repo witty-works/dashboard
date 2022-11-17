@@ -148,9 +148,8 @@
 
     getCharttData('total').then(data => {
         const events = data.events;
-        const lastRefresh = new Date() //TODO: add refresh from endpoint
+        const lastRefresh = data.events.last_refresh;
         let lastRefreshFormatted = moment(lastRefresh).fromNow();
-        console.log(data)
 
         for (const [event, value] of Object.entries(events)) {
             if (event === 'check') {
@@ -181,41 +180,41 @@
             }
 
             //CURRENT WEEK
-            const yValuesCheckWeek = yValuesCheck.slice(-7);
-            const xValuesCheckWeek = xValuesCheck.slice(-7);
+            const yValuesLearningBitesWeek = yValuesLearningBites.slice(-7);
+            const xValuesLearningBitesWeek = xValuesLearningBites.slice(-7);
             const yValuesPopoverOpenWeek = yValuesPopoverOpen.slice(-7);
             const yValuesIgnoreWeek = yValuesIgnore.slice(-7);
             const yValuesAlternativeWeek = yValuesAlternative.slice(-7);
 
             //PREVIOUS WEEK
-            const yValuesCheckWeekPrevious = yValuesCheck.slice(-14, -7);
-            const xValuesCheckWeekPrevious = xValuesCheck.slice(-14, -7);
+            const yValuesLearningBitesWeekPrevious = yValuesLearningBites.slice(-14, -7);
+            const xValuesLearningBitesWeekPrevious = xValuesLearningBites.slice(-14, -7);
             const yValuesPopoverOpenWeekPrevious = yValuesPopoverOpen.slice(-14, -7);
             const yValuesIgnoreWeekPrevious = yValuesIgnore.slice(-14, -7);
             const yValuesAlternativeWeekPrevious = yValuesAlternative.slice(-14, -7);
             
             //TOTAL WEEK
-            const totalWeeklyCheck = yValuesCheckWeek.map(Number).reduce((a, b) => a + b, 0);
+            const totalWeeklyLearningBites = yValuesLearningBites.map(Number).reduce((a, b) => a + b, 0);
             const totalWeeklyPopoverOpen = yValuesPopoverOpenWeek.map(Number).reduce((a, b) => a + b, 0);
             const totalWeeklyIgnore = yValuesIgnoreWeek.map(Number).reduce((a, b) => a + b, 0);
             const totalWeeklyAlternative = yValuesAlternativeWeek.map(Number).reduce((a, b) => a + b, 0);
-            const weeklyEvents = [totalWeeklyCheck, totalWeeklyPopoverOpen, totalWeeklyIgnore, totalWeeklyAlternative];
+            const weeklyEvents = [totalWeeklyLearningBites, totalWeeklyPopoverOpen, totalWeeklyIgnore, totalWeeklyAlternative];
 
             //TOTAL WEEK PREVIOUS
-            const totalWeeklyCheckPrevious = yValuesCheckWeekPrevious.map(Number).reduce((a, b) => a + b, 0);
+            const totalWeeklyLearningBitesPrevious = yValuesLearningBitesWeekPrevious.map(Number).reduce((a, b) => a + b, 0);
             const totalWeeklyPopoverOpenPrevious = yValuesPopoverOpenWeekPrevious.map(Number).reduce((a, b) => a + b, 0);
             const totalWeeklyIgnorePrevious = yValuesIgnoreWeekPrevious.map(Number).reduce((a, b) => a + b, 0);
             const totalWeeklyAlternativePrevious = yValuesAlternativeWeekPrevious.map(Number).reduce((a, b) => a + b, 0);
-            const weeklyEventsPrevious = [totalWeeklyCheckPrevious, totalWeeklyPopoverOpenPrevious, totalWeeklyIgnorePrevious, totalWeeklyAlternativePrevious];
+            const weeklyEventsPrevious = [totalWeeklyLearningBitesPrevious, totalWeeklyPopoverOpenPrevious, totalWeeklyIgnorePrevious, totalWeeklyAlternativePrevious];
 
             //WEEKLY CHANGE
-            const changeInCheckPercentage = (((totalWeeklyCheck - totalWeeklyCheckPrevious) / (totalWeeklyCheckPrevious == 0 ? 1 : totalWeeklyCheckPrevious)) * 100).toFixed(2);
+            const changeInLearningBitesPercentage = (((totalWeeklyLearningBites - totalWeeklyLearningBitesPrevious) / (totalWeeklyLearningBitesPrevious == 0 ? 1 : totalWeeklyLearningBitesPrevious)) * 100).toFixed(2);
             const changeInPopoverPercentage = (((totalWeeklyPopoverOpen - totalWeeklyPopoverOpenPrevious) / (totalWeeklyPopoverOpenPrevious == 0 ? 1 : totalWeeklyPopoverOpenPrevious)) * 100).toFixed(2);
             const changeInIgnorePercentage = (((totalWeeklyIgnore - totalWeeklyIgnorePrevious) / (totalWeeklyIgnorePrevious == 0 ? 1 : totalWeeklyIgnorePrevious)) * 100).toFixed(2);
             const changeInAlternativePercentage = (((totalWeeklyAlternative - totalWeeklyAlternativePrevious) / (totalWeeklyAlternativePrevious == 0 ? 1 : totalWeeklyAlternativePrevious)) * 100).toFixed(2);
 
             
-            document.getElementById("changeInLearningBitesPercentage").innerHTML = 'placeholder &nbsp';
+            document.getElementById("changeInLearningBitesPercentage").innerHTML = changeInLearningBitesPercentage >= 0 ? `+${changeInLearningBitesPercentage}%&nbsp;` : `${changeInLearningBitesPercentage}%&nbsp;`;
             document.getElementById("changeInPopoverPercentage").innerHTML = changeInPopoverPercentage >= 0 ? `+${changeInPopoverPercentage}%&nbsp;` : `${changeInPopoverPercentage}% &nbsp;`;
             document.getElementById("changeInIgnorePercentage").innerHTML = changeInIgnorePercentage >= 0 ? `+${changeInIgnorePercentage}%&nbsp;` : `${changeInIgnorePercentage}% &nbsp;`;
             document.getElementById("changeInAlternativePercentage").innerHTML = changeInAlternativePercentage >= 0 ? `+${changeInAlternativePercentage}%&nbsp;` : `${changeInAlternativePercentage}% &nbsp;`;
@@ -275,17 +274,17 @@
             });
 
             createBarChart(
-                "eventsCheckChart",
-                xValuesCheckWeek,
-                yValuesCheckWeek,
-                "{{ __('content.title_bar_chart_check') }}",
+                "eventsLearningBitesChart",
+                xValuesLearningBitesWeek,
+                yValuesLearningBitesWeek,
+                "{{ __('content.title_bar_chart_learning_bites') }}",
                 false,
                 true
             );
 
             createBarChart(
                 "eventsPopoverChart",
-                xValuesCheckWeek,
+                xValuesLearningBitesWeek,
                 yValuesPopoverOpenWeek,
                 "{{ __('content.title_bar_chart_popover') }}",
                 false,
@@ -294,7 +293,7 @@
 
             createBarChart(
                 "eventsIgnoreChart",
-                xValuesCheckWeek,
+                xValuesLearningBitesWeek,
                 yValuesIgnoreWeek,
                 "{{ __('content.title_bar_chart_ignored') }}",
                 false,
@@ -303,7 +302,7 @@
 
             createBarChart(
                 "eventsAlternativeChart",
-                xValuesCheckWeek,
+                xValuesLearningBitesWeek,
                 yValuesAlternativeWeek,
                 "{{ __('content.title_bar_chart_alternative') }}",
                 false,
@@ -313,7 +312,7 @@
             createDoughnutChart(
                 "requestRatiosChartDoughnut",
                 [
-                "{{ __('content.check_doughnut_chart_event_ratio') }}",
+                "{{ __('content.learning_bites_doughnut_chart_event_ratio') }}",
                 "{{ __('content.popover_doughnut_chart_event_ratio') }}",
                 "{{ __('content.ignored_doughnut_chart_event_ratio') }}",
                 "{{ __('content.alternative_doughnut_chart_event_ratio') }}"
@@ -632,7 +631,7 @@ load_charts(false);
                         </div>
                         <div class="container-row wittyworks-margin-top">
                             <canvas
-                                id="eventsCheckChart"
+                                id="eventsLearningBitesChart"
                                 style="max-width: 195px"
                                 class="wittyworks-analytics-chart-small wittyworks-margin-right">
                             </canvas>
