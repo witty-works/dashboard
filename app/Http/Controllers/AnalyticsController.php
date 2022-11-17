@@ -173,11 +173,11 @@ class AnalyticsController extends Controller
         $chart = $request->get('chart');
         switch ($chart) {
             case 'dau':
-                $events = ['check', 'popover_open', 'alternative', 'ignore'];
+                $events = ['popover_open', 'alternative', 'ignore', 'learning_bites'];
                 $data = $this->fetchEventData($events, $properties, $interval, 'dau');
                 break;
             case 'total':
-                $events = ['check', 'popover_open', 'alternative', 'ignore'];
+                $events = ['popover_open', 'alternative', 'ignore', 'learning_bites'];
                 $data = $this->fetchEventData($events, $properties, $interval);
                 break;
             case 'topSubcategories':
