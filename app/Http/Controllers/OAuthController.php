@@ -10,6 +10,7 @@ use Laravel\Jetstream\Jetstream;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\Request;
+use InvalidArgumentException;
 use JoelButcher\Socialstream\ConnectedAccount;
 use JoelButcher\Socialstream\Contracts\GeneratesProviderRedirect;
 use JoelButcher\Socialstream\Contracts\ResolvesSocialiteUsers;
@@ -266,7 +267,11 @@ class OAuthController extends BaseOAuthController
 
     static public function getProvider($provider, $policy = null)
     {
-        $provider = Socialite::driver($provider);
+        try {
+            $provider = Socialite::driver($provider);
+        } catch (InvalidArgumentException $e) {
+            abort(400);
+        }
 
         if (OAuthController::isBrowserLogin($policy)) {
             $provider->setScopes(config('services.azureadb2c.scope'));
