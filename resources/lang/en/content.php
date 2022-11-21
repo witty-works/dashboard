@@ -218,8 +218,6 @@ Your Witty team',
 
 Ask your team administrators to upgrade to <a href="https://www.witty.works/pricing" target="_blank">Witty Teams</a>.',
     'upgrade_button' => 'Upgrade',
-
-    #analytics
     'activity' => 'Activity',
     'writing_streak' => 'Days Witty writing streak',
     'learning_bites_requests_week' => 'Learning Bites (week)',
@@ -255,4 +253,5 @@ Ask your team administrators to upgrade to <a href="https://www.witty.works/pric
     'refresh_data' => 'Refresh data',
     'last_refreshed' => 'Last refreshed:',
     'refresh_data_blocked' => 'You can refresh every 3 minutes',
+    'learning_bites_doughnut_chart_event_ratio' => 'learning bites doughnut chart event ratio',
 ];
