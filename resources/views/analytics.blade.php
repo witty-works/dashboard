@@ -241,27 +241,32 @@
                 type: "line",
                 data: {
                     labels: xValuesPopoverOpen,
-                    datasets: [{
-                        data: yValuesLearningBites,
-                        borderColor: colors[3],
-                        fill: false,
-                        label: "{{ __('content.learning_bites_label_line_chart') }}",
-                        }, {
-                        data: yValuesPopoverOpen,
-                        borderColor: colors[6],
-                        fill: false,
-                        label: "{{ __('content.popover_label_line_chart') }}",
-                        }, {
-                        data: yValuesIgnore,
-                        borderColor: colors[9],
-                        fill: false,
-                        label:  "{{ __('content.ignored_label_line_chart') }}",
-                        },{
-                        data: yValuesAlternative,
-                        borderColor: colors[12],
-                        fill: false,
-                        label: "{{ __('content.alternative_label_line_chart') }}",
-                    }]
+                    datasets: [
+                        {
+                            data: yValuesPopoverOpen,
+                            borderColor: colors[6],
+                            fill: false,
+                            label: "{{ __('content.popover_label_line_chart') }}",
+                        },
+                        {
+                            data: yValuesIgnore,
+                            borderColor: colors[9],
+                            fill: false,
+                            label:  "{{ __('content.ignored_label_line_chart') }}",
+                        },
+                        {
+                            data: yValuesAlternative,
+                            borderColor: colors[12],
+                            fill: false,
+                            label: "{{ __('content.alternative_label_line_chart') }}",
+                        },
+                        {
+                            data: yValuesLearningBites,
+                            borderColor: colors[3],
+                            fill: false,
+                            label: "{{ __('content.learning_bites_label_line_chart') }}",
+                        },
+                    ]
                 },
                 options: {
                     title: {
