@@ -109,6 +109,17 @@
                     xAxes: [{
                         display: display
                     }],
+                    yAxes: [{
+                        ticks: {
+                            min: 0,
+                            beginAtZero: true,
+                            callback: function(value, index, values) {
+                                if (Math.floor(value) === value) {
+                                    return value;
+                                }
+                            }
+                        }
+                    }],
                 },
                 legend: {
                     display: display,
@@ -208,10 +219,10 @@
             const weeklyEventsPrevious = [totalWeeklyLearningBitesPrevious, totalWeeklyPopoverOpenPrevious, totalWeeklyIgnorePrevious, totalWeeklyAlternativePrevious];
 
             //WEEKLY CHANGE
-            const changeInLearningBitesPercentage = (((totalWeeklyLearningBites - totalWeeklyLearningBitesPrevious) / (totalWeeklyLearningBitesPrevious == 0 ? 1 : totalWeeklyLearningBitesPrevious)) * 100).toFixed(2);
-            const changeInPopoverPercentage = (((totalWeeklyPopoverOpen - totalWeeklyPopoverOpenPrevious) / (totalWeeklyPopoverOpenPrevious == 0 ? 1 : totalWeeklyPopoverOpenPrevious)) * 100).toFixed(2);
-            const changeInIgnorePercentage = (((totalWeeklyIgnore - totalWeeklyIgnorePrevious) / (totalWeeklyIgnorePrevious == 0 ? 1 : totalWeeklyIgnorePrevious)) * 100).toFixed(2);
-            const changeInAlternativePercentage = (((totalWeeklyAlternative - totalWeeklyAlternativePrevious) / (totalWeeklyAlternativePrevious == 0 ? 1 : totalWeeklyAlternativePrevious)) * 100).toFixed(2);
+            const changeInLearningBitesPercentage = (((totalWeeklyLearningBites - totalWeeklyLearningBitesPrevious) / (totalWeeklyLearningBitesPrevious == 0 ? 1 : totalWeeklyLearningBitesPrevious)) * 100).toFixed(0);
+            const changeInPopoverPercentage = (((totalWeeklyPopoverOpen - totalWeeklyPopoverOpenPrevious) / (totalWeeklyPopoverOpenPrevious == 0 ? 1 : totalWeeklyPopoverOpenPrevious)) * 100).toFixed(0);
+            const changeInIgnorePercentage = (((totalWeeklyIgnore - totalWeeklyIgnorePrevious) / (totalWeeklyIgnorePrevious == 0 ? 1 : totalWeeklyIgnorePrevious)) * 100).toFixed(0);
+            const changeInAlternativePercentage = (((totalWeeklyAlternative - totalWeeklyAlternativePrevious) / (totalWeeklyAlternativePrevious == 0 ? 1 : totalWeeklyAlternativePrevious)) * 100).toFixed(0);
 
             
             document.getElementById("changeInLearningBitesPercentage").innerHTML = changeInLearningBitesPercentage >= 0 ? `+${changeInLearningBitesPercentage}%&nbsp;` : `${changeInLearningBitesPercentage}%&nbsp;`;
@@ -249,16 +260,16 @@
                             label: "{{ __('content.popover_label_line_chart') }}",
                         },
                         {
-                            data: yValuesIgnore,
-                            borderColor: colors[9],
-                            fill: false,
-                            label:  "{{ __('content.ignored_label_line_chart') }}",
-                        },
-                        {
                             data: yValuesAlternative,
                             borderColor: colors[12],
                             fill: false,
                             label: "{{ __('content.alternative_label_line_chart') }}",
+                        },
+                        {
+                            data: yValuesIgnore,
+                            borderColor: colors[9],
+                            fill: false,
+                            label:  "{{ __('content.ignored_label_line_chart') }}",
                         },
                         {
                             data: yValuesLearningBites,
@@ -635,26 +646,12 @@ load_charts(false);
                             <canvas id="eventsChart" class="wittyworks-analytics-chart-extra-large"></canvas>
                         </div>
                         <div class="container-row wittyworks-margin-top">
-                            <canvas
-                                id="eventsLearningBitesChart"
-                                style="max-width: 195px"
-                                class="wittyworks-analytics-chart-small wittyworks-margin-right">
-                            </canvas>
-                            <canvas
-                                id="eventsPopoverChart"
-                                style="max-width: 195px"
-                                class="wittyworks-analytics-chart-small wittyworks-margin-right">
-                            </canvas>
-                            <canvas
-                                id="eventsIgnoreChart"
-                                style="max-width: 195px"
-                                class="wittyworks-analytics-chart-small wittyworks-margin-right">
-                            </canvas>
-                            <canvas
-                                id="eventsAlternativeChart"
-                                style="max-width: 195px"
-                                class="wittyworks-analytics-chart-small">
-                            </canvas>
+                            @php
+                                $eventsCharts = ["eventsPopoverChart", "eventsAlternativeChart", "eventsIgnoreChart", "eventsLearningBitesChart"];
+                                for ($i = 0; $i < count($eventsCharts); $i++) {
+                                    echo '<canvas id="' . $eventsCharts[$i] . '" style="max-width: 190px" class="wittyworks-analytics-chart-small wittyworks-margin-right" ></canvas>';
+                                }
+                            @endphp
                         </div>
                     </div>
                 </div>
