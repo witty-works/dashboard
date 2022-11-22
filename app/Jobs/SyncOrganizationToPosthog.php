@@ -38,7 +38,10 @@ class SyncOrganizationToPosthog implements ShouldQueue
             return 0;
         }
 
-        PostHog::init(config('posthog.api_key'));
+        PostHog::init(
+            config('posthog.api_key'),
+            ['host' => config('posthog.host'), 'debug' => config('posthog.debug')],
+        );
 
         $result = PostHog::groupIdentify([
             'groupType' => AppServiceProvider::POSTHOG_ORGANIZATION_TYPE,

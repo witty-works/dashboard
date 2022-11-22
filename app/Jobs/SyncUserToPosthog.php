@@ -36,7 +36,10 @@ class SyncUserToPosthog implements ShouldQueue
             return 0;
         }
 
-        PostHog::init(config('posthog.api_key'));
+        PostHog::init(
+            config('posthog.api_key'),
+            ['host' => config('posthog.host'), 'debug' => config('posthog.debug')],
+        );
 
         $properties = $user->getHubspotData();
         $properties['hubspot_id'] = $user->hubspot_id;
