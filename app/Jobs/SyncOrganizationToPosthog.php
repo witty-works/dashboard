@@ -11,6 +11,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use InvalidArgumentException;
 
 class SyncOrganizationToPosthog implements ShouldQueue
 {
@@ -29,7 +30,7 @@ class SyncOrganizationToPosthog implements ShouldQueue
     {
         $team = Team::find($this->id);
         if (!$team instanceof Team) {
-            return -1;
+            throw new InvalidArgumentException("Team id '{$this->id} does not exist.");
         }
 
         if (!config('posthog.enabled')) {
@@ -57,7 +58,7 @@ class SyncOrganizationToPosthog implements ShouldQueue
         ]);
 
         if (!$result) {
-            return -1;
+            throw new InvalidArgumentException("Team id '{$this->id} could not be added to Posthog.");
         }
 
         return 0;

@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use RuntimeException;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Bus\Queueable;
@@ -33,7 +34,7 @@ abstract class AbstractSyncToNlpApi implements ShouldQueue
         }
 
         if ($response->failed() && $response->status() !== 404) {
-            return -1;
+            throw new RuntimeException("Unable to write to '{$url} ({$data['id']}).");
         }
 
         return 0;
