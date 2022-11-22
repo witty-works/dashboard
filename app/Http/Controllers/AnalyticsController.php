@@ -76,7 +76,7 @@ class AnalyticsController extends Controller
             'type' => 'AND',
             'values' => [
                 [
-                    'key' => 'response__groupId',
+                    'key' => 'response__organizationId',
                     'value' => $postHogId,
                     'operator' => 'exact',
                     'type' => 'event',
@@ -200,7 +200,6 @@ class AnalyticsController extends Controller
                         }
                         $data['events'][$event] = $subcategories;
                     }
-                    
                 }
                 break;
             case 'topWords':
