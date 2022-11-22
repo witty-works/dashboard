@@ -75,13 +75,13 @@
         return checkDaysInRow;
     }
 
-    async function getCharttData(chart, interval = 30) {
+    async function getCharttData(chart, from = 30) {
         let analyticsUrl = '/api/user/analytics?refresh=' + refresh + '&chart=';
         if (window.location.href.includes('team')) {
             analyticsUrl = '/api/team/analytics?refresh=' + refresh + '&chart=';
         }
         const response = await fetch(
-            analyticsUrl + chart + '&interval=' + interval);
+            analyticsUrl + chart + '&from=' + from);
         const data = await response.json();
         return data;
     }
@@ -581,6 +581,14 @@ load_charts(false);
     <div class="wittyworks-navigation-wrapper">@livewire('navigation-menu')</div>
         <div class="wittyworks-page-wrapper">
             <div class="wittyworks-page lg:ml-20">
+                @if(isset($team) && !empty($team_edit))
+                <div>
+                    <div class="max-w-7xl mx-auto py-10">
+                        @livewire('teams.analytics-user-access', ['team' => $team])
+                    </div>
+                </div>
+                @endif
+                
                 <div id="lastRefresh" class="lato-small-text-p wittyworks-margin-right container-row" style="visibility: hidden; align-items: center;"></div>
                 <div class="ibarra-sub-title-h2">{{ __('content.activity') }}</div>
                 <div class="wittyworks-form-section container border-radius">

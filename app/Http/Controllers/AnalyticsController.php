@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Providers\AppServiceProvider;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -26,12 +26,36 @@ class AnalyticsController extends Controller
 
     public function user(Request $request)
     {
-        return view('analytics');
+        $user = $request->user();
+        if (empty($user)) {
+            abort(403);
+        }
+
+        return view('analytics', ['user' => $user]);
+    }
+
+    protected function teamAnalyticsAllowed(User $user = null)
+    {
+        if (
+            empty($user)
+            || empty($user->currentTeam)
+            || (!$user->hasTeamPermission($user->currentTeam, 'edit_guidelines')
+                && !$user->currentTeam->user_access_to_team_analytics
+            )
+        ) {
+            abort(403);
+        }
     }
 
     public function organization(Request $request)
     {
-        return view('analytics');
+        $user = $request->user();
+        $this->teamAnalyticsAllowed($user);
+
+        return view('analytics', [
+            'team' => $user->currentTeam,
+            'team_edit' => $user->hasTeamPermission($user->currentTeam, 'edit_guidelines'),
+        ]);
     }
 
     public function userApi(Request $request)
@@ -39,7 +63,6 @@ class AnalyticsController extends Controller
         if (empty($request->user())) {
             abort(403);
         }
-
 
         $postHogId = config('posthog.dashboard_user_id_override');
         if (empty($postHogId)) {
@@ -63,13 +86,12 @@ class AnalyticsController extends Controller
 
     public function organizationApi(Request $request)
     {
-        if (empty($request->user()) || empty($request->user()->currentTeam)) {
-            abort(403);
-        }
+        $user = $request->user();
+        $this->teamAnalyticsAllowed($user);
 
         $postHogId = config('posthog.dashboard_team_id_override');
         if (empty($postHogId)) {
-            $postHogId = $request->user()->currentTeam->posthogId();
+            $postHogId = $user->currentTeam->posthogId();
         }
 
         $properties = [
@@ -104,7 +126,7 @@ class AnalyticsController extends Controller
         });
     }
 
-    protected function fetchEventData($events, $properties, $interval, $math = 'total')
+    protected function fetchEventData($events, $properties, $interval, $from, $math = 'total')
     {
         $filter = [
             'events' => [
@@ -114,7 +136,8 @@ class AnalyticsController extends Controller
                 ]
             ],
             'filter_test_accounts' => false,
-            'date_from' => $interval,
+            'interval' => $interval,
+            'date_from' => $from,
         ];
 
         $data = [];
@@ -123,12 +146,6 @@ class AnalyticsController extends Controller
 
             $response = $this->fetchData($filter);
             if (isset($response['result'][0])) {
-                $days = [];
-                foreach ($response['result'][0]['days'] as $date) {
-                    $date = new Carbon($date);
-                    $days[] = $date->format('jS \o\f M');
-                }
-                $response['result'][0]['days'] = $days;
                 $data['events'][$event] = array_combine($response['result'][0]['days'], $response['result'][0]['data']);
             }
             $data['last_refresh'] = $response['last_refresh'];
@@ -137,7 +154,7 @@ class AnalyticsController extends Controller
         return $data;
     }
 
-    protected function fetchBreakdown($events, $properties, $breakdown, $interval, $math = 'total')
+    protected function fetchBreakdown($events, $properties, $breakdown, $interval, $from, $math = 'total')
     {
         $properties['values'][] = [
             'key' => 'request__data_category',
@@ -154,7 +171,8 @@ class AnalyticsController extends Controller
                 ]
             ],
             'filter_test_accounts' => false,
-            'date_from' => $interval,
+            'interval' => $interval,
+            'date_from' => $from,
             'display' => 'ActionsBarValue',
             'breakdown' => $breakdown,
         ];
@@ -178,19 +196,20 @@ class AnalyticsController extends Controller
     protected function fetchJson(Request $request, $properties)
     {
         $interval = $this->fetchInterval($request);
+        $from = $this->fetchFrom($request);
         $chart = $request->get('chart');
         switch ($chart) {
             case 'dau':
                 $events = ['check', 'popover_open', 'alternative', 'ignore', 'learning_bites'];
-                $data = $this->fetchEventData($events, $properties, $interval, 'dau');
+                $data = $this->fetchEventData($events, $properties, $interval, $from, 'dau');
                 break;
             case 'total':
                 $events = ['check', 'popover_open', 'alternative', 'ignore', 'learning_bites'];
-                $data = $this->fetchEventData($events, $properties, $interval);
+                $data = $this->fetchEventData($events, $properties, $interval, $from);
                 break;
             case 'topSubcategories':
                 $events = ['popover_open', 'alternative', 'ignore'];
-                $data = $this->fetchBreakdown($events, $properties, 'response__data__subcategory', $interval);
+                $data = $this->fetchBreakdown($events, $properties, 'response__data__subcategory', $interval, $from);
                 foreach ($events as $event) {
                     if (!empty($data['events'][$event])) {
                         $subcategories = [];
@@ -204,7 +223,7 @@ class AnalyticsController extends Controller
                 break;
             case 'topWords':
                 $events = ['popover_open', 'alternative', 'ignore'];
-                $data = $this->fetchBreakdown($events, $properties, 'response__data_text', $interval);
+                $data = $this->fetchBreakdown($events, $properties, 'response__data_text', $interval, $from);
                 break;
             default:
                 return response()->json(['error' => 400, 'message' => "Unsupported chart type '$chart'"], 400);
@@ -216,10 +235,15 @@ class AnalyticsController extends Controller
 
     protected function fetchInterval(Request $request)
     {
-        $maxDays = 30;
-        $interval = $request->get('interval', $maxDays);
-        $interval = min($maxDays, $interval);
+        return $request->get('interval', 'day');
+    }
 
-        return "-{$interval}d";
+    protected function fetchFrom(Request $request)
+    {
+        $maxFrom = 30;
+        $from = $request->get('from', $maxFrom);
+        $from = min($maxFrom, $from);
+
+        return "-{$from}d";
     }
 }
