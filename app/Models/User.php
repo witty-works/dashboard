@@ -254,7 +254,7 @@ class User extends Authenticatable implements MustVerifyEmail
             'ignore_count' => $this->falsePositives->count(),
             'has_team_language_rules' => $false,
             'has_team_privacy_set' => $false,
-            'team_role' => $this->teamRole($this->currentTeam)->name,
+            'team_role' => $teamRole,
             'invited_team_member_count' => 0,
             'team_member_count' => 0,
             'team_dictionary_count' => 0,

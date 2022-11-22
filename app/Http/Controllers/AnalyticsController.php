@@ -98,7 +98,7 @@ class AnalyticsController extends Controller
             'type' => 'AND',
             'values' => [
                 [
-                    'key' => 'response__groupId',
+                    'key' => 'response__organizationId',
                     'value' => $postHogId,
                     'operator' => 'exact',
                     'type' => 'event',

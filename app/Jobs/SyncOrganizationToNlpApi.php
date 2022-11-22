@@ -5,6 +5,7 @@ namespace App\Jobs;
 use App\Models\GuidelinesInterface;
 use App\Models\LanguageGuidelines;
 use App\Models\Team;
+use InvalidArgumentException;
 
 class SyncOrganizationToNlpApi extends AbstractSyncToNlpApi
 {
@@ -20,7 +21,7 @@ class SyncOrganizationToNlpApi extends AbstractSyncToNlpApi
     {
         $team = Team::find($this->id);
         if (!$team instanceof Team) {
-            return -1;
+            throw new InvalidArgumentException("Team id '{$this->id} does not exist.");
         }
 
         $url = '/organization/rules';

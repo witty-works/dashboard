@@ -9,6 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use InvalidArgumentException;
 
 class SyncUserToHubSpot implements ShouldQueue
 {
@@ -25,7 +26,7 @@ class SyncUserToHubSpot implements ShouldQueue
     {
         $user = User::find($this->id);
         if (!$user instanceof User) {
-            return -1;
+            throw new InvalidArgumentException("User id '{$this->id} does not exist.");
         }
 
         if (!config('hubspot.enabled')) {
