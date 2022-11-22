@@ -98,7 +98,7 @@
                 currentYValue += yValues[i];
             } else {
                 aggregatedData.push(currentYValue);
-                aggregatedLabels.push('Week ' + currentXValue);
+                aggregatedLabels.push( "{{ __('content.week') }}" + " " + currentXValue);
                 currentXValue = xValues[i];
                 currentYValue = yValues[i];
             }
@@ -683,7 +683,7 @@ load_charts(false);
                     <div id="activityChartWrapperNoData" style="visibility: hidden; width: 100%">
                         <div class="lato-small-text-p">{{ __('content.no_data_events') }}</div>
                         <div class="image-container">
-                            <img src="{{ url('svg/screenshots/activity.png') }}" alt="activity" style="width: 100%; height: auto; filter: grayscale(100%);" class="wittyworks-margin-top">
+                            <img src="{{ url('svg/screenshots/activity.png') }}" alt="activity" class="image wittyworks-margin-top">
                             <div class="centered-image-text">{{ __('content.no_data_image_text') }}</div>
                         </div>
                     </div>
@@ -764,7 +764,10 @@ load_charts(false);
 
                     <div id="topCategoriesChartWrapperNoData" style="visibility: hidden; width: 100%">
                         <div class="lato-small-text-p">{{ __('content.no_data_top_categories') }}</div>
-                        <img src="{{ url('svg/screenshots/top_categories.png') }}" alt="activity" style="width: 100%; height: auto;"  class="wittyworks-margin-top">
+                        <div class="image-container">
+                            <img src="{{ url('svg/screenshots/top_categories.png') }}" alt="top_categories"  class="image wittyworks-margin-top">
+                            <div class="centered-image-text">{{ __('content.no_data_image_text') }}</div>
+                        </div>
                     </div>
                     <div id="topCategoriesChartWrapper" style="visibility: hidden; width: 100%">
                         <div class="chart-container-row wittyworks-margin-top">
@@ -810,7 +813,10 @@ load_charts(false);
                         </div>
                         <div id="topWordsChartWrapperNoData" style="visibility: hidden; width: 100%">
                             <div class="lato-small-text-p">{{ __('content.no_data_top_words') }}</div>
-                            <img src="{{ url('svg/screenshots/top_words.png') }}" alt="activity" style="width: 100%; height: auto;" class="wittyworks-margin-top">
+                            <div class="image-container">
+                                <img src="{{ url('svg/screenshots/top_words.png') }}" alt="top_words"  class="image wittyworks-margin-top">
+                                <div class="centered-image-text">{{ __('content.no_data_image_text') }}</div>
+                            </div>
                         </div>
                         <div id="topWordsChartWrapper" style="visibility: hidden; width: 100%">
                             <div class="chart-container-row wittyworks-margin-top">

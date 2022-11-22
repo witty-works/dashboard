@@ -813,20 +813,24 @@ input:checked+.slider:before {
     color: white;
 }
 
-.centered-image-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+.image {
+    width: 100%; 
+    height: auto; 
+    filter: grayscale(100%); 
+    opacity:0.2;
+}
 
-    font-family: 'Lato';
-    font-style: normal;
+.centered-image-text {
+    position: absolute;    
+    top: 40%;
+    left: 25%;
+    -webkit-transform: rotate(-45deg);
+
     font-weight: 600;
-    font-size: 57px;
+    font-size: 4.5vw;
     line-height: 68px;
     letter-spacing: -0.025em;
-
-    /* witty-linear-gradient */
+    text-transform: uppercase;
     background: linear-gradient(114.59deg, #F06464 1.6%, #F277D0 32.79%, #9489DB 71.64%, #37D1E5 101.91%, #5ACFB9 131.52%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;

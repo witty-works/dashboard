@@ -257,5 +257,6 @@ Ask your team administrators to upgrade to <a href="https://www.witty.works/pric
     'no_data_events' => 'No data available for usage summary. Some more text about this and what the user has to do.',
     'no_data_top_categories' => 'No data available for your top bias categories. Some more text about this and what the user has to do.',
     'no_data_top_words' => 'No data available for your top words. Some more text about this and what the user has to do.',
-    'no_data_image_text' => 'Image text'
+    'no_data_image_text' => 'Image text',
+    'week' => 'Week',
 ];
