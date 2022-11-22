@@ -109,4 +109,6 @@ only the gender ending (e.g. "Mitarbeiter*in"), the female and male form (e.g. "
     'manage_organization_guidelines_description_german_gender_ending_sub_title' => 'Choose the gender ending',
     'team_analytics_description' => 'Team analytics makes it possible to see trends in how your team uses Witty to see where the team is excelling and where potentially more work needs to be done towards inclusive language and more importantly inclusive culture.',
     'team_analytics' => 'Participate',
+    'user_access_to_team_analytics' => 'user access to team analytics',
+    'user_access_to_team_analytics_description' => 'user access to team analytics description',
 ];
