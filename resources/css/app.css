@@ -827,7 +827,6 @@ input:checked+.slider:before {
     letter-spacing: -0.025em;
 
     /* witty-linear-gradient */
-
     background: linear-gradient(114.59deg, #F06464 1.6%, #F277D0 32.79%, #9489DB 71.64%, #37D1E5 101.91%, #5ACFB9 131.52%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;

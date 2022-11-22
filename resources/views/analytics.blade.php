@@ -384,6 +384,7 @@
             );
     
             document.getElementById("loadingIconActivity").style.display = "none";
+            document.getElementById("activityChartWrapperNoData").style.display = "none";
             document.getElementById("activityChartWrapper").style.visibility = "visible";
         }
     });
@@ -452,6 +453,7 @@
                 },
             });
             document.getElementById("loadingIconTopCatagories").style.display = "none";
+            document.getElementById("topCategoriesChartWrapperNoData").style.display = "none";
             document.getElementById("topCategoriesChartWrapper").style.visibility = "visible";
         });
     });
@@ -584,6 +586,7 @@
                 },
             });
             document.getElementById("loadingIconTopWords").style.display = "none";
+            document.getElementById("topWordsChartWrapperNoData").style.display = "none";
             document.getElementById("topWordsChartWrapper").style.visibility = "visible";
         });
     });
