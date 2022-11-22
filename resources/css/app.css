@@ -806,3 +806,30 @@ input:checked+.slider:before {
 .wittyworks-analytics-chart-small {
     max-width: 300px;
 }
+
+.image-container {
+    position: relative;
+    text-align: center;
+    color: white;
+}
+
+.centered-image-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 57px;
+    line-height: 68px;
+    letter-spacing: -0.025em;
+
+    /* witty-linear-gradient */
+
+    background: linear-gradient(114.59deg, #F06464 1.6%, #F277D0 32.79%, #9489DB 71.64%, #37D1E5 101.91%, #5ACFB9 131.52%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }

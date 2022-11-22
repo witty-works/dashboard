@@ -254,4 +254,8 @@ Ask your team administrators to upgrade to <a href="https://www.witty.works/pric
     'last_refreshed' => 'Last refreshed:',
     'refresh_data_blocked' => 'You can refresh your data every 3 minutes',
     'learning_bites_doughnut_chart_event_ratio' => 'learning bites doughnut chart event ratio',
+    'no_data_events' => 'No data available for usage summary. Some more text about this and what the user has to do.',
+    'no_data_top_categories' => 'No data available for your top bias categories. Some more text about this and what the user has to do.',
+    'no_data_top_words' => 'No data available for your top words. Some more text about this and what the user has to do.',
+    'no_data_image_text' => 'Image text'
 ];
