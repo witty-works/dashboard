@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Categories;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -210,12 +211,16 @@ class AnalyticsController extends Controller
             case 'topSubcategories':
                 $events = ['popover_open', 'alternative', 'ignore'];
                 $data = $this->fetchBreakdown($events, $properties, 'response__data__subcategory', $interval, $from);
+
+                $locale = session('locale', 'en');
                 foreach ($events as $event) {
                     if (!empty($data['events'][$event])) {
                         $subcategories = [];
                         foreach ($data['events'][$event] as $subcategory => $count) {
-                            $subcategory = ucwords(str_replace('_', ' ', $subcategory));
-                            $subcategories[$subcategory] = $count;
+                            $category = Categories::CATEGORIES[$subcategory];
+                            $subcategories[$category['name'][$locale]] = $count;
+
+                            $data['subcategories'][$event][$subcategory] = $category;
                         }
                         $data['events'][$event] = $subcategories;
                     }
