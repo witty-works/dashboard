@@ -49,12 +49,6 @@ hooks:
         php artisan google-fonts:fetch
 
 crons:
-    snapshot:
-        spec: "22 5 * * *"
-        cmd: |
-            if [ "$PLATFORM_BRANCH" = main ]; then
-                platform backup:create --yes --no-wait
-            fi
     snapshot-hourly:
         spec: "42 * * * *"
         cmd: |
