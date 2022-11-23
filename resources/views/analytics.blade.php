@@ -33,6 +33,13 @@
         "#dfdcf4",
     ];
 
+    const xValuesDauCheckIntervallWeek = [];
+    const yValuesDauCheck = [];
+    const yValuesDauIgnore = [];
+    const yValuesDauAlternative = [];
+    const yValuesDauPopoverOpen = [];
+    const yValuesDauLearningBites = []; 
+
     const xValuesCheck = [];
     const xValuesCheckIntervallWeek = [];
     const yValuesCheck = [];
@@ -195,6 +202,81 @@
                 }
         });
     }
+    getChartData('dau').then(data => {
+        const events = data.events;
+        if (!data.events || Object.entries(events.check).filter(([key, value]) => value > 0).length == 0) {
+            handle_no_data('activityChartWrapperNoData', 'loadingIconActivity');
+            return;
+        }
+
+        for (const [event, value] of Object.entries(events)) {
+            if (event === 'check') {
+               for (const [date, count] of Object.entries(value)) {
+                    xValuesDauCheckIntervallWeek.push(moment(date).week());
+                    yValuesDauCheck.push(count);
+                }
+            } else if (event === 'ignore') {
+                for (const [date, count] of Object.entries(value)) {
+                    yValuesDauIgnore.push(count);
+                }
+            } else if (event === 'alternative') {
+                for (const [date, count] of Object.entries(value)) {
+                    yValuesDauAlternative.push(count);
+                }
+            } else if (event === 'popover_open') {
+                for (const [date, count] of Object.entries(value)) {
+                    yValuesDauPopoverOpen.push(count);
+                }
+            } else if (event === 'learning_bites') {
+                for (const [date, count] of Object.entries(value)) {
+                    yValuesDauLearningBites.push(count);
+                }
+            }
+        }
+
+        new Chart("dauChart", {
+                type: "line",
+                data: {
+                    labels: aggregate_chart_data_by_week(xValuesDauCheckIntervallWeek, yValuesDauCheck)[0], 
+                    datasets: [
+                        {
+                            data: aggregate_chart_data_by_week(xValuesDauCheckIntervallWeek, yValuesDauPopoverOpen)[1],
+                            borderColor: colors[6],
+                            fill: false,
+                            label: "{{ __('content.popover_label_line_chart_dau') }}",
+                        },
+                        {
+                            data: aggregate_chart_data_by_week(xValuesDauCheckIntervallWeek, yValuesDauAlternative)[1],
+                            borderColor: colors[12],
+                            fill: false,
+                            label: "{{ __('content.alternative_label_line_chart_dau') }}",
+                        },
+                        {
+                            data: aggregate_chart_data_by_week(xValuesDauCheckIntervallWeek, yValuesDauIgnore)[1],
+                            borderColor: colors[9],
+                            fill: false,
+                            label:  "{{ __('content.ignored_label_line_chart_dau') }}",
+                        },
+                        {
+                            data: aggregate_chart_data_by_week(xValuesDauCheckIntervallWeek, yValuesDauLearningBites)[1],
+                            borderColor: colors[3],
+                            fill: false,
+                            label: "{{ __('content.learning_bites_label_line_chart_dau') }}",
+                        },
+                    ]
+                },
+                options: {
+                    events: ["click"],
+                    title: {
+                    display: true,
+                    text: "{{ __('content.title_line_chart_dau') }}",
+                    fontSize: 16,
+                    fontStyle: 'normal'
+                    }
+                }
+            });
+
+    });
 
     getChartData('total').then(data => {
         const events = data.events;
@@ -734,6 +816,9 @@ load_charts(false);
                         </div>
                         <div class="container-row wittyworks-margin-top">
                             <canvas id="eventsChart" class="wittyworks-analytics-chart-extra-large"></canvas>
+                        </div>
+                        <div class="container-row wittyworks-margin-top">
+                            <canvas id="dauChart" class="wittyworks-analytics-chart-extra-large"></canvas>
                         </div>
                         <div class="container-row wittyworks-margin-top">
                             @php
