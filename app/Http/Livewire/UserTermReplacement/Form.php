@@ -39,17 +39,12 @@ class Form extends OrganizationForm
 
         if (!empty($termReplacement)) {
             if ($this->user->id !== $termReplacement->user_id) {
-                $message = __(
-                    'guidelines.term_replacement_error',
-                );
+                $message = __('guidelines.term_replacement_error');
                 throw ValidationException::withMessages(['term' => $message]);
             }
         } else {
             if ($this->user->getTermReplacementsLimitReached()) {
-                $message = __(
-                    'guidelines.term_replacement_limit_reached_error',
-                    ['max_count' => $this->user->getTermReplacementsCount()]
-                );
+                $message = __('guidelines.term_replacement_limit_reached_error', ['max_count' => $this->user->getTermReplacementsCount()]);
                 throw ValidationException::withMessages(['term' => $message]);
             }
 

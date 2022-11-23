@@ -50,18 +50,13 @@ class Form extends OrganizationForm
 
         if (!empty($falsePositive)) {
             if ($this->user->id !== $falsePositive->user_id) {
-                $message = __(
-                    'guidelines.false_positive_error',
-                );
-                throw ValidationException::withMessages(['term' => $message]);
+                $message = __('guidelines.false_positive_error');
+                throw ValidationException::withMessages(['false_positive' => $message]);
             }
         } else {
             if ($this->user->getFalsePositivesLimitReached()) {
-                $message = __(
-                    'guidelines.false_positive_limit_reached_error',
-                    ['max_count' => $this->user->getFalsePositivesCount()]
-                );
-                throw ValidationException::withMessages(['term' => $message]);
+                $message = __('guidelines.false_positive_limit_reached_error', ['max_count' => $this->user->getFalsePositivesCount()]);
+                throw ValidationException::withMessages(['false_positive' => $message]);
             }
 
             $falsePositive = new FalsePositive();
