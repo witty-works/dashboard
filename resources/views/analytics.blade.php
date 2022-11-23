@@ -33,7 +33,7 @@
         "#dfdcf4",
     ];
 
-    const xValuesDauCheckIntervallWeek = [];
+    const xIntervallDauWeek = [];
     const yValuesDauCheck = [];
     const yValuesDauIgnore = [];
     const yValuesDauAlternative = [];
@@ -120,13 +120,13 @@
         document.getElementById(sectionId).style.display = "none";
     }
 
-    async function getChartData(chart, from = 30) {
+    async function getChartData(chart, from = 30, interval = 'day') {
         let analyticsUrl = '/api/user/analytics?refresh=' + refresh + '&chart=';
         if (window.location.href.includes('team')) {
             analyticsUrl = '/api/team/analytics?refresh=' + refresh + '&chart=';
         }
         const response = await fetch(
-            analyticsUrl + chart + '&from=' + from);
+            analyticsUrl + chart + '&from=' + from + '&interval=' + interval);
         const data = await response.json();
         return data;
     }
@@ -202,7 +202,7 @@
                 }
         });
     }
-    getChartData('dau').then(data => {
+    getChartData('dau', 30, 'week').then(data => {
         const events = data.events;
         if (!data.events || Object.entries(events.check).filter(([key, value]) => value > 0).length == 0) {
             handle_no_data('activityChartWrapperNoData', 'loadingIconActivity');
@@ -212,7 +212,7 @@
         for (const [event, value] of Object.entries(events)) {
             if (event === 'check') {
                for (const [date, count] of Object.entries(value)) {
-                    xValuesDauCheckIntervallWeek.push(moment(date).week());
+                    xIntervallDauWeek.push(date);
                     yValuesDauCheck.push(count);
                 }
             } else if (event === 'ignore') {
@@ -237,28 +237,28 @@
         new Chart("dauChart", {
                 type: "line",
                 data: {
-                    labels: aggregate_chart_data_by_week(xValuesDauCheckIntervallWeek, yValuesDauCheck)[0], 
+                    labels: xIntervallDauWeek, 
                     datasets: [
                         {
-                            data: aggregate_chart_data_by_week(xValuesDauCheckIntervallWeek, yValuesDauPopoverOpen)[1],
+                            data: yValuesDauPopoverOpen,
                             borderColor: colors[6],
                             fill: false,
                             label: "{{ __('content.popover_label_line_chart_dau') }}",
                         },
                         {
-                            data: aggregate_chart_data_by_week(xValuesDauCheckIntervallWeek, yValuesDauAlternative)[1],
+                            data: yValuesDauAlternative,
                             borderColor: colors[12],
                             fill: false,
                             label: "{{ __('content.alternative_label_line_chart_dau') }}",
                         },
                         {
-                            data: aggregate_chart_data_by_week(xValuesDauCheckIntervallWeek, yValuesDauIgnore)[1],
+                            data: yValuesDauIgnore,
                             borderColor: colors[9],
                             fill: false,
                             label:  "{{ __('content.ignored_label_line_chart_dau') }}",
                         },
                         {
-                            data: aggregate_chart_data_by_week(xValuesDauCheckIntervallWeek, yValuesDauLearningBites)[1],
+                            data: yValuesDauLearningBites,
                             borderColor: colors[3],
                             fill: false,
                             label: "{{ __('content.learning_bites_label_line_chart_dau') }}",
@@ -817,9 +817,11 @@ load_charts(false);
                         <div class="container-row wittyworks-margin-top">
                             <canvas id="eventsChart" class="wittyworks-analytics-chart-extra-large"></canvas>
                         </div>
+                        @if(isset($team) && !empty($team_edit))
                         <div class="container-row wittyworks-margin-top">
                             <canvas id="dauChart" class="wittyworks-analytics-chart-extra-large"></canvas>
                         </div>
+                        @endif
                         <div class="container-row wittyworks-margin-top">
                             @php
                                 $eventsCharts = ["eventsPopoverChart", "eventsAlternativeChart", "eventsIgnoreChart", "eventsLearningBitesChart"];
