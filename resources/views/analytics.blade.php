@@ -1,5 +1,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js" rossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 <script>
     function load_charts(refresh) {
         if (refresh) {
@@ -13,6 +14,7 @@
             document.getElementById("loadingIconTopCatagories").style.display = "flex";
             document.getElementById("topCategoriesChartWrapper").style.visibility = "hidden";
         }
+
     const colors = [
         "#241c5b",
         "#33277f",
@@ -32,15 +34,26 @@
     ];
 
     const xValuesCheck = [];
+    const xValuesCheckIntervallWeek = [];
     const yValuesCheck = [];
+    const yValuesCheckWeek = [];
+
     const xValuesPopoverOpen = [];
     const yValuesPopoverOpen = [];
+    const yValuesPopoverOpenWeek = [];
+
     const xValuesIgnore = [];
+    const xValuesIgnoreIntervallWeek = [];
     const yValuesIgnore = [];
+    const yValuesIgnoreWeek = [];
+
     const xValuesAlternative = [];
     const yValuesAlternative = [];
+    const yValuesAlternativeWeek = [];
+
     const xValuesLearningBites = [];
     const yValuesLearningBites = [];
+    const yValuesLearningBitesWeek = [];
 
     const xTopSubCategoriesWeek = [];
     const yTopSubCategoriesWeek = [];
@@ -64,24 +77,49 @@
     Chart.defaults.global.defaultFontColor = '#000000';
 
     function getWittyStreak (yValuesCheck) {
-        let checkDaysInRow = 0;
+        let checkWeeksInRow = 0;
         for (let i = yValuesCheck.length - 1; i >= 0; i--) {
-            if (yValuesCheck[i] != '0') {
-                checkDaysInRow++;
+            if (yValuesCheck[i] != 0) {
+                checkWeeksInRow++;
             } else {
                 break;
             }
         }
-        return checkDaysInRow;
+        return checkWeeksInRow;
     }
 
-    async function getCharttData(chart, interval = 30) {
+    function aggregate_chart_data_by_week(xValues, yValues) {
+        var aggregatedData = [];
+        var aggregatedLabels = [];
+        var currentXValue = xValues[0];
+        var currentYValue = yValues[0];
+        for (var i = 1; i <= xValues.length; i++) {
+            if (xValues[i] == currentXValue) {
+                currentYValue += yValues[i];
+            } else {
+                aggregatedData.push(currentYValue);
+                aggregatedLabels.push( "{{ __('content.week') }}" + " " + currentXValue);
+                currentXValue = xValues[i];
+                currentYValue = yValues[i];
+            }
+        }
+        return [aggregatedLabels, aggregatedData];
+    }
+
+    function handle_no_data(sectionIdNoData, loadingIconId) {     
+        document.getElementById(loadingIconId).style.display = "none";
+        document.getElementById(sectionIdNoData).style.visibility = "visible";
+        const sectionId = sectionIdNoData.replace("NoData", "");
+        document.getElementById(sectionId).style.display = "none";
+    }
+
+    async function getChartData(chart, from = 30) {
         let analyticsUrl = '/api/user/analytics?refresh=' + refresh + '&chart=';
         if (window.location.href.includes('team')) {
             analyticsUrl = '/api/team/analytics?refresh=' + refresh + '&chart=';
         }
         const response = await fetch(
-            analyticsUrl + chart + '&interval=' + interval);
+            analyticsUrl + chart + '&from=' + from);
         const data = await response.json();
         return data;
     }
@@ -98,6 +136,7 @@
                 }]
             },
             options: {
+                events: [],
                 maintainAspectRatio: false,
                 title: {
                 display: true,
@@ -157,15 +196,20 @@
         });
     }
 
-    getCharttData('total').then(data => {
+    getChartData('total').then(data => {
         const events = data.events;
+        if (!data.events || Object.entries(events.check).filter(([key, value]) => value > 0).length == 0) {
+            handle_no_data('activityChartWrapperNoData', 'loadingIconActivity');
+            return;
+        }
+
         const lastRefresh = data.events.last_refresh;
         let lastRefreshFormatted = moment(lastRefresh).fromNow();
-
         for (const [event, value] of Object.entries(events)) {
             if (event === 'check') {
                for (const [date, count] of Object.entries(value)) {
                     xValuesCheck.push(date);
+                    xValuesCheckIntervallWeek.push(moment(date).week());
                     yValuesCheck.push(count);
                 }
             } else if (event === 'ignore') {
@@ -224,12 +268,13 @@
             const changeInIgnorePercentage = (((totalWeeklyIgnore - totalWeeklyIgnorePrevious) / (totalWeeklyIgnorePrevious == 0 ? 1 : totalWeeklyIgnorePrevious)) * 100).toFixed(0);
             const changeInAlternativePercentage = (((totalWeeklyAlternative - totalWeeklyAlternativePrevious) / (totalWeeklyAlternativePrevious == 0 ? 1 : totalWeeklyAlternativePrevious)) * 100).toFixed(0);
 
-            
+            const aggregatedCheckChatData =  aggregate_chart_data_by_week(xValuesCheckIntervallWeek, yValuesCheck);
+
             document.getElementById("changeInLearningBitesPercentage").innerHTML = changeInLearningBitesPercentage >= 0 ? `+${changeInLearningBitesPercentage}%&nbsp;` : `${changeInLearningBitesPercentage}%&nbsp;`;
             document.getElementById("changeInPopoverPercentage").innerHTML = changeInPopoverPercentage >= 0 ? `+${changeInPopoverPercentage}%&nbsp;` : `${changeInPopoverPercentage}% &nbsp;`;
             document.getElementById("changeInIgnorePercentage").innerHTML = changeInIgnorePercentage >= 0 ? `+${changeInIgnorePercentage}%&nbsp;` : `${changeInIgnorePercentage}% &nbsp;`;
             document.getElementById("changeInAlternativePercentage").innerHTML = changeInAlternativePercentage >= 0 ? `+${changeInAlternativePercentage}%&nbsp;` : `${changeInAlternativePercentage}% &nbsp;`;
-            document.getElementById("checkDaysInRow").innerHTML = getWittyStreak(yValuesCheck) + '&nbsp';
+            document.getElementById("checkDaysInRow").innerHTML = getWittyStreak(aggregatedCheckChatData[1]) + '&nbsp';
 
             //updateSection function
             function updateSection() {
@@ -251,28 +296,28 @@
             new Chart("eventsChart", {
                 type: "line",
                 data: {
-                    labels: xValuesPopoverOpen,
+                    labels: aggregatedCheckChatData[0], 
                     datasets: [
                         {
-                            data: yValuesPopoverOpen,
+                            data: aggregate_chart_data_by_week(xValuesCheckIntervallWeek, yValuesPopoverOpen)[1],
                             borderColor: colors[6],
                             fill: false,
                             label: "{{ __('content.popover_label_line_chart') }}",
                         },
                         {
-                            data: yValuesAlternative,
+                            data: aggregate_chart_data_by_week(xValuesCheckIntervallWeek, yValuesAlternative)[1],
                             borderColor: colors[12],
                             fill: false,
                             label: "{{ __('content.alternative_label_line_chart') }}",
                         },
                         {
-                            data: yValuesIgnore,
+                            data: aggregate_chart_data_by_week(xValuesCheckIntervallWeek, yValuesIgnore)[1],
                             borderColor: colors[9],
                             fill: false,
                             label:  "{{ __('content.ignored_label_line_chart') }}",
                         },
                         {
-                            data: yValuesLearningBites,
+                            data: aggregate_chart_data_by_week(xValuesCheckIntervallWeek, yValuesLearningBites)[1],
                             borderColor: colors[3],
                             fill: false,
                             label: "{{ __('content.learning_bites_label_line_chart') }}",
@@ -280,6 +325,7 @@
                     ]
                 },
                 options: {
+                    events: ["click"],
                     title: {
                     display: true,
                     text: "{{ __('content.title_line_chart') }}",
@@ -338,11 +384,16 @@
             );
     
             document.getElementById("loadingIconActivity").style.display = "none";
+            document.getElementById("activityChartWrapperNoData").style.display = "none";
             document.getElementById("activityChartWrapper").style.visibility = "visible";
         }
     });
 
-    getCharttData('topSubcategories', 7).then(data => {
+    getChartData('topSubcategories', 7).then(data => {
+        if (!data || !data.events ) {
+            handle_no_data('topCategoriesChartWrapperNoData', 'loadingIconTopCatagories');
+            return;
+        }
         const openedWeek = Object.entries(data.events.popover_open).sort((a, b) => b[1] - a[1]).slice(0, 8);
         for (const [key, value] of openedWeek) {
             if (key && value) {
@@ -351,7 +402,11 @@
             }
         }
 
-        getCharttData('topSubcategories', 14).then(data => {
+        getChartData('topSubcategories', 14).then(data => {
+        if (!data || !data.events ) {
+            handle_no_data('topCategoriesChartWrapperNoData', 'loadingIconTopCatagories');
+            return;
+        }
         const openedTwoWeeks = data.events.popover_open;
         for (const [key, value] of Object.entries(openedTwoWeeks)) {
             if (!xTopSubCategoriesWeek.includes(key)) {
@@ -387,6 +442,7 @@
                 type: 'radar',
                     data: dataCategories,
                     options: {
+                        events: ["click"],
                         elements: {
                         line: {
                             borderWidth: 1
@@ -397,12 +453,17 @@
                 },
             });
             document.getElementById("loadingIconTopCatagories").style.display = "none";
+            document.getElementById("topCategoriesChartWrapperNoData").style.display = "none";
             document.getElementById("topCategoriesChartWrapper").style.visibility = "visible";
         });
     });
 
 
-    getCharttData('topSubcategories').then(data => {
+    getChartData('topSubcategories').then(data => {
+        if (!data || !data.events ) {
+            handle_no_data('topCategoriesChartWrapperNoData', 'loadingIconTopCatagories');
+            return;
+        }
         const ignored = data.events.ignore;
         const opened = data.events.popover_open;
         const alternative = data.events.alternative;
@@ -458,7 +519,11 @@
                          
     });
 
-    getCharttData('topWords', 7).then(data => {
+    getChartData('topWords', 7).then(data => {
+        if (!data || !data.events ) {
+            handle_no_data('topWordsChartWrapperNoData', 'loadingIconTopWords');
+            return;
+        }
         const xTopWordsWeek = [];
         const yTopWordsWeek = [];
         const yTopWordsTwoWeeks = [];
@@ -470,7 +535,11 @@
             }
         }
 
-        getCharttData('topWords', 14).then(data => {
+        getChartData('topWords', 14).then(data => {
+        if (!data || !data.events ) {
+            handle_no_data('topWordsChartWrapperNoData', 'loadingIconTopWords');
+            return;
+        }
         const openedTwoWeeks = data.events.popover_open;
         for (const [key, value] of Object.entries(openedTwoWeeks)) {
             if (!xTopWordsWeek.includes(key)) {
@@ -508,6 +577,7 @@
             type: 'radar',
             data: dataCategories,
             options: {
+                events: ["click"],
                 elements: {
                     line: {
                         borderWidth: 1
@@ -516,12 +586,17 @@
                 },
             });
             document.getElementById("loadingIconTopWords").style.display = "none";
+            document.getElementById("topWordsChartWrapperNoData").style.display = "none";
             document.getElementById("topWordsChartWrapper").style.visibility = "visible";
         });
     });
 
 
-    getCharttData('topWords').then(data => {
+    getChartData('topWords').then(data => {
+        if (!data || !data.events ) {
+            handle_no_data('topWordsChartWrapperNoData', 'loadingIconTopWords');
+            return;
+        }
         const ignored = data.events.ignore;
         const opened = data.events.popover_open;
         const alternative = data.events.alternative;
@@ -581,6 +656,14 @@ load_charts(false);
     <div class="wittyworks-navigation-wrapper">@livewire('navigation-menu')</div>
         <div class="wittyworks-page-wrapper">
             <div class="wittyworks-page lg:ml-20">
+                @if(isset($team) && !empty($team_edit))
+                <div>
+                    <div class="max-w-7xl mx-auto py-10">
+                        @livewire('teams.analytics-user-access', ['team' => $team])
+                    </div>
+                </div>
+                @endif
+                
                 <div id="lastRefresh" class="lato-small-text-p wittyworks-margin-right container-row" style="visibility: hidden; align-items: center;"></div>
                 <div class="ibarra-sub-title-h2">{{ __('content.activity') }}</div>
                 <div class="wittyworks-form-section container border-radius">
@@ -595,6 +678,13 @@ load_charts(false);
                             <div></div>
                             <div></div>
                             <div></div>
+                        </div>
+                    </div>
+                    <div id="activityChartWrapperNoData" style="visibility: hidden; width: 100%">
+                        <div class="lato-small-text-p">{{ __('content.no_data_events') }}</div>
+                        <div class="image-container">
+                            <img src="{{ url('svg/screenshots/activity.png') }}" alt="activity" class="image wittyworks-margin-top">
+                            <div class="centered-image-text">{{ __('content.no_data_image_text') }}</div>
                         </div>
                     </div>
                     <div id="activityChartWrapper" style="visibility: hidden; width: 100%">
@@ -672,6 +762,13 @@ load_charts(false);
                         </div>
                     </div>
 
+                    <div id="topCategoriesChartWrapperNoData" style="visibility: hidden; width: 100%">
+                        <div class="lato-small-text-p">{{ __('content.no_data_top_categories') }}</div>
+                        <div class="image-container">
+                            <img src="{{ url('svg/screenshots/top_categories.png') }}" alt="top_categories"  class="image wittyworks-margin-top">
+                            <div class="centered-image-text">{{ __('content.no_data_image_text') }}</div>
+                        </div>
+                    </div>
                     <div id="topCategoriesChartWrapper" style="visibility: hidden; width: 100%">
                         <div class="chart-container-row wittyworks-margin-top">
                             <canvas
@@ -712,6 +809,13 @@ load_charts(false);
                                 <div></div>
                                 <div></div>
                                 <div></div>
+                            </div>
+                        </div>
+                        <div id="topWordsChartWrapperNoData" style="visibility: hidden; width: 100%">
+                            <div class="lato-small-text-p">{{ __('content.no_data_top_words') }}</div>
+                            <div class="image-container">
+                                <img src="{{ url('svg/screenshots/top_words.png') }}" alt="top_words"  class="image wittyworks-margin-top">
+                                <div class="centered-image-text">{{ __('content.no_data_image_text') }}</div>
                             </div>
                         </div>
                         <div id="topWordsChartWrapper" style="visibility: hidden; width: 100%">
