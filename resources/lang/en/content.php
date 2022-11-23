@@ -264,4 +264,8 @@ Ask your team administrators to upgrade to <a href="https://www.witty.works/pric
     'alternative_label_line_chart_dau' => 'Addressed',
     'ignored_label_line_chart_dau' => 'Ignored',
     'learning_bites_label_line_chart_dau'  => 'Clicks on "Why?"',
+    'monday' => 'Monday',
+    'saturday' => 'Saturday',
+    'sunday' => 'Sunday',
+    'start_of_week' => 'Start of week: ',
 ];
