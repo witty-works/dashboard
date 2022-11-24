@@ -209,8 +209,8 @@ a {
 .max-width-80 {
     max-width: 80%;
 }
-.max-width-50 {
-    max-width: 55%;
+.max-width-60 {
+    max-width: 60%;
 }
 
 .max-width-40 {
@@ -694,12 +694,17 @@ input:checked+.slider:before {
 }
 
 .wittyworks-analytics-chart-large {
-    max-width: 400;
+    max-width: 300;
 }
 
 .wittyworks-analytics-chart-medium {
     max-width: 270px;
     min-width: 200px
+}
+
+.wittyworks-analytics-chart-medium-bar {
+    max-width: 220px;
+    max-height: 200px;
 }
 
 .wittyworks-analytics-chart-medium-radar {
@@ -717,7 +722,7 @@ input:checked+.slider:before {
     flex-direction: row !important;
     flex-wrap: wrap; 
     justify-content: space-evenly;
-  }
+}
 
 /* LOADING SPINNER */
 .lds-grid {
@@ -816,14 +821,6 @@ input:checked+.slider:before {
     justify-content: center;
     align-items: center;
     background-color: #f5f5f5;
-}
-
-.wittyworks-analytics-chart-large {
-    max-width: 50%;
-}
-
-.wittyworks-analytics-chart-small {
-    max-width: 300px;
 }
 
 .image-container {

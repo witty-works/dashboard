@@ -65,6 +65,8 @@
     const yValuesLearningBites = [];
     const yValuesLearningBitesWeek = [];
 
+    const yValuesDauUserCount = [];
+
     const xTopSubCategoriesWeek = [];
     const yTopSubCategoriesWeek = [];
     const yTopSubCategoriesTwoWeeks = [];
@@ -430,7 +432,6 @@
             );
 
             getChartData('dau', 30, 'week').then(data => {
-                console.log('dau', data);
         const events = data.events;
         if (!data.events || Object.entries(events.check).filter(([key, value]) => value > 0).length == 0) {
             handle_no_data('activityChartWrapperNoData', 'loadingIconActivity');
@@ -458,6 +459,10 @@
             } else if (event === 'learning_bites') {
                 for (const [date, count] of Object.entries(value)) {
                     yValuesDauLearningBites.push(count);
+                }
+            } else if (event === 'user_count') {
+                for (const [date, count] of Object.entries(value)) {
+                    yValuesDauUserCount.push(count);
                 }
             }
         }
@@ -489,6 +494,12 @@
                             borderColor: colors[3],
                             fill: false,
                             label: @json(__('content.learning_bites_label_line_chart_dau')),
+                        },
+                        {
+                            data: yValuesDauUserCount,
+                            borderColor: colors[2],
+                            fill: false,
+                            label: "{{ __('content.user_count_label_line_chart_dau') }}",
                         },
                     ]
                 },
@@ -865,7 +876,7 @@ load_charts(false, 1);
                         </div>
                     </div>
                     <div id="activityChartWrapper" style="visibility: hidden; width: 100%">
-                        <div class="container-row wittyworks-margin-top">
+                        <div class="container-row wittyworks-margin-top" style="justify-content: space-between ">
                             <div class="container-column" style="margin-left: 2em;">
                                 <div class="container-row" style="align-items: center">
                                     <div id="checkDaysInRow" class="lato-small-text-p"></div>
@@ -888,20 +899,20 @@ load_charts(false, 1);
                                     </div>                           
                                 </div>
                             </div>
+                            <div class="container-row wittyworks-margin-right">
+                                <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.start_of_week') }}</div>
+                                <div id="startOfWeekDropdown"></div>
+                            </div>
                         </div>
-                        <div class="container-row wittyworks-margin-top">
-                        <div class="lato-small-text-p margin-right">{{ __('content.start_of_week') }}</div>
-                            <div id="startOfWeekDropdown"></div>
-                        </div>
-                        <div class="container-row wittyworks-margin-top">
-                            <canvas id="eventsChart" class="wittyworks-analytics-chart-extra-large"></canvas>
-                        </div>
-                        @if(isset($team) && !empty($team_edit))
-                        <div class="container-row wittyworks-margin-top">
-                            <canvas id="dauChart" class="wittyworks-analytics-chart-extra-large"></canvas>
-                        </div>
-                        @endif
-                        <div class="container-row wittyworks-margin-top">
+                            <div class="container-row wittyworks-margin-top">
+                                <canvas id="eventsChart" class="wittyworks-analytics-chart-extra-large"></canvas>
+                            </div>
+                            @if(isset($team) && !empty($team_edit))
+                            <div class="container-row wittyworks-margin-top">
+                                <canvas id="dauChart" class="wittyworks-analytics-chart-extra-large"></canvas>
+                            </div>
+                            @endif
+                            <div class="container-row wittyworks-margin-top">
                             <canvas id="requestRatiosChartDoughnut" class="wittyworks-analytics-chart-medium" ></canvas>
                             @php
                                 $eventsCharts = ["eventsPopoverChart", "eventsAlternativeChart", "eventsIgnoreChart", "eventsLearningBitesChart"];

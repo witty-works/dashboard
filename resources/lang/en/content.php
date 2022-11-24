@@ -249,6 +249,7 @@ Ask your team administrators to upgrade to <a href="https://www.witty.works/pric
     'ignored_doughnut_chart_event_ratio' => 'Ignored',
     'alternative_doughnut_chart_event_ratio' => 'Addressed',
     'popover_closed_doughnut_chart_event_ratio' => 'Viewed',
+    'user_count_label_line_chart_dau' => 'User count',
     'title_categories_radar_chart_last_week' => 'Categories last week',
     'title_categories_radar_chart_current_week' => 'Categories current week',
     'title_categories_bar_chart_month' => 'Top categories viewed this month',
