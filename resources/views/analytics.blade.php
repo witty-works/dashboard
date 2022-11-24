@@ -270,11 +270,11 @@
 
             const aggregatedCheckChatData =  aggregate_chart_data_by_week(xValuesCheckIntervallWeek, yValuesCheck);
 
-            document.getElementById("changeInLearningBitesPercentage").innerHTML = changeInLearningBitesPercentage >= 0 ? `+${changeInLearningBitesPercentage}%&nbsp;` : `${changeInLearningBitesPercentage}%&nbsp;`;
-            document.getElementById("changeInPopoverPercentage").innerHTML = changeInPopoverPercentage >= 0 ? `+${changeInPopoverPercentage}%&nbsp;` : `${changeInPopoverPercentage}% &nbsp;`;
-            document.getElementById("changeInIgnorePercentage").innerHTML = changeInIgnorePercentage >= 0 ? `+${changeInIgnorePercentage}%&nbsp;` : `${changeInIgnorePercentage}% &nbsp;`;
-            document.getElementById("changeInAlternativePercentage").innerHTML = changeInAlternativePercentage >= 0 ? `+${changeInAlternativePercentage}%&nbsp;` : `${changeInAlternativePercentage}% &nbsp;`;
-            document.getElementById("checkDaysInRow").innerHTML = getWittyStreak(aggregatedCheckChatData[1]) + '&nbsp';
+            document.getElementById("checkDaysInRow").innerHTML =  '{{ __('content.writing_streak') }}' + '&nbsp; <span class="lato-small-paragraph-title-h4-purple">' +  getWittyStreak(aggregatedCheckChatData[1]) + '&nbsp</span>' + '{{ __('content.in_a_row') }}';
+            document.getElementById("changeInLearningBitesPercentage").innerHTML =  '{{ __('content.you_clicked') }}' + '&nbsp; <span class="lato-small-paragraph-title-h4-purple">' + changeInLearningBitesPercentage + '%</span>&nbsp;' + (changeInLearningBitesPercentage >= 0 ? '{{ __('content.learning_bites_requests_week_positive') }}' : '{{ __('content.learning_bites_requests_week_negative') }}');
+            document.getElementById("changeInPopoverPercentage").innerHTML =  '{{ __('content.you_clicked') }}' + '&nbsp; <span class="lato-small-paragraph-title-h4-purple">' + changeInPopoverPercentage + '%</span>&nbsp;' + (changeInPopoverPercentage >= 0 ? '{{ __('content.popover_open_week_positive') }}' : '{{ __('content.popover_open_week_negative') }}');
+            document.getElementById("changeInAlternativePercentage").innerHTML =  '{{ __('content.you_selected') }}' + '&nbsp; <span class="lato-small-paragraph-title-h4-purple">' + changeInAlternativePercentage + '%</span>&nbsp;' + (changeInAlternativePercentage >= 0 ? '{{ __('content.alternative_clicked_week_positive') }}' : '{{ __('content.alternative_clicked_week_negative') }}');
+            document.getElementById("changeInIgnorePercentage").innerHTML =  '{{ __('content.you_ignored') }}' + '&nbsp; <span class="lato-small-paragraph-title-h4-purple">' + changeInIgnorePercentage + '%</span>&nbsp;' + (changeInIgnorePercentage >= 0 ? '{{ __('content.ignored_words_week_positive') }}' : '{{ __('content.ignored_words_week_negative') }}');
 
             //updateSection function
             function updateSection() {
@@ -292,7 +292,10 @@
                 updateSection()
             }, 30000);
             document.getElementById('lastRefresh').style.visibility = 'visible';
-
+            // const title = '{{ __('content.title_line_chart') }}';
+            //turn title into utf8
+            // const titleUtf8 = decodeURI(title);
+            // console.log(titleUtf8);
             new Chart("eventsChart", {
                 type: "line",
                 data: {
@@ -320,7 +323,7 @@
                             data: aggregate_chart_data_by_week(xValuesCheckIntervallWeek, yValuesLearningBites)[1],
                             borderColor: colors[3],
                             fill: false,
-                            label: "{{ __('content.learning_bites_label_line_chart') }}",
+                            label:  @json(__('content.learning_bites_label_line_chart')),
                         },
                     ]
                 },
@@ -328,7 +331,7 @@
                     events: ["click"],
                     title: {
                     display: true,
-                    text: "{{ __('content.title_line_chart') }}",
+                    text:  @json(__('content.title_line_chart')),
                     fontSize: 16,
                     fontStyle: 'normal'
                     }
@@ -691,40 +694,25 @@ load_charts(false);
                         <div class="container-row wittyworks-margin-top">
                             <div class="container-column" style="margin-left: 2em;">
                                 <div class="container-row" style="align-items: center">
-                                    <div id="checkDaysInRow" class="ibarra-sub-title-h2-purple"></div>
-                                    <div class="lato-small-text-p">{{ __('content.writing_streak') }}</div>
+                                    <div id="checkDaysInRow" class="lato-small-text-p"></div>
                                 </div>
-
-                                <div class="container-row  wittyworks-margin-top" >
-                                    <div
-                                        id="changeInLearningBitesPercentage"
-                                        class="lato-small-paragraph-title-h4-purple">
-                                    </div>
-                                    <div class="lato-small-text-p">{{ __('content.learning_bites_requests_week') }}</div>
+                                <div class="container-row" >
+                                    <div id="changeInLearningBitesPercentage" class="lato-small-text-p"></div>
                                 </div>
                                 
                                 <div class="container-row" >
-                                    <div id="changeInPopoverPercentage"
-                                        class="lato-small-paragraph-title-h4-purple">
-                                    </div>
-                                    <div class="lato-small-text-p">{{ __('content.popover_open_week') }}</div>
+                                    <div id="changeInPopoverPercentage" class="lato-small-text-p"></div>
                                 </div>
 
                                 <div class="container-row" >
-                                    <div id="changeInAlternativePercentage"
-                                        class="lato-small-paragraph-title-h4-purple">
-                                    </div>
-                                    <div class="lato-small-text-p">{{ __('content.alternative_clicked_week') }}</div>
+                                    <div id="changeInAlternativePercentage" class="lato-small-text-p"></div>
                                 </div>
 
                                 <div class="container-row">
                                     <div
-                                        id="changeInIgnorePercentage"
-                                        class="lato-small-paragraph-title-h4-purple">
-                                    </div>
-                                    <div class="lato-small-text-p margin-bottom">{{ __('content.ignored_words_week') }}</div>
+                                        id="changeInIgnorePercentage" class="lato-small-text-p">
+                                    </div>                           
                                 </div>
-                                
                             </div>
                             <canvas
                                 id="requestRatiosChartDoughnut"
@@ -770,6 +758,12 @@ load_charts(false);
                         </div>
                     </div>
                     <div id="topCategoriesChartWrapper" style="visibility: hidden; width: 100%">
+                        <div class="container-row wittyworks-margin-top">
+                            <canvas
+                                id="topSubCategoriesChart"
+                                class="wittyworks-analytics-chart-top wittyworks-margin-top">
+                            </canvas>
+                        </div>
                         <div class="chart-container-row wittyworks-margin-top">
                             <canvas
                                 id="categoriesRadar"
@@ -786,12 +780,6 @@ load_charts(false);
                                     class="wittyworks-analytics-chart-medium">
                                 </canvas>
                             </div>
-                        </div>
-                        <div class="container-row wittyworks-margin-top">
-                            <canvas
-                                id="topSubCategoriesChart"
-                                class="wittyworks-analytics-chart-top wittyworks-margin-top">
-                            </canvas>
                         </div>
                     </div>
                 </div>
@@ -819,6 +807,12 @@ load_charts(false);
                             </div>
                         </div>
                         <div id="topWordsChartWrapper" style="visibility: hidden; width: 100%">
+                            <div class="container-row wittyworks-margin-top">
+                                <canvas
+                                    id="topWordsChart"
+                                    class="wittyworks-analytics-chart-top wittyworks-margin-top">
+                                </canvas>
+                            </div>
                             <div class="chart-container-row wittyworks-margin-top">
                                 <canvas
                                     id="wordsRadar"
@@ -834,12 +828,6 @@ load_charts(false);
                                         class="wittyworks-analytics-chart-medium">
                                     </canvas>
                                 </div>
-                            </div>
-                            <div class="container-row wittyworks-margin-top">
-                                <canvas
-                                    id="topWordsChart"
-                                    class="wittyworks-analytics-chart-top wittyworks-margin-top">
-                                </canvas>
                             </div>
                         </div>
                     </div>
