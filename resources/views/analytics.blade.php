@@ -2,7 +2,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js" rossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
-    function load_charts(refresh) {
+    function load_charts(refresh, startOfWeek) {
         if (refresh) {
             document.getElementById('lastRefresh').style.visibility = 'hidden';
             document.getElementById("loadingIconActivity").style.display = "flex";
@@ -291,7 +291,7 @@
             if (event === 'check') {
                for (const [date, count] of Object.entries(value)) {
                     xValuesCheck.push(date);
-                    xValuesCheckIntervallWeek.push(moment(date).week());
+                    xValuesCheckIntervallWeek.push(moment(date).startOf('week').isoWeekday(startOfWeek).week());
                     yValuesCheck.push(count);
                 }
             } else if (event === 'ignore') {
@@ -358,12 +358,27 @@
             document.getElementById("changeInAlternativePercentage").innerHTML = changeInAlternativePercentage >= 0 ? `+${changeInAlternativePercentage}%&nbsp;` : `${changeInAlternativePercentage}% &nbsp;`;
             document.getElementById("checkDaysInRow").innerHTML = getWittyStreak(aggregatedCheckChatData[1]) + '&nbsp';
 
+            //insert drowdown with two options to id startOfWeekDropdown
+            const startOfWeekDropdown = document.getElementById("startOfWeekDropdown").innerHTML = `<select id="startOfWeek" class="dropdown" onchange="load_charts(true, this.value)">
+                <option value="1">{{ __('content.monday') }}</option>
+                <option value="6">{{ __('content.saturday') }}</option>
+                <option value="7">{{ __('content.sunday') }}</option>
+            </select>`;
+
+            const weekdayOptions = document.getElementById("startOfWeek").options;
+            //go through weekdayOptions and see if value is equal to startOfWeek
+            for (let i = 0; i < weekdayOptions.length; i++) {
+                if (weekdayOptions[i].value == startOfWeek) {
+                    weekdayOptions[i].selected = true;
+                }
+            }
+
             //updateSection function
             function updateSection() {
                 const lastRefreshMinutes = Math.floor((new Date() - lastRefresh) / 60000);
                 lastRefreshFormatted = moment(lastRefresh).fromNow();
                 if (lastRefreshMinutes >= 3) {
-                    return document.getElementById("lastRefresh").innerHTML = '{{ __('content.last_refreshed') }} &nbsp;' + lastRefreshFormatted + '&nbsp; &nbsp; <a class="button primary-button-red" onclick="load_charts(true)">{{ __('content.refresh_data') }}</a>';
+                    return document.getElementById("lastRefresh").innerHTML = '{{ __('content.last_refreshed') }} &nbsp;' + lastRefreshFormatted + '&nbsp; &nbsp; <a class="button primary-button-red" onclick="load_charts(true, startOfWeek)">{{ __('content.refresh_data') }}</a>';
                 } else {
                     return document.getElementById("lastRefresh").innerHTML = '{{ __('content.last_refreshed') }} &nbsp;' + lastRefreshFormatted;
                 }
@@ -758,7 +773,7 @@
         );
     });
 };
-load_charts(false);
+load_charts(false, 1);
 </script>
 
 <x-app-layout>
@@ -841,6 +856,10 @@ load_charts(false);
                                 class="wittyworks-analytics-chart-medium"
                                 style="margin-left: auto;">
                             </canvas>
+                        </div>
+                        <div class="container-row wittyworks-margin-top">
+                        <div class="lato-small-text-p margin-right">{{ __('content.start_of_week') }}</div>
+                            <div id="startOfWeekDropdown"></div>
                         </div>
                         <div class="container-row wittyworks-margin-top">
                             <canvas id="eventsChart" class="wittyworks-analytics-chart-extra-large"></canvas>
