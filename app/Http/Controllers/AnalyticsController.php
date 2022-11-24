@@ -196,16 +196,55 @@ class AnalyticsController extends Controller
 
     protected function fetchJson(Request $request, $properties)
     {
+        $from = "-30d";
         $interval = $this->fetchInterval($request);
-        $from = $this->fetchFrom($request);
         $chart = $request->get('chart');
+
+        $filterField = 'response__data__category';
+        $filters = $this->fetchCategoryFilters($request);
+        if (empty($filters)) {
+            $filters = $this->fetchSubcategoryFilters($request);
+            $filterField = 'response__data__subcategory';
+        }
+
+        if (!empty($filters)) {
+            $filterType = $this->fetchFilterType($request);
+
+            foreach ($filters as $filter) {
+                $values[] = [
+                    'key' => $filterField,
+                    'value' => $filter,
+                    'operator' => $filterType,
+                    'type' => 'event',
+                ];
+            }
+
+            if ($filterType === 'is_not' || count($values) === 1) {
+                $properties['values'] = array_merge($properties['values'], $values);
+            } else {
+                $properties['values'] = [
+                    'type' => 'AND',
+                    'values' => [
+                        [
+                            'type' => 'AND',
+                            'values' => $properties['values'],
+                        ],
+                        [
+                            'type' => 'OR',
+                            'values' => $values,
+                        ]
+                    ],
+                ];
+            }
+        }
+
         switch ($chart) {
             case 'dau':
-                $events = ['check', 'popover_open', 'alternative', 'ignore', 'learning_bites'];
+                $events = ['check', 'popover_open', 'alternative', 'ignore', 'popover_close', 'learning_bites'];
                 $data = $this->fetchEventData($events, $properties, $interval, $from, 'dau');
                 break;
             case 'total':
-                $events = ['check', 'popover_open', 'alternative', 'ignore', 'learning_bites'];
+                $events = ['check', 'popover_open', 'alternative', 'ignore', 'popover_close', 'learning_bites'];
                 $data = $this->fetchEventData($events, $properties, $interval, $from);
                 break;
             case 'topSubcategories':
@@ -238,17 +277,28 @@ class AnalyticsController extends Controller
         return response()->json($data);
     }
 
+    protected function fetchFilterType(Request $request)
+    {
+        return $request->get('filter_type', 'exact');
+    }
+
+    protected function fetchSubcategoryFilters(Request $request)
+    {
+        return $request->get('subcategory_filters', []);
+    }
+
+    protected function fetchCategoryFilters(Request $request)
+    {
+        return $request->get('category_filters', []);
+    }
+
+    protected function fetchOrthography(Request $request)
+    {
+        return $request->get('orthography', true);
+    }
+
     protected function fetchInterval(Request $request)
     {
         return $request->get('interval', 'day');
-    }
-
-    protected function fetchFrom(Request $request)
-    {
-        $maxFrom = 30;
-        $from = $request->get('from', $maxFrom);
-        $from = min($maxFrom, $from);
-
-        return "-{$from}d";
     }
 }
