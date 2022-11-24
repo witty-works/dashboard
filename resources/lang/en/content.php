@@ -248,6 +248,7 @@ Ask your team administrators to upgrade to <a href="https://www.witty.works/pric
     'popover_doughnut_chart_event_ratio' => 'Viewed',
     'ignored_doughnut_chart_event_ratio' => 'Ignored',
     'alternative_doughnut_chart_event_ratio' => 'Addressed',
+    'popover_closed_doughnut_chart_event_ratio' => 'Viewed',
     'title_categories_radar_chart_last_week' => 'Categories last week',
     'title_categories_radar_chart_current_week' => 'Categories current week',
     'title_categories_bar_chart_month' => 'Top categories viewed this month',
@@ -276,4 +277,5 @@ Ask your team administrators to upgrade to <a href="https://www.witty.works/pric
     'saturday' => 'Saturday',
     'sunday' => 'Sunday',
     'start_of_week' => 'Start of week: ',
+    'popover_closed_doughnut_chart_event_ratio' => 'Viewed',
 ];

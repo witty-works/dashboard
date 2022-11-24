@@ -49,6 +49,9 @@
     const yValuesPopoverOpen = [];
     const yValuesPopoverOpenWeek = [];
 
+    const xValuesPopoverClose = [];
+    const yValuesPopoverClose = [];
+
     const xValuesIgnore = [];
     const xValuesIgnoreIntervallWeek = [];
     const yValuesIgnore = [];
@@ -218,81 +221,6 @@
                 }
         });
     }
-    getChartData('dau', 30, 'week').then(data => {
-        const events = data.events;
-        if (!data.events || Object.entries(events.check).filter(([key, value]) => value > 0).length == 0) {
-            handle_no_data('activityChartWrapperNoData', 'loadingIconActivity');
-            return;
-        }
-
-        for (const [event, value] of Object.entries(events)) {
-            if (event === 'check') {
-               for (const [date, count] of Object.entries(value)) {
-                    xIntervallDauWeek.push(date);
-                    yValuesDauCheck.push(count);
-                }
-            } else if (event === 'ignore') {
-                for (const [date, count] of Object.entries(value)) {
-                    yValuesDauIgnore.push(count);
-                }
-            } else if (event === 'alternative') {
-                for (const [date, count] of Object.entries(value)) {
-                    yValuesDauAlternative.push(count);
-                }
-            } else if (event === 'popover_open') {
-                for (const [date, count] of Object.entries(value)) {
-                    yValuesDauPopoverOpen.push(count);
-                }
-            } else if (event === 'learning_bites') {
-                for (const [date, count] of Object.entries(value)) {
-                    yValuesDauLearningBites.push(count);
-                }
-            }
-        }
-
-        new Chart("dauChart", {
-                type: "line",
-                data: {
-                    labels: xIntervallDauWeek, 
-                    datasets: [
-                        {
-                            data: yValuesDauPopoverOpen,
-                            borderColor: colors[6],
-                            fill: false,
-                            label: "{{ __('content.popover_label_line_chart_dau') }}",
-                        },
-                        {
-                            data: yValuesDauAlternative,
-                            borderColor: colors[12],
-                            fill: false,
-                            label: "{{ __('content.alternative_label_line_chart_dau') }}",
-                        },
-                        {
-                            data: yValuesDauIgnore,
-                            borderColor: colors[9],
-                            fill: false,
-                            label:  "{{ __('content.ignored_label_line_chart_dau') }}",
-                        },
-                        {
-                            data: yValuesDauLearningBites,
-                            borderColor: colors[3],
-                            fill: false,
-                            label: "{{ __('content.learning_bites_label_line_chart_dau') }}",
-                        },
-                    ]
-                },
-                options: {
-                    events: ["click"],
-                    title: {
-                    display: true,
-                    text: "{{ __('content.title_line_chart_dau') }}",
-                    fontSize: 16,
-                    fontStyle: 'normal'
-                    }
-                }
-            });
-
-    });
 
     getChartData('total').then(data => {
         const events = data.events;
@@ -330,6 +258,11 @@
                     xValuesLearningBites.push(date);
                     yValuesLearningBites.push(count);
                 }
+            } else if (event === 'popover_close') {
+                for (const [date, count] of Object.entries(value)) {
+                    xValuesPopoverClose.push(date);
+                    yValuesPopoverClose.push(count);
+                }
             }
 
             //CURRENT WEEK
@@ -338,6 +271,7 @@
             const yValuesPopoverOpenWeek = yValuesPopoverOpen.slice(-7);
             const yValuesIgnoreWeek = yValuesIgnore.slice(-7);
             const yValuesAlternativeWeek = yValuesAlternative.slice(-7);
+            const yValuesPopoverCloseWeek = yValuesPopoverClose.slice(-7);
 
             //PREVIOUS WEEK
             const yValuesLearningBitesWeekPrevious = yValuesLearningBites.slice(-14, -7);
@@ -347,11 +281,12 @@
             const yValuesAlternativeWeekPrevious = yValuesAlternative.slice(-14, -7);
             
             //TOTAL WEEK
-            const totalWeeklyLearningBites = yValuesLearningBites.map(Number).reduce((a, b) => a + b, 0);
+            const totalWeeklyLearningBites = yValuesLearningBitesWeek.map(Number).reduce((a, b) => a + b, 0);
             const totalWeeklyPopoverOpen = yValuesPopoverOpenWeek.map(Number).reduce((a, b) => a + b, 0);
             const totalWeeklyIgnore = yValuesIgnoreWeek.map(Number).reduce((a, b) => a + b, 0);
             const totalWeeklyAlternative = yValuesAlternativeWeek.map(Number).reduce((a, b) => a + b, 0);
-            const weeklyEvents = [totalWeeklyLearningBites, totalWeeklyPopoverOpen, totalWeeklyIgnore, totalWeeklyAlternative];
+            const totalWeeklyPopoverClose = yValuesPopoverCloseWeek.map(Number).reduce((a, b) => a + b, 0);
+            const weeklyEvents = [totalWeeklyIgnore, totalWeeklyAlternative, totalWeeklyPopoverClose];
 
             //TOTAL WEEK PREVIOUS
             const totalWeeklyLearningBitesPrevious = yValuesLearningBitesWeekPrevious.map(Number).reduce((a, b) => a + b, 0);
@@ -486,18 +421,95 @@
             createDoughnutChart(
                 "requestRatiosChartDoughnut",
                 [
-                "{{ __('content.learning_bites_doughnut_chart_event_ratio') }}",
-                "{{ __('content.popover_doughnut_chart_event_ratio') }}",
                 "{{ __('content.ignored_doughnut_chart_event_ratio') }}",
-                "{{ __('content.alternative_doughnut_chart_event_ratio') }}"
+                "{{ __('content.alternative_doughnut_chart_event_ratio') }}",
+                "{{ __('content.popover_closed_doughnut_chart_event_ratio') }}"
                 ],
                 weeklyEvents,
                 "{{ __('content.title_doughnut_chart_event_ratio') }}",
             );
-    
+
+            getChartData('dau', 30, 'week').then(data => {
+                console.log('dau', data);
+        const events = data.events;
+        if (!data.events || Object.entries(events.check).filter(([key, value]) => value > 0).length == 0) {
+            handle_no_data('activityChartWrapperNoData', 'loadingIconActivity');
+            return;
+        }
+
+        for (const [event, value] of Object.entries(events)) {
+            if (event === 'check') {
+               for (const [date, count] of Object.entries(value)) {
+                    xIntervallDauWeek.push(date);
+                    yValuesDauCheck.push(count);
+                }
+            } else if (event === 'ignore') {
+                for (const [date, count] of Object.entries(value)) {
+                    yValuesDauIgnore.push(count);
+                }
+            } else if (event === 'alternative') {
+                for (const [date, count] of Object.entries(value)) {
+                    yValuesDauAlternative.push(count);
+                }
+            } else if (event === 'popover_open') {
+                for (const [date, count] of Object.entries(value)) {
+                    yValuesDauPopoverOpen.push(count);
+                }
+            } else if (event === 'learning_bites') {
+                for (const [date, count] of Object.entries(value)) {
+                    yValuesDauLearningBites.push(count);
+                }
+            }
+        }
+            new Chart("dauChart", {
+                type: "line",
+                data: {
+                    labels: aggregatedCheckChatData[0],  //untill posthog offers select start of week
+                    datasets: [
+                        {
+                            data: yValuesDauPopoverOpen,
+                            borderColor: colors[6],
+                            fill: false,
+                            label: "{{ __('content.popover_label_line_chart_dau') }}",
+                        },
+                        {
+                            data: yValuesDauAlternative,
+                            borderColor: colors[12],
+                            fill: false,
+                            label: "{{ __('content.alternative_label_line_chart_dau') }}",
+                        },
+                        {
+                            data: yValuesDauIgnore,
+                            borderColor: colors[9],
+                            fill: false,
+                            label:  "{{ __('content.ignored_label_line_chart_dau') }}",
+                        },
+                        {
+                            data: yValuesDauLearningBites,
+                            borderColor: colors[3],
+                            fill: false,
+                            label: @json(__('content.learning_bites_label_line_chart_dau')),
+                        },
+                    ]
+                },
+                options: {
+                    events: [],
+                    animation: {
+                        duration: 0
+                    },
+                    title: {
+                    display: true,
+                    text: "{{ __('content.title_line_chart_dau') }}",
+                    fontSize: 16,
+                    fontStyle: 'normal'
+                    }
+                }
+            });
             document.getElementById("loadingIconActivity").style.display = "none";
             document.getElementById("activityChartWrapperNoData").style.display = "none";
             document.getElementById("activityChartWrapper").style.visibility = "visible";
+        });
+ 
         }
     });
 
@@ -890,17 +902,13 @@ load_charts(false, 1);
                         </div>
                         @endif
                         <div class="container-row wittyworks-margin-top">
+                            <canvas id="requestRatiosChartDoughnut" class="wittyworks-analytics-chart-medium" ></canvas>
                             @php
                                 $eventsCharts = ["eventsPopoverChart", "eventsAlternativeChart", "eventsIgnoreChart", "eventsLearningBitesChart"];
                                 for ($i = 0; $i < count($eventsCharts); $i++) {
                                     echo '<canvas id="' . $eventsCharts[$i] . '" style="max-width: 190px" class="wittyworks-analytics-chart-small wittyworks-margin-right" ></canvas>';
                                 }
                             @endphp
-                            <canvas
-                                id="requestRatiosChartDoughnut"
-                                class="wittyworks-analytics-chart-medium"
-                                style="margin-left: auto;">
-                            </canvas>
                         </div>
                     </div>
                 </div>
@@ -929,7 +937,7 @@ load_charts(false, 1);
                         </div>
                     </div>
                     <div id="topCategoriesChartWrapper" style="visibility: hidden; width: 100%">
-                        <div class="container-row wittyworks-margin-top">
+                        <div class="chart-container-row wittyworks-margin-top">
                             <canvas
                                 id="topSubCategoriesChart"
                                 class="wittyworks-analytics-chart-top-categories wittyworks-margin-top">

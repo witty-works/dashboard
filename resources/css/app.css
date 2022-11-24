@@ -209,6 +209,13 @@ a {
 .max-width-80 {
     max-width: 80%;
 }
+.max-width-50 {
+    max-width: 55%;
+}
+
+.max-width-40 {
+    max-width: 40%;
+}
 
 .border-radius-top {
     border-top-left-radius: 8px;
@@ -450,6 +457,7 @@ input:checked+.slider:before {
     border: 1px solid transparent;
     border-radius: 10px;
     margin-top: 1em;
+    max-width: 1536px; 
 
     background: linear-gradient(96.78deg,
             #fef7f8 -6.3%,
@@ -693,6 +701,7 @@ input:checked+.slider:before {
     max-width: 270px;
     min-width: 200px
 }
+
 .wittyworks-analytics-chart-medium-radar {
     max-width: 550px;
     min-width: 300px;
