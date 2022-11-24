@@ -683,6 +683,7 @@ load_charts(false);
     <div class="wittyworks-navigation-wrapper">@livewire('navigation-menu')</div>
         <div class="wittyworks-page-wrapper">
             <div class="wittyworks-page lg:ml-20">
+                @include('partials.banners')
                 @if(isset($team) && !empty($team_edit))
                 <div>
                     <div class="max-w-7xl mx-auto py-10">
