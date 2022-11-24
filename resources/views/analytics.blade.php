@@ -49,6 +49,9 @@
     const yValuesPopoverOpen = [];
     const yValuesPopoverOpenWeek = [];
 
+    const xValuesPopoverClose = [];
+    const yValuesPopoverClose = [];
+
     const xValuesIgnore = [];
     const xValuesIgnoreIntervallWeek = [];
     const yValuesIgnore = [];
@@ -61,6 +64,8 @@
     const xValuesLearningBites = [];
     const yValuesLearningBites = [];
     const yValuesLearningBitesWeek = [];
+
+    const yValuesDauUserCount = [];
 
     const xTopSubCategoriesWeek = [];
     const yTopSubCategoriesWeek = [];
@@ -80,9 +85,7 @@
     const xValuesTopWordsAlternative = [];
     const yValuesTopWordsAlternative = [];
 
-    Chart.defaults.global.defaultFontFamily = 'Lato';
     Chart.defaults.global.defaultFontColor = '#000000';
-
     function getWittyStreak (yValuesCheck) {
         let checkWeeksInRow = 0;
         for (let i = yValuesCheck.length - 1; i >= 0; i--) {
@@ -149,7 +152,10 @@
                 display: true,
                 text: text,
                 fontSize: 16,
-                fontStyle: 'normal'
+                fontStyle: 'normal',
+                font: {
+                    family: "Lato",
+                },
                 },
                 scales:{
                     xAxes: [{
@@ -193,90 +199,30 @@
                 },
                 options: {
                     legend: {display: false},
+                    //tooltip color
+                    tooltips: {
+                    yAlign: 'bottom',
+                    callbacks: {
+                        labelColor: function(tooltipItem, chart) {
+                            return {
+                                backgroundColor: chart.data.datasets[tooltipItem.datasetIndex].backgroundColor[tooltipItem.index],
+                                fontColor: "red",
+
+                            }
+                        },
+                    },
+                    backgroundColor: '#ffffff',
+                    bodyFontColor: '#000000',                    
+                },
                     title: {
                     display: true,
                     text: text,
                     fontSize: 16,
-                    fontStyle: 'normal'
+                    fontStyle: 'normal',
                     }
                 }
         });
     }
-    getChartData('dau', 30, 'week').then(data => {
-        const events = data.events;
-        if (!data.events || Object.entries(events.check).filter(([key, value]) => value > 0).length == 0) {
-            handle_no_data('activityChartWrapperNoData', 'loadingIconActivity');
-            return;
-        }
-
-        for (const [event, value] of Object.entries(events)) {
-            if (event === 'check') {
-               for (const [date, count] of Object.entries(value)) {
-                    xIntervallDauWeek.push(date);
-                    yValuesDauCheck.push(count);
-                }
-            } else if (event === 'ignore') {
-                for (const [date, count] of Object.entries(value)) {
-                    yValuesDauIgnore.push(count);
-                }
-            } else if (event === 'alternative') {
-                for (const [date, count] of Object.entries(value)) {
-                    yValuesDauAlternative.push(count);
-                }
-            } else if (event === 'popover_open') {
-                for (const [date, count] of Object.entries(value)) {
-                    yValuesDauPopoverOpen.push(count);
-                }
-            } else if (event === 'learning_bites') {
-                for (const [date, count] of Object.entries(value)) {
-                    yValuesDauLearningBites.push(count);
-                }
-            }
-        }
-
-        new Chart("dauChart", {
-                type: "line",
-                data: {
-                    labels: xIntervallDauWeek, 
-                    datasets: [
-                        {
-                            data: yValuesDauPopoverOpen,
-                            borderColor: colors[6],
-                            fill: false,
-                            label: "{{ __('content.popover_label_line_chart_dau') }}",
-                        },
-                        {
-                            data: yValuesDauAlternative,
-                            borderColor: colors[12],
-                            fill: false,
-                            label: "{{ __('content.alternative_label_line_chart_dau') }}",
-                        },
-                        {
-                            data: yValuesDauIgnore,
-                            borderColor: colors[9],
-                            fill: false,
-                            label:  "{{ __('content.ignored_label_line_chart_dau') }}",
-                        },
-                        {
-                            data: yValuesDauLearningBites,
-                            borderColor: colors[3],
-                            fill: false,
-                            label: "{{ __('content.learning_bites_label_line_chart_dau') }}",
-                        },
-                    ]
-                },
-                options: {
-                    events: ["click"],
-                    title: {
-                    display: true,
-                    text: "{{ __('content.title_line_chart_dau') }}",
-                    fontSize: 16,
-                    fontStyle: 'normal'
-                    }
-                }
-            });
-
-    });
 
     getChartData('total').then(data => {
         const events = data.events;
@@ -314,6 +260,11 @@
                     xValuesLearningBites.push(date);
                     yValuesLearningBites.push(count);
                 }
+            } else if (event === 'popover_close') {
+                for (const [date, count] of Object.entries(value)) {
+                    xValuesPopoverClose.push(date);
+                    yValuesPopoverClose.push(count);
+                }
             }
 
             //CURRENT WEEK
@@ -322,6 +273,7 @@
             const yValuesPopoverOpenWeek = yValuesPopoverOpen.slice(-7);
             const yValuesIgnoreWeek = yValuesIgnore.slice(-7);
             const yValuesAlternativeWeek = yValuesAlternative.slice(-7);
+            const yValuesPopoverCloseWeek = yValuesPopoverClose.slice(-7);
 
             //PREVIOUS WEEK
             const yValuesLearningBitesWeekPrevious = yValuesLearningBites.slice(-14, -7);
@@ -331,11 +283,12 @@
             const yValuesAlternativeWeekPrevious = yValuesAlternative.slice(-14, -7);
             
             //TOTAL WEEK
-            const totalWeeklyLearningBites = yValuesLearningBites.map(Number).reduce((a, b) => a + b, 0);
+            const totalWeeklyLearningBites = yValuesLearningBitesWeek.map(Number).reduce((a, b) => a + b, 0);
             const totalWeeklyPopoverOpen = yValuesPopoverOpenWeek.map(Number).reduce((a, b) => a + b, 0);
             const totalWeeklyIgnore = yValuesIgnoreWeek.map(Number).reduce((a, b) => a + b, 0);
             const totalWeeklyAlternative = yValuesAlternativeWeek.map(Number).reduce((a, b) => a + b, 0);
-            const weeklyEvents = [totalWeeklyLearningBites, totalWeeklyPopoverOpen, totalWeeklyIgnore, totalWeeklyAlternative];
+            const totalWeeklyPopoverClose = yValuesPopoverCloseWeek.map(Number).reduce((a, b) => a + b, 0);
+            const weeklyEvents = [totalWeeklyIgnore, totalWeeklyAlternative, totalWeeklyPopoverClose];
 
             //TOTAL WEEK PREVIOUS
             const totalWeeklyLearningBitesPrevious = yValuesLearningBitesWeekPrevious.map(Number).reduce((a, b) => a + b, 0);
@@ -352,11 +305,11 @@
 
             const aggregatedCheckChatData =  aggregate_chart_data_by_week(xValuesCheckIntervallWeek, yValuesCheck);
 
-            document.getElementById("changeInLearningBitesPercentage").innerHTML = changeInLearningBitesPercentage >= 0 ? `+${changeInLearningBitesPercentage}%&nbsp;` : `${changeInLearningBitesPercentage}%&nbsp;`;
-            document.getElementById("changeInPopoverPercentage").innerHTML = changeInPopoverPercentage >= 0 ? `+${changeInPopoverPercentage}%&nbsp;` : `${changeInPopoverPercentage}% &nbsp;`;
-            document.getElementById("changeInIgnorePercentage").innerHTML = changeInIgnorePercentage >= 0 ? `+${changeInIgnorePercentage}%&nbsp;` : `${changeInIgnorePercentage}% &nbsp;`;
-            document.getElementById("changeInAlternativePercentage").innerHTML = changeInAlternativePercentage >= 0 ? `+${changeInAlternativePercentage}%&nbsp;` : `${changeInAlternativePercentage}% &nbsp;`;
-            document.getElementById("checkDaysInRow").innerHTML = getWittyStreak(aggregatedCheckChatData[1]) + '&nbsp';
+            document.getElementById("checkDaysInRow").innerHTML =  '{{ __('content.writing_streak') }}' + '&nbsp; <span class="lato-small-paragraph-title-h4-purple">' +  getWittyStreak(aggregatedCheckChatData[1]) + '&nbsp</span>' + '{{ __('content.in_a_row') }}';
+            document.getElementById("changeInLearningBitesPercentage").innerHTML =  '{{ __('content.you_clicked') }}' + '&nbsp; <span class="lato-small-paragraph-title-h4-purple">' + changeInLearningBitesPercentage + '%</span>&nbsp;' + (changeInLearningBitesPercentage >= 0 ? '{{ __('content.learning_bites_requests_week_positive') }}' : '{{ __('content.learning_bites_requests_week_negative') }}');
+            document.getElementById("changeInPopoverPercentage").innerHTML =  '{{ __('content.you_clicked') }}' + '&nbsp; <span class="lato-small-paragraph-title-h4-purple">' + changeInPopoverPercentage + '%</span>&nbsp;' + (changeInPopoverPercentage >= 0 ? '{{ __('content.popover_open_week_positive') }}' : '{{ __('content.popover_open_week_negative') }}');
+            document.getElementById("changeInAlternativePercentage").innerHTML =  '{{ __('content.you_selected') }}' + '&nbsp; <span class="lato-small-paragraph-title-h4-purple">' + changeInAlternativePercentage + '%</span>&nbsp;' + (changeInAlternativePercentage >= 0 ? '{{ __('content.alternative_clicked_week_positive') }}' : '{{ __('content.alternative_clicked_week_negative') }}');
+            document.getElementById("changeInIgnorePercentage").innerHTML =  '{{ __('content.you_ignored') }}' + '&nbsp; <span class="lato-small-paragraph-title-h4-purple">' + changeInIgnorePercentage + '%</span>&nbsp;' + (changeInIgnorePercentage >= 0 ? '{{ __('content.ignored_words_week_positive') }}' : '{{ __('content.ignored_words_week_negative') }}');
 
             //insert drowdown with two options to id startOfWeekDropdown
             const startOfWeekDropdown = document.getElementById("startOfWeekDropdown").innerHTML = `<select id="startOfWeek" class="dropdown" onchange="load_charts(true, this.value)">
@@ -389,7 +342,6 @@
                 updateSection()
             }, 30000);
             document.getElementById('lastRefresh').style.visibility = 'visible';
-
             new Chart("eventsChart", {
                 type: "line",
                 data: {
@@ -417,15 +369,15 @@
                             data: aggregate_chart_data_by_week(xValuesCheckIntervallWeek, yValuesLearningBites)[1],
                             borderColor: colors[3],
                             fill: false,
-                            label: "{{ __('content.learning_bites_label_line_chart') }}",
+                            label:  @json(__('content.learning_bites_label_line_chart')),
                         },
                     ]
                 },
                 options: {
-                    events: ["click"],
+                    events: [],
                     title: {
                     display: true,
-                    text: "{{ __('content.title_line_chart') }}",
+                    text:  @json(__('content.title_line_chart')),
                     fontSize: 16,
                     fontStyle: 'normal'
                     }
@@ -471,18 +423,104 @@
             createDoughnutChart(
                 "requestRatiosChartDoughnut",
                 [
-                "{{ __('content.learning_bites_doughnut_chart_event_ratio') }}",
-                "{{ __('content.popover_doughnut_chart_event_ratio') }}",
                 "{{ __('content.ignored_doughnut_chart_event_ratio') }}",
-                "{{ __('content.alternative_doughnut_chart_event_ratio') }}"
+                "{{ __('content.alternative_doughnut_chart_event_ratio') }}",
+                "{{ __('content.popover_closed_doughnut_chart_event_ratio') }}"
                 ],
                 weeklyEvents,
                 "{{ __('content.title_doughnut_chart_event_ratio') }}",
             );
-    
+
+            getChartData('dau', 30, 'week').then(data => {
+        const events = data.events;
+        if (!data.events || Object.entries(events.check).filter(([key, value]) => value > 0).length == 0) {
+            handle_no_data('activityChartWrapperNoData', 'loadingIconActivity');
+            return;
+        }
+
+        for (const [event, value] of Object.entries(events)) {
+            if (event === 'check') {
+               for (const [date, count] of Object.entries(value)) {
+                    xIntervallDauWeek.push(date);
+                    yValuesDauCheck.push(count);
+                }
+            } else if (event === 'ignore') {
+                for (const [date, count] of Object.entries(value)) {
+                    yValuesDauIgnore.push(count);
+                }
+            } else if (event === 'alternative') {
+                for (const [date, count] of Object.entries(value)) {
+                    yValuesDauAlternative.push(count);
+                }
+            } else if (event === 'popover_open') {
+                for (const [date, count] of Object.entries(value)) {
+                    yValuesDauPopoverOpen.push(count);
+                }
+            } else if (event === 'learning_bites') {
+                for (const [date, count] of Object.entries(value)) {
+                    yValuesDauLearningBites.push(count);
+                }
+            } else if (event === 'user_count') {
+                for (const [date, count] of Object.entries(value)) {
+                    yValuesDauUserCount.push(count);
+                }
+            }
+        }
+            new Chart("dauChart", {
+                type: "line",
+                data: {
+                    labels: aggregatedCheckChatData[0],  //untill posthog offers select start of week
+                    datasets: [
+                        {
+                            data: yValuesDauPopoverOpen,
+                            borderColor: colors[6],
+                            fill: false,
+                            label: "{{ __('content.popover_label_line_chart_dau') }}",
+                        },
+                        {
+                            data: yValuesDauAlternative,
+                            borderColor: colors[12],
+                            fill: false,
+                            label: "{{ __('content.alternative_label_line_chart_dau') }}",
+                        },
+                        {
+                            data: yValuesDauIgnore,
+                            borderColor: colors[9],
+                            fill: false,
+                            label:  "{{ __('content.ignored_label_line_chart_dau') }}",
+                        },
+                        {
+                            data: yValuesDauLearningBites,
+                            borderColor: colors[3],
+                            fill: false,
+                            label: @json(__('content.learning_bites_label_line_chart_dau')),
+                        },
+                        {
+                            data: yValuesDauUserCount,
+                            borderColor: colors[2],
+                            fill: false,
+                            label: "{{ __('content.user_count_label_line_chart_dau') }}",
+                        },
+                    ]
+                },
+                options: {
+                    events: [],
+                    animation: {
+                        duration: 0
+                    },
+                    title: {
+                    display: true,
+                    text: "{{ __('content.title_line_chart_dau') }}",
+                    fontSize: 16,
+                    fontStyle: 'normal'
+                    }
+                }
+            });
             document.getElementById("loadingIconActivity").style.display = "none";
             document.getElementById("activityChartWrapperNoData").style.display = "none";
             document.getElementById("activityChartWrapper").style.visibility = "visible";
+        });
+ 
         }
     });
 
@@ -545,8 +583,20 @@
                         line: {
                             borderWidth: 1
                         },
-                        opacity: 0.5
-
+                        opacity: 0.5,
+                        scales:{
+                            yAxes: [{
+                                ticks: {
+                                    min: 0,
+                                    beginAtZero: true,
+                                    callback: function(value, index, values) {
+                                        if (Math.floor(value) === value) {
+                                            return value;
+                                        }
+                                    }
+                                }
+                            }],
+                        },
                     }
                 },
             });
@@ -708,6 +758,19 @@
                         }
                     }
                 },
+                scales:{
+                    yAxes: [{
+                        ticks: {
+                            min: 0,
+                            beginAtZero: true,
+                            callback: function(value, index, values) {
+                            if (Math.floor(value) === value) {
+                            return value;
+                        }
+                    }
+                }
+            }],
+        },                
             });
             document.getElementById("loadingIconTopWords").style.display = "none";
             document.getElementById("topWordsChartWrapperNoData").style.display = "none";
@@ -783,7 +846,7 @@ load_charts(false, 1);
                 @include('partials.banners')
                 @if(isset($team) && !empty($team_edit))
                 <div>
-                    <div class="max-w-7xl mx-auto py-10">
+                    <div>
                         @livewire('teams.analytics-user-access', ['team' => $team])
                     </div>
                 </div>
@@ -813,63 +876,44 @@ load_charts(false, 1);
                         </div>
                     </div>
                     <div id="activityChartWrapper" style="visibility: hidden; width: 100%">
-                        <div class="container-row wittyworks-margin-top">
+                        <div class="container-row wittyworks-margin-top" style="justify-content: space-between ">
                             <div class="container-column" style="margin-left: 2em;">
                                 <div class="container-row" style="align-items: center">
-                                    <div id="checkDaysInRow" class="ibarra-sub-title-h2-purple"></div>
-                                    <div class="lato-small-text-p">{{ __('content.writing_streak') }}</div>
+                                    <div id="checkDaysInRow" class="lato-small-text-p"></div>
                                 </div>
-
-                                <div class="container-row  wittyworks-margin-top" >
-                                    <div
-                                        id="changeInLearningBitesPercentage"
-                                        class="lato-small-paragraph-title-h4-purple">
-                                    </div>
-                                    <div class="lato-small-text-p">{{ __('content.learning_bites_requests_week') }}</div>
+                                <div class="container-row" >
+                                    <div id="changeInLearningBitesPercentage" class="lato-small-text-p"></div>
                                 </div>
                                 
                                 <div class="container-row" >
-                                    <div id="changeInPopoverPercentage"
-                                        class="lato-small-paragraph-title-h4-purple">
-                                    </div>
-                                    <div class="lato-small-text-p">{{ __('content.popover_open_week') }}</div>
+                                    <div id="changeInPopoverPercentage" class="lato-small-text-p"></div>
                                 </div>
 
                                 <div class="container-row" >
-                                    <div id="changeInAlternativePercentage"
-                                        class="lato-small-paragraph-title-h4-purple">
-                                    </div>
-                                    <div class="lato-small-text-p">{{ __('content.alternative_clicked_week') }}</div>
+                                    <div id="changeInAlternativePercentage" class="lato-small-text-p"></div>
                                 </div>
 
                                 <div class="container-row">
                                     <div
-                                        id="changeInIgnorePercentage"
-                                        class="lato-small-paragraph-title-h4-purple">
-                                    </div>
-                                    <div class="lato-small-text-p margin-bottom">{{ __('content.ignored_words_week') }}</div>
+                                        id="changeInIgnorePercentage" class="lato-small-text-p">
+                                    </div>                           
                                 </div>
-                                
                             </div>
-                            <canvas
-                                id="requestRatiosChartDoughnut"
-                                class="wittyworks-analytics-chart-medium"
-                                style="margin-left: auto;">
-                            </canvas>
+                            <div class="container-row wittyworks-margin-right">
+                                <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.start_of_week') }}</div>
+                                <div id="startOfWeekDropdown"></div>
+                            </div>
                         </div>
-                        <div class="container-row wittyworks-margin-top">
-                        <div class="lato-small-text-p margin-right">{{ __('content.start_of_week') }}</div>
-                            <div id="startOfWeekDropdown"></div>
-                        </div>
-                        <div class="container-row wittyworks-margin-top">
-                            <canvas id="eventsChart" class="wittyworks-analytics-chart-extra-large"></canvas>
-                        </div>
-                        @if(isset($team) && !empty($team_edit))
-                        <div class="container-row wittyworks-margin-top">
-                            <canvas id="dauChart" class="wittyworks-analytics-chart-extra-large"></canvas>
-                        </div>
-                        @endif
-                        <div class="container-row wittyworks-margin-top">
+                            <div class="container-row wittyworks-margin-top">
+                                <canvas id="eventsChart" class="wittyworks-analytics-chart-extra-large"></canvas>
+                            </div>
+                            @if(isset($team) && !empty($team_edit))
+                            <div class="container-row wittyworks-margin-top">
+                                <canvas id="dauChart" class="wittyworks-analytics-chart-extra-large"></canvas>
+                            </div>
+                            @endif
+                            <div class="container-row wittyworks-margin-top">
+                            <canvas id="requestRatiosChartDoughnut" class="wittyworks-analytics-chart-medium" ></canvas>
                             @php
                                 $eventsCharts = ["eventsPopoverChart", "eventsAlternativeChart", "eventsIgnoreChart", "eventsLearningBitesChart"];
                                 for ($i = 0; $i < count($eventsCharts); $i++) {
@@ -906,11 +950,17 @@ load_charts(false, 1);
                     <div id="topCategoriesChartWrapper" style="visibility: hidden; width: 100%">
                         <div class="chart-container-row wittyworks-margin-top">
                             <canvas
-                                id="categoriesRadar"
-                                class="wittyworks-analytics-chart-medium-radar"
-                            >
+                                id="topSubCategoriesChart"
+                                class="wittyworks-analytics-chart-top-categories wittyworks-margin-top">
                             </canvas>
-                            <div class="container-column">
+                            <div id="categoryOverview" class="wittyworks-margin-left wittyworks-margin-top"></div>
+                        </div>
+                        <div class="chart-container-row wittyworks-margin-top">
+                            <canvas
+                                id="categoriesRadar"
+                                class="wittyworks-analytics-chart-medium-radar">
+                            </canvas>
+                            <div class="container-column max-width-30">
                                 <canvas
                                     id="topSubCategoriesOpenedChartDoughnut"
                                     class="wittyworks-analytics-chart-medium">
@@ -920,13 +970,6 @@ load_charts(false, 1);
                                     class="wittyworks-analytics-chart-medium">
                                 </canvas>
                             </div>
-                        </div>
-                        <div class="container-row wittyworks-margin-top">
-                            <canvas
-                                id="topSubCategoriesChart"
-                                class="wittyworks-analytics-chart-top-categories wittyworks-margin-top">
-                            </canvas>
-                            <div id="categoryOverview" class="wittyworks-margin-left wittyworks-margin-top"></div>
                         </div>
                     </div>
                 </div>
@@ -954,32 +997,30 @@ load_charts(false, 1);
                             </div>
                         </div>
                         <div id="topWordsChartWrapper" style="visibility: hidden; width: 100%">
-                            <div class="chart-container-row wittyworks-margin-top">
-                                <canvas
-                                    id="wordsRadar"
-                                    class="wittyworks-analytics-chart-medium-radar">
-                                </canvas>
-                                <div class="container-column">
-                                     <canvas
-                                        id="topWordsChartDoughnut"
-                                        class="wittyworks-analytics-chart-medium">
-                                    </canvas>
-                                    <canvas
-                                        id="topWordsChartDoughnutWeek"
-                                        class="wittyworks-analytics-chart-medium">
-                                    </canvas>
-                                </div>
-                            </div>
                             <div class="container-row wittyworks-margin-top">
                                 <canvas
                                     id="topWordsChart"
-                                    class="wittyworks-analytics-chart-top wittyworks-margin-top">
+                                    class="wittyworks-analytics-chart-extra-large wittyworks-margin-top">
+                                </canvas>
+                            </div>
+                            <div class="chart-container-row wittyworks-margin-top">
+                            <canvas
+                                id="wordsRadar"
+                                class="wittyworks-analytics-chart-medium-radar">
+                            </canvas>
+                            <div class="container-column max-width-30">
+                                <canvas
+                                    id="topWordsChartDoughnut"
+                                    class="wittyworks-analytics-chart-medium">
+                                </canvas>
+                                <canvas
+                                    id="topWordsChartDoughnutWeek"
+                                    class="wittyworks-analytics-chart-medium">
                                 </canvas>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>

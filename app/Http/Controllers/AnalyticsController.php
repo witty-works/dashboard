@@ -242,6 +242,10 @@ class AnalyticsController extends Controller
             case 'dau':
                 $events = ['check', 'popover_open', 'alternative', 'ignore', 'popover_close', 'learning_bites'];
                 $data = $this->fetchEventData($events, $properties, $interval, $from, 'dau');
+                foreach ($data['events']['check'] as $day => $value) {
+                    $data['events']['user_count'][$day] = $request->user()->currentTeam->getTotalUserCount();
+                }
+
                 break;
             case 'total':
                 $events = ['check', 'popover_open', 'alternative', 'ignore', 'popover_close', 'learning_bites'];

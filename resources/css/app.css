@@ -196,14 +196,25 @@ a {
     align-items: baseline
   }
 
-  .container-column {
+.container-column {
     display: flex;
     flex-direction: column !important;
     flex-wrap: wrap;
-  }
+}
 
+
+.max-width-30 {
+    max-width: 30%;
+}
 .max-width-80 {
     max-width: 80%;
+}
+.max-width-60 {
+    max-width: 60%;
+}
+
+.max-width-40 {
+    max-width: 40%;
 }
 
 .border-radius-top {
@@ -446,6 +457,7 @@ input:checked+.slider:before {
     border: 1px solid transparent;
     border-radius: 10px;
     margin-top: 1em;
+    max-width: 1536px; 
 
     background: linear-gradient(96.78deg,
             #fef7f8 -6.3%,
@@ -671,11 +683,6 @@ input:checked+.slider:before {
 
 /* ANALYTICS */
 .wittyworks-analytics-chart-extra-large {
-    max-width: 1000px;
-}
-
-.wittyworks-analytics-chart-top {
-    max-width: 1000px;
     max-height: 500px;
     min-height: 300px;
 }
@@ -687,14 +694,22 @@ input:checked+.slider:before {
 }
 
 .wittyworks-analytics-chart-large {
-    max-width: 400;
+    max-width: 300;
 }
 
 .wittyworks-analytics-chart-medium {
-    max-width: 410px;
+    max-width: 270px;
+    min-width: 200px
 }
+
+.wittyworks-analytics-chart-medium-bar {
+    max-width: 220px;
+    max-height: 200px;
+}
+
 .wittyworks-analytics-chart-medium-radar {
-    max-width: 500px;
+    max-width: 550px;
+    min-width: 300px;
 }
 .wittyworks-analytics-chart-small {
     max-width: 195px;
@@ -706,8 +721,8 @@ input:checked+.slider:before {
     display: flex;
     flex-direction: row !important;
     flex-wrap: wrap; 
-    justify-content: flex-start
-  }
+    justify-content: space-evenly;
+}
 
 /* LOADING SPINNER */
 .lds-grid {
@@ -806,16 +821,6 @@ input:checked+.slider:before {
     justify-content: center;
     align-items: center;
     background-color: #f5f5f5;
-}
-
-.wittyworks-analytics-chart-large {
-    max-width: 1000px;
-}
-.wittyworks-analytics-chart-medium {
-    max-width: 450px;
-}
-.wittyworks-analytics-chart-small {
-    max-width: 300px;
 }
 
 .image-container {
