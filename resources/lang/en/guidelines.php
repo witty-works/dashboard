@@ -111,4 +111,7 @@ only the gender ending (e.g. "Mitarbeiter*in"), the female and male form (e.g. "
     'team_analytics' => 'Participate',
     'user_access_to_team_analytics' => 'user access to team analytics',
     'user_access_to_team_analytics_description' => 'user access to team analytics description',
+    'domain_error' => 'domain error',
+    'false_positive_error' => 'false positive error',
+    'term_replacement_error' => 'term replacement error',
 ];
