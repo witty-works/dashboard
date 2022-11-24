@@ -86,17 +86,12 @@ class Form extends Component
 
         if (!empty($termReplacement)) {
             if ($this->team->id !== $termReplacement->team_id) {
-                $message = __(
-                    'guidelines.term_replacement_error',
-                );
+                $message = __('guidelines.term_replacement_error');
                 throw ValidationException::withMessages(['term' => $message]);
             }
         } else {
             if ($this->team->getTermReplacementsLimitReached()) {
-                $message = __(
-                    'guidelines.term_replacement_limit_reached_error',
-                    ['max_count' => $this->team->getTermReplacementsCount()]
-                );
+                $message = __('guidelines.term_replacement_limit_reached_error', ['max_count' => $this->team->getTermReplacementsCount()]);
                 throw ValidationException::withMessages(['term' => $message]);
             }
 
