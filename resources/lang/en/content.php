@@ -267,4 +267,13 @@ Ask your team administrators to upgrade to <a href="https://www.witty.works/pric
     'no_data_top_words' => 'No data available for your top words. Some more text about this and what the user has to do.',
     'no_data_image_text' => 'Image text',
     'week' => 'Week',
+    'title_line_chart_dau' => 'Daily active users',
+    'popover_label_line_chart_dau' => 'Viewed',
+    'alternative_label_line_chart_dau' => 'Addressed',
+    'ignored_label_line_chart_dau' => 'Ignored',
+    'learning_bites_label_line_chart_dau'  => 'Clicks on "Why?"',
+    'monday' => 'Monday',
+    'saturday' => 'Saturday',
+    'sunday' => 'Sunday',
+    'start_of_week' => 'Start of week: ',
 ];

@@ -2,7 +2,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js" rossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
-    function load_charts(refresh) {
+    function load_charts(refresh, startOfWeek) {
         if (refresh) {
             document.getElementById('lastRefresh').style.visibility = 'hidden';
             document.getElementById("loadingIconActivity").style.display = "flex";
@@ -32,6 +32,13 @@
         "#d4d0f1",
         "#dfdcf4",
     ];
+
+    const xIntervallDauWeek = [];
+    const yValuesDauCheck = [];
+    const yValuesDauIgnore = [];
+    const yValuesDauAlternative = [];
+    const yValuesDauPopoverOpen = [];
+    const yValuesDauLearningBites = []; 
 
     const xValuesCheck = [];
     const xValuesCheckIntervallWeek = [];
@@ -111,13 +118,13 @@
         document.getElementById(sectionId).style.display = "none";
     }
 
-    async function getChartData(chart, from = 30) {
+    async function getChartData(chart, from = 30, interval = 'day') {
         let analyticsUrl = '/api/user/analytics?refresh=' + refresh + '&chart=';
         if (window.location.href.includes('team')) {
             analyticsUrl = '/api/team/analytics?refresh=' + refresh + '&chart=';
         }
         const response = await fetch(
-            analyticsUrl + chart + '&from=' + from);
+            analyticsUrl + chart + '&from=' + from + '&interval=' + interval);
         const data = await response.json();
         return data;
     }
@@ -211,6 +218,81 @@
                 }
         });
     }
+    getChartData('dau', 30, 'week').then(data => {
+        const events = data.events;
+        if (!data.events || Object.entries(events.check).filter(([key, value]) => value > 0).length == 0) {
+            handle_no_data('activityChartWrapperNoData', 'loadingIconActivity');
+            return;
+        }
+
+        for (const [event, value] of Object.entries(events)) {
+            if (event === 'check') {
+               for (const [date, count] of Object.entries(value)) {
+                    xIntervallDauWeek.push(date);
+                    yValuesDauCheck.push(count);
+                }
+            } else if (event === 'ignore') {
+                for (const [date, count] of Object.entries(value)) {
+                    yValuesDauIgnore.push(count);
+                }
+            } else if (event === 'alternative') {
+                for (const [date, count] of Object.entries(value)) {
+                    yValuesDauAlternative.push(count);
+                }
+            } else if (event === 'popover_open') {
+                for (const [date, count] of Object.entries(value)) {
+                    yValuesDauPopoverOpen.push(count);
+                }
+            } else if (event === 'learning_bites') {
+                for (const [date, count] of Object.entries(value)) {
+                    yValuesDauLearningBites.push(count);
+                }
+            }
+        }
+
+        new Chart("dauChart", {
+                type: "line",
+                data: {
+                    labels: xIntervallDauWeek, 
+                    datasets: [
+                        {
+                            data: yValuesDauPopoverOpen,
+                            borderColor: colors[6],
+                            fill: false,
+                            label: "{{ __('content.popover_label_line_chart_dau') }}",
+                        },
+                        {
+                            data: yValuesDauAlternative,
+                            borderColor: colors[12],
+                            fill: false,
+                            label: "{{ __('content.alternative_label_line_chart_dau') }}",
+                        },
+                        {
+                            data: yValuesDauIgnore,
+                            borderColor: colors[9],
+                            fill: false,
+                            label:  "{{ __('content.ignored_label_line_chart_dau') }}",
+                        },
+                        {
+                            data: yValuesDauLearningBites,
+                            borderColor: colors[3],
+                            fill: false,
+                            label: "{{ __('content.learning_bites_label_line_chart_dau') }}",
+                        },
+                    ]
+                },
+                options: {
+                    events: ["click"],
+                    title: {
+                    display: true,
+                    text: "{{ __('content.title_line_chart_dau') }}",
+                    fontSize: 16,
+                    fontStyle: 'normal'
+                    }
+                }
+            });
+
+    });
 
     getChartData('total').then(data => {
         const events = data.events;
@@ -225,7 +307,7 @@
             if (event === 'check') {
                for (const [date, count] of Object.entries(value)) {
                     xValuesCheck.push(date);
-                    xValuesCheckIntervallWeek.push(moment(date).week());
+                    xValuesCheckIntervallWeek.push(moment(date).startOf('week').isoWeekday(startOfWeek).week());
                     yValuesCheck.push(count);
                 }
             } else if (event === 'ignore') {
@@ -292,12 +374,27 @@
             document.getElementById("changeInAlternativePercentage").innerHTML =  '{{ __('content.you_selected') }}' + '&nbsp; <span class="lato-small-paragraph-title-h4-purple">' + changeInAlternativePercentage + '%</span>&nbsp;' + (changeInAlternativePercentage >= 0 ? '{{ __('content.alternative_clicked_week_positive') }}' : '{{ __('content.alternative_clicked_week_negative') }}');
             document.getElementById("changeInIgnorePercentage").innerHTML =  '{{ __('content.you_ignored') }}' + '&nbsp; <span class="lato-small-paragraph-title-h4-purple">' + changeInIgnorePercentage + '%</span>&nbsp;' + (changeInIgnorePercentage >= 0 ? '{{ __('content.ignored_words_week_positive') }}' : '{{ __('content.ignored_words_week_negative') }}');
 
+            //insert drowdown with two options to id startOfWeekDropdown
+            const startOfWeekDropdown = document.getElementById("startOfWeekDropdown").innerHTML = `<select id="startOfWeek" class="dropdown" onchange="load_charts(true, this.value)">
+                <option value="1">{{ __('content.monday') }}</option>
+                <option value="6">{{ __('content.saturday') }}</option>
+                <option value="7">{{ __('content.sunday') }}</option>
+            </select>`;
+
+            const weekdayOptions = document.getElementById("startOfWeek").options;
+            //go through weekdayOptions and see if value is equal to startOfWeek
+            for (let i = 0; i < weekdayOptions.length; i++) {
+                if (weekdayOptions[i].value == startOfWeek) {
+                    weekdayOptions[i].selected = true;
+                }
+            }
+
             //updateSection function
             function updateSection() {
                 const lastRefreshMinutes = Math.floor((new Date() - lastRefresh) / 60000);
                 lastRefreshFormatted = moment(lastRefresh).fromNow();
                 if (lastRefreshMinutes >= 3) {
-                    return document.getElementById("lastRefresh").innerHTML = '{{ __('content.last_refreshed') }} &nbsp;' + lastRefreshFormatted + '&nbsp; &nbsp; <a class="button primary-button-red" onclick="load_charts(true)">{{ __('content.refresh_data') }}</a>';
+                    return document.getElementById("lastRefresh").innerHTML = '{{ __('content.last_refreshed') }} &nbsp;' + lastRefreshFormatted + '&nbsp; &nbsp; <a class="button primary-button-red" onclick="load_charts(true, startOfWeek)">{{ __('content.refresh_data') }}</a>';
                 } else {
                     return document.getElementById("lastRefresh").innerHTML = '{{ __('content.last_refreshed') }} &nbsp;' + lastRefreshFormatted;
                 }
@@ -716,13 +813,14 @@
         );
     });
 };
-load_charts(false);
+load_charts(false, 1);
 </script>
 
 <x-app-layout>
     <div class="wittyworks-navigation-wrapper">@livewire('navigation-menu')</div>
         <div class="wittyworks-page-wrapper">
             <div class="wittyworks-page lg:ml-20">
+                @include('partials.banners')
                 @if(isset($team) && !empty($team_edit))
                 <div>
                     <div>
@@ -780,8 +878,17 @@ load_charts(false);
                             </div>
                         </div>
                         <div class="container-row wittyworks-margin-top">
+                        <div class="lato-small-text-p margin-right">{{ __('content.start_of_week') }}</div>
+                            <div id="startOfWeekDropdown"></div>
+                        </div>
+                        <div class="container-row wittyworks-margin-top">
                             <canvas id="eventsChart" class="wittyworks-analytics-chart-extra-large"></canvas>
                         </div>
+                        @if(isset($team) && !empty($team_edit))
+                        <div class="container-row wittyworks-margin-top">
+                            <canvas id="dauChart" class="wittyworks-analytics-chart-extra-large"></canvas>
+                        </div>
+                        @endif
                         <div class="container-row wittyworks-margin-top">
                             @php
                                 $eventsCharts = ["eventsPopoverChart", "eventsAlternativeChart", "eventsIgnoreChart", "eventsLearningBitesChart"];

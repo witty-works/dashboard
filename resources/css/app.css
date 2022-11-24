@@ -193,6 +193,7 @@ a {
     display: flex;
     flex-direction: row !important;
     flex-wrap: wrap; 
+    align-items: baseline
   }
 
 .container-column {
@@ -844,6 +845,10 @@ input:checked+.slider:before {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+  }
+
+  .dropdown {
+    border-radius: 8px;
   }
 
   .link-box {
