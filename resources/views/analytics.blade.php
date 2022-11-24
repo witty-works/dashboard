@@ -73,9 +73,7 @@
     const xValuesTopWordsAlternative = [];
     const yValuesTopWordsAlternative = [];
 
-    Chart.defaults.global.defaultFontFamily = 'Lato';
     Chart.defaults.global.defaultFontColor = '#000000';
-
     function getWittyStreak (yValuesCheck) {
         let checkWeeksInRow = 0;
         for (let i = yValuesCheck.length - 1; i >= 0; i--) {
@@ -142,7 +140,10 @@
                 display: true,
                 text: text,
                 fontSize: 16,
-                fontStyle: 'normal'
+                fontStyle: 'normal',
+                font: {
+                    family: "Lato",
+                },
                 },
                 scales:{
                     xAxes: [{
@@ -186,11 +187,26 @@
                 },
                 options: {
                     legend: {display: false},
+                    //tooltip color
+                    tooltips: {
+                    yAlign: 'bottom',
+                    callbacks: {
+                        labelColor: function(tooltipItem, chart) {
+                            return {
+                                backgroundColor: chart.data.datasets[tooltipItem.datasetIndex].backgroundColor[tooltipItem.index],
+                                fontColor: "red",
+
+                            }
+                        },
+                    },
+                    backgroundColor: '#ffffff',
+                    bodyFontColor: '#000000',                    
+                },
                     title: {
                     display: true,
                     text: text,
                     fontSize: 16,
-                    fontStyle: 'normal'
+                    fontStyle: 'normal',
                     }
                 }
         });
@@ -292,10 +308,6 @@
                 updateSection()
             }, 30000);
             document.getElementById('lastRefresh').style.visibility = 'visible';
-            // const title = '{{ __('content.title_line_chart') }}';
-            //turn title into utf8
-            // const titleUtf8 = decodeURI(title);
-            // console.log(titleUtf8);
             new Chart("eventsChart", {
                 type: "line",
                 data: {
@@ -328,7 +340,7 @@
                     ]
                 },
                 options: {
-                    events: ["click"],
+                    events: [],
                     title: {
                     display: true,
                     text:  @json(__('content.title_line_chart')),
@@ -451,8 +463,20 @@
                         line: {
                             borderWidth: 1
                         },
-                        opacity: 0.5
-
+                        opacity: 0.5,
+                        scales:{
+                            yAxes: [{
+                                ticks: {
+                                    min: 0,
+                                    beginAtZero: true,
+                                    callback: function(value, index, values) {
+                                        if (Math.floor(value) === value) {
+                                            return value;
+                                        }
+                                    }
+                                }
+                            }],
+                        },
                     }
                 },
             });
@@ -614,6 +638,19 @@
                         }
                     }
                 },
+                scales:{
+                    yAxes: [{
+                        ticks: {
+                            min: 0,
+                            beginAtZero: true,
+                            callback: function(value, index, values) {
+                            if (Math.floor(value) === value) {
+                            return value;
+                        }
+                    }
+                }
+            }],
+        },                
             });
             document.getElementById("loadingIconTopWords").style.display = "none";
             document.getElementById("topWordsChartWrapperNoData").style.display = "none";
@@ -688,7 +725,7 @@ load_charts(false);
             <div class="wittyworks-page lg:ml-20">
                 @if(isset($team) && !empty($team_edit))
                 <div>
-                    <div class="max-w-7xl mx-auto py-10">
+                    <div>
                         @livewire('teams.analytics-user-access', ['team' => $team])
                     </div>
                 </div>
@@ -741,11 +778,6 @@ load_charts(false);
                                     </div>                           
                                 </div>
                             </div>
-                            <canvas
-                                id="requestRatiosChartDoughnut"
-                                class="wittyworks-analytics-chart-medium"
-                                style="margin-left: auto;">
-                            </canvas>
                         </div>
                         <div class="container-row wittyworks-margin-top">
                             <canvas id="eventsChart" class="wittyworks-analytics-chart-extra-large"></canvas>
@@ -757,6 +789,11 @@ load_charts(false);
                                     echo '<canvas id="' . $eventsCharts[$i] . '" style="max-width: 190px" class="wittyworks-analytics-chart-small wittyworks-margin-right" ></canvas>';
                                 }
                             @endphp
+                            <canvas
+                                id="requestRatiosChartDoughnut"
+                                class="wittyworks-analytics-chart-medium"
+                                style="margin-left: auto;">
+                            </canvas>
                         </div>
                     </div>
                 </div>
@@ -788,16 +825,16 @@ load_charts(false);
                         <div class="container-row wittyworks-margin-top">
                             <canvas
                                 id="topSubCategoriesChart"
-                                class="wittyworks-analytics-chart-top wittyworks-margin-top">
+                                class="wittyworks-analytics-chart-top-categories wittyworks-margin-top">
                             </canvas>
+                            <div id="categoryOverview" class="wittyworks-margin-left wittyworks-margin-top"></div>
                         </div>
                         <div class="chart-container-row wittyworks-margin-top">
                             <canvas
                                 id="categoriesRadar"
-                                class="wittyworks-analytics-chart-medium-radar"
-                            >
+                                class="wittyworks-analytics-chart-medium-radar">
                             </canvas>
-                            <div class="container-column">
+                            <div class="container-column max-width-30">
                                 <canvas
                                     id="topSubCategoriesOpenedChartDoughnut"
                                     class="wittyworks-analytics-chart-medium">
@@ -807,13 +844,6 @@ load_charts(false);
                                     class="wittyworks-analytics-chart-medium">
                                 </canvas>
                             </div>
-                        </div>
-                        <div class="container-row wittyworks-margin-top">
-                            <canvas
-                                id="topSubCategoriesChart"
-                                class="wittyworks-analytics-chart-top-categories wittyworks-margin-top">
-                            </canvas>
-                            <div id="categoryOverview" class="wittyworks-margin-left wittyworks-margin-top"></div>
                         </div>
                     </div>
                 </div>
@@ -844,29 +874,27 @@ load_charts(false);
                             <div class="container-row wittyworks-margin-top">
                                 <canvas
                                     id="topWordsChart"
-                                    class="wittyworks-analytics-chart-top wittyworks-margin-top">
+                                    class="wittyworks-analytics-chart-extra-large wittyworks-margin-top">
                                 </canvas>
                             </div>
                             <div class="chart-container-row wittyworks-margin-top">
+                            <canvas
+                                id="wordsRadar"
+                                class="wittyworks-analytics-chart-medium-radar">
+                            </canvas>
+                            <div class="container-column max-width-30">
                                 <canvas
-                                    id="wordsRadar"
-                                    class="wittyworks-analytics-chart-medium-radar">
+                                    id="topWordsChartDoughnut"
+                                    class="wittyworks-analytics-chart-medium">
                                 </canvas>
-                                <div class="container-column">
-                                     <canvas
-                                        id="topWordsChartDoughnut"
-                                        class="wittyworks-analytics-chart-medium">
-                                    </canvas>
-                                    <canvas
-                                        id="topWordsChartDoughnutWeek"
-                                        class="wittyworks-analytics-chart-medium">
-                                    </canvas>
-                                </div>
+                                <canvas
+                                    id="topWordsChartDoughnutWeek"
+                                    class="wittyworks-analytics-chart-medium">
+                                </canvas>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
