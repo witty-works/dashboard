@@ -224,6 +224,10 @@ a {
     margin-right: 1em;
 }
 
+.wittyworks-margin-left {
+    margin-left: 1em;
+}
+
 .margin-bottom {
     margin-bottom: 1em !important;
 }
@@ -671,7 +675,13 @@ input:checked+.slider:before {
 
 .wittyworks-analytics-chart-top {
     max-width: 1000px;
+    max-height: 500px;
     min-height: 300px;
+}
+
+.wittyworks-analytics-chart-top-categories {
+    max-width: 75%;
+    max-height: 500px;
     min-height: 300px;
 }
 
@@ -836,3 +846,21 @@ input:checked+.slider:before {
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
+
+  .link-box {
+    float: left;
+    height: 15px;
+    width: 1.5vw;
+    clear: both;
+    margin: 0.5em 0.5em 0em 0.5em;
+
+  }
+
+  .lato-link-list {
+    font-family: Lato, Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    color: #000000;
+    line-height: 26px;
+}

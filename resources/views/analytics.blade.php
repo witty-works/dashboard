@@ -394,6 +394,7 @@
             handle_no_data('topCategoriesChartWrapperNoData', 'loadingIconTopCatagories');
             return;
         }
+
         const openedWeek = Object.entries(data.events.popover_open).sort((a, b) => b[1] - a[1]).slice(0, 8);
         for (const [key, value] of openedWeek) {
             if (key && value) {
@@ -464,6 +465,32 @@
             handle_no_data('topCategoriesChartWrapperNoData', 'loadingIconTopCatagories');
             return;
         }
+
+        const subcategories = data.subcategories.popover_open;
+        listOfLinks = ``;
+
+        let locale = window.location.href.includes("/de/") ? "de" : "en"
+        let i = 0;
+        for (const [key, value] of Object.entries(subcategories).slice(0, 15)) {
+            let why = subcategories[key].why;
+            let label = subcategories[key].name[locale];
+
+            listOfLinks += `<div class="link-box" style="background-color:${colors[i]}"></div>`;
+
+            if (why) {
+                let url = subcategories[key].url[locale];
+                listOfLinks += `<a href="${url}" class="wittyworks-team-name lato-link-list" target="_blank">${label}</a>`;
+            } else {
+                listOfLinks += `<span class="lato-link-list">${label}</span>`;
+            }
+
+            listOfLinks += `</br>`;
+
+            i++;
+        }
+
+        document.getElementById("categoryOverview").innerHTML = listOfLinks;
+
         const ignored = data.events.ignore;
         const opened = data.events.popover_open;
         const alternative = data.events.alternative;
@@ -790,8 +817,9 @@ load_charts(false);
                         <div class="container-row wittyworks-margin-top">
                             <canvas
                                 id="topSubCategoriesChart"
-                                class="wittyworks-analytics-chart-top wittyworks-margin-top">
+                                class="wittyworks-analytics-chart-top-categories wittyworks-margin-top">
                             </canvas>
+                            <div id="categoryOverview" class="wittyworks-margin-left wittyworks-margin-top"></div>
                         </div>
                     </div>
                 </div>
