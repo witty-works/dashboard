@@ -220,11 +220,6 @@ Bitte deine Team-Administratoren, auf <a href="https://www.witty.works/pricing" 
     'analytics' => 'Statistik',
     'activity' => 'Nutzungsübersicht',
     'writing_streak' => 'Du hast Witty :days Tage nacheinander benutzt',
-    'learning_bites_requests_week' => 'Du hast :learning_bites auf "Warum" geklickt, um mehr über ein hervorgehobenes Wort zu erfahren',
-    'popover_open_week' => 'Du hast :popup_over auf einen hervorgehobenen Begriff geklickt als letzte Woche',
-    'alternative_clicked_week' => 'Du hast :alternative_clicked eine vorgeschlagene Alternative ausgewählt als letzte Woche
-',
-    'ignored_words_week' => 'Du hast :ignored_words ein markierten Begriff ignoriert als letzte Woche',
     'top_categories' => 'Deine häufigsten Kategorien',
     'top_words' => 'Deine häufigsten Wörter',
     'learning_bites_label_line_chart' => 'Klicks auf "Warum?"',
@@ -250,4 +245,8 @@ Bitte deine Team-Administratoren, auf <a href="https://www.witty.works/pricing" 
     'refresh_data' => 'Daten aktualisieren',
     'last_refreshed' => 'Zuletzt aktualisiert:',
     'refresh_data_blocked' => 'Du kannst deine Daten alle 3 Minuten aktualisieren',
+    'popover_closed_doughnut_chart_event_ratio' => 'Angeschaut',
+    'popover_label_line_chart_dau' => 'Angeschaut',
+    'alternative_label_line_chart_dau' => 'Behoben',
+    'learning_bites_label_line_chart_dau' => 'Klicks auf "Warum?"',
 ];
