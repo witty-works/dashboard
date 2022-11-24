@@ -14,10 +14,8 @@ use App\Http\Controllers\WebhookController;
 */
 use App\Http\Controllers\TeamInvitationController;
 use Laravel\Jetstream\Http\Controllers\Livewire\ApiTokenController;
-use Laravel\Jetstream\Http\Controllers\Livewire\PrivacyPolicyController;
 use App\Http\Controllers\Livewire\TeamController;
 use App\Http\Controllers\Livewire\UserGuidelinesController;
-use Laravel\Jetstream\Http\Controllers\Livewire\TermsOfServiceController;
 use Laravel\Jetstream\Http\Controllers\Livewire\UserProfileController;
 use Laravel\Jetstream\Jetstream;
 /*
@@ -76,11 +74,6 @@ Route::group(
         |------------------
         */
         Route::group(['middleware' => config('jetstream.middleware', ['web'])], function () {
-            if (Jetstream::hasTermsAndPrivacyPolicyFeature()) {
-                Route::get('/terms-of-service', [TermsOfServiceController::class, 'show'])->name('terms.show');
-                Route::get('/privacy-policy', [PrivacyPolicyController::class, 'show'])->name('policy.show');
-            }
-
             Route::group(['middleware' => ['auth:' . config('fortify.guard')]], function () {
                 Route::get('/', [WelcomeController::class, 'show']);
 
