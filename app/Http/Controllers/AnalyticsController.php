@@ -240,7 +240,7 @@ class AnalyticsController extends Controller
 
         switch ($chart) {
             case 'dau':
-                $events = ['check', 'popover_open', 'alternative', 'ignore', 'popover_close', 'learning_bites'];
+                $events = ['check', 'popover_open', 'alternative', 'ignore', 'learning_bites'];
                 $data = $this->fetchEventData($events, $properties, $interval, $from, 'dau');
                 foreach ($data['events']['check'] as $day => $value) {
                     $data['events']['user_count'][$day] = $request->user()->currentTeam->getTotalUserCount();
@@ -248,7 +248,7 @@ class AnalyticsController extends Controller
 
                 break;
             case 'total':
-                $events = ['check', 'popover_open', 'alternative', 'ignore', 'popover_close', 'learning_bites'];
+                $events = ['check', 'popover_open', 'alternative', 'ignore', 'learning_bites'];
                 $data = $this->fetchEventData($events, $properties, $interval, $from);
                 break;
             case 'topSubcategories':
