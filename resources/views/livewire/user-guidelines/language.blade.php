@@ -1,4 +1,4 @@
-<x-jet-form-section submit="updateLanguageGuidelinesLanguage">
+<x-jet-form-section class="max-w-7xl mx-auto py-10" submit="updateLanguageGuidelinesLanguage">
     <x-slot name="title" class="ibarra-sub-title-h2">
         {{ __('guidelines.manage_organization_guidelines_language') }}
     </x-slot>
@@ -8,6 +8,8 @@
 
     <x-slot name="form" submit="updateLanguageGuidelinesLanguage">
         <div class="lato-paragraph-text-p margin-bottom">{!! __('guidelines.manage_organization_guidelines_description_language') !!}</div>
+
+        <x-jet-input-error for="preferred_variants" class="mt-2" />
 
         <div class="lato-small-text-p">
             {{ __('guidelines.user_preferred_variants_dialect') }}

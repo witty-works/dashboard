@@ -115,4 +115,5 @@ only the gender ending (e.g. "Mitarbeiter*in"), the female and male form (e.g. "
     'false_positive_error' => 'There was an error storing the ignore word. Please reload the page.',
     'term_replacement_error' => 'There was an error storing the dictionary word. Please reload the page.',
     'allow_team_analytics' => 'Allow',
+    'enable_at_least_one_variant' => 'To be able to use Witty, enable at least one language variant.',
 ];
