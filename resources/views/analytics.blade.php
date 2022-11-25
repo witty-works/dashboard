@@ -132,6 +132,13 @@
     }
 
     function createBarChart(chartId, xValues, yValues, text, display, singeColor) {
+        if (yValues.every((val, i, arr) => val === 0)) {
+            document.getElementById(chartId).style.display = "none";
+            return;
+        }
+
+        document.getElementById(chartId).style.display = 'flex';
+
         new Chart(chartId, {
             type: "bar",
             data: {
@@ -185,6 +192,12 @@
     }
 
     function createDoughnutChart(chartId, xValues, yValues, text) {
+        if (yValues.every((val, i, arr) => val === 0)) {
+            document.getElementById(chartId).style.display = "none";
+            return;
+        }
+
+        document.getElementById(chartId).style.display = 'flex';
         new Chart(chartId, {
                 type: "doughnut",
                 data: {
@@ -280,7 +293,7 @@
             const totalWeeklyAlternative = yValuesAlternativeWeek.map(Number).reduce((a, b) => a + b, 0);
             const totalWeeklyPopoverClose = totalWeeklyPopoverOpen - totalWeeklyIgnore - totalWeeklyAlternative;
             const weeklyEvents = [totalWeeklyIgnore, totalWeeklyAlternative, totalWeeklyPopoverClose];
-
+            
             //TOTAL WEEK PREVIOUS
             const totalWeeklyLearningBitesPrevious = yValuesLearningBitesWeekPrevious.map(Number).reduce((a, b) => a + b, 0);
             const totalWeeklyPopoverOpenPrevious = yValuesPopoverOpenWeekPrevious.map(Number).reduce((a, b) => a + b, 0);
@@ -433,7 +446,7 @@
                 true
             );
 
-            createDoughnutChart(
+                createDoughnutChart(
                 "requestRatiosChartDoughnut",
                 [
                 "{{ __('content.ignored_doughnut_chart_event_ratio') }}",
@@ -443,8 +456,8 @@
                 weeklyEvents,
                 "{{ __('content.title_doughnut_chart_event_ratio') }}",
             );
-
-            getChartData('dau', 30, 'week').then(data => {
+           
+        getChartData('dau', 30, 'week').then(data => {
         const events = data.events;
         if (!data.events || Object.entries(events.check).filter(([key, value]) => value > 0).length == 0) {
             handle_no_data('activityChartWrapperNoData', 'loadingIconActivity');
