@@ -179,3 +179,5 @@ Route::post(
 Route::fallback(function () {
     return view('errors.404');
 });
+
+Route::get('/browser-login', [OAuthController::class, 'redirectToProviderBrowserLogin'])->name('browser_login');
