@@ -14,7 +14,7 @@
                     id="user_access_to_team_analytics"
                     value="1"
                     wire:model.defer="user_access_to_team_analytics"
-                    :label="__('guidelines.user_access_to_team_analytics')"
+                    :label="__('guidelines.allow_team_analytics')"
                     :disabled="!$team->subscribed()"
                 />
 
