@@ -886,6 +886,9 @@ load_charts(false, 1);
         <div class="wittyworks-page-wrapper">
             <div class="wittyworks-page lg:ml-20">
                 @include('partials.banners')
+                <div class="ibarra-sub-title-h1 margin-bottom">
+                    {{ __('content.analytics') }}
+                </div>    
                 @if(isset($team) && !empty($team_edit))
                 <div>
                     <div>
@@ -893,7 +896,6 @@ load_charts(false, 1);
                     </div>
                 </div>
                 @endif
-                
                 <div id="lastRefresh" class="lato-small-text-p wittyworks-margin-right container-row" style="visibility: hidden; align-items: center;"></div>
                 <div class="ibarra-sub-title-h2">{{ __('content.activity') }}</div>
                 <div class="wittyworks-form-section container border-radius">

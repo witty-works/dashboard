@@ -1,3 +1,7 @@
+<div class="ibarra-sub-title-h1 margin-bottom">
+    {{ __('guidelines.list_false_positives') }}
+</div>
+
 <x-jet-form-section submit="storeFalsePositive">
     <x-slot name="title">
         {{ __('guidelines.create_false_positive') }}

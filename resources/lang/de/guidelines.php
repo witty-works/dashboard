@@ -30,7 +30,7 @@ return [
     'manage_organization_guidelines_inspiration' => 'Vorschläge zur Umformulierung ganzer Sätze',
     'manage_organization_guidelines_description_inspiration' => 'Vorschläge zur Umformulierung ganzer Sätze.',
     'show_inspiration_alternatives' => 'Inspiration für Umformulierungen vorschlagen',
-    'manage_organization_guidelines_language' => 'Spracheinstellungen',
+    'manage_organization_guidelines_language' => 'Sprachdialektauswahl',
     'manage_organization_guidelines_description_language' => 'Wähle den englischen und deutschen Dialekt aus, um Vorschläge zu erhalten, die auf den Sprachhintergrund deines Teams zugeschnitten sind.',
     'manage_organization_guidelines_orthography' => 'Grammatik & Rechtschreibung',
     'manage_organization_guidelines_description_orthography' => 'Hebt Grammatik- und Rechtschreibprobleme hervor.',

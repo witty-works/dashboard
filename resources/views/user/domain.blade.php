@@ -1,5 +1,5 @@
 <div>
-    <div class="max-w-7xl mx-auto py-10">
+    <div class="py-10">
         @livewire('team-analytics', ['user' => $user])
     </div>
 </div>
@@ -11,13 +11,13 @@ $teamAllowList = !empty($user->currentTeam)
 
 @if(!$teamAllowList)
 <div>
-    <div class="max-w-7xl mx-auto py-10">
+    <div class="py-10">
         @livewire('user-domain.form', ['user' => $user])
     </div>
 </div>
 
 <div>
-    <div class="max-w-7xl mx-auto py-10">
+    <div class="py-10">
         @livewire('user-domain.show', ['user' => $user])
     </div>
 </div>
@@ -25,7 +25,7 @@ $teamAllowList = !empty($user->currentTeam)
 
 @if($user->currentTeam)
 <div>
-    <div class="max-w-7xl mx-auto py-10">
+    <div class="py-10">
         @livewire('organization-domain.show', ['team' => $user->currentTeam, 'hide_actions' => true])
     </div>
 </div>
