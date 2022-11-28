@@ -3,12 +3,11 @@
 </div> 
 <x-jet-form-section submit="updateProfileInformation">
     <x-slot name="title">
-        {{ __('content.manage_account') }}
+        {{ __('teams.profile') }}
     </x-slot>
     <x-slot name="description"></x-slot>
     <x-slot name="form">
     <div class="wittyworks-form-section-wrapper">
-        <div class="lato-small-paragraph-title-h4">{{ __('teams.profile') }}</div>
         <!-- Name -->
         <x-jet-label for="name" value="{{ __('content.name') }}" />
         <div class="container-row lato-small-text-p margin-bottom">
