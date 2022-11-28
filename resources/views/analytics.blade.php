@@ -302,11 +302,11 @@
             const weeklyEventsPrevious = [totalWeeklyLearningBitesPrevious, totalWeeklyPopoverOpenPrevious, totalWeeklyIgnorePrevious, totalWeeklyAlternativePrevious];
 
             //WEEKLY CHANGE
-            const changeInLearningBitesPercentage = (((totalWeeklyLearningBites - totalWeeklyLearningBitesPrevious) / (totalWeeklyLearningBitesPrevious == 0 ? 1 : totalWeeklyLearningBitesPrevious)) * 100).toFixed(0);
-            const changeInPopoverPercentage = (((totalWeeklyPopoverOpen - totalWeeklyPopoverOpenPrevious) / (totalWeeklyPopoverOpenPrevious == 0 ? 1 : totalWeeklyPopoverOpenPrevious)) * 100).toFixed(0);
-            const changeInIgnorePercentage = (((totalWeeklyIgnore - totalWeeklyIgnorePrevious) / (totalWeeklyIgnorePrevious == 0 ? 1 : totalWeeklyIgnorePrevious)) * 100).toFixed(0);
-            const changeInAlternativePercentage = (((totalWeeklyAlternative - totalWeeklyAlternativePrevious) / (totalWeeklyAlternativePrevious == 0 ? 1 : totalWeeklyAlternativePrevious)) * 100).toFixed(0);
-
+            const changeInLearningBitesPercentage = (((totalWeeklyLearningBites - totalWeeklyLearningBitesPrevious) / (totalWeeklyLearningBitesPrevious == 0 ? 1 : totalWeeklyLearningBitesPrevious)) * 100).toFixed(0).replace('-', '');
+            const changeInPopoverPercentage = (((totalWeeklyPopoverOpen - totalWeeklyPopoverOpenPrevious) / (totalWeeklyPopoverOpenPrevious == 0 ? 1 : totalWeeklyPopoverOpenPrevious)) * 100).toFixed(0).replace('-', '');
+            const changeInIgnorePercentage = (((totalWeeklyIgnore - totalWeeklyIgnorePrevious) / (totalWeeklyIgnorePrevious == 0 ? 1 : totalWeeklyIgnorePrevious)) * 100).toFixed(0).replace('-', '');
+            const changeInAlternativePercentage = (((totalWeeklyAlternative - totalWeeklyAlternativePrevious) / (totalWeeklyAlternativePrevious == 0 ? 1 : totalWeeklyAlternativePrevious)) * 100).toFixed(0).replace('-', '');
+            
             const aggregatedCheckChatData =  aggregate_chart_data_by_week(xValuesCheckIntervallWeek, yValuesCheck);
 
             document.getElementById("checkDaysInRow").innerHTML =  '{{ __('content.writing_streak') }}' + '&nbsp; <span class="lato-small-paragraph-title-h4-purple">' +  getWittyStreak(aggregatedCheckChatData[1]) + '&nbsp</span>' + '{{ __('content.in_a_row') }}';
@@ -924,9 +924,6 @@ load_charts(false, 1);
                                     <div id="checkDaysInRow" class="lato-small-text-p"></div>
                                 </div>
                                 <div class="container-row" >
-                                    <div id="changeInLearningBitesPercentage" class="lato-small-text-p"></div>
-                                </div>
-                                <div class="container-row" >
                                     <div id="changeInPopoverPercentage" class="lato-small-text-p"></div>
                                 </div>
                                 <div class="container-row" >
@@ -934,6 +931,9 @@ load_charts(false, 1);
                                 </div>
                                 <div class="container-row">
                                     <div id="changeInIgnorePercentage" class="lato-small-text-p"></div>                           
+                                </div>
+                                <div class="container-row" >
+                                    <div id="changeInLearningBitesPercentage" class="lato-small-text-p"></div>
                                 </div>
                             </div>
                             <div class="container-row wittyworks-margin-right">
