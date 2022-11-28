@@ -7,55 +7,45 @@
 
         if (!wittyIsInstalled) {
             installWitty.style.display = 'flex';
-            installWitty.classList.remove('opacity-0');
-            installWitty.classList.add('opacity-100');
-            loginWitty.style.display = 'none';
-        } else {
-            installWitty.style.display = 'none';
-
+                   } else {
             loginUrl = wittyIsInstalled.getAttribute('login-url')
             if (loginUrl) {
                 const loginWittyUrl = document.getElementById('login-witty-url');
                 loginWittyUrl.setAttribute('href', loginUrl + '?target=' + encodeURIComponent(window.location.href))
-
                 loginWitty.style.display = 'flex';
-                loginWitty.classList.remove('opacity-0');
-                loginWitty.classList.add('opacity-100');
-            } else {
-                loginWitty.style.display = 'none';
             }
         }
     });
 </script>
 
-<div id="install-witty" class="wittyworks-upgrade-banner btn-fade-in bg-teal-500 opacity-0 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded mr-2 transition-all duration-1000 ease-in-out">
-    <div>
-        <div class="wittyworks-upgrade-banner-title">
-            {{ __('content.onboarding_install_witty_title') }}
+    <div id="install-witty" style="display: none" class="wittyworks-upgrade-banner">
+        <div>
+            <div class="wittyworks-upgrade-banner-title">
+                {{ __('content.onboarding_install_witty_title') }}
+            </div>
+            <div class="wittyworks-upgrade-banner-text">
+                {{ __('content.onboarding_install_witty_text') }}
+            </div>
         </div>
-        <div class="wittyworks-upgrade-banner-text">
-            {{ __('content.onboarding_install_witty_text') }}
+        <div class="wittyworks-upgrade-banner-button-container">
+            <a class="button primary-button-purple" href="https://www.witty.works/select-browser" target="_blank" rel="noopener">
+                {{ __('content.onboarding_install_witty_button') }}
+            </a>
         </div>
     </div>
-    <div class="wittyworks-upgrade-banner-button-container">
-        <a class="button primary-button-purple" href="https://www.witty.works/select-browser" target="_blank" rel="noopener">
-            {{ __('content.onboarding_install_witty_button') }}
-        </a>
-    </div>
-</div>
 
-<div id="login-witty" class="wittyworks-upgrade-banner btn-fade-in bg-teal-500 opacity-0 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded mr-2 transition-all duration-1000 ease-in-out">
-    <div>
-        <div class="wittyworks-upgrade-banner-title">
-            {{ __('content.onboarding_login_witty_title') }}
+    <div id="login-witty" style="display: none" class="wittyworks-upgrade-banner">
+        <div>
+            <div class="wittyworks-upgrade-banner-title">
+                {{ __('content.onboarding_login_witty_title') }}
+            </div>
+            <div class="wittyworks-upgrade-banner-text">
+                {{ __('content.onboarding_login_witty_text') }}
+            </div>
         </div>
-        <div class="wittyworks-upgrade-banner-text">
-            {{ __('content.onboarding_login_witty_text') }}
+        <div class="wittyworks-upgrade-banner-button-container">
+            <a id="login-witty-url" class="button primary-button-purple" href="">
+                {{ __('content.onboarding_login_witty_button') }}
+            </a>
         </div>
     </div>
-    <div class="wittyworks-upgrade-banner-button-container">
-        <a id="login-witty-url" class="button primary-button-purple" href="">
-            {{ __('content.onboarding_login_witty_button') }}
-        </a>
-    </div>
-</div>
