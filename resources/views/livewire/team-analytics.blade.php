@@ -1,4 +1,7 @@
 <div class="mt-10 sm:mt-0">
+    <div class="ibarra-sub-title-h1 margin-bottom">
+            {{ __('guidelines.privacy_settings_label') }}
+    </div>  
     <x-jet-form-section submit="updateTeamsAnalytics">
         <x-slot name="title">
             {{ __('guidelines.data_collection') }}

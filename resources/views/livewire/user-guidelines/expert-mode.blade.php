@@ -1,4 +1,4 @@
-<x-jet-form-section class="max-w-7xl mx-auto py-10" submit="updateLanguageGuidelinesExpertMode">
+<x-jet-form-section class="py-10" submit="updateLanguageGuidelinesExpertMode">
     <x-slot name="title">
         {{ __('guidelines.manage_organization_guidelines_expert_mode') }}
     </x-slot>
