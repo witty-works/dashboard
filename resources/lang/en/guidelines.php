@@ -51,7 +51,7 @@ only the gender ending (e.g. "Mitarbeiter*in"), the female and male form (e.g. "
     'manage_organization_guidelines_inspiration' => 'Show inspirations to rephrase entire sentences',
     'manage_organization_guidelines_description_inspiration' => 'Makes suggestions to rephrase entire sentences.',
     'show_inspiration_alternatives' => 'Show inspiration for rephrasing',
-    'manage_organization_guidelines_language' => 'Language Settings',
+    'manage_organization_guidelines_language' => 'Dialekt Selection',
     'manage_organization_guidelines_description_language' => 'Select the English and German dialect to get suggestions tailored to your team\'s language background.',
     'manage_organization_guidelines_orthography' => 'Grammar & Spelling',
     'manage_organization_guidelines_description_orthography' => 'Checks grammar & spelling issues.',
