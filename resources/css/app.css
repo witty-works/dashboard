@@ -26,7 +26,7 @@ a {
 
 /* FONTS */
 .ibarra-sub-title-h1 {
-    font-family: 'Ibarra Real Nova';
+    font-family: Ibarra Real Nova, 'Times New Roman', Times, serif;
     font-style: normal;
     font-weight: 400;
     font-size: 64px;
