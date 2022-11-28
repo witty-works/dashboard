@@ -300,4 +300,8 @@ Please use Witty more often and click on the highlighted terms.',
     'witty_download_description' => 'witty download description',
     'witty_download_description_not_supported_yet' => 'witty download description not supported yet',
     'witty_download_redirecting' => 'witty download redirecting',
+    'title_words_bar_chart_month_corporate_rules' => 'Top corporate words viewed this month',
+    'no_corporate_rules' => 'No corporate rules available. Create dictionary items!',
+    'explanation_corporate_rules' => 'explanation corporate rules',
+    'corporate_rules_none_opened' => 'corporate rules none opened',
 ];
