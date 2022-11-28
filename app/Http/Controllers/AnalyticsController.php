@@ -260,6 +260,10 @@ class AnalyticsController extends Controller
                     if (!empty($data['events'][$event])) {
                         $subcategories = [];
                         foreach ($data['events'][$event] as $subcategory => $count) {
+                            if (empty(Categories::CATEGORIES[$subcategory])) {
+                                continue;
+                            }
+
                             $category = Categories::CATEGORIES[$subcategory];
                             $subcategories[$category['name'][$locale]] = $count;
 
