@@ -3,6 +3,10 @@
         <div class="wittyworks-page-wrapper">
             <div class="wittyworks-page-subscription lg:ml-20">
                 @include('partials.banners')
+                <div class="ibarra-sub-title-h1 margin-bottom">
+                    {{ __('content.manage_account') }}
+                </div> 
+                
                 @if (Laravel\Fortify\Features::canUpdateProfileInformation())
                     @livewire('profile.update-profile-information-form')
                 @endif
