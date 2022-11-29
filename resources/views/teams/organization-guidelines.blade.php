@@ -1,5 +1,5 @@
 <div>
-    <div class="ibarra-sub-title-h1 margin-bottom">
+    <div class="ibarra-sub-title-h1 margin-top margin-bottom">
         {{ __('guidelines.language_settings_label') }}
     </div>
 

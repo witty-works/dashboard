@@ -83,7 +83,7 @@ return [
     'domain_not_valid' => 'Diese URL ist nicht gültig.',
     'set_type' => 'URL Einstellungen',
     'set_type_description' => 'Bitte wähle aus, für welche URLs Witty aktiviert sein soll.',
-    'data_collection' => 'Teamanalyse',
+    'data_collection' => 'Datensammlung',
     'list_team_domains' => 'URL Liste deines Teams',
     'list_team_false_positives' => 'Ignorierte Wörter deines Teams',
     'list_team_false_positives_description' => 'Diese Wörter in dieser Liste sind für das ganze Team sichtbar. Witty wird alle Wörter oder Begriffe in dieser Liste für das ganze Team nicht mehr hervorgehoben.',
@@ -107,7 +107,7 @@ return [
     'simple_language' => 'Leichte Sprache',
     'manage_organization_guidelines_description_german_gender_ending_sub_title' => 'Gender-Endung auswählen',
     'team_analytics_description' => 'Team-Analysen ermöglichen es, Trends zu erkennen, wie dein Team Witty verwendet, um zu sehen, wo das Team hervorragend ist und wo mehr Arbeit in Richtung einer inklusiven Sprache und, was noch wichtiger ist, einer inklusiven Kultur erforderlich ist.',
-    'team_analytics' => 'Mitmachen',
+    'team_analytics' => 'Team-Statistiken',
     'user_access_to_team_analytics' => 'Zugriff auf die Team-Statistik',
     'user_access_to_team_analytics_description' => 'Sollten Nicht-Administratoren Zugang zu den Team-Statistiken haben?',
     'domain_error' => 'Es ist ein Fehler beim Speichern der URL aufgetreten. Bitte lade die Seite neu.',
@@ -115,4 +115,5 @@ return [
     'term_replacement_error' => 'Es ist ein Fehler beim Speichern im Wörterbuchwort aufgetreten. Bitte lade die Seite neu.',
     'allow_team_analytics' => 'Erlauben',
     'enable_at_least_one_variant' => 'Um Witty nutzen zu können, musst du mindestens eine Sprachvariante aktivieren.',
+    'team_analytics_participate' => 'Mitmachen',
 ];
