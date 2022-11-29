@@ -1,4 +1,4 @@
-<x-jet-form-section submit="updateLanguageGuidelinesLanguage">
+<x-jet-form-section class="py-10" submit="updateLanguageGuidelinesLanguage">
     <x-slot name="title" class="ibarra-sub-title-h2">
         {{ __('guidelines.manage_organization_guidelines_language') }}
     </x-slot>
