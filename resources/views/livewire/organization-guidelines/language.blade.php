@@ -1,6 +1,3 @@
-<div class="ibarra-sub-title-h1 margin-bottom">
-        {{ __('guidelines.language_settings_label') }}
-</div>
 <x-jet-form-section class="py-10" submit="updateLanguageGuidelinesLanguage">
     <x-slot name="title" class="ibarra-sub-title-h2">
         {{ __('guidelines.manage_organization_guidelines_language') }}

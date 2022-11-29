@@ -20,8 +20,8 @@ class Language extends Component
     public $preferred_variants_en;
 
     protected $rules = [
-        'preferred_variants_de' => 'nullable|string|in:both,de-DE,de-AT,de-CH',
-        'preferred_variants_en' => 'nullable|string|in:both,en-US,en-GB',
+        'preferred_variants_de' => 'nullable|string|in:de-DE,de-AT,de-CH',
+        'preferred_variants_en' => 'nullable|string|in:en-US,en-GB',
     ];
 
     public $user;
