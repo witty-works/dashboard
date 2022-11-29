@@ -4,7 +4,7 @@
     <div class="wittyworks-page-wrapper">
         <div class="wittyworks-page-academy lg:ml-20">
             @include('partials.banners')
-            <div class="ibarra-sub-title-h1 margin-bottom">
+            <div class="ibarra-sub-title-h1 margin-top">
                 {{ __('content.academy') }}
             </div>
             <div class="wittyworks-video-wrapper">
