@@ -4,6 +4,9 @@
             <div class="wittyworks-page-subscription lg:ml-20">
                 @include('partials.banners')
 
+                <div class="ibarra-sub-title-h1 margin-bottom">
+                    {{ __('teams.plan_headline') }}
+                </div>   
                 @livewire('teams.plan-summary', ['team' => $team])
 
                 <x-jet-section-border />

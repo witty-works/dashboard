@@ -10,6 +10,7 @@ use Laravel\Jetstream\Jetstream;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\Request;
+use InvalidArgumentException;
 use JoelButcher\Socialstream\ConnectedAccount;
 use JoelButcher\Socialstream\Contracts\GeneratesProviderRedirect;
 use JoelButcher\Socialstream\Contracts\ResolvesSocialiteUsers;
@@ -191,7 +192,9 @@ class OAuthController extends BaseOAuthController
 
         $redirectUri = request()->get('state');
         if ($redirectUri && $this->validateRedirectUri($redirectUri)) {
-            $redirectUri .= '?' . http_build_query($data);
+            if (strpos($redirectUri, 'https://') !== 0) {
+                $redirectUri .= '?' . http_build_query($data);
+            }
 
             return redirect($redirectUri);
         }
@@ -254,7 +257,7 @@ class OAuthController extends BaseOAuthController
         $browserLoginPolicies = ['browser_login'];
         $request = request();
         foreach ($browserLoginPolicies as $browserLoginPolicy) {
-            $url = route('browser.callback', ['provider' => 'azureadb2c', 'policy' => $browserLoginPolicy]);
+            $url = route('api.callback', ['provider' => 'azureadb2c', 'policy' => $browserLoginPolicy]);
             if ($request->url() === $url) {
                 $policy = $browserLoginPolicy;
                 break;
@@ -266,7 +269,11 @@ class OAuthController extends BaseOAuthController
 
     static public function getProvider($provider, $policy = null)
     {
-        $provider = Socialite::driver($provider);
+        try {
+            $provider = Socialite::driver($provider);
+        } catch (InvalidArgumentException $e) {
+            abort(400);
+        }
 
         if (OAuthController::isBrowserLogin($policy)) {
             $provider->setScopes(config('services.azureadb2c.scope'));

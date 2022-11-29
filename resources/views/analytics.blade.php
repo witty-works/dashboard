@@ -1,0 +1,1066 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js" rossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script>
+    function load_charts(refresh, startOfWeek) {
+        if (refresh) {
+            document.getElementById('lastRefresh').style.visibility = 'hidden';
+            document.getElementById("loadingIconActivity").style.display = "flex";
+            document.getElementById("activityChartWrapper").style.visibility = "hidden";
+
+            document.getElementById("loadingIconTopWords").style.display = "flex";
+            document.getElementById("topWordsChartWrapper").style.visibility = "hidden";
+
+            document.getElementById("loadingIconTopCatagories").style.display = "flex";
+            document.getElementById("topCategoriesChartWrapper").style.visibility = "hidden";
+        }
+
+    const colors = [
+        "#241c5b",
+        "#33277f",
+        "#3a2c91",
+        "#4132a4",
+        "#4837b6",
+        "#5240c5",
+        "#6352ca",
+        "#7365d0",
+        "#8477d5",
+        "#9489DB",
+        "#a9a1e2",
+        "#bfb8e9",
+        "#cac4ed",
+        "#d4d0f1",
+        "#dfdcf4",
+    ];
+
+    const xIntervallDauWeek = [];
+    const yValuesDauCheck = [];
+    const yValuesDauIgnore = [];
+    const yValuesDauAlternative = [];
+    const yValuesDauPopoverOpen = [];
+    const yValuesDauLearningBites = []; 
+
+    const xValuesCheck = [];
+    const xValuesCheckIntervallWeek = [];
+    const yValuesCheck = [];
+    const yValuesCheckWeek = [];
+
+    const xValuesPopoverOpen = [];
+    const yValuesPopoverOpen = [];
+    const yValuesPopoverOpenWeek = [];
+
+    const xValuesIgnore = [];
+    const xValuesIgnoreIntervallWeek = [];
+    const yValuesIgnore = [];
+    const yValuesIgnoreWeek = [];
+
+    const xValuesAlternative = [];
+    const yValuesAlternative = [];
+    const yValuesAlternativeWeek = [];
+
+    const xValuesLearningBites = [];
+    const yValuesLearningBites = [];
+    const yValuesLearningBitesWeek = [];
+
+    const yValuesDauUserCount = [];
+
+    const xTopSubCategoriesWeek = [];
+    const yTopSubCategoriesWeek = [];
+    const yTopSubCategoriesTwoWeeks = [];
+
+    const xValuesTopSubCategoriesIgnored = [];
+    const yValuesTopSubCategoriesIgnored = [];
+    const xValuesTopSubCategoriesOpened = [];
+    const yValuesTopSubCategoriesOpened = [];
+    const xValuesTopSubCategoriesAlternative = [];
+    const yValuesTopSubCategoriesAlternative = [];
+
+    const xValuesTopWordsIgnored = [];
+    const yValuesTopWordsIgnored = [];
+    const xValuesTopWordsOpened = [];
+    const yValuesTopWordsOpened = [];
+    const xValuesTopWordsAlternative = [];
+    const yValuesTopWordsAlternative = [];
+
+    Chart.defaults.global.defaultFontColor = '#000000';
+    function getWittyStreak (yValuesCheck) {
+        let checkWeeksInRow = 0;
+        for (let i = yValuesCheck.length - 1; i >= 0; i--) {
+            if (yValuesCheck[i] != 0) {
+                checkWeeksInRow++;
+            } else {
+                break;
+            }
+        }
+        return checkWeeksInRow;
+    }
+
+    function aggregate_chart_data_by_week(xValues, yValues) {
+        var aggregatedData = [];
+        var aggregatedLabels = [];
+        var currentXValue = xValues[0];
+        var currentYValue = yValues[0];
+        for (var i = 1; i <= xValues.length; i++) {
+            if (xValues[i] == currentXValue) {
+                currentYValue += yValues[i];
+            } else {
+                aggregatedData.push(currentYValue);
+                aggregatedLabels.push( "{{ __('content.week') }}" + " " + currentXValue);
+                currentXValue = xValues[i];
+                currentYValue = yValues[i];
+            }
+        }
+        return [aggregatedLabels, aggregatedData];
+    }
+
+    function handle_no_data(sectionIdNoData, loadingIconId) {
+        document.getElementById(loadingIconId).style.display = "none";
+        document.getElementById(sectionIdNoData).style.visibility = "visible";
+        const sectionId = sectionIdNoData.replace("NoData", "");
+        document.getElementById(sectionId).style.display = "none";
+    }
+
+    async function getChartData(chart, from = 30, interval = 'day') {
+        let analyticsUrl = '/api/user/analytics?refresh=' + refresh + '&chart=';
+        if (window.location.href.includes('team')) {
+            analyticsUrl = '/api/team/analytics?refresh=' + refresh + '&chart=';
+        }
+        const response = await fetch(
+            analyticsUrl + chart + '&from=' + from + '&interval=' + interval);
+        const data = await response.json();
+        return data;
+    }
+
+    function createBarChart(chartId, xValues, yValues, text, display, singeColor) {
+        if (yValues.every((val, i, arr) => val === 0)) {
+            document.getElementById(chartId).style.display = "none";
+            return;
+        }
+
+        document.getElementById(chartId).style.display = 'flex';
+
+        new Chart(chartId, {
+            type: "bar",
+            data: {
+                labels: xValues,
+                datasets: [{
+                    data: yValues,
+                    backgroundColor: singeColor ? colors[10] : colors,
+                    fill: false,
+                }]
+            },
+            options: {
+                events: [],
+                maintainAspectRatio: false,
+                responsive: true, 
+                title: {
+                display: true,
+                text: text,
+                fontSize: 16,
+                fontStyle: 'normal',
+                font: {
+                    family: "Lato",
+                },
+                },
+                scales:{
+                    xAxes: [{
+                        display: display
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            min: 0,
+                            callback: function(value, index, values) {
+                                if (Math.floor(value) === value) {
+                                    return value;
+                                }
+                            }
+                        }
+                    }],
+                },
+                legend: {
+                    display: display,
+                },
+                legend: {
+                    display: false
+                },
+                tooltips: {
+                    label: false
+                    
+                }
+            }
+        });
+    }
+
+    function createDoughnutChart(chartId, xValues, yValues, text) {
+        if (yValues.every((val, i, arr) => val === 0)) {
+            document.getElementById(chartId).style.display = "none";
+            return;
+        }
+
+        document.getElementById(chartId).style.display = 'flex';
+        new Chart(chartId, {
+                type: "doughnut",
+                data: {
+                    labels: xValues,
+                    datasets: [{
+                    backgroundColor: [colors[6], colors[8], colors[10],colors[12], colors[14]],
+                    data: yValues
+                    }]
+                },
+                options: {
+                    legend: {display: false},
+                    maintainAspectRatio: false,
+                    responsive: true, 
+                    tooltips: {
+                        yAlign: 'bottom',
+                        callbacks: {
+                            labelColor: function(tooltipItem, chart) {
+                                return {
+                                    backgroundColor: chart.data.datasets[tooltipItem.datasetIndex].backgroundColor[tooltipItem.index],
+                                    fontColor: "red",
+
+                                }
+                            },
+                        },
+                        backgroundColor: '#ffffff',
+                        bodyFontColor: '#000000',                    
+                    },
+                    title: {
+                        display: true,
+                        text: text,
+                        fontSize: 16,
+                        fontStyle: 'normal',
+                    }
+                }
+        });
+    }
+
+    getChartData('total').then(data => {
+        const events = data.events;
+        if (!data.events || Object.entries(events.check).filter(([key, value]) => value > 0).length == 0) {
+            handle_no_data('activityChartWrapperNoData', 'loadingIconActivity');
+            return;
+        }
+
+        const lastRefresh = data.events.last_refresh;
+        let lastRefreshFormatted = moment(lastRefresh).fromNow();
+        for (const [event, value] of Object.entries(events)) {
+            if (event === 'check') {
+               for (const [date, count] of Object.entries(value)) {
+                    xValuesCheck.push(date);
+                    xValuesCheckIntervallWeek.push(moment(date).startOf('week').isoWeekday(startOfWeek).week());
+                    yValuesCheck.push(count);
+                }
+            } else if (event === 'ignore') {
+                for (const [date, count] of Object.entries(value)) {
+                    xValuesIgnore.push(date);
+                    yValuesIgnore.push(count);
+                }
+            } else if (event === 'alternative') {
+                for (const [date, count] of Object.entries(value)) {
+                    xValuesAlternative.push(date);
+                    yValuesAlternative.push(count);
+                }
+            } else if (event === 'popover_open') {
+                for (const [date, count] of Object.entries(value)) {
+                    xValuesPopoverOpen.push(date);
+                    yValuesPopoverOpen.push(count);
+                }
+            } else if (event === 'learning_bites') {
+                for (const [date, count] of Object.entries(value)) {
+                    xValuesLearningBites.push(date);
+                    yValuesLearningBites.push(count);
+                }
+            }
+            //CURRENT WEEK
+            const yValuesLearningBitesWeek = yValuesLearningBites.slice(-7);
+            const xValuesLearningBitesWeek = xValuesLearningBites.slice(-7);
+            const yValuesPopoverOpenWeek = yValuesPopoverOpen.slice(-7);
+            const yValuesIgnoreWeek = yValuesIgnore.slice(-7);
+            const yValuesAlternativeWeek = yValuesAlternative.slice(-7);
+
+            //PREVIOUS WEEK
+            const yValuesLearningBitesWeekPrevious = yValuesLearningBites.slice(-14, -7);
+            const xValuesLearningBitesWeekPrevious = xValuesLearningBites.slice(-14, -7);
+            const yValuesPopoverOpenWeekPrevious = yValuesPopoverOpen.slice(-14, -7);
+            const yValuesIgnoreWeekPrevious = yValuesIgnore.slice(-14, -7);
+            const yValuesAlternativeWeekPrevious = yValuesAlternative.slice(-14, -7);
+            
+            //TOTAL WEEK
+            const totalWeeklyLearningBites = yValuesLearningBitesWeek.map(Number).reduce((a, b) => a + b, 0);
+            const totalWeeklyPopoverOpen = yValuesPopoverOpenWeek.map(Number).reduce((a, b) => a + b, 0);
+            const totalWeeklyIgnore = yValuesIgnoreWeek.map(Number).reduce((a, b) => a + b, 0);
+            const totalWeeklyAlternative = yValuesAlternativeWeek.map(Number).reduce((a, b) => a + b, 0);
+            const totalWeeklyPopoverClose = totalWeeklyPopoverOpen - totalWeeklyIgnore - totalWeeklyAlternative;
+            const weeklyEvents = [totalWeeklyIgnore, totalWeeklyAlternative, totalWeeklyPopoverClose];
+            
+            //TOTAL WEEK PREVIOUS
+            const totalWeeklyLearningBitesPrevious = yValuesLearningBitesWeekPrevious.map(Number).reduce((a, b) => a + b, 0);
+            const totalWeeklyPopoverOpenPrevious = yValuesPopoverOpenWeekPrevious.map(Number).reduce((a, b) => a + b, 0);
+            const totalWeeklyIgnorePrevious = yValuesIgnoreWeekPrevious.map(Number).reduce((a, b) => a + b, 0);
+            const totalWeeklyAlternativePrevious = yValuesAlternativeWeekPrevious.map(Number).reduce((a, b) => a + b, 0);
+            const weeklyEventsPrevious = [totalWeeklyLearningBitesPrevious, totalWeeklyPopoverOpenPrevious, totalWeeklyIgnorePrevious, totalWeeklyAlternativePrevious];
+
+            //WEEKLY CHANGE
+            const changeInLearningBitesPercentage = (((totalWeeklyLearningBites - totalWeeklyLearningBitesPrevious) / (totalWeeklyLearningBitesPrevious == 0 ? 1 : totalWeeklyLearningBitesPrevious)) * 100).toFixed(0).replace('-', '');
+            const changeInPopoverPercentage = (((totalWeeklyPopoverOpen - totalWeeklyPopoverOpenPrevious) / (totalWeeklyPopoverOpenPrevious == 0 ? 1 : totalWeeklyPopoverOpenPrevious)) * 100).toFixed(0).replace('-', '');
+            const changeInIgnorePercentage = (((totalWeeklyIgnore - totalWeeklyIgnorePrevious) / (totalWeeklyIgnorePrevious == 0 ? 1 : totalWeeklyIgnorePrevious)) * 100).toFixed(0).replace('-', '');
+            const changeInAlternativePercentage = (((totalWeeklyAlternative - totalWeeklyAlternativePrevious) / (totalWeeklyAlternativePrevious == 0 ? 1 : totalWeeklyAlternativePrevious)) * 100).toFixed(0).replace('-', '');
+            
+            const aggregatedCheckChatData =  aggregate_chart_data_by_week(xValuesCheckIntervallWeek, yValuesCheck);
+
+            document.getElementById("checkDaysInRow").innerHTML =  '{{ __('content.writing_streak') }}' + '&nbsp; <span class="lato-small-paragraph-title-h4-purple">' +  getWittyStreak(aggregatedCheckChatData[1]) + '&nbsp</span>' + '{{ __('content.in_a_row') }}';
+            document.getElementById("changeInLearningBitesPercentage").innerHTML =  '{{ __('content.you_clicked') }}' + '&nbsp; <span class="lato-small-paragraph-title-h4-purple">' + changeInLearningBitesPercentage + '%</span>&nbsp;' + (changeInLearningBitesPercentage >= 0 ? '{{ __('content.learning_bites_requests_week_positive') }}' : '{{ __('content.learning_bites_requests_week_negative') }}');
+            document.getElementById("changeInPopoverPercentage").innerHTML =  '{{ __('content.you_clicked') }}' + '&nbsp; <span class="lato-small-paragraph-title-h4-purple">' + changeInPopoverPercentage + '%</span>&nbsp;' + (changeInPopoverPercentage >= 0 ? '{{ __('content.popover_open_week_positive') }}' : '{{ __('content.popover_open_week_negative') }}');
+            document.getElementById("changeInAlternativePercentage").innerHTML =  '{{ __('content.you_selected') }}' + '&nbsp; <span class="lato-small-paragraph-title-h4-purple">' + changeInAlternativePercentage + '%</span>&nbsp;' + (changeInAlternativePercentage >= 0 ? '{{ __('content.alternative_clicked_week_positive') }}' : '{{ __('content.alternative_clicked_week_negative') }}');
+            document.getElementById("changeInIgnorePercentage").innerHTML =  '{{ __('content.you_ignored') }}' + '&nbsp; <span class="lato-small-paragraph-title-h4-purple">' + changeInIgnorePercentage + '%</span>&nbsp;' + (changeInIgnorePercentage >= 0 ? '{{ __('content.ignored_words_week_positive') }}' : '{{ __('content.ignored_words_week_negative') }}');
+
+            //insert drowdown with two options to id startOfWeekDropdown
+            const startOfWeekDropdown = document.getElementById("startOfWeekDropdown").innerHTML = `<select id="startOfWeek" class="dropdown" onchange="load_charts(true, this.value)">
+                <option value="1">{{ __('content.monday') }}</option>
+                <option value="6">{{ __('content.saturday') }}</option>
+                <option value="7">{{ __('content.sunday') }}</option>
+            </select>`;
+
+            const weekdayOptions = document.getElementById("startOfWeek").options;
+            //go through weekdayOptions and see if value is equal to startOfWeek
+            for (let i = 0; i < weekdayOptions.length; i++) {
+                if (weekdayOptions[i].value == startOfWeek) {
+                    weekdayOptions[i].selected = true;
+                }
+            }
+
+            //updateSection function
+            function updateSection() {
+                const lastRefreshMinutes = Math.floor((new Date() - lastRefresh) / 60000);
+                lastRefreshFormatted = moment(lastRefresh).fromNow();
+                if (lastRefreshMinutes >= 3) {
+                    return document.getElementById("lastRefresh").innerHTML = '{{ __('content.last_refreshed') }} &nbsp;' + lastRefreshFormatted + '&nbsp; &nbsp; <a class="button primary-button-red" onclick="load_charts(true, startOfWeek)">{{ __('content.refresh_data') }}</a>';
+                } else {
+                    return document.getElementById("lastRefresh").innerHTML = '{{ __('content.last_refreshed') }} &nbsp;' + lastRefreshFormatted;
+                }
+            };
+
+            updateSection();
+            setInterval(function() {
+                updateSection()
+            }, 30000);
+            document.getElementById('lastRefresh').style.visibility = 'visible';
+
+            const aggregatedPopoverOpenData = aggregate_chart_data_by_week(xValuesCheckIntervallWeek, yValuesPopoverOpen)[1];
+            const aggregatedAlternativeData = aggregate_chart_data_by_week(xValuesCheckIntervallWeek, yValuesAlternative)[1];
+            const aggregatedIgnoreData = aggregate_chart_data_by_week(xValuesCheckIntervallWeek, yValuesIgnore)[1];
+            const aggregatedLearningBitesData = aggregate_chart_data_by_week(xValuesCheckIntervallWeek, yValuesLearningBites)[1];
+
+            if(aggregatedLearningBitesData.every(Number.isInteger)) {
+            new Chart("eventsChart", {
+                type: "line",
+                data: {
+                    labels: aggregatedCheckChatData[0],
+                    datasets: [
+                        {
+                            data: aggregatedPopoverOpenData,
+                            borderColor: colors[3],
+                            fill: false,
+                            label: "{{ __('content.popover_label_line_chart') }}",
+                        },
+                        {
+                            data: aggregatedAlternativeData,
+                            borderColor: colors[6],
+                            fill: false,
+                            label: "{{ __('content.alternative_label_line_chart') }}",
+                        },
+                        {
+                            data: aggregatedIgnoreData,
+                            borderColor: colors[9],
+                            fill: false,
+                            label:  "{{ __('content.ignored_label_line_chart') }}",
+                        },
+                        {
+                            data: aggregatedLearningBitesData,
+                            borderColor: colors[12],
+                            fill: false,
+                            label:  @json(__('content.learning_bites_label_line_chart')),
+                        },
+                    ]
+                },
+                options: {
+                    events: [],
+                    maintainAspectRatio: false,
+                    responsive: true, 
+                    title: {
+                    display: true,
+                    text:  @json(__('content.title_line_chart')),
+                    fontSize: 16,
+                    fontStyle: 'normal'
+                    },
+                    scales:{
+                        yAxes: [{
+                            ticks: {
+                                min: 0,
+                                callback: function(value, index, values) {
+                                    if (Math.floor(value) === value) {
+                                        return value;
+                                    }
+                                }                        
+                            }
+                        }],
+                    }
+                }
+            });
+        }
+
+            createBarChart(
+                "eventsLearningBitesChart",
+                xValuesLearningBitesWeek,
+                yValuesLearningBitesWeek,
+                "{{ __('content.title_bar_chart_learning_bites') }}",
+                false,
+                true
+            );
+
+            createBarChart(
+                "eventsPopoverChart",
+                xValuesLearningBitesWeek,
+                yValuesPopoverOpenWeek,
+                "{{ __('content.title_bar_chart_popover') }}",
+                false,
+                true
+            );
+
+            createBarChart(
+                "eventsIgnoreChart",
+                xValuesLearningBitesWeek,
+                yValuesIgnoreWeek,
+                "{{ __('content.title_bar_chart_ignored') }}",
+                false,
+                true
+            );
+
+            createBarChart(
+                "eventsAlternativeChart",
+                xValuesLearningBitesWeek,
+                yValuesAlternativeWeek,
+                "{{ __('content.title_bar_chart_alternative') }}",
+                false,
+                true
+            );
+
+                createDoughnutChart(
+                "requestRatiosChartDoughnut",
+                [
+                "{{ __('content.ignored_doughnut_chart_event_ratio') }}",
+                "{{ __('content.alternative_doughnut_chart_event_ratio') }}",
+                "{{ __('content.popover_closed_doughnut_chart_event_ratio') }}"
+                ],
+                weeklyEvents,
+                "{{ __('content.title_doughnut_chart_event_ratio') }}",
+            );
+           
+        getChartData('dau', 30, 'week').then(data => {
+        const events = data.events;
+        if (!data.events || Object.entries(events.check).filter(([key, value]) => value > 0).length == 0) {
+            handle_no_data('activityChartWrapperNoData', 'loadingIconActivity');
+            return;
+        }
+
+        for (const [event, value] of Object.entries(events)) {
+            if (event === 'check') {
+               for (const [date, count] of Object.entries(value)) {
+                    xIntervallDauWeek.push(date);
+                    yValuesDauCheck.push(count);
+                }
+            } else if (event === 'ignore') {
+                for (const [date, count] of Object.entries(value)) {
+                    yValuesDauIgnore.push(count);
+                }
+            } else if (event === 'alternative') {
+                for (const [date, count] of Object.entries(value)) {
+                    yValuesDauAlternative.push(count);
+                }
+            } else if (event === 'popover_open') {
+                for (const [date, count] of Object.entries(value)) {
+                    yValuesDauPopoverOpen.push(count);
+                }
+            } else if (event === 'learning_bites') {
+                for (const [date, count] of Object.entries(value)) {
+                    yValuesDauLearningBites.push(count);
+                }
+            } else if (event === 'user_count') {
+                for (const [date, count] of Object.entries(value)) {
+                    yValuesDauUserCount.push(count);
+                }
+            }
+        }
+            new Chart("dauChart", {
+                type: "line",
+                data: {
+                    labels: aggregatedCheckChatData[0],  //untill posthog offers select start of week
+                    datasets: [
+                        {
+                            data: yValuesDauUserCount,
+                            borderColor: colors[2],
+                            fill: false,
+                            label: "{{ __('content.user_count_label_line_chart_dau') }}",
+                        },
+                        {
+                            data: yValuesDauPopoverOpen,
+                            borderColor: colors[6],
+                            fill: false,
+                            label: "{{ __('content.popover_label_line_chart_dau') }}",
+                        },
+                        {
+                            data: yValuesDauAlternative,
+                            borderColor: colors[8],
+                            fill: false,
+                            label: "{{ __('content.alternative_label_line_chart_dau') }}",
+                        },
+                        {
+                            data: yValuesDauIgnore,
+                            borderColor: colors[10],
+                            fill: false,
+                            label:  "{{ __('content.ignored_label_line_chart_dau') }}",
+                        },
+                        {
+                            data: yValuesDauLearningBites,
+                            borderColor: colors[12],
+                            fill: false,
+                            label: @json(__('content.learning_bites_label_line_chart_dau')),
+                        },
+                    ]
+                },
+                options: {
+                    events: [],
+                    maintainAspectRatio: false,
+                    responsive: true, 
+                    animation: {
+                        duration: 0
+                    },
+                    title: {
+                    display: true,
+                    text: "{{ __('content.title_line_chart_dau') }}",
+                    fontSize: 16,
+                    fontStyle: 'normal'
+                    },
+                    scales:{
+                        yAxes: [{
+                            ticks: {
+                                min: 0,
+                                callback: function(value, index, values) {
+                                    if (Math.floor(value) === value) {
+                                        return value;
+                                    }
+                                }                        
+                            }
+                        }],
+                    }
+                }
+            });
+            document.getElementById("loadingIconActivity").style.display = "none";
+            document.getElementById("activityChartWrapperNoData").style.display = "none";
+            document.getElementById("activityChartWrapper").style.visibility = "visible";
+        });
+ 
+        }
+    });
+
+    getChartData('topSubcategories', 7).then(data => {
+        if (!data || !data.events ) {
+            handle_no_data('topCategoriesChartWrapperNoData', 'loadingIconTopCatagories');
+            return;
+        }
+
+        const openedWeek = Object.entries(data.events.popover_open).sort((a, b) => b[1] - a[1]).slice(0, 8);
+        for (const [key, value] of openedWeek) {
+            if (key && value) {
+                xTopSubCategoriesWeek.push(key);
+                yTopSubCategoriesWeek.push(value);
+            }
+        }
+
+        getChartData('topSubcategories', 14).then(data => {
+        if (!data || !data.events ) {
+            handle_no_data('topCategoriesChartWrapperNoData', 'loadingIconTopCatagories');
+            return;
+        }
+        const openedTwoWeeks = data.events.popover_open;
+        for (const [key, value] of Object.entries(openedTwoWeeks)) {
+            if (!xTopSubCategoriesWeek.includes(key)) {
+                delete openedTwoWeeks[key];
+            }
+        }
+
+        for (const [key, value] of openedWeek) {
+            if (key && value && openedTwoWeeks[key]) {
+                yTopSubCategoriesTwoWeeks.push(openedTwoWeeks[key] - value);
+            } else {
+                yTopSubCategoriesTwoWeeks.push(0);
+            }
+        }
+        const dataCategories = {
+                labels: xTopSubCategoriesWeek,
+                datasets: [{
+                    label: "{{ __('content.title_categories_radar_chart_last_week') }}",
+                    data: yTopSubCategoriesTwoWeeks,
+                    fill: true,
+                    backgroundColor: 'hsla(247, 52.8%, 75.9%, 0.5)',
+                    borderColor: 'hsla(248, 53.2%, 60.6%, 0.5)'
+                }, {
+                    label: "{{ __('content.title_categories_radar_chart_current_week') }}",
+                    data: yTopSubCategoriesWeek,
+                    fill: true,
+                    backgroundColor: 'hsla(247, 54.1%, 88.0%, 0.5)',
+                    borderColor: 'hsla(247, 52.8%, 75.9%, 0.5)'
+                }]
+                };
+  
+            new Chart("categoriesRadar", {
+                type: 'radar',
+                    data: dataCategories,
+                    options: {
+                        maintainAspectRatio: false,
+                        responsive: true, 
+                        events: ["click"],
+                        elements: {
+                        line: {
+                            borderWidth: 1
+                        },
+                        opacity: 0.5,
+                        scales:{
+                            yAxes: [{
+                                ticks: {
+                                    min: 0,
+                                    callback: function(value, index, values) {
+                                        if (Math.floor(value) === value) {
+                                            return value;
+                                        }
+                                    }                                
+                                }
+                            }],
+                        }
+                    }
+                },
+            });
+            document.getElementById("loadingIconTopCatagories").style.display = "none";
+            document.getElementById("topCategoriesChartWrapperNoData").style.display = "none";
+            document.getElementById("topCategoriesChartWrapper").style.visibility = "visible";
+        });
+    });
+
+
+    getChartData('topSubcategories').then(data => {
+        if (!data || !data.events ) {
+            handle_no_data('topCategoriesChartWrapperNoData', 'loadingIconTopCatagories');
+            return;
+        }
+
+        const subcategories = data.subcategories.popover_open;
+        listOfLinks = ``;
+
+        let locale = window.location.href.includes("/de/") ? "de" : "en"
+        let i = 0;
+        for (const [key, value] of Object.entries(subcategories).slice(0, 15)) {
+            let why = subcategories[key].why;
+            let label = subcategories[key].name[locale];
+
+            listOfLinks += `<div class="link-box" style="background-color:${colors[i]}"></div>`;
+
+            if (why) {
+                let url = subcategories[key].url[locale];
+                listOfLinks += `<a href="${url}" class="wittyworks-team-name lato-link-list" target="_blank">${label}</a>`;
+            } else {
+                listOfLinks += `<span class="lato-link-list">${label}</span>`;
+            }
+
+            listOfLinks += `</br>`;
+
+            i++;
+        }
+
+        document.getElementById("categoryOverview").innerHTML = listOfLinks;
+
+        const ignored = data.events.ignore;
+        const opened = data.events.popover_open;
+        const alternative = data.events.alternative;
+
+        for (const [key, value] of Object.entries(ignored)) {
+            xValuesTopSubCategoriesIgnored.push(key);
+            yValuesTopSubCategoriesIgnored.push(value);
+        }
+
+        for (const [key, value] of Object.entries(opened)) {
+            xValuesTopSubCategoriesOpened.push(key);
+            yValuesTopSubCategoriesOpened.push(value);
+        }
+
+        for (const [key, value] of Object.entries(alternative)) {
+            xValuesTopSubCategoriesAlternative.push(key);
+            yValuesTopSubCategoriesAlternative.push(value);
+        }
+
+        const xValuesTopSubCategoriesIgnoredCutDoughnut = xValuesTopSubCategoriesIgnored.slice(0, 5);
+        const yValuesTopSubCategoriesIgnoredCutDoughnut = yValuesTopSubCategoriesIgnored.slice(0, 5);
+
+        const xValuesTopSubCategoriesOpenedCut = xValuesTopSubCategoriesOpened.slice(0, 15);
+        const yValuesTopSubCategoriesOpenedCut = yValuesTopSubCategoriesOpened.slice(0, 15);
+
+        const xValuesTopSubCategoriesAlternativeCutDoughnut = xValuesTopSubCategoriesAlternative.slice(0, 5);
+        const yValuesTopSubCategoriesAlternativeCutDoughnut = yValuesTopSubCategoriesAlternative.slice(0, 5);
+    
+
+        createBarChart(
+            "topSubCategoriesChart",
+            xValuesTopSubCategoriesOpenedCut,
+            yValuesTopSubCategoriesOpenedCut,
+            "{{ __('content.title_categories_bar_chart_month') }}",
+            true,
+            false
+        );
+
+        createDoughnutChart(
+            "topSubCategoriesOpenedChartDoughnut",
+            xValuesTopSubCategoriesAlternativeCutDoughnut,
+            yValuesTopSubCategoriesAlternativeCutDoughnut,
+            "{{ __('content.title_categories_alternative_doughnut_chart_month') }}",
+
+        );
+    
+        createDoughnutChart(
+            "topSubCategoriesIgnoredChartDoughnut",
+            xValuesTopSubCategoriesIgnoredCutDoughnut,
+            yValuesTopSubCategoriesIgnoredCutDoughnut,
+            "{{ __('content.title_categories_ignored_doughnut_chart_month') }}",
+        );
+                         
+    });
+
+    getChartData('topWords', 7).then(data => {
+        if (!data || !data.events ) {
+            handle_no_data('topWordsChartWrapperNoData', 'loadingIconTopWords');
+            return;
+        }
+        const xTopWordsWeek = [];
+        const yTopWordsWeek = [];
+        const yTopWordsTwoWeeks = [];
+        const openedWeek = Object.entries(data.events.popover_open).sort((a, b) => b[1] - a[1]).slice(0, 8);
+        for (const [key, value] of openedWeek) {
+            if (key && value) {
+                xTopWordsWeek.push(key);
+                yTopWordsWeek.push(value);
+            }
+        }
+
+        getChartData('topWords', 14).then(data => {
+        if (!data || !data.events ) {
+            handle_no_data('topWordsChartWrapperNoData', 'loadingIconTopWords');
+            return;
+        }
+        const openedTwoWeeks = data.events.popover_open;
+        for (const [key, value] of Object.entries(openedTwoWeeks)) {
+            if (!xTopWordsWeek.includes(key)) {
+                delete openedTwoWeeks[key];
+            }
+        }
+        for (const [key, value] of openedWeek) {
+            if (key && value && openedTwoWeeks[key]) {
+                yTopWordsTwoWeeks.push(openedTwoWeeks[key] - value);
+            } else if (key && value) {
+                yTopWordsTwoWeeks.push(0);
+            }
+        }
+
+        const dataCategories = {
+            labels:
+            xTopWordsWeek,
+            datasets: [{
+                label: "{{ __('content.title_words_radar_chart_last_week') }}",
+                data: yTopWordsTwoWeeks,
+                fill: true,
+                backgroundColor: 'hsla(247, 52.8%, 75.9%, 0.5)',
+                    borderColor: 'hsla(248, 53.2%, 60.6%, 0.5)'
+            }, {
+                label: "{{ __('content.title_words_radar_chart_current_week') }}",
+                data: yTopWordsWeek,
+                fill: true,
+                backgroundColor: 'hsla(247, 54.1%, 88.0%, 0.5)',
+                    borderColor: 'hsla(247, 52.8%, 75.9%, 0.5)'
+    
+            }]
+        };
+    
+        new Chart("wordsRadar", {
+            type: 'radar',
+            data: dataCategories,
+            options: {
+                events: ["click"],
+                maintainAspectRatio: false,
+                lanresponsive: true, 
+                elements: {
+                    line: {
+                        borderWidth: 1
+                        }
+                    }
+                },
+                scales:{
+                    yAxes: [{
+                        ticks: {
+                            min: 0,
+                            callback: function(value, index, values) {
+                                if (Math.floor(value) === value) {
+                                    return value;
+                                }
+                            }                        
+                        }
+                    }],
+                }
+            });
+            document.getElementById("loadingIconTopWords").style.display = "none";
+            document.getElementById("topWordsChartWrapperNoData").style.display = "none";
+            document.getElementById("topWordsChartWrapper").style.visibility = "visible";
+        });
+    });
+
+
+    getChartData('topWords').then(data => {
+        if (!data || !data.events ) {
+            handle_no_data('topWordsChartWrapperNoData', 'loadingIconTopWords');
+            return;
+        }
+        const ignored = data.events.ignore;
+        const opened = data.events.popover_open;
+        const alternative = data.events.alternative;
+
+        for (const [key, value] of Object.entries(ignored)) {
+            xValuesTopWordsIgnored.push(key);
+            yValuesTopWordsIgnored.push(value);
+        }
+
+        for (const [key, value] of Object.entries(opened)) {
+            xValuesTopWordsOpened.push(key);
+            yValuesTopWordsOpened.push(value);
+        }
+
+        for (const [key, value] of Object.entries(alternative)) {
+            xValuesTopWordsAlternative.push(key);
+            yValuesTopWordsAlternative.push(value);
+        }
+
+        const xValuesTopWordsIgnoredCutDoughnut = xValuesTopWordsIgnored.slice(0, 5);
+        const yValuesTopWordsIgnoredCutDoughnut = yValuesTopWordsIgnored.slice(0, 5);
+
+        const xValuesTopWordsOpenedCut = xValuesTopWordsOpened.slice(0, 15);
+        const yValuesTopWordsOpenedCut = yValuesTopWordsOpened.slice(0, 15);
+     
+        const xValuesTopWordsAlternativeCutDoughnut = xValuesTopWordsAlternative.slice(0, 5);
+        const yValuesTopWordsAlternativeCutDoughnut = yValuesTopWordsAlternative.slice(0, 5);
+
+        createDoughnutChart(
+            "topWordsChartDoughnut",
+            xValuesTopWordsAlternativeCutDoughnut,
+            yValuesTopWordsAlternativeCutDoughnut,
+            "{{ __('content.title_words_alternative_doughnut_chart_month') }}",
+        );
+
+        createDoughnutChart(
+            "topWordsChartDoughnutWeek",
+            xValuesTopWordsIgnoredCutDoughnut,
+            yValuesTopWordsIgnoredCutDoughnut,
+            "{{ __('content.title_words_ignored_doughnut_chart_month') }}",
+        );
+       
+        createBarChart(
+            "topWordsChart",
+            xValuesTopWordsOpenedCut,
+            yValuesTopWordsOpenedCut,
+            "{{ __('content.title_words_bar_chart_month') }}",
+            true,
+            false
+        );
+    });
+};
+load_charts(false, 1);
+</script>
+
+<x-app-layout>
+    <div class="wittyworks-navigation-wrapper">@livewire('navigation-menu')</div>
+        <div class="wittyworks-page-wrapper">
+            <div class="wittyworks-page lg:ml-20">
+                @include('partials.banners')
+                <div class="ibarra-sub-title-h1 margin-bottom">
+                    {{ __('content.analytics') }}
+                </div>    
+                @if(isset($team) && !empty($team_edit))
+                <div>
+                    <div>
+                        @livewire('teams.analytics-user-access', ['team' => $team])
+                    </div>
+                </div>
+                @endif
+                <div id="lastRefresh" class="lato-small-text-p wittyworks-margin-right container-row" style="visibility: hidden; align-items: center;"></div>
+                <div class="ibarra-sub-title-h2">{{ __('content.activity') }}</div>
+                <div class="wittyworks-form-section container border-radius">
+                    <div id="loadingIconActivity" class="loading-icon-wrapper" style="width: 100%">
+                        <div class="lds-grid">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                    </div>
+                    <div id="activityChartWrapperNoData" style="visibility: hidden; width: 100%">
+                        <div class="lato-small-text-p">{{ __('content.no_data_events') }}</div>
+                        <div class="image-container">
+                            <img src="{{ url('svg/screenshots/activity.png') }}" alt="activity" class="image wittyworks-margin-top">
+                            <div class="centered-image-text">{{ __('content.no_data_image_text') }}</div>
+                        </div>
+                    </div>
+                    <div id="activityChartWrapper" style="visibility: hidden; width: 100%">
+                        <div class="container-row wittyworks-margin-top" style="justify-content: space-between ">
+                            <div class="container-column" style="margin-left: 2em;">
+                                <div class="container-row" style="align-items: center">
+                                    <div id="checkDaysInRow" class="lato-small-text-p"></div>
+                                </div>
+                                <div class="container-row" >
+                                    <div id="changeInPopoverPercentage" class="lato-small-text-p"></div>
+                                </div>
+                                <div class="container-row" >
+                                    <div id="changeInAlternativePercentage" class="lato-small-text-p"></div>
+                                </div>
+                                <div class="container-row">
+                                    <div id="changeInIgnorePercentage" class="lato-small-text-p"></div>                           
+                                </div>
+                                <div class="container-row" >
+                                    <div id="changeInLearningBitesPercentage" class="lato-small-text-p"></div>
+                                </div>
+                            </div>
+                            <div class="container-row wittyworks-margin-right">
+                                <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.start_of_week') }}</div>
+                                <div id="startOfWeekDropdown"></div>
+                            </div>
+                        </div>
+                        <div class="container-row wittyworks-margin-top">
+                            <canvas id="eventsChart" class="wittyworks-analytics-chart-extra-large"></canvas>
+                        </div>
+                        @if(isset($team) && !empty($team_edit))
+                        <div class="container-row wittyworks-margin-top">
+                            <canvas id="dauChart" class="wittyworks-analytics-chart-extra-large"></canvas>
+                        </div>
+                        @endif
+                        <div class="container-row wittyworks-margin-top">
+                            <canvas id="requestRatiosChartDoughnut" class="wittyworks-analytics-chart-small"></canvas>
+                            @php
+                                $eventsCharts = ["eventsPopoverChart", "eventsAlternativeChart", "eventsIgnoreChart", "eventsLearningBitesChart"];
+                                for ($i = 0; $i < count($eventsCharts); $i++) {
+                                    echo '<canvas id="' . $eventsCharts[$i] . '" class="wittyworks-analytics-chart-small wittyworks-margin-right" ></canvas>';
+                                }
+                            @endphp
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ibarra-sub-title-h2 wittyworks-margin-top">{{ __('content.top_categories') }}</div>
+                <div class="wittyworks-form-section container border-radius">
+                    <div id="loadingIconTopCatagories" class="loading-icon-wrapper"  style="width: 100%">
+                        <div class="lds-grid">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                    </div>
+
+                    <div id="topCategoriesChartWrapperNoData" style="visibility: hidden; width: 100%">
+                        <div class="lato-small-text-p">{{ __('content.no_data_top_categories') }}</div>
+                        <div class="image-container">
+                            <img src="{{ url('svg/screenshots/top_categories.png') }}" alt="top_categories"  class="image wittyworks-margin-top">
+                            <div class="centered-image-text">{{ __('content.no_data_image_text') }}</div>
+                        </div>
+                    </div>
+                    <div id="topCategoriesChartWrapper" style="visibility: hidden; width: 100%">
+                        <div class="chart-container-row wittyworks-margin-top">
+                            <canvas
+                                id="topSubCategoriesChart"
+                                class="wittyworks-analytics-chart-top-categories wittyworks-margin-top">
+                            </canvas>
+                            <div id="categoryOverview" class="wittyworks-margin-left wittyworks-margin-top"></div>
+                        </div>
+                        <div class="chart-container-row wittyworks-margin-top">
+                            <canvas
+                                id="categoriesRadar"
+                                class="wittyworks-analytics-chart-medium-radar">
+                            </canvas>
+                            <div class="container-column">
+                                <canvas
+                                    id="topSubCategoriesOpenedChartDoughnut"
+                                    class="wittyworks-analytics-chart-medium">
+                                </canvas>
+                                <canvas
+                                    id="topSubCategoriesIgnoredChartDoughnut"
+                                    class="wittyworks-analytics-chart-medium">
+                                </canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ibarra-sub-title-h2 wittyworks-margin-top">{{ __('content.top_words') }}</div>
+                    <div class="wittyworks-form-section container border-radius">
+                        <div id="loadingIconTopWords" class="loading-icon-wrapper" style="width: 100%">
+                            <div class="lds-grid">
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                            </div>
+                        </div>
+                        <div id="topWordsChartWrapperNoData" style="visibility: hidden; width: 100%">
+                            <div class="lato-small-text-p">{{ __('content.no_data_top_words') }}</div>
+                            <div class="image-container">
+                                <img src="{{ url('svg/screenshots/top_words.png') }}" alt="top_words"  class="image wittyworks-margin-top">
+                                <div class="centered-image-text">{{ __('content.no_data_image_text') }}</div>
+                            </div>
+                        </div>
+                        <div id="topWordsChartWrapper" style="visibility: hidden; width: 100%">
+                            <div class="container-row wittyworks-margin-top">
+                                <canvas
+                                    id="topWordsChart"
+                                    class="wittyworks-analytics-chart-extra-large wittyworks-margin-top">
+                                </canvas>
+                            </div>
+                            <div class="chart-container-row wittyworks-margin-top">
+                            <canvas
+                                id="wordsRadar"
+                                class="wittyworks-analytics-chart-medium-radar">
+                            </canvas>
+                            <div class="container-column">
+                                <canvas
+                                    id="topWordsChartDoughnut"
+                                    class="wittyworks-analytics-chart-medium">
+                                </canvas>
+                                <canvas
+                                    id="topWordsChartDoughnutWeek"
+                                    class="wittyworks-analytics-chart-medium">
+                                </canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>

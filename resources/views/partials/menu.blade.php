@@ -57,15 +57,35 @@
                     {{ __('content.manage_account') }}
                 </x-jet-nav-link>
     
+                @if(config('app.analytics'))
+                @if(!$team_edit && $team && $team->user_access_to_team_analytics)
+                <x-jet-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('user_analytics') }}">
+                    <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/analytics.svg') }}" alt="analytics" />
+                    {{ __('content.analytics') }}
+                </x-jet-nav-link>
+
+                <div class="wittyworks-navigation-sub-wrapper">
+                    <x-jet-nav-link class="wittyworks-navigation-sub-link lato-small-text-p" href="{{ route('user_analytics') }}" :active="request()->routeIs('user_analytics')">{{ __('guidelines.personal_account') }}</x-jet-nav-link>
+                    <br />
+                    <x-jet-nav-link class="wittyworks-navigation-sub-link lato-small-text-p" href="{{ route('team_analytics') }}" :active="request()->routeIs('team_analytics')">{{ __('guidelines.team_account') }}</x-jet-nav-link>
+                </div>
+                @else
+                <x-jet-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('user_analytics') }}" :active="request()->routeIs('user_analytics')">
+                    <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/analytics.svg') }}" alt="analytics" />
+                    {{ __('content.analytics') }}
+                </x-jet-nav-link>
+                @endif
+                @endif
+
                 <div class="wittyworks-navigation-label-wrapper lato-paragraph-text-p">
                     <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/language.svg') }}" alt="" />
-                    {{ __('guidelines.language') }}
+                    <x-jet-nav-link class="wittyworks-navigation-sub-link lato-small-text-p" href="{{ route('user.' . key($links)) }}">{{ __('guidelines.language') }}</x-jet-nav-link>
                 </div>
 
                 <div class="wittyworks-navigation-sub-wrapper">
                     @foreach($links as $route => $label)
                     <x-jet-nav-link class="wittyworks-navigation-sub-link lato-small-text-p" href="{{ route('user.' . $route) }}" :active="request()->routeIs('user.' . $route)">{{ $label }}</x-jet-nav-link>
-                    <br>
+                    <br />
                     @endforeach
                 </div>
             </div>
@@ -82,16 +102,23 @@
                     <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/dollar.svg') }}" alt="" />
                     {{ __('content.subscription') }}
                 </x-jet-nav-link>
-    
+
+                @if(config('app.analytics'))
+                <x-jet-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('team_analytics') }}" :active="request()->routeIs('team_analytics')">
+                    <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/analytics.svg') }}" alt="analytics" />
+                    {{ __('content.analytics') }}
+                </x-jet-nav-link>
+                @endif
+
                 <div class="wittyworks-navigation-label-wrapper lato-paragraph-text-p">
                     <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/language.svg') }}" alt="" />
-                    {{ __('teams.language') }}            
+                    <x-jet-nav-link class="wittyworks-navigation-sub-link lato-small-text-p" href="{{ route('teams.' . key($links)) }}">{{ __('teams.language') }}</x-jet-nav-link>
                 </div>
 
                 <div class="wittyworks-navigation-sub-wrapper">
                     @foreach($links as $route => $label)
                     <x-jet-nav-link class="wittyworks-navigation-sub-link lato-small-text-p" href="{{ route('teams.' . $route) }}" :active="request()->routeIs('teams.' . $route)">{{ $label }}</x-jet-nav-link>
-                    <br>
+                    <br />
                     @endforeach
                 </div>
             </div>

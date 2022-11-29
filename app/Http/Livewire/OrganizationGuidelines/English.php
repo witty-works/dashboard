@@ -13,6 +13,9 @@ class English extends Component
     use AuthorizesRequests;
     use HelpHeroTrait;
 
+    protected $listeners = ['saved'];
+
+    public $enabled;
     public $singular_they;
     public $english_rules_force;
 
@@ -32,8 +35,14 @@ class English extends Component
     public function mount($team)
     {
         $this->team = $team;
+        $this->enabled = false;
 
         $languageGuidelines = $this->getLanguageGuidelines($this->team);
+        foreach ($languageGuidelines->preferred_variants as $variant) {
+            if (strpos($variant, 'en') === 0) {
+                $this->enabled = true;
+            }
+        }
 
         $this->singular_they = (bool) $languageGuidelines->singular_they;
         $this->english_rules_force = (bool) $languageGuidelines->english_rules_force;
@@ -66,6 +75,12 @@ class English extends Component
     public function render()
     {
         return view('livewire.organization-guidelines.english');
+    }
+
+    public function saved()
+    {
+        $this->mount($this->team);
+        $this->render();
     }
 
     protected function getLanguageGuidelines($team)

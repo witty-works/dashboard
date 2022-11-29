@@ -13,6 +13,9 @@ class German extends Component
     use AuthorizesRequests;
     use HelpHeroTrait;
 
+    protected $listeners = ['saved'];
+
+    public $enabled;
     public $german_rules_force;
     public $german_gender_ending;
     public $gendered_roles_format;
@@ -34,8 +37,14 @@ class German extends Component
     public function mount($team)
     {
         $this->team = $team;
+        $this->enabled = false;
 
         $languageGuidelines = $this->getLanguageGuidelines($this->team);
+        foreach ($languageGuidelines->preferred_variants as $variant) {
+            if (strpos($variant, 'de') === 0) {
+                $this->enabled = true;
+            }
+        }
 
         $this->german_rules_force = $languageGuidelines->german_rules_force;
         $this->german_gender_ending = $languageGuidelines->german_gender_ending;
@@ -70,6 +79,12 @@ class German extends Component
     public function render()
     {
         return view('livewire.organization-guidelines.german');
+    }
+
+    public function saved()
+    {
+        $this->mount($this->team);
+        $this->render();
     }
 
     protected function getLanguageGuidelines($team)

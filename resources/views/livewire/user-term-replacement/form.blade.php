@@ -1,3 +1,6 @@
+<div class="ibarra-sub-title-h1 margin-bottom">
+        {{ __('guidelines.dictionary_label') }}
+</div>
 <x-jet-form-section submit="storeTermReplacement">
     <x-slot name="title">
         {{ __('guidelines.create_term_replacement') }}

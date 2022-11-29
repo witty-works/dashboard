@@ -1,7 +1,10 @@
 <div>
     @if (Gate::check('viewUserCreateForm', $team))
         <!-- Add Team Member -->
-        <div class="max-w-7xl mx-auto py-10" id="add-team-member">
+        <div class="py-10" id="add-team-member">
+            <div class="ibarra-sub-title-h1 margin-bottom">
+                {{ __('content.manage_members') }}
+            </div>   
             <x-jet-form-section submit="addTeamMember">
                 <x-slot name="title">
                     {{ __('content.add_team_member') }}
@@ -104,7 +107,7 @@
         <x-jet-section-border />
 
         <!-- Team Member Invitations -->
-        <div class="max-w-7xl mx-auto py-10">
+        <div class="py-10">
             <x-jet-action-section>
                 <x-slot name="title">
                     {{ trans_choice('content.pending_team_invitations', $team->teamInvitations->count(), ['count' => $team->teamInvitations->count()]) }}
@@ -141,7 +144,7 @@
         <x-jet-section-border />
 
         <!-- Manage Team Members -->
-        <div class="max-w-7xl mx-auto py-10">
+        <div class="py-10">
             <x-jet-action-section>
                 <x-slot name="title">
                     {{ trans_choice('content.team_members', $team->users->count(), ['count' => $team->users->count()]) }}

@@ -81,9 +81,7 @@ class Form extends Component
 
         if (!empty($domain)) {
             if ($this->team->id !== $domain->team_id) {
-                $message = __(
-                    'guidelines.domain_error',
-                );
+                $message = __('guidelines.domain_error');
                 throw ValidationException::withMessages(['domain' => $message]);
             }
         } else {

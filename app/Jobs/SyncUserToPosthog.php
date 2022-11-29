@@ -11,6 +11,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use InvalidArgumentException;
 
 class SyncUserToPosthog implements ShouldQueue
 {
@@ -27,7 +28,7 @@ class SyncUserToPosthog implements ShouldQueue
     {
         $user = User::find($this->id);
         if (!$user instanceof User) {
-            return -1;
+            throw new InvalidArgumentException("User id '{$this->id} does not exist.");
         }
 
         if (!config('posthog.enabled')) {
@@ -36,7 +37,10 @@ class SyncUserToPosthog implements ShouldQueue
             return 0;
         }
 
-        PostHog::init(config('posthog.api_key'));
+        PostHog::init(
+            config('posthog.api_key'),
+            ['host' => config('posthog.host'), 'debug' => config('posthog.debug')],
+        );
 
         $properties = $user->getHubspotData();
         $properties['hubspot_id'] = $user->hubspot_id;
@@ -50,7 +54,7 @@ class SyncUserToPosthog implements ShouldQueue
         ]);
 
         if (!$result) {
-            return -1;
+            throw new InvalidArgumentException("User id '{$this->id} could not be added to Posthog.");
         }
 
         return 0;

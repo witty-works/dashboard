@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\Livewire\OrganizationGuidelinesController;
 use Illuminate\Support\Facades\Route;
 
@@ -13,10 +14,8 @@ use App\Http\Controllers\WebhookController;
 */
 use App\Http\Controllers\TeamInvitationController;
 use Laravel\Jetstream\Http\Controllers\Livewire\ApiTokenController;
-use Laravel\Jetstream\Http\Controllers\Livewire\PrivacyPolicyController;
 use App\Http\Controllers\Livewire\TeamController;
 use App\Http\Controllers\Livewire\UserGuidelinesController;
-use Laravel\Jetstream\Http\Controllers\Livewire\TermsOfServiceController;
 use Laravel\Jetstream\Http\Controllers\Livewire\UserProfileController;
 use Laravel\Jetstream\Jetstream;
 /*
@@ -75,11 +74,6 @@ Route::group(
         |------------------
         */
         Route::group(['middleware' => config('jetstream.middleware', ['web'])], function () {
-            if (Jetstream::hasTermsAndPrivacyPolicyFeature()) {
-                Route::get('/terms-of-service', [TermsOfServiceController::class, 'show'])->name('terms.show');
-                Route::get('/privacy-policy', [PrivacyPolicyController::class, 'show'])->name('policy.show');
-            }
-
             Route::group(['middleware' => ['auth:' . config('fortify.guard')]], function () {
                 Route::get('/', [WelcomeController::class, 'show']);
 
@@ -120,12 +114,14 @@ Route::group(
                     Route::get('/user/language/dictionary', [UserGuidelinesController::class, 'termReplacements'])->name('user.dictionary');
                     Route::get('/user/language/ignore-words', [UserGuidelinesController::class, 'falsePositives'])->name('user.ignored-words');
                     Route::get('/user/language/privacy-settings', [UserGuidelinesController::class, 'domains'])->name('user.privacy-settings');
+                    Route::get('/user/analytics', [AnalyticsController::class, 'user'])->name('user_analytics');
 
                     Route::redirect('/team/language', '/team/language/language-settings')->name('teams.language-guidelines');
                     Route::get('/team/language/language-settings', [OrganizationGuidelinesController::class, 'customizeWitty'])->name('teams.language-settings');
                     Route::get('/team/language/dictionary', [OrganizationGuidelinesController::class, 'termReplacements'])->name('teams.dictionary');
                     Route::get('/team/language/ignored-words', [OrganizationGuidelinesController::class, 'falsePositives'])->name('teams.ignored-words');
                     Route::get('/team/language/privacy-settings', [OrganizationGuidelinesController::class, 'domains'])->name('teams.privacy-settings');
+                    Route::get('/team/analytics', [AnalyticsController::class, 'organization'])->name('team_analytics');
                 }
             });
         });
@@ -183,3 +179,5 @@ Route::post(
 Route::fallback(function () {
     return view('errors.404');
 });
+
+Route::get('/browser-login', [OAuthController::class, 'redirectToProviderBrowserLogin'])->name('browser_login');

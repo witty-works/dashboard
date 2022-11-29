@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Models\LanguageGuidelines;
 use App\Models\User;
+use InvalidArgumentException;
 
 class SyncUserToNlpApi extends AbstractSyncToNlpApi
 {
@@ -19,7 +20,7 @@ class SyncUserToNlpApi extends AbstractSyncToNlpApi
     {
         $user = User::find($this->id);
         if (!$user instanceof User) {
-            return -1;
+            throw new InvalidArgumentException("User id '{$this->id} does not exist.");
         }
 
         $url = '/user/rules';

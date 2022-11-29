@@ -54,9 +54,7 @@ class Form extends OrganizationForm
 
         if (!empty($domain)) {
             if ($this->user->id !== $domain->user_id) {
-                $message = __(
-                    'guidelines.domain_error',
-                );
+                $message = __('guidelines.domain_error');
                 throw ValidationException::withMessages(['domain' => $message]);
             }
         } else {

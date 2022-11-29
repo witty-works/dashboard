@@ -15,7 +15,7 @@ abstract class AbstractSyncCommand extends Command
     {
         $idsString = $this->option($optionName);
 
-        if ($idsString) {
+        if ($idsString !== null) {
             $ids = explode(',', trim($idsString));
             if ($ids !== array_filter($ids, 'is_numeric')) {
                 $this->error('Non integer passed as ID: ' . $idsString);

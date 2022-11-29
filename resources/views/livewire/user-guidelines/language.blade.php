@@ -1,3 +1,6 @@
+<div class="ibarra-sub-title-h1 margin-bottom">
+    {{ __('guidelines.language_settings_label') }}
+</div> 
 <x-jet-form-section submit="updateLanguageGuidelinesLanguage">
     <x-slot name="title" class="ibarra-sub-title-h2">
         {{ __('guidelines.manage_organization_guidelines_language') }}
@@ -8,6 +11,8 @@
 
     <x-slot name="form" submit="updateLanguageGuidelinesLanguage">
         <div class="lato-paragraph-text-p margin-bottom">{!! __('guidelines.manage_organization_guidelines_description_language') !!}</div>
+
+        <x-jet-input-error for="preferred_variants" class="mt-2" />
 
         <div class="lato-small-text-p">
             {{ __('guidelines.user_preferred_variants_dialect') }}

@@ -74,18 +74,13 @@ class Form extends Component
 
         if (!empty($falsePositive)) {
             if ($this->team->id !== $falsePositive->team_id) {
-                $message = __(
-                    'guidelines.false_positive_error',
-                );
-                throw ValidationException::withMessages(['term' => $message]);
+                $message = __('guidelines.false_positive_error');
+                throw ValidationException::withMessages(['false_positive' => $message]);
             }
         } else {
             if ($this->team->getFalsePositivesLimitReached()) {
-                $message = __(
-                    'guidelines.false_positive_limit_reached_error',
-                    ['max_count' => $this->team->getFalsePositivesCount()]
-                );
-                throw ValidationException::withMessages(['term' => $message]);
+                $message = __('guidelines.false_positive_limit_reached_error', ['max_count' => $this->team->getFalsePositivesCount()]);
+                throw ValidationException::withMessages(['false_positive' => $message]);
             }
 
             $falsePositive = new FalsePositive();

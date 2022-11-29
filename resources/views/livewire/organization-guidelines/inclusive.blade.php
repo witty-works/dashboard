@@ -1,4 +1,4 @@
-<x-jet-form-section submit="updateLanguageGuidelinesInclusive">
+<x-jet-form-section class="py-10" submit="updateLanguageGuidelinesInclusive">
     <x-slot name="title">
         {{ __('guidelines.manage_organization_guidelines_inclusive') }}
     </x-slot>
