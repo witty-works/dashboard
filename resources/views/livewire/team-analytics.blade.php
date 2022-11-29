@@ -1,6 +1,6 @@
 <x-jet-form-section submit="updateTeamsAnalytics">
     <x-slot name="title">
-        {{ __('guidelines.data_collection') }}
+        {{ __('guidelines.team_analytics') }}
     </x-slot>
 
     <x-slot name="description">
@@ -13,7 +13,7 @@
                 id="team_analytics"
                 value="1"
                 wire:model.defer="team_analytics"
-                :label="__('guidelines.team_analytics')"
+                :label="__('guidelines.team_analytics_participate')"
                 :disabled="!$user->subscribed()"
             />
 

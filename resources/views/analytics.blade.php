@@ -7,13 +7,6 @@
                 <div class="ibarra-sub-title-h1 margin-top">
                     {{ __('content.analytics') }}
                 </div>    
-                @if(isset($team) && !empty($team_edit))
-                <div>
-                    <div>
-                        @livewire('teams.analytics-user-access', ['team' => $team])
-                    </div>
-                </div>
-                @endif
                 <div id="lastRefresh" class="lato-small-text-p wittyworks-margin-right container-row margin-top" style="visibility: hidden; align-items: center;"></div>
                 <div class="ibarra-sub-title-h2 wittyworks-margin-top">{{ __('content.activity') }}</div>
                 <div class="wittyworks-form-section container border-radius">
