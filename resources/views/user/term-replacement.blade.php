@@ -1,3 +1,7 @@
+<div class="ibarra-sub-title-h1 margin-bottom">
+    {{ __('guidelines.dictionary_label') }}
+</div>
+
 <div>
     <div class="py-10">
         @livewire('user-term-replacement.form', ['user' => $user])

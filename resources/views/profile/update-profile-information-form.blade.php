@@ -1,6 +1,3 @@
-<div class="ibarra-sub-title-h1 margin-bottom">
-    {{ __('content.manage_account') }}
-</div> 
 <x-jet-form-section submit="updateProfileInformation">
     <x-slot name="title">
         {{ __('teams.profile') }}
