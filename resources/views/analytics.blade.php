@@ -236,11 +236,11 @@
     }
 
     getChartData('total').then(data => {
-        const events = data.events;
         if (!data.events || Object.entries(events.check).filter(([key, value]) => value > 0).length == 0) {
             handle_no_data('activityChartWrapperNoData', 'loadingIconActivity');
             return;
         }
+        const events = data.events || {};
 
         const lastRefresh = data.events.last_refresh;
         let lastRefreshFormatted = moment(lastRefresh).fromNow();
@@ -458,11 +458,12 @@
             );
            
         getChartData('dau', 30, 'week').then(data => {
-        const events = data.events;
         if (!data.events || Object.entries(events.check).filter(([key, value]) => value > 0).length == 0) {
             handle_no_data('activityChartWrapperNoData', 'loadingIconActivity');
             return;
         }
+
+        const events = data.events || {};
 
         for (const [event, value] of Object.entries(events)) {
             if (event === 'check') {
@@ -569,8 +570,8 @@
             handle_no_data('topCategoriesChartWrapperNoData', 'loadingIconTopCatagories');
             return;
         }
-
-        const openedWeek = Object.entries(data.events.popover_open).sort((a, b) => b[1] - a[1]).slice(0, 8);
+        const eventsPopoverOpenedWeekUnsorted = data.events.popover_open || {};
+        const openedWeek = Object.entries(eventsPopoverOpenedWeekUnsorted).sort((a, b) => b[1] - a[1]).slice(0, 8);
         for (const [key, value] of openedWeek) {
             if (key && value) {
                 xTopSubCategoriesWeek.push(key);
@@ -583,7 +584,7 @@
             handle_no_data('topCategoriesChartWrapperNoData', 'loadingIconTopCatagories');
             return;
         }
-        const openedTwoWeeks = data.events.popover_open;
+        const openedTwoWeeks = data.events.popover_open || {};
         for (const [key, value] of Object.entries(openedTwoWeeks)) {
             if (!xTopSubCategoriesWeek.includes(key)) {
                 delete openedTwoWeeks[key];
@@ -654,7 +655,7 @@
             return;
         }
 
-        const subcategories = data.subcategories.popover_open;
+        const subcategories = data.subcategories.popover_open || {};
         listOfLinks = ``;
 
         let locale = window.location.href.includes("/de/") ? "de" : "en"
@@ -679,9 +680,9 @@
 
         document.getElementById("categoryOverview").innerHTML = listOfLinks;
 
-        const ignored = data.events.ignore;
-        const opened = data.events.popover_open;
-        const alternative = data.events.alternative;
+        const ignored = data.events.ignore || {};
+        const opened = data.events.popover_open || {};
+        const alternative = data.events.alternative || {};
 
         for (const [key, value] of Object.entries(ignored)) {
             xValuesTopSubCategoriesIgnored.push(key);
@@ -742,7 +743,8 @@
         const xTopWordsWeek = [];
         const yTopWordsWeek = [];
         const yTopWordsTwoWeeks = [];
-        const openedWeek = Object.entries(data.events.popover_open).sort((a, b) => b[1] - a[1]).slice(0, 8);
+        const popoverOpenedWeekUnsorted = data.events.popover_open || {};
+        const openedWeek = Object.entries(popoverOpenedWeekUnsorted).sort((a, b) => b[1] - a[1]).slice(0, 8);
         for (const [key, value] of openedWeek) {
             if (key && value) {
                 xTopWordsWeek.push(key);
@@ -755,7 +757,7 @@
             handle_no_data('topWordsChartWrapperNoData', 'loadingIconTopWords');
             return;
         }
-        const openedTwoWeeks = data.events.popover_open;
+        const openedTwoWeeks = data.events.popover_open || {};
         for (const [key, value] of Object.entries(openedTwoWeeks)) {
             if (!xTopWordsWeek.includes(key)) {
                 delete openedTwoWeeks[key];
@@ -820,15 +822,14 @@
         });
     });
 
-
     getChartData('topWords').then(data => {
         if (!data || !data.events ) {
             handle_no_data('topWordsChartWrapperNoData', 'loadingIconTopWords');
             return;
         }
-        const ignored = data.events.ignore;
-        const opened = data.events.popover_open;
-        const alternative = data.events.alternative;
+        const ignored = data.events.ignore || {};
+        const opened = data.events.popover_open || {};
+        const alternative = data.events.alternative || {};
 
         for (const [key, value] of Object.entries(ignored)) {
             xValuesTopWordsIgnored.push(key);
