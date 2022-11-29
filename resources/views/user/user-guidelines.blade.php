@@ -1,4 +1,8 @@
 <div>
+    <div class="ibarra-sub-title-h1 margin-bottom">
+        {{ __('guidelines.language_settings_label') }}
+    </div>
+
     @livewire('user-guidelines.intro', ['user' => $user])
 
     @livewire('user-guidelines.language', ['user' => $user])
