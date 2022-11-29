@@ -1,3 +1,7 @@
+<div class="ibarra-sub-title-h1 margin-bottom">
+    {{ __('guidelines.list_false_positives') }}
+</div>
+
 <div>
     <div class="py-10">
         @livewire('user-false-positive.form', ['user' => $user])
