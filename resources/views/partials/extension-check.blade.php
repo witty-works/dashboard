@@ -17,7 +17,7 @@
             }
 
             const extensionVersion = wittyIsInstalled.getAttribute('extension-version');
-            const newestVersion = '3.3.3' //TODO: get newest version 
+            const newestVersion = @json(config('app.browser_version'));
             if (extensionVersion !== newestVersion) { 
                 upgradeWittyVersion.style.display = 'flex';
             }
@@ -35,7 +35,7 @@
             </div>
         </div>
         <div class="wittyworks-upgrade-banner-button-container">
-            <a class="button primary-button-purple" href="https://www.witty.works/select-browser" target="_blank" rel="noopener">
+            <a class="button primary-button-purple" href="https://www.witty.works/download" target="_blank" rel="noopener">
                 {{ __('content.onboarding_install_witty_button') }}
             </a>
         </div>
@@ -67,8 +67,7 @@
             </div>
         </div>
         <div class="wittyworks-upgrade-banner-button-container">
-        <!-- TODO: Add correct link to button, link to chrome store? -->
-        <a class="button primary-button-purple" href="https://www.witty.works/select-browser" target="_blank" rel="noopener">
+            <a class="button primary-button-purple" href="https://www.witty.works/select-browser" target="_blank" rel="noopener">
                 {{ __('content.upgrade_witty_version_button') }}
             </a>
         </div>
