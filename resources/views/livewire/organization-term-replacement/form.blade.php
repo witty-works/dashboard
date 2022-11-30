@@ -21,8 +21,8 @@
                 autocomplete="term_replacement_id" />
 
             <x-jet-input id="term"
-                type="text" 
-                class="mt-1 block w-full"
+                type="textarea"
+                class="mt-1 block w-full textarea-as-input"
                 wire:model.defer="term"
                 autocomplete="term"
                 :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')"
@@ -35,8 +35,8 @@
             <x-jet-label for="replacement" value="{!! __('guidelines.replacement_label') !!}" />
 
             <x-jet-input id="replacement"
-                type="text" 
-                class="mt-1 block w-full"
+                type="textarea"
+                class="mt-1 block w-full textarea-as-input"
                 wire:model.defer="replacement"
                 autocomplete="replacement"
                 :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')"
