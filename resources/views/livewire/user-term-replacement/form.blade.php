@@ -60,7 +60,7 @@
             <x-jet-label for="explanation" value="{!! __('guidelines.explanation_label') !!}" />
 
             <x-jet-input id="explanation"
-                type="text" 
+                type="textarea" 
                 class="mt-1 block w-full"
                 wire:model.defer="explanation"
                 autocomplete="explanation"
