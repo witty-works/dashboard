@@ -23,7 +23,7 @@
                 :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')"
             />
 
-                <x-jet-input-error for="false_positive" class="mt-2" />
+            <x-jet-input-error for="false_positive" class="mt-2" />
         </div>
 {{--
         <div class="w-full col-span-6 sm:col-span-4 mt-5">
