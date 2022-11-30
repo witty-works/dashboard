@@ -10,6 +10,13 @@ class TeamMemberManagerHelpHero extends TeamMemberManagerBase
 {
     use HelpHeroTrait;
 
+    public function mount($team)
+    {
+        parent::mount($team);
+
+        $this->resetForm();
+    }
+
     /**
      * Add a new team member to a team.
      *
@@ -55,5 +62,22 @@ class TeamMemberManagerHelpHero extends TeamMemberManagerBase
     {
         parent::removeTeamMember($remover);
         $this->updateHelpHero();
+    }
+
+    protected function resetForm()
+    {
+        $this->resetErrorBag();
+
+        $this->addTeamMemberForm = [
+            'email' => '',
+            'role' => $this->team->subscribed() ? null : 'admin',
+        ];
+    }
+
+    public function cancel()
+    {
+        $this->resetForm();
+
+        return $this->render();
     }
 }

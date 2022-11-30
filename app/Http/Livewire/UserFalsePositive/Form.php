@@ -75,7 +75,6 @@ class Form extends OrganizationForm
 
         $this->emit('saved');
 
-        $this->false_positive = '';
-        $this->false_positive_id = '';
+        $this->resetForm();
     }
 }

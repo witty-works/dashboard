@@ -9,7 +9,7 @@
     </x-slot>
 
     <x-slot name="list">
-        <table class="table-fixed w-full">
+        <table class="table-auto w-full">
             <thead>
                 <tr>
                     <th class="py-2 lato-paragraph-text-p">{{ __('guidelines.domain_label') }}</th>
@@ -22,7 +22,7 @@
             <tr @if($loop->even)class="bg-grey"@endif>
                 <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $domain->domain }}</td>
                 <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $domain->exists_on_team ? __('guidelines.yes') : __('guidelines.no') }} </td>
-                <td class="border px-4 py-2 text-center container-row ">
+                <td class="border px-4 py-2 text-center container-row">
                     <button wire:click="editDomain({{ $domain->id }})" class="button primary-button-red ">
                         {{ __('content.edit') }}
                     </button>

@@ -32,7 +32,15 @@ class Orthography extends Component
      */
     public function mount($team)
     {
-        $this->mountCategories($team, GuidelinesInterface::DISABLED_CATEGORIES_ORTHOGRAPHY);
+        $this->team = $team;
+        $this->resetForm();
+    }
+
+    public function resetForm()
+    {
+        $this->resetErrorBag();
+
+        $this->mountCategories($this->team, GuidelinesInterface::DISABLED_CATEGORIES_ORTHOGRAPHY);
     }
 
     public function updateLanguageGuidelinesOrthography()

@@ -26,7 +26,15 @@ class AnalyticsUserAccess extends Component
      */
     public function mount($team)
     {
-        $this->user_access_to_team_analytics = (bool) $team->user_access_to_team_analytics;
+        $this->team = $team;
+        $this->resetForm();
+    }
+
+    protected function resetForm()
+    {
+        $this->resetErrorBag();
+
+        $this->user_access_to_team_analytics = (bool) $this->team->user_access_to_team_analytics;
         if (!$this->team->subscribed()) {
             $this->user_access_to_team_analytics = true;
         }
@@ -58,5 +66,12 @@ class AnalyticsUserAccess extends Component
     public function render()
     {
         return view('livewire.teams.analytics-user-access');
+    }
+
+    public function cancel()
+    {
+        $this->resetForm();
+
+        return $this->render();
     }
 }

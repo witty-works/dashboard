@@ -30,14 +30,8 @@
     </x-slot>
 
     @if (Gate::check('update', $team))
-        <x-slot name="actions">
-            <x-jet-action-message class="mr-3" on="saved">
-                <span class="float-right">{{ __('content.saved') }}</span>
-            </x-jet-action-message>
-
-            <x-jet-button>
-                {{ __('content.save') }}
-            </x-jet-button>
-        </x-slot>
+    <x-slot name="actions">
+        @include('partials/save_cancel_action')
+    </x-slot>
     @endif
 </x-jet-form-section>

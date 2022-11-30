@@ -28,8 +28,14 @@ class TeamAnalytics extends Component
     public function mount($user)
     {
         $this->user = Auth::user();
+        $this->resetForm();
+    }
 
-        $this->team_analytics = (bool) $user->team_analytics;
+    protected function resetForm()
+    {
+        $this->resetErrorBag();
+
+        $this->team_analytics = (bool) $this->user->team_analytics;
         if (!$this->user->subscribed()) {
             $this->team_analytics = true;
         }
@@ -59,5 +65,12 @@ class TeamAnalytics extends Component
     public function render()
     {
         return view('livewire.team-analytics');
+    }
+
+    public function cancel()
+    {
+        $this->resetForm();
+
+        return $this->render();
     }
 }

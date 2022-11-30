@@ -24,13 +24,7 @@
 
     @if(!\App\Models\LanguageGuidelines::isForcedOnTeam(Auth::user(), 'english_rules'))
     <x-slot name="actions">
-        <x-jet-action-message class="mr-3" on="saved">
-            <span class="float-right">{{ __('content.saved') }}</span>
-        </x-jet-action-message>
-
-        <x-jet-button>
-            {{ __('content.save') }}
-        </x-jet-button>
+        @include('partials/save_cancel_action')
     </x-slot>
     @endif
 </x-jet-form-section>

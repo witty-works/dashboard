@@ -35,6 +35,12 @@ class Language extends Component
     public function mount($user)
     {
         $this->user = Auth::user();
+        $this->resetForm();
+    }
+
+    protected function resetForm()
+    {
+        $this->resetErrorBag();
 
         $languageGuidelines = $this->getLanguageGuidelines($this->user);
 
@@ -93,6 +99,13 @@ class Language extends Component
     public function render()
     {
         return view('livewire.user-guidelines.language');
+    }
+
+    public function cancel()
+    {
+        $this->resetForm();
+
+        return $this->render();
     }
 
     protected function getLanguageGuidelines($user)
