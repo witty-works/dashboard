@@ -887,3 +887,8 @@ input:checked+.slider:before {
     color: #000000;
     line-height: 26px;
 }
+
+.textarea-as-input {
+    resize: none !important;
+    max-height: 42px;
+}
