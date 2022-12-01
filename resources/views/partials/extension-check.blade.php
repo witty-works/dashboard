@@ -20,12 +20,7 @@
             const newestVersions = @json(config('app.browser_version'));
 
             if (extensionVersion && !newestVersions.includes(extensionVersion)) {
-                extensionId = wittyIsInstalled.getAttribute('extension-id');
-                let url = 'chrome://extensions/?id=' + extensionId;
-
-                if (navigator.userAgent.match(/firefox/i)) {
-                    url = 'about:addons';
-                }
+                let url = 'https://www.witty.works/en/help/how-can-i-update-witty';
 
                 const wittyOptionsUrl = document.getElementById('witty-version-options-url');
                 wittyOptionsUrl.setAttribute('href', url)
