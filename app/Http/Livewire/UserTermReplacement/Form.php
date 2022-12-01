@@ -21,12 +21,16 @@ class Form extends OrganizationForm
 
     public function render()
     {
-        return view('livewire.user-term-replacement.form');
+        $this->cleanValues($this->user->subscribed());
+
+        $params = ['language_codes' => $this->getLanguageCodes()];
+        return view('livewire.user-term-replacement.form', $params);
     }
 
     public function storeTermReplacement()
     {
         $this->validate();
+        $this->cleanValues($this->user->subscribed());
 
         $query = TermReplacement::query()
             ->where('user_id', $this->user->id)
@@ -59,12 +63,16 @@ class Form extends OrganizationForm
 
         $this->emoji = TermReplacement::validateEmoji($this->emoji);
 
+        $this->handleMatchingType();
+
         $termReplacement->term = $this->term;
         $termReplacement->replacement = $this->replacement;
         $termReplacement->language_code = null;
         $termReplacement->explanation = $this->explanation;
         $termReplacement->url = $this->url;
         $termReplacement->emoji = $this->emoji;
+        $termReplacement->language_code = $this->language_code;
+        $termReplacement->word_type = $this->word_type;
         $termReplacement->user_id = $this->user->id;
         $termReplacement->save();
 

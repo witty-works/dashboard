@@ -42,19 +42,54 @@
 
             <x-jet-input-error for="replacement" class="mt-2" />
         </div>
-{{--
+
         <div class="w-full col-span-6 sm:col-span-4 mt-5">
             <x-jet-label for="language_code" value="{!! __('guidelines.language_code_label') !!}" />
 
             <x-select id="language_code"
-                :options="\App\Models\TermReplacement::LANGUAGE_CODE"
+                :options="$language_codes"
                 class="mt-1 block w-full"
                 wire:model.defer="language_code"
             />
 
-                <x-jet-input-error for="language_code" class="mt-2" />
+            <x-jet-input-error for="language_code" class="mt-2" />
         </div>
---}}
+
+        <div class="w-full col-span-6 sm:col-span-4 mt-5">
+            <x-jet-label for="language_code">
+                {!! __('guidelines.matching_type_label') !!}
+                @if(!$user->subscribed())
+                <span class="pl-3">
+                @include('partials.witty-teams-only')
+                </span>
+                @endif
+            </x-jet-label>
+
+            <x-select id="matching_type"
+                :options="\App\Models\TermReplacement::MATCHING_TYPES"
+                class="mt-1 block w-full"
+                wire:model.defer="matching_type"
+                wire:change="showHideWordType"
+                :disabled="!$user->subscribed()"
+            />
+
+            <x-jet-input-error for="matching_type" class="mt-2" />
+
+            <x-jet-input-error for="word_type" class="mt-2" />
+        </div>
+
+        @if($show_word_type)
+        <div class="w-full col-span-6 sm:col-span-4 mt-5">
+            <x-jet-label for="word_type" value="{!! __('guidelines.word_type_label') !!}" />
+
+            <x-select id="word_type"
+                :options="\App\Models\TermReplacement::WORD_TYPES"
+                class="mt-1 block w-full"
+                wire:model.defer="word_type"
+                :disabled="!$user->subscribed()"
+            />
+        </div>
+        @endif
 
         <div class="w-full col-span-6 sm:col-span-4 mt-5">
             <x-jet-label for="explanation" value="{!! __('guidelines.explanation_label') !!}" />

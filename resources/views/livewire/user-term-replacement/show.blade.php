@@ -15,6 +15,7 @@
                     <th class="py-2 lato-paragraph-text-p">{{ __('guidelines.term_label') }}</th>
                     <th class="py-2 lato-paragraph-text-p">{{ __('guidelines.replacement_label') }}</th>     
                     <th class="py-2 lato-paragraph-text-p">{{ __('guidelines.emoji_short_label') }}</th>
+                    <th class="py-2 lato-paragraph-text-p">{{ __('guidelines.matching_type_label') }}</th>     
                     <th class="py-2 lato-paragraph-text-p">{{ __('guidelines.exists_on_team_label') }}</th>
                     <th class="py-2 lato-paragraph-text-p">{{ __('guidelines.action_label') }}</th>     
                 </tr>
@@ -25,6 +26,13 @@
                 <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $term_replacement->term }}</td>
                 <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $term_replacement->replacement }}</td>
                 <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $term_replacement->emoji }}</td>
+                <td class="border px-4 py-2 text-left lato-paragraph-text-p">
+                    @if($term_replacement->matching_type === 'lemmatize')
+                    {{ __('guidelines.'.$term_replacement->word_type) }}
+                    @else
+                    {{ __('guidelines.'.$term_replacement->matching_type) }}
+                    @endif
+                </td>
                 <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $term_replacement->exists_on_team ? __('guidelines.yes') : __('guidelines.no') }} </td>
                 <td class="border px-4 py-2 text-center container-row">
                     <button wire:click="editTermReplacement({{ $term_replacement->id }})" class="button primary-button-red ">
