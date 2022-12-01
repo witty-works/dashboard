@@ -70,11 +70,6 @@ class Form extends OrganizationForm
 
         $this->emit('saved');
 
-        $this->term_replacement_id = '';
-        $this->term = '';
-        $this->replacement = '';
-        $this->explanation = '';
-        $this->url = '';
-        $this->emoji = '';
+        $this->resetForm();
     }
 }

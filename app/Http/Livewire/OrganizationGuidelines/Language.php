@@ -37,6 +37,12 @@ class Language extends Component
     public function mount($team)
     {
         $this->team = $team;
+        $this->resetForm();
+    }
+
+    public function resetForm()
+    {
+        $this->resetErrorBag();
 
         $languageGuidelines = $this->getLanguageGuidelines($this->team);
 
@@ -97,6 +103,13 @@ class Language extends Component
     public function render()
     {
         return view('livewire.organization-guidelines.language');
+    }
+
+    public function cancel()
+    {
+        $this->resetForm();
+
+        return $this->render();
     }
 
     protected function getLanguageGuidelines($team)

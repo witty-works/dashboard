@@ -29,8 +29,14 @@ class StoreContext extends Component
     public function mount($team)
     {
         $this->team = $team;
+        $this->resetForm();
+    }
 
-        $this->store_context = (bool) $team->store_context;
+    protected function resetForm()
+    {
+        $this->resetErrorBag();
+
+        $this->store_context = (bool) $this->team->store_context;
         if (!$this->team->subscribed()) {
             $this->store_context = true;
         }
@@ -64,5 +70,12 @@ class StoreContext extends Component
     public function render()
     {
         return view('livewire.teams.store-context');
+    }
+
+    public function cancel()
+    {
+        $this->resetForm();
+
+        return $this->render();
     }
 }

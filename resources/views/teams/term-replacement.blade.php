@@ -1,5 +1,5 @@
 <div class="ibarra-sub-title-h1 margin-top">
-    {{ __('guidelines.list_false_positives') }}
+    {{ __('guidelines.dictionary_label') }}
 </div>
 
 <div>

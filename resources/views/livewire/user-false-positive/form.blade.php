@@ -15,19 +15,14 @@
         <div class="w-full col-span-6 sm:col-span-4">
             <x-jet-label for="false_positive" value="{!! __('guidelines.false_positive_label') !!}" />
 
-            <x-jet-input id="term_replacement_id"
-                type="hidden" 
-                wire:model.defer="term_replacement_id"
-                autocomplete="term_replacement_id" />
-
             <x-jet-input id="false_positive"
-                type="text" 
-                class="mt-1 block w-full"
+                type="textarea"
+                class="mt-1 block w-full textarea-as-input"
                 wire:model.defer="false_positive"
                 autocomplete="false_positive"
             />
 
-                <x-jet-input-error for="false_positive" class="mt-2" />
+            <x-jet-input-error for="false_positive" class="mt-2" />
         </div>
 {{--
         <div class="w-full col-span-6 sm:col-span-4 mt-5">
@@ -45,13 +40,7 @@
     </x-slot>
 
     <x-slot name="actions">
-        <x-jet-action-message class="mr-3" on="saved">
-            <span class="float-right">{{ __('content.saved') }}</span>
-        </x-jet-action-message>
-
-        <x-jet-button>
-            {{ __('content.save') }}
-        </x-jet-button>
+        @include('partials/save_cancel_action')
     </x-slot>
 
 </x-jet-form-section>

@@ -32,7 +32,15 @@ class Inclusive extends Component
      */
     public function mount($team)
     {
-        $this->mountCategories($team, GuidelinesInterface::DISABLED_CATEGORIES_INCLUSIVE);
+        $this->team = $team;
+        $this->resetForm();
+    }
+
+    public function resetForm()
+    {
+        $this->resetErrorBag();
+
+        $this->mountCategories($this->team, GuidelinesInterface::DISABLED_CATEGORIES_INCLUSIVE);
     }
 
     public function updateLanguageGuidelinesInclusive()

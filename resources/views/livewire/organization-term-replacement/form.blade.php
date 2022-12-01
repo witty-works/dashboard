@@ -21,8 +21,8 @@
                 autocomplete="term_replacement_id" />
 
             <x-jet-input id="term"
-                type="text" 
-                class="mt-1 block w-full"
+                type="textarea"
+                class="mt-1 block w-full textarea-as-input"
                 wire:model.defer="term"
                 autocomplete="term"
                 :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')"
@@ -35,8 +35,8 @@
             <x-jet-label for="replacement" value="{!! __('guidelines.replacement_label') !!}" />
 
             <x-jet-input id="replacement"
-                type="text" 
-                class="mt-1 block w-full"
+                type="textarea"
+                class="mt-1 block w-full textarea-as-input"
                 wire:model.defer="replacement"
                 autocomplete="replacement"
                 :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')"
@@ -104,13 +104,7 @@
     </x-slot>
 
     <x-slot name="actions">
-        <x-jet-action-message class="mr-3" on="saved">
-            <span class="float-right">{{ __('content.saved') }}</span>
-        </x-jet-action-message>
-
-        <x-jet-button>
-            {{ __('content.save') }}
-        </x-jet-button>
+        @include('partials/save_cancel_action')
     </x-slot>
 
 </x-jet-form-section>

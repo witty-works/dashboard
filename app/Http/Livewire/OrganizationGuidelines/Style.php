@@ -32,7 +32,15 @@ class Style extends Component
      */
     public function mount($team)
     {
-        $this->mountCategories($team, GuidelinesInterface::DISABLED_CATEGORIES_STYLE);
+        $this->team = $team;
+        $this->resetForm();
+    }
+
+    public function resetForm()
+    {
+        $this->resetErrorBag();
+
+        $this->mountCategories($this->team, GuidelinesInterface::DISABLED_CATEGORIES_STYLE);
     }
 
     public function updateLanguageGuidelinesStyle()

@@ -85,7 +85,7 @@ return [
     'set_type_description' => 'Bitte wähle aus, für welche URLs Witty aktiviert sein soll.',
     'data_collection' => 'Datensammlung',
     'list_team_domains' => 'URL Liste deines Teams',
-    'list_team_false_positives' => 'Ignorierte Wörter deines Teams',
+    'list_team_false_positives' => 'Teams Ignorierte Wörter',
     'list_team_false_positives_description' => 'Diese Wörter in dieser Liste sind für das ganze Team sichtbar. Witty wird alle Wörter oder Begriffe in dieser Liste für das ganze Team nicht mehr hervorgehoben.',
     'list_team_term_replacements' => 'Team-Wörterbuch',
     'list_team_term_replacements_description' => 'Diese Wörter in dieser Liste sind für das ganze Team sichtbar. Witty schlägt für jeden Begriff in dieser Liste dem ganze Team die Alternative vor.',

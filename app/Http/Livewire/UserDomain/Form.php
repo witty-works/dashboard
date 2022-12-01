@@ -74,7 +74,6 @@ class Form extends OrganizationForm
 
         $this->emit('saved');
 
-        $this->domain_id = '';
-        $this->domain = '';
+        $this->resetForm();
     }
 }

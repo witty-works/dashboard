@@ -37,6 +37,13 @@ class German extends Component
     public function mount($team)
     {
         $this->team = $team;
+        $this->resetForm();
+    }
+
+    public function resetForm()
+    {
+        $this->resetErrorBag();
+
         $this->enabled = false;
 
         $languageGuidelines = $this->getLanguageGuidelines($this->team);
@@ -79,6 +86,13 @@ class German extends Component
     public function render()
     {
         return view('livewire.organization-guidelines.german');
+    }
+
+    public function cancel()
+    {
+        $this->resetForm();
+
+        return $this->render();
     }
 
     public function saved()
