@@ -276,4 +276,7 @@ Bitte deine Team-Administratoren, auf <a href="https://www.witty.works/pricing" 
     'saturday' => 'Samstag',
     'sunday' => 'Sonntag',
     'start_of_week' => 'Wochenstart:',
+    'upgrade_witty_version_title' => 'upgrade witty version title',
+    'upgrade_witty_version_text' => 'upgrade witty version text',
+    'upgrade_witty_version_button' => 'upgrade witty version button',
 ];
