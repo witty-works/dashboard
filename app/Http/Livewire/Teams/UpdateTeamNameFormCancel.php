@@ -9,6 +9,7 @@ class UpdateTeamNameFormCancel extends UpdateTeamNameForm
     public function mount($team)
     {
         $this->team = $team;
+
         $this->resetForm();
     }
 

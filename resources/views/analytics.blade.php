@@ -597,7 +597,7 @@
                 "eventsLearningBitesChart",
                 xValuesLearningBitesWeek,
                 yValuesLearningBitesWeek,
-                "{{ __('content.title_bar_chart_learning_bites') }}",
+                @json(__('content.title_bar_chart_learning_bites')),
                 false,
                 true
             );

@@ -37,6 +37,7 @@ class German extends Component
     public function mount($team)
     {
         $this->team = $team;
+
         $this->resetForm();
     }
 

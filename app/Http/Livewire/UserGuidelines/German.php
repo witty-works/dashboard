@@ -35,6 +35,7 @@ class German extends Component
     public function mount($user)
     {
         $this->user = Auth::user();
+
         $this->resetForm();
     }
 
