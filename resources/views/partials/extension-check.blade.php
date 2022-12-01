@@ -17,8 +17,18 @@
             }
 
             const extensionVersion = wittyIsInstalled.getAttribute('extension-version');
-            const newestVersion = @json(config('app.browser_version'));
-            if (extensionVersion !== newestVersion) { 
+            const newestVersions = @json(config('app.browser_version'));
+
+            if (extensionVersion && !newestVersions.includes(extensionVersion)) {
+                if (navigator.userAgent.match(/firefox/i)) {
+                    url = 'about:addons';
+                } else {
+                    extensionID = wittyIsInstalled.getAttribute('extension-id')
+                    url = 'brave://extensions/?id='.extensionID;
+                }
+
+                const wittyOptionsUrl = document.getElementById('witty-options-url');
+                wittyOptionsUrl.setAttribute(url)
                 upgradeWittyVersion.style.display = 'flex';
             }
         }
@@ -35,7 +45,7 @@
             </div>
         </div>
         <div class="wittyworks-upgrade-banner-button-container">
-            <a class="button primary-button-purple" href="https://www.witty.works/download" target="_blank" rel="noopener">
+            <a id="witty-options-url" class="button primary-button-purple" target="_blank" rel="noopener">
                 {{ __('content.onboarding_install_witty_button') }}
             </a>
         </div>
