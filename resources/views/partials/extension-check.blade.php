@@ -20,15 +20,16 @@
             const newestVersions = @json(config('app.browser_version'));
 
             if (extensionVersion && !newestVersions.includes(extensionVersion)) {
+                extensionId = wittyIsInstalled.getAttribute('extension-id');
+                let url = 'chrome://extensions/?id=' + extensionId;
+
                 if (navigator.userAgent.match(/firefox/i)) {
                     url = 'about:addons';
-                } else {
-                    extensionID = wittyIsInstalled.getAttribute('extension-id')
-                    url = 'brave://extensions/?id='.extensionID;
                 }
 
-                const wittyOptionsUrl = document.getElementById('witty-options-url');
-                wittyOptionsUrl.setAttribute(url)
+                const wittyOptionsUrl = document.getElementById('witty-version-options-url');
+                wittyOptionsUrl.setAttribute('href', url)
+
                 upgradeWittyVersion.style.display = 'flex';
             }
         }
@@ -77,7 +78,7 @@
             </div>
         </div>
         <div class="wittyworks-upgrade-banner-button-container">
-            <a class="button primary-button-purple" href="https://www.witty.works/select-browser" target="_blank" rel="noopener">
+            <a id="witty-version-options-url" class="button primary-button-purple" target="_blank" rel="noopener">
                 {{ __('content.upgrade_witty_version_button') }}
             </a>
         </div>
