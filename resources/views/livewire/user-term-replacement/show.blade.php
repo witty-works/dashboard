@@ -9,7 +9,7 @@
     </x-slot>
 
     <x-slot name="list">
-        <table class="table-fixed w-full">
+        <table class="table-auto w-full">
             <thead>
                 <tr>
                     <th class="py-2 lato-paragraph-text-p">{{ __('guidelines.term_label') }}</th>

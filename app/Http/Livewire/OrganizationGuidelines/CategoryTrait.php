@@ -28,6 +28,13 @@ trait CategoryTrait
         }
     }
 
+    public function cancel()
+    {
+        $this->resetForm();
+
+        return $this->render();
+    }
+
     public function updateCategories($categories)
     {
         $this->validate();

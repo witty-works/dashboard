@@ -55,6 +55,25 @@ class Form extends Component
         return view('livewire.organization-term-replacement.form');
     }
 
+    protected function resetForm()
+    {
+        $this->resetErrorBag();
+
+        $this->term_replacement_id = '';
+        $this->term = '';
+        $this->replacement = '';
+        $this->explanation = '';
+        $this->url = '';
+        $this->emoji = '';
+    }
+
+    public function cancel()
+    {
+        $this->resetForm();
+
+        return $this->render();
+    }
+
     public function edit(TermReplacement $termReplacement)
     {
         $this->term_replacement_id = $termReplacement->id;

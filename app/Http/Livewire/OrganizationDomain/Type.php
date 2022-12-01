@@ -28,7 +28,7 @@ class Type extends Component
     public function mount($team)
     {
         $this->team = $team;
-        $this->type = $team->getDomainListType();
+        $this->resetForm();
     }
 
     public function storeDomainType()
@@ -56,6 +56,20 @@ class Type extends Component
     public function render()
     {
         return view('livewire.organization-domain.type');
+    }
+
+    protected function resetForm()
+    {
+        $this->resetErrorBag();
+
+        $this->type = $this->team->getDomainListType();
+    }
+
+    public function cancel()
+    {
+        $this->resetForm();
+
+        return $this->render();
     }
 
     protected function getLanguageGuidelines($team)

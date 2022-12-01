@@ -5,6 +5,10 @@
             <div class="ibarra-sub-title-h1 margin-top">
                 {{ __('content.manage_members') }}
             </div>   
+
+            @livewire('teams.update-team-name-form-cancel', ['team' => $team])
+
+            <div class="pt-10">
             <x-jet-form-section submit="addTeamMember">
                 <x-slot name="title">
                     {{ __('content.add_team_member') }}
@@ -45,7 +49,7 @@
 
                     <!-- Role -->
                     @if (count($this->roles) > 0)
-                        <div class="col-span-6 lg:col-span-4" wire:init="$set('addTeamMemberForm.role', 'admin')">
+                        <div class="col-span-6 lg:col-span-4">
                             <x-jet-label class="lato-small-text-p" for="role" value="{{ __('content.role') }}" />
                             <x-jet-input-error for="role" class="mt-2" />
 
@@ -91,23 +95,28 @@
                 </x-slot>
 
                 <x-slot name="actions">
-                    <x-jet-action-message class="mr-3" on="saved">
-                        {{ __('content.added') }}
-                    </x-jet-action-message>
-
-                    <x-jet-button>
-                        {{ __('content.add') }}
-                    </x-jet-button>
+                    <div class="flex flex-row align-middle items-center">
+                        <x-jet-button>
+                            {{ __('content.add') }}
+                        </x-jet-button>
+                
+                        <a wire:click="cancel()" class="button secondary-button-red ">
+                            {{ __('content.cancel') }}
+                        </a>
+                
+                        <x-jet-action-message class="m-3" on="saved">
+                            {{ __('content.added') }}
+                        </x-jet-action-message>
+                    </div>
                 </x-slot>
             </x-jet-form-section>
+            </div>
         </div>
     @endif
 
     @if ($team->teamInvitations->isNotEmpty() && Gate::check('viewUserCreateForm', $team))
-        <x-jet-section-border />
-
         <!-- Team Member Invitations -->
-        <div class="py-10">
+        <div class="pb-5">
             <x-jet-action-section>
                 <x-slot name="title">
                     {{ trans_choice('content.pending_team_invitations', $team->teamInvitations->count(), ['count' => $team->teamInvitations->count()]) }}
@@ -141,10 +150,8 @@
     @endif
 
     @if ($team->users->isNotEmpty())
-        <x-jet-section-border />
-
         <!-- Manage Team Members -->
-        <div class="py-10">
+        <div class="py-5">
             <x-jet-action-section>
                 <x-slot name="title">
                     {{ trans_choice('content.team_members', $team->users->count(), ['count' => $team->users->count()]) }}

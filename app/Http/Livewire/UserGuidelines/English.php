@@ -33,6 +33,13 @@ class English extends Component
     public function mount($user)
     {
         $this->user = Auth::user();
+        $this->resetForm();
+    }
+
+    protected function resetForm()
+    {
+        $this->resetErrorBag();
+
         $this->enabled = false;
 
         $languageGuidelines = $this->getLanguageGuidelines($this->user);
@@ -78,6 +85,13 @@ class English extends Component
     public function render()
     {
         return view('livewire.user-guidelines.english');
+    }
+
+    public function cancel()
+    {
+        $this->resetForm();
+
+        return $this->render();
     }
 
     public function saved()

@@ -35,6 +35,14 @@ class English extends Component
     public function mount($team)
     {
         $this->team = $team;
+
+        $this->resetForm();
+    }
+
+    protected function resetForm()
+    {
+        $this->resetErrorBag();
+
         $this->enabled = false;
 
         $languageGuidelines = $this->getLanguageGuidelines($this->team);
@@ -75,6 +83,13 @@ class English extends Component
     public function render()
     {
         return view('livewire.organization-guidelines.english');
+    }
+
+    public function cancel()
+    {
+        $this->resetForm();
+
+        return $this->render();
     }
 
     public function saved()

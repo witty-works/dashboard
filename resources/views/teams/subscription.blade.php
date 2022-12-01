@@ -8,10 +8,6 @@
                     {{ __('teams.plan_headline') }}
                 </div>   
                 @livewire('teams.plan-summary', ['team' => $team])
-
-                <x-jet-section-border />
-
-                @livewire('teams.update-team-name-form', ['team' => $team])
             </div>
         </div>
     </div>

@@ -47,6 +47,21 @@ class Form extends Component
         return view('livewire.organization-false-positive.form');
     }
 
+    protected function resetForm()
+    {
+        $this->resetErrorBag();
+
+        $this->false_positive_id = '';
+        $this->false_positive = '';
+    }
+
+    public function cancel()
+    {
+        $this->resetForm();
+
+        return $this->render();
+    }
+
     public function edit(FalsePositive $falsePositive)
     {
         $this->false_positive_id = $falsePositive->id;

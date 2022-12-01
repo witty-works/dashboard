@@ -27,11 +27,17 @@ class PlanSummary extends Component
     public function mount($team)
     {
         $this->team = $team;
+        $this->resetForm();
+    }
+
+    protected function resetForm()
+    {
+        $this->resetErrorBag();
 
         $subscription = $this->team->subscription();
         $licenseCount = $subscription
             ? $subscription->quantity
-            : $team->getTotalUserWithInvitationsCount();
+            : $this->team->getTotalUserWithInvitationsCount();
 
         $this->licenseCount = $this->convertLicenseCountToString($licenseCount);
     }
@@ -80,6 +86,13 @@ class PlanSummary extends Component
     public function render()
     {
         return view('livewire.teams.plan-summary', ['licenseOptions' => $this->getLicenseOptions($this->team->getTotalUserWithInvitationsCount())]);
+    }
+
+    public function cancel()
+    {
+        $this->resetForm();
+
+        return $this->render();
     }
 
     protected function convertLicenseCountToString($licenseCount)

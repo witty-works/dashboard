@@ -92,7 +92,7 @@ only the gender ending (e.g. "Mitarbeiter*in"), the female and male form (e.g. "
     'set_type_description' => 'Please choose for which domains Witty should be enabled.',
     'data_collection' => 'Data Collection',
     'list_team_domains' => 'Domains list of your team',
-    'list_team_false_positives' => 'Ignored words of your team',
+    'list_team_false_positives' => 'Team Ignored words',
     'list_team_false_positives_description' => 'The words in this list are shared among your team. Witty will no longer highlight any word in this list for your whole team.',
     'list_team_term_replacements' => 'Team dictionary',
     'list_team_term_replacements_description' => 'The words in this list are shared among your team. Witty highlights any words in this list and suggests the alternative to the whole team.',

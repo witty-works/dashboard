@@ -52,6 +52,21 @@ class Form extends Component
         return $this->render();
     }
 
+    protected function resetForm()
+    {
+        $this->resetErrorBag();
+
+        $this->domain_id = '';
+        $this->domain = '';
+    }
+
+    public function cancel()
+    {
+        $this->resetForm();
+
+        return $this->render();
+    }
+
     public function edit(Domain $domain)
     {
         $this->domain_id = $domain->id;
@@ -101,7 +116,6 @@ class Form extends Component
 
         $this->emit('saved');
 
-        $this->domain_id = '';
-        $this->domain = '';
+        $this->resetForm();
     }
 }

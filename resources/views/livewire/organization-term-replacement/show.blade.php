@@ -9,7 +9,7 @@
     </x-slot>
 
     <x-slot name="list">
-        <table class="table-fixed w-full">
+        <table class="table-auto w-full">
             <thead>
                 <tr>
                     <th class="py-2 lato-paragraph-text-p">{{ __('guidelines.term_label') }}</th>
@@ -27,7 +27,7 @@
                 <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $term_replacement->replacement }}</td>
                 <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $term_replacement->emoji }}</td>
                 @if (Auth::user()->hasTeamPermission($team, 'edit_guidelines') && empty($hide_actions))
-                <td class="border px-4 py-2 text-center container-row ">
+                <td class="border px-4 py-2 text-center container-row">
                     <button wire:click="editTermReplacement({{ $term_replacement->id }})" class="button primary-button-red ">
                         {{ __('content.edit') }}
                     </button>
