@@ -4,15 +4,28 @@
 
         const installWitty = document.querySelector('#install-witty');
         const loginWitty = document.querySelector('#login-witty');
+        const upgradeWittyVersion = document.querySelector('#upgrade-witty-version');
 
         if (!wittyIsInstalled) {
             installWitty.style.display = 'flex';
-                   } else {
+        } else {
             loginUrl = wittyIsInstalled.getAttribute('login-url')
             if (loginUrl) {
                 const loginWittyUrl = document.getElementById('login-witty-url');
                 loginWittyUrl.setAttribute('href', loginUrl + '?target=' + encodeURIComponent(window.location.href))
                 loginWitty.style.display = 'flex';
+            }
+
+            const extensionVersion = wittyIsInstalled.getAttribute('extension-version');
+            const newestVersions = @json(config('app.browser_version'));
+
+            if (extensionVersion && !newestVersions.includes(extensionVersion)) {
+                let url = 'https://www.witty.works/en/help/how-can-i-update-witty';
+
+                const wittyOptionsUrl = document.getElementById('witty-version-options-url');
+                wittyOptionsUrl.setAttribute('href', url)
+
+                upgradeWittyVersion.style.display = 'flex';
             }
         }
     });
@@ -28,7 +41,7 @@
             </div>
         </div>
         <div class="wittyworks-upgrade-banner-button-container">
-            <a class="button primary-button-purple" href="https://www.witty.works/select-browser" target="_blank" rel="noopener">
+            <a id="witty-options-url" class="button primary-button-purple" target="_blank" rel="noopener">
                 {{ __('content.onboarding_install_witty_button') }}
             </a>
         </div>
@@ -46,6 +59,22 @@
         <div class="wittyworks-upgrade-banner-button-container">
             <a id="login-witty-url" class="button primary-button-purple" href="">
                 {{ __('content.onboarding_login_witty_button') }}
+            </a>
+        </div>
+    </div>
+
+    <div id="upgrade-witty-version" style="display: none" class="wittyworks-upgrade-banner">
+        <div>
+            <div class="wittyworks-upgrade-banner-title">
+                {{ __('content.upgrade_witty_version_title') }}
+            </div>
+            <div class="wittyworks-upgrade-banner-text">
+                {{ __('content.upgrade_witty_version_text') }}
+            </div>
+        </div>
+        <div class="wittyworks-upgrade-banner-button-container">
+            <a id="witty-version-options-url" class="button primary-button-purple" target="_blank" rel="noopener">
+                {{ __('content.upgrade_witty_version_button') }}
             </a>
         </div>
     </div>

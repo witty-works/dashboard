@@ -276,4 +276,7 @@ Ask your team administrators to upgrade to <a href="https://www.witty.works/pric
     'saturday' => 'Saturday',
     'sunday' => 'Sunday',
     'start_of_week' => 'Start of week: ',
+    'upgrade_witty_version_title' => 'You don\'t have the latest version of Witty installed',
+    'upgrade_witty_version_text' => 'Please update Witty to the latest version to use the full functionality of Witty.',
+    'upgrade_witty_version_button' => 'Upgrade Witty',
 ];
