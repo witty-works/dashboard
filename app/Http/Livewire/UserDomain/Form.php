@@ -30,6 +30,8 @@ class Form extends OrganizationForm
     public function mount($user)
     {
         $this->user = Auth::user();
+
+        $this->resetForm();
     }
 
     public function render()
