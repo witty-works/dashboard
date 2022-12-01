@@ -192,9 +192,7 @@ class OAuthController extends BaseOAuthController
 
         $redirectUri = request()->get('state');
         if ($redirectUri && $this->validateRedirectUri($redirectUri)) {
-            if (strpos($redirectUri, 'https://') !== 0) {
-                $redirectUri .= '?' . http_build_query($data);
-            }
+            $redirectUri .= '?' . http_build_query($data);
 
             return redirect($redirectUri);
         }
@@ -257,7 +255,7 @@ class OAuthController extends BaseOAuthController
         $browserLoginPolicies = ['browser_login'];
         $request = request();
         foreach ($browserLoginPolicies as $browserLoginPolicy) {
-            $url = route('api.callback', ['provider' => 'azureadb2c', 'policy' => $browserLoginPolicy]);
+            $url = route('browser.callback', ['provider' => 'azureadb2c', 'policy' => $browserLoginPolicy]);
             if ($request->url() === $url) {
                 $policy = $browserLoginPolicy;
                 break;
