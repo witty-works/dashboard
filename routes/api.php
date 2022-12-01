@@ -16,14 +16,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/browser-login', [OAuthController::class, 'redirectToProviderBrowserLogin'])->name('api.browser_login');
-Route::post('/refresh-token', [OAuthController::class, 'accessTokenFromRefreshToken'])->name('api.refresh_token');
-Route::get('/oauth/{provider}/{policy}/callback', [OAuthController::class, 'handleProviderCallback'])->name('api.callback');
+Route::get('/browser-login', [OAuthController::class, 'redirectToProviderBrowserLogin'])->name('browser_login');
+Route::post('/refresh-token', [OAuthController::class, 'accessTokenFromRefreshToken'])->name('browser.refresh_token');
+Route::get('/oauth/{provider}/{policy}/callback', [OAuthController::class, 'handleProviderCallback'])->name('browser.callback');
 
-Route::delete('/user/language/domains', [UserGuidelinesApiController::class, 'deleteDomain'])->name('api.domains.delete');
-Route::put('/user/language/domains', [UserGuidelinesApiController::class, 'putDomain'])->name('api.domains.put');
+Route::delete('/user/language/domains', [UserGuidelinesApiController::class, 'deleteDomain'])->name('user.domains.delete');
+Route::put('/user/language/domains', [UserGuidelinesApiController::class, 'putDomain'])->name('user.domains.put');
 
 Route::middleware(['auth:sanctum'])->group(function () {
-    Route::get('/user/analytics', [AnalyticsController::class, 'userApi'])->name('api.user_analytics');
-    Route::get('/team/analytics', [AnalyticsController::class, 'organizationApi'])->name('api.team_analytics');
+    Route::get('/user/analytics', [AnalyticsController::class, 'userApi'])->name('api_user_analytics');
+    Route::get('/team/analytics', [AnalyticsController::class, 'organizationApi'])->name('api_team_analytics');
 });

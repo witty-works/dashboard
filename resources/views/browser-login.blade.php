@@ -17,7 +17,7 @@
                     {{ __('content.login_failed') }}
                     @endif
                 @else
-                <a href="{{ route('api.browser_login') }}">
+                <a href="{{ route('browser_login') }}">
                     {{ __('content.log_in') }}
                 </a>
                 @endauth
