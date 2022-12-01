@@ -20,6 +20,19 @@ return [
     | Analytics
     |--------------------------------------------------------------------------
     |
+    | This comma separated list determines if analytics is shown in the menu
+    |
+    | possible values: true/false
+    |
+    */
+
+    'browser_version' => explode(',', env('BROWSER_VERSION')),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Analytics
+    |--------------------------------------------------------------------------
+    |
     | This value determines if analytics is shown in the menu, possible values true/false
     |
     */
