@@ -39,7 +39,6 @@ return [
     'resend_verification_email' => 'Bestätigungsmail erneut senden',
     'log_out' => 'Abmelden',
     'dashboard' => 'Dashboard',
-    'manage_team' => 'Team verwalten',
     'create_new_team' => 'Erstelle ein Team',
     'switch_teams' => 'Team wechseln',
     'manage_account' => 'Mein Konto',
