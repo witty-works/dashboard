@@ -848,13 +848,12 @@
 
         let i = 0;
         for (const [key, value] of Object.entries(subcategories).slice(0, 15)) {
-            let why = subcategories[key].why;
+            let url = subcategories[key].url[locale];
             let label = subcategories[key].name[locale];
 
             listOfLinks += `<div class="link-box" style="background-color:${colors[i]}"></div>`;
 
-            if (why) {
-                let url = subcategories[key].url[locale];
+            if (url) {
                 listOfLinks += `<a href="${url}" class="wittyworks-team-name lato-link-list" target="_blank">${label}</a>`;
             } else {
                 listOfLinks += `<span class="lato-link-list">${label}</span>`;
