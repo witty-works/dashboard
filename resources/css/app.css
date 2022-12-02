@@ -711,7 +711,7 @@ input:checked+.slider:before {
 }
 
 .wittyworks-analytics-chart-medium {
-    max-width: 235px;
+    max-width: 500px;
     min-width: 100px;
     max-height: 180px;
 }
