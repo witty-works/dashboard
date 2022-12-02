@@ -74,10 +74,10 @@ class AnalyticsController extends Controller
             'type' => 'AND',
             'values' => [
                 [
-                    'key' => 'request__id',
+                    'key' => 'dashboard_id',
                     'value' => $postHogId,
                     'operator' => 'exact',
-                    'type' => 'event',
+                    'type' => 'person',
                 ]
             ]
         ];

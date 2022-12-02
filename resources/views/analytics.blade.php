@@ -416,7 +416,7 @@
     }
 
     getChartData('total').then(data => {
-        if (!data || !data.events || Object.entries(data.events.check).filter(([key, value]) => value > 0).length == 0) {
+        if (!data || !data.events || Object.entries(data.events.popover_open).filter(([key, value]) => value > 0).length == 0) {
             handle_no_data('activityChartWrapperNoData', 'loadingIconActivity');
             return;
         }
@@ -641,7 +641,7 @@
             );
            
         getChartData('dau', 30, 'week').then(data => {
-        if (!data || !data.events || Object.entries(data.events.check).filter(([key, value]) => value > 0).length == 0) {
+        if (!data || !data.events || Object.entries(data.events.popover_open).filter(([key, value]) => value > 0).length == 0) {
             handle_no_data('activityChartWrapperNoData', 'loadingIconActivity');
             return;
         }
