@@ -109,7 +109,7 @@
                                 id="categoriesRadar"
                                 class="wittyworks-analytics-chart-medium-radar">
                             </canvas>
-                            <div class="container-column">
+                            <div id="topSubcategoriesDoughnutWrapper" class="container-column">
                                 <canvas
                                     id="topSubCategoriesOpenedChartDoughnut"
                                     class="wittyworks-analytics-chart-medium">
@@ -157,7 +157,7 @@
                                 id="wordsRadar"
                                 class="wittyworks-analytics-chart-medium-radar">
                             </canvas>
-                            <div class="container-column">
+                            <div id="topWordsDoughnutWrapper" class="container-column">
                                 <canvas
                                     id="topWordsChartDoughnut"
                                     class="wittyworks-analytics-chart-medium">
@@ -782,6 +782,20 @@
                 yTopSubCategoriesTwoWeeks.push(0);
             }
         }
+
+        if (yTopSubCategoriesTwoWeeks.every((val, i, arr) => val === arr[0]) || yTopSubCategoriesWeek.every((val, i, arr) => val === arr[0])) {
+            document.getElementById("categoriesRadar").style.display = "none";
+            document.getElementById("loadingIconTopCatagories").style.display = "none";
+            document.getElementById("topCategoriesChartWrapperNoData").style.display = "none";
+            document.getElementById("topCategoriesChartWrapper").style.visibility = "visible";
+
+            document.getElementById("topSubcategoriesDoughnutWrapper").classList.remove("container-column");
+            document.getElementById("topSubcategoriesDoughnutWrapper").classList.add("container-row");
+            document.getElementById("topSubcategoriesDoughnutWrapper").style.width = "100%";
+            document.getElementById("topSubcategoriesDoughnutWrapper").style.justifyContent = "space-around";
+            return;
+        }
+
         const dataCategories = {
                 labels: xTopSubCategoriesWeek,
                 datasets: [{
@@ -848,13 +862,12 @@
 
         let i = 0;
         for (const [key, value] of Object.entries(subcategories).slice(0, 15)) {
-            let why = subcategories[key].why;
+            let url = subcategories[key].url[locale];
             let label = subcategories[key].name[locale];
 
             listOfLinks += `<div class="link-box" style="background-color:${colors[i]}"></div>`;
 
-            if (why) {
-                let url = subcategories[key].url[locale];
+            if (url) {
                 listOfLinks += `<a href="${url}" class="wittyworks-team-name lato-link-list" target="_blank">${label}</a>`;
             } else {
                 listOfLinks += `<span class="lato-link-list">${label}</span>`;
@@ -958,6 +971,19 @@
             }
         }
 
+        if (yTopWordsTwoWeeks.every((val, i, arr) => val === arr[0]) || yTopWordsWeek.every((val, i, arr) => val === arr[0])) {
+            document.getElementById("wordsRadar").style.display = "none";
+            document.getElementById("loadingIconTopWords").style.display = "none";
+            document.getElementById("topWordsChartWrapperNoData").style.display = "none";
+            document.getElementById("topWordsChartWrapper").style.visibility = "visible";
+
+            document.getElementById("topWordsDoughnutWrapper").classList.remove("container-column");
+            document.getElementById("topWordsDoughnutWrapper").classList.add("container-row");
+            document.getElementById("topWordsDoughnutWrapper").style.width = "100%";
+            document.getElementById("topWordsDoughnutWrapper").style.justifyContent = "space-around";
+            return;
+        }
+
         const dataCategories = {
             labels:
             xTopWordsWeek,
@@ -984,7 +1010,7 @@
             options: {
                 events: ["click"],
                 maintainAspectRatio: false,
-                lanresponsive: true, 
+                responsive: true, 
                 elements: {
                     line: {
                         borderWidth: 1
