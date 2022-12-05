@@ -50,17 +50,24 @@ hooks:
 
 crons:
     snapshot-hourly:
-        spec: "42 * * * *"
+        # once per day at 12:00
+        spec: "0 12 * * *"
         cmd: |
             if [ "$PLATFORM_BRANCH" = main ]; then
                 platform backup:create --yes --no-wait --live
             fi
     generate-statistics:
+        # once per day at 00:55
         spec: "55 0 * * *"
         cmd: |
             if [ "$PLATFORM_BRANCH" = main ]; then
                 php artisan statistics
             fi
+    capture-kpis:
+        # once per day at 03:20
+        spec: "20 3 * * *"
+        cmd: |
+            php artisan kpis
 
 # The relationships of the application with services or other applications.
 # The left-hand side is the name of the relationship as it will be exposed
