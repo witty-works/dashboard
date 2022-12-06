@@ -22,6 +22,7 @@
 
         @auth
         <!-- LOGGED IN -->
+        @if($user->role)
         <div class="wittyworks-navigation-top-half">
             <x-jet-nav-link class="wittyworks-navigation-item lato-small-paragraph-title-h4" href="{{ route('profile.show') }}">
                 {{ $user->name}}
@@ -125,25 +126,25 @@
             @endif
             @lumki
         </div>
+        @endif
 
         <div class="wittyworks-navigation-bottom-half">
             <x-jet-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="https://www.witty.works/editor" target="_blank" rel="noopener">
                 <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/editor.svg') }}" alt="" />
                 {{ __('content.witty_editor') }}
             </x-jet-nav-link>
-                
+            @if($user->role)
             <x-jet-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('academy') }}" alt="Academy" :active="request()->routeIs('academy')">
                 <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/bulb.svg') }}" alt=""/>
                 {{ __('content.academy') }}
             </x-jet-nav-link>
-
+            @endif
             <x-jet-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('logout', ['provider' => 'azureadb2c']) }}">
                 <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/logout.svg') }}" alt="" />
                 {{ __('content.log_out') }}
             </x-jet-nav-link>
             <div class="wittyworks-navigation-username lato-small-text-p">{{ $user->name }}</div>
         </div>
-                
         @else
         <!-- LOGGED OUT -->
         <div class="wittyworks-navigation-top-half">

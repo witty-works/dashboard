@@ -81,7 +81,7 @@ class LanguageGuidelines extends Model
         DB::statement($query, $params);
     }
 
-    static public function getTeamGuidelines(User $user)
+    public static function getTeamGuidelines(User $user)
     {
         $team = $user->currentTeam;
 
@@ -92,7 +92,7 @@ class LanguageGuidelines extends Model
         return self::firstOrNew(['team_id' => $team->id]);
     }
 
-    static public function isForcedOnTeam(User $user, $section)
+    public static function isForcedOnTeam(User $user, $section)
     {
         $teamGuidelines = self::getTeamGuidelines($user);
 
@@ -107,7 +107,7 @@ class LanguageGuidelines extends Model
         return $teamGuidelines->{$section . '_force'} ? 'locked' : false;
     }
 
-    static public function doUserGuidelinesTeamDiffer($user)
+    public static function doUserGuidelinesTeamDiffer($user)
     {
         if (!$user->currentTeam) {
             return false;
@@ -129,7 +129,7 @@ class LanguageGuidelines extends Model
         return false;
     }
 
-    static public function resetGuidelinesToTeam($user)
+    public static function resetGuidelinesToTeam($user)
     {
         if (!$user->currentTeam) {
             return;
@@ -147,5 +147,16 @@ class LanguageGuidelines extends Model
         }
 
         $languageGuidelines->save();
+    }
+
+    protected function fireCustomModelEvent($event, $method)
+    {
+        if ($event !== 'updating') {
+            return;
+        }
+
+        if (!$this->isDirty('customized')) {
+            $this->customized = true;
+        }
     }
 }

@@ -42,6 +42,7 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\SwitchToTeam::class,
             \App\Http\Middleware\HubSpotIdentificationToken::class,
             \App\Http\Middleware\SetUserLanguage::class,
+            \App\Http\Middleware\Onboarding::class,
         ],
 
         'api' => [

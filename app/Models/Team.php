@@ -167,12 +167,15 @@ class Team extends JetstreamTeam
         return $this->getTotalFalsePositivesCount()
             || $this->getTotalTermReplacementsCount()
             || $this->getTotalUserWithInvitationsCount() > 1
-            || $this->languageGuidelines !== null;
+            || ($this->languageGuidelines !== null && $this->languageGuidelines->customized);
     }
 
     public function hasConfiguredPrivacy()
     {
-        if ($this->languageGuidelines && $this->languageGuidelines->domain_list_type === 'allow_witty_works') {
+        if (
+            $this->languageGuidelines
+            && $this->languageGuidelines->domain_list_type === 'allow_witty_works'
+        ) {
             return true;
         }
 
