@@ -12,7 +12,17 @@ class TermReplacement extends Model
     use HasFactory;
     use GuidelinesUpdateTrait;
 
-    const LANGUAGE_CODE = ['' => 'content.any', 'de' => 'content.de', 'en' => 'content.en'];
+    const LANGUAGE_CODES = ['' => 'content.any', 'en' => 'content.en', 'de' => 'content.de'];
+    const MATCHING_TYPES = [
+        'case_insensitive' => 'guidelines.case_insensitive_long',
+        'case_sensitive' => 'guidelines.case_sensitive_long',
+        'lemmatize' => 'guidelines.lemmatize_long'
+    ];
+    const WORD_TYPES = [
+        'a' => 'guidelines.adjective_long',
+        'v' => 'guidelines.verb_long',
+        's' => 'guidelines.substantive_long'
+    ];
 
     public function getExistsOnTeamAttribute()
     {
@@ -23,6 +33,19 @@ class TermReplacement extends Model
         }
 
         return self::where('team_id', $team->id)->where('term', $this->term)->exists();
+    }
+
+
+    public function getMatchingTypeAttribute()
+    {
+        switch ($this->word_type) {
+            case '-':
+                return 'case_insensitive';
+            case '=':
+                return 'case_sensitive';
+            default:
+                return 'lemmatize';
+        }
     }
 
     static public function validateEmoji($emoji)

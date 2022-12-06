@@ -16,7 +16,7 @@
             <x-jet-label for="term" value="{!! __('guidelines.term_label') !!}" />
 
             <x-jet-input id="term_replacement_id"
-                type="hidden" 
+                type="hidden"
                 wire:model.defer="term_replacement_id"
                 autocomplete="term_replacement_id" />
 
@@ -25,7 +25,6 @@
                 class="mt-1 block w-full textarea-as-input"
                 wire:model.defer="term"
                 autocomplete="term"
-                :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')"
             />
 
             <x-jet-input-error for="term" class="mt-2" />
@@ -39,46 +38,77 @@
                 class="mt-1 block w-full textarea-as-input"
                 wire:model.defer="replacement"
                 autocomplete="replacement"
-                :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')"
             />
 
             <x-jet-input-error for="replacement" class="mt-2" />
         </div>
-{{--
+
         <div class="w-full col-span-6 sm:col-span-4 mt-5">
             <x-jet-label for="language_code" value="{!! __('guidelines.language_code_label') !!}" />
 
             <x-select id="language_code"
-                :options="\App\Models\TermReplacement::LANGUAGE_CODE"
+                :options="$language_codes"
                 class="mt-1 block w-full"
                 wire:model.defer="language_code"
-                :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')"
             />
 
-                <x-jet-input-error for="language_code" class="mt-2" />
+            <x-jet-input-error for="language_code" class="mt-2" />
         </div>
---}}
+
+        <div class="w-full col-span-6 sm:col-span-4 mt-5">
+            <x-jet-label for="language_code">
+                {!! __('guidelines.matching_type_label') !!}
+                @if(!$team->subscribed())
+                <span class="pl-3">
+                @include('partials.witty-teams-only')
+                </span>
+                @endif
+            </x-jet-label>
+
+            <x-select id="matching_type"
+                :options="\App\Models\TermReplacement::MATCHING_TYPES"
+                class="mt-1 block w-full"
+                wire:model.defer="matching_type"
+                wire:change="showHideWordType"
+                :disabled="!$team->subscribed()"
+            />
+
+            <x-jet-input-error for="matching_type" class="mt-2" />
+
+            <x-jet-input-error for="word_type" class="mt-2" />
+        </div>
+
+        @if($show_word_type)
+        <div class="w-full col-span-6 sm:col-span-4 mt-5">
+            <x-jet-label for="word_type" value="{!! __('guidelines.word_type_label') !!}" />
+
+            <x-select id="word_type"
+                :options="\App\Models\TermReplacement::WORD_TYPES"
+                class="mt-1 block w-full"
+                wire:model.defer="word_type"
+                :disabled="!$team->subscribed()"
+            />
+        </div>
+        @endif
 
         <div class="w-full col-span-6 sm:col-span-4 mt-5">
             <x-jet-label for="explanation" value="{!! __('guidelines.explanation_label') !!}" />
 
             <x-jet-input id="explanation"
-                type="textarea" 
+                type="textarea"
                 class="mt-1 block w-full"
                 wire:model.defer="explanation"
                 autocomplete="explanation"
-                :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')"
             />
 
             <x-jet-input-error for="explanation" class="mt-2" />
         </div>
 
-
         <div class="w-full col-span-6 sm:col-span-4 mt-5">
             <x-jet-label for="url" value="{!! __('guidelines.url_label') !!}" />
 
             <x-jet-input id="url"
-                type="text" 
+                type="text"
                 class="mt-1 block w-full"
                 wire:model.defer="url"
                 autocomplete="url"
@@ -87,12 +117,11 @@
             <x-jet-input-error for="url" class="mt-2" />
         </div>
 
-
         <div class="w-full col-span-6 sm:col-span-4 mt-5">
             <x-jet-label for="emoji" value="{!! __('guidelines.emoji_label') !!}" />
 
             <x-jet-input id="emoji"
-                type="text" 
+                type="text"
                 class="mt-1 block w-full"
                 wire:model.defer="emoji"
                 autocomplete="emoji"

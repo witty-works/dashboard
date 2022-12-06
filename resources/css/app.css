@@ -313,7 +313,6 @@ a {
 
 .witty-teams-only {
     text-decoration: none;
-    display: flex;
     flex-direction: column;
     align-items: flex-start;
     padding: 3px 4px;

@@ -10,7 +10,7 @@ class FalsePositive extends Model
     use HasFactory;
     use GuidelinesUpdateTrait;
 
-    const LANGUAGE_CODE = ['' => 'content.any', 'de' => 'content.de', 'en' => 'content.en'];
+    const LANGUAGE_CODES = ['' => 'content.any', 'en' => 'content.en', 'de' => 'content.de'];
 
     public function getExistsOnTeamAttribute()
     {
