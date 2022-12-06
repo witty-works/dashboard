@@ -48,7 +48,7 @@
                                     <div id="changeInLearningBitesPercentage" class="lato-small-text-p"></div>
                                 </div>
                             </div>
-                            <div class="container-row wittyworks-margin-right">
+                            <div class="container-row wittyworks-margin-right wittyworks-margin-top" style="margin-left: 2em;">
                                 <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.start_of_week') }}</div>
                                 <div id="startOfWeekDropdown"></div>
                             </div>
