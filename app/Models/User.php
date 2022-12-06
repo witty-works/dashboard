@@ -247,6 +247,7 @@ class User extends Authenticatable implements MustVerifyEmail
             'has_consented_to_mailing' => $this->has_consented_to_mailing ? $true : $false,
             'has_accessed_stripe' => $this->has_accessed_stripe ? $true : $false,
             'witty_plan' => $this->planId(),
+            'hs_language' => $this->language,
             'dashboard_id' => $this->posthogId(),
             'team_dashboard_id' => $this->posthogTeamId(),
             'impersonate_url' => config('app.url') . '/impersonate/take/' . $this->id,
