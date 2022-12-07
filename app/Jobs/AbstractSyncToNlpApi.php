@@ -34,7 +34,7 @@ abstract class AbstractSyncToNlpApi implements ShouldQueue
         }
 
         if ($response->failed() && $response->status() !== 404) {
-            throw new RuntimeException("Unable to write to '{$url} ({$data['id']}).");
+            throw new RuntimeException("Unable to write to '{$url} ({$data['id']}): " . $response->json('message'));
         }
 
         return 0;
@@ -57,8 +57,8 @@ abstract class AbstractSyncToNlpApi implements ShouldQueue
         foreach ($termReplacements as $termReplacement) {
             $termReplacementData = [
                 'alternatives' => [$termReplacement->replacement],
-                'lang' => [$termReplacement->lang],
-                'word_type' => [$termReplacement->word_type],
+                'lang' => $termReplacement->lang,
+                'word_type' => $termReplacement->word_type,
             ];
 
             if ($termReplacement->explanation !== null) {
