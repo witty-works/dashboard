@@ -14,7 +14,7 @@ class SyncToApi extends AbstractSyncCommand
      *
      * @var string
      */
-    protected $signature = 'nlp_api:sync {--ids=} {--team-ids=}';
+    protected $signature = 'nlp_api:sync {--ids=} {--team-ids=} {--e}';
 
     /**
      * The console command description.
@@ -41,7 +41,9 @@ class SyncToApi extends AbstractSyncCommand
         $teamCount = 0;
         foreach (Team::query()->cursor() as $team) {
             /** @var \App\Models\Team $team */
-            dispatch(new SyncOrganizationToNlpApi($team));
+            $job = new SyncOrganizationToNlpApi($team);
+            $this->handleJob($job);
+
             $teamCount++;
         }
 
@@ -56,7 +58,9 @@ class SyncToApi extends AbstractSyncCommand
         $userCount = 0;
         foreach ($query->cursor() as $user) {
             /** @var \App\Models\User $user */
-            dispatch(new SyncUserToNlpApi($user));
+            $job = new SyncUserToNlpApi($user);
+            $this->handleJob($job);
+
             $userCount++;
         }
 

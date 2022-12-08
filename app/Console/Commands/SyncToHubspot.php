@@ -12,7 +12,7 @@ class SyncToHubspot extends AbstractSyncCommand
      *
      * @var string
      */
-    protected $signature = 'hubspot:sync {--ids=} {--f}';
+    protected $signature = 'hubspot:sync {--ids=} {--f} {--e}';
 
     /**
      * The console command description.
@@ -50,7 +50,12 @@ class SyncToHubspot extends AbstractSyncCommand
         $userCount = 0;
         foreach ($query->cursor() as $user) {
             /** @var \App\Models\User $user */
-            dispatch(new SyncUserToHubSpot($user));
+            $job = new SyncUserToHubSpot($user);
+            if ($this->hasOption('e')) {
+                $job->handle();
+            } else {
+                dispatch($job);
+            }
 
             $userCount++;
         }
