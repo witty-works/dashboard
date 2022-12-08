@@ -247,6 +247,19 @@ class User extends Authenticatable implements MustVerifyEmail
         return in_array($provider, $this->emailProviders);
     }
 
+    public function hasCompletedOnboarding()
+    {
+        if ($this->role !== null) {
+            return true;
+        }
+
+        if (!$this->currentTeam) {
+            return true;
+        }
+
+        return !$this->ownsTeam($this->currentTeam);
+    }
+
     public function getHubspotData($booleanAsStrings = false)
     {
         $true = $booleanAsStrings ? 'Yes' : true;

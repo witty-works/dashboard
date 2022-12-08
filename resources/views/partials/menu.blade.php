@@ -22,7 +22,7 @@
 
         @auth
         <!-- LOGGED IN -->
-        @if($user->role)
+        @if($user->hasCompletedOnboarding())
         <div class="wittyworks-navigation-top-half">
             <x-jet-nav-link class="wittyworks-navigation-item lato-small-paragraph-title-h4" href="{{ route('profile.show') }}">
                 {{ $user->name}}
@@ -124,16 +124,17 @@
                 </div>
             </div>
             @endif
-            @lumki
         </div>
         @endif
+
+        @lumki
 
         <div class="wittyworks-navigation-bottom-half">
             <x-jet-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="https://www.witty.works/editor" target="_blank" rel="noopener">
                 <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/editor.svg') }}" alt="" />
                 {{ __('content.witty_editor') }}
             </x-jet-nav-link>
-            @if($user->role)
+            @if($user->hasCompletedOnboarding())
             <x-jet-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('academy') }}" alt="Academy" :active="request()->routeIs('academy')">
                 <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/bulb.svg') }}" alt=""/>
                 {{ __('content.academy') }}

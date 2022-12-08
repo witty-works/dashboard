@@ -16,6 +16,12 @@ return new class extends Migration
             $table->string('role')->nullable();
         });
 
+        DB::table('users')
+            ->whereRaw('NOT EXISTS (SELECT * FROM teams WHERE teams.user_id = users.id AND users.current_team_id = teams.id)')
+            ->update([
+                'role' => '',
+            ]);
+
         Schema::table('language_guidelines', function ($table) {
             $table->boolean('customized')->nullable()->default(true);
         });

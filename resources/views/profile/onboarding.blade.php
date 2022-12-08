@@ -2,7 +2,6 @@
     <div class="wittyworks-navigation-wrapper">@livewire('navigation-menu')</div>
         <div class="wittyworks-page-wrapper">
             <div class="wittyworks-page-subscription lg:ml-20 margin-bottom">
-                @include('partials.banners')
                 <div class="ibarra-sub-title-h1 margin-top">
                     {{ __('content.onboarding') }}
                 </div>
@@ -22,7 +21,7 @@
                             </x-jet-section-title>
                         
                             <div class="container border-radius-top">
-                                <div class="w-full col-span-6 sm:col-span-4">
+                                <div class="w-full col-span-6 sm:col-span-4 margin-bottom">
                                     <x-jet-label for="role" value="{!! __('content.role') !!}" />
                         
                                     <x-select name="role"
@@ -34,7 +33,7 @@
                                     <x-jet-input-error for="role" class="mt-2" />
                                 </div>
 
-                                <div class="w-full col-span-6 sm:col-span-4">
+                                <div class="w-full col-span-6 sm:col-span-4 margin-bottom">
                                     <x-jet-label for="languages" value="{!! __('content.languages') !!}" />
                         
                                     <x-select name="languages"
@@ -47,7 +46,7 @@
                                 </div>
 
                                 @if($user->isSharedEmailAccount())
-                                <div class="w-full col-span-6 sm:col-span-4">
+                                <div class="w-full col-span-6 sm:col-span-4 margin-bottom">
                                     <x-jet-label for="company_name" value="{!! __('content.company_name') !!}" />
                         
                                     <x-jet-input name="company_name"
