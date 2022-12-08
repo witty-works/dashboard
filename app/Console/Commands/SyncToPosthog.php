@@ -14,7 +14,7 @@ class SyncToPosthog extends AbstractSyncCommand
      *
      * @var string
      */
-    protected $signature = 'posthog:sync {--ids=} {--team-ids=}';
+    protected $signature = 'posthog:sync {--ids=} {--team-ids=} {--e}';
 
     /**
      * The console command description.
@@ -47,7 +47,9 @@ class SyncToPosthog extends AbstractSyncCommand
         $teamCount = 0;
         foreach ($query->cursor() as $team) {
             /** @var \App\Models\Team $team */
-            dispatch(new SyncOrganizationToPosthog($team));
+            $job = new SyncOrganizationToPosthog($team);
+            $this->handleJob($job);
+
             $teamCount++;
         }
 
@@ -62,7 +64,9 @@ class SyncToPosthog extends AbstractSyncCommand
         $userCount = 0;
         foreach ($query->cursor() as $user) {
             /** @var \App\Models\User $user */
-            dispatch(new SyncUserToPosthog($user));
+            $job = new SyncUserToPosthog($user);
+            $this->handleJob($job);
+
             $userCount++;
         }
 
