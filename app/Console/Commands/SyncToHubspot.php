@@ -12,7 +12,7 @@ class SyncToHubspot extends AbstractSyncCommand
      *
      * @var string
      */
-    protected $signature = 'hubspot:sync {--ids=}';
+    protected $signature = 'hubspot:sync {--ids=} {--f}';
 
     /**
      * The console command description.
@@ -36,7 +36,12 @@ class SyncToHubspot extends AbstractSyncCommand
 
         $this->info('Queuing syncing to Hubspot ...');
 
-        $query = User::whereNull('hubspot_id');
+        $force = $this->hasOption('f');
+
+        $query = $force
+            ? User::query()
+            : User::whereNull('hubspot_id')->orWhereNull('hubspot_source');
+
         $query = $this->filterQueryByIds($query);
         if (!$query) {
             return 1;

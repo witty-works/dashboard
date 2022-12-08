@@ -60,10 +60,15 @@ class SyncUserToHubSpot implements ShouldQueue
             $searchRequest = new \HubSpot\Client\Crm\Contacts\Model\PublicObjectSearchRequest();
             $searchRequest->setFilterGroups([$filterGroup]);
 
+            $searchRequest->setProperties(['hs_analytics_source']);
+
             // @var CollectionResponseWithTotalSimplePublicObject $contactsPage
             $contactsPage = $hubspot->crm()->contacts()->searchApi()->doSearch($searchRequest);
             if ($contactsPage->getTotal()) {
                 $contactId = $contactsPage->getResults()[0]['id'];
+                if (!empty($contactsPage->getResults()[0]['properties']['hs_analytics_source'])) {
+                    $contactSource = $contactsPage->getResults()[0]['properties']['hs_analytics_source'];
+                }
 
                 $newProperties = new \HubSpot\Client\Crm\Contacts\Model\SimplePublicObjectInput();
                 $newProperties->setProperties($data);
@@ -75,7 +80,15 @@ class SyncUserToHubSpot implements ShouldQueue
         }
 
         $user->hubspot_id = $contactId;
+        if (!empty($contactSource)) {
+            $user->hubspot_source = $contactSource;
+        }
+
         $user->saveQuietly();
+
+        if (!empty($contactSource)) {
+            dispatch(new SyncUserToPosthog($user));
+        }
 
         return 0;
     }
