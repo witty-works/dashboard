@@ -38,55 +38,40 @@ class SyncUserToHubSpot implements ShouldQueue
         $hubspot = \HubSpot\Factory::createWithAccessToken(config('hubspot.access_token'));
         $data = $user->getHubspotData(true);
 
-        try {
-            $newData = $data;
-            $newData['email'] = $user->email;
+        $filter = new \HubSpot\Client\Crm\Contacts\Model\Filter();
+        $filter
+            ->setOperator('EQ')
+            ->setPropertyName('email')
+            ->setValue($user->email);
 
-            $contactInput = new \HubSpot\Client\Crm\Contacts\Model\SimplePublicObjectInput();
-            $contactInput->setProperties($newData);
+        $filterGroup = new \HubSpot\Client\Crm\Contacts\Model\FilterGroup();
+        $filterGroup->setFilters([$filter]);
 
-            $contact = $hubspot->crm()->contacts()->basicApi()->create($contactInput);
-            $contactId = $contact['id'];
-        } catch (\HubSpot\Client\Crm\Contacts\ApiException $e) {
-            $filter = new \HubSpot\Client\Crm\Contacts\Model\Filter();
-            $filter
-                ->setOperator('EQ')
-                ->setPropertyName('email')
-                ->setValue($user->email);
+        $searchRequest = new \HubSpot\Client\Crm\Contacts\Model\PublicObjectSearchRequest();
+        $searchRequest->setFilterGroups([$filterGroup]);
 
-            $filterGroup = new \HubSpot\Client\Crm\Contacts\Model\FilterGroup();
-            $filterGroup->setFilters([$filter]);
+        $searchRequest->setProperties(['hs_analytics_source']);
 
-            $searchRequest = new \HubSpot\Client\Crm\Contacts\Model\PublicObjectSearchRequest();
-            $searchRequest->setFilterGroups([$filterGroup]);
-
-            $searchRequest->setProperties(['hs_analytics_source']);
-
-            // @var CollectionResponseWithTotalSimplePublicObject $contactsPage
-            $contactsPage = $hubspot->crm()->contacts()->searchApi()->doSearch($searchRequest);
-            if ($contactsPage->getTotal()) {
-                $contactId = $contactsPage->getResults()[0]['id'];
-                if (!empty($contactsPage->getResults()[0]['properties']['hs_analytics_source'])) {
-                    $contactSource = $contactsPage->getResults()[0]['properties']['hs_analytics_source'];
-                }
-
-                $newProperties = new \HubSpot\Client\Crm\Contacts\Model\SimplePublicObjectInput();
-                $newProperties->setProperties($data);
-
-                $hubspot->crm()->contacts()->basicApi()->update($contactId, $newProperties);
-            } else {
-                $contactId = 0;
+        // @var CollectionResponseWithTotalSimplePublicObject $contactsPage
+        $contactsPage = $hubspot->crm()->contacts()->searchApi()->doSearch($searchRequest);
+        if ($contactsPage->getTotal()) {
+            $contactId = $contactsPage->getResults()[0]['id'];
+            if (!empty($contactsPage->getResults()[0]['properties']['hs_analytics_source'])) {
+                $contactSource = $contactsPage->getResults()[0]['properties']['hs_analytics_source'];
             }
-        }
 
-        $user->hubspot_id = $contactId;
-        if (!empty($contactSource)) {
-            $user->hubspot_source = $contactSource;
-        }
+            $newProperties = new \HubSpot\Client\Crm\Contacts\Model\SimplePublicObjectInput();
+            $newProperties->setProperties($data);
 
-        $user->saveQuietly();
+            $hubspot->crm()->contacts()->basicApi()->update($contactId, $newProperties);
 
-        if (!empty($contactSource)) {
+            $user->hubspot_id = $contactId;
+            if (!empty($contactSource)) {
+                $user->hubspot_source = $contactSource;
+            }
+
+            $user->saveQuietly();
+
             dispatch(new SyncUserToPosthog($user));
         }
 
