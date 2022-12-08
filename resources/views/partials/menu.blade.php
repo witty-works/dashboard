@@ -22,6 +22,7 @@
 
         @auth
         <!-- LOGGED IN -->
+        @if($user->hasCompletedOnboarding())
         <div class="wittyworks-navigation-top-half">
             <x-jet-nav-link class="wittyworks-navigation-item lato-small-paragraph-title-h4" href="{{ route('profile.show') }}">
                 {{ $user->name}}
@@ -57,7 +58,6 @@
                     {{ __('content.manage_account') }}
                 </x-jet-nav-link>
     
-                @if(config('app.analytics'))
                 @if(!$team_edit && $team && $team->user_access_to_team_analytics)
                 <x-jet-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('user_analytics') }}">
                     <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/analytics.svg') }}" alt="analytics" />
@@ -74,7 +74,6 @@
                     <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/analytics.svg') }}" alt="analytics" />
                     {{ __('content.analytics') }}
                 </x-jet-nav-link>
-                @endif
                 @endif
 
                 <div class="wittyworks-navigation-label-wrapper lato-paragraph-text-p">
@@ -103,12 +102,10 @@
                     {{ __('content.subscription') }}
                 </x-jet-nav-link>
 
-                @if(config('app.analytics'))
                 <x-jet-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('team_analytics') }}" :active="request()->routeIs('team_analytics')">
                     <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/analytics.svg') }}" alt="analytics" />
                     {{ __('content.analytics') }}
                 </x-jet-nav-link>
-                @endif
 
                 <div class="wittyworks-navigation-label-wrapper lato-paragraph-text-p">
                     <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/language.svg') }}" alt="" />
@@ -123,27 +120,28 @@
                 </div>
             </div>
             @endif
-            @lumki
         </div>
+        @endif
+
+        @lumki
 
         <div class="wittyworks-navigation-bottom-half">
             <x-jet-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="https://www.witty.works/editor" target="_blank" rel="noopener">
                 <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/editor.svg') }}" alt="" />
                 {{ __('content.witty_editor') }}
             </x-jet-nav-link>
-                
+            @if($user->hasCompletedOnboarding())
             <x-jet-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('academy') }}" alt="Academy" :active="request()->routeIs('academy')">
                 <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/bulb.svg') }}" alt=""/>
                 {{ __('content.academy') }}
             </x-jet-nav-link>
-
+            @endif
             <x-jet-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('logout', ['provider' => 'azureadb2c']) }}">
                 <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/logout.svg') }}" alt="" />
                 {{ __('content.log_out') }}
             </x-jet-nav-link>
             <div class="wittyworks-navigation-username lato-small-text-p">{{ $user->name }}</div>
         </div>
-                
         @else
         <!-- LOGGED OUT -->
         <div class="wittyworks-navigation-top-half">

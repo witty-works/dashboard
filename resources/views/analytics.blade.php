@@ -48,7 +48,7 @@
                                     <div id="changeInLearningBitesPercentage" class="lato-small-text-p"></div>
                                 </div>
                             </div>
-                            <div class="container-row wittyworks-margin-right">
+                            <div class="container-row wittyworks-margin-right wittyworks-margin-top" style="margin-left: 2em;">
                                 <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.start_of_week') }}</div>
                                 <div id="startOfWeekDropdown"></div>
                             </div>
@@ -820,7 +820,7 @@
                     options: {
                         maintainAspectRatio: false,
                         responsive: true, 
-                        events: ["click"],
+                        events: [],
                         elements: {
                         line: {
                             borderWidth: 1
@@ -1008,7 +1008,7 @@
             type: 'radar',
             data: dataCategories,
             options: {
-                events: ["click"],
+                events: [],
                 maintainAspectRatio: false,
                 responsive: true, 
                 elements: {

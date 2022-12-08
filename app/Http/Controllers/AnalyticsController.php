@@ -196,7 +196,7 @@ class AnalyticsController extends Controller
 
     protected function fetchJson(Request $request, $properties)
     {
-        $from = "-30d";
+        $from = $this->fetchFrom($request);
         $interval = $this->fetchInterval($request);
         $chart = $request->get('chart');
 
@@ -308,5 +308,12 @@ class AnalyticsController extends Controller
     protected function fetchInterval(Request $request)
     {
         return $request->get('interval', 'day');
+    }
+
+    protected function fetchFrom(Request $request)
+    {
+        $from = max(min((int)$request->get('from', '30'), 30), 1);
+
+        return "-{$from}d";
     }
 }

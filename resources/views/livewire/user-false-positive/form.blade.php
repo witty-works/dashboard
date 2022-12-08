@@ -29,7 +29,7 @@
             <x-jet-label for="language_code" value="{!! __('guidelines.language_code_label') !!}" />
 
             <x-select id="language_code"
-                :options="\App\Models\FalsePositive::LANGUAGE_CODE"
+                :options="\App\Models\FalsePositive::LANGUAGE_CODES"
                 class="mt-1 block w-full"
                 wire:model.defer="language_code"
             />

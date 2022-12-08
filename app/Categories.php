@@ -200,7 +200,10 @@ class Categories
             "name" => ["en" => "Cognitive Perception", "de" => "Wahrnehmung"],
             "gravity" => 2.0,
             "importance" => 2,
-            "url" => ["en" => null, "de" => null],
+            "url" => [
+                "en" => "https://www.witty.works/en/categories/biased_language#cognitive_perception",
+                "de" => "https://www.witty.works/de/kategorien/sprachliche_voreingenommenheit#wahrnehmung",
+            ],
             "emoji" => "😒",
         ],
         "color" => [
@@ -211,7 +214,7 @@ class Categories
             "importance" => 2,
             "url" => [
                 "en" => "https://www.witty.works/en/categories/biased_language#color",
-                "de" => null,
+                "de" => "https://www.witty.works/de/kategorien/sprachliche_voreingenommenheit#farbwörter",
             ],
             "emoji" => "😒",
         ],
@@ -283,7 +286,10 @@ class Categories
             "name" => ["en" => "Positive Emotions", "de" => "Positive Emotionen"],
             "gravity" => null,
             "importance" => 3,
-            "url" => ["en" => null, "de" => null],
+            "url" => [
+                "en" => "https://www.witty.works/en/categories/inclusive#positive_emotions",
+                "de" => "https://www.witty.works/de/kategorien/inklusiv#positive_emotionen",
+            ],
             "emoji" => "✅",
         ],
         "exaggerating" => [
@@ -410,8 +416,8 @@ class Categories
             "inclusive" => false,
             "category" => "style",
             "name" => ["en" => "Miscellaneous", "de" => "Verschiedenes"],
-            "gravity" => 2.0,
-            "importance" => 2,
+            "gravity" => 3.0,
+            "importance" => 3,
             "url" => ["en" => null, "de" => null],
             "emoji" => "🤔",
         ],
@@ -511,7 +517,10 @@ class Categories
             "name" => ["en" => "Learning Ability", "de" => "Lernfähigkeit"],
             "gravity" => 2.0,
             "importance" => 2,
-            "url" => ["en" => null, "de" => null],
+            "url" => [
+                "en" => "https://www.witty.works/en/categories/biased_language#learning_ability",
+                "de" => "https://www.witty.works/de/kategorien/sprachliche_voreingenommenheit#lernfähigkeit",
+            ],
             "emoji" => "😒",
         ],
         "male_stereotype" => [
@@ -544,7 +553,10 @@ class Categories
             "name" => ["en" => "Mental Wellbeing", "de" => "Mentales Wohlbefinden"],
             "gravity" => 2.0,
             "importance" => 2,
-            "url" => ["en" => null, "de" => null],
+            "url" => [
+                "en" => "https://www.witty.works/en/categories/biased_language#mental_wellbeing",
+                "de" => "https://www.witty.works/de/kategorien/sprachliche_voreingenommenheit#mentales_wohlbefinden",
+            ],
             "emoji" => "😒",
         ],
         "migration" => [
@@ -565,7 +577,10 @@ class Categories
             "name" => ["en" => "Military Source", "de" => "Militaerische Wurzel"],
             "gravity" => 2.0,
             "importance" => 2,
-            "url" => ["en" => null, "de" => null],
+            "url" => [
+                "en" => "https://www.witty.works/en/categories/biased_language#military_source",
+                "de" => "https://www.witty.works/de/kategorien/sprachliche_voreingenommenheit#militaerische_wurzel",
+            ],
             "emoji" => "🪖",
         ],
         "misc" => [
@@ -742,7 +757,10 @@ class Categories
             "name" => ["en" => "Speech Ability", "de" => "Sprech-Fähigkeit"],
             "gravity" => 2.0,
             "importance" => 2,
-            "url" => ["en" => null, "de" => null],
+            "url" => [
+                "en" => "https://www.witty.works/en/categories/biased_language#speech_ability",
+                "de" => "https://www.witty.works/de/kategorien/sprachliche_voreingenommenheit#sprech-fähigkeit",
+            ],
             "emoji" => "😒",
         ],
         "sports_terms" => [
@@ -751,7 +769,10 @@ class Categories
             "name" => ["en" => "Sports Terms", "de" => "Sport-Jargon"],
             "gravity" => 2.0,
             "importance" => 2,
-            "url" => ["en" => null, "de" => null],
+            "url" => [
+                "en" => "https://www.witty.works/en/categories/biased_language#sports_terms",
+                "de" => "https://www.witty.works/de/kategorien/sprachliche_voreingenommenheit#sport-jargon",
+            ],
             "emoji" => "🏅",
         ],
         "style" => [
@@ -760,7 +781,10 @@ class Categories
             "name" => ["en" => "Style", "de" => "Stil"],
             "gravity" => 2.0,
             "importance" => 2,
-            "url" => ["en" => null, "de" => null],
+            "url" => [
+                "en" => "https://www.witty.works/en/categories/style#style",
+                "de" => "https://www.witty.works/de/kategorien/stil#stil",
+            ],
             "emoji" => "😟",
         ],
         "titles" => [

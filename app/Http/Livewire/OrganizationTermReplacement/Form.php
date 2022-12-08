@@ -3,8 +3,10 @@
 namespace App\Http\Livewire\OrganizationTermReplacement;
 
 use App\Models\TermReplacement;
+use Http\Client\Exception\RequestException;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 
@@ -19,6 +21,9 @@ class Form extends Component
     public $url;
     public $emoji;
     public $language_code;
+    public $matching_type;
+    public $word_type;
+    public $show_word_type;
 
     protected $listeners = ['edit'];
 
@@ -29,7 +34,9 @@ class Form extends Component
         'explanation' => 'required_with:url,emoji|max:100',
         'url' => 'nullable|url|max:250',
         'emoji' => 'nullable',
-        'language_code' => 'nullable|size:2',
+        'language_code' => 'nullable|string|in:en,de,',
+        'matching_type' => 'nullable|string|in:case_insensitive,case_sensitive,lemmatize',
+        'word_type' => 'nullable|string|in:a,v,s',
     ];
 
     /**
@@ -48,11 +55,44 @@ class Form extends Component
     public function mount($team)
     {
         $this->team = $team;
+
+        $this->resetForm();
+    }
+
+    protected function getLanguageCodes()
+    {
+        $language_codes = TermReplacement::LANGUAGE_CODES;
+        if ($this->matching_type === 'lemmatize') {
+            $this->show_word_type = true;
+            unset($language_codes['']);
+        } else {
+            $this->show_word_type = false;
+            $this->word_type = '';
+        }
+
+        return $language_codes;
+    }
+
+    protected function cleanValues($subscribed)
+    {
+        $this->term = trim($this->term);
+        $this->replacement = trim($this->replacement);
+        if (!$subscribed) {
+            $this->matching_type = 'case_insensitive';
+        }
     }
 
     public function render()
     {
-        return view('livewire.organization-term-replacement.form');
+        $this->cleanValues($this->team->subscribed());
+
+        $params = ['language_codes' => $this->getLanguageCodes()];
+        return view('livewire.organization-term-replacement.form', $params);
+    }
+
+    public function showHideWordType()
+    {
+        return $this->render();
     }
 
     protected function resetForm()
@@ -65,6 +105,9 @@ class Form extends Component
         $this->explanation = '';
         $this->url = '';
         $this->emoji = '';
+        $this->language_code = '';
+        $this->matching_type = '';
+        $this->word_type = '';
     }
 
     public function cancel()
@@ -82,6 +125,9 @@ class Form extends Component
         $this->explanation = $termReplacement->explanation;
         $this->url = $termReplacement->url;
         $this->emoji = $termReplacement->emoji;
+        $this->language_code = $termReplacement->language_code;
+        $this->matching_type = $termReplacement->matching_type;
+        $this->word_type = $termReplacement->word_type;
 
         return $this->render();
     }
@@ -89,10 +135,14 @@ class Form extends Component
     public function storeTermReplacement()
     {
         $this->validate();
+        $this->cleanValues($this->team->subscribed());
 
         if (!Auth::user()->hasTeamPermission($this->team, 'edit_guidelines')) {
             abort(403);
         }
+
+        $this->term = trim($this->term);
+        $this->replacement = trim($this->replacement);
 
         $query = TermReplacement::query()
             ->where('team_id', $this->team->id)
@@ -125,22 +175,96 @@ class Form extends Component
 
         $this->emoji = TermReplacement::validateEmoji($this->emoji);
 
+        $this->handleMatchingType();
+
         $termReplacement->term = $this->term;
         $termReplacement->replacement = $this->replacement;
         $termReplacement->language_code = null;
         $termReplacement->explanation = $this->explanation;
         $termReplacement->url = $this->url;
         $termReplacement->emoji = $this->emoji;
+        $termReplacement->language_code = $this->language_code;
+        $termReplacement->word_type = $this->word_type;
         $termReplacement->team_id = $this->team->id;
         $termReplacement->save();
 
         $this->emit('saved');
 
-        $this->term_replacement_id = '';
-        $this->term = '';
-        $this->replacement = '';
-        $this->explanation = '';
-        $this->url = '';
-        $this->emoji = '';
+        $this->resetForm();
+    }
+
+    protected function handleMatchingType()
+    {
+        switch ($this->matching_type) {
+            case 'lemmatize':
+                if (preg_match('/[\t\n\r\f\v ]/', $this->term)) {
+                    $message = __('guidelines.lemmatize_requires_single_word');
+                    throw ValidationException::withMessages(['term' => $message]);
+                }
+
+                if (empty($this->language_code)) {
+                    $language_codes = $this->getLanguageCodes();
+                    $this->language_code = key($language_codes);
+                }
+
+                if (empty($this->word_type)) {
+                    $word_types = TermReplacement::WORD_TYPES;
+                    $language_codes = $this->getLanguageCodes();
+                    $this->word_type = key($word_types);
+                }
+
+                $result = $this->getLemma($this->term, $this->language_code);
+                if ($result === null) {
+                    $message = __('guidelines.lemmatization_error');
+                    throw ValidationException::withMessages(['matching_type' => $message]);
+                }
+
+                $this->term = $result;
+
+                $result = $this->getLemma($this->replacement, $this->language_code);
+                if ($result === null) {
+                    $this->replacement = $result;
+                }
+                break;
+            case 'case_sensitive':
+                $this->word_type = '=';
+                break;
+            case 'case_insensitive':
+            default:
+                $this->word_type = '-';
+                break;
+        }
+    }
+    protected function getLemma($text, $locale)
+    {
+        if (empty(config('app.nlp_api_endpoint.url'))) {
+            return null;
+        }
+
+        $endpoint = config('app.nlp_api_endpoint');
+        $endpoint['url'] .= '/lemmatize';
+
+        $data = [
+            'text' => $text,
+            'locale' => $locale,
+        ];
+
+        try {
+            if (empty($endpoint['user'])) {
+                $response = Http::get($endpoint['url'], $data);
+            } else {
+                $response = Http::withBasicAuth($endpoint['user'], $endpoint['password'])
+                    ->post($endpoint['url'], $data);
+            }
+        } catch (RequestException $e) {
+            $response = false;
+        }
+
+        if (!$response || ($response->failed() && $response->status() !== 404)) {
+            $message = __('guidelines.lemmatization_error');
+            throw ValidationException::withMessages(['matching_type' => $message]);
+        }
+
+        return $response->json();
     }
 }

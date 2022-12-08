@@ -18,7 +18,7 @@ abstract class AbstractSyncToNlpApi implements ShouldQueue
     public function updateRules($url, $data)
     {
         $endpoint = config('app.nlp_api_endpoint');
-        if (empty($endpoint['url'])) {
+        if (empty($endpoint['url']) || empty($endpoint['sync_rules'])) {
             Log::debug("Endpoint URL not set, otherwise would update: $url ({$data['id']})");
 
             return 0;
@@ -34,7 +34,7 @@ abstract class AbstractSyncToNlpApi implements ShouldQueue
         }
 
         if ($response->failed() && $response->status() !== 404) {
-            throw new RuntimeException("Unable to write to '{$url} ({$data['id']}).");
+            throw new RuntimeException("Unable to write to '{$url} ({$data['id']}): " . $response->json('message'));
         }
 
         return 0;
@@ -57,6 +57,8 @@ abstract class AbstractSyncToNlpApi implements ShouldQueue
         foreach ($termReplacements as $termReplacement) {
             $termReplacementData = [
                 'alternatives' => [$termReplacement->replacement],
+                'lang' => $termReplacement->lang,
+                'word_type' => $termReplacement->word_type,
             ];
 
             if ($termReplacement->explanation !== null) {

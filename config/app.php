@@ -28,16 +28,6 @@ return [
 
     'browser_version' => explode(',', env('BROWSER_VERSION')),
 
-    /*
-    |--------------------------------------------------------------------------
-    | Analytics
-    |--------------------------------------------------------------------------
-    |
-    | This value determines if analytics is shown in the menu, possible values true/false
-    |
-    */
-
-    'analytics' => env('ANALYTICS', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -171,6 +161,7 @@ return [
         'url' => env('APP_NLP_API_SYNC_ENDPOINT'),
         'user' => env('APP_NLP_API_SYNC_USER'),
         'password' => env('APP_NLP_API_SYNC_PASSWORD'),
+        'sync_rules' => env('APP_NLP_API_SYNC_CONFIGS', true),
     ],
 
     /*

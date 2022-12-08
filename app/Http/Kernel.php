@@ -41,6 +41,8 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\SwitchToTeam::class,
             \App\Http\Middleware\HubSpotIdentificationToken::class,
+            \App\Http\Middleware\SetUserLanguage::class,
+            \App\Http\Middleware\Onboarding::class,
         ],
 
         'api' => [
