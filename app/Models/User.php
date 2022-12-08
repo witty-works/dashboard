@@ -36,6 +36,16 @@ class User extends Authenticatable implements MustVerifyEmail
     use TwoFactorAuthenticatable;
     use GuidelinesTrait;
 
+    const ROLES = ['' => 'content.please_select', 'executive' => 'content.executive', 'lead' => 'content.lead', 'employee' => 'content.employee'];
+
+    protected $emailProviders = [
+        'gmail.com', 'bluewin.ch', 'icloud.com', 'hotmail.com', 'protonmail.com', 'protonmail.ch',
+        'gmx.ch', 'gmx.at', 'gmx.de', 'gmx.net', 'mein.gmx', 'aol.com', 'outlook.com', 'zoho.com',
+        'zohomail.eu', 'yahoo.com', 'web.de', 'cyon.ch', 'orange.fr', 'vodafone.com', '@me.com', 'hotmail.de',
+        'hotmail.ch', 'yahoo.ch', 'yahoo.de', 'hey.com', 'hotmail.fr', 'bluemail.ch', 'freenet.de', 'sunrise.ch',
+        'googlemail.com'
+    ];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -229,6 +239,14 @@ class User extends Authenticatable implements MustVerifyEmail
         return  implode(' ', $split);
     }
 
+    public function isSharedEmailAccount()
+    {
+        $email = explode('@', $this->email);
+        $provider = array_pop($email);
+
+        return in_array($provider, $this->emailProviders);
+    }
+
     public function getHubspotData($booleanAsStrings = false)
     {
         $true = $booleanAsStrings ? 'Yes' : true;
@@ -243,6 +261,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
         $data = [
             'witty_account_created_at' => $this->created_at,
+            'job_role' => $this->role,
             'has_witty_account' => $true,
             'has_consented_to_mailing' => $this->has_consented_to_mailing ? $true : $false,
             'has_accessed_stripe' => $this->has_accessed_stripe ? $true : $false,

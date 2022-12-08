@@ -16,7 +16,7 @@ use App\Http\Controllers\TeamInvitationController;
 use Laravel\Jetstream\Http\Controllers\Livewire\ApiTokenController;
 use App\Http\Controllers\Livewire\TeamController;
 use App\Http\Controllers\Livewire\UserGuidelinesController;
-use Laravel\Jetstream\Http\Controllers\Livewire\UserProfileController;
+use App\Http\Controllers\UserProfileController;
 use Laravel\Jetstream\Jetstream;
 /*
 |------------------
@@ -75,9 +75,15 @@ Route::group(
         */
         Route::group(['middleware' => config('jetstream.middleware', ['web'])], function () {
             Route::group(['middleware' => ['auth:' . config('fortify.guard')]], function () {
-                Route::get('/', [WelcomeController::class, 'show']);
+                Route::get('/', [WelcomeController::class, 'show'])->name('root');
 
                 Route::get('/subscribe', [StripeController::class, 'subscribe'])->name('stripe.subscribe');
+
+                Route::get('/user/onboarding', [UserProfileController::class, 'onboarding'])
+                    ->name('profile.onboarding');
+
+                Route::post('/user/onboarding', [UserProfileController::class, 'storeOnboarding'])
+                    ->name('profile.onboarding.store');
 
                 // User & Profile...
                 Route::get('/user/profile', [UserProfileController::class, 'show'])
@@ -158,7 +164,7 @@ Route::group(
 Route::group(['middleware' => config('socialstream.middleware', ['web'])], function () {
     Route::get('/', [WelcomeController::class, 'show'])->name('login');
     Route::redirect('/register', '/')->name('register');
-    Route::get('/mock-login', [OAuthController::class, 'mockLogin']);
+    Route::get('/mock-login', [OAuthController::class, 'mockLogin'])->name('mock-login');
     Route::get('/logout/{provider}', [OAuthController::class, 'logout'])->name('logout');
     Route::get('/oauth/{provider}/{policy}', [OAuthController::class, 'redirectToProvider'])->name('oauth.redirect');
     Route::get('/oauth/{provider}/{policy}/callback', [OAuthController::class, 'handleProviderCallback'])->name('oauth.callback');
