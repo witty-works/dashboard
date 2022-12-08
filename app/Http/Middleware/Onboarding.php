@@ -18,6 +18,8 @@ class Onboarding
                 'login',
                 'logout',
                 'mock-login',
+                'impersonate',
+                'impersonate.leave',
             ];
 
             if (!$user->hasCompletedOnboarding() && !in_array($currentRouteName, $routes)) {
