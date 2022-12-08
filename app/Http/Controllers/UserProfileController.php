@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\GuidelinesInterface;
 use App\Models\LanguageGuidelines;
 use Illuminate\Http\Request;
 use Laravel\Jetstream\Http\Controllers\Livewire\UserProfileController as BaseUserProfileController;
@@ -43,7 +42,7 @@ class UserProfileController extends BaseUserProfileController
                 $languageGuidelines->save();
             }
 
-            if ($user->currentTeam) {
+            if ($user->currentTeam && $user->ownsTeam($user->currentTeam)) {
                 if (!empty($preferredVariants)) {
                     $languageGuidelines = LanguageGuidelines::firstOrNew(['team_id' => $user->currentTeam->id]);
                     $languageGuidelines->preferred_variants = $preferredVariants;

@@ -20,7 +20,7 @@ class Onboarding
                 'mock-login',
             ];
 
-            if (!$user->role && !in_array($currentRouteName, $routes)) {
+            if (!$user->hasCompletedOnboarding() && !in_array($currentRouteName, $routes)) {
                 return redirect()->route('profile.onboarding');
             }
         }
