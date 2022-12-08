@@ -58,7 +58,6 @@
                     {{ __('content.manage_account') }}
                 </x-jet-nav-link>
     
-                @if(config('app.analytics'))
                 @if(!$team_edit && $team && $team->user_access_to_team_analytics)
                 <x-jet-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('user_analytics') }}">
                     <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/analytics.svg') }}" alt="analytics" />
@@ -75,7 +74,6 @@
                     <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/analytics.svg') }}" alt="analytics" />
                     {{ __('content.analytics') }}
                 </x-jet-nav-link>
-                @endif
                 @endif
 
                 <div class="wittyworks-navigation-label-wrapper lato-paragraph-text-p">
@@ -104,12 +102,10 @@
                     {{ __('content.subscription') }}
                 </x-jet-nav-link>
 
-                @if(config('app.analytics'))
                 <x-jet-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('team_analytics') }}" :active="request()->routeIs('team_analytics')">
                     <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/analytics.svg') }}" alt="analytics" />
                     {{ __('content.analytics') }}
                 </x-jet-nav-link>
-                @endif
 
                 <div class="wittyworks-navigation-label-wrapper lato-paragraph-text-p">
                     <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/language.svg') }}" alt="" />
