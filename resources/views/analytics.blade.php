@@ -1133,6 +1133,7 @@
                     yValuesTopCorporateWordsOpened.push(0);
                 }
             }
+
             createBarChart(
                 "topWordsChartCorporateRules",
                 xValuesTopCorporateWordsOpened,
@@ -1141,6 +1142,7 @@
                 true,
                 false
             );
+
             document.getElementById("topWordsChartCorporateRulesWrapper").style.display = "flex";
         } else {
             if ( "{{ __($dictionaryItems > 0) }}" ) {
