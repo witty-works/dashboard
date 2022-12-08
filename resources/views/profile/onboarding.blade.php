@@ -2,7 +2,6 @@
     <div class="wittyworks-navigation-wrapper">@livewire('navigation-menu')</div>
         <div class="wittyworks-page-wrapper">
             <div class="wittyworks-page-subscription lg:ml-20 margin-bottom">
-                @include('partials.banners')
                 <div class="ibarra-sub-title-h1 margin-top">
                     {{ __('content.onboarding') }}
                 </div>
