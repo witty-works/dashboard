@@ -12,7 +12,7 @@ $contactLinks = [
 ];
 @endphp
 
-<nav class="wittyworks-footer light-grey-background">
+<footer class="wittyworks-footer light-grey-background">
     <div class="wittyworks-footer-section">
         <div class="lato-small-paragraph-title-h4 margin-bottom">{{ __('content.more_resouces') }}</div>
         @foreach($resourceLinks as $label => $url)
@@ -32,4 +32,4 @@ $contactLinks = [
     <div class="wittyworks-footer-language-switcher">
         @include('partials/language-switcher')
     </div>
-</nav>
+</footer>
