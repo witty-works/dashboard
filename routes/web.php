@@ -68,6 +68,10 @@ Route::group(
     function () {
         Route::impersonate();
 
+        Route::get('/download', function () {
+            return view('download');
+        })->name('download');
+
         /*
         |------------------
         | JETSTREAM LIVEWIRE
