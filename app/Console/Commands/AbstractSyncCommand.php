@@ -27,4 +27,13 @@ abstract class AbstractSyncCommand extends Command
 
         return $query;
     }
+
+    protected function handleJob($job)
+    {
+        if ($this->hasOption('e')) {
+            $job->handle();
+        } else {
+            dispatch($job);
+        }
+    }
 }

@@ -164,10 +164,7 @@ class Team extends JetstreamTeam
 
     public function hasLanguageRules()
     {
-        return $this->getTotalFalsePositivesCount()
-            || $this->getTotalTermReplacementsCount()
-            || $this->getTotalUserWithInvitationsCount() > 1
-            || ($this->languageGuidelines !== null && $this->languageGuidelines->customized);
+        return $this->languageGuidelines !== null && $this->languageGuidelines->customized;
     }
 
     public function hasConfiguredPrivacy()
