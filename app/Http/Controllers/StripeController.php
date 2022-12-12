@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Support\Facades\Gate;
 
 class StripeController extends Controller
 {
@@ -36,7 +34,7 @@ class StripeController extends Controller
     {
         $user = $request->user();
         if (empty($user)) {
-            return redirect(route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'login']));
+            return $this->redirectToLogin();
         }
 
         $team = $user->currentTeam;
@@ -64,6 +62,13 @@ class StripeController extends Controller
         return redirect('https://www.witty.works/pricing');
     }
 
+    public function passwordConfirm(Request $request)
+    {
+        $request->session()->put('socialstream.previous_url', route('teams.subscription'));
+
+        return $this->redirectToLogin();
+    }
+
     protected function goToPortal(Request $request)
     {
         $user = $request->user();
@@ -85,5 +90,10 @@ class StripeController extends Controller
         }
 
         return $team->redirectToCheckout();
+    }
+
+    protected function redirectToLogin()
+    {
+        return redirect(route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'login']));
     }
 }

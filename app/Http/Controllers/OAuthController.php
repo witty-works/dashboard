@@ -33,7 +33,10 @@ class OAuthController extends BaseOAuthController
 
     public function redirectToProvider(Request $request, string $provider, GeneratesProviderRedirect $generator, $policy = 'login')
     {
-        session()->put('socialstream.previous_url', back()->getTargetUrl());
+        $previousUrl = $request->session()->get('socialstream.previous_url');
+        if (empty($previousUrl)) {
+            $request->session()->put('socialstream.previous_url', back()->getTargetUrl());
+        }
 
         return $generator->generate($provider, $policy);
     }
@@ -92,17 +95,20 @@ class OAuthController extends BaseOAuthController
             $this->invalidStateHandler->handle($e);
         }
 
+        $previousUrl = $request->session()->get('socialstream.previous_url');
+        $request->session()->remove('socialstream.previous_url');
+
         $account = Socialstream::findConnectedAccountForProviderAndId($provider, $providerAccount->getId());
 
         // Authenticated...
         if (!is_null($user = Auth::user())) {
-            return $this->alreadyAuthenticated($user, $account, $provider, $providerAccount);
+            return $this->alreadyAuthenticated($user, $account, $provider, $providerAccount, $previousUrl);
         }
 
         // Registration...
         if (
             FortifyFeatures::enabled(FortifyFeatures::registration())
-            && ($request->is('api/*') || session()->get('socialstream.previous_url') === route('register'))
+            && ($request->is('api/*') || $previousUrl === route('register'))
             && !$account
         ) {
             $user = Jetstream::newUserModel()->where('email', $providerAccount->getEmail())->first();
@@ -151,7 +157,9 @@ class OAuthController extends BaseOAuthController
             $user->forceFill($userData)->save();
         }
 
-        return $this->login($user);
+        $request->session()->put('auth.password_confirmed_at', time());
+
+        return $this->login($user, $previousUrl);
     }
 
     protected function checkAllowedRedirectUri($redirectUri)
@@ -210,13 +218,13 @@ class OAuthController extends BaseOAuthController
      * @throws BindingResolutionException 
      * @throws RouteNotFoundException 
      */
-    protected function alreadyAuthenticated($user, $account, $provider, $providerAccount)
+    protected function alreadyAuthenticated($user, $account, $provider, $providerAccount, $previousUrl = null)
     {
         if (self::isBrowserLogin()) {
             return $this->returnAccessTokenResponse(self::getProvider($this->provider, 'browser_login'));
         }
 
-        $route = route('profile.show');
+        $route = $previousUrl ?? route('profile.show');
 
         if ($account && $account->user_id !== $user->id) {
             return redirect($route);
@@ -240,11 +248,16 @@ class OAuthController extends BaseOAuthController
      * @param  \Illuminate\Contracts\Auth\Authenticatable|mixed  $user
      * @return mixed
      */
-    protected function login($user, $policy = 'login')
+    protected function login($user, $previousUrl = null, $policy = 'login')
     {
         $loginResponse = parent::login($user);
+
         if (self::isBrowserLogin()) {
             return $this->returnAccessTokenResponse(self::getProvider($this->provider, $policy));
+        }
+
+        if (!empty($previousUrl)) {
+            return redirect($previousUrl);
         }
 
         return $loginResponse;
@@ -299,6 +312,8 @@ class OAuthController extends BaseOAuthController
         }
 
         $user = User::where('email', $request->get('email'))->firstOrFail();
+
+        $request->session()->put('auth.password_confirmed_at', time());
 
         return $this->login($user);
     }

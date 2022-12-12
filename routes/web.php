@@ -77,7 +77,9 @@ Route::group(
             Route::group(['middleware' => ['auth:' . config('fortify.guard')]], function () {
                 Route::get('/', [WelcomeController::class, 'show'])->name('root');
 
-                Route::get('/subscribe', [StripeController::class, 'subscribe'])->name('stripe.subscribe');
+                Route::get('/subscribe', [StripeController::class, 'subscribe'])
+                    ->middleware('password.confirm')
+                    ->name('stripe.subscribe');
 
                 Route::get('/user/onboarding', [UserProfileController::class, 'onboarding'])
                     ->name('profile.onboarding');
@@ -105,7 +107,9 @@ Route::group(
                 if (Jetstream::hasTeamFeatures()) {
                     Route::get('/team/create', [TeamController::class, 'create'])->name('teams.create');
                     Route::get('/team/show', [TeamController::class, 'show'])->name('teams.show');
-                    Route::get('/team/subscription', [StripeController::class, 'show'])->name('teams.subscription');
+                    Route::get('/team/subscription', [StripeController::class, 'show'])
+                        ->middleware('password.confirm')
+                        ->name('teams.subscription');
 
                     Route::get('/team-invitations/{invitation}', [TeamInvitationController::class, 'accept'])
                         ->middleware(['auth'])
@@ -144,7 +148,9 @@ Route::group(
         */
 
         Route::middleware(['auth:sanctum'])->group(function () {
-            Route::get('/stripe/portal', [StripeController::class, 'portal'])->name('stripe.portal');
+            Route::get('/stripe/portal', [StripeController::class, 'portal'])
+                ->middleware('password.confirm')
+                ->name('stripe.portal');
         });
 
         /*
@@ -163,6 +169,7 @@ Route::group(
 */
 Route::group(['middleware' => config('socialstream.middleware', ['web'])], function () {
     Route::get('/', [WelcomeController::class, 'show'])->name('login');
+    Route::get('/password-confirm', [StripeController::class, 'passwordConfirm'])->name('password.confirm');
     Route::redirect('/register', '/')->name('register');
     Route::get('/mock-login', [OAuthController::class, 'mockLogin'])->name('mock-login');
     Route::get('/logout/{provider}', [OAuthController::class, 'logout'])->name('logout');
