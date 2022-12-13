@@ -27,7 +27,23 @@ return [
     */
 
     'browser_version' => explode(',', env('BROWSER_VERSION')),
-
+    'browsers' => [
+        'chrome' => [
+            'image_src' => '/google-chrome-icon-transparent-4.webp',
+            'store_href' => 'https://chrome.google.com/webstore/detail/meojhlodfiihbjkcnehkdcgncnhgagog',
+        ],
+        'edge' => [
+            'image_src' => '/Microsoft_Edge_logo_(2019).webp',
+            'store_href' => 'https://chrome.google.com/webstore/detail/meojhlodfiihbjkcnehkdcgncnhgagog',
+        ],
+        'firefox' => [
+            'image_src' => '/Firefox_logo,_2019.webp',
+            'store_href' => 'https://addons.mozilla.org/en-US/firefox/addon/witty/',
+        ],
+    ],
+    'browser_redirect' => env('BROWSER_REDIRECT', true),
+    'browser_check_time' => env('BROWSER_CHECK_TIME', 3000),
+    'welcome_url' => 'https://www.witty.works/welcome',
 
     /*
     |--------------------------------------------------------------------------
