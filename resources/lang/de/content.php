@@ -248,9 +248,12 @@ Bitte deine Team-Administratoren, auf <a href="https://www.witty.works/pricing" 
     'last_refreshed' => 'Zuletzt aktualisiert:',
     'refresh_data_blocked' => 'Du kannst deine Daten alle 3 Minuten aktualisieren',
     'learning_bites_doughnut_chart_event_ratio' => 'Graphik zu den Klick auf "Warum?"',
-    'no_data_events' => 'Im Moment sind keine Daten für Ihre Nutzungszusammenfassung verfügbar. Bitte verwende Witty und klicke auf die hervorgehobenen Begriffe.',
-    'no_data_top_categories' => 'Im Moment sind keine Daten für deine am häufigsten hervorgehobenen Kategorien verfügbar. Bitte verwende Witty und klicke auf die hervorgehobenen Begriffe.',
-    'no_data_top_words' => 'Im Moment sind keine Daten für deine am häufigsten hervorgehobenen Wörter verfügbar. Bitte verwende Witty und klicke auf die hervorgehobenen Begriffe.',
+    'no_data_events' => 'Im Moment haben wir nicht genug Daten, um diese Grafik anzuzeigen. 
+Bitte verwende Witty öfter und klicke auf die hervorgehobenen Begriffe.',
+    'no_data_top_categories' => 'Im Moment haben wir nicht genug Daten, um diese Grafik anzuzeigen. 
+Bitte verwende Witty öfter und klicke auf die hervorgehobenen Begriffe.',
+    'no_data_top_words' => 'Im Moment haben wir nicht genug Daten, um diese Grafik anzuzeigen. 
+Bitte verwende Witty öfter und klicke auf die hervorgehobenen Begriffe.',
     'no_data_image_text' => 'Nutze Witty, um genügend Daten für die Analyse zu generieren.',
     'week' => 'Woche',
     'in_a_row' => 'Wochen hintereinander benutzt',

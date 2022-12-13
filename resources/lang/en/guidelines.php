@@ -127,7 +127,7 @@ only the gender ending (e.g. "Mitarbeiter*in"), the female and male form (e.g. "
     'lemmatize_requires_language_code' => 'Please choose a language so we can lemmatize this term.',
     'lemmatization_error' => 'We were unable to lemmatize this term. Please choose a different option under "When should this term be highlighted?".',
     'matching_type_label' => 'When should this term be highlighted?',
-    'adjective_long' => 'Adjective (f.e. "honest")',
+    'adjective_long' => 'Adjectiv',
     'verb_long' => 'Verb',
     'substantive_long' => 'Noun',
     'a' => 'Adjective',
