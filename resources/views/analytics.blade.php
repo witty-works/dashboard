@@ -1,3 +1,8 @@
+<?php 
+    $filter = isset($team) ? ['team_id' => $team->id] : ['user_id' => $user->id];
+    $has_term_replacements = \App\Models\TermReplacement::where($filter)->exists();
+    $dictionaryItems = isset($team) ? $team->getTotalTermReplacementsCount() : $user->getTotalTermReplacementsCount();
+?>
 <x-app-layout>
     <div class="wittyworks-navigation-wrapper">@livewire('navigation-menu')</div>
         <div class="wittyworks-page-wrapper">
@@ -152,6 +157,19 @@
                                     class="wittyworks-analytics-chart-extra-large wittyworks-margin-top">
                                 </canvas>
                             </div>
+                            <div id="topWordsChartCorporateRulesWrapper" class="chart-container-row wittyworks-margin-top" style="display: none; width: 100%; align-items:center">
+                                <canvas
+                                    id="topWordsChartCorporateRules"
+                                    class="wittyworks-analytics-chart-medium wittyworks-margin-top">
+                                </canvas>
+                                <div class="lato-small-text-p max-width-30 wittyworks-margin-left">{{ __('content.explanation_corporate_rules') }}</div>
+                            </div>
+                            <div id="noCorporateRulesWrapper" class="container-row wittyworks-margin-top" style="display: none;">
+                                <div class="lato-small-text-p">{{ __('content.no_corporate_rules') }}</div>
+                            </div>
+                            <div id="corporateRulesButNoneOpened" class="container-row wittyworks-margin-top" style="display: none;">
+                                <div class="lato-small-text-p">{{ __('content.corporate_rules_none_opened') }}</div>
+                            </div>
                             <div class="chart-container-row wittyworks-margin-top">
                             <canvas
                                 id="wordsRadar"
@@ -259,6 +277,8 @@
     const yValuesTopWordsOpened = [];
     const xValuesTopWordsAlternative = [];
     const yValuesTopWordsAlternative = [];
+    const xValuesTopCorporateWordsOpened = [];
+    const yValuesTopCorporateWordsOpened = [];
 
     Chart.defaults.global.defaultFontColor = '#000000';
     function getWittyStreak (yValuesCheck) {
@@ -298,13 +318,16 @@
         document.getElementById(sectionId).style.display = "none";
     }
 
-    async function getChartData(chart, from = 30, interval = 'day') {
+    async function getChartData(chart, from = 30, interval = 'day', filter = null) {
         let analyticsUrl = '/api/user/analytics?refresh=' + refresh + '&chart=';
         if (window.location.href.includes('team')) {
             analyticsUrl = '/api/team/analytics?refresh=' + refresh + '&chart=';
         }
-        const response = await fetch(
-            analyticsUrl + chart + '&from=' + from + '&interval=' + interval);
+        analyticsUrl += chart + '&from=' + from + '&interval=' + interval
+        if(filter) {
+            analyticsUrl += '&category_filters[]=' + filter;
+        }
+        const response = await fetch(analyticsUrl);
         const data = await response.json();
         return data;
     }
@@ -343,7 +366,7 @@
                 },
                 scales:{
                     xAxes: [{
-                        display: display
+                        display: display,
                     }],
                     yAxes: [{
                         ticks: {
@@ -1092,6 +1115,42 @@
             true,
             false
         );
+    });
+
+    getChartData('topWords', 30, 'day', 'corporate_rules').then(data => {  
+        if((data && data.events && data.events.popover_open)) {
+            const openedCorporatewords = data.events.popover_open;
+            for (const [key, value] of Object.entries(openedCorporatewords)) {
+                xValuesTopCorporateWordsOpened.push(key);
+                yValuesTopCorporateWordsOpened.push(value);
+            }
+            if(xValuesTopCorporateWordsOpened.length >= 10) {
+                xValuesTopCorporateWordsOpened.slice(0, 10);
+                yValuesTopCorporateWordsOpened.slice(0, 10);
+            } else if (xValuesTopCorporateWordsOpened.length > 0) {
+                for (let i = xValuesTopCorporateWordsOpened.length; i < 10; i++) {
+                    xValuesTopCorporateWordsOpened.push("");
+                    yValuesTopCorporateWordsOpened.push(0);
+                }
+            }
+
+            createBarChart(
+                "topWordsChartCorporateRules",
+                xValuesTopCorporateWordsOpened,
+                yValuesTopCorporateWordsOpened,
+                "{{ __('content.title_words_bar_chart_month_corporate_rules') }}",
+                true,
+                false
+            );
+
+            document.getElementById("topWordsChartCorporateRulesWrapper").style.display = "flex";
+        } else {
+            if ( "{{ __($dictionaryItems > 0) }}" ) {
+                document.getElementById("corporateRulesButNoneOpened").style.display = "flex";
+            } else {
+                document.getElementById("noCorporateRulesWrapper").style.display = "flex";
+            }
+        }
     });
 };
 load_charts(false, 1);
