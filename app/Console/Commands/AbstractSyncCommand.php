@@ -2,6 +2,8 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Team;
+use App\Models\User;
 use Illuminate\Console\Command;
 
 abstract class AbstractSyncCommand extends Command
@@ -11,7 +13,7 @@ abstract class AbstractSyncCommand extends Command
      *
      * @return mixed
      */
-    protected function filterQueryByIds($query, $optionName = 'ids')
+    protected function filterQueryByIds($query, $optionName)
     {
         $idsString = $this->option($optionName);
 
@@ -35,5 +37,49 @@ abstract class AbstractSyncCommand extends Command
         } else {
             dispatch($job);
         }
+    }
+
+    protected function handleTeam(Team $team)
+    {
+    }
+
+    protected function handleTeams($query = null)
+    {
+        $query = $query ?? Team::query();
+        $query = $this->filterQueryByIds($query, 'team-ids');
+        if (!$query) {
+            return -1;
+        }
+
+        $teamCount = 0;
+        foreach ($query->cursor() as $team) {
+            /** @var \App\Models\Team $team */
+            $this->handleTeam($team);
+            $teamCount++;
+        }
+
+        return $teamCount;
+    }
+
+    protected function handleUser(User $user)
+    {
+    }
+
+    public function handleUsers($query = null)
+    {
+        $query = $query ?? User::query();
+        $query = $this->filterQueryByIds($query, 'ids');
+        if (!$query) {
+            return -1;
+        }
+
+        $userCount = 0;
+        foreach ($query->cursor() as $user) {
+            /** @var \App\Models\User $user */
+            $this->handleUser($user);
+            $userCount++;
+        }
+
+        return $userCount;
     }
 }

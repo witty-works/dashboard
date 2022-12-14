@@ -281,17 +281,6 @@
     const yValuesTopCorporateWordsOpened = [];
 
     Chart.defaults.global.defaultFontColor = '#000000';
-    function getWittyStreak (yValuesCheck) {
-        let checkWeeksInRow = 0;
-        for (let i = yValuesCheck.length - 1; i >= 0; i--) {
-            if (yValuesCheck[i] != 0) {
-                checkWeeksInRow++;
-            } else {
-                break;
-            }
-        }
-        return checkWeeksInRow;
-    }
 
     function aggregate_chart_data_by_week(xValues, yValues) {
         var aggregatedData = [];
@@ -444,11 +433,12 @@
             return;
         }
         const events = data.events || {};
+        const writing_streak = data.writing_streak || 0;
         const lastRefresh = data.last_refresh;
 
         let lastRefreshFormatted = moment(lastRefresh).fromNow();
         for (const [event, value] of Object.entries(events)) {
-            if (event === 'check') {
+            if (event === 'popover_open') {
                for (const [date, count] of Object.entries(value)) {
                     xValuesCheck.push(date);
                     xValuesCheckIntervallWeek.push(moment(date).startOf('week').isoWeekday(startOfWeek).week());
@@ -463,11 +453,6 @@
                 for (const [date, count] of Object.entries(value)) {
                     xValuesAlternative.push(date);
                     yValuesAlternative.push(count);
-                }
-            } else if (event === 'popover_open') {
-                for (const [date, count] of Object.entries(value)) {
-                    xValuesPopoverOpen.push(date);
-                    yValuesPopoverOpen.push(count);
                 }
             } else if (event === 'learning_bites') {
                 for (const [date, count] of Object.entries(value)) {
@@ -512,7 +497,7 @@
             
             const aggregatedCheckChatData =  aggregate_chart_data_by_week(xValuesCheckIntervallWeek, yValuesCheck);
 
-            document.getElementById("checkDaysInRow").innerHTML =  '{{ __('content.writing_streak') }}' + '&nbsp; <span class="lato-small-paragraph-title-h4-purple">' +  getWittyStreak(aggregatedCheckChatData[1]) + '&nbsp</span>' + '{{ __('content.in_a_row') }}';
+            document.getElementById("checkDaysInRow").innerHTML =  '{{ __('content.writing_streak') }}' + '&nbsp; <span class="lato-small-paragraph-title-h4-purple">' +  writing_streak + '&nbsp</span>' + '{{ __('content.in_a_row') }}';
             document.getElementById("changeInLearningBitesPercentage").innerHTML =  '{{ __('content.you_clicked') }}' + '&nbsp; <span class="lato-small-paragraph-title-h4-purple">' + changeInLearningBitesPercentage + '%</span>&nbsp;' + (changeInLearningBitesPercentage >= 0 ? '{{ __('content.learning_bites_requests_week_positive') }}' : '{{ __('content.learning_bites_requests_week_negative') }}');
             document.getElementById("changeInPopoverPercentage").innerHTML =  '{{ __('content.you_clicked') }}' + '&nbsp; <span class="lato-small-paragraph-title-h4-purple">' + changeInPopoverPercentage + '%</span>&nbsp;' + (changeInPopoverPercentage >= 0 ? '{{ __('content.popover_open_week_positive') }}' : '{{ __('content.popover_open_week_negative') }}');
             document.getElementById("changeInAlternativePercentage").innerHTML =  '{{ __('content.you_selected') }}' + '&nbsp; <span class="lato-small-paragraph-title-h4-purple">' + changeInAlternativePercentage + '%</span>&nbsp;' + (changeInAlternativePercentage >= 0 ? '{{ __('content.alternative_clicked_week_positive') }}' : '{{ __('content.alternative_clicked_week_negative') }}');
@@ -671,7 +656,7 @@
         const events = data.events || {};
 
         for (const [event, value] of Object.entries(events)) {
-            if (event === 'check') {
+            if (event === 'popover_open') {
                for (const [date, count] of Object.entries(value)) {
                     xIntervallDauWeek.push(date);
                     yValuesDauCheck.push(count);
@@ -684,17 +669,13 @@
                 for (const [date, count] of Object.entries(value)) {
                     yValuesDauAlternative.push(count);
                 }
-            } else if (event === 'popover_open') {
+            } else if (event === 'user_count') {
                 for (const [date, count] of Object.entries(value)) {
                     yValuesDauPopoverOpen.push(count);
                 }
             } else if (event === 'learning_bites') {
                 for (const [date, count] of Object.entries(value)) {
                     yValuesDauLearningBites.push(count);
-                }
-            } else if (event === 'user_count') {
-                for (const [date, count] of Object.entries(value)) {
-                    yValuesDauUserCount.push(count);
                 }
             }
         }
