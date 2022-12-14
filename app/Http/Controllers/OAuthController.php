@@ -40,9 +40,24 @@ class OAuthController extends BaseOAuthController
 
     public function redirectToProviderBrowserLogin(Request $request, GeneratesProviderRedirect $generator)
     {
+        $redirectUri = $request->get('redirect_uri');
+
+        $user = $request->user();
+        if ($user) {
+            $account = $user->currentConnectedAccount;
+            if ($account && $account->token) {
+                $data = [
+                    'email' => $user->email,
+                    'access_token' => $account->token,
+                    'refresh_token' => $account->refresh_token,
+                ];
+
+                return $this->returnAccessTokenResponse($data, $redirectUri);
+            }
+        }
+
         $response = $generator->generate($this->provider, 'browser_login');
 
-        $redirectUri = $request->get('redirect_uri');
         if ($this->validateRedirectUri($redirectUri)) {
             $targetUrl = $response->getTargetUrl();
             $url = parse_url($targetUrl);
@@ -68,7 +83,7 @@ class OAuthController extends BaseOAuthController
         }
 
         try {
-            $provider = self::getProvider($this->provider, 'browser_login');
+            $provider = $this->getBrowserLoginProvider();
             $provider->setRefreshToken($refreshToken);
 
             return response()
@@ -93,6 +108,13 @@ class OAuthController extends BaseOAuthController
         }
 
         $account = Socialstream::findConnectedAccountForProviderAndId($provider, $providerAccount->getId());
+        $tokens = $this->getAccessTokenResponse(self::getProvider($provider, 'browser_login'));
+        if (!empty($tokens['access_token'])) {
+            $providerAccount->token = $tokens['access_token'];
+        }
+        if (!empty($tokens['refresh_token'])) {
+            $providerAccount->refreshToken = $tokens['refresh_token'];
+        }
 
         // Authenticated...
         if (!is_null($user = Auth::user())) {
@@ -168,6 +190,11 @@ class OAuthController extends BaseOAuthController
         return false;
     }
 
+    protected function getBrowserLoginProvider()
+    {
+        return self::getProvider($this->provider, 'browser_login');
+    }
+
     protected function validateRedirectUri($redirectUri)
     {
         return config('services.azureadb2c.validate_redirect_uri_disabled')
@@ -178,6 +205,11 @@ class OAuthController extends BaseOAuthController
     protected function getAccessTokenResponse(ProviderInterface $provider)
     {
         $socialiteUser = $provider->user();
+        $account = Socialstream::findConnectedAccountForProviderAndId($this->provider, $socialiteUser->id);
+
+        $account->token = $socialiteUser->accessTokenResponseBody['access_token'];
+        $account->refresh_token = $socialiteUser->accessTokenResponseBody['refresh_token'];
+        $account->save();
 
         return [
             'email' => User::getEmailFromProvider($socialiteUser->user),
@@ -186,11 +218,17 @@ class OAuthController extends BaseOAuthController
         ];
     }
 
-    protected function returnAccessTokenResponse(ProviderInterface $provider)
+    protected function returnAccessTokenResponse($data = null, $redirectUri = null)
     {
-        $data = $this->getAccessTokenResponse($provider);
+        if (empty($data)) {
+            $provider = $this->getBrowserLoginProvider();
+            $data = $this->getAccessTokenResponse($provider);
+        }
 
-        $redirectUri = request()->get('state');
+        if (empty($redirectUri)) {
+            $redirectUri = request()->get('state');
+        }
+
         if ($redirectUri && $this->validateRedirectUri($redirectUri)) {
             $redirectUri .= '?' . http_build_query($data);
 
@@ -213,7 +251,7 @@ class OAuthController extends BaseOAuthController
     protected function alreadyAuthenticated($user, $account, $provider, $providerAccount)
     {
         if (self::isBrowserLogin()) {
-            return $this->returnAccessTokenResponse(self::getProvider($this->provider, 'browser_login'));
+            return $this->returnAccessTokenResponse();
         }
 
         $route = route('profile.show');
@@ -244,7 +282,7 @@ class OAuthController extends BaseOAuthController
     {
         $loginResponse = parent::login($user);
         if (self::isBrowserLogin()) {
-            return $this->returnAccessTokenResponse(self::getProvider($this->provider, $policy));
+            return $this->returnAccessTokenResponse();
         }
 
         return $loginResponse;
