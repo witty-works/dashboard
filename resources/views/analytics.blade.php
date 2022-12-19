@@ -10,7 +10,7 @@
                 @include('partials.banners')
                 <div class="ibarra-sub-title-h1 margin-top">
                     {{ __('content.analytics') }}
-                </div>    
+                </div>
                 <div id="lastRefresh" class="lato-small-text-p wittyworks-margin-right container-row margin-top" style="visibility: hidden; align-items: center;"></div>
                 <div class="ibarra-sub-title-h2 wittyworks-margin-top">{{ __('content.activity') }}</div>
                 <div class="wittyworks-form-section container border-radius">
@@ -234,10 +234,10 @@
     const yValuesDauIgnore = [];
     const yValuesDauAlternative = [];
     const yValuesDauPopoverOpen = [];
-    const yValuesDauLearningBites = []; 
+    const yValuesDauLearningBites = [];
 
     const xValuesCheck = [];
-    const xValuesCheckIntervallWeek = [];
+    const xValuesPopoverOpenIntervallWeek = [];
     const yValuesCheck = [];
     const yValuesCheckWeek = [];
 
@@ -343,7 +343,7 @@
             options: {
                 events: [],
                 maintainAspectRatio: false,
-                responsive: true, 
+                responsive: true,
                 title: {
                 display: true,
                 text: text,
@@ -402,7 +402,7 @@
                 options: {
                     legend: {display: false},
                     maintainAspectRatio: false,
-                    responsive: true, 
+                    responsive: true,
                     tooltips: {
                         yAlign: 'bottom',
                         callbacks: {
@@ -415,7 +415,7 @@
                             },
                         },
                         backgroundColor: '#ffffff',
-                        bodyFontColor: '#000000',                    
+                        bodyFontColor: '#000000',
                     },
                     title: {
                         display: true,
@@ -440,9 +440,9 @@
         for (const [event, value] of Object.entries(events)) {
             if (event === 'popover_open') {
                for (const [date, count] of Object.entries(value)) {
-                    xValuesCheck.push(date);
-                    xValuesCheckIntervallWeek.push(moment(date).startOf('week').isoWeekday(startOfWeek).week());
-                    yValuesCheck.push(count);
+                    xValuesPopoverOpen.push(date);
+                    xValuesPopoverOpenIntervallWeek.push(moment(date).startOf('week').isoWeekday(startOfWeek).week());
+                    yValuesPopoverOpen.push(count);
                 }
             } else if (event === 'ignore') {
                 for (const [date, count] of Object.entries(value)) {
@@ -495,7 +495,7 @@
             const changeInIgnorePercentage = (((totalWeeklyIgnore - totalWeeklyIgnorePrevious) / (totalWeeklyIgnorePrevious == 0 ? 1 : totalWeeklyIgnorePrevious)) * 100).toFixed(0).replace('-', '');
             const changeInAlternativePercentage = (((totalWeeklyAlternative - totalWeeklyAlternativePrevious) / (totalWeeklyAlternativePrevious == 0 ? 1 : totalWeeklyAlternativePrevious)) * 100).toFixed(0).replace('-', '');
             
-            const aggregatedCheckChatData =  aggregate_chart_data_by_week(xValuesCheckIntervallWeek, yValuesCheck);
+            const aggregatedCheckChatData =  aggregate_chart_data_by_week(xValuesPopoverOpenIntervallWeek, yValuesCheck);
 
             document.getElementById("checkDaysInRow").innerHTML =  '{{ __('content.writing_streak') }}' + '&nbsp; <span class="lato-small-paragraph-title-h4-purple">' +  writing_streak + '&nbsp</span>' + '{{ __('content.in_a_row') }}';
             document.getElementById("changeInLearningBitesPercentage").innerHTML =  '{{ __('content.you_clicked') }}' + '&nbsp; <span class="lato-small-paragraph-title-h4-purple">' + changeInLearningBitesPercentage + '%</span>&nbsp;' + (changeInLearningBitesPercentage >= 0 ? '{{ __('content.learning_bites_requests_week_positive') }}' : '{{ __('content.learning_bites_requests_week_negative') }}');
@@ -537,69 +537,69 @@
             }, 30000);
             document.getElementById('lastRefresh').style.visibility = 'visible';
 
-            const aggregatedPopoverOpenData = aggregate_chart_data_by_week(xValuesCheckIntervallWeek, yValuesPopoverOpen)[1];
-            const aggregatedAlternativeData = aggregate_chart_data_by_week(xValuesCheckIntervallWeek, yValuesAlternative)[1];
-            const aggregatedIgnoreData = aggregate_chart_data_by_week(xValuesCheckIntervallWeek, yValuesIgnore)[1];
-            const aggregatedLearningBitesData = aggregate_chart_data_by_week(xValuesCheckIntervallWeek, yValuesLearningBites)[1];
+            const aggregatedPopoverOpenData = aggregate_chart_data_by_week(xValuesPopoverOpenIntervallWeek, yValuesPopoverOpen)[1];
+            const aggregatedAlternativeData = aggregate_chart_data_by_week(xValuesPopoverOpenIntervallWeek, yValuesAlternative)[1];
+            const aggregatedIgnoreData = aggregate_chart_data_by_week(xValuesPopoverOpenIntervallWeek, yValuesIgnore)[1];
+            const aggregatedLearningBitesData = aggregate_chart_data_by_week(xValuesPopoverOpenIntervallWeek, yValuesLearningBites)[1];
 
             if(aggregatedLearningBitesData.every(Number.isInteger)) {
                 ctx = document.getElementById('eventsChart').getContext('2d');
-            new Chart(ctx, {
-                type: "line",
-                data: {
-                    labels: aggregatedCheckChatData[0],
-                    datasets: [
-                        {
-                            data: aggregatedPopoverOpenData,
-                            borderColor: colors[3],
-                            fill: false,
-                            label: "{{ __('content.popover_label_line_chart') }}",
-                        },
-                        {
-                            data: aggregatedAlternativeData,
-                            borderColor: colors[6],
-                            fill: false,
-                            label: "{{ __('content.alternative_label_line_chart') }}",
-                        },
-                        {
-                            data: aggregatedIgnoreData,
-                            borderColor: colors[9],
-                            fill: false,
-                            label:  "{{ __('content.ignored_label_line_chart') }}",
-                        },
-                        {
-                            data: aggregatedLearningBitesData,
-                            borderColor: colors[12],
-                            fill: false,
-                            label:  @json(__('content.learning_bites_label_line_chart')),
-                        },
-                    ]
-                },
-                options: {
-                    events: [],
-                    maintainAspectRatio: false,
-                    responsive: true, 
-                    title: {
-                    display: true,
-                    text:  @json(__('content.title_line_chart')),
-                    fontSize: 16,
-                    fontStyle: 'normal'
+                new Chart(ctx, {
+                    type: "line",
+                    data: {
+                        labels: aggregatedCheckChatData[0],
+                        datasets: [
+                            {
+                                data: aggregatedPopoverOpenData,
+                                borderColor: colors[3],
+                                fill: false,
+                                label: "{{ __('content.popover_label_line_chart') }}",
+                            },
+                            {
+                                data: aggregatedAlternativeData,
+                                borderColor: colors[6],
+                                fill: false,
+                                label: "{{ __('content.alternative_label_line_chart') }}",
+                            },
+                            {
+                                data: aggregatedIgnoreData,
+                                borderColor: colors[9],
+                                fill: false,
+                                label:  "{{ __('content.ignored_label_line_chart') }}",
+                            },
+                            {
+                                data: aggregatedLearningBitesData,
+                                borderColor: colors[12],
+                                fill: false,
+                                label:  @json(__('content.learning_bites_label_line_chart')),
+                            },
+                        ]
                     },
-                    scales:{
-                        yAxes: [{
-                            ticks: {
-                                min: 0,
-                                callback: function(value, index, values) {
-                                    if (Math.floor(value) === value) {
-                                        return value;
+                    options: {
+                        events: [],
+                        maintainAspectRatio: false,
+                        responsive: true,
+                        title: {
+                        display: true,
+                        text:  @json(__('content.title_line_chart')),
+                        fontSize: 16,
+                        fontStyle: 'normal'
+                        },
+                        scales:{
+                            yAxes: [{
+                                ticks: {
+                                    min: 0,
+                                    callback: function(value, index, values) {
+                                        if (Math.floor(value) === value) {
+                                            return value;
+                                        }
                                     }
-                                }                        
-                            }
-                        }],
+                                }
+                            }],
+                        }
                     }
-                }
-            });
-        }
+                });
+            }
 
             createBarChart(
                 "eventsLearningBitesChart",
@@ -657,9 +657,9 @@
 
         for (const [event, value] of Object.entries(events)) {
             if (event === 'popover_open') {
-               for (const [date, count] of Object.entries(value)) {
+                for (const [date, count] of Object.entries(value)) {
                     xIntervallDauWeek.push(date);
-                    yValuesDauCheck.push(count);
+                    yValuesDauPopoverOpen.push(count);
                 }
             } else if (event === 'ignore') {
                 for (const [date, count] of Object.entries(value)) {
@@ -669,13 +669,13 @@
                 for (const [date, count] of Object.entries(value)) {
                     yValuesDauAlternative.push(count);
                 }
-            } else if (event === 'user_count') {
-                for (const [date, count] of Object.entries(value)) {
-                    yValuesDauPopoverOpen.push(count);
-                }
             } else if (event === 'learning_bites') {
                 for (const [date, count] of Object.entries(value)) {
                     yValuesDauLearningBites.push(count);
+                }
+            } else if (event === 'user_count') {
+                for (const [date, count] of Object.entries(value)) {
+                    yValuesDauUserCount.push(count);
                 }
             }
         }
@@ -685,7 +685,7 @@
             new Chart(ctx, {
                 type: "line",
                 data: {
-                    labels: aggregatedCheckChatData[0],  //untill posthog offers select start of week
+                    labels: aggregatedCheckChatData[0],  //until posthog offers select start of week
                     datasets: [
                         {
                             data: yValuesDauUserCount,
@@ -722,7 +722,7 @@
                 options: {
                     events: [],
                     maintainAspectRatio: false,
-                    responsive: true, 
+                    responsive: true,
                     animation: {
                         duration: 0
                     },
@@ -740,7 +740,7 @@
                                     if (Math.floor(value) === value) {
                                         return value;
                                     }
-                                }                        
+                                }
                             }
                         }],
                     }
@@ -753,6 +753,7 @@
         });
         }
     });
+
     getChartData('topSubcategories', 7).then(data => {
         if (!data || !data.events ) {
             handle_no_data('topCategoriesChartWrapperNoData', 'loadingIconTopCatagories');
@@ -823,7 +824,7 @@
                     data: dataCategories,
                     options: {
                         maintainAspectRatio: false,
-                        responsive: true, 
+                        responsive: true,
                         events: [],
                         elements: {
                         line: {
@@ -838,7 +839,7 @@
                                         if (Math.floor(value) === value) {
                                             return value;
                                         }
-                                    }                                
+                                    }
                                 }
                             }],
                         }
@@ -1014,7 +1015,7 @@
             options: {
                 events: [],
                 maintainAspectRatio: false,
-                responsive: true, 
+                responsive: true,
                 elements: {
                     line: {
                         borderWidth: 1
@@ -1029,7 +1030,7 @@
                                 if (Math.floor(value) === value) {
                                     return value;
                                 }
-                            }                        
+                            }
                         }
                     }],
                 }
@@ -1098,7 +1099,7 @@
         );
     });
 
-    getChartData('topWords', 30, 'day', 'corporate_rules').then(data => {  
+    getChartData('topWords', 30, 'day', 'corporate_rules').then(data => {
         if((data && data.events && data.events.popover_open)) {
             const openedCorporatewords = data.events.popover_open;
             for (const [key, value] of Object.entries(openedCorporatewords)) {

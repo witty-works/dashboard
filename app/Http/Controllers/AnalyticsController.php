@@ -236,7 +236,7 @@ class AnalyticsController extends Controller
                 $writingStreakComplete = true;
                 foreach ($data['events']['check'] as $day => $value) {
                     // skip everything that isn't start of the week
-                    // @TODO honor the users start of the week 
+                    // @TODO honor the users start of the week
                     if ($interval === 'day' && (int)date('w', strtotime($day)) !== 0) {
                         continue;
                     }
@@ -296,7 +296,7 @@ class AnalyticsController extends Controller
                 break;
             case 'topSubcategories':
                 $events = ['popover_open', 'alternative', 'ignore'];
-                $data = $this->fetchBreakdown($events, $properties, 'response__data__subcategory', $interval, $from);
+                $data = $this->fetchBreakdown($events, $properties, 'response__data__subcategory', $interval, $fromPosthog);
 
                 $locale = session('locale', 'en');
                 foreach ($events as $event) {
