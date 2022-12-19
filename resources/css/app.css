@@ -897,3 +897,17 @@ input:checked+.slider:before {
     resize: none !important;
     max-height: 42px;
 }
+
+
+.browser-selection {
+  margin-top: 1.5rem;
+  margin-right: 1.5rem;
+  max-width: 100%;
+  width: 100%;
+  padding: 28px;
+}
+
+.browser-logo {
+  margin: auto;
+  padding-bottom: 20px;
+}

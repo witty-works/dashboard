@@ -1,21 +1,21 @@
 <x-app-layout>
         <div class="wittyworks-page-wrapper">
             <div class="wittyworks-page-subscription lg:ml-20 margin-bottom">
-                <div class="ibarra-sub-title-h1 margin-top">
+                <div class="ibarra-sub-title-h1 margin-top align-center">
                     {{ __('content.witty_download') }}
                 </div>
-                
+
                 <div>
                     <div class="py-10">
-                        <div class="w-full col-span-6 sm:col-span-4 margin-bottom">
+                        <div class="w-full col-span-6 sm:col-span-4 margin-bottom align-center">
                             {!! __('content.witty_download_description') !!}
                         </div>
 
                         <div class="h-56 grid grid-cols-3 gap-4 content-center">
                             @foreach (config('app.browsers') as $key => $browser)
-                            <div class="rounded-lg bg-white">
+                            <div class="rounded-lg bg-white browser-selection">
                                 <a href="{{ $browser['store_href'] }}">
-                                    <img width="100px;" src="{{ URL::asset($browser['image_src']) }}" alt="{{ __('content.browser_name_'.$key) }}" />
+                                    <img class="browser-logo" width="100px;" src="{{ URL::asset($browser['image_src']) }}" alt="{{ __('content.browser_name_'.$key) }}" />
                                 </a>
 
                                 <a href="{{ $browser['store_href'] }}" class="button primary-button-red">{{ __('content.browser_get_'.$key) }}</a>
