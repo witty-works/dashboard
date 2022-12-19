@@ -77,16 +77,18 @@ class SyncUserToHubSpot implements ShouldQueue
             }
         }
 
-        $user->hubspot_id = $contactId;
-        if (!empty($contactSource) && $user->hubspot_source != $contactSource) {
-            $user->hubspot_source = $contactSource;
-            $contactSourceUpdated = true;
-        }
+        if (!empty($contactId)) {
+            $user->hubspot_id = $contactId;
+            if (!empty($contactSource) && $user->hubspot_source != $contactSource) {
+                $user->hubspot_source = $contactSource;
+                $contactSourceUpdated = true;
+            }
 
-        $user->saveQuietly();
+            $user->saveQuietly();
 
-        if (!empty($contactSourceUpdated)) {
-            dispatch(new SyncUserToPosthog($user));
+            if (!empty($contactSourceUpdated)) {
+                dispatch(new SyncUserToPosthog($user));
+            }
         }
 
         return 0;
