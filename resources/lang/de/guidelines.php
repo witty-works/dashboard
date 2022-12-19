@@ -126,7 +126,7 @@ return [
     'lemmatize_requires_language_code' => 'Bitte wähle eine Sprache, damit wir diesen Begriff lemmatisieren können.',
     'lemmatization_error' => 'Wir konnten diesen Begriff nicht lemmatisieren. Bitte wähle eine andere Option unter "Wann soll dieser Begriff hervorgehoben werden?".',
     'matching_type_label' => 'Wann soll dieser Begriff hervorgehoben werden?',
-    'adjective_long' => 'Adjektiv (z.B. „ehrlich“)',
+    'adjective_long' => 'Adjektiv',
     'verb_long' => 'Verb',
     'substantive_long' => 'Substantiv',
     'a' => 'Adjektiv',

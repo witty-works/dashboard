@@ -2,24 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Categories;
+use App\Helpers\Categories;
+use App\Models\Kpi;
+use App\Models\Team;
 use App\Models\User;
-use Carbon\Carbon;
+use App\Helpers\Posthog;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\DB;
 
 class AnalyticsController extends Controller
 {
-    protected $personalApiKey;
     protected $url;
     protected $refresh;
 
     public function __construct(Request $request)
     {
-        $this->personalApiKey = config('posthog.personal_api_key');
-
         $projectId = $request->get('project_id', config('posthog.project_id'));
         $this->url = config('posthog.host') . "/api/projects/$projectId/insights/trend";
         $this->refresh = $request->get('refresh', false);
@@ -65,22 +64,7 @@ class AnalyticsController extends Controller
             abort(403);
         }
 
-        $postHogId = config('posthog.dashboard_user_id_override');
-        if (empty($postHogId)) {
-            $postHogId = $request->user()->posthogId();
-        }
-
-        $properties = [
-            'type' => 'AND',
-            'values' => [
-                [
-                    'key' => 'dashboard_id',
-                    'value' => $postHogId,
-                    'operator' => 'exact',
-                    'type' => 'person',
-                ]
-            ]
-        ];
+        $properties = PostHog::getUserFilter($request->user());
 
         return $this->fetchJson($request, $properties);
     }
@@ -90,41 +74,9 @@ class AnalyticsController extends Controller
         $user = $request->user();
         $this->teamAnalyticsAllowed($user);
 
-        $postHogId = config('posthog.dashboard_team_id_override');
-        if (empty($postHogId)) {
-            $postHogId = $user->currentTeam->posthogId();
-        }
+        $properties = PostHog::getOrganizationFilter($user->currentTeam);
 
-        $properties = [
-            'type' => 'AND',
-            'values' => [
-                [
-                    'key' => 'response__organizationId',
-                    'value' => $postHogId,
-                    'operator' => 'exact',
-                    'type' => 'event',
-                ]
-            ]
-        ];
-
-        return $this->fetchJson($request, $properties);
-    }
-
-    protected function fetchData($filter)
-    {
-        $key = 'posthog:' . md5($this->url) . ':' . md5(serialize($filter));
-        if ($this->refresh) {
-            Cache::forget($key);
-        }
-
-        return Cache::remember($key, config('posthog.insights_cache_time'), function () use ($filter) {
-            $response = Http::withToken($this->personalApiKey)
-                ->post($this->url, $filter);
-
-            $data = $response->collect()->all();
-            $data['last_refresh'] = Carbon::now();
-            return $data;
-        });
+        return $this->fetchJson($request, $properties, $user->currentTeam);
     }
 
     protected function fetchEventData($events, $properties, $interval, $from, $math = 'total')
@@ -145,7 +97,7 @@ class AnalyticsController extends Controller
         foreach ($events as $event) {
             $filter['events'][0]['id'] = $event;
 
-            $response = $this->fetchData($filter);
+            $response = PostHog::fetchData($filter, $this->url);
             if (isset($response['result'][0])) {
                 $data['events'][$event] = array_combine($response['result'][0]['days'], $response['result'][0]['data']);
             }
@@ -182,7 +134,7 @@ class AnalyticsController extends Controller
         foreach ($events as $event) {
             $filter['events'][0]['id'] = $event;
 
-            $response = $this->fetchData($filter);
+            $response = PostHog::fetchData($filter, $this->url);
             if (isset($response['result'])) {
                 foreach ($response['result'] as $value) {
                     $data['events'][$event][$value['breakdown_value']] = $value['aggregated_value'];
@@ -194,9 +146,18 @@ class AnalyticsController extends Controller
         return $data;
     }
 
-    protected function fetchJson(Request $request, $properties)
+    protected function numWeeks(DateTime $firstDate, DateTime $secondDate)
+    {
+        $differenceInDays = $firstDate->diff($secondDate)->days;
+        $differenceInWeeks = $differenceInDays / 7;
+
+        return floor($differenceInWeeks);
+    }
+
+    protected function fetchJson(Request $request, $properties, $model = null)
     {
         $from = $this->fetchFrom($request);
+        $fromPosthog = "-{$from}d";
         $interval = $this->fetchInterval($request);
         $chart = $request->get('chart');
 
@@ -240,20 +201,113 @@ class AnalyticsController extends Controller
 
         switch ($chart) {
             case 'dau':
-                $events = ['check', 'popover_open', 'alternative', 'ignore', 'learning_bites'];
-                $data = $this->fetchEventData($events, $properties, $interval, $from, 'dau');
-                foreach ($data['events']['check'] as $day => $value) {
-                    $data['events']['user_count'][$day] = $request->user()->currentTeam->getTotalUserCount();
+                $events = ['popover_open', 'alternative', 'ignore', 'learning_bites'];
+                $data = $this->fetchEventData($events, $properties, $interval, $fromPosthog, 'dau');
+
+                if ($model instanceof Team) {
+                    $fromUserCount = $from + 10;
+                    $userCount = Kpi::where('team_id', $model->id)
+                        ->where('kpi', Kpi::TEAM_COUNT)
+                        ->whereRaw("date > DATE_SUB(NOW(), INTERVAL {$fromUserCount} DAY)")
+                        ->select('date', 'value')
+                        ->pluck('value', 'date')
+                        ->toArray();
+
+                    foreach ($data['events']['popover_open'] as $day => $value) {
+                        $value = (int) $value;
+                        // the check here is to handle the case when a team adds
+                        // and removes users over the course of the week
+                        if (isset($userCount[$day]) && $userCount[$day] > $value) {
+                            $value = $userCount[$day];
+                        }
+                        // handle missing data in the KPI table, this should eventually never happen
+                        if ($value === 0) {
+                            $value = $model->getTotalUserCount();
+                        }
+                        $data['events']['user_count'][$day] = $value;
+                    }
                 }
 
                 break;
             case 'total':
                 $events = ['check', 'popover_open', 'alternative', 'ignore', 'learning_bites'];
-                $data = $this->fetchEventData($events, $properties, $interval, $from);
+                $data = $this->fetchEventData($events, $properties, $interval, $fromPosthog);
+
+                $writingStreak = 0;
+                $writingStreakComplete = true;
+                foreach ($data['events']['check'] as $day => $value) {
+                    // skip everything that isn't start of the week
+                    // @TODO honor the users start of the week
+                    if ($interval === 'day' && (int)date('w', strtotime($day)) !== 0) {
+                        continue;
+                    }
+
+                    if ((int)$value === 0) {
+                        $writingStreak = 0;
+                        $writingStreakComplete = false;
+                    }
+                    $writingStreak += ($value ? 1 : 0);
+                }
+
+                if ($writingStreakComplete) {
+                    $columnName = $model instanceof Team ? 'team_id' : 'user_id';
+                    $query = Kpi::where($columnName, $model->id)
+                        ->where('kpi', Kpi::WRITING_STREAK)
+                        ->groupBy('year_date', 'week_date')
+                        ->having(DB::raw('SUM(value)'), '=', 0)
+                        ->orderBy('year_date', 'DESC')
+                        ->orderBy('week_date', 'DESC')
+                        ->limit(1)
+                        ->select(DB::raw('YEAR(date) AS year_date'), DB::raw('WEEK(date) AS week_date'));
+
+                    // most recent week before the current writing streak started
+                    $writingStreakEnd = $query
+                        ->first();
+
+                    // user/team has a writing streak since the beginning,
+                    // ie. they never had a week without a writing streak
+                    if (empty($writingStreakEnd)) {
+                        $query = $model instanceof Team ? Team::query() : User::query();
+                        $query->where('id', $model->id)
+                            ->select(
+                                DB::raw('YEAR(created_at) AS year_date'),
+                                DB::raw('WEEK(created_at) AS week_date')
+                            );
+
+                        $writingStreakEnd = $query
+                            ->first();
+                    }
+
+                    $writingStreakEnd = $writingStreakEnd->toArray();
+                    $writingStreakStart = new DateTime();
+                    $writingStreakStart->setISODate($writingStreakEnd['year_date'], $writingStreakEnd['week_date']);
+                    $writingStreakStart->modify('+7 day');
+
+                    // writing streaks can only have started in December
+                    $earliestWritingStreakStart = new DateTime('2022-12-01');
+
+                    if (empty($writingStreakStart) || $writingStreakStart < $earliestWritingStreakStart) {
+                        $writingStreakStart = $earliestWritingStreakStart;
+                    }
+
+                    $writingStreak = max(
+                        $writingStreak,
+                        $this->numWeeks($writingStreakStart, new DateTime())
+                    );
+                }
+
+                unset($data['events']['check']);
+                $data['writing_streak'] = $writingStreak;
                 break;
             case 'topSubcategories':
                 $events = ['popover_open', 'alternative', 'ignore'];
-                $data = $this->fetchBreakdown($events, $properties, 'response__data__subcategory', $interval, $from);
+                $data = $this->fetchBreakdown(
+                    $events,
+                    $properties,
+                    'response__data__subcategory',
+                    $interval,
+                    $fromPosthog
+                );
 
                 $locale = session('locale', 'en');
                 foreach ($events as $event) {
@@ -275,7 +329,7 @@ class AnalyticsController extends Controller
                 break;
             case 'topWords':
                 $events = ['popover_open', 'alternative', 'ignore'];
-                $data = $this->fetchBreakdown($events, $properties, 'response__data_text', $interval, $from);
+                $data = $this->fetchBreakdown($events, $properties, 'response__data_text', $interval, $fromPosthog);
                 break;
             default:
                 return response()->json(['error' => 400, 'message' => "Unsupported chart type '$chart'"], 400);
@@ -312,8 +366,6 @@ class AnalyticsController extends Controller
 
     protected function fetchFrom(Request $request)
     {
-        $from = max(min((int)$request->get('from', '30'), 30), 1);
-
-        return "-{$from}d";
+        return max(min((int)$request->get('from', '30'), 30), 1);
     }
 }

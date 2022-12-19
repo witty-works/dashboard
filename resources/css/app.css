@@ -711,6 +711,7 @@ input:checked+.slider:before {
     max-width: 500px;
     min-width: 100px;
     max-height: 180px;
+    min-height: 170px;
 }
 
 .wittyworks-analytics-chart-medium-bar {
@@ -895,4 +896,28 @@ input:checked+.slider:before {
 .textarea-as-input {
     resize: none !important;
     max-height: 42px;
+}
+
+
+.browser-selection {
+  margin-top: 1.5rem;
+  margin-right: 1.5rem;
+  max-width: 100%;
+  width: 100%;
+  padding: 28px;
+}
+
+.browser-logo {
+  margin: auto;
+  padding-bottom: 20px;
+}
+
+.download-button {
+  margin: auto;
+}
+
+.redirecting-message {
+  color: #f06464;
+  font-size: 24px;
+  margin-top: 2rem;
 }

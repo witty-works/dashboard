@@ -36,30 +36,19 @@ class SyncToHubspot extends AbstractSyncCommand
 
         $this->info('Queuing syncing to Hubspot ...');
 
-        $force = $this->hasOption('f');
-
-        $query = $force
-            ? User::query()
-            : User::whereNull('hubspot_id')->orWhereNull('hubspot_source');
-
-        $query = $this->filterQueryByIds($query);
-        if (!$query) {
-            return 1;
+        $query = null;
+        if ($this->hasOption('f')) {
+            $query = User::whereNull('hubspot_id')->orWhereNull('hubspot_source');
         }
 
-        $userCount = 0;
-        foreach ($query->cursor() as $user) {
-            /** @var \App\Models\User $user */
-            $job = new SyncUserToHubSpot($user);
-            if ($this->hasOption('e')) {
-                $job->handle();
-            } else {
-                dispatch($job);
-            }
-
-            $userCount++;
-        }
+        $userCount = $this->handleUsers($query);
 
         $this->info("Finished syncing $userCount users");
+    }
+
+    protected function handleUser(User $user)
+    {
+        $job = new SyncUserToHubSpot($user);
+        $this->handleJob($job);
     }
 }

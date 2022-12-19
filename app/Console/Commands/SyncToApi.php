@@ -32,38 +32,23 @@ class SyncToApi extends AbstractSyncCommand
     {
         $this->info('Syncing to NLP API ...');
 
-        $query = Team::query();
-        $query = $this->filterQueryByIds($query, 'team-ids');
-        if (!$query) {
-            return 1;
-        }
-
-        $teamCount = 0;
-        foreach (Team::query()->cursor() as $team) {
-            /** @var \App\Models\Team $team */
-            $job = new SyncOrganizationToNlpApi($team);
-            $this->handleJob($job);
-
-            $teamCount++;
-        }
-
+        $teamCount = $this->handleTeams();
         $this->info("Finished syncing $teamCount teams");
 
-        $query = User::query();
-        $query = $this->filterQueryByIds($query);
-        if (!$query) {
-            return 1;
-        }
-
-        $userCount = 0;
-        foreach ($query->cursor() as $user) {
-            /** @var \App\Models\User $user */
-            $job = new SyncUserToNlpApi($user);
-            $this->handleJob($job);
-
-            $userCount++;
-        }
+        $userCount = $this->handleUsers();
 
         $this->info("Finished syncing $userCount users");
+    }
+
+    protected function handleTeam(Team $team)
+    {
+        $job = new SyncOrganizationToNlpApi($team);
+        $this->handleJob($job);
+    }
+
+    protected function handleUser(User $user)
+    {
+        $job = new SyncUserToNlpApi($user);
+        $this->handleJob($job);
     }
 }
