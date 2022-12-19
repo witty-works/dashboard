@@ -911,3 +911,12 @@ input:checked+.slider:before {
   margin: auto;
   padding-bottom: 20px;
 }
+
+.download-button {
+  margin: auto;
+}
+
+.redirecting-message {
+  color: #f06464;
+  font-size: 24px;
+}

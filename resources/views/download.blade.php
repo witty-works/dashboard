@@ -5,6 +5,14 @@
                     {{ __('content.witty_download') }}
                 </div>
 
+                <div id="not_supported" style="display: none" class="align-center redirecting-message margin-bottom">
+                    {!! __('content.witty_download_description_not_supported_yet') !!}
+                </div>
+
+                <div id="redirecting" style="display: none" class="align-center redirecting-message margin-bottom">
+                    {!! __('content.witty_download_redirecting') !!}
+                </div>
+
                 <div>
                     <div class="py-10">
                         <div class="w-full col-span-6 sm:col-span-4 margin-bottom align-center">
@@ -18,7 +26,7 @@
                                     <img class="browser-logo" width="100px;" src="{{ URL::asset($browser['image_src']) }}" alt="{{ __('content.browser_name_'.$key) }}" />
                                 </a>
 
-                                <a href="{{ $browser['store_href'] }}" class="button primary-button-red">{{ __('content.browser_get_'.$key) }}</a>
+                                <a href="{{ $browser['store_href'] }}" class="button primary-button-red download-button">{{ __('content.browser_get_'.$key) }}</a>
                             </div>
                             @endforeach
                         </div>
@@ -69,14 +77,6 @@
                                 }
                             }
                         </script>
-
-                        <div id="not_supported" style="display: none" class="w-full col-span-6 sm:col-span-4 margin-bottom">
-                            {!! __('content.witty_download_description_not_supported_yet') !!}
-                        </div>
-
-                        <div id="redirecting" style="display: none" class="w-full col-span-6 sm:col-span-4 margin-bottom">
-                            {!! __('content.witty_download_redirecting') !!}
-                        </div>
                     </div>
                 </div>
             </div>
