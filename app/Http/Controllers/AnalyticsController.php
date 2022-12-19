@@ -215,7 +215,8 @@ class AnalyticsController extends Controller
 
                     foreach ($data['events']['popover_open'] as $day => $value) {
                         $value = (int) $value;
-                        // the check here is to handle the case when a team adds and removes users over the course of the week
+                        // the check here is to handle the case when a team adds
+                        // and removes users over the course of the week
                         if (isset($userCount[$day]) && $userCount[$day] > $value) {
                             $value = $userCount[$day];
                         }
@@ -263,11 +264,15 @@ class AnalyticsController extends Controller
                     $writingStreakEnd = $query
                         ->first();
 
-                    // user/team has a writing streak since the beginning, ie. they never had a week without a writing streak
+                    // user/team has a writing streak since the beginning,
+                    // ie. they never had a week without a writing streak
                     if (empty($writingStreakEnd)) {
                         $query = $model instanceof Team ? Team::query() : User::query();
                         $query->where('id', $model->id)
-                            ->select(DB::raw('YEAR(created_at) AS year_date'), DB::raw('WEEK(created_at) AS week_date'));
+                            ->select(
+                                DB::raw('YEAR(created_at) AS year_date'),
+                                DB::raw('WEEK(created_at) AS week_date')
+                            );
 
                         $writingStreakEnd = $query
                             ->first();
@@ -296,7 +301,13 @@ class AnalyticsController extends Controller
                 break;
             case 'topSubcategories':
                 $events = ['popover_open', 'alternative', 'ignore'];
-                $data = $this->fetchBreakdown($events, $properties, 'response__data__subcategory', $interval, $fromPosthog);
+                $data = $this->fetchBreakdown(
+                    $events,
+                    $properties,
+                    'response__data__subcategory',
+                    $interval,
+                    $fromPosthog
+                );
 
                 $locale = session('locale', 'en');
                 foreach ($events as $event) {
