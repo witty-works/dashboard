@@ -5,11 +5,11 @@
                     {{ __('content.witty_download') }}
                 </div>
 
-                <div id="not_supported" style="display: none" class="align-center redirecting-message margin-bottom">
+                <div id="not_supported" style="display: none" class="align-center redirecting-message">
                     {!! __('content.witty_download_description_not_supported_yet') !!}
                 </div>
 
-                <div id="redirecting" style="display: none" class="align-center redirecting-message margin-bottom">
+                <div id="redirecting" style="display: none" class="align-center redirecting-message">
                     {!! __('content.witty_download_redirecting') !!}
                 </div>
 
