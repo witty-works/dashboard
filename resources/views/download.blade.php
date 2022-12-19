@@ -50,7 +50,7 @@
                                         setRedirect(url);
                                     } else {
                                         const notSupported = document.querySelector('#not_supported');
-                                        notSupported.style.display = 'flex';
+                                        notSupported.style.display = 'block';
                                     }
                                 }
                             });
@@ -58,7 +58,7 @@
                             function setRedirect(url)
                             {
                                 const redirecting = document.querySelector('#redirecting');
-                                redirecting.style.display = 'flex';
+                                redirecting.style.display = 'block';
 
                                 setTimeout(function() {
                                     redirectToStore(url);
