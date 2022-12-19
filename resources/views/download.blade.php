@@ -36,7 +36,12 @@
                                 const wittyIsInstalled = document.querySelector('witty-is-installed');
 
                                 if (wittyIsInstalled) {
-                                    url = @json(config('app.welcome_url'));
+                                    loginUrl = wittyIsInstalled.getAttribute('login-url')
+                                    if (loginUrl) {
+                                        url = @json(config('app.welcome_url'));
+                                    } else {
+                                        url = @json(config('app.try_out_url'));
+                                    }
                                     setRedirect(url);
                                 } else {
                                     url = false;
