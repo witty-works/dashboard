@@ -205,13 +205,6 @@ class OAuthController extends BaseOAuthController
     protected function getAccessTokenResponse(ProviderInterface $provider)
     {
         $socialiteUser = $provider->user();
-        $account = Socialstream::findConnectedAccountForProviderAndId($this->provider, $socialiteUser->id);
-
-        if ($account) {
-            $account->token = $socialiteUser->accessTokenResponseBody['access_token'];
-            $account->refresh_token = $socialiteUser->accessTokenResponseBody['refresh_token'];
-            $account->save();
-        }
 
         return [
             'email' => User::getEmailFromProvider($socialiteUser->user),
