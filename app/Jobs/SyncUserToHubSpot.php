@@ -79,7 +79,7 @@ class SyncUserToHubSpot implements ShouldQueue
 
         if (!empty($contactId)) {
             $user->hubspot_id = $contactId;
-            if (!empty($contactSource) && $user->hubspot_source != $contactSource) {
+            if (!empty($contactSource) && $user->hubspot_source !== $contactSource) {
                 $user->hubspot_source = $contactSource;
                 $contactSourceUpdated = true;
             }
