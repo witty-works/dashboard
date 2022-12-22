@@ -66,7 +66,7 @@
                                 redirecting.style.display = 'block';
 
                                 setTimeout(function() {
-                                    redirectToStore(url);
+                                        redirectToStore(url);
                                     },
                                     @json(config('app.browser_check_time'))
                                 );
@@ -74,6 +74,16 @@
 
                             function redirectToStore(url)
                             {
+                                if (window.HubSpotConversations
+                                    && window.HubSpotConversations.widget.status().loaded !== true
+                                ) {
+                                    setTimeout(function() {
+                                            redirectToStore(url);
+                                        },
+                                        500
+                                    );
+                                }
+
                                 if (@json(config('app.browser_redirect'))) {
                                     window.location.replace(url);
                                 } else {
