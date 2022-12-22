@@ -262,11 +262,11 @@ Ask your team administrators to upgrade to <a href="https://www.witty.works/pric
     'last_refreshed' => 'Last refreshed:',
     'refresh_data_blocked' => 'You can refresh your data every 3 minutes',
     'learning_bites_doughnut_chart_event_ratio' => 'Doughnut chart about the clicks on "Why?"',
-    'no_data_events' => 'At the moment we don\'t have enough data to display this graph. 
+    'no_data_events' => 'At the moment we don\'t have enough data to display this graph.<br/>
 Please use Witty more often and click on the highlighted terms.',
-    'no_data_top_categories' => 'At the moment we don\'t have enough data to display this graph. 
+    'no_data_top_categories' => 'At the moment we don\'t have enough data to display this graph. <br/>
 Please use Witty more often and click on the highlighted terms.',
-    'no_data_top_words' => 'At the moment we don\'t have enough data to display this graph. 
+    'no_data_top_words' => 'At the moment we don\'t have enough data to display this graph.<br/>
 Please use Witty more often and click on the highlighted terms.',
     'no_data_image_text' => 'Use Witty to generate data for analysis',
     'week' => 'Week',
@@ -290,10 +290,10 @@ Please use Witty more often and click on the highlighted terms.',
     'executive' => 'Executive Manager',
     'lead' => 'Team Lead',
     'employee' => 'Employee',
-    'title_words_bar_chart_month_corporate_rules' => 'Top corporate words viewed this month',
-    'no_corporate_rules' => 'No corporate rules available. Create dictionary items!',
-    'explanation_corporate_rules' => 'Here is some explanation what this means and some information about how to add corporate rules to the dictionary.',
-    'corporate_rules_none_opened' => 'You have created corporate rules, but they have not been clicked on yet.',
+    'title_words_bar_chart_month_corporate_rules' => 'Top dictionary words viewed this month',
+    'no_corporate_rules' => 'You haven\'t made any entries in <a href="https://dashboard.witty.works/en/team/language/dictionary" target="_blank">your team dictionary</a> yet, so we can\'t show statistics for that.<br/>
+<a href="https://dashboard.witty.works/en/team/language/dictionary" target="_blank">Try it!</a>',
+    'corporate_rules_none_opened' => 'You have entered words in your <a href="https://dashboard.witty.works/en/team/language/dictionary" target="_blank">team\'s dictionary</a>, but no one from your team has yet looked at the suggested alternative if the word was underlined.',
     'browser_name_chrome' => 'Chrome',
     'browser_get_chrome' => 'Get for Chrome',
     'browser_name_edge' => 'Microsoft Edge',
@@ -304,4 +304,7 @@ Please use Witty more often and click on the highlighted terms.',
     'witty_download_description' => 'Pick your browser, and add the Witty extension.',
     'witty_download_description_not_supported_yet' => 'This browser is not yet supported by Witty.',
     'witty_download_redirecting' => 'You are being redirected to the store. Thank you for your patience.',
+    'no_corporate_rules_user' => 'You haven\'t made any entries in <a href="https://dashboard.witty.works/en/user/language/dictionary" target="_blank">your dictionary</a> yet, so we can\'t show statistics for that.<br/>
+<a href="https://dashboard.witty.works/en/user/language/dictionary" target="_blank">Try it!</a>',
+    'corporate_rules_none_opened_user' => 'You have entered words in your <a href="https://dashboard.witty.works/en/user/language/dictionary" target="_blank"> dictionary</a>, but you haven\'t yet looked at the suggested alternative if the word was underlined.',
 ];
