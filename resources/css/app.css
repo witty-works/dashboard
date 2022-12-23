@@ -900,24 +900,25 @@ input:checked+.slider:before {
 
 
 .browser-selection {
-  margin-top: 1.5rem;
-  margin-right: 1.5rem;
-  max-width: 100%;
-  width: 100%;
-  padding: 28px;
+    margin-top: 1.5rem;
+    margin-right: 1.5rem;
+    max-width: 100%;
+    width: 100%;
+    padding: 28px;
 }
 
 .browser-logo {
-  margin: auto;
-  padding-bottom: 20px;
+    margin: auto;
+    padding-bottom: 20px;
 }
 
 .download-button {
-  margin: auto;
+    margin: auto;
 }
 
-.redirecting-message {
-  color: #f06464;
-  font-size: 24px;
-  margin-top: 2rem;
+.warning-message {
+    color: #f06464;
+    font-size: 22px;
+    font-weight: 600;
+    margin-top: 2rem;
 }

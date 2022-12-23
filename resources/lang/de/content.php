@@ -248,11 +248,11 @@ Bitte deine Team-Administratoren, auf <a href="https://www.witty.works/pricing" 
     'last_refreshed' => 'Zuletzt aktualisiert:',
     'refresh_data_blocked' => 'Du kannst deine Daten alle 3 Minuten aktualisieren',
     'learning_bites_doughnut_chart_event_ratio' => 'Graphik zu den Klick auf "Warum?"',
-    'no_data_events' => 'Im Moment haben wir nicht genug Daten, um diese Grafik anzuzeigen. 
+    'no_data_events' => 'Im Moment haben wir nicht genug Daten, um diese Grafik anzuzeigen.<br/>
 Bitte verwende Witty öfter und klicke auf die hervorgehobenen Begriffe.',
-    'no_data_top_categories' => 'Im Moment haben wir nicht genug Daten, um diese Grafik anzuzeigen. 
+    'no_data_top_categories' => 'Im Moment haben wir nicht genug Daten, um diese Grafik anzuzeigen. <br/>
 Bitte verwende Witty öfter und klicke auf die hervorgehobenen Begriffe.',
-    'no_data_top_words' => 'Im Moment haben wir nicht genug Daten, um diese Grafik anzuzeigen. 
+    'no_data_top_words' => 'Im Moment haben wir nicht genug Daten, um diese Grafik anzuzeigen. <br/>
 Bitte verwende Witty öfter und klicke auf die hervorgehobenen Begriffe.',
     'no_data_image_text' => 'Nutze Witty, um genügend Daten für die Analyse zu generieren.',
     'week' => 'Woche',
@@ -290,6 +290,10 @@ Bitte verwende Witty öfter und klicke auf die hervorgehobenen Begriffe.',
     'executive' => 'Manager',
     'lead' => 'Teamleiter*in',
     'employee' => 'Mitarbeiter*in',
+    'title_words_bar_chart_month_corporate_rules' => 'Die am häufigsten angeschauten Wörter aus dem Wörterbuch in diesem Monat',
+    'no_corporate_rules' => 'Du hast noch keine Einträge in <a href="https://dashboard.witty.works/de/team/language/dictionary" target="_blank">dein Team-Wörterbuch</a> gemacht, deshalb können wir dazu keine Statistiken anzeigen.<br/>
+<a href="https://dashboard.witty.works/de/team/language/dictionary" target="_blank">Probiers gleich aus!</a>',
+    'corporate_rules_none_opened' => 'Du hast Wörter in <a href="https://dashboard.witty.works/de/team/language/dictionary" target="_blank">dein Team-Wörterbuch</a> eingetragen, aber noch niemand aus deinem Team hat sich die vorgeschlagene Alternative angesehen, wenn das Wort unterstrichen wurde.',
     'browser_name_chrome' => 'Chrome',
     'browser_get_chrome' => 'Ich benutze Chrome',
     'browser_name_edge' => 'Microsoft Edge',
@@ -300,4 +304,7 @@ Bitte verwende Witty öfter und klicke auf die hervorgehobenen Begriffe.',
     'witty_download_description' => 'Wähle deinen Browser aus und füge die Witty-Extension hinzu.',
     'witty_download_description_not_supported_yet' => 'Dieser Browser wird von Witty noch nicht unterstützt.',
     'witty_download_redirecting' => 'Du wirst weitergeleitet. Danke für deine Geduld.',
+    'no_corporate_rules_user' => 'Du hast noch keine Einträge in <a href="https://dashboard.witty.works/de/user/language/dictionary" target="_blank">deinWörterbuch</a> gemacht, deshalb können wir dazu keine Statistiken anzeigen.<br/>
+<a href="https://dashboard.witty.works/de/user/language/dictionary" target="_blank">Probiers gleich aus!</a>',
+    'corporate_rules_none_opened_user' => 'Du hast Wörter in <a href="https://dashboard.witty.works/de/user/language/dictionary" target="_blank">dein Wörterbuch</a> eingetragen, aber du hast dir die vorgeschlagene Alternative noch nie angesehen, wenn das Wort unterstrichen wurde.',
 ];
