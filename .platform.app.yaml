@@ -49,7 +49,13 @@ hooks:
         php artisan google-fonts:fetch
 
 crons:
-    snapshot-hourly:
+    hubspot-sync:
+        spec: "33 * * * *"
+        cmd: |
+            if [ "$PLATFORM_BRANCH" = main ]; then
+                platform hubspot:sync --f
+            fi
+    snapshot-once-per-day:
         # once per day at 12:00
         spec: "0 12 * * *"
         cmd: |

@@ -5,11 +5,11 @@
                     {{ __('content.witty_download') }}
                 </div>
 
-                <div id="not_supported" style="display: none" class="align-center redirecting-message">
+                <div id="not_supported" style="display: none" class="align-center warning-message">
                     {!! __('content.witty_download_description_not_supported_yet') !!}
                 </div>
 
-                <div id="redirecting" style="display: none" class="align-center redirecting-message">
+                <div id="redirecting" style="display: none" class="align-center warning-message">
                     {!! __('content.witty_download_redirecting') !!}
                 </div>
 
@@ -66,7 +66,7 @@
                                 redirecting.style.display = 'block';
 
                                 setTimeout(function() {
-                                    redirectToStore(url);
+                                        redirectToStore(url);
                                     },
                                     @json(config('app.browser_check_time'))
                                 );
@@ -74,6 +74,16 @@
 
                             function redirectToStore(url)
                             {
+                                if (window.HubSpotConversations
+                                    && window.HubSpotConversations.widget.status().loaded !== true
+                                ) {
+                                    setTimeout(function() {
+                                            redirectToStore(url);
+                                        },
+                                        500
+                                    );
+                                }
+
                                 if (@json(config('app.browser_redirect'))) {
                                     window.location.replace(url);
                                 } else {

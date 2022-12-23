@@ -32,7 +32,7 @@ abstract class AbstractSyncCommand extends Command
 
     protected function handleJob($job)
     {
-        if ($this->hasOption('e')) {
+        if ($this->option('e')) {
             $job->handle();
         } else {
             dispatch($job);
