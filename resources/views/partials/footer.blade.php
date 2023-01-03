@@ -9,6 +9,7 @@ $resourceLinks = [
 $contactLinks = [
     __('content.contact') => 'https://www.witty.works/contact-sales',
     __('content.book-demo') => 'https://www.witty.works/demo',
+    __('content.help') => 'https://www.witty.works/en/help/wittys-help-center',
 ];
 @endphp
 
