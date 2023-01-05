@@ -34,7 +34,7 @@ return [
         ],
         'edge' => [
             'image_src' => '/Microsoft_Edge_logo_(2019).webp',
-            'store_href' => 'https://chrome.google.com/webstore/detail/meojhlodfiihbjkcnehkdcgncnhgagog',
+            'store_href' => 'https://microsoftedge.microsoft.com/addons/detail/icngefdfohhklfkjbohjgjnboenocbic',
         ],
         'firefox' => [
             'image_src' => '/Firefox_logo,_2019.webp',

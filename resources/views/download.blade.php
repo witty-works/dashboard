@@ -45,7 +45,9 @@
                                     setRedirect(url);
                                 } else {
                                     url = false;
-                                    if (!!window.chrome) {
+                                    if (window.navigator.userAgent.indexOf("Edg") > -1) {
+                                        url = @json(config('app.browsers')['edge']['store_href']);
+                                    } else if (!!window.chrome) {
                                         url = @json(config('app.browsers')['chrome']['store_href']);
                                     } else if (window.navigator.userAgent.toLowerCase().indexOf("firefox") > -1) {
                                         url = @json(config('app.browsers')['firefox']['store_href']);
