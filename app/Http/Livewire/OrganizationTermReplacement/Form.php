@@ -222,7 +222,7 @@ class Form extends Component
                 $this->term = $result;
 
                 $result = $this->getLemma($this->replacement, $this->language_code);
-                if ($result === null) {
+                if ($result !== null) {
                     $this->replacement = $result;
                 }
                 break;
