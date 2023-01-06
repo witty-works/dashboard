@@ -254,7 +254,7 @@ class Form extends Component
                 $response = Http::get($endpoint['url'], $data);
             } else {
                 $response = Http::withBasicAuth($endpoint['user'], $endpoint['password'])
-                    ->post($endpoint['url'], $data);
+                    ->get($endpoint['url'], $data);
             }
         } catch (RequestException $e) {
             $response = false;
