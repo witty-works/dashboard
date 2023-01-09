@@ -16,7 +16,7 @@
         ? 'team' : 'user';
 ?>
 
-<a href="https://www.witty.works/">
+        <a href="https://www.witty.works/">
             <img class="wittyworks-logo" src="{{ url('svg/witty-logo-white.svg') }}" alt="Witty Works" />
         </a>
 

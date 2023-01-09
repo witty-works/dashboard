@@ -249,6 +249,11 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function hasCompletedOnboarding()
     {
+        $manager = app('impersonate');
+        if ($manager->isImpersonating()) {
+            return true;
+        }
+
         if ($this->role !== null) {
             return true;
         }
