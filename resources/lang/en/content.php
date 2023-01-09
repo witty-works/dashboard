@@ -307,4 +307,5 @@ Please use Witty more often and click on the highlighted terms.',
     'no_corporate_rules_user' => 'You haven\'t made any entries in <a href="https://dashboard.witty.works/en/user/language/dictionary" target="_blank">your dictionary</a> yet, so we can\'t show statistics for that.<br/>
 <a href="https://dashboard.witty.works/en/user/language/dictionary" target="_blank">Try it!</a>',
     'corporate_rules_none_opened_user' => 'You have entered words in your <a href="https://dashboard.witty.works/en/user/language/dictionary" target="_blank"> dictionary</a>, but you haven\'t yet looked at the suggested alternative if the word was underlined.',
+    'help' => 'Help',
 ];
