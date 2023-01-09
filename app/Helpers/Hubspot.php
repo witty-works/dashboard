@@ -1,0 +1,166 @@
+<?php
+
+namespace App\Helpers;
+
+use App\Models\User;
+use HubSpot\Factory;
+use HubSpot\Client\Crm\Contacts\Model\Filter as ContactsFilter;
+use HubSpot\Client\Crm\Contacts\Model\FilterGroup as ContactsFilterGroup;
+use HubSpot\Client\Crm\Contacts\Model\PublicObjectSearchRequest as ContactsPublicObjectSearchRequest;
+use HubSpot\Client\Crm\Contacts\Model\SimplePublicObjectInput as ContactsSimplePublicObjectInput;
+use HubSpot\Client\Crm\Companies\Model\Filter as CompaniesFilter;
+use HubSpot\Client\Crm\Companies\Model\FilterGroup as CompaniesFilterGroup;
+use HubSpot\Client\Crm\Companies\Model\PublicObjectSearchRequest as CompaniesPublicObjectSearchRequest;
+
+class Hubspot
+{
+    protected $api;
+
+    public function __construct()
+    {
+        $this->api = Factory::createWithAccessToken(config('hubspot.access_token'));
+    }
+
+    public function createContactViaForm(User $user, $hubspotutk)
+    {
+        $names = explode(' ', $user->name);
+        $lastname = array_pop($names);
+        $firstname = implode(' ', $names);
+
+        $data = [
+            'fields' => [
+                [
+                    'name' => 'email',
+                    'value' => $user->email,
+                ],
+                [
+                    'name' => 'firstname',
+                    'value' => $firstname,
+                ],
+                [
+                    'name' => 'lastname',
+                    'value' => $lastname,
+                ],
+            ],
+            'context' => [
+                'hutk' => $hubspotutk,
+            ],
+        ];
+
+        $hubspotPortalId = config('hubspot.hub_id');
+        $hubspotFormGuid = config('hubspot.form_id');
+
+        return $this->api->apiRequest([
+            'method' => 'POST',
+            'baseUrl' => 'https://api.hsforms.com',
+            'path' => "/submissions/v3/integration/submit/$hubspotPortalId/$hubspotFormGuid",
+            'body' => $data,
+        ]);
+    }
+
+    public function createContact(User $user, array $data)
+    {
+        try {
+            $data['email'] = $user->email;
+
+            $contactInput = new ContactsSimplePublicObjectInput();
+            $contactInput->setProperties($data);
+
+            $result = $this->api->crm()->contacts()->basicApi()->create($contactInput);
+
+            return ['id' => $result['id'], 'hubspot_source' => 'OFFLINE'];
+        } catch (\HubSpot\Client\Crm\Contacts\ApiException $e) {
+        }
+    }
+
+    public function updateContact($contactId, array $data)
+    {
+        $newProperties = new ContactsSimplePublicObjectInput();
+        $newProperties->setProperties($data);
+
+        $this->api->crm()->contacts()->basicApi()->update($contactId, $newProperties);
+
+        return true;
+    }
+
+    public function syncContact(User $user, array $data)
+    {
+        $contact = $this->findContact($user);
+        if ($contact) {
+            $this->updateContact($contact['id'], $data);
+        }
+
+        return $contact;
+    }
+
+    public function findContact(User $user)
+    {
+        $properties = ['email', 'hs_additional_emails'];
+        $filterGroups = [];
+        foreach ($properties as $property) {
+            $filter = new ContactsFilter();
+            $filter
+                ->setOperator('EQ')
+                ->setPropertyName($property)
+                ->setValue($user->email);
+
+            $filterGroup = new ContactsFilterGroup();
+            $filterGroup->setFilters([$filter]);
+            $filterGroups[] = $filterGroup;
+        }
+
+        $searchRequest = new ContactsPublicObjectSearchRequest();
+        $searchRequest->setFilterGroups($filterGroups);
+
+        $searchRequest->setProperties(['hs_analytics_source']);
+
+        // @var CollectionResponseWithTotalSimplePublicObject $results
+        $results = $this->api->crm()->contacts()->searchApi()->doSearch($searchRequest);
+        if ($results->getTotal() !== 1) {
+            return null;
+        }
+
+        return $results->getResults()[0];
+    }
+
+    public function getDataFromContact($contact)
+    {
+        $hubSpotData = [
+            'id' => $contact['id'],
+        ];
+
+        if (!empty($contact['properties']['hs_analytics_source'])) {
+            $hubSpotData['hubspot_source'] = $contact['properties']['hs_analytics_source'];
+        }
+
+        return $hubSpotData;
+    }
+
+    public function findCompanyByUser(User $user)
+    {
+        $email = explode('@', $user->email);
+        if (empty($email[1])) {
+            return null;
+        }
+
+        $filter = new CompaniesFilter();
+        $filter
+            ->setOperator('EQ')
+            ->setPropertyName('domain')
+            ->setValue($email[1]);
+
+        $filterGroup = new CompaniesFilterGroup();
+        $filterGroup->setFilters([$filter]);
+
+        $searchRequest = new CompaniesPublicObjectSearchRequest();
+        $searchRequest->setFilterGroups([$filterGroup]);
+
+        // @var CollectionResponseWithTotalSimplePublicObject $results
+        $results = $this->api->crm()->companies()->searchApi()->doSearch($searchRequest);
+        if ($results->getTotal() !== 1) {
+            return null;
+        }
+
+        return $results->getResults()[0];
+    }
+}
