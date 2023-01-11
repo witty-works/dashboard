@@ -23,7 +23,7 @@
                 <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $false_positive->false_positive }} {{ $false_positive->language_code ? "($false_positive->language_code)" : '' }} </td>
                 <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $false_positive->exists_on_team ? __('guidelines.yes') : __('guidelines.no') }} </td>
                 <td class="border px-4 py-2 text-center container-row">
-                    <button onclick="document.body.scrollIntoView({behavior: 'smooth'});" wire:click="editFalsePositive({{ $false_positive->id }})" class="button primary-button-red">
+                    <button onclick="document.getElementById('false_positives').scrollIntoView({behavior: 'smooth'});" wire:click="editFalsePositive({{ $false_positive->id }})" class="button primary-button-red">
                         {{ __('content.edit') }}
                     </button>
                     <button wire:click="deleteFalsePositive({{ $false_positive->id }})"class="button secondary-button-red">

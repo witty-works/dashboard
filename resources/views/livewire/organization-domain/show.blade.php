@@ -24,7 +24,7 @@
                 <td class="border px-4 py-2 text-left">{{ $domain->domain }}</td>
                 @if (Auth::user()->hasTeamPermission($team, 'edit_guidelines') && empty($hide_actions))
                 <td class="border px-4 py-2 text-center container-row">
-                    <button onclick="document.body.scrollIntoView({behavior: 'smooth'});" wire:click="editDomain({{ $domain->id }})" class="button primary-button-red ">
+                    <button onclick="document.getElementById('organization_domains').scrollIntoView({behavior: 'smooth'});" wire:click="editDomain({{ $domain->id }})" class="button primary-button-red ">
                         {{ __('content.edit') }}
                     </button>
                     <button wire:click="deleteDomain({{ $domain->id }})" class="button secondary-button-red ">

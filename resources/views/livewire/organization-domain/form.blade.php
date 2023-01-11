@@ -2,7 +2,9 @@
     @if ($show)
     <x-jet-form-section submit="storeDomain">
         <x-slot name="title">
-            {{ __('guidelines.create_domain') }}
+            <div id="organization_domains">
+                {{ __('guidelines.create_domain') }}
+            </div>
         </x-slot>
 
         <x-slot name="description">
