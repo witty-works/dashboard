@@ -1,6 +1,8 @@
 <x-jet-form-section submit="storeTermReplacement">
     <x-slot name="title">
-        {{ __('guidelines.create_term_replacement') }}
+        <div id="term_replacements">
+            {{ __('guidelines.create_term_replacement') }}
+        </div>
     </x-slot>
 
     <x-slot name="description">
