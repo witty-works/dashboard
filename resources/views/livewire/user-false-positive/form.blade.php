@@ -1,6 +1,8 @@
 <x-jet-form-section submit="storeFalsePositive">
     <x-slot name="title">
-        {{ __('guidelines.create_false_positive') }}
+        <div id="false_positives">
+            {{ __('guidelines.create_false_positive') }}
+        </div>
     </x-slot>
 
     <x-slot name="description">
