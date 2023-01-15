@@ -73,9 +73,9 @@ class Form extends OrganizationForm
         $domain->user_id = $this->user->id;
 
         $domain->save();
+        $domain->dispatchEventToPosthog();
 
         $this->emit('saved');
-
         $this->resetForm();
     }
 }

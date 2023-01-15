@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use App\Models\Kpi;
 use App\Models\Team;
 use App\Models\User;
-use App\Helpers\Posthog;
+use App\Helpers\PosthogHelper;
 use Carbon\Carbon;
 
 class StoreKpis extends AbstractSyncCommand
@@ -60,8 +60,8 @@ class StoreKpis extends AbstractSyncCommand
     protected function getWritingStreak($model)
     {
         $properties = $model instanceof Team
-            ? PostHog::getOrganizationFilter($model)
-            : PostHog::getUserFilter($model);
+            ? PosthogHelper::getOrganizationFilter($model)
+            : PosthogHelper::getUserFilter($model);
 
         $filter = [
             'events' => [
@@ -77,7 +77,7 @@ class StoreKpis extends AbstractSyncCommand
             'date_to' => $this->date,
         ];
 
-        $response = PostHog::fetchData($filter, PostHog::getUrl());
+        $response = PosthogHelper::fetchData($filter, PosthogHelper::getUrl());
 
         if (isset($response['result'][0])) {
             foreach ($response['result'][0]['data'] as $data) {

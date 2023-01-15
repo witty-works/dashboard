@@ -8,8 +8,20 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 
-class Posthog
+class PosthogHelper
 {
+    public const POSTHOG_ORGANIZATION_TYPE = 'organization';
+    public const STORE_TEAM_DOMAIN = 'team_store_domain';
+    public const STORE_DOMAIN = 'store_domain';
+    public const STORE_TEAM_FALSE_POSITIVE = 'team_store_false_positive';
+    public const STORE_FALSE_POSITIVE = 'store_false_positive';
+    public const STORE_TEAM_TERM_REPLACEMENT = 'team_store_term_replacement';
+    public const STORE_TERM_REPLACEMENT = 'store_term_replacement';
+    public const STORE_TEAM_LANGUAGE = 'team_store_language';
+    public const STORE_LANGUAGE = 'store_language';
+
+    public static $posthog_reset = false;
+
     public static function getUrl()
     {
         $projectId = config('posthog.project_id');

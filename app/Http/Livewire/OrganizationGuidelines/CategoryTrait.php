@@ -68,6 +68,8 @@ trait CategoryTrait
         $this->disabled_categories = $disabled_categories;
         $this->disabled_categories_force = $disabled_categories_force;
 
+        $languageGuidelines->dispatchEventToPosthog((new \ReflectionClass($this))->getShortName());
+
         $this->emit('saved');
         $this->updateHelpHero();
 

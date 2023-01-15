@@ -186,10 +186,11 @@ class Form extends Component
         $termReplacement->language_code = $this->language_code;
         $termReplacement->word_type = $this->word_type;
         $termReplacement->team_id = $this->team->id;
+
         $termReplacement->save();
+        $termReplacement->dispatchEventToPosthog();
 
         $this->emit('saved');
-
         $this->resetForm();
     }
 

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Jobs\SyncUserToNlpApi;
 use App\Models\ConnectedAccount;
 use App\Models\Domain;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Laravel\Socialite\Two\InvalidStateException;
@@ -43,6 +42,8 @@ class UserGuidelinesApiController extends Controller
         );
 
         dispatch(new SyncUserToNlpApi($user, 'high'));
+
+        $domain->dispatchEventToPosthog(['from_extension' => true]);
 
         return response()->noContent();
     }

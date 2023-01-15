@@ -73,6 +73,7 @@ class English extends Component
         $languageGuidelines->singular_they = (bool) $this->singular_they;
 
         $languageGuidelines->save();
+        $languageGuidelines->dispatchEventToPosthog((new \ReflectionClass($this))->getShortName());
 
         $this->emit('saved');
         $this->updateHelpHero();

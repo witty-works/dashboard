@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Providers\AppServiceProvider;
+use App\Helpers\PosthogHelper;
 use Laravel\Cashier\Cashier;
 use Laravel\Cashier\Events\WebhookReceived;
 use PostHog\PostHog;
@@ -24,7 +24,7 @@ class PosthogBilling
         PostHog::capture([
             'distinctId' => $team->owner->posthogId(),
             'event' => 'stripe.' . $event->payload['type'],
-            '$groups' => [AppServiceProvider::POSTHOG_ORGANIZATION_TYPE => $team->posthogId()],
+            '$groups' => [PosthogHelper::POSTHOG_ORGANIZATION_TYPE => $team->posthogId()],
         ]);
     }
 }

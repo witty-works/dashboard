@@ -2,9 +2,9 @@
 
 namespace App\Jobs;
 
+use App\Helpers\PosthogHelper;
 use PostHog\PostHog;
 use App\Models\Team;
-use App\Providers\AppServiceProvider;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -45,7 +45,7 @@ class SyncOrganizationToPosthog implements ShouldQueue
         );
 
         $result = PostHog::groupIdentify([
-            'groupType' => AppServiceProvider::POSTHOG_ORGANIZATION_TYPE,
+            'groupType' => PosthogHelper::POSTHOG_ORGANIZATION_TYPE,
             'groupKey' => $team->posthogId(),
             'properties' => [
                 'is_deleted' => $this->isDeleted,
