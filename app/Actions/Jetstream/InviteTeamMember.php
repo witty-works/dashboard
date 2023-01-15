@@ -2,6 +2,7 @@
 
 namespace App\Actions\Jetstream;
 
+use App\Events\InvitedTeamMember;
 use App\Jobs\SyncUserToNlpApi;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
@@ -37,6 +38,8 @@ class InviteTeamMember implements InvitesTeamMembers
             'email' => $email,
             'role' => $role,
         ]);
+
+        InvitedTeamMember::dispatch($team, $email, $role);
 
         $user = User::where('email', $email)->first();
         if ($user) {
