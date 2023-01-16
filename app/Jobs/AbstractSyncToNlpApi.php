@@ -105,37 +105,37 @@ abstract class AbstractSyncToNlpApi implements ShouldQueue
     {
         $config['maximum_importance'] = [
             'value' => $guidelines->expert_mode ? 3 : 2,
-            'status' => $guidelines->expert_mode_force === false ? 'suggestion' : 'force',
+            'status' => $guidelines->expert_mode_force === true ? 'force' : 'suggestion',
         ];
 
         $config['simple_language'] = [
             'value' => (bool) $guidelines->simple_language,
-            'status' => $guidelines->expert_mode_force === false ? 'suggestion' : 'force',
+            'status' => $guidelines->expert_mode_force === true ? 'force' : 'suggestion',
         ];
 
         $config['singular_they'] = [
             'value' => $guidelines->singular_they ? 'all_pronouns' : 'he_or_she',
-            'status' => $guidelines->english_rules_force === false ? 'suggestion' : 'force',
+            'status' => $guidelines->english_rules_force === true ? 'force' : 'suggestion',
         ];
 
         $config['show_inspiration_alternatives'] = [
             'value' => (bool) $guidelines->show_inspiration_alternatives,
-            'status' => $guidelines->show_inspiration_alternatives_force === false ? 'suggestion' : 'force',
+            'status' => $guidelines->show_inspiration_alternatives_force === true ? 'force' : 'suggestion',
         ];
 
         $config['gendered_roles_format'] = [
             'value' => $guidelines->gendered_roles_format,
-            'status' => $guidelines->german_rules_force === false ? 'suggestion' : 'force',
+            'status' => $guidelines->german_rules_force === true ? 'force' : 'suggestion',
         ];
 
         $config['german_gender_ending'] = [
             'value' => $guidelines->german_gender_ending,
-            'status' => $guidelines->german_rules_force === false ? 'suggestion' : 'force',
+            'status' => $guidelines->german_rules_force === true ? 'force' : 'suggestion',
         ];
 
         $config['preferred_variants'] = [
             'value' => $guidelines->preferred_variants,
-            'status' => $guidelines->preferred_variants_force === false ? 'suggestion' : 'force',
+            'status' => $guidelines->preferred_variants_force === true ? 'force' : 'suggestion',
         ];
 
         return $config;
