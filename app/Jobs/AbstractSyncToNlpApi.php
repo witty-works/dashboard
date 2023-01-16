@@ -26,6 +26,8 @@ abstract class AbstractSyncToNlpApi implements ShouldQueue
 
         $endpoint['url'] .= $url;
 
+        $data['sync_date'] = now()->toDateTimeString();
+
         if (empty($endpoint['user'])) {
             $response = Http::post($endpoint['url'], $data);
         } else {
