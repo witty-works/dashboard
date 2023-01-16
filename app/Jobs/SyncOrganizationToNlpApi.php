@@ -24,7 +24,7 @@ class SyncOrganizationToNlpApi extends AbstractSyncToNlpApi
             throw new InvalidArgumentException("Team id '{$this->id} does not exist.");
         }
 
-        $url = '/organization/rules';
+        $url = '/organization/configs';
         $data = $this->getData($team);
 
         return $this->updateRules($url, $data);
