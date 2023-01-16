@@ -72,6 +72,10 @@ Route::group(
             return view('download');
         })->name('download');
 
+        Route::get('/editor', function () {
+            return view('editor');
+        })->name('editor');
+
         /*
         |------------------
         | JETSTREAM LIVEWIRE
