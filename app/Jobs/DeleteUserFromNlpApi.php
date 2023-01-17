@@ -16,7 +16,7 @@ class DeleteUserFromNlpApi extends AbstractDeleteFromNlpApi
 
     public function handle()
     {
-        $url = '/user/rules?' . http_build_query(['email' => $this->email]);
+        $url = '/user/configs?' . http_build_query(['email' => $this->email]);
         return $this->deleteRules($url);
     }
 }
