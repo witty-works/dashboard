@@ -311,4 +311,6 @@ Please use Witty more often and click on the highlighted terms.',
     'witty_editor_description' => 'If Witty doesn\'t work on a specific website, simply copy & paste your text here.',
     'witty_editor_viral_copy_text' => 'Checked with witty.works for inclusive language',
     'witty_editor_placeholder_text' => 'Type here or paste',
+    'witty_editor_share_button' => 'Copy URL to share content to clipboard',
+    'witty_editor_copy_button' => 'Copy text to clipboard',
 ];
