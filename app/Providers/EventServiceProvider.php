@@ -53,7 +53,7 @@ class EventServiceProvider extends ServiceProvider
             HubspotUpdateUser::class,
             PostHogUpdateUser::class,
         ],
-        InvitingTeamMember::class => [
+        InvitedTeamMember::class => [
             HubspotUpdateUser::class,
             PostHogUpdateUser::class,
             TeamMemberInvitedSlackAlert::class,
