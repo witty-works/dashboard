@@ -49,7 +49,7 @@ class SyncOrganizationToNlpApi extends AbstractSyncToNlpApi
         $plan = $team->planId();
 
         $guidelines = LanguageGuidelines::firstOrNew(['team_id' => $team->id]);
-        $config = self::getConfig($guidelines);
+        $config = self::getConfig($guidelines, false);
         foreach (GuidelinesInterface::DISABLED_CATEGORIES as $category) {
             $config[$category] = [
                 'value' => !in_array($category, $guidelines->disabled_categories),
