@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Providers\AppServiceProvider;
+use App\Helpers\PosthogHelper;
 
 class PosthogReset
 {
@@ -15,7 +15,7 @@ class PosthogReset
     public function handle($event)
     {
         if (config('posthog.js_enabled')) {
-            AppServiceProvider::$posthog_reset = true;
+            PosthogHelper::$posthog_reset = true;
         }
     }
 }

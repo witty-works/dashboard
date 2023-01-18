@@ -70,6 +70,7 @@ class English extends Component
         $languageGuidelines->english_rules_force = (bool) $this->english_rules_force;
 
         $languageGuidelines->save();
+        $languageGuidelines->dispatchEventToPosthog((new \ReflectionClass($this))->getShortName());
 
         $this->emit('saved');
         $this->updateHelpHero();

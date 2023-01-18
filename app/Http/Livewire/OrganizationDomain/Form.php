@@ -81,7 +81,8 @@ class Form extends Component
     {
         $this->validate();
 
-        if (!Auth::user()->hasTeamPermission($this->team, 'edit_guidelines')) {
+        $user = Auth::user();
+        if (!$user->hasTeamPermission($this->team, 'edit_guidelines')) {
             abort(403);
         }
 
@@ -115,9 +116,9 @@ class Form extends Component
         $domain->team_id = $this->team->id;
 
         $domain->save();
+        $domain->dispatchEventToPosthog();
 
         $this->emit('saved');
-
         $this->resetForm();
     }
 }

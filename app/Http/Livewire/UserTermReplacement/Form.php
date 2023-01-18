@@ -76,10 +76,11 @@ class Form extends OrganizationForm
         $termReplacement->language_code = $this->language_code;
         $termReplacement->word_type = $this->word_type;
         $termReplacement->user_id = $this->user->id;
+
         $termReplacement->save();
+        $termReplacement->dispatchEventToPosthog();
 
         $this->emit('saved');
-
         $this->resetForm();
     }
 }

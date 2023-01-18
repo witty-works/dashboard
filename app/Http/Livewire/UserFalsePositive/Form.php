@@ -73,10 +73,11 @@ class Form extends OrganizationForm
         $falsePositive->false_positive = $this->false_positive;
         $falsePositive->language_code = null;
         $falsePositive->user_id = $this->user->id;
+
         $falsePositive->save();
+        $falsePositive->dispatchEventToPosthog();
 
         $this->emit('saved');
-
         $this->resetForm();
     }
 }

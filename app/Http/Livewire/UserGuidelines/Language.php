@@ -87,6 +87,7 @@ class Language extends Component
         $languageGuidelines->preferred_variants = $this->preferred_variants;
 
         $languageGuidelines->save();
+        $languageGuidelines->dispatchEventToPosthog((new \ReflectionClass($this))->getShortName());
 
         $this->emit('saved');
         $this->updateHelpHero();

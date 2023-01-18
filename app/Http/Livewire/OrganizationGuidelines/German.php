@@ -74,6 +74,7 @@ class German extends Component
         $languageGuidelines->gendered_roles_format = $this->gendered_roles_format;
 
         $languageGuidelines->save();
+        $languageGuidelines->dispatchEventToPosthog((new \ReflectionClass($this))->getShortName());
 
         $this->emit('saved');
         $this->updateHelpHero();

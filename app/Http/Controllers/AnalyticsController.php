@@ -6,7 +6,7 @@ use App\Helpers\Categories;
 use App\Models\Kpi;
 use App\Models\Team;
 use App\Models\User;
-use App\Helpers\Posthog;
+use App\Helpers\PosthogHelper;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -64,7 +64,7 @@ class AnalyticsController extends Controller
             abort(403);
         }
 
-        $properties = PostHog::getUserFilter($request->user());
+        $properties = PosthogHelper::getUserFilter($request->user());
 
         return $this->fetchJson($request, $properties);
     }
@@ -74,7 +74,7 @@ class AnalyticsController extends Controller
         $user = $request->user();
         $this->teamAnalyticsAllowed($user);
 
-        $properties = PostHog::getOrganizationFilter($user->currentTeam);
+        $properties = PosthogHelper::getOrganizationFilter($user->currentTeam);
 
         return $this->fetchJson($request, $properties, $user->currentTeam);
     }
@@ -97,7 +97,7 @@ class AnalyticsController extends Controller
         foreach ($events as $event) {
             $filter['events'][0]['id'] = $event;
 
-            $response = PostHog::fetchData($filter, $this->url);
+            $response = PosthogHelper::fetchData($filter, $this->url);
             if (isset($response['result'][0])) {
                 $data['events'][$event] = array_combine($response['result'][0]['days'], $response['result'][0]['data']);
             }
@@ -134,7 +134,7 @@ class AnalyticsController extends Controller
         foreach ($events as $event) {
             $filter['events'][0]['id'] = $event;
 
-            $response = PostHog::fetchData($filter, $this->url);
+            $response = PosthogHelper::fetchData($filter, $this->url);
             if (isset($response['result'])) {
                 foreach ($response['result'] as $value) {
                     $data['events'][$event][$value['breakdown_value']] = $value['aggregated_value'];

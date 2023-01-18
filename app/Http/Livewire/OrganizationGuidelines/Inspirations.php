@@ -60,6 +60,7 @@ class Inspirations extends Component
         $languageGuidelines->show_inspiration_alternatives_force = (bool) $this->show_inspiration_alternatives_force;
 
         $languageGuidelines->save();
+        $languageGuidelines->dispatchEventToPosthog((new \ReflectionClass($this))->getShortName());
 
         $this->emit('saved');
         $this->updateHelpHero();

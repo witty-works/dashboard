@@ -6,9 +6,9 @@
             {!! json_encode(config('posthog.api_key')) !!}, {
             api_host: {!! json_encode(config('posthog.host'), JSON_UNESCAPED_SLASHES) !!},
             persistence: 'memory',
-            @if (!empty(Auth::user()) || \App\Providers\AppServiceProvider::$posthog_reset)
+            @if (!empty(Auth::user()) || \App\Helpers\PosthogHelper::$posthog_reset)
             loaded: function(posthog) {
-                @if (\App\Providers\AppServiceProvider::$posthog_reset)
+                @if (\App\Helpers\PosthogHelper::$posthog_reset)
                 posthog.reset();
                 @endif
                 @if (!empty(Auth::user()))
