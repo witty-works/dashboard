@@ -23,17 +23,5 @@
         */
         window.hsConversationsOnReady = [onConversationsAPIReady];
     }
-
-    @if(!empty($user))
-    var _hsq = window._hsq = window._hsq || [];
-    _hsq.push(["identify",{
-        email: @json($user->email),
-        id: @json($user->posthogId()),
-    }]);
-    @endif
 </script>
-
-@if(!empty($user))
-<script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/{{ config('hubspot.hub_id') }}.js"></script>
-@endif
 @endif

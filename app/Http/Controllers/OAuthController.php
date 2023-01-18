@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SyncUserToHubSpot;
 use App\Models\User;
 use Laravel\Socialite\AbstractUser;
 use Laravel\Socialite\Two\InvalidStateException;
@@ -21,6 +22,7 @@ use SocialiteProviders\Manager\Contracts\OAuth2\ProviderInterface;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Socialite;
 use SocialiteProviders\Manager\Config;
+use Browser;
 
 class OAuthController extends BaseOAuthController
 {
@@ -148,6 +150,7 @@ class OAuthController extends BaseOAuthController
             $userData['has_consented_to_terms_of_service'] = $providerAccount->user['extension_termsOfUseConsentDateTime'];
         }
 
+        $newUser = false;
         if (!$account) {
             $user = Jetstream::newUserModel()->where('email', $providerAccount->getEmail())->first();
             if ($user) {
@@ -156,6 +159,8 @@ class OAuthController extends BaseOAuthController
                 );
             } else {
                 $user = $this->createsUser->create($provider, $providerAccount);
+                $newUser = true;
+                dispatch(new SyncUserToHubSpot($user, $request->cookie('hubspotutk')));
             }
 
             if (!empty($providerAccount->user['extension_MailingConsented'])) {
@@ -173,7 +178,7 @@ class OAuthController extends BaseOAuthController
             $user->forceFill($userData)->save();
         }
 
-        return $this->login($user);
+        return $this->login($user, $newUser);
     }
 
     protected function checkAllowedRedirectUri($redirectUri)
@@ -273,11 +278,27 @@ class OAuthController extends BaseOAuthController
      * @param  \Illuminate\Contracts\Auth\Authenticatable|mixed  $user
      * @return mixed
      */
-    protected function login($user, $policy = 'login')
+    protected function login($user, $newUser = false)
     {
         $loginResponse = parent::login($user);
         if (self::isBrowserLogin()) {
             return $this->returnAccessTokenResponse();
+        }
+
+        if ($newUser) {
+            if (Browser::isFirefox()) {
+                return redirect(config('app.browsers.firefox.store_href'));
+            }
+
+            if (Browser::isEdge()) {
+                return redirect(config('app.browsers.edge.store_href'));
+            }
+
+            if (Browser::isChrome()) {
+                return redirect(config('app.browsers.chrome.store_href'));
+            }
+
+            return redirect()->route('download');
         }
 
         return $loginResponse;

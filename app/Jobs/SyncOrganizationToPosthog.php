@@ -44,23 +44,25 @@ class SyncOrganizationToPosthog implements ShouldQueue
             ['host' => config('posthog.host'), 'debug' => config('posthog.debug')],
         );
 
+        $properties = [
+            'is_deleted' => $this->isDeleted,
+            'name' => $team->name,
+            'owner' => $team->owner->posthogId(),
+            'impersonate_url' => config('app.url') . '/impersonate/take/' . $team->owner->id,
+            'users' => $team->getTotalUserCount(),
+            'stripe_plan' => $team->planId(),
+        ];
+
         $result = PostHog::groupIdentify([
             'groupType' => PosthogHelper::POSTHOG_ORGANIZATION_TYPE,
             'groupKey' => $team->posthogId(),
-            'properties' => [
-                'is_deleted' => $this->isDeleted,
-                'name' => $team->name,
-                'owner' => $team->owner->posthogId(),
-                'impersonate_url' => config('app.url') . '/impersonate/take/' . $team->owner->id,
-                'users' => $team->getTotalUserCount(),
-                'stripe_plan' => $team->planId(),
-            ]
+            'properties' => $properties,
         ]);
 
         if (!$result) {
             throw new InvalidArgumentException("Team id '{$this->id} could not be added to Posthog.");
         }
 
-        return 0;
+        return $properties;
     }
 }

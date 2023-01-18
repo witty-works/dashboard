@@ -39,7 +39,7 @@ abstract class AbstractSyncToNlpApi implements ShouldQueue
             throw new RuntimeException("Unable to write to '{$url} ({$data['id']}): " . $response->json('message'));
         }
 
-        return 0;
+        return $data;
     }
 
     protected function getFalsePositives($falsePositives, $subscribed, $count)
