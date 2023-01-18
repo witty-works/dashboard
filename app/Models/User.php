@@ -9,6 +9,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Collection;
 use JoelButcher\Socialstream\HasConnectedAccounts;
 use JoelButcher\Socialstream\SetsProfilePhotoFromUrl;
 use Laravel\Fortify\TwoFactorAuthenticatable;
@@ -113,6 +114,22 @@ class User extends Authenticatable implements MustVerifyEmail
     public function invitations()
     {
         return $this->hasMany(Jetstream::teamInvitationModel(), 'email', 'email');
+    }
+
+    /**
+     * Get the open invitiations
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function teamInvitationRequests()
+    {
+        /** @var $team \App\Models\Team */
+        $team = $this->currentTeam;
+        if (empty($team)) {
+            return new Collection();
+        }
+
+        return $team->invitationRequests;
     }
 
     /**
@@ -229,7 +246,11 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function getNotificationCount()
     {
-        return $this->invitations->count();
+        if ($this->currentTeam && $this->ownsTeam($this->currentTeam)) {
+            return $this->invitations->count() + $this->teamInvitationRequests->count();
+        }
+
+        return 0;
     }
 
     public function getFirstNameAttribute()
@@ -246,21 +267,25 @@ class User extends Authenticatable implements MustVerifyEmail
         return  implode(' ', $split);
     }
 
-    public function isSharedEmailAccount()
+    public function getEmailDomain()
     {
         $email = explode('@', $this->email);
-        $provider = array_pop($email);
+        return array_pop($email);
+    }
+
+    public function isSharedEmailAccount()
+    {
+        $provider = $this->getEmailDomain();
 
         return in_array($provider, $this->emailProviders);
     }
 
     public function hasCompletedOnboarding()
     {
-        $manager = app('impersonate');
         if (
-            $manager->isImpersonating()
-            || $this->role !== null
+            $this->role !== null
             || !$this->currentTeam
+            || app('impersonate')->isImpersonating()
         ) {
             return true;
         }
@@ -273,11 +298,13 @@ class User extends Authenticatable implements MustVerifyEmail
         $true = $booleanAsStrings ? 'Yes' : true;
         $false = $booleanAsStrings ? 'No' : false;
 
-        $teamRole = $this->teamRole($this->currentTeam);
-        if ($teamRole instanceof Role) {
-            $teamRole = $teamRole->name;
-        } else {
-            $teamRole = null;
+        if ($this->currentTeam) {
+            $teamRole = $this->teamRole($this->currentTeam);
+            if ($teamRole instanceof Role) {
+                $teamRole = $teamRole->name;
+            } else {
+                $teamRole = null;
+            }
         }
 
         $data = [

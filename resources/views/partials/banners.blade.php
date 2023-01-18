@@ -2,13 +2,19 @@
 $team = false;
 $showInviteCheck = false;
 $showInvitations = false;
+$showInvitationRequests = false;
 $showMailing = false;
 
 $user = Auth::user();
 if ($user) {
     $team = $user->currentTeam;
+    if ($team) {
+        $showInviteCheck = empty($hideInviteCheck) && $team->getTotalUserWithInvitationsCount() <= 1;
+        if ($user->hasTeamPermission($team, 'update')) {
+            $showInvitationRequests = $team->invitationRequests->isNotEmpty();
+        }
+    }
 
-    $showInviteCheck = empty($hideInviteCheck) && $team && $team->getTotalUserWithInvitationsCount() <= 1;
     $showInvitations = $user->invitations->count();
     $showMailing = $user->has_consented_to_mailing === null;
 }
@@ -18,6 +24,8 @@ if ($user) {
 
 @if($showInvitations)
 @include('partials.invitations', ['user' => $user])
+@elseif($showInvitationRequests && !Route::is('teams.show'))
+@include('partials.invitation-requests')
 @elseif($showInviteCheck)
 @include('partials.invite-check')
 @elseif($showMailing && !Route::is('profile.show'))
