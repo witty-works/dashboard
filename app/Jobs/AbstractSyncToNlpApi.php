@@ -101,41 +101,51 @@ abstract class AbstractSyncToNlpApi implements ShouldQueue
         return $data;
     }
 
-    protected function getConfig($guidelines)
+    protected function getConfig($guidelines, $forceDefault)
     {
+        $guidelines->expert_mode_force = $forceDefault;
+
         $config['maximum_importance'] = [
             'value' => $guidelines->expert_mode ? 3 : 2,
-            'status' => $guidelines->expert_mode_force === true ? 'force' : 'suggestion',
+            'status' => $guidelines->expert_mode_force ? 'force' : 'suggestion',
         ];
 
         $config['simple_language'] = [
             'value' => (bool) $guidelines->simple_language,
-            'status' => $guidelines->expert_mode_force === true ? 'force' : 'suggestion',
+            'status' => $guidelines->expert_mode_force ? 'force' : 'suggestion',
         ];
+
+        $guidelines->english_rules_force = $forceDefault;
 
         $config['singular_they'] = [
             'value' => $guidelines->singular_they ? 'all_pronouns' : 'he_or_she',
-            'status' => $guidelines->english_rules_force === true ? 'force' : 'suggestion',
+            'status' => $guidelines->english_rules_force ? 'force' : 'suggestion',
         ];
+
+        $guidelines->show_inspiration_alternatives_force = $forceDefault;
 
         $config['show_inspiration_alternatives'] = [
             'value' => (bool) $guidelines->show_inspiration_alternatives,
-            'status' => $guidelines->show_inspiration_alternatives_force === true ? 'force' : 'suggestion',
+            'status' => $guidelines->show_inspiration_alternatives_force ? 'force' : 'suggestion',
         ];
+
+        $guidelines->german_rules_force = $forceDefault;
 
         $config['gendered_roles_format'] = [
             'value' => $guidelines->gendered_roles_format,
-            'status' => $guidelines->german_rules_force === true ? 'force' : 'suggestion',
+            'status' => $guidelines->german_rules_force ? 'force' : 'suggestion',
         ];
 
         $config['german_gender_ending'] = [
             'value' => $guidelines->german_gender_ending,
-            'status' => $guidelines->german_rules_force === true ? 'force' : 'suggestion',
+            'status' => $guidelines->german_rules_force ? 'force' : 'suggestion',
         ];
+
+        $guidelines->preferred_variants_force = $forceDefault;
 
         $config['preferred_variants'] = [
             'value' => $guidelines->preferred_variants,
-            'status' => $guidelines->preferred_variants_force === true ? 'force' : 'suggestion',
+            'status' => $guidelines->preferred_variants_force ? 'force' : 'suggestion',
         ];
 
         return $config;
