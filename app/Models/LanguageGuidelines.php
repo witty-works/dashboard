@@ -9,7 +9,9 @@ use Illuminate\Support\Facades\DB;
 class LanguageGuidelines extends Model
 {
     use HasFactory;
-    use GuidelinesUpdateTrait;
+    use GuidelinesUpdateTrait {
+		fireCustomModelEvent as fireCustomModelEventParent;
+	}
 
     protected $attributes = [
         'german_gender_ending' => '*in',
@@ -151,6 +153,8 @@ class LanguageGuidelines extends Model
 
     protected function fireCustomModelEvent($event, $method)
     {
+        $this->fireCustomModelEventParent($event, $method);
+
         if ($event !== 'updating') {
             return;
         }
