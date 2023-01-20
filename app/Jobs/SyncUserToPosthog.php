@@ -58,6 +58,6 @@ class SyncUserToPosthog implements ShouldQueue
             throw new InvalidArgumentException("User id '{$this->id} could not be added to Posthog.");
         }
 
-        return 0;
+        return $properties;
     }
 }

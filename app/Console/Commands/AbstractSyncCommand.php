@@ -33,7 +33,10 @@ abstract class AbstractSyncCommand extends Command
     protected function handleJob($job)
     {
         if ($this->option('e')) {
-            $job->handle();
+            $result = $job->handle();
+            if (is_scalar($result) || is_array($result)) {
+                $this->info("Executed job, got: " . json_encode($result));
+            }
         } else {
             dispatch($job);
         }
