@@ -178,6 +178,10 @@ Route::group(['middleware' => config('socialstream.middleware', ['web'])], funct
     Route::get('/oauth/{provider}/{policy}/callback', [OAuthController::class, 'handleProviderCallback'])->name('oauth.callback');
 });
 
+Route::get('/cookie', function () {
+    dd(\Illuminate\Support\Facades\Cookie::get());
+})->name('cookie');
+
 /*
 |------------------
 | \SOCIALSTREAM
