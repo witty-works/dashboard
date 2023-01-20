@@ -160,7 +160,9 @@ class OAuthController extends BaseOAuthController
             } else {
                 $user = $this->createsUser->create($provider, $providerAccount);
                 $newUser = true;
-                dispatch(new SyncUserToHubSpot($user, $request->cookie('hubspotutk')));
+                $cookie = $request->cookie('hubspotutk', false);
+                dispatch(new SyncUserToHubSpot($user, $cookie));
+                dd($cookie);
             }
 
             if (!empty($providerAccount->user['extension_MailingConsented'])) {

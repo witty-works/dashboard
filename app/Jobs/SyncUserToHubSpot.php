@@ -46,7 +46,7 @@ class SyncUserToHubSpot implements ShouldQueue
 
         $this->hubspot = HubSpotFactory::createWithAccessToken(config('hubspot.access_token'));
 
-        if ($this->cookie) {
+        if ($this->cookie !== null) {
             $this->createContactViaForm($user);
         } else {
             $data = $user->getHubspotData(true);
