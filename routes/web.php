@@ -178,10 +178,6 @@ Route::group(['middleware' => config('socialstream.middleware', ['web'])], funct
     Route::get('/oauth/{provider}/{policy}/callback', [OAuthController::class, 'handleProviderCallback'])->name('oauth.callback');
 });
 
-Route::get('/cookie', function () {
-    dd($_COOKIE, \Illuminate\Support\Facades\Cookie::get(), \Illuminate\Support\Facades\Cookie::get('hubspotutk'));
-})->name('cookie');
-
 /*
 |------------------
 | \SOCIALSTREAM
