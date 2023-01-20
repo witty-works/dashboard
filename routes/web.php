@@ -179,7 +179,7 @@ Route::group(['middleware' => config('socialstream.middleware', ['web'])], funct
 });
 
 Route::get('/cookie', function () {
-    dd(\Illuminate\Support\Facades\Cookie::get());
+    dd($_COOKIE, \Illuminate\Support\Facades\Cookie::get(), \Illuminate\Support\Facades\Cookie::get('hubspotutk'));
 })->name('cookie');
 
 /*
