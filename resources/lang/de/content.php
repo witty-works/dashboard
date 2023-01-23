@@ -308,4 +308,7 @@ Bitte verwende Witty öfter und klicke auf die hervorgehobenen Begriffe.',
 <a href="https://dashboard.witty.works/de/user/language/dictionary" target="_blank">Probiers gleich aus!</a>',
     'corporate_rules_none_opened_user' => 'Du hast Wörter in <a href="https://dashboard.witty.works/de/user/language/dictionary" target="_blank">dein Wörterbuch</a> eingetragen, aber du hast dir die vorgeschlagene Alternative noch nie angesehen, wenn das Wort unterstrichen wurde.',
     'help' => 'Hilfe',
+    'witty_editor_description' => 'Sollte Witty auf einer Website nicht funktioniert, kopiere einfach deinen Text und fügen Sie ihn hier zur Prüfung ein.',
+    'witty_editor_viral_copy_text' => 'Geprüft mit witty.works auf inklusive Sprache',
+    'witty_editor_placeholder_text' => 'Hier Text eingeben oder einfügen',
 ];
