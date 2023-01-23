@@ -3,7 +3,6 @@
 namespace App\Jobs;
 
 use App\Models\User;
-use Carbon\Carbon;
 use HubSpot\Factory as HubSpotFactory;
 use HubSpot\Client\Crm\Contacts\Model\Filter as HubSpotFilter;
 use HubSpot\Client\Crm\Contacts\Model\FilterGroup as HubSpotFilterGroup;
@@ -22,13 +21,11 @@ class SyncUserToHubSpot implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     protected $id;
-    protected $cookie;
     protected $hubspot;
 
-    public function __construct(User $user, $cookie = null)
+    public function __construct(User $user)
     {
         $this->id = $user->id;
-        $this->cookie = $cookie;
     }
 
     public function handle()
@@ -47,25 +44,26 @@ class SyncUserToHubSpot implements ShouldQueue
         $this->hubspot = HubSpotFactory::createWithAccessToken(config('hubspot.access_token'));
 
         $hubSpotData = false;
-        if ($this->cookie !== null) {
-            $this->createContactViaForm($user);
+        $data = $user->getHubspotData(true);
+        if (!empty($user->hubspotutk)) {
+            // create via hubspot 'hubspotutk' cookie
+            $this->createContactViaForm($user, $user->hubspotutk);
         } else {
-            $data = $user->getHubspotData(true);
-
             $hubSpotData = $this->syncContact($user, $data);
             if (empty($hubSpotData)) {
                 $hubSpotData = $this->createContact($user, $data);
             }
-
-            if (!empty($hubSpotData)) {
-                $this->updateUser($user, $hubSpotData);
-            }
         }
+
+        if (!empty($hubSpotData)) {
+            $this->updateUser($user, $hubSpotData);
+        }
+
 
         return $hubSpotData;
     }
 
-    protected function createContactViaForm(User $user)
+    protected function createContactViaForm(User $user, $hubspotutk)
     {
         $names = explode(' ', $user->name);
         $lastname = array_pop($names);
@@ -87,7 +85,7 @@ class SyncUserToHubSpot implements ShouldQueue
                 ],
             ],
             'context' => [
-                'hutk' => $this->cookie,
+                'hutk' => $hubspotutk,
             ],
         ];
 
@@ -104,13 +102,6 @@ class SyncUserToHubSpot implements ShouldQueue
 
     protected function createContact(User $user, array $data)
     {
-        $current = Carbon::now();
-
-        # if the user was created under X minutes ago, do not force the creation of the contact
-        if ($current->diffInMinutes($user->created_at) < config('hubspot.force_create_after')) {
-            return;
-        }
-
         try {
             $data['email'] = $user->email;
 

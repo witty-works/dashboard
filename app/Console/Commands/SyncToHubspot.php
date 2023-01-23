@@ -37,7 +37,7 @@ class SyncToHubspot extends AbstractSyncCommand
         $this->info('Queuing syncing to Hubspot ...');
 
         $query = null;
-        if ($this->option('f')) {
+        if (!$this->option('f')) {
             $query = User::whereNull('hubspot_id')->orWhereNull('hubspot_source');
         }
 

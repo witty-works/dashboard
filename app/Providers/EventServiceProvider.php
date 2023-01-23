@@ -25,7 +25,6 @@ use Laravel\Jetstream\Events\TeamDeleted;
 use Laravel\Jetstream\Events\TeamMemberAdded;
 use Laravel\Jetstream\Events\TeamMemberRemoved;
 use Laravel\Cashier\Events\WebhookReceived;
-use Laravel\Jetstream\Events\InvitingTeamMember;
 use SocialiteProviders\AzureADB2C\AzureADB2CExtendSocialite;
 use SocialiteProviders\Manager\SocialiteWasCalled;
 
@@ -40,6 +39,7 @@ class EventServiceProvider extends ServiceProvider
         UserCreated::class => [
             UpdateUserGuidelines::class,
             UserAddedSlackAlert::class,
+            HubspotUpdateUser::class,
         ],
         UserDeleted::class => [
             UpdateUserGuidelines::class,
