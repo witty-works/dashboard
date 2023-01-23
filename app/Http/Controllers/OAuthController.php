@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Jobs\SyncUserToHubSpot;
 use App\Models\User;
 use Laravel\Socialite\AbstractUser;
 use Laravel\Socialite\Two\InvalidStateException;
@@ -158,10 +157,9 @@ class OAuthController extends BaseOAuthController
                     $this->createsConnectedAccounts->create($user, $provider, $providerAccount)
                 );
             } else {
-                $user = $this->createsUser->create($provider, $providerAccount);
                 $newUser = true;
-                $cookie = $request->cookie('hubspotutk', false);
-                dispatch(new SyncUserToHubSpot($user, $cookie));
+                $user = $this->createsUser->create($provider, $providerAccount);
+                $userData['hubspotutk'] = $request->cookie('hubspotutk');
             }
 
             if (!empty($providerAccount->user['extension_MailingConsented'])) {
