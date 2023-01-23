@@ -2,9 +2,9 @@
 
 namespace App\Jobs;
 
+use App\Helpers\PosthogHelper;
 use PostHog\PostHog;
 use App\Models\Team;
-use App\Providers\AppServiceProvider;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -44,23 +44,25 @@ class SyncOrganizationToPosthog implements ShouldQueue
             ['host' => config('posthog.host'), 'debug' => config('posthog.debug')],
         );
 
+        $properties = [
+            'is_deleted' => $this->isDeleted,
+            'name' => $team->name,
+            'owner' => $team->owner->posthogId(),
+            'impersonate_url' => config('app.url') . '/impersonate/take/' . $team->owner->id,
+            'users' => $team->getTotalUserCount(),
+            'stripe_plan' => $team->planId(),
+        ];
+
         $result = PostHog::groupIdentify([
-            'groupType' => AppServiceProvider::POSTHOG_ORGANIZATION_TYPE,
+            'groupType' => PosthogHelper::POSTHOG_ORGANIZATION_TYPE,
             'groupKey' => $team->posthogId(),
-            'properties' => [
-                'is_deleted' => $this->isDeleted,
-                'name' => $team->name,
-                'owner' => $team->owner->posthogId(),
-                'impersonate_url' => config('app.url') . '/impersonate/take/' . $team->owner->id,
-                'users' => $team->getTotalUserCount(),
-                'stripe_plan' => $team->planId(),
-            ]
+            'properties' => $properties,
         ]);
 
         if (!$result) {
             throw new InvalidArgumentException("Team id '{$this->id} could not be added to Posthog.");
         }
 
-        return 0;
+        return $properties;
     }
 }

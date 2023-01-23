@@ -76,7 +76,8 @@ class Form extends Component
     {
         $this->validate();
 
-        if (!Auth::user()->hasTeamPermission($this->team, 'edit_guidelines')) {
+        $user = Auth::user();
+        if (!$user->hasTeamPermission($this->team, 'edit_guidelines')) {
             abort(403);
         }
 
@@ -112,11 +113,11 @@ class Form extends Component
         $falsePositive->false_positive = $this->false_positive;
         $falsePositive->language_code = null;
         $falsePositive->team_id = $this->team->id;
+
         $falsePositive->save();
+        $falsePositive->dispatchEventToPosthog();
 
         $this->emit('saved');
-
-        $this->false_positive = '';
-        $this->false_positive_id = '';
+        $this->resetForm();
     }
 }

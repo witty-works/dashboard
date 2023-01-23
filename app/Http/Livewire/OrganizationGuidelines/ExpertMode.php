@@ -67,6 +67,7 @@ class ExpertMode extends Component
         $languageGuidelines->expert_mode_force = (bool) $this->expert_mode_force;
 
         $languageGuidelines->save();
+        $languageGuidelines->dispatchEventToPosthog((new \ReflectionClass($this))->getShortName());
 
         $this->emit('saved');
         $this->updateHelpHero();

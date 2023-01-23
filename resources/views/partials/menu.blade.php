@@ -126,7 +126,7 @@
         @lumki
 
         <div class="wittyworks-navigation-bottom-half">
-            <x-jet-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="https://www.witty.works/editor" target="_blank" rel="noopener">
+            <x-jet-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('editor') }}">
                 <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/editor.svg') }}" alt="" />
                 {{ __('content.witty_editor') }}
             </x-jet-nav-link>
@@ -145,7 +145,7 @@
         @else
         <!-- LOGGED OUT -->
         <div class="wittyworks-navigation-top-half">
-            <x-jet-nav-link class="wittyworks-navigation-link-wrapper" href="https://www.witty.works/editor" target="_blank" rel="noopener">
+            <x-jet-nav-link class="wittyworks-navigation-link-wrapper" href="{{ route('editor') }}">
                 <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/editor.svg') }}" alt="" />
                 {{ __('content.witty_editor') }}
             </x-jet-nav-link>

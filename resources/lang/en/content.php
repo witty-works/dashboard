@@ -308,4 +308,7 @@ Please use Witty more often and click on the highlighted terms.',
 <a href="https://dashboard.witty.works/en/user/language/dictionary" target="_blank">Try it!</a>',
     'corporate_rules_none_opened_user' => 'You have entered words in your <a href="https://dashboard.witty.works/en/user/language/dictionary" target="_blank"> dictionary</a>, but you haven\'t yet looked at the suggested alternative if the word was underlined.',
     'help' => 'Help',
+    'witty_editor_description' => 'If Witty doesn\'t work on a specific website, simply copy & paste your text here.',
+    'witty_editor_viral_copy_text' => 'Checked with witty.works for inclusive language',
+    'witty_editor_placeholder_text' => 'Type here or paste',
 ];

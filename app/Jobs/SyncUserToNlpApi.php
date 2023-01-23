@@ -23,7 +23,7 @@ class SyncUserToNlpApi extends AbstractSyncToNlpApi
             throw new InvalidArgumentException("User id '{$this->id} does not exist.");
         }
 
-        $url = '/user/rules';
+        $url = '/user/configs';
         $data = $this->getData($user);
 
         return $this->updateRules($url, $data);

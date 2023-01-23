@@ -39,8 +39,6 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         UserCreated::class => [
             UpdateUserGuidelines::class,
-            HubspotUpdateUser::class,
-            PostHogUpdateUser::class,
             UserAddedSlackAlert::class,
         ],
         UserDeleted::class => [
@@ -53,7 +51,7 @@ class EventServiceProvider extends ServiceProvider
             HubspotUpdateUser::class,
             PostHogUpdateUser::class,
         ],
-        InvitingTeamMember::class => [
+        InvitedTeamMember::class => [
             HubspotUpdateUser::class,
             PostHogUpdateUser::class,
             TeamMemberInvitedSlackAlert::class,

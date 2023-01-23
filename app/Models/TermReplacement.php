@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
+use App\Helpers\PosthogHelper;
+use App\Jobs\SendEventToPosthog;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use function Emoji\detect_emoji;
 
@@ -35,7 +38,6 @@ class TermReplacement extends Model
         return self::where('team_id', $team->id)->where('term', $this->term)->exists();
     }
 
-
     public function getMatchingTypeAttribute()
     {
         switch ($this->word_type) {
@@ -46,6 +48,35 @@ class TermReplacement extends Model
             default:
                 return 'lemmatize';
         }
+    }
+
+    public function dispatchEventToPosthog()
+    {
+        if ($this->user) {
+            $model = $user = $this->user;
+            $team = null;
+            $event = PosthogHelper::STORE_TERM_REPLACEMENT;
+        } else {
+            $user = Auth::user();
+            $model = $team = $this->team;
+            $event = PosthogHelper::STORE_TEAM_TERM_REPLACEMENT;
+        }
+
+        $job = new SendEventToPosthog(
+            $user,
+            $event,
+            [
+                'total' => $model->termReplacements->count(),
+                'replacement' => $this->replacement,
+                'language_code' => $this->language_code,
+                'word_type' => $this->word_type,
+
+            ],
+            !$this->wasRecentlyCreated,
+            $team,
+        );
+
+        dispatch($job);
     }
 
     static public function validateEmoji($emoji)

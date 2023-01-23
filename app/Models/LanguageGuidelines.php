@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
+use App\Helpers\PosthogHelper;
+use App\Jobs\SendEventToPosthog;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class LanguageGuidelines extends Model
@@ -81,6 +84,85 @@ class LanguageGuidelines extends Model
         }
 
         DB::statement($query, $params);
+    }
+
+    public function dispatchEventToPosthog($type)
+    {
+        if ($this->user) {
+            $user = $this->user;
+            $team = null;
+            $event = PosthogHelper::STORE_LANGUAGE;
+        } else {
+            $user = Auth::user();
+            $team = $this->team;
+            $event = PosthogHelper::STORE_TEAM_LANGUAGE;
+        }
+
+        switch ($type) {
+            case 'English':
+                $properties = [
+                    'language_type' => (new \ReflectionClass($this))->getShortName(),
+                    'singular_they' => $this->singular_they,
+                    'force' => $this->english_rules_force,
+                ];
+                break;
+            case 'Language':
+                $properties = [
+                    'language_type' => (new \ReflectionClass($this))->getShortName(),
+                    'preferred_variants' => $this->preferred_variants,
+                    'force' => $this->preferred_variants_force,
+                ];
+                break;
+            case 'ExpertMode':
+                $properties = [
+                    'language_type' => (new \ReflectionClass($this))->getShortName(),
+                    'expert_mode' => $this->expert_mode,
+                    'force' => $this->expert_mode_force,
+                ];
+                break;
+            case 'German':
+                $properties = [
+                    'language_type' => (new \ReflectionClass($this))->getShortName(),
+                    'german_gender_ending' => $this->german_gender_ending,
+                    'gendered_roles_format' => $this->gendered_roles_format,
+                    'force' => $this->german_rules_force,
+                ];
+                break;
+            case 'Inspiration':
+                $properties = [
+                    'language_type' => (new \ReflectionClass($this))->getShortName(),
+                    'show_inspiration_alternatives' => $this->show_inspiration_alternatives,
+                    'force' => $this->show_inspiration_alternatives_force,
+                ];
+                break;
+            case 'Inclusive':
+            case 'Orthography':
+            case 'Style':
+                $properties = [
+                    'language_type' => (new \ReflectionClass($this))->getShortName(),
+                    'disabled_categories' => $this->disabled_categories,
+                    'force' => $this->disabled_categories_force,
+                ];
+                break;
+            default:
+                $properties = [];
+        }
+
+        if (!empty($properties)) {
+            $job = new SendEventToPosthog(
+                $user,
+                $event,
+                $properties,
+                !$this->wasRecentlyCreated,
+                $team,
+            );
+
+            dispatch($job);
+
+            return true;
+        }
+
+        return false;
     }
 
     public static function getTeamGuidelines(User $user)
