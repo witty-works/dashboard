@@ -45,12 +45,13 @@ class SyncUserToHubSpot implements ShouldQueue
 
         $hubSpotData = false;
         $data = $user->getHubspotData(true);
-        if (!empty($user->hubspotutk)) {
-            // create via hubspot 'hubspotutk' cookie
-            $this->createContactViaForm($user, $user->hubspotutk);
-        } else {
-            $hubSpotData = $this->syncContact($user, $data);
-            if (empty($hubSpotData)) {
+
+        $hubSpotData = $this->syncContact($user, $data);
+        if (empty($hubSpotData)) {
+            if (!empty($user->hubspotutk)) {
+                // create via hubspot 'hubspotutk' cookie
+                $this->createContactViaForm($user, $user->hubspotutk);
+            } else {
                 $hubSpotData = $this->createContact($user, $data);
             }
         }
