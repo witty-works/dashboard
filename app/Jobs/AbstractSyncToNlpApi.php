@@ -103,7 +103,7 @@ abstract class AbstractSyncToNlpApi implements ShouldQueue
 
     protected function getConfig($guidelines, $forceDefault)
     {
-        $guidelines->expert_mode_force = $forceDefault;
+        $guidelines->expert_mode_force = $guidelines->expert_mode_force ?? $forceDefault;
 
         $config['maximum_importance'] = [
             'value' => $guidelines->expert_mode ? 3 : 2,
@@ -115,21 +115,22 @@ abstract class AbstractSyncToNlpApi implements ShouldQueue
             'status' => $guidelines->expert_mode_force ? 'force' : 'suggestion',
         ];
 
-        $guidelines->english_rules_force = $forceDefault;
+        $guidelines->english_rules_force = $guidelines->english_rules_force ?? $forceDefault;
 
         $config['singular_they'] = [
             'value' => $guidelines->singular_they ? 'all_pronouns' : 'he_or_she',
             'status' => $guidelines->english_rules_force ? 'force' : 'suggestion',
         ];
 
-        $guidelines->show_inspiration_alternatives_force = $forceDefault;
+        $guidelines->show_inspiration_alternatives_force
+            = $guidelines->show_inspiration_alternatives_force ?? $forceDefault;
 
         $config['show_inspiration_alternatives'] = [
             'value' => (bool) $guidelines->show_inspiration_alternatives,
             'status' => $guidelines->show_inspiration_alternatives_force ? 'force' : 'suggestion',
         ];
 
-        $guidelines->german_rules_force = $forceDefault;
+        $guidelines->german_rules_force = $guidelines->german_rules_force ?? $forceDefault;
 
         $config['gendered_roles_format'] = [
             'value' => $guidelines->gendered_roles_format,
@@ -141,7 +142,7 @@ abstract class AbstractSyncToNlpApi implements ShouldQueue
             'status' => $guidelines->german_rules_force ? 'force' : 'suggestion',
         ];
 
-        $guidelines->preferred_variants_force = $forceDefault;
+        $guidelines->preferred_variants_force = $guidelines->preferred_variants_force ?? $forceDefault;
 
         $config['preferred_variants'] = [
             'value' => $guidelines->preferred_variants,
