@@ -60,7 +60,6 @@ class SendEventToPosthog implements ShouldQueue
         ];
 
         $result = PostHog::capture($data);
-        dump($data);
         if (!$result) {
             throw new InvalidArgumentException("User id '{$this->id} could not be added to Posthog.");
         }
