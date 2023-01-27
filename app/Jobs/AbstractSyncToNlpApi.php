@@ -59,7 +59,7 @@ abstract class AbstractSyncToNlpApi implements ShouldQueue
         foreach ($termReplacements as $termReplacement) {
             $termReplacementData = [
                 'alternatives' => [$termReplacement->replacement],
-                'lang' => $termReplacement->lang,
+                'lang' => $termReplacement->language_code,
                 'word_type' => $termReplacement->word_type,
             ];
 
