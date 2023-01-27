@@ -116,30 +116,30 @@ class SyncUserToHubSpot implements ShouldQueue
         }
     }
 
-    protected function syncContact(User $user, $data, $checkAdditional = false)
+    protected function syncContact(User $user, $data)
     {
-        $property = $checkAdditional ? 'hs_additional_emails' : 'email';
-        $filter = new HubSpotFilter();
-        $filter
-            ->setOperator('EQ')
-            ->setPropertyName($property)
-            ->setValue($user->email);
+        $properties = ['email', 'hs_additional_emails'];
+        $filterGroups = [];
+        foreach ($properties as $property) {
+            $filter = new HubSpotFilter();
+            $filter
+                ->setOperator('EQ')
+                ->setPropertyName($property)
+                ->setValue($user->email);
 
-        $filterGroup = new HubSpotFilterGroup();
-        $filterGroup->setFilters([$filter]);
+            $filterGroup = new HubSpotFilterGroup();
+            $filterGroup->setFilters([$filter]);
+            $filterGroups[] = $filterGroup;
+        }
 
         $searchRequest = new HubSpotPublicObjectSearchRequest();
-        $searchRequest->setFilterGroups([$filterGroup]);
+        $searchRequest->setFilterGroups($filterGroups);
 
         $searchRequest->setProperties(['hs_analytics_source']);
 
         // @var CollectionResponseWithTotalSimplePublicObject $contactsPage
         $contactsPage = $this->hubspot->crm()->contacts()->searchApi()->doSearch($searchRequest);
         if (!$contactsPage->getTotal()) {
-            if (!$checkAdditional) {
-                return $this->syncContact($user, $data, true);
-            }
-
             return;
         }
 
