@@ -105,7 +105,7 @@ class Form extends Component
         $this->explanation = '';
         $this->url = '';
         $this->emoji = '';
-        $this->language_code = '';
+        $this->language_code = null;
         $this->matching_type = '';
         $this->word_type = '';
     }
@@ -179,7 +179,6 @@ class Form extends Component
 
         $termReplacement->term = $this->term;
         $termReplacement->replacement = $this->replacement;
-        $termReplacement->language_code = null;
         $termReplacement->explanation = $this->explanation;
         $termReplacement->url = $this->url;
         $termReplacement->emoji = $this->emoji;
