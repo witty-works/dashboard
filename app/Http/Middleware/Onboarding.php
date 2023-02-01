@@ -10,7 +10,7 @@ class Onboarding
     public function handle($request, Closure $next)
     {
         $user = $request->user();
-        if ($user) {
+        if ($user && !Route::is('download')) {
             $currentRouteName = Route::currentRouteName();
             $routes = [
                 'profile.onboarding',
