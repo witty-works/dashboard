@@ -36,12 +36,17 @@ class User extends Authenticatable implements MustVerifyEmail
     use TwoFactorAuthenticatable;
     use GuidelinesTrait;
 
-    const ROLES = ['' => 'content.please_select', 'executive' => 'content.executive', 'lead' => 'content.lead', 'employee' => 'content.employee'];
+    const ROLES = [
+        '' => 'content.please_select',
+        'executive' => 'content.executive',
+        'lead' => 'content.lead',
+        'employee' => 'content.employee'
+    ];
 
     protected $emailProviders = [
         'gmail.com', 'bluewin.ch', 'icloud.com', 'hotmail.com', 'protonmail.com', 'protonmail.ch',
         'gmx.ch', 'gmx.at', 'gmx.de', 'gmx.net', 'mein.gmx', 'aol.com', 'outlook.com', 'zoho.com',
-        'zohomail.eu', 'yahoo.com', 'web.de', 'cyon.ch', 'orange.fr', 'vodafone.com', '@me.com', 'hotmail.de',
+        'zohomail.eu', 'yahoo.com', 'web.de', 'cyon.ch', 'orange.fr', 'vodafone.com', 'me.com', 'hotmail.de',
         'hotmail.ch', 'yahoo.ch', 'yahoo.de', 'hey.com', 'hotmail.fr', 'bluemail.ch', 'freenet.de', 'sunrise.ch',
         'googlemail.com'
     ];
@@ -252,15 +257,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function hasCompletedOnboarding()
     {
         $manager = app('impersonate');
-        if ($manager->isImpersonating()) {
-            return true;
-        }
-
-        if ($this->role !== null) {
-            return true;
-        }
-
-        if (!$this->currentTeam) {
+        if (
+            $manager->isImpersonating()
+            || $this->role !== null
+            || !$this->currentTeam
+        ) {
             return true;
         }
 
