@@ -41,7 +41,7 @@
             </div>
         </div>
         <div class="wittyworks-upgrade-banner-button-container">
-            <a id="witty-options-url" class="button primary-button-purple" target="_blank" rel="noopener">
+            <a href="{{ route('download') }}" class="button primary-button-purple">
                 {{ __('content.onboarding_install_witty_button') }}
             </a>
         </div>
