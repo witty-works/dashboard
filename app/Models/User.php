@@ -36,7 +36,12 @@ class User extends Authenticatable implements MustVerifyEmail
     use TwoFactorAuthenticatable;
     use GuidelinesTrait;
 
-    const ROLES = ['' => 'content.please_select', 'executive' => 'content.executive', 'lead' => 'content.lead', 'employee' => 'content.employee'];
+    const ROLES = [
+        '' => 'content.please_select',
+        'executive' => 'content.executive',
+        'lead' => 'content.lead',
+        'employee' => 'content.employee'
+    ];
 
     protected $emailProviders = [
         'gmail.com', 'bluewin.ch', 'icloud.com', 'hotmail.com', 'protonmail.com', 'protonmail.ch',
@@ -252,15 +257,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function hasCompletedOnboarding()
     {
         $manager = app('impersonate');
-        if ($manager->isImpersonating()) {
-            return true;
-        }
-
-        if ($this->role !== null) {
-            return true;
-        }
-
-        if (!$this->currentTeam) {
+        if (
+            $manager->isImpersonating()
+            || $this->role !== null
+            || !$this->currentTeam
+        ) {
             return true;
         }
 
