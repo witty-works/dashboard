@@ -68,14 +68,6 @@ Route::group(
     function () {
         Route::impersonate();
 
-        Route::get('/download', function () {
-            return view('download');
-        })->name('download');
-
-        Route::get('/editor', function () {
-            return view('editor');
-        })->name('editor');
-
         /*
         |------------------
         | JETSTREAM LIVEWIRE
@@ -84,6 +76,14 @@ Route::group(
         Route::group(['middleware' => config('jetstream.middleware', ['web'])], function () {
             Route::group(['middleware' => ['auth:' . config('fortify.guard')]], function () {
                 Route::get('/', [WelcomeController::class, 'show'])->name('root');
+
+                Route::get('/download', function () {
+                    return view('download');
+                })->name('download');
+
+                Route::get('/editor', function () {
+                    return view('editor');
+                })->name('editor');
 
                 Route::get('/subscribe', [StripeController::class, 'subscribe'])->name('stripe.subscribe');
 

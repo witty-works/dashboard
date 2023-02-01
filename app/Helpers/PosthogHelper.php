@@ -19,6 +19,8 @@ class PosthogHelper
     public const STORE_TERM_REPLACEMENT = 'store_term_replacement';
     public const STORE_TEAM_LANGUAGE = 'team_store_language';
     public const STORE_LANGUAGE = 'store_language';
+    public const ADDED_TEAM_MEMBER = 'added_team_member';
+    public const JOINED_TEAM = 'joined_team';
 
     public static $posthog_reset = false;
 
