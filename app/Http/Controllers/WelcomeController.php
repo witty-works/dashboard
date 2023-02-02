@@ -22,11 +22,6 @@ class WelcomeController extends Controller
             return redirect()->route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'login']);
         }
 
-        $team = $user->currentTeam;
-        if ($team && $user->ownsTeam($team) || $user->hasTeamPermission($team, 'update')) {
-            return redirect()->route('teams.language-guidelines');
-        }
-
         return redirect()->route('user.language-guidelines');
     }
 
