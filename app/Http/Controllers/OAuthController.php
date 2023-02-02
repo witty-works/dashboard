@@ -285,18 +285,6 @@ class OAuthController extends BaseOAuthController
         }
 
         if ($newUser) {
-            if (Browser::isFirefox()) {
-                return redirect(config('app.browsers.firefox.store_href'));
-            }
-
-            if (Browser::isEdge()) {
-                return redirect(config('app.browsers.edge.store_href'));
-            }
-
-            if (Browser::isChrome()) {
-                return redirect(config('app.browsers.chrome.store_href'));
-            }
-
             return redirect()->route('download');
         }
 

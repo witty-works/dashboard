@@ -5,14 +5,6 @@
                     {{ __('content.witty_download') }}
                 </div>
 
-                <div id="not_supported" style="display: none" class="align-center warning-message">
-                    {!! __('content.witty_download_description_not_supported_yet') !!}
-                </div>
-
-                <div id="redirecting" style="display: none" class="align-center warning-message">
-                    {!! __('content.witty_download_redirecting') !!}
-                </div>
-
                 <div>
                     <div class="py-10">
                         <div class="w-full col-span-6 sm:col-span-4 margin-bottom align-center">
@@ -36,56 +28,41 @@
                                 const wittyIsInstalled = document.querySelector('witty-is-installed');
 
                                 if (wittyIsInstalled) {
-                                    loginUrl = wittyIsInstalled.getAttribute('login-url')
-                                    if (loginUrl) {
-                                        url = @json(config('app.welcome_url'));
-                                    } else {
-                                        url = @json(config('app.try_out_url'));
-                                    }
-                                    setRedirect(url);
-                                } else {
-                                    url = false;
-                                    if (window.navigator.userAgent.indexOf("Edg") > -1) {
-                                        url = @json(config('app.browsers')['edge']['store_href']);
-                                    } else if (!!window.chrome) {
-                                        url = @json(config('app.browsers')['chrome']['store_href']);
-                                    } else if (window.navigator.userAgent.toLowerCase().indexOf("firefox") > -1) {
-                                        url = @json(config('app.browsers')['firefox']['store_href']);
-                                    }
+                                    const loginUrl = wittyIsInstalled.getAttribute('login-url')
 
-                                    if (url) {
-                                        setRedirect(url);
+                                    if (loginUrl) {
+                                        const alreadyInstalled = document.querySelector('#already_installed');
+                                        alreadyInstalled.style.display = 'block';
                                     } else {
-                                        const notSupported = document.querySelector('#not_supported');
-                                        notSupported.style.display = 'block';
+                                        const alreadySignedin = document.querySelector('#already_signedin');
+                                        alreadySignedin.style.display = 'block';
                                     }
+                                } else if (!!window.chrome || window.navigator.userAgent.toLowerCase().indexOf("firefox") > -1) {
+                                    const supported = document.querySelector('#supported');
+                                    supported.style.display = 'block';
+                                } else {
+                                    const notSupported = document.querySelector('#not_supported');
+                                    notSupported.style.display = 'block';
                                 }
                             });
-
-                            function setRedirect(url)
-                            {
-                                const redirecting = document.querySelector('#redirecting');
-                                redirecting.style.display = 'block';
-
-                                setTimeout(function() {
-                                        redirectToStore(url);
-                                    },
-                                    @json(config('app.browser_check_time'))
-                                );
-                            }
-
-                            function redirectToStore(url)
-                            {
-                                if (@json(config('app.browser_redirect'))) {
-                                    window.location.replace(url);
-                                } else {
-                                    // debugging
-                                    const redirecting = document.querySelector('#redirecting');
-                                    redirecting.innerText = 'redirected to .. ' + url;
-                                }
-                            }
-                        </script>
+                            </script>
                     </div>
+                </div>
+
+                <div id="supported" style="display: none" class="align-center warning-message">
+                    {!! __('content.witty_download_description_supported') !!}
+                </div>
+
+                <div id="not_supported" style="display: none" class="align-center warning-message">
+                    {!! __('content.witty_download_description_not_supported_yet') !!}
+                </div>
+
+                <div id="already_installed" style="display: none" class="align-center warning-message">
+                    {!! __('content.witty_download_already_installed') !!}
+                </div>
+
+                <div id="already_signedin" style="display: none" class="align-center warning-message">
+                    {!! __('content.witty_download_already_signedin') !!}
                 </div>
             </div>
         </div>
