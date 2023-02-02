@@ -21,7 +21,6 @@ use SocialiteProviders\Manager\Contracts\OAuth2\ProviderInterface;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Socialite;
 use SocialiteProviders\Manager\Config;
-use Browser;
 
 class OAuthController extends BaseOAuthController
 {
@@ -32,7 +31,7 @@ class OAuthController extends BaseOAuthController
         return $generator->logout($provider, $policy);
     }
 
-    public function redirectToProvider(Request $request, string $provider, GeneratesProviderRedirect $generator, $policy = 'login')
+    public function redirectToProvider(string $provider, GeneratesProviderRedirect $generator, $policy = 'login')
     {
         session()->put('socialstream.previous_url', back()->getTargetUrl());
 
