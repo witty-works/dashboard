@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout :pagetitle="__('lumki::ui.manage_users')">
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('lumki::ui.manage_users') }}

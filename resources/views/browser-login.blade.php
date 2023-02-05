@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout :pagetitle="__('content.browser_login')">
     <x-slot name="header">
         <h2>{{ __('content.browser_login') }}</h2>
     </x-slot>

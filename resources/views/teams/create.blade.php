@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout :pagetitle="__('content.create_team')">
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('content.create_team') }}

@@ -3,7 +3,7 @@
     $has_term_replacements = \App\Models\TermReplacement::where($filter)->exists();
     $dictionaryItems = isset($team) ? $team->getTotalTermReplacementsCount() : $user->getTotalTermReplacementsCount() + $user->currentTeam->getTotalTermReplacementsCount();
 ?>
-<x-app-layout>
+<x-app-layout :pagetitle="__('content.analytics')">
     <div class="wittyworks-navigation-wrapper">@livewire('navigation-menu')</div>
         <div class="wittyworks-page-wrapper">
             <div class="wittyworks-page lg:ml-20">

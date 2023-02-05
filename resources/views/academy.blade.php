@@ -1,5 +1,4 @@
-
-<x-app-layout>
+<x-app-layout :pagetitle="__('content.academy')">
     <div class="wittyworks-navigation-wrapper">@livewire('navigation-menu')</div>
     <div class="wittyworks-page-wrapper">
         <div class="wittyworks-page-academy lg:ml-20">
