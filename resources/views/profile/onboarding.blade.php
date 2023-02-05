@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout :pagetitle="__('content.onboarding')">
     <div class="wittyworks-navigation-wrapper">@livewire('navigation-menu')</div>
         <div class="wittyworks-page-wrapper">
             <div class="wittyworks-page-subscription lg:ml-20 margin-bottom">

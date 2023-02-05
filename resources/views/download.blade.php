@@ -1,5 +1,5 @@
-<x-app-layout>
-        <div class="wittyworks-page-wrapper">
+<x-app-layout :pagetitle="__('content.witty_download')">
+    <div class="wittyworks-page-wrapper">
             <div class="wittyworks-page-subscription lg:ml-20 margin-bottom">
                 <div id="not_installed_title" style="display: none" class="ibarra-sub-title-h1 margin-top align-center">
                     {{ __('content.witty_download') }}
