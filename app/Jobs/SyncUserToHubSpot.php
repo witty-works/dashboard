@@ -15,6 +15,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use InvalidArgumentException;
+use Spatie\RateLimitedMiddleware\RateLimited;
 
 class SyncUserToHubSpot implements ShouldQueue
 {
@@ -26,6 +27,22 @@ class SyncUserToHubSpot implements ShouldQueue
     public function __construct(User $user)
     {
         $this->id = $user->id;
+    }
+
+    public function retryUntil()
+    {
+        return now()->addHour(1);
+    }
+
+    public function middleware()
+    {
+        $rateLimitedMiddleware = new RateLimited(false);
+
+        $rateLimitedMiddleware
+            ->allow(config('hubspot.rate.limit'))
+            ->everySeconds(config('hubspot.rate.interval_seconds'));
+
+        return [$rateLimitedMiddleware];
     }
 
     public function handle()

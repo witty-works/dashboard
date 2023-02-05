@@ -4,8 +4,54 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "633cd996ada25b2cd512212a0a0904f8",
+    "content-hash": "2f7f62d9e301983beb325321e83fc40d",
     "packages": [
+        {
+            "name": "artisansdk/ratelimiter",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/artisansdk/ratelimiter.git",
+                "reference": "470d3ca1b8e43b6d9a551209cd6de7bcc621387c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/artisansdk/ratelimiter/zipball/470d3ca1b8e43b6d9a551209cd6de7bcc621387c",
+                "reference": "470d3ca1b8e43b6d9a551209cd6de7bcc621387c",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "~5.0|~6.0|~7.0|~8.0|~9.0",
+                "nesbot/carbon": "~1.0|~2.0",
+                "php": ">=7.0|>=8.0",
+                "symfony/http-kernel": "~2.6|~3.3|~4.0|~5.0|~6.0"
+            },
+            "require-dev": {
+                "artisansdk/bench": "~1.0.0-rc2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ArtisanSdk\\RateLimiter\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel LaBarge",
+                    "email": "daniel@artisanmade.io"
+                }
+            ],
+            "description": "A leaky bucket rate limiter and corresponding middleware with route-level granularity compatible with Laravel.",
+            "support": {
+                "issues": "https://github.com/artisansdk/ratelimiter/issues",
+                "source": "https://github.com/artisansdk/ratelimiter/tree/1.0.2"
+            },
+            "time": "2022-12-19T17:38:43+00:00"
+        },
         {
             "name": "asm89/stack-cors",
             "version": "v2.1.1",
@@ -6603,6 +6649,70 @@
                 }
             ],
             "time": "2023-01-14T05:16:37+00:00"
+        },
+        {
+            "name": "spatie/laravel-rate-limited-job-middleware",
+            "version": "2.2.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-rate-limited-job-middleware.git",
+                "reference": "9f0502d0d45016de50e6968d4dc27358e442fc32"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-rate-limited-job-middleware/zipball/9f0502d0d45016de50e6968d4dc27358e442fc32",
+                "reference": "9f0502d0d45016de50e6968d4dc27358e442fc32",
+                "shasum": ""
+            },
+            "require": {
+                "artisansdk/ratelimiter": "^1.0",
+                "illuminate/cache": "^8.0|^9.0",
+                "illuminate/redis": "^8.0|^9.0",
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.4.1",
+                "orchestra/testbench": "^6.23|^7.0",
+                "pestphp/pest": "^1.21",
+                "phpunit/phpunit": "^9.5",
+                "spatie/pest-plugin-test-time": "^1.0",
+                "symfony/var-dumper": "^5.4|^6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\RateLimitedMiddleware\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A middleware that can rate limit jobs",
+            "homepage": "https://github.com/spatie/laravel-rate-limited-job-middleware",
+            "keywords": [
+                "laravel-rate-limited-job-middleware",
+                "spatie"
+            ],
+            "support": {
+                "issues": "https://github.com/spatie/laravel-rate-limited-job-middleware/issues",
+                "source": "https://github.com/spatie/laravel-rate-limited-job-middleware/tree/2.2.6"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/spatie",
+                    "type": "github"
+                }
+            ],
+            "time": "2022-11-02T08:02:31+00:00"
         },
         {
             "name": "spatie/laravel-slack-alerts",
