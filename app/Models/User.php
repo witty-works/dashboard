@@ -115,23 +115,6 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Jetstream::teamInvitationModel(), 'email', 'email');
     }
-
-    /**
-     * Get the open invitiations
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function teamInvitationRequests()
-    {
-        /** @var $team \App\Models\Team */
-        $team = $this->currentTeam;
-        if (empty($team)) {
-            return new Collection();
-        }
-
-        return $team->invitationRequests;
-    }
-
     /**
      * Get the current team of the user's context.
      *
@@ -247,7 +230,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getNotificationCount()
     {
         if ($this->currentTeam && $this->ownsTeam($this->currentTeam)) {
-            return $this->invitations->count() + $this->teamInvitationRequests->count();
+            return $this->invitations->count() + $this->currentTeam->InvitationRequests->count();
         }
 
         return 0;
