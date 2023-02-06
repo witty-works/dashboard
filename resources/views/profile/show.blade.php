@@ -5,7 +5,7 @@
                 @include('partials.banners')
                 <div class="ibarra-sub-title-h1 margin-top">
                     {{ __('content.manage_account') }}
-                </div> 
+                </div>
                 
                 @if (Laravel\Fortify\Features::canUpdateProfileInformation())
                     @livewire('profile.update-profile-information-form')

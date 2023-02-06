@@ -315,5 +315,4 @@ Please use Witty more often and click on the highlighted terms.',
     'witty_download_installed' => 'You have already installed Witty.',
     'sign_in' => 'Sign in',
     'try_out' => 'Try out Witty',
-    'show_team' => 'Show team',
 ];

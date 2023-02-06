@@ -315,5 +315,4 @@ Bitte verwende Witty öfter und klicke auf die hervorgehobenen Begriffe.',
     'witty_download_installed' => 'Du hast Witty bereits installiert.',
     'sign_in' => 'Logge dich ein',
     'try_out' => 'Probiere Witty aus',
-    'show_team' => 'Teamliste',
 ];

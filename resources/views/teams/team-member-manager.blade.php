@@ -1,10 +1,10 @@
 <div>
     @if (Gate::check('viewUserCreateForm', $team))
         <!-- Add Team Member -->
-        <div class="py-10" id="add-team-member">
+        <div id="add-team-member">
             <div class="ibarra-sub-title-h1 margin-top">
                 {{ __('content.manage_members') }}
-            </div>   
+            </div>
 
             @livewire('teams.update-team-name-form-cancel', ['team' => $team])
 
