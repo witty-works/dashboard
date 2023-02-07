@@ -22,19 +22,6 @@
                         
                             <div class="container border-radius-top">
                                 <div class="w-full col-span-6 sm:col-span-4 margin-bottom">
-                                    <x-jet-label for="role" value="{!! __('content.role') !!}" />
-                        
-                                    <x-select
-                                        name="role"
-                                        :options="\App\Models\User::ROLES"
-                                        class="mt-1 block w-full"
-                                        selected="{{ old('role') }}"
-                                    />
-                                    
-                                    <x-jet-input-error for="role" class="mt-2" />
-                                </div>
-
-                                <div class="w-full col-span-6 sm:col-span-4 margin-bottom">
                                     <x-jet-label for="languages" value="{!! __('content.languages') !!}" />
                         
                                     <x-select
@@ -45,6 +32,19 @@
                                     />
                         
                                     <x-jet-input-error for="languages" class="mt-2" />
+                                </div>
+
+                                <div class="w-full col-span-6 sm:col-span-4 margin-bottom">
+                                    <x-jet-label for="role" value="{!! __('content.role') !!}" />
+                        
+                                    <x-select
+                                        name="role"
+                                        :options="\App\Models\User::ROLES"
+                                        class="mt-1 block w-full"
+                                        selected="{{ old('role') }}"
+                                    />
+                                    
+                                    <x-jet-input-error for="role" class="mt-2" />
                                 </div>
 
                                 @if($request_invite)
