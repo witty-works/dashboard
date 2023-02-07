@@ -33,7 +33,7 @@
                             {!! __('content.witty_download_already_signedin') !!}
 
                             <div class="mt-5">
-                                <a class="button primary-button-red download-button" href="https://www.witty.works/try-out-witty">
+                                <a class="button primary-button-red download-button" href="{{ config('app.try_out_url') }}">
                                     {{ __('content.try_out') }}
                                 </a>
                             </div>
@@ -63,7 +63,7 @@
 
                                     if (loginUrl) {
                                         const loginWittyUrl = document.querySelector('#login-witty-url');
-                                        loginWittyUrl.setAttribute('href', loginUrl + '?target=' + encodeURIComponent('https://www.witty.works/try-out-witty'))
+                                        loginWittyUrl.setAttribute('href', loginUrl + '?target=' + encodeURIComponent(@json(config('app.try_out_url'))))
 
                                         const alreadyInstalled = document.querySelector('#already_installed');
                                         alreadyInstalled.style.display = 'block';
