@@ -267,7 +267,7 @@ class User extends Authenticatable implements MustVerifyEmail
         if (
             $this->role !== null
             || !$this->currentTeam
-            || app('impersonate')->isImpersonating()
+            || (config('app.no_onboarding_for_impersonation') && app('impersonate')->isImpersonating())
         ) {
             return true;
         }
