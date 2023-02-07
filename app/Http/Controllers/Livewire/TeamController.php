@@ -20,6 +20,10 @@ class TeamController extends Controller
             abort(403);
         }
 
+        if (Gate::denies('update', $team)) {
+            return redirect()->route('profile.show');
+        }
+
         return view('teams.show', [
             'user' => $request->user(),
             'team' => $team,
