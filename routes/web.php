@@ -42,7 +42,9 @@ use App\Http\Controllers\WelcomeController;
 | MCAMARA LARAVELLOCALIZATION
 |------------------
 */
+
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+
 /*
 |------------------
 | \MCAMARA LARAVELLOCALIZATION
