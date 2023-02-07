@@ -77,13 +77,14 @@
                                 </div>
                                 @elseif($request_invite === null && $user->isSharedEmailAccount())
                                 <div class="w-full col-span-6 sm:col-span-4 margin-bottom">
+                                    <x-jet-label for="company_name" value="{!! __('content.company_name') !!}" />
+
                                     <x-jet-input
                                         name="company_name"
                                         type="textarea"
                                         class="mt-1 block w-full textarea-as-input"
                                         value="{{ old('company_name') }}"
                                     />
-                                    <x-jet-label for="company_name" value="{!! __('content.company_name') !!}" />
                                     <x-jet-input-error for="company_name" class="mt-2" />
                                 </div>
                                 @endif
