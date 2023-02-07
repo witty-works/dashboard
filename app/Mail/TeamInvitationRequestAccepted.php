@@ -38,6 +38,8 @@ class TeamInvitationRequestAccepted extends Mailable
     {
         $param = [
             'team' => $this->invitationRequest->team->name,
+            'name' => $this->invitationRequest->team->owner->name,
+            'email' => $this->invitationRequest->team->owner->email,
         ];
 
         return $this->markdown('mail.team-invitation-request-accepted', $param)
