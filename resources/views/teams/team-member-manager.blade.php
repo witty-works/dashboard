@@ -17,6 +17,12 @@
                 <x-slot name="description">
                     {{ trans_choice('content.add_a_new_team_member', $team->getUserLicensesCount(), ['max_count' => $team->getUserLicensesCount()]) }}
 
+                    @if (session()->has('teams_invitation_request_message'))
+                    <p class="lato-small-text-p margin-bottom limit-reached">
+                        {{ session('teams_invitation_request_message') }}
+                    </p>
+                    @endif
+
                     <!-- Limit reached -->
                     @if($team->getUserLicensesLimitReached())
                     <p class="lato-small-text-p margin-bottom limit-reached">
@@ -158,11 +164,7 @@
             </x-slot>
 
             <x-slot name="description">
-                @if (session()->has('teams_invitation_request_message'))
-                <p class="lato-small-text-p margin-bottom limit-reached">
-                    {{ session('teams_invitation_request_message') }}
-                </p>
-                @elseif($team->getUserLicensesLimitReached())
+                @if($team->getUserLicensesLimitReached())
                 <p class="lato-small-text-p margin-bottom limit-reached">
                     {{ __('teams.user_limit_reached_error', ['max_count' => $team->getUserLicensesCount()-1]) }}
 
