@@ -38,9 +38,22 @@ class Form extends OrganizationForm
             ->where('user_id', $this->user->id)
             ->where('term', $this->term);
 
+        if ($this->language_code) {
+            $query->where(function ($q) {
+                $q->where('language_code', '')
+                    ->orWhere('language_code', $this->language_code);
+            });
+        }
+
         if ($this->term_replacement_id) {
             $query->whereNot('id', $this->term_replacement_id);
             $termReplacement = TermReplacement::find($this->term_replacement_id);
+        }
+
+        $count = $query->count();
+        if ($count) {
+            $message = __('guidelines.term_already_exists');
+            throw ValidationException::withMessages(['term' => $message]);
         }
 
         if (!empty($termReplacement)) {
@@ -55,12 +68,6 @@ class Form extends OrganizationForm
             }
 
             $termReplacement = new TermReplacement();
-        }
-
-        $count = $query->count();
-        if ($count) {
-            $message = __('guidelines.term_already_exists');
-            throw ValidationException::withMessages(['term' => $message]);
         }
 
         $this->emoji = TermReplacement::validateEmoji($this->emoji);
