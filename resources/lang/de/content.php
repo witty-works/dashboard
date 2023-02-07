@@ -128,8 +128,7 @@ return [
 
 So kannst du deinem Team beitreten:
 
-- Lade das <a href="https://www.witty.works/download">Witty-Plugin</a> herunter
-- <a href="https://www.witty.works/register">Registriere dich oder logge dich ein</a>. 
+- <a href="https://www.witty.works/download">Registriere</a> dich oder logge dich ein and download the Witty-Plugin.
 - Gehen zum <a href="https://dashboard.witty.works/">Dashboard</a> und akzeptiere die Einladung',
     'if_you_did_not_expect' => 'Wenn du diese Einladung nicht annehmen willst, sind keine weiteren Schritte erforderlich.',
     'woops' => 'hoppla',
@@ -176,7 +175,7 @@ So kannst du deinem Team beitreten:
     'making_changes_requires_admin_rights' => 'Um Änderungen vorzunehmen, sind Administrationsrechte erforderlich. Bitte wende dich an dein*e <a href="mailto::email">Team-Eigentümer*in</a>.',
     'already_invited_to_team' => 'Diese*r Benutzer*in wurde bereits in das Team eingeladen.',
     'already_belongs_to_team' => 'Diese*r Benutzer*in ist schon im Team.',
-    'team_invitation_subject' => ':name hat dich eingeladen, ihrem Team auf Witty beizutreten',
+    'team_invitation_subject' => ':name hat dich eingeladen, dem Team ":team" auf Witty beizutreten',
     'if_you_have_questions' => 'P.S. Brauchst du Hilfe oder hast du Fragen?
 <a href="https://www.witty.works/en/help/wittys-help-center">Hier</a> findest du Antworten auf viele Fragen. Du erreichst uns unter <a href="mailto:support@witty.works">support@witty.works</a>. Wir sind hier, um dir bei jedem Schritt auf dem Weg zu helfen.',
     'have_a_great_day' => 'Wir wünschen dir einen schönen Tag,
@@ -204,7 +203,7 @@ Dein Witty-Team',
     'mailing_consent_button' => 'Ja',
     'renew' => 'Abonnement fortsetzen',
     'accepting_invitation_will_cancel' => 'Durch Annehmen dieser Einladung, wird das aktuelle Abonnement gekündigt.',
-    'accepting_invitation_will_cancel_and_downgrade' => 'Wenn Sie diese Einladung annehmen, wird Ihr aktuelles Abonnement gekündigt und Sie werden auf den Witty Free-Plan herabgestuft.',
+    'accepting_invitation_will_cancel_and_downgrade' => 'Wenn Sie diese Einladung annehmen, wird dein aktuelles Abonnement gekündigt und du wirst auf den Witty Free-Plan herabgestuft.',
     'onboarding_login_witty_title' => 'Bitte melden Dich bei Witty an',
     'onboarding_login_witty_text' => 'Um Witty zu verwenden, melde Dich bitte bei der Witty-Browsererweiterung an.',
     'onboarding_login_witty_button' => 'Melden dich bei Witty an',
@@ -317,9 +316,9 @@ Bitte verwende Witty öfter und klicke auf die hervorgehobenen Begriffe.',
     'try_out' => 'Probiere Witty aus',
     'request_invite' => 'Ich würde gerne diesem Team beitreten',
     'co-workers-with-witty-account' => '{1} Eine andere Person aus deiner Organisation hat ebenfalls ein Witty-Konto! | :count weitere Personen aus deiner Organisation haben ebenfalls ein Witty-Konto.',
-    'team_invitation_request_subject' => 'Witty | :first_name möchte sich deinem Team anschließen',
-    'invition_request_send' => 'Witty | :first_name wants to join your team',
-    'invitation_request_explanation' => ':first_name hat soeben ein Witty-Konto erstellt und würde gerne deinem Team beitreten. 🧡 
+    'team_invitation_request_subject' => 'Witty | :name möchte sich deinem Team anschließen',
+    'invition_request_send' => 'Witty | :name wants to join your team',
+    'invitation_request_explanation' => ':name (:email) hat soeben ein Witty-Konto erstellt und würde gerne deinem Team beitreten. 🧡 
 
 Ein Team hilft, inklusiv UND konsistent in deiner gesamten Organisation zu schreiben.  
 
@@ -330,16 +329,16 @@ Spracheinstellungen: Lege Schreibpräferenzen und Regeln rund um Inklusion & Div
 Erstelle ein Team-Wörterbuch: Stelle sicher, dass alle in deinem Unternehmen die gleiche Sprache verwendet. 
 
 Messe Verbesserungen: Erkenne Trends in den Texten deines Teams und messe, wie ihr euch verbessert.',
-    'accept_invitation_request' => ':first_name in dein Team aufnehmen',
+    'accept_invitation_request' => ':name in dein Team aufnehmen',
     'if_you_did_not_expect_request' => 'Wenn du diese Person nicht in dein Team aufnehmen möchtest, ignoriere diese E-Mail einfach. 🙂',
-    'pending_team_invitation_requests' => 'Ausstehende Teameinladungen',
+    'pending_team_invitation_requests' => 'Ausstehende Teamanfragen',
     'these_people_have_requested_an_invite' => 'Diese Personen möchten deinem Team beitreten. Sie können deinem Team beitreten, indem du unten auf "Akzeptieren" klickst.',
     'accept' => 'Annehmen',
-    'team_invitation_request_accepted_subject' => 'Witty | Willkommen im :company_name Team',
-    'invition_request_accepted' => 'Witty | Willkommen im Team von :company_name',
-    'invitation_request_accepted_explanation' => 'Du bist soeben dem Team von :company_name beitreten. 🧡 
+    'team_invitation_request_accepted_subject' => 'Witty | Willkommen im Team ":team"',
+    'invition_request_accepted' => 'Witty | Willkommen im Team ":team"',
+    'invitation_request_accepted_explanation' => 'Du bist soeben dem Team ":team" beitreten. 🧡 
 
-Ein Team hilft, inklusiv UND konsistent in deiner gesamten Organisation zu schreiben.  
+Ein Team hilft, inklusiv UND konsistent in deiner gesamten Organisation zu schreiben.
 
 Was bekommst du als Team?
 
@@ -348,6 +347,9 @@ Spracheinstellungen: Lege Schreibpräferenzen und Regeln rund um Inklusion & Div
 Erstelle ein Team-Wörterbuch: Stelle sicher, dass alle in deinem Unternehmen die gleiche Sprache verwendet. 
 
 Messe Verbesserungen: Erkenne Trends in den Texten deines Teams und messe, wie ihr euch verbessert.',
-    'invitation_request_already_accepted' => ':first_name ist bereits einem anderen Team beigetreten.',
+    'invition_requests_title' => 'Teamanfrage',
+    'invition_requests_text' => 'Jemand hat darum gebeten, deinem Team beizutreten.',
+    'review_invitation_requests_button' => 'Überprüfen',
+    'invitation_request_already_accepted' => ':name ist bereits einem anderen Team beigetreten.',
     'invitation_request_license_limit_reached' => 'Du hast bereits zwei Mitglieder in dein Team eingeladen und hast das Limit erreicht. Mach ein <a href="https://dashboard.witty.works/en/team/subscription">Upgrade</a>, um mehr Mitglieder einzuladen!',
 ];

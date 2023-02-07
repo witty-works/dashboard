@@ -129,12 +129,11 @@ return [
     'whoops' => 'Whoops! Something went wrong.',
     'you_have_been_invited' => 'Welcome to <a href="https://www.witty.works/">Witty</a>!
 
-:name has invited you to join team ":team"!
+:name has invited you to join ":team" team!
 
 Here is how you can join your team:
 
-- <a href="https://www.witty.works/download">Download</a> the Witty plugin
-- Log in or register. To do so, follow <a href="https://www.witty.works/welcome">these quick onboarding steps</a>.
+- <a href="https://www.witty.works/download">Register</a> or log in and download the Witty plugin.
 - Go to the <a href="https://dashboard.witty.works/">dashboard</a> and accept the invitation',
     'invitation_email_welcome' => 'When you join the team, you will have access to the team\'s language settings in Witty.',
     'if_you_did_not_expect' => 'If you do not want to accept the invitation, no further steps are required.',
@@ -180,7 +179,7 @@ Here is how you can join your team:
     'making_changes_requires_admin_rights' => 'To make changes, admin rights are required. Please contact your team <a href="mailto::email">owner</a>.',
     'already_invited_to_team' => 'This user has already been invited to the team.',
     'already_belongs_to_team' => 'This user already belongs to the team.',
-    'team_invitation_subject' => ':name invited you to join :team on Witty',
+    'team_invitation_subject' => 'Witty | :name invited you to join team ":team" on Witty',
     'if_you_have_questions' => 'P.S. Need support or have any questions?
 You can find answers to many questions <a href="https://www.witty.works/en/help/wittys-help-center">here</a>. You can get in touch with us at <a href="mailto:support@witty.works">support@witty.works</a>. We\'re here to help you at any step along the way.',
     'have_a_great_day' => 'Have a great day,
@@ -317,9 +316,9 @@ Please use Witty more often and click on the highlighted terms.',
     'try_out' => 'Try out Witty',
     'request_invite' => 'I would like to join this team',
     'co-workers-with-witty-account' => '{1} Another person from your organization also has a Witty account. |{2} :count people from your organization also have an Witty account.',
-    'team_invitation_request_subject' => 'Witty | :first_name wants to join your team',
-    'invition_request_send' => 'Witty | :first_name wants to join your team',
-    'invitation_request_explanation' => ':first_name just created an account in Witty and would like to join your team. 🧡 
+    'team_invitation_request_subject' => 'Witty | :name wants to join your team',
+    'invition_request_send' => 'Witty | :name wants to join your team',
+    'invitation_request_explanation' => ':name (:email) just created an account in Witty and would like to join your team. 🧡 
 
 Creating a team helps writing inclusively AND consistently throughout your whole organization.  
 
@@ -330,14 +329,14 @@ Language settings: Customize writing preferences and rules around diversity and 
 Create a team dictionary: Create your own library of words to ensure that everyone in your company uses the brand voice. 
 
 Measure improvement: Use data-driven insights to identify trends in your team’s writing and measure improvement.',
-    'accept_invitation_request' => 'Accept :first_name in your team',
+    'accept_invitation_request' => 'Accept :name in your team',
     'if_you_did_not_expect_request' => 'If you don\'t want to add this person to your team, just ignore this email. 🙂',
-    'pending_team_invitation_requests' => 'Pending team invitations',
+    'pending_team_invitation_requests' => 'Pending team join requests',
     'these_people_have_requested_an_invite' => 'These people want to join your team. Let them join your team by clicking "Accept" below.',
     'accept' => 'Accept',
-    'team_invitation_request_accepted_subject' => 'Witty | Welcome to :company_name \'s team',
-    'invition_request_accepted' => 'Witty | Welcome to :company_name \'s team',
-    'invitation_request_accepted_explanation' => 'You just joined :company_name \'s team. 🧡 
+    'team_invitation_request_accepted_subject' => 'Witty | Welcome to team ":team"',
+    'invition_request_accepted' => 'Witty | Welcome to team ":team"',
+    'invitation_request_accepted_explanation' => 'You just joined team ":team". 🧡 
 
 Joining a team helps writing inclusively AND consistently throughout your whole organization.  
 
@@ -348,9 +347,9 @@ Language settings: Customize writing preferences and rules around diversity and 
 Create a team dictionary: Create your own library of words to ensure that everyone in your company uses the brand voice. 
 
 Measure improvement: Use data-driven insights to identify trends in your team’s writing and measure improvement.',
-    'invition_requests_title' => 'invition requests title',
-    'invition_requests_text' => 'invition requests text',
-    'review_invitation_requests_button' => 'review invitation requests button',
-    'invitation_request_already_accepted' => ':first_name already join another team.',
+    'invition_requests_title' => 'Join Request',
+    'invition_requests_text' => 'Someone has requested to join your team.',
+    'review_invitation_requests_button' => 'Review',
+    'invitation_request_already_accepted' => ':name already join another team.',
     'invitation_request_license_limit_reached' => 'You have already invited two members to your team and have reached the limit. <a href="https://dashboard.witty.works/en/team/subscription">Upgrade</a> to invite more members!',
 ];

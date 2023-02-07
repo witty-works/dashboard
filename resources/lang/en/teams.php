@@ -27,7 +27,7 @@ return [
     'team_owner' => 'Team owner',
     'upgrade_to_witty_teams' => 'Please upgrade to Witty Teams',
     'ask_owner_to_buy_or_leave_to_create_own_team' => 'Please ask the team owner :name (:email) to buy Witty licenses or leave your current team to create own team.',
-    'accepted_invitation' => 'Great! You have accepted the invitation to join the :team team.',
+    'accepted_invitation' => 'Great! You have accepted the invitation to join the ":team" team.',
     'language' => 'Team Language',
     'witty_teams_only' => 'Witty Teams Only',
     'locked_by_team' => 'This setting has been locked by your team administrators.',
@@ -38,5 +38,4 @@ return [
     'amount_per_year' => ':count licenses - :amount per year',
     'license_count_did_not_change' => 'The license count was not changed.',
     'to_upgrade_contact_owner' => 'To upgrade, please contact your team owner.',
-    'accepted_invitation_request' => 'accepted invitation request',
 ];
