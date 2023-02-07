@@ -1,6 +1,4 @@
 @component('mail::message')
-{!! __('content.invition_request_accepted', ['team' => $team, 'name' => $name, 'email' => $email]) !!}
-
 {!! __('content.invitation_request_accepted_explanation', ['team' => $team, 'name' => $name, 'email' => $email]) !!}
 
 {!! __('content.have_a_great_day') !!}

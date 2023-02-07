@@ -1,10 +1,8 @@
 @component('mail::message')
-{!! __('content.invition_request_send', ['name' => $name, 'team' => $team, 'email' => $email]) !!}
-
 {!! __('content.invitation_request_explanation', ['name' => $name, 'team' => $team, 'email' => $email]) !!}
 
 @component('mail::button', ['url' => route('teams.show').'#requests'])
-{{ __('content.accept_invitation_request') }}
+{{ __('content.accept_invitation_request', ['name' => $name, 'team' => $team, 'email' => $email]) }}
 @endcomponent
 
 {!! __('content.if_you_did_not_expect_request') !!}

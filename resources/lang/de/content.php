@@ -314,10 +314,9 @@ Bitte verwende Witty öfter und klicke auf die hervorgehobenen Begriffe.',
     'witty_download_installed' => 'Du hast Witty bereits installiert.',
     'sign_in' => 'Logge dich ein',
     'try_out' => 'Probiere Witty aus',
-    'request_invite' => 'Ich würde gerne diesem Team beitreten',
+    'request_invite' => 'Ich würde gerne ihrem Team beitreten',
     'co-workers-with-witty-account' => '{1} Eine andere Person aus deiner Organisation hat ebenfalls ein Witty-Konto! | :count weitere Personen aus deiner Organisation haben ebenfalls ein Witty-Konto.',
     'team_invitation_request_subject' => 'Witty | :name möchte sich deinem Team anschließen',
-    'invition_request_send' => 'Witty | :name wants to join your team',
     'invitation_request_explanation' => ':name (:email) hat soeben ein Witty-Konto erstellt und würde gerne deinem Team beitreten. 🧡 
 
 Ein Team hilft, inklusiv UND konsistent in deiner gesamten Organisation zu schreiben.  
@@ -335,7 +334,6 @@ Messe Verbesserungen: Erkenne Trends in den Texten deines Teams und messe, wie i
     'these_people_have_requested_an_invite' => 'Diese Personen möchten deinem Team beitreten. Sie können deinem Team beitreten, indem du unten auf "Akzeptieren" klickst.',
     'accept' => 'Annehmen',
     'team_invitation_request_accepted_subject' => 'Witty | Willkommen im Team ":team"',
-    'invition_request_accepted' => 'Witty | Willkommen im Team ":team"',
     'invitation_request_accepted_explanation' => 'Du bist soeben dem Team ":team" beitreten. 🧡 
 
 Ein Team hilft, inklusiv UND konsistent in deiner gesamten Organisation zu schreiben.
