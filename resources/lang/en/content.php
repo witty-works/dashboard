@@ -315,22 +315,42 @@ Please use Witty more often and click on the highlighted terms.',
     'witty_download_installed' => 'Witty is already installed!',
     'sign_in' => 'Sign in',
     'try_out' => 'Try out Witty',
-    'request_invite' => 'Ask to be invited to their team',
-    'co-workers-with-witty-account' => '{1} Atleast one person from your organization also has an Witty account!|{2} Atleast :count people from your organization also have an Witty account!',
-    'team_invitation_request_subject' => 'team invitation request subject',
-    'invition_request_send' => 'invition request send ',
-    'invitation_request_explanation' => 'invitation request explanation',
-    'accept_invitation_request' => 'accept invitation request',
-    'if_you_did_not_expect_request' => 'if you did not expect request',
-    'pending_team_invitation_requests' => '{1} One pending team invitation request |[2,*] :count pending team invitation requests',
-    'these_people_have_requested_an_invite' => 'These people have requested to be invited to join your team. They will join the team by clicking on "Accept" below.',
+    'request_invite' => 'I would like to join this team',
+    'co-workers-with-witty-account' => '{1} Another person from your organization also has a Witty account. |{2} :count people from your organization also have an Witty account.',
+    'team_invitation_request_subject' => 'Witty | :first_name wants to join your team',
+    'invition_request_send' => 'Witty | :first_name wants to join your team',
+    'invitation_request_explanation' => ':first_name just created an account in Witty and would like to join your team. 🧡 
+
+Creating a team helps writing inclusively AND consistently throughout your whole organization.  
+
+What do you get as a team?
+
+Language settings: Customize writing preferences and rules around diversity and inclusion for your team to communicate as one.
+
+Create a team dictionary: Create your own library of words to ensure that everyone in your company uses the brand voice. 
+
+Measure improvement: Use data-driven insights to identify trends in your team’s writing and measure improvement.',
+    'accept_invitation_request' => 'Accept :first_name in your team',
+    'if_you_did_not_expect_request' => 'If you don\'t want to add this person to your team, just ignore this email. 🙂',
+    'pending_team_invitation_requests' => 'Pending team invitations',
+    'these_people_have_requested_an_invite' => 'These people want to join your team. Let them join your team by clicking "Accept" below.',
     'accept' => 'Accept',
-    'team_invitation_request_accepted_subject' => 'team invitation request accepted subject',
-    'invition_request_accepted' => 'invition request accepted',
-    'invitation_request_accepted_explanation' => 'invitation request accepted explanation',
+    'team_invitation_request_accepted_subject' => 'Witty | Welcome to :company_name \'s team',
+    'invition_request_accepted' => 'Witty | Welcome to :company_name \'s team',
+    'invitation_request_accepted_explanation' => 'You just joined :company_name \'s team. 🧡 
+
+Joining a team helps writing inclusively AND consistently throughout your whole organization.  
+
+What do you get as a team?
+
+Language settings: Customize writing preferences and rules around diversity and inclusion for your team to communicate as one.
+
+Create a team dictionary: Create your own library of words to ensure that everyone in your company uses the brand voice. 
+
+Measure improvement: Use data-driven insights to identify trends in your team’s writing and measure improvement.',
     'invition_requests_title' => 'invition requests title',
     'invition_requests_text' => 'invition requests text',
     'review_invitation_requests_button' => 'review invitation requests button',
-    'invitation_request_already_accepted' => 'invitation request already accepted',
-    'invitation_request_license_limit_reached' => 'invitation request license limit reached',
+    'invitation_request_already_accepted' => ':first_name already join another team.',
+    'invitation_request_license_limit_reached' => 'You have already invited two members to your team and have reached the limit. <a href="https://dashboard.witty.works/en/team/subscription">Upgrade</a> to invite more members!',
 ];

@@ -315,5 +315,39 @@ Bitte verwende Witty öfter und klicke auf die hervorgehobenen Begriffe.',
     'witty_download_installed' => 'Du hast Witty bereits installiert.',
     'sign_in' => 'Logge dich ein',
     'try_out' => 'Probiere Witty aus',
+    'request_invite' => 'Ich würde gerne diesem Team beitreten',
+    'co-workers-with-witty-account' => '{1} Eine andere Person aus deiner Organisation hat ebenfalls ein Witty-Konto! | :count weitere Personen aus deiner Organisation haben ebenfalls ein Witty-Konto.',
+    'team_invitation_request_subject' => 'Witty | :first_name möchte sich deinem Team anschließen',
+    'invition_request_send' => 'Witty | :first_name wants to join your team',
+    'invitation_request_explanation' => ':first_name hat soeben ein Witty-Konto erstellt und würde gerne deinem Team beitreten. 🧡 
+
+Ein Team hilft, inklusiv UND konsistent in deiner gesamten Organisation zu schreiben.  
+
+Was bekommst du als Team?
+
+Spracheinstellungen: Lege Schreibpräferenzen und Regeln rund um Inklusion & Diversät fest, damit dein Team als Einheit kommunizieren kann.
+
+Erstelle ein Team-Wörterbuch: Stelle sicher, dass alle in deinem Unternehmen die gleiche Sprache verwendet. 
+
+Messe Verbesserungen: Erkenne Trends in den Texten deines Teams und messe, wie ihr euch verbessert.',
+    'accept_invitation_request' => ':first_name in dein Team aufnehmen',
+    'if_you_did_not_expect_request' => 'Wenn du diese Person nicht in dein Team aufnehmen möchtest, ignoriere diese E-Mail einfach. 🙂',
+    'pending_team_invitation_requests' => 'Ausstehende Teameinladungen',
+    'these_people_have_requested_an_invite' => 'Diese Personen möchten deinem Team beitreten. Sie können deinem Team beitreten, indem du unten auf "Akzeptieren" klickst.',
     'accept' => 'Annehmen',
+    'team_invitation_request_accepted_subject' => 'Witty | Willkommen im :company_name Team',
+    'invition_request_accepted' => 'Witty | Willkommen im Team von :company_name',
+    'invitation_request_accepted_explanation' => 'Du bist soeben dem Team von :company_name beitreten. 🧡 
+
+Ein Team hilft, inklusiv UND konsistent in deiner gesamten Organisation zu schreiben.  
+
+Was bekommst du als Team?
+
+Spracheinstellungen: Lege Schreibpräferenzen und Regeln rund um Inklusion & Diversät fest, damit dein Team als Einheit kommunizieren kann.
+
+Erstelle ein Team-Wörterbuch: Stelle sicher, dass alle in deinem Unternehmen die gleiche Sprache verwendet. 
+
+Messe Verbesserungen: Erkenne Trends in den Texten deines Teams und messe, wie ihr euch verbessert.',
+    'invitation_request_already_accepted' => ':first_name ist bereits einem anderen Team beigetreten.',
+    'invitation_request_license_limit_reached' => 'Du hast bereits zwei Mitglieder in dein Team eingeladen und hast das Limit erreicht. Mach ein <a href="https://dashboard.witty.works/en/team/subscription">Upgrade</a>, um mehr Mitglieder einzuladen!',
 ];
