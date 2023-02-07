@@ -60,13 +60,14 @@ class AnalyticsController extends Controller
 
     public function userApi(Request $request)
     {
-        if (empty($request->user())) {
+        $user = $request->user();
+        if (empty($user)) {
             abort(403);
         }
 
-        $properties = PosthogHelper::getUserFilter($request->user());
+        $properties = PosthogHelper::getUserFilter($user);
 
-        return $this->fetchJson($request, $properties);
+        return $this->fetchJson($request, $properties, $user);
     }
 
     public function organizationApi(Request $request)
@@ -154,7 +155,7 @@ class AnalyticsController extends Controller
         return floor($differenceInWeeks);
     }
 
-    protected function fetchJson(Request $request, $properties, $model = null)
+    protected function fetchJson(Request $request, $properties, $model)
     {
         $from = $this->fetchFrom($request);
         $fromPosthog = "-{$from}d";
