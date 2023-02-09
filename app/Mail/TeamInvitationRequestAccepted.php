@@ -12,11 +12,25 @@ class TeamInvitationRequestAccepted extends Mailable
     use Queueable, SerializesModels;
 
     /**
-     * The team invitation instance.
+     * The team invitation request instance.
      *
      * @var \App\Models\TeamInvitationRequest
      */
     public $invitationRequest;
+
+    /**
+     * The role to which the user was accepted to.
+     *
+     * @var string
+     */
+    public $role;
+
+    /**
+     * The admin that accepted the invitation request instance.
+     *
+     * @var \App\Models\User
+     */
+    public $admin;
 
     /**
      * Create a new message instance.
@@ -24,9 +38,11 @@ class TeamInvitationRequestAccepted extends Mailable
      * @param  \App\Models\TeamInvitationRequest  $invitationRequest
      * @return void
      */
-    public function __construct(TeamInvitationRequestModel $invitationRequest)
+    public function __construct(TeamInvitationRequestModel $invitationRequest, $role, $admin)
     {
         $this->invitationRequest = $invitationRequest;
+        $this->role = $role;
+        $this->admin = $admin;
     }
 
     /**
@@ -38,8 +54,9 @@ class TeamInvitationRequestAccepted extends Mailable
     {
         $param = [
             'team' => $this->invitationRequest->team->name,
-            'name' => $this->invitationRequest->team->owner->name,
-            'email' => $this->invitationRequest->team->owner->email,
+            'role' => $this->role,
+            'name' => $this->admin->name,
+            'email' => $this->admin->email,
         ];
 
         return $this->markdown('mail.team-invitation-request-accepted', $param)

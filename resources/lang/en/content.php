@@ -133,7 +133,7 @@ return [
 
 Here is how you can join your team:
 
-- <a href="https://www.witty.works/download">Register</a> or log in and download the Witty plugin.
+- <a href="https://dashboard.witty.works/download">Register</a> or log in and download the Witty plugin.
 - Go to the <a href="https://dashboard.witty.works/">dashboard</a> and accept the invitation',
     'invitation_email_welcome' => 'When you join the team, you will have access to the team\'s language settings in Witty.',
     'if_you_did_not_expect' => 'If you do not want to accept the invitation, no further steps are required.',
@@ -290,9 +290,9 @@ Please use Witty more often and click on the highlighted terms.',
     'lead' => 'Team Lead',
     'employee' => 'Employee',
     'title_words_bar_chart_month_corporate_rules' => 'Top dictionary words viewed this month',
-    'no_corporate_rules' => 'You haven\'t made any entries in <a href="https://dashboard.witty.works/en/team/language/dictionary" target="_blank">your team dictionary</a> yet, so we can\'t show statistics for that.<br/>
-<a href="https://dashboard.witty.works/en/team/language/dictionary" target="_blank">Try it!</a>',
-    'corporate_rules_none_opened' => 'You have entered words in your <a href="https://dashboard.witty.works/en/team/language/dictionary" target="_blank">team\'s dictionary</a>, but no one from your team has yet looked at the suggested alternative if the word was underlined.',
+    'no_corporate_rules' => 'You haven\'t made any entries in <a href="https://dashboard.witty.works/team/language/dictionary" target="_blank">your team dictionary</a> yet, so we can\'t show statistics for that.<br/>
+<a href="https://dashboard.witty.works/team/language/dictionary" target="_blank">Try it!</a>',
+    'corporate_rules_none_opened' => 'You have entered words in your <a href="https://dashboard.witty.works/team/language/dictionary" target="_blank">team\'s dictionary</a>, but no one from your team has yet looked at the suggested alternative if the word was underlined.',
     'browser_name_chrome' => 'Chrome',
     'browser_get_chrome' => 'Get for Chrome',
     'browser_name_edge' => 'Microsoft Edge',
@@ -302,9 +302,9 @@ Please use Witty more often and click on the highlighted terms.',
     'witty_download' => 'Download Witty. It’s free.',
     'witty_download_description' => 'Pick your browser, and add the Witty extension.',
     'witty_download_description_not_supported_yet' => 'This browser is not yet supported by Witty.',
-    'no_corporate_rules_user' => 'You haven\'t made any entries in <a href="https://dashboard.witty.works/en/user/language/dictionary" target="_blank">your dictionary</a> yet, so we can\'t show statistics for that.<br/>
-<a href="https://dashboard.witty.works/en/user/language/dictionary" target="_blank">Try it!</a>',
-    'corporate_rules_none_opened_user' => 'You have entered words in your <a href="https://dashboard.witty.works/en/user/language/dictionary" target="_blank"> dictionary</a>, but you haven\'t yet looked at the suggested alternative if the word was underlined.',
+    'no_corporate_rules_user' => 'You haven\'t made any entries in <a href="https://dashboard.witty.works/user/language/dictionary" target="_blank">your dictionary</a> yet, so we can\'t show statistics for that.<br/>
+<a href="https://dashboard.witty.works/user/language/dictionary" target="_blank">Try it!</a>',
+    'corporate_rules_none_opened_user' => 'You have entered words in your <a href="https://dashboard.witty.works/user/language/dictionary" target="_blank"> dictionary</a>, but you haven\'t yet looked at the suggested alternative if the word was underlined.',
     'help' => 'Help',
     'witty_editor_description' => 'If Witty doesn\'t work on a specific website, simply copy & paste your text here.',
     'witty_editor_viral_copy_text' => 'Checked with witty.works for inclusive language',
@@ -314,40 +314,64 @@ Please use Witty more often and click on the highlighted terms.',
     'witty_download_installed' => 'Witty is already installed!',
     'sign_in' => 'Sign in',
     'try_out' => 'Try out Witty',
-    'request_invite' => 'I would like to join their team',
-    'co-workers-with-witty-account' => '{1} Another person from your organization also has a Witty account. |{2} :count people from your organization also have an Witty account.',
+    'request_invite' => 'I would like to request to join their team',
+    'co-workers-with-witty-account' => '{1} Another person from your organization also has a Witty account. |{2} :count people from your organization also have a Witty account.',
     'team_invitation_request_subject' => 'Witty | :name wants to join your team',
-    'invitation_request_explanation' => ':name (:email) just created an account in Witty and would like to join your team. 🧡 
+    'invitation_request_explanation' => 'Hi,
 
-Creating a team helps writing inclusively AND consistently throughout your whole organization.  
+:name (:email) just created an account in Witty and would like to join your team. 🧡
+
+<b>Joining a team helps writing inclusively AND consistently throughout your organization. </b>
 
 What do you get as a team?
 
-Language settings: Customize writing preferences and rules around diversity and inclusion for your team to communicate as one.
+<ul><li><a href="https://dashboard.witty.works/team/language/language-settings">Language settings</a>: Customize writing preferences and rules around diversity and inclusion for your team to communicate as one.</li>
 
-Create a team dictionary: Create your own library of words to ensure that everyone in your company uses the brand voice. 
+<li><a href="https://dashboard.witty.works/team/language/dictionary">Create a team dictionary</a>: Create your own library of words to ensure that everyone in your company uses the brand voice. </li>
 
-Measure improvement: Use data-driven insights to identify trends in your team’s writing and measure improvement.',
+<li><a href="https://dashboard.witty.works/team/analytics">Measure improvement</a>: Use data-driven insights to identify trends in your team’s writing and measure improvement.</li>
+</ul>',
     'accept_invitation_request' => 'Accept :name to your team',
     'if_you_did_not_expect_request' => 'If you don\'t want to add this person to your team, just ignore this email. 🙂',
     'pending_team_invitation_requests' => 'Pending team join requests',
     'these_people_have_requested_an_invite' => 'These people want to join your team. Let them join your team by clicking "Accept" below.',
     'accept' => 'Accept',
     'team_invitation_request_accepted_subject' => 'Witty | Welcome to team ":team"',
-    'invitation_request_accepted_explanation' => 'You just joined team ":team". 🧡 
+    'invitation_request_accepted_explanation_user' => 'Hi,
 
-Joining a team helps writing inclusively AND consistently throughout your whole organization.  
+You just joined team ":team" for <a href="https://dashboard.witty.works">Witty</a>. 🧡
+
+<b>Joining a team helps writing inclusively AND consistently throughout your organization. </b>
 
 What do you get as a team?
 
-Language settings: Customize writing preferences and rules around diversity and inclusion for your team to communicate as one.
+<ul><li><b>Language settings</b>: Customize writing preferences and rules around diversity and inclusion for your team to communicate as one.</li>
 
-Create a team dictionary: Create your own library of words to ensure that everyone in your company uses the brand voice. 
+<li><b>Create a team dictionary</b>: Create your own library of words to ensure that everyone in your company uses the brand voice. </li>
 
-Measure improvement: Use data-driven insights to identify trends in your team’s writing and measure improvement.',
+<li><b>Measure improvement</b>: Use data-driven insights to identify trends in your team’s writing and measure improvement.</li>
+</ul>
+
+If you have any questions, contact your team admin :name (:email).',
+    'invitation_request_accepted_explanation_admin' => 'Hi,
+
+You just joined team ":team" for <a href="https://dashboard.witty.works">Witty</a>. 🧡
+
+<b>Joining a team helps writing inclusively AND consistently throughout your organization. </b>
+
+What do you get as a team?
+
+<ul><li><a href="https://dashboard.witty.works/team/language/language-settings">Language settings</a>: Customize writing preferences and rules around diversity and inclusion for your team to communicate as one.</li>
+
+<li><a href="https://dashboard.witty.works/team/language/dictionary">Create a team dictionary</a>: Create your own library of words to ensure that everyone in your company uses the brand voice. </li>
+
+<li><a href="https://dashboard.witty.works/team/analytics">Measure improvement</a>: Use data-driven insights to identify trends in your team’s writing and measure improvement.</li>
+</ul>
+
+If you have any questions, contact your team admin :name (:email).',
     'invition_requests_title' => 'Team Join Request',
     'invition_requests_text' => 'Someone has requested to join your team.',
     'review_invitation_requests_button' => 'Review',
     'invitation_request_already_accepted' => ':name already join another team.',
-    'invitation_request_license_limit_reached' => 'You have already invited two members to your team and have reached the limit. <a href="https://dashboard.witty.works/en/team/subscription">Upgrade</a> to invite more members!',
+    'invitation_request_license_limit_reached' => 'You have already invited two members to your team and have reached the limit. <a href="https://dashboard.witty.works/team/subscription">Upgrade</a> to invite more members!',
 ];

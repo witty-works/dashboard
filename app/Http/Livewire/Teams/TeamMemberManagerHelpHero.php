@@ -29,7 +29,24 @@ class TeamMemberManagerHelpHero extends TeamMemberManagerBase
      */
     public function addTeamMember()
     {
-        parent::addTeamMember();
+        $invitationRequest = TeamInvitationRequest::join('users', 'users.id', '=', 'team_invitation_requests.user_id')
+            ->where('email', $this->addTeamMemberForm['email'])
+            ->where('team_id', $this->team->id)
+            ->first();
+
+        if ($invitationRequest) {
+            $this->acceptTeamInvitationRequest($invitationRequest, $this->addTeamMemberForm['role']);
+
+            $this->addTeamMemberForm = [
+                'email' => '',
+                'role' => null,
+            ];
+
+            $this->team = $this->team->fresh();
+        } else {
+            parent::addTeamMember();
+        }
+
         $this->updateHelpHero();
     }
 
@@ -48,13 +65,13 @@ class TeamMemberManagerHelpHero extends TeamMemberManagerBase
     /**
      * Cancel a pending team member invitation request.
      *
-     * @param  int  $invitationRequestId
+     * @param  TeamInvitationRequest  $invitationRequest
      * @return void
      */
-    public function cancelTeamInvitationRequest($invitationRequestId)
+    public function cancelTeamInvitationRequest(TeamInvitationRequest $invitationRequest = null)
     {
-        if (!empty($invitationRequestId)) {
-            TeamInvitationRequest::whereKey($invitationRequestId)->delete();
+        if (!empty($invitationRequest)) {
+            $invitationRequest->delete();
         }
 
         $this->team = $this->team->fresh();
@@ -65,16 +82,11 @@ class TeamMemberManagerHelpHero extends TeamMemberManagerBase
     /**
      * Accept a pending team member invitation request.
      *
-     * @param  int  $invitationRequestId
+     * @param  TeamInvitationRequest  $invitationRequest
      * @return void
      */
-    public function acceptTeamInvitationRequest($invitationRequestId)
+    public function acceptTeamInvitationRequest(TeamInvitationRequest $invitationRequest = null, $role = 'user')
     {
-        if (empty($invitationRequestId)) {
-            return;
-        }
-
-        $invitationRequest = TeamInvitationRequest::firstWhere('id', $invitationRequestId);
         if (empty($invitationRequest)) {
             session()->flash('teams_invitation_request_message', __('content.invitation_request_already_accepted'));
 
@@ -90,18 +102,24 @@ class TeamMemberManagerHelpHero extends TeamMemberManagerBase
 
         $user = $invitationRequest->user;
 
+        if (!$this->team->subscribed()) {
+            $role = 'admin';
+        }
+
         app(AddsTeamMembers::class)->add(
             $this->team->owner,
             $this->team,
             $user->email,
-            $this->team->subscribed() ? 'user' : 'admin'
+            $role,
         );
 
         $user->switchTeam($this->team);
 
         $this->team = $this->team->fresh();
 
-        Mail::to($user->email)->send(new TeamInvitationRequestAccepted($invitationRequest));
+        Mail::to($user->email)->send(
+            new TeamInvitationRequestAccepted($invitationRequest, $role, request()->user())
+        );
 
         $invitationRequests = TeamInvitationRequest::where('user_id', $user->id)->get();
         foreach ($invitationRequests as $invitationRequest) {
