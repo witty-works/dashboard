@@ -228,11 +228,12 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function getNotificationCount()
     {
+        $count = $this->invitations->count();
         if ($this->currentTeam && $this->ownsTeam($this->currentTeam)) {
-            return $this->invitations->count() + $this->currentTeam->InvitationRequests->count();
+            $count += $this->currentTeam->invitationRequests->count();
         }
 
-        return 0;
+        return $count;
     }
 
     public function getFirstNameAttribute()
