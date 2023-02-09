@@ -326,7 +326,7 @@ Was bekommst du als Team?
 
 <ul><li><a href="https://dashboard.witty.works/team/language/language-settings">Spracheinstellungen</a>: Lege Schreibpräferenzen und Regeln rund um Inklusion & Diversität fest, damit dein Team als Einheit kommunizieren kann.</li>
 <li><a href="https://dashboard.witty.works/team/language/dictionary">Erstelle ein Team-Wörterbuch</a>: Stelle sicher, dass alle in deinem Unternehmen die gleiche Sprache verwendet.</li>
- <li><a href="https://dashboard.witty.works/team/analytics">Messe Verbesserungen</a>: Erkenne Trends in den Texten deines Teams und messe, wie ihr euch verbessert.</li></ul>',
+ <li><a href="https://dashboard.witty.works/team/analytics">Messe Verbesserungen</a>: Erkenne Trends in der Kommunikation deines Teams und messe, wie ihr euch verbessert.</li></ul>',
     'accept_invitation_request' => ':name in dein Team aufnehmen',
     'if_you_did_not_expect_request' => 'Wenn du diese Person nicht in dein Team aufnehmen möchtest, ignoriere diese E-Mail einfach. 🙂',
     'pending_team_invitation_requests' => 'Ausstehende Teamanfragen',
@@ -347,8 +347,8 @@ Du bist soeben dem Team ":team" von <a href="https://dashboard.witty.works">Witt
 Was bekommst du als Team?
 
 <ul><li><b>Spracheinstellungen</b>: Lege Schreibpräferenzen und Regeln rund um Inklusion & Diversität fest, damit dein Team als Einheit kommunizieren kann.</li>
-<li><b>Erstelle ein Team-Wörterbuch</b>: Stelle sicher, dass alle in deinem Unternehmen die gleiche Sprache verwendet.</li>
-<li><b>Messe Verbesserungen</b>: Erkenne Trends in den Texten deines Teams und messe, wie ihr euch verbessert.</li>
+<li><b>Erstelle ein Team-Wörterbuch</b>: Stelle sicher, dass alle in deinem Unternehmen die gleiche Sprache verwenden.</li>
+<li><b>Messe Verbesserungen</b>: Erkenne Trends in der Kommunikation deines Teams und messe, wie ihr euch verbessert.</li>
 </ul>
 
 Wenn du Fragen hast, wende dich an deine*n Team-Administrator*in :name (:email).<a href="https://dashboard.witty.works/">',
@@ -360,9 +360,9 @@ Du bist soeben dem Team ":team" von <a href="https://dashboard.witty.works">Witt
 
 Was bekommst du als Team?
 
-<ul><li><a href="https://dashboard.witty.works/team/language/language-settings">Spracheinstellungen</a>: Lege Schreibpräferenzen und Regeln rund um Inklusion & Diversität fest, damit dein Team als Einheit kommunizieren kann.</li>
-<li><a href="https://dashboard.witty.works/team/language/dictionary">Erstelle ein Team-Wörterbuch</a>: Stelle sicher, dass alle in deinem Unternehmen die gleiche Sprache verwendet.</li>
- <li><a href="https://dashboard.witty.works/team/analytics">Messe Verbesserungen</a>: Erkenne Trends in den Texten deines Teams und messe, wie ihr euch verbessert.</li></ul>
+<ul><li><a href="https://dashboard.witty.works/team/language/language-settings">Spracheinstellungen</a>: Lege Schreibpräferenzen und Regeln rund um Inklusion & Diversität fest, damit dein Team einheitlich kommunizieren kann.</li>
+<li><a href="https://dashboard.witty.works/team/language/dictionary">Erstelle ein Team-Wörterbuch</a>: Stelle sicher, dass alle in deinem Unternehmen die gleiche Sprache verwenden.</li>
+ <li><a href="https://dashboard.witty.works/team/analytics">Messe Verbesserungen</a>: Erkenne Trends in der Kommunikation deines Teams und messe, wie ihr euch verbessert.</li></ul>
 
 Wenn du Fragen hast, wende dich an deine*n Team-Administrator*in :name (:email).<a href="https://dashboard.witty.works/team/language/language-settings">',
 ];

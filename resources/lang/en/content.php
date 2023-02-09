@@ -329,7 +329,7 @@ What do you get as a team?
 
 <li><a href="https://dashboard.witty.works/team/language/dictionary">Create a team dictionary</a>: Create your own library of words to ensure that everyone in your company uses the brand voice. </li>
 
-<li><a href="https://dashboard.witty.works/team/analytics">Measure improvement</a>: Use data-driven insights to identify trends in your team’s writing and measure improvement.</li>
+<li><a href="https://dashboard.witty.works/team/analytics">Measure improvement</a>: Use data-driven insights to identify trends in your team’s communication and measure improvement.</li>
 </ul>',
     'accept_invitation_request' => 'Accept :name to your team',
     'if_you_did_not_expect_request' => 'If you don\'t want to add this person to your team, just ignore this email. 🙂',
@@ -349,7 +349,7 @@ What do you get as a team?
 
 <li><b>Create a team dictionary</b>: Create your own library of words to ensure that everyone in your company uses the brand voice. </li>
 
-<li><b>Measure improvement</b>: Use data-driven insights to identify trends in your team’s writing and measure improvement.</li>
+<li><b>Measure improvement</b>: Use data-driven insights to identify trends in your team’s communication and measure improvement.</li>
 </ul>
 
 If you have any questions, contact your team admin :name (:email).',
@@ -365,7 +365,7 @@ What do you get as a team?
 
 <li><a href="https://dashboard.witty.works/team/language/dictionary">Create a team dictionary</a>: Create your own library of words to ensure that everyone in your company uses the brand voice. </li>
 
-<li><a href="https://dashboard.witty.works/team/analytics">Measure improvement</a>: Use data-driven insights to identify trends in your team’s writing and measure improvement.</li>
+<li><a href="https://dashboard.witty.works/team/analytics">Measure improvement</a>: Use data-driven insights to identify trends in your team’s communication and measure improvement.</li>
 </ul>
 
 If you have any questions, contact your team admin :name (:email).',
