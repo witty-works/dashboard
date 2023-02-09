@@ -5,7 +5,6 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\URL;
 use App\Models\TeamInvitationRequest as TeamInvitationRequestModel;
 
 class TeamInvitationRequest extends Mailable
@@ -13,7 +12,7 @@ class TeamInvitationRequest extends Mailable
     use Queueable, SerializesModels;
 
     /**
-     * The team invitation instance.
+     * The team invitation request instance.
      *
      * @var \App\Models\TeamInvitationRequest
      */

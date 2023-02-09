@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Mail;
 use Laravel\Jetstream\Contracts\AddsTeamMembers;
 use Laravel\Jetstream\Http\Livewire\TeamMemberManager as TeamMemberManagerBase;
 use Laravel\Jetstream\Contracts\RemovesTeamMembers;
-use Laravel\Jetstream\Jetstream;
 
 class TeamMemberManagerHelpHero extends TeamMemberManagerBase
 {
