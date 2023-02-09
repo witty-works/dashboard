@@ -53,27 +53,29 @@
                                         {{ trans_choice('content.co-workers-with-witty-account', $users->count(), ['count' => $users->count()]) }}
                                     </div>
 
-                                    <x-jet-label for="request_invite" value="{!! __('content.request_invite') !!}" />
+                                    <div class="mt-5">
+                                        <label class="switch">
+                                            <input
+                                                type="hidden"
+                                                name="request_invite"
+                                                value="0"
+                                            />
+                                            <input
+                                                type="checkbox"
+                                                class="guidelines-form-section-toggle"
+                                                name="request_invite"
+                                                value="1"
+                                                @if(old('request_invite') || old('request_invite') === null)
+                                                checked="checked"
+                                                @endif
+                                            />
+                                            <span class="slider round"></span>
+                                        </label>
 
-                                    <label class="switch">
-                                        <input
-                                            type="hidden"
-                                            name="request_invite"
-                                            value="0"
-                                        />
-                                        <input
-                                            type="checkbox"
-                                            class="guidelines-form-section-toggle"
-                                            name="request_invite"
-                                            value="1"
-                                            @if(old('request_invite') || old('request_invite') === null)
-                                            checked="checked"
-                                            @endif
-                                        />
-                                        <span class="slider round"></span>
-                                    </label>
-                                            
-                                    <x-jet-input-error for="request_invite" class="mt-2" />
+                                        <x-jet-label for="request_invite" value="{!! __('content.request_invite') !!}" />
+
+                                        <x-jet-input-error for="request_invite" class="mt-2" />
+                                    </div>
                                 </div>
                                 @elseif($request_invite === null && $user->isSharedEmailAccount())
                                 <div class="w-full col-span-6 sm:col-span-4 margin-bottom">
