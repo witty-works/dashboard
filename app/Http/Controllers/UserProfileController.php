@@ -23,10 +23,10 @@ class UserProfileController extends BaseUserProfileController
 
         $users = null;
         $requestInvite = null;
-
         if (
-            !$user->currentTeam
-            || $user->currentTeam->getTotalUserCount() <= 1
+            (!$user->currentTeam
+                || $user->currentTeam->getTotalUserCount() <= 1)
+            && !$user->invitations->count()
         ) {
             try {
                 $hubspot = new Hubspot();
