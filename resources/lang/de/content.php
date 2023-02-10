@@ -280,7 +280,7 @@ Bitte verwende Witty öfter und klicke auf die hervorgehobenen Begriffe.',
     'start_of_week' => 'Wochenstart:',
     'upgrade_witty_version_title' => 'Du hast nicht die neueste Version von Witty installiert',
     'upgrade_witty_version_text' => 'Bitte aktualisiere Witty auf die neueste Version, um die volle Funktionalität von Witty nutzen zu können.',
-    'upgrade_witty_version_button' => 'Witty Aktualisieren',
+    'upgrade_witty_version_button' => 'Witty aktualisieren',
     'onboarding' => 'Willkommen',
     'small_onboarding_survey' => 'Hilf uns, Witty für dich anzupassen.',
     'languages' => 'Ich schreibe auf',
@@ -314,21 +314,28 @@ Bitte verwende Witty öfter und klicke auf die hervorgehobenen Begriffe.',
     'witty_download_installed' => 'Du hast Witty bereits installiert.',
     'sign_in' => 'Logge dich ein',
     'try_out' => 'Probiere Witty aus',
-    'request_invite' => 'Ich würde gerne Anfragen ihrem Team beizutreten',
-    'co-workers-with-witty-account' => '{1} Eine andere Person aus deiner Organisation hat ebenfalls ein Witty-Konto! | :count weitere Personen aus deiner Organisation haben ebenfalls ein Witty-Konto.',
+    'request_invite' => 'Anbieten, im Team mitzumachen',
+    'co-workers-with-witty-account' => '{1} Eine Person aus deiner Organisation nutzt Witty bereits. | :count Personen aus deiner Organisation nutzen Witty bereits.',
     'team_invitation_request_subject' => 'Witty | :name möchte sich deinem Team anschließen',
-    'invitation_request_explanation' => 'Hallo,
+    'invitation_request_explanation' => 'Hey, 
 
-:name (:email) hat soeben ein Witty-Konto erstellt und würde gerne deinem Team beitreten. 
+:name (:email) ist nun auch bei Witty und fragt, ob du an einer Zusammenarbeit interessiert bist.  🧡',
+    'accept_invitation_request' => 'Willkommen im Team, :name!',
+    'if_you_did_not_expect_request' => 'Was bringt ein Team?
 
-<b>Ein Team hilft, in deiner Organisation inklusiv UND konsistent zu schreiben.</b>  
-Was bekommst du als Team?
+<b>Gemeinsam könnt ihr euch effektiver für Inklusion starkmachen:</b>
 
-<ul><li><a href="https://dashboard.witty.works/team/language/language-settings">Spracheinstellungen</a>: Lege Schreibpräferenzen und Regeln rund um Inklusion & Diversität fest, damit dein Team als Einheit kommunizieren kann.</li>
-<li><a href="https://dashboard.witty.works/team/language/dictionary">Erstelle ein Team-Wörterbuch</a>: Stelle sicher, dass alle in deinem Unternehmen die gleiche Sprache verwendet.</li>
- <li><a href="https://dashboard.witty.works/team/analytics">Messe Verbesserungen</a>: Erkenne Trends in der Kommunikation deines Teams und messe, wie ihr euch verbessert.</li></ul>',
-    'accept_invitation_request' => ':name in dein Team aufnehmen',
-    'if_you_did_not_expect_request' => 'Wenn du diese Person nicht in dein Team aufnehmen möchtest, ignoriere diese E-Mail einfach. 🙂',
+<ul><li><a href="https://dashboard.witty.works/team/language/language-settings">Wähle Einstellungen</a>, die euch beim Schreiben besser unterstützen
+</li>
+
+<li><a href="https://dashboard.witty.works/team/language/dictionary">Das Wörterbuch</a> verhilft euch zu einer konsistenteren Markenstimme</li>
+
+<li><a href="https://dashboard.witty.works/team/analytics">Mit Analysedaten</a> kann sich euer Team gezielt verbessern</li>
+</ul>
+
+Du möchtest lieber nicht mit :name im Team zusammenarbeiten?
+
+Dann kannst du diese Mail einfach ignorieren. 🙂',
     'pending_team_invitation_requests' => 'Ausstehende Teamanfragen',
     'these_people_have_requested_an_invite' => 'Diese Personen möchten deinem Team beitreten. Sie können deinem Team beitreten, indem du unten auf "Akzeptieren" klickst.',
     'accept' => 'Annehmen',
@@ -338,31 +345,38 @@ Was bekommst du als Team?
     'review_invitation_requests_button' => 'Überprüfen',
     'invitation_request_already_accepted' => ':name ist bereits einem anderen Team beigetreten.',
     'invitation_request_license_limit_reached' => 'Du hast bereits zwei Mitglieder in dein Team eingeladen und hast das Limit erreicht. Mach ein <a href="https://dashboard.witty.works/team/subscription">Upgrade</a>, um mehr Mitglieder einzuladen!',
-    'invitation_request_accepted_explanation_user' => 'Hallo,
+    'invitation_request_accepted_explanation_user' => 'Hey,
 
-Du bist soeben dem Team ":team" von <a href="https://dashboard.witty.works">Witty</a> beitreten. 🧡
+Willkommen im Team ":team" von Witty. 🧡
 
-<b>Ein Team hilft, in deiner Organisation inklusiv UND konsistent zu schreiben</b>  
+Was bringt dir das?
 
-Was bekommst du als Team?
+<b>Gemeinsam könnt ihr euch effektiver für Inklusion starkmachen:</b>
 
-<ul><li><b>Spracheinstellungen</b>: Lege Schreibpräferenzen und Regeln rund um Inklusion & Diversität fest, damit dein Team als Einheit kommunizieren kann.</li>
-<li><b>Erstelle ein Team-Wörterbuch</b>: Stelle sicher, dass alle in deinem Unternehmen die gleiche Sprache verwenden.</li>
-<li><b>Messe Verbesserungen</b>: Erkenne Trends in der Kommunikation deines Teams und messe, wie ihr euch verbessert.</li>
+<ul><li><a href="https://dashboard.witty.works/team/language/language-settings">Wähle Einstellungen</a>, die euch beim Schreiben besser unterstützen
+</li>
+
+<li><a href="https://dashboard.witty.works/team/language/dictionary">Das Wörterbuch</a> verhilft euch zu einer konsistenteren Markenstimme</li>
+
+<li><a href="https://dashboard.witty.works/team/analytics">Mit Analysedaten</a> kann sich euer Team gezielt verbessern</li>
 </ul>
 
-Wenn du Fragen hast, wende dich an deine*n Team-Administrator*in :name (:email).<a href="https://dashboard.witty.works/">',
-    'invitation_request_accepted_explanation_admin' => 'Hallo,
+Falls du Fragen hast, nimm Kontakt mit :name (:email) auf. 🙂',
+    'invitation_request_accepted_explanation_admin' => 'Hey,
 
-Du bist soeben dem Team ":team" von <a href="https://dashboard.witty.works">Witty</a> beitreten. 🧡
+Willkommen im Team ":team" von Witty. 🧡
 
-<b>Ein Team hilft, in deiner Organisation inklusiv UND konsistent zu schreiben.</b>  
+Was bringt dir das?
 
-Was bekommst du als Team?
+<b>Gemeinsam könnt ihr euch effektiver für Inklusion starkmachen:</b>
 
-<ul><li><a href="https://dashboard.witty.works/team/language/language-settings">Spracheinstellungen</a>: Lege Schreibpräferenzen und Regeln rund um Inklusion & Diversität fest, damit dein Team einheitlich kommunizieren kann.</li>
-<li><a href="https://dashboard.witty.works/team/language/dictionary">Erstelle ein Team-Wörterbuch</a>: Stelle sicher, dass alle in deinem Unternehmen die gleiche Sprache verwenden.</li>
- <li><a href="https://dashboard.witty.works/team/analytics">Messe Verbesserungen</a>: Erkenne Trends in der Kommunikation deines Teams und messe, wie ihr euch verbessert.</li></ul>
+<ul><li><a href="https://dashboard.witty.works/team/language/language-settings">Wähle Einstellungen</a>, die euch beim Schreiben besser unterstützen
+</li>
 
-Wenn du Fragen hast, wende dich an deine*n Team-Administrator*in :name (:email).<a href="https://dashboard.witty.works/team/language/language-settings">',
+<li><a href="https://dashboard.witty.works/team/language/dictionary">Das Wörterbuch</a> verhilft euch zu einer konsistenteren Markenstimme</li>
+
+<li><a href="https://dashboard.witty.works/team/analytics">Mit Analysedaten</a> kann sich euer Team gezielt verbessern</li>
+</ul>
+
+Falls du Fragen hast, nimm Kontakt mit :name (:email) auf. 🙂',
 ];

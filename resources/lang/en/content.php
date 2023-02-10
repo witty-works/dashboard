@@ -314,61 +314,62 @@ Please use Witty more often and click on the highlighted terms.',
     'witty_download_installed' => 'Witty is already installed!',
     'sign_in' => 'Sign in',
     'try_out' => 'Try out Witty',
-    'request_invite' => 'I would like to request to join their team',
-    'co-workers-with-witty-account' => '{1} Another person from your organization also has a Witty account. |{2} :count people from your organization also have a Witty account.',
+    'request_invite' => 'Ask to join their team',
+    'co-workers-with-witty-account' => '{1} Another person from your organization uses Witty. |{2} :count people from your organization use Witty.',
     'team_invitation_request_subject' => 'Witty | :name wants to join your team',
-    'invitation_request_explanation' => 'Hi,
+    'invitation_request_explanation' => 'Yay, 
 
-:name (:email) just created an account in Witty and would like to join your team. 🧡
+:name (:email) just joined Witty and is interested in collaborating. 🧡',
+    'accept_invitation_request' => 'Welcome :name!',
+    'if_you_did_not_expect_request' => 'Why form a team?
 
-<b>Joining a team helps writing inclusively AND consistently throughout your organization. </b>
+<b>A team amplifies your voice for more inclusion:</b>
 
-What do you get as a team?
+<ul><li><a href="https://dashboard.witty.works/team/language/language-settings">Set preferences</a> to best support your team‘s writing process</li>
 
-<ul><li><a href="https://dashboard.witty.works/team/language/language-settings">Language settings</a>: Customize writing preferences and rules around diversity and inclusion for your team to communicate as one.</li>
+<li><a href="https://dashboard.witty.works/team/language/dictionary">Create a dictionary</a> to ensure a consistent brand voice</li>
 
-<li><a href="https://dashboard.witty.works/team/language/dictionary">Create a team dictionary</a>: Create your own library of words to ensure that everyone in your company uses the brand voice. </li>
+<li><a href="https://dashboard.witty.works/team/analytics">Use analytics</a> to help your team improve effectively</li>
+</ul>
 
-<li><a href="https://dashboard.witty.works/team/analytics">Measure improvement</a>: Use data-driven insights to identify trends in your team’s communication and measure improvement.</li>
-</ul>',
-    'accept_invitation_request' => 'Accept :name to your team',
-    'if_you_did_not_expect_request' => 'If you don\'t want to add this person to your team, just ignore this email. 🙂',
+You\'d rather not add Barbara Schülé to your team?
+Just ignore this email. 🙂',
     'pending_team_invitation_requests' => 'Pending team join requests',
     'these_people_have_requested_an_invite' => 'These people want to join your team. Let them join your team by clicking "Accept" below.',
     'accept' => 'Accept',
     'team_invitation_request_accepted_subject' => 'Witty | Welcome to team ":team"',
-    'invitation_request_accepted_explanation_user' => 'Hi,
+    'invitation_request_accepted_explanation_user' => 'Yay,
 
-You just joined team ":team" for <a href="https://dashboard.witty.works">Witty</a>. 🧡
+Welcome to ":team", your organization\'s Witty team for inclusive writing. 🧡
 
-<b>Joining a team helps writing inclusively AND consistently throughout your organization. </b>
+What\'s your benefit?
 
-What do you get as a team?
+<b>A team amplifies your voice for more inclusion:</b>
 
-<ul><li><b>Language settings</b>: Customize writing preferences and rules around diversity and inclusion for your team to communicate as one.</li>
+<ul><li><a href="https://dashboard.witty.works/team/language/language-settings">Set preferences</a> to best support your team‘s writing process</li>
 
-<li><b>Create a team dictionary</b>: Create your own library of words to ensure that everyone in your company uses the brand voice. </li>
+<li><a href="https://dashboard.witty.works/team/language/dictionary">Create a dictionary</a> to ensure a consistent brand voice</li>
 
-<li><b>Measure improvement</b>: Use data-driven insights to identify trends in your team’s communication and measure improvement.</li>
+<li><a href="https://dashboard.witty.works/team/analytics">Use analytics</a> to help your team improve effectively</li>
 </ul>
 
-If you have any questions, contact your team admin :name (:email).',
-    'invitation_request_accepted_explanation_admin' => 'Hi,
+If you have any questions, contact :name (:email). 🙂',
+    'invitation_request_accepted_explanation_admin' => 'Yay,
 
-You just joined team ":team" for <a href="https://dashboard.witty.works">Witty</a>. 🧡
+Welcome to ":team", your organization\'s Witty team for inclusive writing. 🧡
 
-<b>Joining a team helps writing inclusively AND consistently throughout your organization. </b>
+What\'s your benefit?
 
-What do you get as a team?
+<b>A team amplifies your voice for more inclusion:</b>
 
-<ul><li><a href="https://dashboard.witty.works/team/language/language-settings">Language settings</a>: Customize writing preferences and rules around diversity and inclusion for your team to communicate as one.</li>
+<ul><li><a href="https://dashboard.witty.works/team/language/language-settings">Set preferences</a> to best support your team‘s writing process</li>
 
-<li><a href="https://dashboard.witty.works/team/language/dictionary">Create a team dictionary</a>: Create your own library of words to ensure that everyone in your company uses the brand voice. </li>
+<li><a href="https://dashboard.witty.works/team/language/dictionary">Create a dictionary</a> to ensure a consistent brand voice</li>
 
-<li><a href="https://dashboard.witty.works/team/analytics">Measure improvement</a>: Use data-driven insights to identify trends in your team’s communication and measure improvement.</li>
+<li><a href="https://dashboard.witty.works/team/analytics">Use analytics</a> to help your team improve effectively</li>
 </ul>
 
-If you have any questions, contact your team admin :name (:email).',
+If you have any questions, contact :name (:email). 🙂',
     'invition_requests_title' => 'Team Join Request',
     'invition_requests_text' => 'Someone has requested to join your team.',
     'review_invitation_requests_button' => 'Review',
