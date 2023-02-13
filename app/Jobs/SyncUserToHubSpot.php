@@ -71,17 +71,17 @@ class SyncUserToHubSpot implements ShouldQueue
         if (!empty($contact)) {
             $hubSpotData = $this->hubspot->getDataFromContact($contact);
 
-            $user->hubspot_id = $data['id'];
+            $user->hubspot_id = $hubSpotData['id'];
 
             if (
-                !empty($data['hubspot_source'])
-                && $user->hubspot_source !== $data['hubspot_source']
+                !empty($hubSpotData['hubspot_source'])
+                && $user->hubspot_source !== $hubSpotData['hubspot_source']
             ) {
-                $user->hubspot_source = $data['hubspot_source'];
+                $user->hubspot_source = $hubSpotData['hubspot_source'];
             }
-    
+
             $user->saveQuietly();
-    
+
             if ($user->wasChanged()) {
                 dispatch(new SyncUserToPosthog($user));
             }
