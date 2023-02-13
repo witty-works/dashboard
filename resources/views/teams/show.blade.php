@@ -1,17 +1,15 @@
-<x-app-layout>
+<x-app-layout :pagetitle="__('content.manage_members')">
     <div class="wittyworks-navigation-wrapper">@livewire('navigation-menu')</div>
     <div class="wittyworks-page-wrapper">
         <div class="wittyworks-page lg:ml-20">
             @include('partials.banners', ['hideInviteCheck' => true])
+            @if (!Auth::user()->hasTeamPermission($team, 'update'))
             <x-slot name="header">
-                @if (!Auth::user()->hasTeamPermission($team, 'update'))
                 {!! __('content.making_changes_requires_admin_rights', ['email' => $team->owner->email]) !!}
-                @endif
             </x-slot>
+            @endif
 
-            <div>
-                @livewire('teams.team-member-manager-help-hero', ['team' => $team])
-            </div>
+            @livewire('teams.team-member-manager-help-hero', ['team' => $team])
         </div>
     </div>
 </x-app-layout>

@@ -21,7 +21,7 @@ return [
     'team_owner' => 'Team-Eigentümer*in',
     'upgrade_to_witty_teams' => 'Bitte wechsle auf Witty Teams',
     'ask_owner_to_buy_or_leave_to_create_own_team' => 'Bitte frag deine*n Teameigentümer*in :name (:email), Witty Lizenzen zu kaufen, oder verlasse dein aktuelles Team, um ein eigenes Team zu erstellen.',
-    'accepted_invitation' => 'Toll! Du hast die Einladung angenommen, dem :team Team beizutreten.',
+    'accepted_invitation' => 'Toll! Du hast die Einladung angenommen, dem Team ":team" beizutreten.',
     'subscription' => 'Team-Abonnement',
     'language' => 'Team-Sprache',
     'witty_teams_only' => 'Nur Witty Teams',

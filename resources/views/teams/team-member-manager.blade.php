@@ -1,10 +1,10 @@
 <div>
     @if (Gate::check('viewUserCreateForm', $team))
         <!-- Add Team Member -->
-        <div class="py-10" id="add-team-member">
+        <div id="add-team-member">
             <div class="ibarra-sub-title-h1 margin-top">
                 {{ __('content.manage_members') }}
-            </div>   
+            </div>
 
             @livewire('teams.update-team-name-form-cancel', ['team' => $team])
 
@@ -16,6 +16,12 @@
 
                 <x-slot name="description">
                     {{ trans_choice('content.add_a_new_team_member', $team->getUserLicensesCount(), ['max_count' => $team->getUserLicensesCount()]) }}
+
+                    @if (session()->has('teams_invitation_request_message'))
+                    <p class="lato-small-text-p margin-bottom limit-reached">
+                        {{ session('teams_invitation_request_message') }}
+                    </p>
+                    @endif
 
                     <!-- Limit reached -->
                     @if($team->getUserLicensesLimitReached())
@@ -116,7 +122,7 @@
 
     @if ($team->teamInvitations->isNotEmpty() && Gate::check('viewUserCreateForm', $team))
         <!-- Team Member Invitations -->
-        <div class="pb-5">
+        <div class="py-5">
             <x-jet-action-section>
                 <x-slot name="title">
                     {{ trans_choice('content.pending_team_invitations', $team->teamInvitations->count(), ['count' => $team->teamInvitations->count()]) }}
@@ -147,6 +153,59 @@
                 </x-slot>
             </x-jet-action-section>
         </div>
+    @endif
+
+    @if ($team->invitationRequests->isNotEmpty() && Gate::check('viewUserCreateForm', $team))
+    <!-- Team Member Invitations -->
+    <div class="py-5" id="requests">
+        <x-jet-action-section>
+            <x-slot name="title">
+                {{ trans_choice('content.pending_team_invitation_requests', $team->invitationRequests->count(), ['count' => $team->invitationRequests->count()]) }}
+            </x-slot>
+
+            <x-slot name="description">
+                @if($team->getUserLicensesLimitReached())
+                <p class="lato-small-text-p margin-bottom limit-reached">
+                    {{ __('teams.user_limit_reached_error', ['max_count' => $team->getUserLicensesCount()-1]) }}
+
+                    @if(Auth::user()->ownsTeam($team))
+                    <a class="button primary-button-red" href="{{ route('teams.subscription') }}">
+                        {{ __('teams.add_licenses') }}
+                    </a>
+                    @endif
+                </p>
+                @else
+                {{ __('content.these_people_have_requested_an_invite') }}
+                @endif
+            </x-slot>
+
+            <x-slot name="content">
+                <div class="space-y-6">
+                    @foreach ($team->invitationRequests as $invitationRequest)
+                        <div class="flex items-center justify-between">
+                            <div class="lato-paragraph-text-p">{{ $invitationRequest->user->email }}</div>
+
+                            <div class="flex items-center">
+                                @if (Gate::check('removeTeamMember', $team))
+                                    <!-- Cancel Team Invitation -->
+                                    <button class="cursor-pointer ml-6 lato-paragraph-text-p-red"
+                                                        wire:click="cancelTeamInvitationRequest({{ $invitationRequest->id }})">
+                                        {{ __('content.cancel') }}
+                                    </button>
+                                    @if(!$team->getUserLicensesLimitReached())
+                                    <button class="cursor-pointer ml-6 lato-paragraph-text-p-red"
+                                                        wire:click="acceptTeamInvitationRequest({{ $invitationRequest->id }})">
+                                        {{ __('content.accept') }}
+                                    </button>
+                                    @endif
+                                @endif
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </x-slot>
+        </x-jet-action-section>
+    </div>
     @endif
 
     @if ($team->users->isNotEmpty())

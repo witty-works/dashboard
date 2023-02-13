@@ -17,6 +17,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | No onboarding for impersonation
+    |--------------------------------------------------------------------------
+    |
+    | If the onboarding survey should be shown when impersonatin a user
+    |
+    | possible values: true/false
+    |
+    */
+
+    'no_onboarding_for_impersonation' => env('NO_ONBOARDING_FOR_IMPERSONATION', true),
+
+    /*
+    |--------------------------------------------------------------------------
     | Analytics
     |--------------------------------------------------------------------------
     |
@@ -43,7 +56,6 @@ return [
     ],
     'browser_redirect' => env('BROWSER_REDIRECT', true),
     'browser_check_time' => env('BROWSER_CHECK_TIME', 3000),
-    'welcome_url' => 'https://www.witty.works/welcome',
     'try_out_url' => 'https://www.witty.works/try-out-witty',
 
     /*

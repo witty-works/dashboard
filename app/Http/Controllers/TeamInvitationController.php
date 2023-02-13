@@ -28,7 +28,10 @@ class TeamInvitationController extends BaseTeamInvitationController
         $currentTeam = $user->currentTeam;
         if ($currentTeam) {
             if ($user->ownsTeam($currentTeam)) {
-                if ($currentTeam->subscribed() && !$currentTeam->subscription()->canceled()) {
+                if (
+                    $currentTeam->subscribed()
+                    && !$currentTeam->subscription()->canceled()
+                ) {
                     $currentTeam->subscription()->cancel();
                 }
             } else {
@@ -40,13 +43,22 @@ class TeamInvitationController extends BaseTeamInvitationController
 
         $user->switchTeam($invitation->team);
 
-        foreach ($user->invitations as $invitation) {
-            dispatch(new SyncUserToHubSpot($invitation->team->owner));
-            dispatch(new SyncUserToPosthog($invitation->team->owner));
-        }
-
         // update notification count
-        dispatch(new SyncUserToNlpApi($user, 'high'));
+        dispatch(new SyncUserToNlpApi($invitation->team->owner, 'high'));
+
+        foreach ($user->invitations as $otherInvitation) {
+            if ($invitation->id !== $otherInvitation->id) {
+                continue;
+            }
+
+            $otherInvitation->delete();
+
+            dispatch(new SyncUserToHubSpot($otherInvitation->team->owner));
+            dispatch(new SyncUserToPosthog($otherInvitation->team->owner));
+
+            // update notification count
+            dispatch(new SyncUserToNlpApi($otherInvitation->team->owner, 'high'));
+        }
 
         return $response->banner(__('teams.accepted_invitation', ['team' => $invitation->team->name]));
     }

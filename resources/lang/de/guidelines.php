@@ -38,7 +38,8 @@ return [
     'manage_organization_guidelines_description_style' => 'Macht Witty Vorschläge, um deinen Text verständlicher zu machen, oder um ihm Authentizität oder Emotionalität zu verleihen. <a href="https://www.witty.works/de/kategorien/stil" target="_blank" rel="noopener">Mehr dazu</a>.',
     'create_new_false_positive_description' => 'Alle Wörter oder Begriffe, die du zu dieser Liste hinzufügst, werden von Witty in Zukunft nicht mehr hervorgehoben.',
     'create_term_replacement' => 'Füge ein Wort hinzu',
-    'create_new_term_replacement_description' => 'Alle Wörter, die zu dieser Liste hinzufügst, werden von Witty hervorgehoben, und deine Alternative wird vorgeschlagen.',
+    'create_new_term_replacement_description' => 'Eine starke Kommunikation braucht eine einheitliche Sprache. Füge deinem Wörterbuch Wörter hinzu, um deine Firmensprache schnell umzusetzen.
+Alle Wörter, die zu dieser Liste hinzufügst, werden von Witty hervorgehoben, und deine Alternative wird vorgeschlagen.',
     'term_label' => 'Begriff',
     'replacement_label' => 'Alternative',
     'list_false_positives_description' => 'Witty wird alle Wörter oder Begriffe in dieser Liste für dich nicht mehr hervorgehoben.',
@@ -93,7 +94,6 @@ return [
     'list_team_deny_domains_description' => 'Witty ist für alle URLs in dieser Liste für dein ganzes Team deaktiviert.',
     'dictionary_label' => 'Wörterbuch',
     'language_settings_label' => 'Spracheinstellungen',
-    'ignored-words_label' => 'Ignorierte Wörter',
     'privacy_settings_label' => 'Datenschutz- einstellungen',
     'personal_account' => 'Persönlich',
     'team_account' => 'Team',

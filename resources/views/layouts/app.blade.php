@@ -7,7 +7,7 @@
 
         @include('partials/gtm-header')
 
-        <title>{{ config('app.name') }}</title>
+        <title>{{ $pagetitle ?? config('app.name') }}</title>
 
         <!-- Fonts -->
         @googlefonts('lato')
@@ -23,7 +23,7 @@
         <x-embed-styles />
 
         <!-- Scripts -->
-        @include('partials/sentry')    
+        @include('partials/sentry')
         <script src="{{ mix('js/app.js') }}" defer></script>
         @include('partials/hubspot', ['user' => Auth::user()])
         @include('partials/posthog')

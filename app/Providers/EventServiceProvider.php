@@ -16,6 +16,7 @@ use App\Listeners\PostHogUpdateUser;
 use App\Listeners\SyncStartRenwalDates;
 use App\Listeners\TeamMemberAddedSlackAlert;
 use App\Listeners\TeamMemberInvitedSlackAlert;
+use App\Listeners\UpdateCurrentTeam;
 use App\Listeners\UpdateOrganizationGuidelines;
 use App\Listeners\UpdateUserGuidelines;
 use App\Listeners\UserAddedSlackAlert;
@@ -64,6 +65,7 @@ class EventServiceProvider extends ServiceProvider
             TeamMemberAddedSlackAlert::class,
         ],
         TeamMemberRemoved::class => [
+            UpdateCurrentTeam::class,
             UpdateOrganizationGuidelines::class,
             HubspotUpdateUser::class,
             PostHogUpdateUser::class,

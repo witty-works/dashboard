@@ -114,7 +114,6 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Jetstream::teamInvitationModel(), 'email', 'email');
     }
-
     /**
      * Get the current team of the user's context.
      *
@@ -229,7 +228,12 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function getNotificationCount()
     {
-        return $this->invitations->count();
+        $count = $this->invitations->count();
+        if ($this->currentTeam && $this->ownsTeam($this->currentTeam)) {
+            $count += $this->currentTeam->invitationRequests->count();
+        }
+
+        return $count;
     }
 
     public function getFirstNameAttribute()
@@ -246,21 +250,25 @@ class User extends Authenticatable implements MustVerifyEmail
         return  implode(' ', $split);
     }
 
-    public function isSharedEmailAccount()
+    public function getEmailDomain()
     {
         $email = explode('@', $this->email);
-        $provider = array_pop($email);
+        return array_pop($email);
+    }
+
+    public function isSharedEmailAccount()
+    {
+        $provider = $this->getEmailDomain();
 
         return in_array($provider, $this->emailProviders);
     }
 
     public function hasCompletedOnboarding()
     {
-        $manager = app('impersonate');
         if (
-            $manager->isImpersonating()
-            || $this->role !== null
+            $this->role !== null
             || !$this->currentTeam
+            || (config('app.no_onboarding_for_impersonation') && app('impersonate')->isImpersonating())
         ) {
             return true;
         }
@@ -268,17 +276,24 @@ class User extends Authenticatable implements MustVerifyEmail
         return !$this->ownsTeam($this->currentTeam);
     }
 
+    public function getTeamRoleName()
+    {
+        if (!$this->currentTeam) {
+            return null;
+        }
+
+        $teamRole = $this->teamRole($this->currentTeam);
+        if ($teamRole instanceof Role) {
+            return $teamRole->name;
+        }
+
+        return null;
+    }
+
     public function getHubspotData($booleanAsStrings = false)
     {
         $true = $booleanAsStrings ? 'Yes' : true;
         $false = $booleanAsStrings ? 'No' : false;
-
-        $teamRole = $this->teamRole($this->currentTeam);
-        if ($teamRole instanceof Role) {
-            $teamRole = $teamRole->name;
-        } else {
-            $teamRole = null;
-        }
 
         $data = [
             'witty_account_created_at' => $this->created_at->__toString(),
@@ -295,7 +310,7 @@ class User extends Authenticatable implements MustVerifyEmail
             'ignore_count' => $this->falsePositives->count(),
             'has_team_language_rules' => $false,
             'has_team_privacy_set' => $false,
-            'team_role' => $teamRole,
+            'team_role' => $this->getTeamRoleName(),
             'invited_team_member_count' => 0,
             'team_member_count' => 0,
             'team_dictionary_count' => 0,

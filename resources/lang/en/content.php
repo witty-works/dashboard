@@ -129,12 +129,11 @@ return [
     'whoops' => 'Whoops! Something went wrong.',
     'you_have_been_invited' => 'Welcome to <a href="https://www.witty.works/">Witty</a>!
 
-:name has invited you to join team ":team"!
+:name has invited you to join ":team" team!
 
 Here is how you can join your team:
 
-- <a href="https://www.witty.works/download">Download</a> the Witty plugin
-- Log in or register. To do so, follow <a href="https://www.witty.works/welcome">these quick onboarding steps</a>.
+- <a href="https://dashboard.witty.works/download">Register</a> or log in and download the Witty plugin.
 - Go to the <a href="https://dashboard.witty.works/">dashboard</a> and accept the invitation',
     'invitation_email_welcome' => 'When you join the team, you will have access to the team\'s language settings in Witty.',
     'if_you_did_not_expect' => 'If you do not want to accept the invitation, no further steps are required.',
@@ -180,7 +179,7 @@ Here is how you can join your team:
     'making_changes_requires_admin_rights' => 'To make changes, admin rights are required. Please contact your team <a href="mailto::email">owner</a>.',
     'already_invited_to_team' => 'This user has already been invited to the team.',
     'already_belongs_to_team' => 'This user already belongs to the team.',
-    'team_invitation_subject' => ':name invited you to join :team on Witty',
+    'team_invitation_subject' => 'Witty | :name invited you to join team ":team" on Witty',
     'if_you_have_questions' => 'P.S. Need support or have any questions?
 You can find answers to many questions <a href="https://www.witty.works/en/help/wittys-help-center">here</a>. You can get in touch with us at <a href="mailto:support@witty.works">support@witty.works</a>. We\'re here to help you at any step along the way.',
     'have_a_great_day' => 'Have a great day,
@@ -291,9 +290,9 @@ Please use Witty more often and click on the highlighted terms.',
     'lead' => 'Team Lead',
     'employee' => 'Employee',
     'title_words_bar_chart_month_corporate_rules' => 'Top dictionary words viewed this month',
-    'no_corporate_rules' => 'You haven\'t made any entries in <a href="https://dashboard.witty.works/en/team/language/dictionary" target="_blank">your team dictionary</a> yet, so we can\'t show statistics for that.<br/>
-<a href="https://dashboard.witty.works/en/team/language/dictionary" target="_blank">Try it!</a>',
-    'corporate_rules_none_opened' => 'You have entered words in your <a href="https://dashboard.witty.works/en/team/language/dictionary" target="_blank">team\'s dictionary</a>, but no one from your team has yet looked at the suggested alternative if the word was underlined.',
+    'no_corporate_rules' => 'You haven\'t made any entries in <a href="https://dashboard.witty.works/team/language/dictionary" target="_blank">your team dictionary</a> yet, so we can\'t show statistics for that.<br/>
+<a href="https://dashboard.witty.works/team/language/dictionary" target="_blank">Try it!</a>',
+    'corporate_rules_none_opened' => 'You have entered words in your <a href="https://dashboard.witty.works/team/language/dictionary" target="_blank">team\'s dictionary</a>, but no one from your team has yet looked at the suggested alternative if the word was underlined.',
     'browser_name_chrome' => 'Chrome',
     'browser_get_chrome' => 'Get for Chrome',
     'browser_name_edge' => 'Microsoft Edge',
@@ -303,12 +302,77 @@ Please use Witty more often and click on the highlighted terms.',
     'witty_download' => 'Download Witty. It’s free.',
     'witty_download_description' => 'Pick your browser, and add the Witty extension.',
     'witty_download_description_not_supported_yet' => 'This browser is not yet supported by Witty.',
-    'witty_download_redirecting' => 'You are being redirected to the store. Thank you for your patience.',
-    'no_corporate_rules_user' => 'You haven\'t made any entries in <a href="https://dashboard.witty.works/en/user/language/dictionary" target="_blank">your dictionary</a> yet, so we can\'t show statistics for that.<br/>
-<a href="https://dashboard.witty.works/en/user/language/dictionary" target="_blank">Try it!</a>',
-    'corporate_rules_none_opened_user' => 'You have entered words in your <a href="https://dashboard.witty.works/en/user/language/dictionary" target="_blank"> dictionary</a>, but you haven\'t yet looked at the suggested alternative if the word was underlined.',
+    'no_corporate_rules_user' => 'You haven\'t made any entries in <a href="https://dashboard.witty.works/user/language/dictionary" target="_blank">your dictionary</a> yet, so we can\'t show statistics for that.<br/>
+<a href="https://dashboard.witty.works/user/language/dictionary" target="_blank">Try it!</a>',
+    'corporate_rules_none_opened_user' => 'You have entered words in your <a href="https://dashboard.witty.works/user/language/dictionary" target="_blank"> dictionary</a>, but you haven\'t yet looked at the suggested alternative if the word was underlined.',
     'help' => 'Help',
     'witty_editor_description' => 'If Witty doesn\'t work on a specific website, simply copy & paste your text here.',
     'witty_editor_viral_copy_text' => 'Checked with witty.works for inclusive language',
     'witty_editor_placeholder_text' => 'Type here or paste',
+    'witty_download_already_installed' => 'Log in to try out Witty.',
+    'witty_download_already_signedin' => 'Go ahead and try out Witty!',
+    'witty_download_installed' => 'Witty is already installed!',
+    'sign_in' => 'Sign in',
+    'try_out' => 'Try out Witty',
+    'request_invite' => 'Ask to join their team',
+    'co-workers-with-witty-account' => '{1} Another person from your organization uses Witty. |{2} :count people from your organization use Witty.',
+    'team_invitation_request_subject' => 'Witty | :name wants to join your team',
+    'invitation_request_explanation' => 'Yay, 
+
+:name (:email) just joined Witty and is interested in collaborating. 🧡',
+    'accept_invitation_request' => 'Welcome :name!',
+    'if_you_did_not_expect_request' => 'Why form a team?
+
+<b>A team amplifies your voice for more inclusion:</b>
+
+<ul><li><a href="https://dashboard.witty.works/team/language/language-settings">Set preferences</a> to best support your team‘s writing process</li>
+
+<li><a href="https://dashboard.witty.works/team/language/dictionary">Create a dictionary</a> to ensure a consistent brand voice</li>
+
+<li><a href="https://dashboard.witty.works/team/analytics">Use analytics</a> to help your team improve effectively</li>
+</ul>
+
+You\'d rather not add Barbara Schülé to your team?
+Just ignore this email. 🙂',
+    'pending_team_invitation_requests' => 'Pending team join requests',
+    'these_people_have_requested_an_invite' => 'These people want to join your team. Let them join your team by clicking "Accept" below.',
+    'accept' => 'Accept',
+    'team_invitation_request_accepted_subject' => 'Witty | Welcome to team ":team"',
+    'invitation_request_accepted_explanation_user' => 'Yay,
+
+Welcome to ":team", your organization\'s Witty team for inclusive writing. 🧡
+
+What\'s your benefit?
+
+<b>A team amplifies your voice for more inclusion:</b>
+
+<ul><li><a href="https://dashboard.witty.works/team/language/language-settings">Set preferences</a> to best support your team‘s writing process</li>
+
+<li><a href="https://dashboard.witty.works/team/language/dictionary">Create a dictionary</a> to ensure a consistent brand voice</li>
+
+<li><a href="https://dashboard.witty.works/team/analytics">Use analytics</a> to help your team improve effectively</li>
+</ul>
+
+If you have any questions, contact :name (:email). 🙂',
+    'invitation_request_accepted_explanation_admin' => 'Yay,
+
+Welcome to ":team", your organization\'s Witty team for inclusive writing. 🧡
+
+What\'s your benefit?
+
+<b>A team amplifies your voice for more inclusion:</b>
+
+<ul><li><a href="https://dashboard.witty.works/team/language/language-settings">Set preferences</a> to best support your team‘s writing process</li>
+
+<li><a href="https://dashboard.witty.works/team/language/dictionary">Create a dictionary</a> to ensure a consistent brand voice</li>
+
+<li><a href="https://dashboard.witty.works/team/analytics">Use analytics</a> to help your team improve effectively</li>
+</ul>
+
+If you have any questions, contact :name (:email). 🙂',
+    'invition_requests_title' => 'Team Join Request',
+    'invition_requests_text' => 'Someone has requested to join your team.',
+    'review_invitation_requests_button' => 'Review',
+    'invitation_request_already_accepted' => ':name already join another team.',
+    'invitation_request_license_limit_reached' => 'You have already invited two members to your team and have reached the limit. <a href="https://dashboard.witty.works/team/subscription">Upgrade</a> to invite more members!',
 ];

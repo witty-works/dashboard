@@ -1,25 +1,45 @@
-<x-app-layout>
-        <div class="wittyworks-page-wrapper">
+<x-app-layout :pagetitle="__('content.witty_download')">
+    <div class="wittyworks-page-wrapper">
             <div class="wittyworks-page-subscription lg:ml-20 margin-bottom">
-                <div class="ibarra-sub-title-h1 margin-top align-center">
+                <div id="not_installed_title" style="display: none" class="ibarra-sub-title-h1 margin-top align-center">
                     {{ __('content.witty_download') }}
                 </div>
 
-                <div id="not_supported" style="display: none" class="align-center warning-message">
-                    {!! __('content.witty_download_description_not_supported_yet') !!}
-                </div>
-
-                <div id="redirecting" style="display: none" class="align-center warning-message">
-                    {!! __('content.witty_download_redirecting') !!}
+                <div id="installed_title" style="display: none" class="ibarra-sub-title-h1 margin-top align-center">
+                    {{ __('content.witty_download_installed') }}
                 </div>
 
                 <div>
                     <div class="py-10">
-                        <div class="w-full col-span-6 sm:col-span-4 margin-bottom align-center">
+                        <div id="not_installed_description" style="display: none" class="w-full col-span-6 sm:col-span-4 margin-bottom align-center">
                             {!! __('content.witty_download_description') !!}
                         </div>
 
-                        <div class="h-56 grid grid-cols-3 gap-4 content-center">
+                        <div id="not_supported" style="display: none" class="align-center warning-message">
+                            {!! __('content.witty_download_description_not_supported_yet') !!}
+                        </div>
+        
+                        <div id="already_installed" style="display: none" class="w-full col-span-6 sm:col-span-4 margin-bottom align-center">
+                            {!! __('content.witty_download_already_installed') !!}
+
+                            <div class="mt-5">
+                                <a id="login-witty-url" class="button primary-button-red download-button" href="https://witty.works/welcome">
+                                    {{ __('content.sign_in') }}
+                                </a>
+                            </div>
+                        </div>
+        
+                        <div id="already_signedin" style="display: none" class="w-full col-span-6 sm:col-span-4 margin-bottom align-center">
+                            {!! __('content.witty_download_already_signedin') !!}
+
+                            <div class="mt-5">
+                                <a class="button primary-button-red download-button" href="{{ config('app.try_out_url') }}">
+                                    {{ __('content.try_out') }}
+                                </a>
+                            </div>
+                        </div>
+        
+                        <div id="store_links" style="display: none" class="h-56 grid grid-cols-3 gap-4 content-center">
                             @foreach (config('app.browsers') as $key => $browser)
                             <div class="rounded-lg bg-white browser-selection">
                                 <a href="{{ $browser['store_href'] }}">
@@ -36,55 +56,38 @@
                                 const wittyIsInstalled = document.querySelector('witty-is-installed');
 
                                 if (wittyIsInstalled) {
-                                    loginUrl = wittyIsInstalled.getAttribute('login-url')
-                                    if (loginUrl) {
-                                        url = @json(config('app.welcome_url'));
-                                    } else {
-                                        url = @json(config('app.try_out_url'));
-                                    }
-                                    setRedirect(url);
-                                } else {
-                                    url = false;
-                                    if (window.navigator.userAgent.indexOf("Edg") > -1) {
-                                        url = @json(config('app.browsers')['edge']['store_href']);
-                                    } else if (!!window.chrome) {
-                                        url = @json(config('app.browsers')['chrome']['store_href']);
-                                    } else if (window.navigator.userAgent.toLowerCase().indexOf("firefox") > -1) {
-                                        url = @json(config('app.browsers')['firefox']['store_href']);
-                                    }
+                                    const installed_title = document.querySelector('#installed_title');
+                                    installed_title.style.display = 'block';
 
-                                    if (url) {
-                                        setRedirect(url);
+                                    const loginUrl = wittyIsInstalled.getAttribute('login-url')
+
+                                    if (loginUrl) {
+                                        const loginWittyUrl = document.querySelector('#login-witty-url');
+                                        loginWittyUrl.setAttribute('href', loginUrl + '?target=' + encodeURIComponent(@json(config('app.try_out_url'))))
+
+                                        const alreadyInstalled = document.querySelector('#already_installed');
+                                        alreadyInstalled.style.display = 'block';
                                     } else {
+                                        const alreadySignedin = document.querySelector('#already_signedin');
+                                        alreadySignedin.style.display = 'block';
+                                    }
+                                } else {
+                                    const not_installed_title = document.querySelector('#not_installed_title');
+                                    not_installed_title.style.display = 'block';
+
+                                    const not_installed_description = document.querySelector('#not_installed_description');
+                                    not_installed_description.style.display = 'block';
+
+                                    const store_links = document.querySelector('#store_links');
+                                    store_links.style.display = 'block';
+
+                                    if (!window.chrome && window.navigator.userAgent.toLowerCase().indexOf("firefox") == -1) {
                                         const notSupported = document.querySelector('#not_supported');
                                         notSupported.style.display = 'block';
                                     }
                                 }
                             });
-
-                            function setRedirect(url)
-                            {
-                                const redirecting = document.querySelector('#redirecting');
-                                redirecting.style.display = 'block';
-
-                                setTimeout(function() {
-                                        redirectToStore(url);
-                                    },
-                                    @json(config('app.browser_check_time'))
-                                );
-                            }
-
-                            function redirectToStore(url)
-                            {
-                                if (@json(config('app.browser_redirect'))) {
-                                    window.location.replace(url);
-                                } else {
-                                    // debugging
-                                    const redirecting = document.querySelector('#redirecting');
-                                    redirecting.innerText = 'redirected to .. ' + url;
-                                }
-                            }
-                        </script>
+                            </script>
                     </div>
                 </div>
             </div>

@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout :pagetitle="__('content.subscription')">
     <div class="wittyworks-navigation-wrapper">@livewire('navigation-menu')</div>
         <div class="wittyworks-page-wrapper">
             <div class="wittyworks-page-subscription lg:ml-20">
@@ -6,7 +6,8 @@
 
                 <div class="ibarra-sub-title-h1 margin-top">
                     {{ __('teams.plan_headline') }}
-                </div>   
+                </div>
+
                 @livewire('teams.plan-summary', ['team' => $team])
             </div>
         </div>

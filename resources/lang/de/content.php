@@ -128,8 +128,7 @@ return [
 
 So kannst du deinem Team beitreten:
 
-- Lade das <a href="https://www.witty.works/download">Witty-Plugin</a> herunter
-- <a href="https://www.witty.works/register">Registriere dich oder logge dich ein</a>. 
+- <a href="https://dashboard.witty.works/<a href="https://dashboard.witty.works/download">download">Registriere</a> dich oder logge dich ein and download the Witty-Plugin.
 - Gehen zum <a href="https://dashboard.witty.works/">Dashboard</a> und akzeptiere die Einladung',
     'if_you_did_not_expect' => 'Wenn du diese Einladung nicht annehmen willst, sind keine weiteren Schritte erforderlich.',
     'woops' => 'hoppla',
@@ -176,7 +175,7 @@ So kannst du deinem Team beitreten:
     'making_changes_requires_admin_rights' => 'Um Änderungen vorzunehmen, sind Administrationsrechte erforderlich. Bitte wende dich an dein*e <a href="mailto::email">Team-Eigentümer*in</a>.',
     'already_invited_to_team' => 'Diese*r Benutzer*in wurde bereits in das Team eingeladen.',
     'already_belongs_to_team' => 'Diese*r Benutzer*in ist schon im Team.',
-    'team_invitation_subject' => ':name hat dich eingeladen, ihrem Team auf Witty beizutreten',
+    'team_invitation_subject' => ':name hat dich eingeladen, dem Team ":team" auf Witty beizutreten',
     'if_you_have_questions' => 'P.S. Brauchst du Hilfe oder hast du Fragen?
 <a href="https://www.witty.works/en/help/wittys-help-center">Hier</a> findest du Antworten auf viele Fragen. Du erreichst uns unter <a href="mailto:support@witty.works">support@witty.works</a>. Wir sind hier, um dir bei jedem Schritt auf dem Weg zu helfen.',
     'have_a_great_day' => 'Wir wünschen dir einen schönen Tag,
@@ -204,7 +203,7 @@ Dein Witty-Team',
     'mailing_consent_button' => 'Ja',
     'renew' => 'Abonnement fortsetzen',
     'accepting_invitation_will_cancel' => 'Durch Annehmen dieser Einladung, wird das aktuelle Abonnement gekündigt.',
-    'accepting_invitation_will_cancel_and_downgrade' => 'Wenn Sie diese Einladung annehmen, wird Ihr aktuelles Abonnement gekündigt und Sie werden auf den Witty Free-Plan herabgestuft.',
+    'accepting_invitation_will_cancel_and_downgrade' => 'Wenn Sie diese Einladung annehmen, wird dein aktuelles Abonnement gekündigt und du wirst auf den Witty Free-Plan herabgestuft.',
     'onboarding_login_witty_title' => 'Bitte melden Dich bei Witty an',
     'onboarding_login_witty_text' => 'Um Witty zu verwenden, melde Dich bitte bei der Witty-Browsererweiterung an.',
     'onboarding_login_witty_button' => 'Melden dich bei Witty an',
@@ -281,7 +280,7 @@ Bitte verwende Witty öfter und klicke auf die hervorgehobenen Begriffe.',
     'start_of_week' => 'Wochenstart:',
     'upgrade_witty_version_title' => 'Du hast nicht die neueste Version von Witty installiert',
     'upgrade_witty_version_text' => 'Bitte aktualisiere Witty auf die neueste Version, um die volle Funktionalität von Witty nutzen zu können.',
-    'upgrade_witty_version_button' => 'Witty Aktualisieren',
+    'upgrade_witty_version_button' => 'Witty aktualisieren',
     'onboarding' => 'Willkommen',
     'small_onboarding_survey' => 'Hilf uns, Witty für dich anzupassen.',
     'languages' => 'Ich schreibe auf',
@@ -291,9 +290,9 @@ Bitte verwende Witty öfter und klicke auf die hervorgehobenen Begriffe.',
     'lead' => 'Teamleiter*in',
     'employee' => 'Mitarbeiter*in',
     'title_words_bar_chart_month_corporate_rules' => 'Die am häufigsten angeschauten Wörter aus dem Wörterbuch in diesem Monat',
-    'no_corporate_rules' => 'Du hast noch keine Einträge in <a href="https://dashboard.witty.works/de/team/language/dictionary" target="_blank">dein Team-Wörterbuch</a> gemacht, deshalb können wir dazu keine Statistiken anzeigen.<br/>
-<a href="https://dashboard.witty.works/de/team/language/dictionary" target="_blank">Probiers gleich aus!</a>',
-    'corporate_rules_none_opened' => 'Du hast Wörter in <a href="https://dashboard.witty.works/de/team/language/dictionary" target="_blank">dein Team-Wörterbuch</a> eingetragen, aber noch niemand aus deinem Team hat sich die vorgeschlagene Alternative angesehen, wenn das Wort unterstrichen wurde.',
+    'no_corporate_rules' => 'Du hast noch keine Einträge in <a href="https://dashboard.witty.works/team/language/dictionary" target="_blank">dein Team-Wörterbuch</a> gemacht, deshalb können wir dazu keine Statistiken anzeigen.<br/>
+<a href="https://dashboard.witty.works/team/language/dictionary" target="_blank">Probiers gleich aus!</a>',
+    'corporate_rules_none_opened' => 'Du hast Wörter in <a href="https://dashboard.witty.works/team/language/dictionary" target="_blank">dein Team-Wörterbuch</a> eingetragen, aber noch niemand aus deinem Team hat sich die vorgeschlagene Alternative angesehen, wenn das Wort unterstrichen wurde.<a href="https://dashboard.witty.works/team/language/dictionary" target="_blank">',
     'browser_name_chrome' => 'Chrome',
     'browser_get_chrome' => 'Ich benutze Chrome',
     'browser_name_edge' => 'Microsoft Edge',
@@ -303,12 +302,81 @@ Bitte verwende Witty öfter und klicke auf die hervorgehobenen Begriffe.',
     'witty_download' => 'Lade Witty kostenlos  herunter.',
     'witty_download_description' => 'Wähle deinen Browser aus und füge die Witty-Extension hinzu.',
     'witty_download_description_not_supported_yet' => 'Dieser Browser wird von Witty noch nicht unterstützt.',
-    'witty_download_redirecting' => 'Du wirst weitergeleitet. Danke für deine Geduld.',
-    'no_corporate_rules_user' => 'Du hast noch keine Einträge in <a href="https://dashboard.witty.works/de/user/language/dictionary" target="_blank">deinWörterbuch</a> gemacht, deshalb können wir dazu keine Statistiken anzeigen.<br/>
-<a href="https://dashboard.witty.works/de/user/language/dictionary" target="_blank">Probiers gleich aus!</a>',
-    'corporate_rules_none_opened_user' => 'Du hast Wörter in <a href="https://dashboard.witty.works/de/user/language/dictionary" target="_blank">dein Wörterbuch</a> eingetragen, aber du hast dir die vorgeschlagene Alternative noch nie angesehen, wenn das Wort unterstrichen wurde.',
+    'no_corporate_rules_user' => 'Du hast noch keine Einträge in <a href="https://dashboard.witty.works/user/language/dictionary" target="_blank">deinWörterbuch</a> gemacht, deshalb können wir dazu keine Statistiken anzeigen.<br/>
+<a href="https://dashboard.witty.works/user/language/dictionary" target="_blank">Probiers gleich aus!</a>',
+    'corporate_rules_none_opened_user' => 'Du hast Wörter in <a href="https://dashboard.witty.works/user/language/dictionary" target="_blank">dein Wörterbuch</a> eingetragen, aber du hast dir die vorgeschlagene Alternative noch nie angesehen, wenn das Wort unterstrichen wurde.',
     'help' => 'Hilfe',
     'witty_editor_description' => 'Sollte Witty auf einer Website nicht funktioniert, kopiere einfach deinen Text und fügen Sie ihn hier zur Prüfung ein.',
     'witty_editor_viral_copy_text' => 'Geprüft mit witty.works auf inklusive Sprache',
     'witty_editor_placeholder_text' => 'Hier Text eingeben oder einfügen',
+    'witty_download_already_installed' => 'Logge dich ein, um Witty auszuprobieren.',
+    'witty_download_already_signedin' => 'Probiere Witty jetzt aus!',
+    'witty_download_installed' => 'Du hast Witty bereits installiert.',
+    'sign_in' => 'Logge dich ein',
+    'try_out' => 'Probiere Witty aus',
+    'request_invite' => 'Anbieten, im Team mitzumachen',
+    'co-workers-with-witty-account' => '{1} Eine Person aus deiner Organisation nutzt Witty bereits. | :count Personen aus deiner Organisation nutzen Witty bereits.',
+    'team_invitation_request_subject' => 'Witty | :name möchte sich deinem Team anschließen',
+    'invitation_request_explanation' => 'Hey, 
+
+:name (:email) ist nun auch bei Witty und fragt, ob du an einer Zusammenarbeit interessiert bist.  🧡',
+    'accept_invitation_request' => 'Willkommen im Team, :name!',
+    'if_you_did_not_expect_request' => 'Was bringt ein Team?
+
+<b>Gemeinsam könnt ihr euch effektiver für Inklusion starkmachen:</b>
+
+<ul><li><a href="https://dashboard.witty.works/team/language/language-settings">Wähle Einstellungen</a>, die euch beim Schreiben besser unterstützen
+</li>
+
+<li><a href="https://dashboard.witty.works/team/language/dictionary">Das Wörterbuch</a> verhilft euch zu einer konsistenteren Markenstimme</li>
+
+<li><a href="https://dashboard.witty.works/team/analytics">Mit Analysedaten</a> kann sich euer Team gezielt verbessern</li>
+</ul>
+
+Du möchtest lieber nicht mit :name im Team zusammenarbeiten?
+
+Dann kannst du diese Mail einfach ignorieren. 🙂',
+    'pending_team_invitation_requests' => 'Ausstehende Teamanfragen',
+    'these_people_have_requested_an_invite' => 'Diese Personen möchten deinem Team beitreten. Sie können deinem Team beitreten, indem du unten auf "Akzeptieren" klickst.',
+    'accept' => 'Annehmen',
+    'team_invitation_request_accepted_subject' => 'Witty | Willkommen im Team ":team"',
+    'invition_requests_title' => 'Teamanfrage',
+    'invition_requests_text' => 'Jemand hat darum gebeten, deinem Team beizutreten.',
+    'review_invitation_requests_button' => 'Überprüfen',
+    'invitation_request_already_accepted' => ':name ist bereits einem anderen Team beigetreten.',
+    'invitation_request_license_limit_reached' => 'Du hast bereits zwei Mitglieder in dein Team eingeladen und hast das Limit erreicht. Mach ein <a href="https://dashboard.witty.works/team/subscription">Upgrade</a>, um mehr Mitglieder einzuladen!',
+    'invitation_request_accepted_explanation_user' => 'Hey,
+
+Willkommen im Team ":team" von Witty. 🧡
+
+Was bringt dir das?
+
+<b>Gemeinsam könnt ihr euch effektiver für Inklusion starkmachen:</b>
+
+<ul><li><a href="https://dashboard.witty.works/team/language/language-settings">Wähle Einstellungen</a>, die euch beim Schreiben besser unterstützen
+</li>
+
+<li><a href="https://dashboard.witty.works/team/language/dictionary">Das Wörterbuch</a> verhilft euch zu einer konsistenteren Markenstimme</li>
+
+<li><a href="https://dashboard.witty.works/team/analytics">Mit Analysedaten</a> kann sich euer Team gezielt verbessern</li>
+</ul>
+
+Falls du Fragen hast, nimm Kontakt mit :name (:email) auf. 🙂',
+    'invitation_request_accepted_explanation_admin' => 'Hey,
+
+Willkommen im Team ":team" von Witty. 🧡
+
+Was bringt dir das?
+
+<b>Gemeinsam könnt ihr euch effektiver für Inklusion starkmachen:</b>
+
+<ul><li><a href="https://dashboard.witty.works/team/language/language-settings">Wähle Einstellungen</a>, die euch beim Schreiben besser unterstützen
+</li>
+
+<li><a href="https://dashboard.witty.works/team/language/dictionary">Das Wörterbuch</a> verhilft euch zu einer konsistenteren Markenstimme</li>
+
+<li><a href="https://dashboard.witty.works/team/analytics">Mit Analysedaten</a> kann sich euer Team gezielt verbessern</li>
+</ul>
+
+Falls du Fragen hast, nimm Kontakt mit :name (:email) auf. 🙂',
 ];
