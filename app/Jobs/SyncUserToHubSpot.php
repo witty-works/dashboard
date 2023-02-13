@@ -63,28 +63,32 @@ class SyncUserToHubSpot implements ShouldQueue
             if (!empty($user->hubspotutk)) {
                 // create via hubspot 'hubspotutk' cookie
                 $this->hubspot->createContactViaForm($user, $user->hubspotutk);
-            } else {
-                $contact = $this->hubspot->createContact($user, $data);
+
+                return null;
             }
+
+            $contact = $this->hubspot->createContact($user, $data);
         }
 
-        if (!empty($contact)) {
-            $hubSpotData = $this->hubspot->getDataFromContact($contact);
+        if (empty($contact)) {
+            return null;
+        }
 
-            $user->hubspot_id = $hubSpotData['id'];
+        $hubSpotData = $this->hubspot->getDataFromContact($contact);
 
-            if (
-                !empty($hubSpotData['hubspot_source'])
-                && $user->hubspot_source !== $hubSpotData['hubspot_source']
-            ) {
-                $user->hubspot_source = $hubSpotData['hubspot_source'];
-            }
+        $user->hubspot_id = $hubSpotData['id'];
 
-            $user->saveQuietly();
+        if (
+            !empty($hubSpotData['hubspot_source'])
+            && $user->hubspot_source !== $hubSpotData['hubspot_source']
+        ) {
+            $user->hubspot_source = $hubSpotData['hubspot_source'];
+        }
 
-            if ($user->wasChanged()) {
-                dispatch(new SyncUserToPosthog($user));
-            }
+        $user->saveQuietly();
+
+        if ($user->wasChanged()) {
+            dispatch(new SyncUserToPosthog($user));
         }
 
         return $hubSpotData;
