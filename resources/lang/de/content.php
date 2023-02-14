@@ -178,7 +178,7 @@ So kannst du deinem Team beitreten:
     'team_invitation_subject' => ':name hat dich eingeladen, dem Team ":team" auf Witty beizutreten',
     'if_you_have_questions' => 'P.S. Brauchst du Hilfe oder hast du Fragen?
 <a href="https://www.witty.works/en/help/wittys-help-center">Hier</a> findest du Antworten auf viele Fragen. Du erreichst uns unter <a href="mailto:support@witty.works">support@witty.works</a>. Wir sind hier, um dir bei jedem Schritt auf dem Weg zu helfen.',
-    'have_a_great_day' => 'Wir wünschen dir einen schönen Tag,
+    'have_a_great_day' => 'Wir wünschen einen zauberhaften Tag,
 
 Dein Witty-Team',
     'unable_to_find_user_with_this_email' => 'Wir konnten keine*n registrierte*n Benutzer*in mit dieser E-Mail-Adresse finden.',
@@ -361,7 +361,9 @@ Was bringt dir das?
 <li><a href="https://dashboard.witty.works/team/analytics">Mit Analysedaten</a> kann sich euer Team gezielt verbessern</li>
 </ul>
 
-Falls du Fragen hast, nimm Kontakt mit :name (:email) auf. 🙂',
+Falls du Fragen hast, nimm Kontakt mit :name (:email) auf. 🙂
+
+',
     'invitation_request_accepted_explanation_admin' => 'Hey,
 
 Willkommen im Team ":team" von Witty. 🧡
@@ -378,5 +380,7 @@ Was bringt dir das?
 <li><a href="https://dashboard.witty.works/team/analytics">Mit Analysedaten</a> kann sich euer Team gezielt verbessern</li>
 </ul>
 
-Falls du Fragen hast, nimm Kontakt mit :name (:email) auf. 🙂',
+Falls du Fragen hast, nimm Kontakt mit :name (:email) auf. 🙂
+
+',
 ];

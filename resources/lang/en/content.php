@@ -353,7 +353,9 @@ What\'s your benefit?
 <li><a href="https://dashboard.witty.works/team/analytics">Use analytics</a> to help your team improve effectively</li>
 </ul>
 
-If you have any questions, contact :name (:email). 🙂',
+If you have any questions, contact :name (:email). 🙂
+
+',
     'invitation_request_accepted_explanation_admin' => 'Yay,
 
 Welcome to ":team", your organization\'s Witty team for inclusive writing. 🧡
@@ -369,7 +371,9 @@ What\'s your benefit?
 <li><a href="https://dashboard.witty.works/team/analytics">Use analytics</a> to help your team improve effectively</li>
 </ul>
 
-If you have any questions, contact :name (:email). 🙂',
+If you have any questions, contact :name (:email). 🙂
+
+',
     'invition_requests_title' => 'Team Join Request',
     'invition_requests_text' => 'Someone has requested to join your team.',
     'review_invitation_requests_button' => 'Review',
