@@ -5,7 +5,7 @@
 {{ __('content.accept_invitation_request', ['name' => $name, 'team' => $team, 'email' => $email]) }}
 @endcomponent
 
-{!! __('content.if_you_did_not_expect_request') !!}
+{!! __('content.if_you_did_not_expect_request', ['team' => $team, 'name' => $name, 'email' => $email]) !!}
 
 {!! __('content.have_a_great_day') !!}
 
