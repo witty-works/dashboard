@@ -14,13 +14,10 @@ use Illuminate\Support\Facades\DB;
 
 class AnalyticsController extends Controller
 {
-    protected $url;
     protected $refresh;
 
     public function __construct(Request $request)
     {
-        $projectId = $request->get('project_id', config('posthog.project_id'));
-        $this->url = config('posthog.host') . "/api/projects/$projectId/insights/trend";
         $this->refresh = $request->get('refresh', false);
     }
 
@@ -98,7 +95,7 @@ class AnalyticsController extends Controller
         foreach ($events as $event) {
             $filter['events'][0]['id'] = $event;
 
-            $response = PosthogHelper::fetchData($filter, $this->url);
+            $response = PosthogHelper::fetchData($filter, $this->refresh);
             if (isset($response['result'][0])) {
                 $data['events'][$event] = array_combine($response['result'][0]['days'], $response['result'][0]['data']);
             }
@@ -135,7 +132,7 @@ class AnalyticsController extends Controller
         foreach ($events as $event) {
             $filter['events'][0]['id'] = $event;
 
-            $response = PosthogHelper::fetchData($filter, $this->url);
+            $response = PosthogHelper::fetchData($filter, $this->refresh);
             if (isset($response['result'])) {
                 foreach ($response['result'] as $value) {
                     $data['events'][$event][$value['breakdown_value']] = $value['aggregated_value'];

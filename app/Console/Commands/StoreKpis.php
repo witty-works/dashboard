@@ -12,7 +12,7 @@ class StoreKpis extends AbstractSyncCommand
 {
     protected $signature = 'kpis {--ids=} {--team-ids=} {--date=}';
 
-    protected $description = 'Store KPIs (like team count and writing streaks';
+    protected $description = 'Store KPIs (like team count and writing streaks)';
 
     protected $date;
 
@@ -77,7 +77,7 @@ class StoreKpis extends AbstractSyncCommand
             'date_to' => $this->date,
         ];
 
-        $response = PosthogHelper::fetchData($filter, PosthogHelper::getUrl());
+        $response = PosthogHelper::fetchData($filter);
 
         if (isset($response['result'][0])) {
             foreach ($response['result'][0]['data'] as $data) {
