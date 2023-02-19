@@ -22,12 +22,9 @@ class StoreKpis extends AbstractSyncCommand
         $this->date = $date ? new Carbon($date) : Carbon::yesterday();
         $this->date = $this->date->format('Y-m-d');
 
-        $teamCount = $this->handleTeams();
-        $this->info("Finished capturing KPIs for $teamCount teams");
-
-        $userCount = $this->handleUsers();
-        $this->info("Finished capturing KPIs for $userCount users");
-    }
+        $this->handleTeams();
+        $this->handleUsers();
+   }
 
     protected function storeKpi($model, $kpi, $value)
     {

@@ -38,12 +38,8 @@ class SyncToPosthog extends AbstractSyncCommand
 
         $this->info('Queuing syncing to Posthog ...');
 
-        $teamCount = $this->handleTeams();
-        $this->info("Finished syncing $teamCount teams");
-
-        $userCount = $this->handleUsers();
-
-        $this->info("Finished syncing $userCount users");
+        $this->handleTeams();
+        $this->handleUsers();
     }
 
     protected function handleTeam(Team $team)
