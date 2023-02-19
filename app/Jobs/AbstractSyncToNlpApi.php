@@ -21,7 +21,7 @@ abstract class AbstractSyncToNlpApi implements ShouldQueue
         if (empty($endpoint['url']) || empty($endpoint['sync_rules'])) {
             Log::debug("Endpoint URL not set, otherwise would update: $url ({$data['id']})");
 
-            return 0;
+            return true;
         }
 
         $endpoint['url'] .= $url;

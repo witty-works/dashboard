@@ -36,7 +36,7 @@ class SyncOrganizationToPosthog implements ShouldQueue
         if (!config('posthog.enabled')) {
             Log::debug("Posthog not enabled, otherwise update organization: {$team->name} ({$team->id})");
 
-            return 0;
+            return true;
         }
 
         PostHog::init(
