@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\MissingAttributeException;
 use Laravel\Jetstream\Events\TeamCreated;
 use Laravel\Jetstream\Events\TeamDeleted;
 use Laravel\Jetstream\Events\TeamUpdated;
@@ -112,6 +113,15 @@ class Team extends JetstreamTeam
         }
 
         return $this->user_licenses ?? config('stripe.plans.witty_free.features.invite_smaller_teams.count');
+    }
+
+    public function allUsers()
+    {
+        if ($this->owner === null) {
+            throw new MissingAttributeException($this, 'owner');
+        }
+
+        return parent::allUsers();
     }
 
     public function getTotalUserCount()
