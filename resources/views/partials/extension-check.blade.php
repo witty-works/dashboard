@@ -19,7 +19,10 @@
             const extensionVersion = wittyIsInstalled.getAttribute('extension-version');
             const newestVersions = @json(config('app.browser_version'));
 
-            if (extensionVersion && !newestVersions.includes(extensionVersion)) {
+            if (extensionVersion
+                && newestVersions
+                && -1 === new Intl.Collator('en').compare(extensionVersion, newestVersions)
+            ) {
                 let url = 'https://www.witty.works/en/help/how-can-i-update-witty';
 
                 const wittyOptionsUrl = document.getElementById('witty-version-options-url');
