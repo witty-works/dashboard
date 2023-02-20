@@ -284,7 +284,7 @@ class OAuthController extends BaseOAuthController
         }
 
         if ($newUser) {
-            return redirect()->route('download');
+            return redirect(config('app.download_url'));
         }
 
         return $loginResponse;
