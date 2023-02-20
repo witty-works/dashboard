@@ -113,7 +113,6 @@ Route::group(
 
                 // Teams...
                 if (Jetstream::hasTeamFeatures()) {
-                    Route::get('/team/create', [TeamController::class, 'create'])->name('teams.create');
                     Route::get('/team/show', [TeamController::class, 'show'])->name('teams.show');
                     Route::get('/team/subscription', [StripeController::class, 'show'])->name('teams.subscription');
 
@@ -178,6 +177,10 @@ Route::group(['middleware' => config('socialstream.middleware', ['web'])], funct
     Route::get('/logout/{provider}', [OAuthController::class, 'logout'])->name('logout');
     Route::get('/oauth/{provider}/{policy}', [OAuthController::class, 'redirectToProvider'])->name('oauth.redirect');
     Route::get('/oauth/{provider}/{policy}/callback', [OAuthController::class, 'handleProviderCallback'])->name('oauth.callback');
+
+    Route::get('/team-invitations/{invitation}', [TeamInvitationController::class, 'acceptSigned'])
+        ->middleware(['signed'])
+        ->name('team-invitations.accept-signed');
 });
 
 /*

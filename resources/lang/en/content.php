@@ -130,13 +130,12 @@ return [
     'you_have_been_invited' => 'Welcome to <a href="https://www.witty.works/">Witty</a>!
 
 :name has invited you to join ":team" team!
+',
+    'invitation_email_welcome' => 'Why join a team?
 
-Here is how you can join your team:
-
-- <a href="https://dashboard.witty.works/download">Register</a> or log in and download the Witty plugin.
-- Go to the <a href="https://dashboard.witty.works/">dashboard</a> and accept the invitation',
-    'invitation_email_welcome' => 'When you join the team, you will have access to the team\'s language settings in Witty.',
-    'if_you_did_not_expect' => 'If you do not want to accept the invitation, no further steps are required.',
+A team amplifies your voice for more inclusion. You will have access to the dictionary to ensure a consistent brand voice, as well as to the team\'s analytics to improve effectively.',
+    'if_you_did_not_expect' => 'You\'d rather not join this team?
+Just ignore this email. 🙂',
     'woops' => 'woops',
     'documentation' => 'Documentation',
     'welcome' => 'Welcome to the Witty Dashboard',
