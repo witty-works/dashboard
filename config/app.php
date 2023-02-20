@@ -57,6 +57,7 @@ return [
     'browser_redirect' => env('BROWSER_REDIRECT', true),
     'browser_check_time' => env('BROWSER_CHECK_TIME', 3000),
     'try_out_url' => 'https://www.witty.works/try-out-witty',
+    'download_url' => 'https://www.witty.works/install-witty',
 
     /*
     |--------------------------------------------------------------------------
