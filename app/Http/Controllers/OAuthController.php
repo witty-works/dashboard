@@ -294,7 +294,7 @@ class OAuthController extends BaseOAuthController
             return redirect($redirectUri);
         }
 
-        return redirect(route('profile.show'));
+        return redirect(config('fortify.home'));
     }
 
     /**
