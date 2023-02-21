@@ -33,7 +33,12 @@ class OAuthController extends BaseOAuthController
 
     public function redirectToProvider(string $provider, GeneratesProviderRedirect $generator, $policy = 'login')
     {
-        $redirectUri = request()->get('redirect_uri', back()->getTargetUrl());
+        $redirectUri = null;
+        if ($this->isWittyWorksUrl(back()->getTargetUrl(), true)) {
+            $redirectUri = back()->getTargetUrl();
+        }
+
+        $redirectUri = request()->get('redirect_uri', $redirectUri);
         if ($this->isWittyWorksUrl($redirectUri)) {
             session()->put('socialstream.previous_url', $redirectUri);
         } else {
@@ -184,9 +189,17 @@ class OAuthController extends BaseOAuthController
         return $this->login($user, $newUser);
     }
 
-    protected function isWittyWorksUrl($url)
+    protected function isWittyWorksUrl($url, $strict = false)
     {
+        if (empty($url)) {
+            return false;
+        }
+
         $result = parse_url($url);
+        if ($strict) {
+            return $result['host'] === 'dashboard.witty.works';
+        }
+
         if (
             $result['host'] === 'witty.works'
             || str_ends_with($result['host'], '.witty.works')
