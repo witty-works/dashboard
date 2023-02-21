@@ -148,9 +148,21 @@ class Form extends Component
             ->where('team_id', $this->team->id)
             ->where('term', $this->term);
 
+        if ($this->language_code) {
+            $query->where(function ($q) {
+                $q->whereNull('language_code')
+                    ->orWhere('language_code', $this->language_code);
+            });
+        }
+
         if ($this->term_replacement_id) {
             $query->whereNot('id', $this->term_replacement_id);
             $termReplacement = TermReplacement::find($this->term_replacement_id);
+        }
+
+        if ($query->exists()) {
+            $message = __('guidelines.term_already_exists');
+            throw ValidationException::withMessages(['term' => $message]);
         }
 
         if (!empty($termReplacement)) {
@@ -165,12 +177,6 @@ class Form extends Component
             }
 
             $termReplacement = new TermReplacement();
-        }
-
-        $count = $query->count();
-        if ($count) {
-            $message = __('guidelines.term_already_exists');
-            throw ValidationException::withMessages(['term' => $message]);
         }
 
         $this->emoji = TermReplacement::validateEmoji($this->emoji);
