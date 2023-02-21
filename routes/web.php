@@ -80,7 +80,7 @@ Route::group(
                 Route::get('/', [WelcomeController::class, 'show'])->name('root');
 
                 Route::get('/download', function () {
-                    return view('download');
+                    return redirect(config('app.download_url'));
                 })->name('download');
 
                 Route::get('/editor', function () {
