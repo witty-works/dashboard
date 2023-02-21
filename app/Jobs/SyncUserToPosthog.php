@@ -34,7 +34,7 @@ class SyncUserToPosthog implements ShouldQueue
         if (!config('posthog.enabled')) {
             Log::debug("Posthog not enabled, otherwise update user: {$user->name} ({$user->id})");
 
-            return 0;
+            return true;
         }
 
         PostHog::init(

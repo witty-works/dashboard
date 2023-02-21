@@ -33,7 +33,12 @@ class OAuthController extends BaseOAuthController
 
     public function redirectToProvider(string $provider, GeneratesProviderRedirect $generator, $policy = 'login')
     {
-        session()->put('socialstream.previous_url', back()->getTargetUrl());
+        $redirectUri = request()->get('redirect_uri', back()->getTargetUrl());
+        if ($this->isWittyWorksUrl($redirectUri)) {
+            session()->put('socialstream.previous_url', $redirectUri);
+        } else {
+            session()->remove('socialstream.previous_url');
+        }
 
         return $generator->generate($provider, $policy);
     }
@@ -58,7 +63,7 @@ class OAuthController extends BaseOAuthController
 
         $response = $generator->generate($this->provider, 'browser_login');
 
-        if ($this->validateRedirectUri($redirectUri)) {
+        if ($redirectUri && $this->validateRedirectUri($redirectUri)) {
             $targetUrl = $response->getTargetUrl();
             $url = parse_url($targetUrl);
             if (!empty($url['query'])) {
@@ -179,6 +184,17 @@ class OAuthController extends BaseOAuthController
         return $this->login($user, $newUser);
     }
 
+    protected function isWittyWorksUrl($url)
+    {
+        $result = parse_url($url);
+        if (
+            $result['host'] === 'witty.works'
+            || str_ends_with($result['host'], '.witty.works')
+        ) {
+            return true;
+        }
+    }
+
     protected function checkAllowedRedirectUri($redirectUri)
     {
         $allowedRedirectUris = config('services.azureadb2c.redirect_uri');
@@ -193,16 +209,17 @@ class OAuthController extends BaseOAuthController
         return false;
     }
 
-    protected function getBrowserLoginProvider()
-    {
-        return self::getProvider($this->provider, 'browser_login');
-    }
-
     protected function validateRedirectUri($redirectUri)
     {
         return config('services.azureadb2c.validate_redirect_uri_disabled')
             || strpos($redirectUri, 'moz-extension://') === 0
+            || $this->isWittyWorksUrl($redirectUri)
             || $this->checkAllowedRedirectUri($redirectUri);
+    }
+
+    protected function getBrowserLoginProvider()
+    {
+        return self::getProvider($this->provider, 'browser_login');
     }
 
     protected function getAccessTokenResponse(ProviderInterface $provider)
@@ -252,22 +269,19 @@ class OAuthController extends BaseOAuthController
             return $this->returnAccessTokenResponse();
         }
 
-        $route = route('profile.show');
-
-        if ($account && $account->user_id !== $user->id) {
-            return redirect($route);
-        }
-
         if (!$account) {
             $this->createsConnectedAccounts->create($user, $provider, $providerAccount);
-
-            return redirect($route);
+        } elseif ($account->user_id === $user->id) {
+            $user->updateName($providerAccount);
+            $user->saveQuietly();
         }
 
-        $user->updateName($providerAccount);
-        $user->save();
+        $redirectUri = session()->get('socialstream.previous_url');
+        if ($redirectUri && $this->validateRedirectUri($redirectUri)) {
+            return redirect($redirectUri);
+        }
 
-        return redirect($route);
+        return redirect(route('profile.show'));
     }
 
     /**
@@ -287,10 +301,17 @@ class OAuthController extends BaseOAuthController
             return redirect(config('app.download_url'));
         }
 
+        $redirectUri = session()->get('socialstream.previous_url');
+        if ($redirectUri) {
+            session()->remove('socialstream.previous_url');
+
+            return redirect($redirectUri);
+        }
+
         return $loginResponse;
     }
 
-    static public function isBrowserLogin($policy = null)
+    public static function isBrowserLogin($policy = null)
     {
         $browserLoginPolicies = ['browser_login'];
         $request = request();
@@ -305,7 +326,7 @@ class OAuthController extends BaseOAuthController
         return in_array($policy, $browserLoginPolicies);
     }
 
-    static public function getProvider($provider, $policy = null)
+    public static function getProvider($provider, $policy = null)
     {
         try {
             $provider = Socialite::driver($provider);

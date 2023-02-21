@@ -23,7 +23,6 @@ abstract class AbstractSyncCommand extends Command
                 $this->error('Non integer passed as ID: ' . $idsString);
                 return false;
             }
-
             $query->whereIn('id', $ids);
         }
 
@@ -48,20 +47,32 @@ abstract class AbstractSyncCommand extends Command
 
     protected function handleTeams($query = null)
     {
+        $results = ['success' => [], 'failure' => []];
+
         $query = $query ?? Team::query();
         $query = $this->filterQueryByIds($query, 'team-ids');
         if (!$query) {
-            return -1;
+            return $results;
         }
 
-        $teamCount = 0;
         foreach ($query->cursor() as $team) {
             /** @var \App\Models\Team $team */
-            $this->handleTeam($team);
-            $teamCount++;
+
+            try {
+                $this->handleTeam($team);
+                $results['success'][] = $team->id;
+            } catch (\Exception $e) {
+                $results['failure'][] = $team->id;
+            }
         }
 
-        return $teamCount;
+        $teamCount = count($results['success']);
+        $this->info("Finished syncing $teamCount teams");
+
+        $teamCount = count($results['failure']);
+        $this->error("Failed syncing $teamCount teams");
+
+        return $results;
     }
 
     protected function handleUser(User $user)
@@ -70,19 +81,30 @@ abstract class AbstractSyncCommand extends Command
 
     public function handleUsers($query = null)
     {
+        $results = ['success' => [], 'failure' => []];
+
         $query = $query ?? User::query();
         $query = $this->filterQueryByIds($query, 'ids');
         if (!$query) {
-            return -1;
+            return $results;
         }
 
-        $userCount = 0;
         foreach ($query->cursor() as $user) {
             /** @var \App\Models\User $user */
-            $this->handleUser($user);
-            $userCount++;
+            try {
+                $this->handleUser($user);
+                $results['success'][] = $user->id;
+            } catch (\Exception $e) {
+                $results['failure'][] = $user->id;
+            }
         }
 
-        return $userCount;
+        $userCount = count($results['success']);
+        $this->info("Finished syncing $userCount users");
+
+        $userCount = count($results['failure']);
+        $this->error("Failed syncing $userCount users");
+
+        return $results;
     }
 }

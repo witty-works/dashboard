@@ -21,7 +21,7 @@ abstract class AbstractDeleteFromNlpApi implements ShouldQueue
         if (empty($endpoint['url'])) {
             Log::debug("Endpoint URL not set, otherwise would delete: $url");
 
-            return 0;
+            return true;
         }
 
         $endpoint['url'] .= $url;
@@ -37,6 +37,6 @@ abstract class AbstractDeleteFromNlpApi implements ShouldQueue
             throw new RuntimeException("Unable to delete '{$url}.: " . $response->json('message'));
         }
 
-        return 0;
+        return true;
     }
 }

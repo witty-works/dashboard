@@ -27,11 +27,14 @@ class PosthogHelper
     public static function getUrl()
     {
         $projectId = config('posthog.project_id');
+
         return config('posthog.host') . "/api/projects/$projectId/insights/trend";
     }
 
-    public static function fetchData($filter, $url, $refresh = false)
+    public static function fetchData($filter, $refresh = false)
     {
+        $url = self::getUrl();
+
         $key = 'posthog:' . md5($url) . ':' . md5(serialize($filter));
         if ($refresh) {
             Cache::forget($key);

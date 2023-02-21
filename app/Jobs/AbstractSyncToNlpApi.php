@@ -21,7 +21,7 @@ abstract class AbstractSyncToNlpApi implements ShouldQueue
         if (empty($endpoint['url']) || empty($endpoint['sync_rules'])) {
             Log::debug("Endpoint URL not set, otherwise would update: $url ({$data['id']})");
 
-            return 0;
+            return true;
         }
 
         $endpoint['url'] .= $url;
@@ -59,8 +59,8 @@ abstract class AbstractSyncToNlpApi implements ShouldQueue
         foreach ($termReplacements as $termReplacement) {
             $termReplacementData = [
                 'alternatives' => [$termReplacement->replacement],
-                'lang' => $termReplacement->language_code,
                 'word_type' => $termReplacement->word_type,
+                'term' => $termReplacement->term,
             ];
 
             if ($termReplacement->explanation !== null) {
@@ -71,7 +71,15 @@ abstract class AbstractSyncToNlpApi implements ShouldQueue
                 ];
             }
 
-            $data[$termReplacement->term] = $termReplacementData;
+            if ($termReplacement->language_code) {
+                $languageCodes = [$termReplacement->language_code];
+            } else {
+                $languageCodes = ['en', 'de'];
+            }
+
+            foreach ($languageCodes as $languageCode) {
+                $data[$termReplacement->term . '|' . $languageCode] = $termReplacementData;
+            }
         }
 
         if (!$subscribed) {

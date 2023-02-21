@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'browser_version' => explode(',', env('BROWSER_VERSION')),
+    'browser_version' => env('BROWSER_VERSION'),
     'browsers' => [
         'chrome' => [
             'image_src' => '/google-chrome-icon-transparent-4.webp',

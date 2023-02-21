@@ -35,7 +35,17 @@ class TermReplacement extends Model
             return false;
         }
 
-        return self::where('team_id', $team->id)->where('term', $this->term)->exists();
+        $query = self::where('team_id', $team->id)
+            ->where('term', $this->term);
+
+            if ($this->language_code) {
+            $query->where(function ($q) {
+                $q->where('language_code', '')
+                    ->orWhere('language_code', $this->language_code);
+            });
+        }
+
+        return $query->exists();
     }
 
     public function getMatchingTypeAttribute()

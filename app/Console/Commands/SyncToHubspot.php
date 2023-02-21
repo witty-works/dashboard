@@ -41,9 +41,7 @@ class SyncToHubspot extends AbstractSyncCommand
             $query = User::whereNull('hubspot_id')->orWhereNull('hubspot_source');
         }
 
-        $userCount = $this->handleUsers($query);
-
-        $this->info("Finished syncing $userCount users");
+        $this->handleUsers($query);
     }
 
     protected function handleUser(User $user)
