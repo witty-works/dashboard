@@ -193,16 +193,16 @@ class OAuthController extends BaseOAuthController
         return false;
     }
 
-    protected function getBrowserLoginProvider()
-    {
-        return self::getProvider($this->provider, 'browser_login');
-    }
-
     protected function validateRedirectUri($redirectUri)
     {
         return config('services.azureadb2c.validate_redirect_uri_disabled')
             || strpos($redirectUri, 'moz-extension://') === 0
             || $this->checkAllowedRedirectUri($redirectUri);
+    }
+
+    protected function getBrowserLoginProvider()
+    {
+        return self::getProvider($this->provider, 'browser_login');
     }
 
     protected function getAccessTokenResponse(ProviderInterface $provider)
@@ -290,7 +290,7 @@ class OAuthController extends BaseOAuthController
         return $loginResponse;
     }
 
-    static public function isBrowserLogin($policy = null)
+    public static function isBrowserLogin($policy = null)
     {
         $browserLoginPolicies = ['browser_login'];
         $request = request();
@@ -305,7 +305,7 @@ class OAuthController extends BaseOAuthController
         return in_array($policy, $browserLoginPolicies);
     }
 
-    static public function getProvider($provider, $policy = null)
+    public static function getProvider($provider, $policy = null)
     {
         try {
             $provider = Socialite::driver($provider);
