@@ -99,9 +99,13 @@ class UserProfileController extends BaseUserProfileController
                             $teams[$companyUser->currentTeam->id] = [
                                 'team' => $companyUser->currentTeam,
                                 'admins' => [$companyUser],
+                                'language' => $companyUser->language ?? 'en',
                             ];
                         } else {
                             $teams[$companyUser->currentTeam->id]['admins'][] = $companyUser;
+                            if ($companyUser->language === 'en') {
+                                $teams[$companyUser->currentTeam->id]['language'] = $companyUser->language;
+                            }
                         }
                     }
                 }
@@ -113,7 +117,7 @@ class UserProfileController extends BaseUserProfileController
                     ]);
 
                     if ($invitationRequest->wasRecentlyCreated) {
-                        Mail::to($data['admins'])->send(new MailTeamInvitationRequest($invitationRequest));
+                        Mail::to($data['admins'])->send(new MailTeamInvitationRequest($invitationRequest, $data['language']));
 
                         dispatch(new SyncUserToNlpApi($data['team']->owner, 'high'));
                     }
