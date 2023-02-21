@@ -332,7 +332,7 @@ Please use Witty more often and click on the highlighted terms.',
 <li><a href="https://dashboard.witty.works/team/analytics">Use analytics</a> to help your team improve effectively</li>
 </ul>
 
-You\'d rather not add Barbara Schülé to your team?
+You\'d rather not add :name to your team?
 Just ignore this email. 🙂',
     'pending_team_invitation_requests' => 'Pending team join requests',
     'these_people_have_requested_an_invite' => 'These people want to join your team. Let them join your team by clicking "Accept" below.',
