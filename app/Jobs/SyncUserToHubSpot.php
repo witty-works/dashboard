@@ -51,7 +51,7 @@ class SyncUserToHubSpot implements ShouldQueue
         if (!config('hubspot.enabled')) {
             Log::debug("Hubspot not enabled, otherwise update user: {$user->name} ({$user->id})");
 
-            return 0;
+            return true;
         }
 
         $this->hubspot = new Hubspot();
@@ -64,14 +64,14 @@ class SyncUserToHubSpot implements ShouldQueue
                 // create via hubspot 'hubspotutk' cookie
                 $this->hubspot->createContactViaForm($user, $user->hubspotutk);
 
-                return null;
+                return true;
             }
 
             $contact = $this->hubspot->createContact($user, $data);
         }
 
         if (empty($contact)) {
-            return null;
+            return true;
         }
 
         $hubSpotData = $this->hubspot->getDataFromContact($contact);

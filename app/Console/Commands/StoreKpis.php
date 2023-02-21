@@ -7,6 +7,8 @@ use App\Models\Team;
 use App\Models\User;
 use App\Helpers\PosthogHelper;
 use Carbon\Carbon;
+use Illuminate\Mail\Message;
+use Illuminate\Support\Facades\Mail;
 
 class StoreKpis extends AbstractSyncCommand
 {
@@ -22,11 +24,38 @@ class StoreKpis extends AbstractSyncCommand
         $this->date = $date ? new Carbon($date) : Carbon::yesterday();
         $this->date = $this->date->format('Y-m-d');
 
-        $teamCount = $this->handleTeams();
-        $this->info("Finished capturing KPIs for $teamCount teams");
+        $html = "";
+        $results = $this->handleTeams();
+        $html .= $this->getHtml($results, 'teams');
+        $results = $this->handleUsers();
+        $html .= $this->getHtml($results, 'users');
 
-        $userCount = $this->handleUsers();
-        $this->info("Finished capturing KPIs for $userCount users");
+        Mail::send([], [], function (Message $message) use ($html) {
+            $message->to('engineering@witty.works')
+                ->subject('KPIs')
+                ->from('support@witty.works')
+                ->html($html);
+        });
+
+        $this->info("Send email ..");
+    }
+
+    protected function getHtml($results, $modelName)
+    {
+        $successful = count($results['success']);
+        $html = "<h2>Success syncing $successful $modelName</h2>";
+
+        $failed = count($results['failure']);
+        if ($failed) {
+            $html .= "<h2>Failed syncing $failed $modelName</h2>";
+            $html .= "<ul>";
+            foreach ($results['failure'] as $id) {
+                $html .= "<li>$modelName: $id</li>";
+            }
+            $html .= "</ul>";
+        }
+
+        return $html;
     }
 
     protected function storeKpi($model, $kpi, $value)
