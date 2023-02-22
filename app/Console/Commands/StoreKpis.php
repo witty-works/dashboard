@@ -32,7 +32,7 @@ class StoreKpis extends AbstractSyncCommand
 
         Mail::send([], [], function (Message $message) use ($html) {
             $message->to('engineering@witty.works')
-                ->subject('KPIs')
+                ->subject(getenv('PLATFORM_ENVIRONMENT') . ': KPIs')
                 ->from('support@witty.works')
                 ->html($html);
         });
