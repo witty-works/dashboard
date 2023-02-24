@@ -20,11 +20,9 @@ class UserGuidelinesApiController extends Controller
         $result = Domain::where('domain', $domain)
             ->where('user_id', $user->id)->delete();
 
-        if (!$result) {
-            abort(404);
+        if ($result) {
+            dispatch(new SyncUserToNlpApi($user, 'high'));
         }
-
-        dispatch(new SyncUserToNlpApi($user, 'high'));
 
         return response()->noContent();
     }
@@ -34,16 +32,21 @@ class UserGuidelinesApiController extends Controller
         $user = $this->getUser($request);
         $domain = Domain::validateDomain($request->get('domain'));
 
-        Domain::upsert(
+        $result = Domain::upsert(
             [
                 ['user_id' => $user->id, 'domain' => $domain],
             ],
             ['user_id', 'domain']
         );
 
-        dispatch(new SyncUserToNlpApi($user, 'high'));
+        if ($result === 1) {
+            dispatch(new SyncUserToNlpApi($user, 'high'));
 
-        $domain->dispatchEventToPosthog(['from_extension' => true]);
+            $domain = Domain::where('domain', $domain)->where('user_id', $user->id)->first();
+            if ($domain instanceof Domain) {
+                $domain->dispatchEventToPosthog(['from_extension' => true]);
+            }
+        }
 
         return response()->noContent();
     }
