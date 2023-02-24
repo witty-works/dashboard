@@ -20,8 +20,13 @@ Route::get('/browser-login', [OAuthController::class, 'redirectToProviderBrowser
 Route::post('/refresh-token', [OAuthController::class, 'accessTokenFromRefreshToken'])->name('browser.refresh_token');
 Route::get('/oauth/{provider}/{policy}/callback', [OAuthController::class, 'handleProviderCallback'])->name('browser.callback');
 
-Route::delete('/user/language/domains', [UserGuidelinesApiController::class, 'deleteDomain'])->name('user.domains.delete');
-Route::put('/user/language/domains', [UserGuidelinesApiController::class, 'putDomain'])->name('user.domains.put');
+Route::group([
+    'prefix' => '/user/language',
+    'excluded_middleware' => ['ensureStateful'],
+], function () {
+    Route::delete('/domains', [UserGuidelinesApiController::class, 'deleteDomain'])->name('user.domains.delete');
+    Route::put('/domains', [UserGuidelinesApiController::class, 'putDomain'])->name('user.domains.put');
+});
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user/analytics', [AnalyticsController::class, 'userApi'])->name('api_user_analytics');

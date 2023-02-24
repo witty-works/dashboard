@@ -23,10 +23,6 @@ class Hubspot
 
     public function createContactViaForm(User $user, $hubspotutk)
     {
-        $names = explode(' ', $user->name);
-        $lastname = array_pop($names);
-        $firstname = implode(' ', $names);
-
         $data = [
             'fields' => [
                 [
@@ -35,11 +31,11 @@ class Hubspot
                 ],
                 [
                     'name' => 'firstname',
-                    'value' => $firstname,
+                    'value' => $user->first_name,
                 ],
                 [
                     'name' => 'lastname',
-                    'value' => $lastname,
+                    'value' => $user->last_name,
                 ],
             ],
             'context' => [
@@ -62,6 +58,8 @@ class Hubspot
     {
         try {
             $data['email'] = $user->email;
+            $data['firstname'] = $user->first_name;
+            $data['lastname'] = $user->last_name;
 
             $contactInput = new ContactsSimplePublicObjectInput();
             $contactInput->setProperties($data);
