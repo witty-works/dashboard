@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Validation\ValidationException;
 
 class Kpi extends Model
 {
@@ -21,4 +20,13 @@ class Kpi extends Model
         'kpi',
         'value',
     ];
+
+    public static function getWritingStreakPast30Days($model)
+    {
+        $columnName = $model instanceof User ? 'user_id' : 'team_id';
+
+        return Kpi::where($columnName, $model->id)
+            ->where('kpi', Kpi::WRITING_STREAK)
+            ->whereDate('date', '>', now()->subDays(30))->sum('value');
+    }
 }

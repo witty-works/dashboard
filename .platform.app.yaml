@@ -49,19 +49,6 @@ hooks:
         php artisan google-fonts:fetch
 
 crons:
-    hubspot-sync:
-        spec: "33 * * * *"
-        cmd: |
-            if [ "$PLATFORM_BRANCH" = main ]; then
-                platform hubspot:sync --f
-            fi
-    snapshot-once-per-day:
-        # once per day at 12:00
-        spec: "0 12 * * *"
-        cmd: |
-            if [ "$PLATFORM_BRANCH" = main ]; then
-                platform backup:create --yes --no-wait --live
-            fi
     generate-statistics:
         # once per day at 00:55
         spec: "55 0 * * *"
@@ -70,10 +57,31 @@ crons:
                 php artisan statistics
             fi
     capture-kpis:
-        # once per day at 03:20
-        spec: "20 3 * * *"
+        # once per day at 01:20
+        spec: "20 1 * * *"
         cmd: |
             php artisan kpis
+    hubspot-sync:
+        # once per day at 04:20
+        spec: "20 4 * * *"
+        cmd: |
+            if [ "$PLATFORM_BRANCH" = main ]; then
+                platform hubspot:sync --f
+            fi
+    posthog-sync:
+        # once per day at 05:50
+        spec: "50 5 * * *"
+        cmd: |
+            if [ "$PLATFORM_BRANCH" = main ]; then
+                platform posthog:sync
+            fi
+    snapshot-once-per-day:
+        # once per day at 12:00
+        spec: "0 12 * * *"
+        cmd: |
+            if [ "$PLATFORM_BRANCH" = main ]; then
+                platform backup:create --yes --no-wait --live
+            fi
 
 # The relationships of the application with services or other applications.
 # The left-hand side is the name of the relationship as it will be exposed
