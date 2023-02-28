@@ -218,4 +218,9 @@ class Team extends JetstreamTeam
                 ]
             )->redirect();
     }
+
+    public function getWritingStreakPast30Days()
+    {
+        return Kpi::getWritingStreakPast30Days($this);
+    }
 }
