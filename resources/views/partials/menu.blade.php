@@ -29,7 +29,7 @@
             </x-jet-nav-link>
             @if ($team_edit)
             <br />
-            <x-jet-nav-link class="wittyworks-team-name lato-paragraph-text-p " href="{{ route('teams.subscription') }}#updateTeamName">
+            <x-jet-nav-link class="wittyworks-team-name lato-paragraph-text-p " href="{{ route('teams.show') }}">
                 {{ $team->name }}
             </x-jet-nav-link>
             @elseif ($team)

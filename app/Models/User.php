@@ -290,6 +290,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return null;
     }
 
+    public function getWritingStreakPast30Days()
+    {
+        return Kpi::getWritingStreakPast30Days($this);
+    }
+
     public function getHubspotData($booleanAsStrings = false)
     {
         $true = $booleanAsStrings ? 'Yes' : true;
@@ -315,6 +320,7 @@ class User extends Authenticatable implements MustVerifyEmail
             'team_member_count' => 0,
             'team_dictionary_count' => 0,
             'team_ignore_count' => 0,
+            'writing_streak' => $this->getWritingStreakPast30Days(),
         ];
 
         if ($this->currentTeam && $this->ownsTeam($this->currentTeam)) {
@@ -324,6 +330,7 @@ class User extends Authenticatable implements MustVerifyEmail
             $data['team_ignore_count'] = $this->currentTeam->falsePositives->count();
             $data['invited_team_member_count'] = $this->currentTeam->teamInvitations()->count();
             $data['team_member_count'] = $this->currentTeam->getTotalUserCount();
+            $data['team_writing_streak'] = $this->currentTeam->getWritingStreakPast30Days();
         }
 
         return $data;
