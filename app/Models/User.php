@@ -239,15 +239,16 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getFirstNameAttribute()
     {
         $split = explode(' ', $this->name);
+        array_pop($split);
 
-        return array_shift($split);
+        return implode(' ', $split);
     }
 
     public function getLastNameAttribute()
     {
         $split = explode(' ', $this->name);
 
-        return  implode(' ', $split);
+        return array_pop($split);
     }
 
     public function getEmailDomain()
