@@ -60,20 +60,22 @@ crons:
         # once per day at 01:20
         spec: "20 1 * * *"
         cmd: |
-            php artisan kpis
+            if [ "$PLATFORM_BRANCH" = main ] || [ "$PLATFORM_BRANCH" = dev ]; then
+                php artisan kpis
+            fi
     hubspot-sync:
         # once per day at 04:20
         spec: "20 4 * * *"
         cmd: |
             if [ "$PLATFORM_BRANCH" = main ]; then
-                platform hubspot:sync --f
+                php artisan hubspot:sync --f
             fi
     posthog-sync:
         # once per day at 05:50
         spec: "50 5 * * *"
         cmd: |
-            if [ "$PLATFORM_BRANCH" = main ]; then
-                platform posthog:sync
+            if [ "$PLATFORM_BRANCH" = main ] || [ "$PLATFORM_BRANCH" = dev ]; then
+                php artisan posthog:sync
             fi
     snapshot-once-per-day:
         # once per day at 12:00
