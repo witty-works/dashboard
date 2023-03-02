@@ -27,7 +27,7 @@ class SyncUserToHubSpot implements ShouldQueue
 
     public function retryUntil()
     {
-        return now()->addHour(1);
+        return now()->addHour(2);
     }
 
     public function middleware()

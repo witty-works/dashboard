@@ -32,7 +32,7 @@ class SyncToPosthog implements ShouldQueue
 
     public function retryUntil()
     {
-        return now()->addHour(1);
+        return now()->addHour(5);
     }
 
     public function middleware()
