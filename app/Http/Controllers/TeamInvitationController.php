@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Jobs\SyncUserToHubSpot;
 use App\Jobs\SyncUserToNlpApi;
-use App\Jobs\SyncUserToPosthog;
+use App\Jobs\SyncToPosthog;
 use Laravel\Jetstream\TeamInvitation;
 use Illuminate\Http\Request;
 use Laravel\Jetstream\Http\Controllers\TeamInvitationController as BaseTeamInvitationController;
@@ -54,7 +54,7 @@ class TeamInvitationController extends BaseTeamInvitationController
             $otherInvitation->delete();
 
             dispatch(new SyncUserToHubSpot($otherInvitation->team->owner));
-            dispatch(new SyncUserToPosthog($otherInvitation->team->owner));
+            dispatch(new SyncToPosthog($otherInvitation->team->owner));
 
             // update notification count
             dispatch(new SyncUserToNlpApi($otherInvitation->team->owner, 'high'));
@@ -79,7 +79,7 @@ class TeamInvitationController extends BaseTeamInvitationController
         $invitation->delete();
 
         dispatch(new SyncUserToHubSpot($invitation->team->owner));
-        dispatch(new SyncUserToPosthog($invitation->team->owner));
+        dispatch(new SyncToPosthog($invitation->team->owner));
 
         // update notification count
         dispatch(new SyncUserToNlpApi($request->user(), 'high'));

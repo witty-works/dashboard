@@ -5,7 +5,7 @@ namespace App\Listeners;
 use App\Events\AbstractSubscription;
 use App\Helpers\PosthogHelper;
 use App\Jobs\SendEventToPosthog;
-use App\Jobs\SyncUserToPosthog;
+use App\Jobs\SyncToPosthog;
 use Laravel\Jetstream\Events\TeamMemberAdded;
 
 class PostHogUpdateUser
@@ -13,15 +13,15 @@ class PostHogUpdateUser
     public function handle($event)
     {
         if (!empty($event->user)) {
-            dispatch(new SyncUserToPosthog($event->user));
+            dispatch(new SyncToPosthog($event->user));
         }
 
         if (!empty($event->team)) {
-            dispatch(new SyncUserToPosthog($event->team->owner));
+            dispatch(new SyncToPosthog($event->team->owner));
 
             if ($event instanceof AbstractSubscription) {
                 foreach ($event->team->users as $user) {
-                    dispatch(new SyncUserToPosthog($user));
+                    dispatch(new SyncToPosthog($user));
                 }
             }
         }

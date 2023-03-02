@@ -7,6 +7,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
+use RuntimeException;
 
 class PosthogHelper
 {
@@ -44,8 +45,17 @@ class PosthogHelper
             $response = Http::withToken(config('posthog.personal_api_key'))
                 ->post($url, $filter);
 
+            if ($response->failed()) {
+                throw new RuntimeException("Posthog returned status code:{$response->status()}\n" . serialize($filter));
+            }
+
             $data = $response->collect()->all();
+            if (empty($data['result'][0])) {
+                throw new RuntimeException("Posthog returned no data\n" . serialize($filter));
+            }
+
             $data['last_refresh'] = Carbon::now();
+
             return $data;
         });
     }
