@@ -151,6 +151,7 @@ class Form extends Component
         if ($this->language_code) {
             $query->where(function ($q) {
                 $q->whereNull('language_code')
+                    ->orWhere('language_code', '')
                     ->orWhere('language_code', $this->language_code);
             });
         }
