@@ -40,7 +40,8 @@ class Form extends OrganizationForm
 
         if ($this->language_code) {
             $query->where(function ($q) {
-                $q->where('language_code', '')
+                $q->whereNull('language_code')
+                    ->orWhere('language_code', '')
                     ->orWhere('language_code', $this->language_code);
             });
         }
@@ -50,8 +51,7 @@ class Form extends OrganizationForm
             $termReplacement = TermReplacement::find($this->term_replacement_id);
         }
 
-        $count = $query->count();
-        if ($count) {
+        if ($query->exists()) {
             $message = __('guidelines.term_already_exists');
             throw ValidationException::withMessages(['term' => $message]);
         }
