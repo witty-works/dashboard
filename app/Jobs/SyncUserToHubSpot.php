@@ -88,7 +88,7 @@ class SyncUserToHubSpot implements ShouldQueue
         $user->saveQuietly();
 
         if ($user->wasChanged()) {
-            dispatch(new SyncUserToPosthog($user));
+            dispatch(new SyncToPosthog($user));
         }
 
         return $hubSpotData;

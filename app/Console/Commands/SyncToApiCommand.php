@@ -7,7 +7,7 @@ use App\Jobs\SyncUserToNlpApi;
 use App\Models\User;
 use App\Models\Team;
 
-class SyncToApi extends AbstractSyncCommand
+class SyncToApiCommand extends AbstractSyncCommand
 {
     /**
      * The name and signature of the console command.
