@@ -64,15 +64,15 @@ crons:
                 php artisan kpis
             fi
     hubspot-sync:
-        # once per day at 04:20
-        spec: "20 4 * * *"
+        # once per day at 06:20
+        spec: "20 6 * * *"
         cmd: |
             if [ "$PLATFORM_BRANCH" = main ]; then
                 php artisan hubspot:sync --f
             fi
     posthog-sync:
-        # once per day at 05:50
-        spec: "50 5 * * *"
+        # once per day at 06:50
+        spec: "50 6 * * *"
         cmd: |
             if [ "$PLATFORM_BRANCH" = main ] || [ "$PLATFORM_BRANCH" = dev ]; then
                 php artisan posthog:sync

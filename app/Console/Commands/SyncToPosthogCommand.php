@@ -2,12 +2,11 @@
 
 namespace App\Console\Commands;
 
-use App\Jobs\SyncOrganizationToPosthog;
-use App\Jobs\SyncUserToPosthog;
+use App\Jobs\SyncToPosthog;
 use App\Models\User;
 use App\Models\Team;
 
-class SyncToPosthog extends AbstractSyncCommand
+class SyncToPosthogCommand extends AbstractSyncCommand
 {
     /**
      * The name and signature of the console command.
@@ -44,13 +43,13 @@ class SyncToPosthog extends AbstractSyncCommand
 
     protected function handleTeam(Team $team)
     {
-        $job = new SyncOrganizationToPosthog($team);
+        $job = new SyncToPosthog($team);
         $this->handleJob($job);
     }
 
     protected function handleUser(User $user)
     {
-        $job = new SyncUserToPosthog($user);
+        $job = new SyncToPosthog($user);
         $this->handleJob($job);
     }
 }

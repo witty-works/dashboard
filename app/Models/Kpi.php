@@ -29,4 +29,20 @@ class Kpi extends Model
             ->where('kpi', Kpi::WRITING_STREAK)
             ->whereDate('date', '>', now()->subDays(30))->sum('value');
     }
+
+    public static function storeKpi($model, $kpi, $value, $date)
+    {
+        $idColumnName = $model instanceof Team ? 'team_id' : 'user_id';
+
+        Kpi::updateOrCreate(
+            [
+                $idColumnName => $model->id,
+                'date' => $date,
+                'kpi' => $kpi,
+            ],
+            [
+                'value' => $value,
+            ]
+        );
+    }
 }

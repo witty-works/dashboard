@@ -7,7 +7,7 @@ use Illuminate\Mail\Message;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
-class StatisticsEmail extends Command
+class StatisticsEmailCommand extends Command
 {
     /**
      * The name and signature of the console command.

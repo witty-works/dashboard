@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Jobs\SyncOrganizationToPosthog;
+use App\Jobs\SyncToPosthog;
 use Laravel\Jetstream\Events\TeamDeleted;
 
 class PostHogUpdateOrganization
@@ -13,10 +13,6 @@ class PostHogUpdateOrganization
             return;
         }
 
-        if ($event instanceof TeamDeleted) {
-            dispatch(new SyncOrganizationToPosthog($event->team, true));
-        } else {
-            dispatch(new SyncOrganizationToPosthog($event->team));
-        }
+        dispatch(new SyncToPosthog($event->team, $event instanceof TeamDeleted));
     }
 }
