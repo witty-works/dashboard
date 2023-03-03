@@ -239,6 +239,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getFirstNameAttribute()
     {
         $split = explode(' ', $this->name);
+        if (count($split) <= 1) {
+            return $this->name;
+        }
+
         array_pop($split);
 
         return implode(' ', $split);
@@ -247,6 +251,9 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getLastNameAttribute()
     {
         $split = explode(' ', $this->name);
+        if (count($split) <= 1) {
+            return '';
+        }
 
         return array_pop($split);
     }
