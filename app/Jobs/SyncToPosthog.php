@@ -41,7 +41,8 @@ class SyncToPosthog implements ShouldQueue
 
         $rateLimitedMiddleware
             ->allow(config('posthog.rate.limit'))
-            ->everySeconds(config('posthog.rate.interval_seconds'));
+            ->everySeconds(config('posthog.rate.interval_seconds'))
+            ->releaseAfterBackoff($this->attempts(), config('posthog.rate.muiltiplier'));
 
         return [$rateLimitedMiddleware];
     }

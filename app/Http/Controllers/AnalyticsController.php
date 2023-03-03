@@ -96,8 +96,10 @@ class AnalyticsController extends Controller
             $filter['events'][0]['id'] = $event;
 
             $response = PosthogHelper::fetchData($filter, $this->refresh);
+            if (!empty($data['result'][0])) {
+                $data['events'][$event] = array_combine($response['result'][0]['days'], $response['result'][0]['data']);
+            }
 
-            $data['events'][$event] = array_combine($response['result'][0]['days'], $response['result'][0]['data']);
             $data['last_refresh'] = $response['last_refresh'];
         }
 

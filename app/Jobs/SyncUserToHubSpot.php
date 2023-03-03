@@ -36,7 +36,8 @@ class SyncUserToHubSpot implements ShouldQueue
 
         $rateLimitedMiddleware
             ->allow(config('hubspot.rate.limit'))
-            ->everySeconds(config('hubspot.rate.interval_seconds'));
+            ->everySeconds(config('hubspot.rate.interval_seconds'))
+            ->releaseAfterBackoff($this->attempts(), config('hubspot.rate.muiltiplier'));
 
         return [$rateLimitedMiddleware];
     }

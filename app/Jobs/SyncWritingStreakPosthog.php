@@ -39,7 +39,8 @@ class SyncWritingStreakPosthog implements ShouldQueue
 
         $rateLimitedMiddleware
             ->allow(config('posthog.rate.limit'))
-            ->everySeconds(config('posthog.rate.interval_seconds'));
+            ->everySeconds(config('posthog.rate.interval_seconds'))
+            ->releaseAfterBackoff($this->attempts(), config('posthog.rate.muiltiplier'));
 
         return [$rateLimitedMiddleware];
     }
@@ -75,6 +76,10 @@ class SyncWritingStreakPosthog implements ShouldQueue
         ];
 
         $response = PosthogHelper::fetchData($filter);
+        if (empty($response['result'][0])) {
+            return 0;
+        }
+
         foreach ($response['result'][0]['data'] as $data) {
             if ($data) {
                 return 1;
