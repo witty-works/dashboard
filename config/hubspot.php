@@ -11,5 +11,6 @@ return [
         # 2 requests per Job (fetch + write) => 100 / 2 = 50
         'limit' => env('HUBSPOT_RATE_LIMIT', 50),
         'interval_seconds' => env('HUBSPOT_RATE_INTERVAL_SECONDS', 10),
+        'muiltiplier' => env('HUBSPOT_RATE_MULTIPLIER', 2),
     ],
 ];
