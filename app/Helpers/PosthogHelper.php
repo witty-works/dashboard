@@ -50,10 +50,6 @@ class PosthogHelper
             }
 
             $data = $response->collect()->all();
-            if (empty($data['result'][0])) {
-                throw new RuntimeException("Posthog returned no data\n" . serialize($filter));
-            }
-
             $data['last_refresh'] = Carbon::now();
 
             return $data;

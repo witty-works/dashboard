@@ -75,6 +75,10 @@ class SyncWritingStreakPosthog implements ShouldQueue
         ];
 
         $response = PosthogHelper::fetchData($filter);
+        if (empty($response['result'][0])) {
+            return 0;
+        }
+
         foreach ($response['result'][0]['data'] as $data) {
             if ($data) {
                 return 1;
