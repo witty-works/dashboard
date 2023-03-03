@@ -203,7 +203,7 @@ class AnalyticsController extends Controller
                 $events = ['popover_open', 'alternative', 'ignore', 'learning_bites'];
                 $data = $this->fetchEventData($events, $properties, $interval, $fromPosthog, 'dau');
 
-                if ($model instanceof Team) {
+                if ($model instanceof Team && !empty($data['events']['popover_open'])) {
                     $fromUserCount = $from + 10;
                     $userCount = Kpi::where('team_id', $model->id)
                         ->where('kpi', Kpi::TEAM_COUNT)
@@ -234,18 +234,20 @@ class AnalyticsController extends Controller
 
                 $writingStreak = 0;
                 $writingStreakComplete = true;
-                foreach ($data['events']['check'] as $day => $value) {
-                    // skip everything that isn't start of the week
-                    // @TODO honor the users start of the week
-                    if ($interval === 'day' && (int)date('w', strtotime($day)) !== 0) {
-                        continue;
+                if (!empty($data['events']['check'])) {
+                    foreach ($data['events']['check'] as $day => $value) {
+                        // skip everything that isn't start of the week
+                        // @TODO honor the users start of the week
+                        if ($interval === 'day' && (int)date('w', strtotime($day)) !== 0) {
+                            continue;
+                        }
+    
+                        if ((int)$value === 0) {
+                            $writingStreak = 0;
+                            $writingStreakComplete = false;
+                        }
+                        $writingStreak += ($value ? 1 : 0);
                     }
-
-                    if ((int)$value === 0) {
-                        $writingStreak = 0;
-                        $writingStreakComplete = false;
-                    }
-                    $writingStreak += ($value ? 1 : 0);
                 }
 
                 if ($writingStreakComplete) {
