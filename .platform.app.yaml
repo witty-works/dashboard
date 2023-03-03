@@ -64,6 +64,13 @@ crons:
                 php artisan kpis
             fi
     hubspot-sync:
+        # once per hour at 05
+        spec: "05 * * * *"
+        cmd: |
+            if [ "$PLATFORM_BRANCH" = main ]; then
+                php artisan hubspot:sync
+            fi
+    hubspot-full-sync:
         # once per day at 06:20
         spec: "20 6 * * *"
         cmd: |
