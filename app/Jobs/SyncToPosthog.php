@@ -13,7 +13,6 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use InvalidArgumentException;
-use Spatie\RateLimitedMiddleware\RateLimited;
 
 class SyncToPosthog implements ShouldQueue
 {
@@ -28,23 +27,6 @@ class SyncToPosthog implements ShouldQueue
         $this->id = $model->id;
         $this->model = $model instanceof Team ? 'team' : 'user';
         $this->isDeleted = $isDeleted;
-    }
-
-    public function retryUntil()
-    {
-        return now()->addHour(5);
-    }
-
-    public function middleware()
-    {
-        $rateLimitedMiddleware = new RateLimited(false);
-
-        $rateLimitedMiddleware
-            ->allow(config('posthog.rate.limit'))
-            ->everySeconds(config('posthog.rate.interval_seconds'))
-            ->releaseAfterBackoff($this->attempts(), config('posthog.rate.muiltiplier'));
-
-        return [$rateLimitedMiddleware];
     }
 
     public function handle()
