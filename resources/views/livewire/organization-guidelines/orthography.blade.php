@@ -26,6 +26,7 @@
                 value="1"
                 :label="__('guidelines.set_for_all')"
                 wire:model.defer="disabled_categories_force_orthography"
+                :disabled="!$team->subscribed()"
             />
         </div>
 

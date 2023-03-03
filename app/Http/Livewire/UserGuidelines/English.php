@@ -2,16 +2,13 @@
 
 namespace App\Http\Livewire\UserGuidelines;
 
-use App\Http\Livewire\HelpHeroTrait;
-use App\Models\LanguageGuidelines;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class English extends Component
 {
-    use AuthorizesRequests, AttributeTrait;
-    use HelpHeroTrait;
+    use AuthorizesRequests;
+    use GuidelineTrait;
 
     protected $listeners = ['saved'];
 
@@ -23,19 +20,6 @@ class English extends Component
     ];
 
     public $user;
-
-    /**
-     * Mount the component.
-     *
-     * @param  mixed  $user
-     * @return void
-     */
-    public function mount($user)
-    {
-        $this->user = Auth::user();
-
-        $this->resetForm();
-    }
 
     protected function resetForm()
     {
@@ -87,23 +71,5 @@ class English extends Component
     public function render()
     {
         return view('livewire.user-guidelines.english');
-    }
-
-    public function cancel()
-    {
-        $this->resetForm();
-
-        return $this->render();
-    }
-
-    public function saved()
-    {
-        $this->mount($this->user);
-        $this->render();
-    }
-
-    protected function getLanguageGuidelines($user)
-    {
-        return LanguageGuidelines::firstOrNew(['user_id' => $user->id]);
     }
 }

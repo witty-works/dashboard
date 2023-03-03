@@ -27,6 +27,7 @@
                 value="1"
                 :label="__('guidelines.set_for_all')"
                 wire:model.defer="english_rules_force"
+                :disabled="!$team->subscribed()"
             />
         </div>
 
