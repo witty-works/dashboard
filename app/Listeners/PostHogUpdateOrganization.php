@@ -13,6 +13,6 @@ class PostHogUpdateOrganization
             return;
         }
 
-        dispatch(new SyncToPosthog($event->team, $event instanceof TeamDeleted));
+        dispatch(new SyncToPosthog($event->team, false, $event instanceof TeamDeleted));
     }
 }

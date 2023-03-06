@@ -13,7 +13,7 @@ class SyncToPosthogCommand extends AbstractSyncCommand
      *
      * @var string
      */
-    protected $signature = 'posthog:sync {--ids=} {--team-ids=} {--e}';
+    protected $signature = 'posthog:sync {--ids=} {--team-ids=} {--e} {--f}';
 
     /**
      * The console command description.
@@ -43,13 +43,13 @@ class SyncToPosthogCommand extends AbstractSyncCommand
 
     protected function handleTeam(Team $team)
     {
-        $job = new SyncToPosthog($team);
+        $job = new SyncToPosthog($team, $this->option('f'));
         $this->handleJob($job);
     }
 
     protected function handleUser(User $user)
     {
-        $job = new SyncToPosthog($user);
+        $job = new SyncToPosthog($user, $this->option('f'));
         $this->handleJob($job);
     }
 }

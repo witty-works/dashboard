@@ -20,34 +20,21 @@ class SyncToPosthog implements ShouldQueue
 
     protected $id;
     protected $model;
+    protected $force;
     protected $isDeleted;
 
-    public function __construct($model, $isDeleted = false)
+    public function __construct($model, $force = false, $isDeleted = false)
     {
         $this->id = $model->id;
         $this->model = $model instanceof Team ? 'team' : 'user';
+        $this->force = $force;
         $this->isDeleted = $isDeleted;
     }
 
     public function handle()
     {
-        if ($this->model === 'team') {
-            $team = Team::find($this->id);
-            return $this->handleTeam($team);
-        }
-
-        $user = User::find($this->id);
-        return $this->handleUser($user);
-    }
-
-    public function handleUser($user)
-    {
-        if (!$user instanceof User) {
-            throw new InvalidArgumentException("User id '{$this->id} does not exist.");
-        }
-
         if (!config('posthog.enabled')) {
-            Log::debug("Posthog not enabled, otherwise update user: {$user->name} ({$user->id})");
+            Log::debug("Posthog not enabled, otherwise update model {$this->model}, id {$this->id})");
 
             return true;
         }
@@ -56,6 +43,31 @@ class SyncToPosthog implements ShouldQueue
             config('posthog.api_key'),
             ['host' => config('posthog.host'), 'debug' => config('posthog.debug')],
         );
+
+        switch ($this->model) {
+            case 'team':
+                $result = $this->handleTeam();
+                break;
+            case 'user':
+                $result = $this->handleUser();
+                break;
+            default:
+                throw new InvalidArgumentException("Invalid model type {$this->model} (must be either 'team' or 'user').");
+        }
+
+        if (!$result) {
+            throw new InvalidArgumentException("{$this->model}, id {$this->id} could not be synced to Posthog.");
+        }
+
+        return $result;
+    }
+
+    public function handleUser()
+    {
+        $user = User::find($this->id);
+        if (!$user instanceof User) {
+            throw new InvalidArgumentException("User id '{$this->id} does not exist.");
+        }
 
         $properties = $user->getHubspotData();
         $properties['hubspot_source'] = $user->hubspot_source;
@@ -64,34 +76,35 @@ class SyncToPosthog implements ShouldQueue
             PosthogHelper::POSTHOG_ORGANIZATION_TYPE => $user->posthogTeamId()
         ];
 
+        $encodedProperties = json_encode($properties);
+        if (!$this->force && $user->posthog_last_sync_data === $encodedProperties) {
+            return true;
+        }
+
         $result = PostHog::identify([
             'distinctId' => $user->posthogId(),
             'properties' => $properties,
         ]);
 
         if (!$result) {
-            throw new InvalidArgumentException("User id '{$this->id} could not be added to Posthog.");
+            return false;
         }
+
+        User::withoutTimestamps(function () use ($user, $encodedProperties) {
+            $user->posthog_last_sync = now();
+            $user->posthog_last_sync_data = $encodedProperties;
+            $user->saveQuietly();
+        });
 
         return $properties;
     }
 
-    public function handleTeam($team)
+    public function handleTeam()
     {
+        $team = Team::find($this->id);
         if (!$team instanceof Team) {
             throw new InvalidArgumentException("Team id '{$this->id} does not exist.");
         }
-
-        if (!config('posthog.enabled')) {
-            Log::debug("Posthog not enabled, otherwise update organization: {$team->name} ({$team->id})");
-
-            return true;
-        }
-
-        PostHog::init(
-            config('posthog.api_key'),
-            ['host' => config('posthog.host'), 'debug' => config('posthog.debug')],
-        );
 
         $properties = [
             'is_deleted' => $this->isDeleted,
@@ -102,6 +115,11 @@ class SyncToPosthog implements ShouldQueue
             'stripe_plan' => $team->planId(),
         ];
 
+        $encodedProperties = json_encode($properties);
+        if (!$this->force && $team->posthog_last_sync_data === $encodedProperties) {
+            return true;
+        }
+
         $result = PostHog::groupIdentify([
             'groupType' => PosthogHelper::POSTHOG_ORGANIZATION_TYPE,
             'groupKey' => $team->posthogId(),
@@ -109,8 +127,14 @@ class SyncToPosthog implements ShouldQueue
         ]);
 
         if (!$result) {
-            throw new InvalidArgumentException("Team id '{$this->id} could not be added to Posthog.");
+            return false;
         }
+
+        Team::withoutTimestamps(function () use ($team, $encodedProperties) {
+            $team->posthog_last_sync = now();
+            $team->posthog_last_sync_data = $encodedProperties;
+            $team->saveQuietly();
+        });
 
         return $properties;
     }
