@@ -10,7 +10,7 @@ class StoreKpisCommand extends AbstractSyncCommand
 {
     protected $signature = 'kpis {--ids=} {--team-ids=} {--date=} {--e}';
 
-    protected $description = 'Store KPIs (like team count and writing streaks)';
+    protected $description = 'Store KPIs (team user/license count)';
 
     protected $date;
 
