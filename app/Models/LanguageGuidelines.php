@@ -199,7 +199,7 @@ class LanguageGuidelines extends Model
     public static function isForcedOnTeam(User $user, $section)
     {
         if (!$user->subscribed()) {
-            return 'locked';
+            return 'locked_upgrade';
         }
 
         $teamGuidelines = self::getTeamGuidelines($user);
