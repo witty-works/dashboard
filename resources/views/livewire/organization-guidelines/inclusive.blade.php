@@ -25,6 +25,7 @@
                 value="1"
                 :label="__('guidelines.set_for_all')"
                 wire:model.defer="disabled_categories_force_inclusive"
+                :disabled="!$team->subscribed()"
             />
         </div>
 

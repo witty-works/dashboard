@@ -2,9 +2,7 @@
 
 namespace App\Http\Livewire\OrganizationGuidelines;
 
-use App\Http\Livewire\HelpHeroTrait;
 use App\Models\GuidelinesInterface;
-use App\Models\LanguageGuidelines;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
@@ -13,7 +11,7 @@ use Livewire\Component;
 class Language extends Component
 {
     use AuthorizesRequests;
-    use HelpHeroTrait;
+    use GuidelineTrait;
 
     public $preferred_variants;
     public $preferred_variants_force;
@@ -27,19 +25,6 @@ class Language extends Component
     ];
 
     public $team;
-
-    /**
-     * Mount the component.
-     *
-     * @param  mixed  $team
-     * @return void
-     */
-    public function mount($team)
-    {
-        $this->team = $team;
-
-        $this->resetForm();
-    }
 
     public function resetForm()
     {
@@ -88,7 +73,10 @@ class Language extends Component
         $this->preferred_variants = $preferredVariants;
 
         $languageGuidelines->preferred_variants = $this->preferred_variants;
-        $languageGuidelines->preferred_variants_force = $this->preferred_variants_force;
+
+        if ($this->team->subscribed()) {
+            $languageGuidelines->preferred_variants_force = (bool) $this->preferred_variants_force;
+        }
 
         $languageGuidelines->save();
         $languageGuidelines->dispatchEventToPosthog((new \ReflectionClass($this))->getShortName());
@@ -105,17 +93,5 @@ class Language extends Component
     public function render()
     {
         return view('livewire.organization-guidelines.language');
-    }
-
-    public function cancel()
-    {
-        $this->resetForm();
-
-        return $this->render();
-    }
-
-    protected function getLanguageGuidelines($team)
-    {
-        return LanguageGuidelines::firstOrNew(['team_id' => $team->id]);
     }
 }

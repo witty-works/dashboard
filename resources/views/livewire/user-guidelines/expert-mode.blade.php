@@ -14,7 +14,7 @@
                 value="1"
                 :label="__('guidelines.enable_expert_mode')"
                 wire:model.defer="expert_mode"
-                :disabled="!$user->subscribed() ? true : \App\Models\LanguageGuidelines::isForcedOnTeam(Auth::user(), 'expert_mode')"
+                :disabled="\App\Models\LanguageGuidelines::isForcedOnTeam(Auth::user(), 'expert_mode')"
             />
 
             <x-jet-input-error for="expert_mode" class="mt-2" />
@@ -29,7 +29,7 @@
                 value="1"
                 :label="__('guidelines.simple_language')"
                 wire:model.defer="simple_language"
-                :disabled="!$user->subscribed() ? true : \App\Models\LanguageGuidelines::isForcedOnTeam(Auth::user(), 'expert_mode')"
+                :disabled="\App\Models\LanguageGuidelines::isForcedOnTeam(Auth::user(), 'expert_mode')"
             />
 
             <x-jet-input-error for="simple_language" class="mt-2" />

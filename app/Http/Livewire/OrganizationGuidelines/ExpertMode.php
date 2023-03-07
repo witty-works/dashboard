@@ -2,8 +2,6 @@
 
 namespace App\Http\Livewire\OrganizationGuidelines;
 
-use App\Http\Livewire\HelpHeroTrait;
-use App\Models\LanguageGuidelines;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -11,7 +9,7 @@ use Livewire\Component;
 class ExpertMode extends Component
 {
     use AuthorizesRequests;
-    use HelpHeroTrait;
+    use GuidelineTrait;
 
     public $expert_mode;
     public $simple_language;
@@ -24,19 +22,6 @@ class ExpertMode extends Component
     ];
 
     public $team;
-
-    /**
-     * Mount the component.
-     *
-     * @param  mixed  $team
-     * @return void
-     */
-    public function mount($team)
-    {
-        $this->team = $team;
-
-        $this->resetForm();
-    }
 
     public function resetForm()
     {
@@ -57,17 +42,19 @@ class ExpertMode extends Component
             abort(403);
         }
 
-        $languageGuidelines = $this->getLanguageGuidelines($this->team);
+        if ($this->team->subscribed()) {
+            $languageGuidelines = $this->getLanguageGuidelines($this->team);
 
-        $languageGuidelines->simple_language = (bool) $this->simple_language;
-        if ($languageGuidelines->simple_language) {
-            $this->expert_mode = true;
+            $languageGuidelines->simple_language = (bool) $this->simple_language;
+            if ($languageGuidelines->simple_language) {
+                $this->expert_mode = true;
+            }
+            $languageGuidelines->expert_mode = (bool) $this->expert_mode;
+            $languageGuidelines->expert_mode_force = (bool) $this->expert_mode_force;
+
+            $languageGuidelines->save();
+            $languageGuidelines->dispatchEventToPosthog((new \ReflectionClass($this))->getShortName());
         }
-        $languageGuidelines->expert_mode = (bool) $this->expert_mode;
-        $languageGuidelines->expert_mode_force = (bool) $this->expert_mode_force;
-
-        $languageGuidelines->save();
-        $languageGuidelines->dispatchEventToPosthog((new \ReflectionClass($this))->getShortName());
 
         $this->emit('saved');
         $this->updateHelpHero();
@@ -81,28 +68,5 @@ class ExpertMode extends Component
     public function render()
     {
         return view('livewire.organization-guidelines.expert-mode');
-    }
-
-    public function cancel()
-    {
-        $this->resetForm();
-
-        return $this->render();
-    }
-
-    protected function getLanguageGuidelines($team)
-    {
-        $languageGuidelines = LanguageGuidelines::firstOrNew(['team_id' => $team->id]);
-
-        if (!$this->team->subscribed()) {
-            $this->expert_mode = false;
-            $languageGuidelines->expert_mode = false;
-            $this->simple_language = false;
-            $languageGuidelines->simple_language = false;
-            $this->expert_mode_force = false;
-            $languageGuidelines->expert_mode_force = false;
-        }
-
-        return $languageGuidelines;
     }
 }

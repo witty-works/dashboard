@@ -18,20 +18,13 @@
                     :options="\App\Models\GuidelinesInterface::GENDERED_ROLES_FORMAT"
                     class="guidelines-form-section-dropdown margin-bottom"
                     wire:model.defer="gendered_roles_format"
-                    :disabled="!$user->subscribed() || \App\Models\LanguageGuidelines::isForcedOnTeam(Auth::user(), 'german_rules')"
+                    :disabled="\App\Models\LanguageGuidelines::isForcedOnTeam(Auth::user(), 'german_rules')"
                 />
 
                 <x-jet-input-error for="gendered_roles_format" class="mt-2" />
             </div>
 
-            @if(\App\Models\LanguageGuidelines::isForcedOnTeam(Auth::user(), 'german_rules'))
-              @include('partials.locked')
-            @elseif(!$user->subscribed())
-              <div class="p-3">
-                @include('partials.witty-teams-only')
-              </div>
-            @endif
-
+            @include('partials.toggle_label', ['disabled' => \App\Models\LanguageGuidelines::isForcedOnTeam(Auth::user(), 'german_rules')])
         </div>
 
         <div class="margin-bottom">
@@ -50,9 +43,8 @@
 
                 <x-jet-input-error for="german_gender_ending" class="mt-2" />
             </div>
-            @if(\App\Models\LanguageGuidelines::isForcedOnTeam(Auth::user(), 'german_rules'))
-              @include('partials.locked')
-            @endif
+
+            @include('partials.toggle_label', ['disabled' => \App\Models\LanguageGuidelines::isForcedOnTeam(Auth::user(), 'german_rules')])
         </div>
     </x-slot>
 
