@@ -125,12 +125,10 @@ return [
     'you_have_been_invited' => 'Willkommen bei <a href="https://www.witty.works/">Witty</a>!
 
 :name hat dich zum Team ":team" eingeladen!
+',
+    'if_you_did_not_expect' => 'Du möchtest lieber nicht im Team zusammenarbeiten?
 
-So kannst du deinem Team beitreten:
-
-- <a href="https://dashboard.witty.works/<a href="https://dashboard.witty.works/download">download">Registriere</a> dich oder logge dich ein and download the Witty-Plugin.
-- Gehen zum <a href="https://dashboard.witty.works/">Dashboard</a> und akzeptiere die Einladung',
-    'if_you_did_not_expect' => 'Wenn du diese Einladung nicht annehmen willst, sind keine weiteren Schritte erforderlich.',
+Dann kannst du diese Mail einfach ignorieren. 🙂',
     'woops' => 'hoppla',
     'documentation' => 'Dokumentation',
     'welcome' => 'Willkommen beim Witty Dashboard',
@@ -145,7 +143,9 @@ So kannst du deinem Team beitreten:
     'en' => 'Englisch',
     'welcome_text' => 'Das Dashboard hilft dir, Witty einzurichten und deinen Bedürfnissen anzupassen.',
     'onboarding_signup_to_witty' => 'Meldung für ein Witty-Konto',
-    'invitation_email_welcome' => 'Wenn du dem Team beitreten, hast du Zugriff auf die Spracheinstellungen des Teams in Witty.',
+    'invitation_email_welcome' => 'Was bringt ein Team?
+
+Gemeinsam könnt ihr euch effektiver für Inklusion starkmachen. Das Team-Wörterbuch verhilft dir zu einer konsistenteren Markenstimme und kannst dir die Team-Statistiken anschauen, um dich gezielt zu verbessern.',
     'onboarding_install_witty' => 'Installiere unsere Witty-Browsererweiterung',
     'accept_invitiation' => 'Annehmen',
     'reject_invitiation' => 'Ablehnen',
@@ -330,7 +330,7 @@ Bitte verwende Witty öfter und klicke auf die hervorgehobenen Begriffe.',
 
 <li><a href="https://dashboard.witty.works/team/language/dictionary">Das Wörterbuch</a> verhilft euch zu einer konsistenteren Markenstimme</li>
 
-<li><a href="https://dashboard.witty.works/team/analytics">Mit Analysedaten</a> kann sich euer Team gezielt verbessern</li>
+<li><a href="https://dashboard.witty.works/team/analytics">Mit Statistiken</a> kann sich euer Team gezielt verbessern</li>
 </ul>
 
 Du möchtest lieber nicht mit :name im Team zusammenarbeiten?
@@ -358,7 +358,7 @@ Was bringt dir das?
 
 <li><a href="https://dashboard.witty.works/team/language/dictionary">Das Wörterbuch</a> verhilft euch zu einer konsistenteren Markenstimme</li>
 
-<li><a href="https://dashboard.witty.works/team/analytics">Mit Analysedaten</a> kann sich euer Team gezielt verbessern</li>
+<li><a href="https://dashboard.witty.works/team/analytics">Mit Statistiken</a> kann sich euer Team gezielt verbessern</li>
 </ul>
 
 Falls du Fragen hast, nimm Kontakt mit :name (:email) auf. 🙂
@@ -377,7 +377,7 @@ Was bringt dir das?
 
 <li><a href="https://dashboard.witty.works/team/language/dictionary">Das Wörterbuch</a> verhilft euch zu einer konsistenteren Markenstimme</li>
 
-<li><a href="https://dashboard.witty.works/team/analytics">Mit Analysedaten</a> kann sich euer Team gezielt verbessern</li>
+<li><a href="https://dashboard.witty.works/team/analytics">Mit Statistiken</a> kann sich euer Team gezielt verbessern</li>
 </ul>
 
 Falls du Fragen hast, nimm Kontakt mit :name (:email) auf. 🙂
