@@ -63,27 +63,34 @@ crons:
             if [ "$PLATFORM_BRANCH" = main ] || [ "$PLATFORM_BRANCH" = dev ]; then
                 php artisan kpis
             fi
-    hubspot-sync:
+    capture-writing-streak-kpi:
+        # once per day at 01:40
+        spec: "40 1 * * *"
+        cmd: |
+            if [ "$PLATFORM_BRANCH" = main ] || [ "$PLATFORM_BRANCH" = dev ]; then
+                php artisan writing-streak-kpi
+            fi
+    hubspot-missing-sync:
         # once per hour at 05
         spec: "05 * * * *"
         cmd: |
             if [ "$PLATFORM_BRANCH" = main ]; then
                 php artisan hubspot:sync
             fi
-    #hubspot-full-sync:
-    #    # once per day at 06:20
-    #    spec: "20 6 * * *"
-    #    cmd: |
-    #        if [ "$PLATFORM_BRANCH" = main ]; then
-    #            php artisan hubspot:sync --f
-    #        fi
-    #posthog-sync:
-    #    # once per day at 06:50
-    #    spec: "50 6 * * *"
-    #    cmd: |
-    #        if [ "$PLATFORM_BRANCH" = main ] || [ "$PLATFORM_BRANCH" = dev ]; then
-    #            php artisan posthog:sync
-    #        fi
+    hubspot-full-sync:
+        # once per day at 03:20
+        spec: "20 3 * * *"
+        cmd: |
+            if [ "$PLATFORM_BRANCH" = main ]; then
+                php artisan hubspot:sync --f
+            fi
+    posthog-sync:
+        # once per day at 04:20
+        spec: "20 4 * * *"
+        cmd: |
+            if [ "$PLATFORM_BRANCH" = main ] || [ "$PLATFORM_BRANCH" = dev ]; then
+                php artisan posthog:sync
+            fi
     snapshot-once-per-day:
         # once per day at 12:00
         spec: "0 12 * * *"

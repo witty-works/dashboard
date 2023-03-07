@@ -92,6 +92,11 @@ class SyncUserToHubSpot implements ShouldQueue
             dispatch(new SyncToPosthog($user));
         }
 
+        User::withoutTimestamps(function () use ($user) {
+            $user->hubspot_last_sync = now();
+            $user->saveQuietly();
+        });
+
         return $hubSpotData;
     }
 }

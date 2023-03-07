@@ -25,16 +25,54 @@ class PosthogHelper
 
     public static $posthog_reset = false;
 
-    public static function getUrl()
+    public static function getInsightsUrl()
     {
         $projectId = config('posthog.project_id');
 
         return config('posthog.host') . "/api/projects/$projectId/insights/trend";
     }
 
+    public static function getPersonsUrl()
+    {
+        $projectId = config('posthog.project_id');
+
+        return config('posthog.host') . "/api/projects/$projectId/persons/trends";
+    }
+
+    public static function fetchWritingStreak($date, $offset, $organizations = false)
+    {
+        $url = self::getPersonsUrl();
+
+        $query = [
+            'date_from' => $date,
+            'date_to' => $date,
+            'entity_id' => 'check',
+            'entity_type' => 'events',
+            'entity_math' => $organizations ? 'unique_group' : 'dau',
+            'offset' => $offset,
+            'interval' => 'day',
+        ];
+
+        if ($organizations) {
+            $query['events'] = '[{"id": "check", "type": "events", "order": 0, "name": "check", "custom_name": null, "math": "unique_group", "math_property": null, "math_group_type_index": 0, "properties": {"type": "AND", "values": [{"key": "$group_0", "operator": "is_not", "type": "event", "value": ""}]}}]';
+        } else {
+            $query['events'] = '[{"id": "check", "type": "events", "order": 0, "name": "check", "custom_name": null, "math": "dau", "math_property": null, "math_group_type_index": null, "properties": {}}]';
+            $query['properties'] = '{"type": "AND", "values": [{"key": "dashboard_id", "operator": "is_set", "type": "person", "value": "is_set"}]}';
+        }
+
+        $response = Http::withToken(config('posthog.personal_api_key'))
+            ->get($url, $query);
+
+        if ($response->failed()) {
+            throw new RuntimeException("Posthog returned status code:{$response->status()}\n" . serialize($query));
+        }
+
+        return $response->collect()->all();
+    }
+
     public static function fetchData($filter, $refresh = false)
     {
-        $url = self::getUrl();
+        $url = self::getInsightsUrl();
 
         $key = 'posthog:' . md5($url) . ':' . md5(serialize($filter));
         if ($refresh) {
