@@ -34,7 +34,7 @@ class StoreWritingStreakKpiCommand extends Command
             $message->to('engineering@witty.works')
                 ->subject(getenv('PLATFORM_ENVIRONMENT') . ': writing streak KPI')
                 ->from('support@witty.works')
-                ->html($html);
+                ->html(nl2br($html));
         });
 
         $this->info("Send email ..");
