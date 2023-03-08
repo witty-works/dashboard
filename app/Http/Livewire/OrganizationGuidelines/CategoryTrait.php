@@ -2,13 +2,13 @@
 
 namespace App\Http\Livewire\OrganizationGuidelines;
 
-use App\Http\Livewire\HelpHeroTrait;
 use App\Jobs\SyncOrganizationToNlpApi;
+use App\Models\LanguageGuidelines;
 use Illuminate\Support\Facades\Auth;
 
 trait CategoryTrait
 {
-    use HelpHeroTrait;
+    use GuidelineTrait;
 
     public function mountCategories($team, $categories)
     {
@@ -60,7 +60,7 @@ trait CategoryTrait
 
             $languageGuidelines->inPlaceUpateArray($category, 'disabled_categories_force', !$this->$property);
 
-            if ($this->$property) {
+            if (!$this->team->subscribed() || $this->$property) {
                 $disabled_categories_force[] = $category;
             }
         }

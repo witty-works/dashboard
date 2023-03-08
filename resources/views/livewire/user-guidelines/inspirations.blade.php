@@ -14,7 +14,7 @@
                 value="1"
                 :label="__('guidelines.enable_show_inspiration_alternatives')"
                 wire:model.defer="show_inspiration_alternatives"
-                :disabled="!$user->subscribed() ? true : \App\Models\LanguageGuidelines::isForcedOnTeam(Auth::user(), 'show_inspiration_alternatives')"
+                :disabled="\App\Models\LanguageGuidelines::isForcedOnTeam(Auth::user(), 'show_inspiration_alternatives')"
             />
         </div>
     </x-slot>

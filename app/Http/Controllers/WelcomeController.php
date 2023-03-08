@@ -22,7 +22,11 @@ class WelcomeController extends Controller
             return redirect()->route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'login']);
         }
 
-        return redirect()->route('user.language-guidelines');
+        if ($user->subscribed()) {
+            return redirect()->route('user.language-guidelines');
+        }
+
+        return redirect()->route('teams.language-guidelines');
     }
 
     public function mailingConsent(Request $request)

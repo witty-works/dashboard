@@ -13,15 +13,21 @@ class LanguageGuidelines extends Model
 {
     use HasFactory;
     use GuidelinesUpdateTrait {
-		fireCustomModelEvent as fireCustomModelEventParent;
-	}
+        fireCustomModelEvent as fireCustomModelEventParent;
+    }
 
     protected $attributes = [
         'german_gender_ending' => '*in',
-        'gendered_roles_format' => 'inclusive_gender',
+        'gendered_roles_format' => 'both',
         'singular_they' => false,
         'expert_mode' => false,
         'show_inspiration_alternatives' => false,
+        'expert_mode_force' => true,
+        'english_rules_force' => true,
+        'german_rules_force' => true,
+        'show_inspiration_alternatives_force' => true,
+        'preferred_variants_force' => true,
+
     ];
 
     protected $fillable = [
@@ -43,7 +49,7 @@ class LanguageGuidelines extends Model
         'preferred_variants_force' => 'boolean',
     ];
 
-    static protected $syncFields = [
+    protected static $syncFields = [
         'preferred_languages',
         'preferred_variants',
         'german_gender_ending',
@@ -57,7 +63,11 @@ class LanguageGuidelines extends Model
         $attributes += [
             'preferred_variants' => ['de-DE', 'en-US'],
             'disabled_categories' => [],
-            'disabled_categories_force' => [],
+            'disabled_categories_force' => [
+                'inclusive' => true,
+                'style' => true,
+                'orthography' => true,
+            ],
         ];
 
         parent::__construct($attributes);
@@ -98,26 +108,28 @@ class LanguageGuidelines extends Model
             $event = PosthogHelper::STORE_TEAM_LANGUAGE;
         }
 
+        $subscribed = $user->subscribed();
+
         switch ($type) {
             case 'English':
                 $properties = [
                     'language_type' => (new \ReflectionClass($this))->getShortName(),
                     'singular_they' => $this->singular_they,
-                    'force' => $this->english_rules_force,
+                    'force' => !$subscribed || $this->english_rules_force,
                 ];
                 break;
             case 'Language':
                 $properties = [
                     'language_type' => (new \ReflectionClass($this))->getShortName(),
                     'preferred_variants' => $this->preferred_variants,
-                    'force' => $this->preferred_variants_force,
+                    'force' => !$subscribed || $this->preferred_variants_force,
                 ];
                 break;
             case 'ExpertMode':
                 $properties = [
                     'language_type' => (new \ReflectionClass($this))->getShortName(),
                     'expert_mode' => $this->expert_mode,
-                    'force' => $this->expert_mode_force,
+                    'force' => !$subscribed || $this->expert_mode_force,
                 ];
                 break;
             case 'German':
@@ -125,23 +137,31 @@ class LanguageGuidelines extends Model
                     'language_type' => (new \ReflectionClass($this))->getShortName(),
                     'german_gender_ending' => $this->german_gender_ending,
                     'gendered_roles_format' => $this->gendered_roles_format,
-                    'force' => $this->german_rules_force,
+                    'force' => !$subscribed || $this->german_rules_force,
                 ];
                 break;
             case 'Inspiration':
                 $properties = [
                     'language_type' => (new \ReflectionClass($this))->getShortName(),
                     'show_inspiration_alternatives' => $this->show_inspiration_alternatives,
-                    'force' => $this->show_inspiration_alternatives_force,
+                    'force' => !$subscribed || $this->show_inspiration_alternatives_force,
                 ];
                 break;
             case 'Inclusive':
             case 'Orthography':
             case 'Style':
+                if (!$subscribed) {
+                    $disabled_categories_force = [];
+                    foreach ($this->disabled_categories_force as $key => $value) {
+                        $disabled_categories_force[$key] = true;
+                    }
+                } else {
+                    $disabled_categories_force = $this->disabled_categories_force;
+                }
                 $properties = [
                     'language_type' => (new \ReflectionClass($this))->getShortName(),
                     'disabled_categories' => $this->disabled_categories,
-                    'force' => $this->disabled_categories_force,
+                    'force' => $disabled_categories_force,
                 ];
                 break;
             default:
@@ -178,6 +198,10 @@ class LanguageGuidelines extends Model
 
     public static function isForcedOnTeam(User $user, $section)
     {
+        if (!$user->subscribed()) {
+            return 'locked_upgrade';
+        }
+
         $teamGuidelines = self::getTeamGuidelines($user);
 
         if (!$teamGuidelines) {

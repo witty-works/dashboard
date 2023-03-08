@@ -2,16 +2,13 @@
 
 namespace App\Http\Livewire\UserGuidelines;
 
-use App\Http\Livewire\HelpHeroTrait;
-use App\Models\LanguageGuidelines;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class Inspirations extends Component
 {
-    use AuthorizesRequests, AttributeTrait;
-    use HelpHeroTrait;
+    use AuthorizesRequests;
+    use GuidelineTrait;
 
     public $show_inspiration_alternatives;
 
@@ -20,19 +17,6 @@ class Inspirations extends Component
     ];
 
     public $user;
-
-    /**
-     * Mount the component.
-     *
-     * @param  mixed  $user
-     * @return void
-     */
-    public function mount($user)
-    {
-        $this->user = Auth::user();
-
-        $this->resetForm();
-    }
 
     protected function resetForm()
     {
@@ -51,12 +35,13 @@ class Inspirations extends Component
     {
         $this->validate();
 
-        $languageGuidelines = $this->getLanguageGuidelines($this->user);
+        if ($this->user->subscribed()) {
+            $languageGuidelines = $this->getLanguageGuidelines($this->user);
+            $languageGuidelines->show_inspiration_alternatives = (bool) $this->show_inspiration_alternatives;
 
-        $languageGuidelines->show_inspiration_alternatives = (bool) $this->show_inspiration_alternatives;
-
-        $languageGuidelines->save();
-        $languageGuidelines->dispatchEventToPosthog((new \ReflectionClass($this))->getShortName());
+            $languageGuidelines->save();
+            $languageGuidelines->dispatchEventToPosthog((new \ReflectionClass($this))->getShortName());
+        }
 
         $this->emit('saved');
         $this->updateHelpHero();
@@ -70,24 +55,5 @@ class Inspirations extends Component
     public function render()
     {
         return view('livewire.user-guidelines.inspirations');
-    }
-
-    public function cancel()
-    {
-        $this->resetForm();
-
-        return $this->render();
-    }
-
-    protected function getLanguageGuidelines($user)
-    {
-        $languageGuidelines = LanguageGuidelines::firstOrNew(['user_id' => $user->id]);
-
-        if (!$this->user->subscribed()) {
-            $this->show_inspiration_alternatives = false;
-            $languageGuidelines->show_inspiration_alternatives = false;
-        }
-
-        return $languageGuidelines;
     }
 }

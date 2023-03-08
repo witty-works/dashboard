@@ -2,16 +2,13 @@
 
 namespace App\Http\Livewire\UserGuidelines;
 
-use App\Http\Livewire\HelpHeroTrait;
-use App\Models\LanguageGuidelines;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class German extends Component
 {
-    use AuthorizesRequests, AttributeTrait;
-    use HelpHeroTrait;
+    use AuthorizesRequests;
+    use GuidelineTrait;
 
     protected $listeners = ['saved'];
 
@@ -25,19 +22,6 @@ class German extends Component
     ];
 
     public $user;
-
-    /**
-     * Mount the component.
-     *
-     * @param  mixed  $user
-     * @return void
-     */
-    public function mount($user)
-    {
-        $this->user = Auth::user();
-
-        $this->resetForm();
-    }
 
     protected function resetForm()
     {
@@ -80,7 +64,10 @@ class German extends Component
         $languageGuidelines = $this->getLanguageGuidelines($this->user);
 
         $languageGuidelines->german_gender_ending = $this->german_gender_ending;
-        $languageGuidelines->gendered_roles_format = $this->gendered_roles_format;
+        
+        if ($this->user->subscribed()) {
+            $languageGuidelines->gendered_roles_format = $this->gendered_roles_format;
+        }
 
         $languageGuidelines->save();
         $languageGuidelines->dispatchEventToPosthog((new \ReflectionClass($this))->getShortName());
@@ -97,30 +84,5 @@ class German extends Component
     public function render()
     {
         return view('livewire.user-guidelines.german');
-    }
-
-    public function cancel()
-    {
-        $this->resetForm();
-
-        return $this->render();
-    }
-
-    public function saved()
-    {
-        $this->mount($this->user);
-        $this->render();
-    }
-
-    protected function getLanguageGuidelines($user)
-    {
-        $languageGuidelines = LanguageGuidelines::firstOrNew(['user_id' => $user->id]);
-
-        if (!$this->user->subscribed()) {
-            $this->gendered_roles_format = 'both';
-            $languageGuidelines->gendered_roles_format = 'both';
-        }
-
-        return $languageGuidelines;
     }
 }

@@ -3,30 +3,58 @@
 namespace App\Http\Middleware;
 
 use App\Models\Team;
+use App\Models\TeamInvitation;
 use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 class SwitchToTeam
 {
     public function handle(Request $request, Closure $next)
     {
-
-        $this->ensureUserHasCurrentTeam();
+        $invitation = $this->ensureUserHasCurrentTeam($request);
 
         $response = $next($request);
+        if ($invitation instanceof TeamInvitation) {
+            return redirect()->route(
+                'team-invitations.accept',
+                ['invitation' => $invitation->id]
+            );
+        }
 
-        $this->ensureUserHasCurrentTeam();
+        $this->checkTeam($request->user());
 
         return $response;
     }
 
-    protected function ensureUserHasCurrentTeam()
+    protected function ensureUserHasCurrentTeam(Request $request)
     {
-        $user = Auth::user();
+        $user = $request->user();
+        if (!$user instanceof User) {
+            return;
+        }
+
+        if ('team-invitations.accept' === Route::currentRouteName()) {
+            return;
+        }
+
+        # are there any remaining invitations that were previously accept?
+        $invitation = TeamInvitation::where('email', $user->email)
+            ->where('accepted', true)
+            ->first();
+
+        if ($invitation instanceof TeamInvitation) {
+            return $invitation;
+        }
+
+        $this->checkTeam($user);
+    }
+
+    protected function checkTeam($user)
+    {
         // every user should have a current team
-        if ($user && !$user->currentTeam) {
+        if ($user instanceof User && !$user->currentTeam) {
             $teams = $user->teams;
             if ($teams->count()) {
                 // prefer invited teams
@@ -37,7 +65,7 @@ class SwitchToTeam
         }
     }
 
-    static public function ensureTeam(User $user)
+    public static function ensureTeam(User $user)
     {
         $ownedTeams = $user->ownedTeams();
 

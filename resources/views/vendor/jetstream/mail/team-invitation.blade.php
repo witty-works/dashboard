@@ -3,6 +3,10 @@
 
 {!! __('content.invitation_email_welcome') !!}
 
+@component('mail::button', ['url' => $acceptUrl])
+{{ __('Accept Invitation') }}
+@endcomponent
+
 {!! __('content.if_you_did_not_expect') !!}
 
 {!! __('content.have_a_great_day') !!}

@@ -36,7 +36,9 @@ class StripeController extends Controller
     {
         $user = $request->user();
         if (empty($user)) {
-            return redirect(route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'login']));
+            return redirect(
+                route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'login'])
+            );
         }
 
         $team = $user->currentTeam;
@@ -50,7 +52,10 @@ class StripeController extends Controller
         }
 
         return redirect()->route('login')->banner(
-            __('teams.ask_owner_to_buy_or_leave_to_create_own_team', ['name' => $team->owner->name, 'email' => $team->owner->email]),
+            __(
+                'teams.ask_owner_to_buy_or_leave_to_create_own_team',
+                ['name' => $team->owner->name, 'email' => $team->owner->email]
+            ),
         );
     }
 

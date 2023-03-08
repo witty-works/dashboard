@@ -3,7 +3,9 @@
         {{ __('guidelines.language_settings_label') }}
     </div>
 
+    @if($user->subscribed())
     @livewire('user-guidelines.intro', ['user' => $user])
+    @endif
 
     @livewire('user-guidelines.language', ['user' => $user])
 

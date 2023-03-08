@@ -14,7 +14,7 @@
                 value="1"
                 :label="__('guidelines.enable_expert_mode')"
                 wire:model.defer="expert_mode"
-                :disabled="!$team->subscribed()" 
+                :disabled="!$team->subscribed()"
             />
 
             <x-jet-input-error for="expert_mode" class="mt-2" />
@@ -29,14 +29,13 @@
                 value="1"
                 :label="__('guidelines.simple_language')"
                 wire:model.defer="simple_language"
-                :disabled="!$team->subscribed()" 
+                :disabled="!$team->subscribed()"
             />
 
             <x-jet-input-error for="simple_language" class="mt-2" />
         </div>
     </x-slot>
 
-    @if($team->subscribed())
     <x-slot name="actions">
         <div class="guidelines-form-section--apply-for-all">
             <x-jet-checkbox
@@ -44,11 +43,11 @@
                 value="1"
                 :label="__('guidelines.set_for_all')"
                 wire:model.defer="expert_mode_force"
+                :disabled="!$team->subscribed()"
             />
         </div>
 
         @include('partials/save_cancel_action')
     </x-slot>
-    @endif
 
 </x-jet-form-section>

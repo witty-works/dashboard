@@ -36,6 +36,7 @@
                 value="1"
                 :label="__('guidelines.set_for_all')"
                 wire:model.defer="preferred_variants_force"
+                :disabled="!$team->subscribed()"
             />
         </div>
 

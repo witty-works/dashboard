@@ -64,8 +64,8 @@ crons:
                 php artisan kpis
             fi
     capture-writing-streak-kpi:
-        # once per day at 01:40
-        spec: "40 1 * * *"
+        # once per day at 02:20
+        spec: "20 2 * * *"
         cmd: |
             if [ "$PLATFORM_BRANCH" = main ] || [ "$PLATFORM_BRANCH" = dev ]; then
                 php artisan writing-streak-kpi

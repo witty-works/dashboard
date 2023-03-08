@@ -25,9 +25,7 @@
                 />
                 <x-jet-input-error for="preferred_variants_en" class="mt-2" />
             </div>
-            @if(\App\Models\LanguageGuidelines::isForcedOnTeam(Auth::user(), 'preferred_variants'))
-              @include('partials.locked')
-            @endif
+            @include('partials.toggle_label', ['disabled' => \App\Models\LanguageGuidelines::isForcedOnTeam(Auth::user(), 'preferred_variants')])
         </div>
 
         <div class="lato-small-text-p">
@@ -44,10 +42,7 @@
                 />
                 <x-jet-input-error for="preferred_variants_de" class="mt-2" />
             </div>
-            @if(\App\Models\LanguageGuidelines::isForcedOnTeam(Auth::user(), 'preferred_variants'))
-              @include('partials.locked')
-            @endif
-
+            @include('partials.toggle_label', ['disabled' => \App\Models\LanguageGuidelines::isForcedOnTeam(Auth::user(), 'preferred_variants')])
         </div>
     </x-slot>
 

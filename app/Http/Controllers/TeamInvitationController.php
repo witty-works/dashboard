@@ -18,6 +18,26 @@ class TeamInvitationController extends BaseTeamInvitationController
      * @param  \Laravel\Jetstream\TeamInvitation  $invitation
      * @return \Illuminate\Http\RedirectResponse
      */
+    public function acceptSigned(Request $request, TeamInvitation $invitation)
+    {
+        $user = $request->user();
+        if ($user) {
+            return $this->accept($request, $invitation);
+        }
+
+        $invitation->accepted = true;
+        $invitation->save();
+
+        return redirect(config('fortify.home'));
+    }
+
+    /**
+     * Accept a team invitation.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Laravel\Jetstream\TeamInvitation  $invitation
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function accept(Request $request, TeamInvitation $invitation)
     {
         $user = $request->user();
@@ -39,7 +59,7 @@ class TeamInvitationController extends BaseTeamInvitationController
             }
         }
 
-        $response = parent::accept($request, $invitation);
+        parent::accept($request, $invitation);
 
         $user->switchTeam($invitation->team);
 
@@ -60,7 +80,8 @@ class TeamInvitationController extends BaseTeamInvitationController
             dispatch(new SyncUserToNlpApi($otherInvitation->team->owner, 'high'));
         }
 
-        return $response->banner(__('teams.accepted_invitation', ['team' => $invitation->team->name]));
+        return redirect(config('fortify.home'))
+            ->banner(__('teams.accepted_invitation', ['team' => $invitation->team->name]));
     }
 
     /**
