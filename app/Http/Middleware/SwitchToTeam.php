@@ -42,6 +42,7 @@ class SwitchToTeam
         # are there any remaining invitations that were previously accept?
         $invitation = TeamInvitation::where('email', $user->email)
             ->where('accepted', true)
+            ->orderBy('updated_at', 'desc')
             ->first();
 
         if ($invitation instanceof TeamInvitation) {
