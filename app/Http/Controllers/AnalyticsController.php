@@ -96,7 +96,7 @@ class AnalyticsController extends Controller
             $filter['events'][0]['id'] = $event;
 
             $response = PosthogHelper::fetchData($filter, $this->refresh);
-            if (!empty($data['result'][0])) {
+            if (!empty($response['result'][0])) {
                 $data['events'][$event] = array_combine($response['result'][0]['days'], $response['result'][0]['data']);
             }
 
@@ -241,7 +241,7 @@ class AnalyticsController extends Controller
                         if ($interval === 'day' && (int)date('w', strtotime($day)) !== 0) {
                             continue;
                         }
-    
+
                         if ((int)$value === 0) {
                             $writingStreak = 0;
                             $writingStreakComplete = false;
