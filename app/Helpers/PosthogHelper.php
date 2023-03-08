@@ -44,8 +44,8 @@ class PosthogHelper
         $url = self::getPersonsUrl();
 
         $query = [
-            'date_from' => $date,
-            'date_to' => $date,
+            'date_from' => $date . 'T00:00:00+00:00',
+            'date_to' => $date . 'T23:59:59.999999+00:00',
             'entity_id' => 'check',
             'entity_type' => 'events',
             'entity_math' => $organizations ? 'unique_group' : 'dau',
