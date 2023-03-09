@@ -51,6 +51,7 @@ class PosthogHelper
             'entity_math' => $organizations ? 'unique_group' : 'dau',
             'offset' => $offset,
             'interval' => 'day',
+            'refresh' => 'true',
         ];
 
         if ($organizations) {
