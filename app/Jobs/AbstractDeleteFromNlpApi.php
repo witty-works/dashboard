@@ -18,25 +18,36 @@ abstract class AbstractDeleteFromNlpApi implements ShouldQueue
     public function deleteRules($url)
     {
         $endpoint = config('app.nlp_api_endpoint');
-        if (empty($endpoint['url'])) {
+        if (empty($endpoint['urls'])) {
             Log::debug("Endpoint URL not set, otherwise would delete: $url");
 
             return true;
         }
 
-        $endpoint['url'] .= $url;
+        foreach ($endpoint['urls'] as $baseUrl) {
+            if (empty($baseUrl)) {
+                continue;
+            }
 
-        if (empty($endpoint['user'])) {
-            $response = Http::delete($endpoint['url']);
+            $this->deleteData($baseUrl . $url, $endpoint['user'], $endpoint['password']);
+        }
+
+        return true;
+    }
+
+    protected function deleteData($url, $user, $password)
+    {
+        if (empty($user)) {
+            $response = Http::delete($url);
         } else {
-            $response = Http::withBasicAuth($endpoint['user'], $endpoint['password'])
-                ->delete($endpoint['url']);
+            $response = Http::withBasicAuth($user, $password)
+                ->delete($url);
         }
 
         if ($response->failed() && $response->status() !== 404) {
             throw new RuntimeException("Unable to delete '{$url}.: " . $response->json('message'));
         }
 
-        return true;
+        return $response;
     }
 }

@@ -18,28 +18,38 @@ abstract class AbstractSyncToNlpApi implements ShouldQueue
     public function updateRules($url, $data)
     {
         $endpoint = config('app.nlp_api_endpoint');
-        if (empty($endpoint['url']) || empty($endpoint['sync_rules'])) {
+        if (empty($endpoint['urls']) || empty($endpoint['sync_rules'])) {
             Log::debug("Endpoint URL not set, otherwise would update: $url ({$data['id']})");
 
             return true;
         }
 
-        $endpoint['url'] .= $url;
-
         $data['sync_date'] = now()->toDateTimeString();
+        foreach ($endpoint['urls'] as $baseUrl) {
+            if (empty($baseUrl)) {
+                continue;
+            }
 
-        if (empty($endpoint['user'])) {
-            $response = Http::post($endpoint['url'], $data);
+            $this->postData($data, $baseUrl . $url, $endpoint['user'], $endpoint['password']);
+        }
+
+        return $data;
+    }
+
+    protected function postData($data, $url, $user, $password)
+    {
+        if (empty($user)) {
+            $response = Http::post($url, $data);
         } else {
-            $response = Http::withBasicAuth($endpoint['user'], $endpoint['password'])
-                ->post($endpoint['url'], $data);
+            $response = Http::withBasicAuth($user, $password)
+                ->post($url, $data);
         }
 
         if ($response->failed() && $response->status() !== 404) {
             throw new RuntimeException("Unable to write to '{$url} ({$data['id']}): " . $response->json('message'));
         }
 
-        return $data;
+        return $response;
     }
 
     protected function getFalsePositives($falsePositives, $subscribed, $count)
