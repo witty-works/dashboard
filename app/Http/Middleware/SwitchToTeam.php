@@ -19,7 +19,7 @@ class SwitchToTeam
         if ($invitation instanceof TeamInvitation) {
             return redirect()->route(
                 'team-invitations.accept',
-                ['invitation' => $invitation->id]
+                ['invitation' => $invitation]
             );
         }
 
