@@ -12,6 +12,7 @@ use HubSpot\Client\Crm\Companies\Model\Filter as CompaniesFilter;
 use HubSpot\Client\Crm\Companies\Model\FilterGroup as CompaniesFilterGroup;
 use HubSpot\Client\Crm\Companies\Model\PublicObjectSearchRequest as CompaniesPublicObjectSearchRequest;
 
+// https://henrywang.nl/hubspot-contact-properties-list/
 class Hubspot
 {
     protected $api;
@@ -54,9 +55,10 @@ class Hubspot
         ]);
     }
 
-    public function createContact(User $user, array $data)
+    public function createContact(User $user)
     {
         try {
+            $data = $user->getHubspotData(true);
             $data['email'] = $user->email;
             $data['firstname'] = $user->first_name;
             $data['lastname'] = $user->last_name;
@@ -65,14 +67,16 @@ class Hubspot
             $contactInput->setProperties($data);
 
             $result = $this->api->crm()->contacts()->basicApi()->create($contactInput);
-
-            return ['id' => $result['id'], 'hubspot_source' => 'OFFLINE'];
         } catch (\HubSpot\Client\Crm\Contacts\ApiException $e) {
+            return [];
         }
+
+        return ['id' => $result['id'], 'hubspot_source' => 'OFFLINE'];
     }
 
-    public function updateContact($contactId, array $data)
+    public function updateContact($contactId, User $user)
     {
+        $data = $user->getHubspotData(true);
         $newProperties = new ContactsSimplePublicObjectInput();
         $newProperties->setProperties($data);
 
@@ -81,15 +85,17 @@ class Hubspot
         return true;
     }
 
-    public function syncContact(User $user, array $data)
+    public function updateUserFromContact(User $user, $contact)
     {
-        $contact = $this->findContact($user);
-        if ($contact) {
-            $this->updateContact($contact['id'], $data);
-        }
+        $user->hubspot_id = $contact['id'] ?? null;
+        $user->hubspot_source = $contact['properties']['hs_analytics_source'] ?? null;
+        $user->hubspot_company_id = $contact['properties']['associatedcompanyid'] ?? null;
 
-        return $contact;
+        $user->saveQuietly();
+
+        return $user->wasChanged();
     }
+
 
     public function findContact(User $user)
     {
@@ -110,7 +116,7 @@ class Hubspot
         $searchRequest = new ContactsPublicObjectSearchRequest();
         $searchRequest->setFilterGroups($filterGroups);
 
-        $searchRequest->setProperties(['hs_analytics_source']);
+        $searchRequest->setProperties(['hs_analytics_source', 'associatedcompanyid']);
 
         // @var CollectionResponseWithTotalSimplePublicObject $results
         $results = $this->api->crm()->contacts()->searchApi()->doSearch($searchRequest);
@@ -119,19 +125,6 @@ class Hubspot
         }
 
         return $results->getResults()[0];
-    }
-
-    public function getDataFromContact($contact)
-    {
-        $hubSpotData = [
-            'id' => $contact['id'],
-        ];
-
-        if (!empty($contact['properties']['hs_analytics_source'])) {
-            $hubSpotData['hubspot_source'] = $contact['properties']['hs_analytics_source'];
-        }
-
-        return $hubSpotData;
     }
 
     public function findCompanyByUser(User $user)

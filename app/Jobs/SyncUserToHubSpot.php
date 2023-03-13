@@ -57,38 +57,49 @@ class SyncUserToHubSpot implements ShouldQueue
 
         $this->hubspot = new Hubspot();
 
-        $data = $user->getHubspotData(true);
+        $contact = $this->hubspot->findContact($user);
+        if ($contact) {
+            $oldHubspotCompanyId = $user->hubspot_company_id;
+            $changed = $this->hubspot->updateUserFromContact($user, $contact);
+            $this->hubspot->updateContact($contact['id'], $user);
 
-        $contact = $this->hubspot->syncContact($user, $data);
-        if (empty($contact)) {
-            if (!empty($user->hubspotutk)) {
+            // company ID changed, so we may need to update other users in HubSpot
+            if ($oldHubspotCompanyId !== $user->hubspot_company_id) {
+                $ids = [];
+
+                // contact added to a new company
+                if ($user->hubspot_company_id) {
+                    $ids[] = $user->hubspot_company_id;
+                }
+
+                // contact moved to another company
+                if ($oldHubspotCompanyId) {
+                    $ids[] = $oldHubspotCompanyId;
+                }
+
+                $query = User::whereIn('hubspot_company_id', $ids)
+                    ->whereNot('id', $user->id);
+
+                foreach ($query->get() as $otherUser) {
+                    dispatch(new SyncUserToHubSpot($otherUser));
+                }
+            }
+        } else {
+            if (empty($user->hubspotutk)) {
+                $contact = $this->hubspot->createContact($user);
+            } else {
                 // create via hubspot 'hubspotutk' cookie
                 $this->hubspot->createContactViaForm($user, $user->hubspotutk);
+            }
 
+            if (empty($contact)) {
                 return true;
             }
 
-            $contact = $this->hubspot->createContact($user, $data);
+            $changed = $this->hubspot->updateUserFromContact($user, $contact);
         }
 
-        if (empty($contact)) {
-            return true;
-        }
-
-        $hubSpotData = $this->hubspot->getDataFromContact($contact);
-
-        $user->hubspot_id = $hubSpotData['id'];
-
-        if (
-            !empty($hubSpotData['hubspot_source'])
-            && $user->hubspot_source !== $hubSpotData['hubspot_source']
-        ) {
-            $user->hubspot_source = $hubSpotData['hubspot_source'];
-        }
-
-        $user->saveQuietly();
-
-        if ($user->wasChanged()) {
+        if ($changed) {
             dispatch(new SyncToPosthog($user));
         }
 
@@ -97,6 +108,6 @@ class SyncUserToHubSpot implements ShouldQueue
             $user->saveQuietly();
         });
 
-        return $hubSpotData;
+        return $user->getHubspotData(true);
     }
 }
