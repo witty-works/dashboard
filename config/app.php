@@ -188,7 +188,10 @@ return [
     |
     */
     'nlp_api_endpoint' => [
-        'url' => env('APP_NLP_API_SYNC_ENDPOINT'),
+        'urls' => [
+            env('APP_NLP_API_SYNC_ENDPOINT'),
+            env('APP_NLP_API_SYNC_ENDPOINT_2'),
+        ],
         'user' => env('APP_NLP_API_SYNC_USER'),
         'password' => env('APP_NLP_API_SYNC_PASSWORD'),
         'sync_rules' => env('APP_NLP_API_SYNC_CONFIGS', true),

@@ -242,14 +242,15 @@ class Form extends Component
                 break;
         }
     }
+
     protected function getLemma($text, $locale)
     {
-        if (empty(config('app.nlp_api_endpoint.url'))) {
+        $endpoint = config('app.nlp_api_endpoint');
+        if (empty($endpoint['urls'])) {
             return null;
         }
 
-        $endpoint = config('app.nlp_api_endpoint');
-        $endpoint['url'] .= '/lemmatize';
+        $url = reset($endpoint['urls']) . '/lemmatize';
 
         $data = [
             'text' => $text,
@@ -258,10 +259,10 @@ class Form extends Component
 
         try {
             if (empty($endpoint['user'])) {
-                $response = Http::get($endpoint['url'], $data);
+                $response = Http::get($url, $data);
             } else {
                 $response = Http::withBasicAuth($endpoint['user'], $endpoint['password'])
-                    ->get($endpoint['url'], $data);
+                    ->get($url, $data);
             }
         } catch (RequestException $e) {
             $response = false;
