@@ -116,9 +116,10 @@ Route::group(
                     Route::get('/team/show', [TeamController::class, 'show'])->name('teams.show');
                     Route::get('/team/subscription', [StripeController::class, 'show'])->name('teams.subscription');
 
-                    Route::get('/team-invitations/{invitation}', [TeamInvitationController::class, 'accept'])
+                    Route::get('/team-invitations/{invitation}/accept', [TeamInvitationController::class, 'accept'])
                         ->middleware(['auth'])
                         ->name('team-invitations.accept');
+
                     Route::get('/team-invitations/{invitation}/reject', [TeamInvitationController::class, 'destroy'])
                         ->middleware(['auth'])
                         ->name('team-invitations.reject');
