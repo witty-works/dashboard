@@ -554,7 +554,7 @@ input:checked+.slider:before {
 
 .wittyworks-page {
     margin-top: 1em;
-    width: 100%;
+    width: 60%;
     max-width: 100%;
     min-height: 100vh;
 }
@@ -941,4 +941,9 @@ input:checked+.slider:before {
     font-size: 22px;
     font-weight: 600;
     margin-top: 2rem;
+}
+
+/* page inside editor */
+.fr-element {
+    max-width: 95%;
 }
