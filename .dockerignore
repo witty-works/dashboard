@@ -1,7 +1,0 @@
-Dockerfile
-.platform*
-.lando*
-.git
-docker-compose.yaml
-ops/**/*
-!ops/dashboard/files/**/*
