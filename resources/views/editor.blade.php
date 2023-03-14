@@ -52,8 +52,8 @@
                                 spellcheck: false,
                                 toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'fontSize', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'insertLink', 'clearFormatting', 'undo', 'redo', 'copy', 'help'],
                                 toolbarButtonsMD: ['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'fontSize', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'insertLink', 'clearFormatting', 'undo', 'redo', 'copy', 'help'],
-                                toolbarButtonsSM: ['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'fontSize', 'insertLink', 'undo', 'redo', 'copy', 'help'],
-                                toolbarButtonsXS: ['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'fontSize', 'copy', 'help'],
+                                toolbarButtonsSM: ['fullscreen', 'bold', 'underline', 'strikeThrough', 'fontSize', 'insertLink', 'undo', 'redo', 'copy', 'help'],
+                                toolbarButtonsXS: ['fullscreen', 'bold', 'underline', 'fontSize', 'copy', 'help'],
                             });
                         </script>
                     </div>
