@@ -1,0 +1,450 @@
+<!--
+templateType: "page"
+label: "Child Theme Category Page"
+isAvailableForNewContent: true
+-->
+{% extends './layouts/base.html' %}
+{% block body %}
+<main id="main-content" class="body-container-wrapper body-container">
+    <style>
+        .share-me-btn {
+            float: right;
+            cursor: copy;
+            transition: background-color calc(var(--duration) * 2) var(--ease);
+        }
+        .share-me-btn:after {
+            content: attr(data-tooltip-text);
+            position: absolute;
+            bottom: calc(100% + 6px);
+            left: 50%;
+            padding: 8px 16px;
+            white-space: nowrap;
+            background-color: white;
+            border-radius: 4px;
+            box-shadow: 0 0 0 -12px rgba(0, 0, 0, 0);
+            pointer-events: none;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            opacity: 0;
+            -webkit-transform: translate(-50%, 12px);
+            transform: translate(-50%, 12px);
+            transition: box-shadow calc(var(--duration) / 1.5) var(--bounce),
+            opacity calc(var(--duration) / 1.5) var(--bounce),
+            -webkit-transform calc(var(--duration) / 1.5) var(--bounce);
+            transition: box-shadow calc(var(--duration) / 1.5) var(--bounce),
+            opacity calc(var(--duration) / 1.5) var(--bounce),
+            transform calc(var(--duration) / 1.5) var(--bounce);
+            transition: box-shadow calc(var(--duration) / 1.5) var(--bounce),
+            opacity calc(var(--duration) / 1.5) var(--bounce),
+            transform calc(var(--duration) / 1.5) var(--bounce),
+            -webkit-transform calc(var(--duration) / 1.5) var(--bounce);
+        }
+        .share-me-btn.is-hovered:after {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            opacity: 1;
+            -webkit-transform: translate(-50%, 0);
+            transform: translate(-50%, 0);
+            transition-timing-function: var(--ease);
+        }
+        .share-me-btn.is-copied:after {
+            content: attr(data-tooltip-text-copied);
+        }
+        .page-wrapper {
+            display: flex;
+            flex-direction: column;
+            font-family: 'Lato';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 18px;
+            line-height: 30px;
+            color: #000000;
+        }
+        .row-wrapper {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+        .col-wrapper {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+        .margin-right {
+            margin-right: 1rem;
+        }
+        .margin-bottom {
+            margin-bottom: 2rem;
+        }
+        .video {
+            width: 100%;
+            margin-right: 1rem;
+        }
+        .long-explanation {
+            width: 130%;
+            margin-right: 1rem;
+        }
+        .section-1-row-0-max-width-section-centering > .row-fluid {
+            max-width: 810px !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
+        }
+        .border-box-row{
+            display: flex !important;
+        }
+        .border-box{
+            background: radial-gradient(77.73% 534.3% at 103.67% 105.04%,rgba(55,209,229,.084) 0,rgba(55,209,229,0) 100%),linear-gradient(96.78deg,hsla(0,82%,67%,.05) -3.1%,rgba(242,119,208,.06) 57.76%,rgba(242,119,208,0) 111.13%),#fff;
+            border: 1px solid;
+            border-image-repeat: round!important;
+            border-image-slice: 10!important;
+            border-image-source: linear-gradient(114.59deg,#f06464 1.6%,#f277d0 32.79%,#9489db 71.64%,#37d1e5 101.91%,#5acfb9 131.52%)!important;
+            box-sizing: content-box;
+            padding: 2.75rem 1rem;
+            flex: 1;
+        }
+        .dnd-section {
+            padding: 40px 20px;
+        }
+    </style>
+    <section>
+        {% set remove_font_size_regexp = "font-size:[^;]+;" %}
+        {% if "/en/subcategories" in request.path %}
+            {% set language = "en" %}
+            {% set backLink = "/en/subcategories" %}
+            {% set backLinkLabel = "Back to the category overview" %}
+            {% set whatCanYouDo = "What can you do?" %}
+            {% set chooseSubcategory = "Choose one of the following subcategories to see the explanation" %}
+            {% set whatCanYouDo = "What can you do?" %}
+            {% set excludedGroups = "Doesn't resonate with" %}
+            {% set relatedTo = "Explore diversity dimensions" %}
+            {% set hardFacts = "Dig deeper" %}
+            {% set inOtherWords = "In other words" %}
+            {% set nonInclusiveExample = "👎" %}
+            {% set inclusiveAlternative = "👍" %}
+            {% set readOn = "Read on" %}
+            {% set resources = "Shout-outs" %}
+        {% else %}
+            {% set language = "de" %}
+            {% set backLink = "/de/subkategorien" %}
+            {% set backLinkLabel = "Zurück zu der Kategorie-Übersicht" %}
+            {% set whatCanYouDo = "Was kannst du tun?" %}
+            {% set chooseSubcategory = "Wählen Sie eine der folgenden Subkategorien, um die Erklärung anzuzeigen" %}
+            {% set excludedGroups = "Findet keine Resonanz bei" %}
+            {% set relatedTo = "Explore diversity dimensions" %}
+            {% set hardFacts = "Dig deeper" %}
+            {% set inOtherWords = "In other words" %}
+            {% set nonInclusiveExample = "👎" %}
+            {% set inclusiveAlternative = "👍" %}
+            {% set readOn = "Read on" %}
+            {% set resources = "Shout outs" %}
+        {% endif %}
+
+        {% if dynamic_page_hubdb_row %}
+        <div class="category-hero">
+            <div class="content-wrapper wide-content-wrapper">
+                <div class="page-wrapper">
+
+                    <!-- ROW 0 -->
+                    <div class="row-fluid-wrapper row-depth-1 row-number-8 section-1-row-2-vertical-alignment section-1-row-2-max-width-section-centering section-1-row-2-padding">
+                        <div class="row-fluid">
+
+                            <!-- BACK LINK -->
+                            <div class="span6 widget-span widget-type-cell dnd-column" style="" data-widget-type="cell" data-x="0" data-w="6">
+                                <a href="{{ backLink }}">← {{ backLinkLabel }} </a>
+                            </div>
+
+                            <!-- SHARE BUTTON -->
+                            <div class="span6 widget-span widget-type-cell dnd-column" style="" data-widget-type="cell" data-x="0" data-w="6">
+                                <button class="share-me-btn" data-url="{{ absolute_url }}" data-tooltip-text="{{ tooltipText }}" data-tooltip-text-copied="{{ tooltipTextCopied }}">
+                                    {{ linkText }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ROW 1 -->
+                    <div class="row-fluid-wrapper row-depth-1 row-number-1 section-1-row-0-padding dnd-section section-1-row-0-max-width-section-centering">
+                        <div class="row-fluid">
+
+                            <!-- TITLE -->
+                            <h1 style="text-align:center">
+                                <span class="emoji">{{ dynamic_page_hubdb_row.emoji }}</span>
+                                {{ dynamic_page_hubdb_row.dimension ? dynamic_page_hubdb_row.dimension + ':' : dynamic_page_hubdb_row.name }}<br/>
+                                {{ dynamic_page_hubdb_row.short_explanation }}
+                            </h1>
+
+                            <!-- INTRO -->
+                            {% if dynamic_page_hubdb_row.dimension %}
+                            <div class="margin-bottom" style="text-align: center; font-size: 20px;">
+                                <h2>
+                                    {{ dynamic_page_hubdb_row.sub_head }}
+                                </h2>
+                            </div>
+
+                            <div class="row-fluid">
+                                <div class="video margin-bottom">
+                                {% if dynamic_page_hubdb_row.lead_video %}
+                                    {% video_player "embed_player" player_id="{{ dynamic_page_hubdb_row.lead_video }}" %}
+                                {% elif dynamic_page_hubdb_row.lead_image.url %}
+                                    <img
+                                        src="{{ dynamic_page_hubdb_row.lead_image.url }}"
+                                        title="{{ dynamic_page_hubdb_row.lead_image.title }}"
+                                        alt="{{ dynamic_page_hubdb_row.lead_image.alt }}"
+                                    />
+                                {% endif %}
+                                </div>
+                            </div>
+                            {% else %}
+                            <div class="introduction">
+                                {{ dynamic_page_hubdb_row.introduction }}
+                                {% if dynamic_page_hubdb_row.solution %}
+                                <h2>{{ whatCanYouDo }}</h2>
+                                    {{ dynamic_page_hubdb_row.solution }}
+                                {% endif %}
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        {% if dynamic_page_hubdb_row.soft_explanation %}
+                        <div class="row-fluid" style="text-align: center; font-size: 20px;">
+                            {{ dynamic_page_hubdb_row.soft_explanation|regex_replace(remove_font_size_regexp, "") }}
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    {% if dynamic_page_hubdb_row.inclusive_sentence or dynamic_page_hubdb_row.non_inclusive_sentence %}
+                    <!-- ROW 2 -->
+                    <div class="row-fluid-wrapper row-depth-1 row-number-8 section-1-row-2-vertical-alignment section-1-row-2-max-width-section-centering dnd-section section-1-row-2-padding">
+                        <div class="row-fluid border-box-row">
+
+                            <!-- INCLUSIVE EXAMPLE -->
+                            {% if dynamic_page_hubdb_row.inclusive_sentence %}
+                            <div class="border-box span6 margin-bottom" style="" data-widget-type="cell" data-x="0" data-w="6">
+                                <h2>{{ inclusiveAlternative }}</h2>
+                                {{ dynamic_page_hubdb_row.inclusive_sentence|regex_replace(remove_font_size_regexp, "") }}
+                            </div>
+                            {% endif %}
+
+                            <!-- NON INCLUSIVE EXMAPLES -->
+                            {% if dynamic_page_hubdb_row.non_inclusive_sentence %}
+                            <div class="border-box span6 margin-bottom" style="" data-widget-type="cell" data-x="0" data-w="6">
+                                <h2>{{ nonInclusiveExample }}</h2>
+                                {{ dynamic_page_hubdb_row.non_inclusive_sentence|regex_replace(remove_font_size_regexp, "") }}
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <!-- ROW 3 -->
+                    {% if dynamic_page_hubdb_row.excluded %}
+                    <div class="row-fluid-wrapper row-depth-1 row-number-8 section-1-row-2-vertical-alignment section-1-row-2-max-width-section-centering dnd-section section-1-row-2-padding">
+                        <div class="row-fluid ">
+
+                            <!-- EXCLUDED GROUPS -->
+                            <h2>{{ excludedGroups }}</h2>
+                            {% set ids = [] %}
+                            {% for excluded in  dynamic_page_hubdb_row.excluded %}
+                                {% do ids.append(excluded.hs_id) %}
+                            {% endfor %}
+                            {% set filter = "hs_id__in=" + ids|join(',') %}
+                            <ul>
+                            {% for row in hubdb_table_rows("excluded_groups", filter) %}
+                                {% for translation in row['translation_' + dynamic_page_hubdb_row.language.name] %}
+                                    <li>
+                                        {{ translation.description }}
+                                    </li>
+                                {% endfor %}
+                            {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <!-- ROW 4 -->
+                    {% if dynamic_page_hubdb_row.hard_facts %}
+                    <div class="row-fluid-wrapper row-depth-1 row-number-8 section-1-row-2-vertical-alignment section-1-row-2-max-width-section-centering dnd-section section-1-row-2-padding">
+                        <div class="row-fluid ">
+
+                            <!-- HARD FACTS -->
+                            <div class="span6 widget-span widget-type-cell dnd-column" style="" data-widget-type="cell" data-x="0" data-w="6">
+                                <h2>{{ hardFacts }}</h2>
+                                {{ dynamic_page_hubdb_row.hard_facts|regex_replace(remove_font_size_regexp, "") }}
+                            </div>
+
+                            <!-- IMAGES -->
+                            <div class="span6 widget-span widget-type-cell dnd-column" style="" data-widget-type="cell" data-x="0" data-w="6">
+                                {% if dynamic_page_hubdb_row.hero_figure.url %}
+                                <img
+                                    width="100%"
+                                    src="{{ dynamic_page_hubdb_row.hero_figure.url }}"
+                                    title="{{ dynamic_page_hubdb_row.hero_figure.title }}"
+                                    alt="{{ dynamic_page_hubdb_row.hero_figure.alt }}"
+                                    style="border-radius: 20px;"
+                                />
+                                {% endif %}
+                                {% if dynamic_page_hubdb_row.hero_fact.url %}
+                                <img
+                                    width="100%"
+                                    src="{{ dynamic_page_hubdb_row.hero_fact.url }}"
+                                    title="{{ dynamic_page_hubdb_row.hero_fact.title }}"
+                                    alt="{{ dynamic_page_hubdb_row.hero_fact.alt }}"
+                                    style="border-radius: 20px;"
+                                />
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <!-- ROW 5 -->
+                    {% if dynamic_page_hubdb_row.resources %}
+                    <div class="row-fluid-wrapper row-depth-1 row-number-8 section-1-row-2-vertical-alignment section-1-row-2-max-width-section-centering dnd-section section-1-row-2-padding">
+                        <div class="row-fluid ">
+                            <!-- RESSOURCES -->
+                            <h3>{{ resources }}</h3>
+                            <ul>
+                            {% for resource in dynamic_page_hubdb_row.resources %}
+                                <li>
+                                    <a href="{{ resource.url }}">{{ resource.title }}</a> ({{ resource.authors}})
+                                </li>
+                            {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <!-- ROW 6 -->
+                    {% if dynamic_page_hubdb_row.meme.url or dynamic_page_hubdb_row.meme_2.url %}
+                    <div class="row-fluid-wrapper row-depth-1 row-number-8 section-1-row-2-vertical-alignment section-1-row-2-max-width-section-centering dnd-section section-1-row-2-padding">
+                       <h3>{{ inOtherWords }}</h3>
+                        <div class="row-fluid ">
+
+                            <!-- MEME 1 -->
+                            {% if dynamic_page_hubdb_row.meme.url %}
+                            <div class="span6 widget-span widget-type-cell dnd-column" style="" data-widget-type="cell" data-x="0" data-w="6">
+                                <img
+                                width="100%"
+                                src="{{ dynamic_page_hubdb_row.meme.url }}"
+                                alt="{{ dynamic_page_hubdb_row.meme.altText }}"
+                                    />
+                            </div>
+                            {% endif %}
+
+                            <!-- MEME 2 -->
+                            {% if dynamic_page_hubdb_row.meme_2.url %}
+                            <div class="span6 widget-span widget-type-cell dnd-column margin-bottom" style="" data-widget-type="cell" data-x="0" data-w="6"> 
+                                <img
+                                    width="100%"
+                                    src="{{ dynamic_page_hubdb_row.meme_2.url }}"
+                                    alt="{{ dynamic_page_hubdb_row.meme_2.altText }}"
+                                />
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% if dynamic_page_hubdb_row.read_on or dynamic_page_hubdb_row.diversity_dimensions %}
+                    <!-- ROW 7 -->
+                    <div class="row-fluid-wrapper row-depth-1 row-number-8 section-1-row-2-vertical-alignment section-1-row-2-max-width-section-centering dnd-section section-1-row-2-padding">
+                        <div class="row-fluid ">
+                            <!-- READ ON -->
+                            {% if dynamic_page_hubdb_row.read_on %}
+                            <div class="span6 widget-span widget-type-cell dnd-column margin-bottom" style="" data-widget-type="cell" data-x="0" data-w="6">
+                                <h3>{{ readOn }}</h3>
+                                {{ dynamic_page_hubdb_row.read_on|regex_replace(remove_font_size_regexp, "") }}
+                            </div>
+                            {% endif %}
+
+                            <!-- RELATED TO -->
+                            {% if dynamic_page_hubdb_row.diversity_dimensions %}
+                            <div class="span6 widget-span widget-type-cell dnd-column" style="" data-widget-type="cell" data-x="0" data-w="6">
+                                <h3>{{ relatedTo }}</h3>
+                                {% set ids = [] %}
+                                {% for diversity_dimension in dynamic_page_hubdb_row.diversity_dimensions %}
+                                    {% do ids.append(diversity_dimension.hs_id) %}
+                                {% endfor %}
+                                {% set filter = "hs_id__in=" + ids|join(',') %}
+                                <ul>
+                                {% for row in hubdb_table_rows("diversity_dimensions", filter) %}
+                                    {% for translation in row['translation_' + dynamic_page_hubdb_row.language.name] %}
+                                    <li>
+                                        {{ translation.hs_name }}
+                                    </li>
+                                    {% endfor %}
+                                {% endfor %}
+                                </ul>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+        {% elif dynamic_page_hubdb_table_id %}
+        <div class="content-wrapper">
+            <p>{{ chooseSubcategory }}</p>
+            <ul class="category-list">
+                {% for row in hubdb_table_rows(dynamic_page_hubdb_table_id, "language=" + language + "&orderBy=sort&orderBy=name") %}
+                  {% if row.hs_path %}
+                <li>
+                    <span class="category">
+                        <a href="{{ request.path }}/{{ row.hs_path }}">{{ row.emoji }} {{ row.dimension ? row.dimension : row.name }}</a>
+                    </span>
+                    <div>{{ dynamic_page_hubdb_row.introduction }}</div>
+                </li>
+                  {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </section>
+    <script>
+        const links = document.querySelectorAll('.share-me-btn');
+        const cls = {
+            copied: 'is-copied',
+            hover: 'is-hovered',
+        };
+
+        const copyToClipboard = (str) => {
+        const el = document.createElement('input');
+            el.value = str.getAttribute('data-url');
+            el.setAttribute('readonly', '');
+            el.style.position = 'absolute';
+            el.style.opacity = 0;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+        };
+
+        const clickInteraction = (e) => {
+            e.preventDefault();
+            copyToClipboard(e.target);
+            e.target.classList.add(cls.copied);
+            setTimeout(() => e.target.classList.remove(cls.copied), 1000);
+            setTimeout(() => e.target.classList.remove(cls.hover), 700);
+        };
+
+        Array.from(links).forEach((link) => {
+            link.addEventListener('click', (e) => clickInteraction(e));
+            link.addEventListener('keypress', (e) => {
+                if (e.keyCode === 13) clickInteraction(e);
+            });
+
+        link.addEventListener('mouseover', (e) =>
+            e.target.classList.add(cls.hover)
+        );
+
+        link.addEventListener('mouseleave', (e) => {
+            if (!e.target.classList.contains(cls.copied)) {
+                e.target.classList.remove(cls.hover);
+            }
+            });
+        });
+    </script>
+</main>
+{% endblock body %}

@@ -1,0 +1,216 @@
+<!--
+  templateType: "page"
+  label: "Child Theme Category Page"
+  isAvailableForNewContent: true
+-->
+{% extends './layouts/base.html' %}
+
+{% block body %}
+
+<main id="main-content" class="body-container-wrapper body-container">
+  <style>
+    .share-me-btn {
+      position: relative;
+      text-decoration: none;
+      cursor: copy;
+      transition: background-color calc(var(--duration) * 2) var(--ease);
+    }
+
+    .share-me-btn:after {
+      content: attr(data-tooltip-text);
+      position: absolute;
+      bottom: calc(100% + 6px);
+      left: 50%;
+      padding: 8px 16px;
+      white-space: nowrap;
+      background-color: white;
+      border-radius: 4px;
+      box-shadow: 0 0 0 -12px rgba(0, 0, 0, 0);
+      pointer-events: none;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      opacity: 0;
+      -webkit-transform: translate(-50%, 12px);
+      transform: translate(-50%, 12px);
+      transition: box-shadow calc(var(--duration) / 1.5) var(--bounce), opacity calc(var(--duration) / 1.5) var(--bounce), -webkit-transform calc(var(--duration) / 1.5) var(--bounce);
+      transition: box-shadow calc(var(--duration) / 1.5) var(--bounce), opacity calc(var(--duration) / 1.5) var(--bounce), transform calc(var(--duration) / 1.5) var(--bounce);
+      transition: box-shadow calc(var(--duration) / 1.5) var(--bounce), opacity calc(var(--duration) / 1.5) var(--bounce), transform calc(var(--duration) / 1.5) var(--bounce), -webkit-transform calc(var(--duration) / 1.5) var(--bounce);
+    }
+
+    .share-me-btn.is-hovered:after {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      opacity: 1;
+      -webkit-transform: translate(-50%, 0);
+      transform: translate(-50%, 0);
+      transition-timing-function: var(--ease);
+    }
+
+    .share-me-btn.is-copied:after {
+      content: attr(data-tooltip-text-copied);
+    }
+  </style>
+
+  {% if !dynamic_page_hubdb_row %}   
+    <section id="section-1">
+      {% dnd_area 'section-1', label='section-1' %}
+
+         {% dnd_section
+
+          background_color={
+            r: 250,
+            g: 250,
+            b: 252,
+            a: 1.0
+          },
+          vertical_alignment='BOTTOM',
+          margin={ 'top': 16 },
+          padding={
+            'default': { 'top': 80, 'bottom': 72 },
+            'mobile': { 'top': 56, 'bottom': 48 }
+          }
+        %}
+          {% dnd_module path='@hubspot/rich_text', 
+            horizontal_alignment='CENTER'
+          %}
+            {% module_attribute 'html' %} 
+
+            {% end_module_attribute %}
+          {% end_dnd_module %}
+
+        {% end_dnd_section %}
+
+      {% end_dnd_area %}
+    </section>
+  
+  {% endif %}
+  
+  <section>
+    {% if dynamic_page_hubdb_row %}        
+        <div class="category-hero">
+          <div class="content-wrapper narrow-content-wrapper">
+            {% if "/en/categories" in request.path %}
+              <a href="/en/categories">← Back to the category overview</a>
+              {% set tooltipText = "Copy link to Clipboard" %}
+              {% set tooltipTextCopied = "Copied to clipboard" %}
+            
+            {% else %}
+              <a href="/de/kategorien">← Zurück zu der Kategorie-Übersicht</a>
+              {% set tooltipText = "Zum Clipboard kopieren" %}
+              {% set tooltipTextCopied = "Zum Clipboard kopiert" %}
+            {% endif %}
+
+              <h2 class="category-title">{{ dynamic_page_hubdb_row.emoji }} {{ dynamic_page_hubdb_row.name }}</h2>
+              <p>{{ dynamic_page_hubdb_row.introduction }}</p>
+           </div>
+         </div>
+    
+    {% if dynamic_page_hubdb_row.lead_text %}
+      <div class="content-wrapper narrow-content-wrapper">
+          <div class="category-intro">
+              <h4>{{ dynamic_page_hubdb_row.lead_title }}</h4>
+              <p>{{ dynamic_page_hubdb_row.lead_text }}</p>
+          </div>
+      </div>
+    {% endif %}
+
+      <div class="content-wrapper narrow-content-wrapper">
+        {% set filter = "category_name=" + dynamic_page_hubdb_row.category_name + "&language=" + dynamic_page_hubdb_row.language.name + "&is_active=1&orderBy=name" %}
+        {% for row in hubdb_table_rows("subcategories", filter) %}
+          <div class="sub-category-info" id="{{ row.anchor }}">
+            <h4 class="sub-category-title gravity-{{ row.gravity }}">
+              <span><span class="emoji">{{ row.emoji }}</span> {{ row.name }}
+                <button class="share-me-btn" data-url="{{ absolute_url }}#{{ row.anchor }}" data-tooltip-text="{{ tooltipText }}"
+    data-tooltip-text-copied="{{ tooltipTextCopied }}">
+                  {{ linkText }}
+                </button>
+              </span>
+            </h4>
+            <p class="introduction">
+              {{ row.introduction }}
+            {% if row.solution %}
+                <br/><br/>
+                <span class="what-can-you-do">
+                  
+                  {% if content.language.languageTag == "en" %} 
+                    What can you do? 
+                  {% else %}
+                    Was kannst du tun?
+                  {% endif %}
+              </span>
+                <br/>
+                {{ row.solution }}
+            {% endif %}
+            </p>
+          </div>
+        {% endfor %}
+      </div>
+    
+      {% elif dynamic_page_hubdb_table_id %}
+        <div class="content-wrapper">
+          <ul class="category-list">
+          {% if request.path == "/en/categories" %}
+            {% set language = "en" %}
+            <p>
+              Choose one of the following categories to see the explanation
+            </p>
+          {% else %}
+            {% set language = "de" %}
+            <p>
+              Wählen Sie eine der folgenden Kategorien, um die Erklärung anzuzeigen
+            </p>
+          {% endif %}
+
+            {% for row in hubdb_table_rows(dynamic_page_hubdb_table_id, "language=" + language + "&orderBy=sort&orderBy=name") %}
+            <li>
+              <span class="category">
+                <a href="{{ request.path }}/{{ row.hs_path }}">{{ row.emoji }} {{ row.name }}</a>
+              </span>
+              <div>{{ dynamic_page_hubdb_row.introduction }}</div>
+            </li>                
+          {% endfor %}
+          </ul>
+        </div>
+     {% endif %}
+
+</section>
+  <script>const links = document.querySelectorAll('.share-me-btn');
+    const cls = {
+      copied: 'is-copied',
+      hover: 'is-hovered'
+    };
+
+    const copyToClipboard = str => {
+      const el = document.createElement('input');
+      el.value = str.getAttribute('data-url');
+      el.setAttribute('readonly', '');
+      el.style.position = 'absolute';
+      el.style.opacity = 0;
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand('copy');
+      document.body.removeChild(el);
+    };
+
+    const clickInteraction = e => {
+      e.preventDefault();
+      copyToClipboard(e.target);
+      e.target.classList.add(cls.copied);
+      setTimeout(() => e.target.classList.remove(cls.copied), 1000);
+      setTimeout(() => e.target.classList.remove(cls.hover), 700);
+    };
+
+    Array.from(links).forEach(link => {
+      link.addEventListener('click', e => clickInteraction(e));
+      link.addEventListener('keypress', e => {
+        if (e.keyCode === 13) clickInteraction(e);
+      });
+      link.addEventListener('mouseover', e => e.target.classList.add(cls.hover));
+      link.addEventListener('mouseleave', e => {
+        if (!e.target.classList.contains(cls.copied)) {
+          e.target.classList.remove(cls.hover);
+        }
+      });
+    });
+  </script>
+</main>
+{% endblock body %}
