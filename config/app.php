@@ -15,6 +15,8 @@ return [
 
     'name' => env('APP_NAME', 'Witty - Dashboard'),
 
+    'froala_key' => env('FROALA_KEY', 'Ne2C1sA4I4A3A11B9C7D6kOPVi1b1b2Le2e1G1AWMSGSAFDTGHWsE7D7D6C4A1I4E3C3D7A4=='),
+
     /*
     |--------------------------------------------------------------------------
     | No onboarding for impersonation
@@ -255,7 +257,7 @@ return [
         Themsaid\Langman\LangmanServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         Mailjet\LaravelMailjet\MailjetServiceProvider::class,
-
+        Mews\Purifier\PurifierServiceProvider::class,
 
     ],
 
