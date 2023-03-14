@@ -71,6 +71,7 @@ class SyncToPosthog implements ShouldQueue
 
         $properties = $user->getHubspotData();
         $properties['hubspot_source'] = $user->hubspot_source;
+        $properties['hubspot_company_id'] = $user->hubspot_company_id;
         $properties['hubspot_id'] = $user->hubspot_id;
         $properties['$groups'] = [
             PosthogHelper::POSTHOG_ORGANIZATION_TYPE => $user->posthogTeamId()

@@ -303,6 +303,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return Kpi::getWritingStreakPast30Days($this);
     }
 
+    public function getHubspotCompanyUserCount()
+    {
+        return self::where('hubspot_company_id', $this->hubspot_company_id)->count();
+    }
+
     public function getHubspotData($booleanAsStrings = false)
     {
         $true = $booleanAsStrings ? 'Yes' : true;
@@ -328,6 +333,7 @@ class User extends Authenticatable implements MustVerifyEmail
             'team_member_count' => 0,
             'team_dictionary_count' => 0,
             'team_ignore_count' => 0,
+            'hubspot_company_user_count' => $this->hubspot_company_id ? $this->getHubspotCompanyUserCount() : null,
             'writing_streak' => $this->getWritingStreakPast30Days(),
         ];
 
