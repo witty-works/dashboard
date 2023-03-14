@@ -945,5 +945,5 @@ input:checked+.slider:before {
 
 /* page inside editor */
 .fr-element {
-    max-width: 95%;
+    max-width: 80%;
 }
