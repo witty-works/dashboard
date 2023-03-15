@@ -26,10 +26,9 @@
         @include('partials/sentry')
         <script src="{{ mix('js/app.js') }}" defer></script>
         @php
-            $user = Auth::user();   
+            $user = Auth::user();
         @endphp
         @include('partials/hubspot', ['user' => $user])
-        @include('partials/posthog')
     </head>
     <body class="font-sans antialiased">
         @include('partials/gtm-body')
