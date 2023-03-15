@@ -178,6 +178,7 @@ Route::group(['middleware' => config('socialstream.middleware', ['web'])], funct
     Route::get('/logout/{provider}', [OAuthController::class, 'logout'])->name('logout');
     Route::get('/oauth/{provider}/{policy}', [OAuthController::class, 'redirectToProvider'])->name('oauth.redirect');
     Route::get('/oauth/{provider}/{policy}/callback', [OAuthController::class, 'handleProviderCallback'])->name('oauth.callback');
+    Route::get('/browser-login', [OAuthController::class, 'redirectToProviderBrowserLogin'])->name('browser_login');
 
     Route::get('/team-invitations/{invitation}', [TeamInvitationController::class, 'acceptSigned'])
         ->middleware(['signed'])
