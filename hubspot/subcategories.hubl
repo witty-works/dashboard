@@ -7,48 +7,6 @@ isAvailableForNewContent: true
 {% block body %}
 <main id="main-content" class="body-container-wrapper body-container">
     <style>
-        .share-me-btn {
-            float: right;
-            cursor: copy;
-            transition: background-color calc(var(--duration) * 2) var(--ease);
-        }
-        .share-me-btn:after {
-            content: attr(data-tooltip-text);
-            position: absolute;
-            bottom: calc(100% + 6px);
-            left: 50%;
-            padding: 8px 16px;
-            white-space: nowrap;
-            background-color: white;
-            border-radius: 4px;
-            box-shadow: 0 0 0 -12px rgba(0, 0, 0, 0);
-            pointer-events: none;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-            opacity: 0;
-            -webkit-transform: translate(-50%, 12px);
-            transform: translate(-50%, 12px);
-            transition: box-shadow calc(var(--duration) / 1.5) var(--bounce),
-            opacity calc(var(--duration) / 1.5) var(--bounce),
-            -webkit-transform calc(var(--duration) / 1.5) var(--bounce);
-            transition: box-shadow calc(var(--duration) / 1.5) var(--bounce),
-            opacity calc(var(--duration) / 1.5) var(--bounce),
-            transform calc(var(--duration) / 1.5) var(--bounce);
-            transition: box-shadow calc(var(--duration) / 1.5) var(--bounce),
-            opacity calc(var(--duration) / 1.5) var(--bounce),
-            transform calc(var(--duration) / 1.5) var(--bounce),
-            -webkit-transform calc(var(--duration) / 1.5) var(--bounce);
-        }
-        .share-me-btn.is-hovered:after {
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            opacity: 1;
-            -webkit-transform: translate(-50%, 0);
-            transform: translate(-50%, 0);
-            transition-timing-function: var(--ease);
-        }
-        .share-me-btn.is-copied:after {
-            content: attr(data-tooltip-text-copied);
-        }
         .page-wrapper {
             display: flex;
             flex-direction: column;
@@ -138,30 +96,11 @@ isAvailableForNewContent: true
             {% set readOn = "Read on" %}
             {% set resources = "Shout outs" %}
         {% endif %}
-
+        {% set reducedView = "reducedView" in request.query %}
         {% if dynamic_page_hubdb_row %}
         <div class="category-hero">
             <div class="content-wrapper wide-content-wrapper">
                 <div class="page-wrapper">
-
-                    <!-- ROW 0 -->
-                    <div class="row-fluid-wrapper row-depth-1 row-number-8 section-1-row-2-vertical-alignment section-1-row-2-max-width-section-centering section-1-row-2-padding">
-                        <div class="row-fluid">
-
-                            <!-- BACK LINK -->
-                            <div class="span6 widget-span widget-type-cell dnd-column" style="" data-widget-type="cell" data-x="0" data-w="6">
-                                <a href="{{ backLink }}">← {{ backLinkLabel }} </a>
-                            </div>
-
-                            <!-- SHARE BUTTON -->
-                            <div class="span6 widget-span widget-type-cell dnd-column" style="" data-widget-type="cell" data-x="0" data-w="6">
-                                <button class="share-me-btn" data-url="{{ absolute_url }}" data-tooltip-text="{{ tooltipText }}" data-tooltip-text-copied="{{ tooltipTextCopied }}">
-                                    {{ linkText }}
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
                     <!-- ROW 1 -->
                     <div class="row-fluid-wrapper row-depth-1 row-number-1 section-1-row-0-padding dnd-section section-1-row-0-max-width-section-centering">
                         <div class="row-fluid">
@@ -212,6 +151,7 @@ isAvailableForNewContent: true
                         {% endif %}
                     </div>
 
+                    {% if not reducedView %}
                     {% if dynamic_page_hubdb_row.inclusive_sentence or dynamic_page_hubdb_row.non_inclusive_sentence %}
                     <!-- ROW 2 -->
                     <div class="row-fluid-wrapper row-depth-1 row-number-8 section-1-row-2-vertical-alignment section-1-row-2-max-width-section-centering dnd-section section-1-row-2-padding">
@@ -380,7 +320,7 @@ isAvailableForNewContent: true
                         </div>
                     </div>
                     {% endif %}
-
+                    {% endif %}
                 </div>
             </div>
         </div>
