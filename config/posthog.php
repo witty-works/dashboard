@@ -17,6 +17,6 @@ return [
         # 1200 per hour, use only 1000 per hour -> 16 per minute
         'limit' => env('POSTHOG_RATE_LIMIT', 16),
         'interval_seconds' => env('POSTHOG_RATE_INTERVAL_SECONDS', 60),
-        'muiltiplier' => env('POSTHOG_RATE_MULTIPLIER', 3),
+        'multiplier' => env('POSTHOG_RATE_MULTIPLIER', 3),
     ],
 ];
