@@ -87,9 +87,23 @@ class Hubspot
 
     public function updateUserFromContact(User $user, $contact)
     {
-        $user->hubspot_id = $contact['id'] ?? null;
-        $user->hubspot_source = $contact['properties']['hs_analytics_source'] ?? null;
-        $user->hubspot_company_id = $contact['properties']['associatedcompanyid'] ?? null;
+        if (empty($contact['id'])) {
+            $user->hubspot_id = null;
+        } else {
+            $user->hubspot_id = $contact['id'];
+        }
+
+        if (empty($contact['properties']['hs_analytics_source'])) {
+            $user->hubspot_source = null;
+        } else {
+            $user->hubspot_source = $contact['properties']['hs_analytics_source'];
+        }
+
+        if (empty($contact['properties']['associatedcompanyid'])) {
+            $user->hubspot_company_id = null;
+        } else {
+            $user->hubspot_company_id = $contact['properties']['associatedcompanyid'];
+        }
 
         $user->saveQuietly();
 
