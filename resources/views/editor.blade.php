@@ -43,6 +43,23 @@
                                 }
                             });
 
+                            FroalaEditor.DefineIcon('example', {
+                                template: 'image',
+                                SRC: @json(URL::asset('add-to-home.png')),
+                                ALT: @json(__('content.witty_editor_example_button'))
+                            });
+                            FroalaEditor.RegisterCommand('example', {
+                                title: @json(__('content.witty_editor_example_button')),
+                                focus: false,
+                                undo: false,
+                                refreshAfterCallback: false,
+                                callback: function () {
+                                    text = @json(nl2br(__('content.witty_editor_example_text')), JSON_HEX_QUOT);
+                                    this.html.insert(text);
+                                    this.undo.saveStep();
+                                }
+                            });
+
                             new FroalaEditor('#witty_editor', {
                                 key: @json(config('app.froala_key')),
                                 language: @json(config('app.locale')),
@@ -50,9 +67,9 @@
                                 autofocus: true,
                                 documentReady: true,
                                 spellcheck: false,
-                                toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'fontSize', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'insertLink', 'clearFormatting', 'undo', 'redo', 'copy', 'help'],
-                                toolbarButtonsMD: ['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'fontSize', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'insertLink', 'clearFormatting', 'undo', 'redo', 'copy', 'help'],
-                                toolbarButtonsSM: ['fullscreen', 'bold', 'underline', 'strikeThrough', 'fontSize', 'insertLink', 'undo', 'redo', 'copy', 'help'],
+                                toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'fontSize', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'insertLink', 'clearFormatting', 'undo', 'redo', 'copy', 'example', 'help'],
+                                toolbarButtonsMD: ['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'fontSize', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'insertLink', 'clearFormatting', 'undo', 'redo', 'copy', 'example', 'help'],
+                                toolbarButtonsSM: ['fullscreen', 'bold', 'underline', 'strikeThrough', 'fontSize', 'insertLink', 'undo', 'redo', 'copy', 'example', 'help'],
                                 toolbarButtonsXS: ['fullscreen', 'bold', 'underline', 'fontSize', 'copy', 'help'],
                             });
                         </script>
