@@ -105,6 +105,12 @@ class Hubspot
             $user->hubspot_company_id = $contact['properties']['associatedcompanyid'];
         }
 
+        if (empty($contact['properties']['sales_readiness'])) {
+            $user->hubspot_sales_readiness = null;
+        } else {
+            $user->hubspot_sales_readiness = $contact['properties']['sales_readiness'];
+        }
+
         $user->saveQuietly();
 
         return $user->wasChanged();
@@ -130,7 +136,7 @@ class Hubspot
         $searchRequest = new ContactsPublicObjectSearchRequest();
         $searchRequest->setFilterGroups($filterGroups);
 
-        $searchRequest->setProperties(['hs_analytics_source', 'associatedcompanyid']);
+        $searchRequest->setProperties(['hs_analytics_source', 'associatedcompanyid', 'sales_readiness']);
 
         // @var CollectionResponseWithTotalSimplePublicObject $results
         $results = $this->api->crm()->contacts()->searchApi()->doSearch($searchRequest);
