@@ -383,4 +383,22 @@ Falls du Fragen hast, nimm Kontakt mit :name (:email) auf. 🙂
 
 ',
     'witty_editor_copy_button' => 'Text in die Zwischenablage kopieren',
+    'witty_editor_example_button' => 'Beispiel zeigen',
+    'witty_editor_example_text' => 'Die Grundlagen:
+
+Witty hebt voreingenommene Sprache orange hervor:
+
+Hallo Kollegen, wir haben ein großes Softwareprojekt, das viele Arbeitsstunden in Anspruch nehmen wird. Wer möchte bei uns mitmachen? Bringen Sie Ihr außergewöhnliches Fachwissen und Ihren starken technischen Hintergrund ein. Wir suchen einen Digital Native.
+
+PS Ihre Frauen sind bei der Weihnachtsfeier des Vorstandes herzlich willkommen.
+
+Positive Begriffe hebt Witty grün hervor: Wir sind ein kreatives Team.
+
+Witty korrigiert Grammatik- und Rechtschreibfehler.
+
+Sie sind rot markiert: Dies ist ein Rechtschreibbfehler.
+
+Warten Sie ... es gibt noch mehr.
+
+Witty hebt Wörter in Gelb hervor, die deine Sprache komplizierter machen: Dies ist eigentlich ein sehr langes Meeting.',
 ];
