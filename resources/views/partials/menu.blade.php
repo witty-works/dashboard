@@ -123,7 +123,9 @@
         </div>
         @endif
 
+        @if(config('lumki.show_lumki'))
         @lumki
+        @endif
 
         <div class="wittyworks-navigation-bottom-half">
             <x-jet-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('editor') }}">
