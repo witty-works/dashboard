@@ -17,5 +17,7 @@ return [
         //     'label' => 'Username',
         //     'placeholder' => 'Username',
         // ],
-    ]
+    ],
+    'show_lumki' => env('SHOW_LUMKI', false),
+
 ];
