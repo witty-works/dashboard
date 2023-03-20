@@ -189,6 +189,7 @@ return [
     | Endpoint to which to sync the organization guidelines
     |
     */
+
     'nlp_api_endpoint' => [
         'urls' => [
             env('APP_NLP_API_SYNC_ENDPOINT'),
