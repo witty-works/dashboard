@@ -64,7 +64,6 @@
                                 key: @json(config('app.froala_key')),
                                 language: @json(config('app.locale')),
                                 attribution: false,
-                                autofocus: true,
                                 documentReady: true,
                                 spellcheck: false,
                                 toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'fontSize', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'insertLink', 'clearFormatting', 'undo', 'redo', 'copy', 'example', 'help'],
