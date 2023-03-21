@@ -13,82 +13,65 @@
                             {!! __('content.witty_editor_description') !!}
                         </div>
 
-                        @if(!Auth::user() || Auth::user()->planId() !== 'witty_teams')
+                        <link rel='stylesheet' type='text/css' href='https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css' />
+                        <link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_style.min.css">
+
+                        <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js'></script> 
+
+                        <div id="witty_editor">
+                            {!! clean(Request::get('content')) !!}
+                        </div>
+
                         <script type="text/javascript">
-                            function addToClipboard(copytext, e) {
-                                if (!copytext) {
-                                    return false;
+                            FroalaEditor.DefineIcon('copy', {
+                                template: 'image',
+                                SRC: @json(URL::asset('copy.png')),
+                                ALT: @json(__('content.witty_editor_copy_button'))
+                            });
+                            FroalaEditor.RegisterCommand('copy', {
+                                title: @json(__('content.witty_editor_copy_button')),
+                                focus: false,
+                                undo: false,
+                                refreshAfterCallback: false,
+                                callback: function () {
+                                    let text = this.html.get();
+                                    text+= @json(__('content.witty_editor_viral_copy_text'), JSON_HEX_QUOT);
+                                    let type = "text/html";
+                                    let blob = new Blob([text], { type });
+                                    let data = [new ClipboardItem({ [type]: blob })];
+                                    navigator.clipboard.write(data);
                                 }
+                            });
 
-                                let clipdata = e.clipboardData || window.clipboardData;
-                                if (!clipdata) {
-                                    return false;
+                            FroalaEditor.DefineIcon('example', {
+                                template: 'image',
+                                SRC: @json(URL::asset('add-to-home.png')),
+                                ALT: @json(__('content.witty_editor_example_button'))
+                            });
+                            FroalaEditor.RegisterCommand('example', {
+                                title: @json(__('content.witty_editor_example_button')),
+                                focus: false,
+                                undo: false,
+                                refreshAfterCallback: false,
+                                callback: function () {
+                                    text = @json(nl2br(__('content.witty_editor_example_text')), JSON_HEX_QUOT);
+                                    this.html.insert(text);
+                                    this.undo.saveStep();
                                 }
+                            });
 
-                                copytext+= "\n\n" + @json(__('content.witty_editor_viral_copy_text'));
-                                clipdata.setData('Text', copytext);
-                                return true;
-                            }
-
-                            function copySelection() {
-                                if (window.getSelection) {
-                                    try {
-                                        let copytext;
-
-                                        let activeElement = document.activeElement;
-                                        if (activeElement && activeElement.value) {
-                                            // firefox bug https://bugzilla.mozilla.org/show_bug.cgi?id=85686
-                                            return activeElement.value.substring(activeElement.selectionStart, activeElement.selectionEnd);
-                                        }
-
-                                        return window.getSelection().toString();
-                                    } catch (e) {
-                                    }
-                                }
-                            }
-
-                            function cutSelection() {
-                                if (window.getSelection) {
-                                    try {
-                                        let copytext = copySelection();
-
-                                        window.getSelection().deleteFromDocument();
-
-                                        return copytext;
-                                    } catch (e) {
-                                    }
-                                }
-                            }
-
-                            function copyListener(e) {
-                                let copytext = copySelection();
-                                if (addToClipboard(copytext, e)) {
-                                    e.preventDefault();
-                                }
-                            }
-
-                            function cutListener(e) {
-                                let copytext = copySelection();
-                                if (addToClipboard(copytext, e)) {
-                                    cutSelection();
-                                    e.preventDefault();
-                                }
-                            }
-
-                            document.addEventListener("copy", copyListener);
-                            document.addEventListener("cut", cutListener);
+                            new FroalaEditor('#witty_editor', {
+                                key: @json(config('app.froala_key')),
+                                language: @json(config('app.locale')),
+                                attribution: false,
+                                documentReady: true,
+                                spellcheck: false,
+                                toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'fontSize', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'insertLink', 'clearFormatting', 'undo', 'redo', 'copy', 'example', 'help'],
+                                toolbarButtonsMD: ['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'fontSize', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'insertLink', 'clearFormatting', 'undo', 'redo', 'copy', 'example', 'help'],
+                                toolbarButtonsSM: ['fullscreen', 'bold', 'underline', 'strikeThrough', 'fontSize', 'insertLink', 'undo', 'redo', 'copy', 'example', 'help'],
+                                toolbarButtonsXS: ['fullscreen', 'bold', 'underline', 'fontSize', 'copy', 'help'],
+                            });
                         </script>
-                        @endif
-
-                        <x-jet-input
-                            id="witty_editor"
-                            type="textarea"
-                            class="mt-1 block w-full"
-                            placeholder="{{ __('content.witty_editor_placeholder_text') }}"
-                            :value="Request::get('content')"
-                            rows="20"
-                            cols="100"
-                        />
                     </div>
                 </div>
             </div>

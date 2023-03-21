@@ -306,8 +306,7 @@ Please use Witty more often and click on the highlighted terms.',
     'corporate_rules_none_opened_user' => 'You have entered words in your <a href="https://dashboard.witty.works/user/language/dictionary" target="_blank"> dictionary</a>, but you haven\'t yet looked at the suggested alternative if the word was underlined.',
     'help' => 'Help',
     'witty_editor_description' => 'If Witty doesn\'t work on a specific website, simply copy & paste your text here.',
-    'witty_editor_viral_copy_text' => 'Checked with witty.works for inclusive language',
-    'witty_editor_placeholder_text' => 'Type here or paste',
+    'witty_editor_viral_copy_text' => 'Checked with <a href="https://witty.works">witty.works</a> for inclusive language',
     'witty_download_already_installed' => 'Log in to try out Witty.',
     'witty_download_already_signedin' => 'Go ahead and try out Witty!',
     'witty_download_installed' => 'Witty is already installed!',
@@ -378,4 +377,26 @@ If you have any questions, contact :name (:email). 🙂
     'review_invitation_requests_button' => 'Review',
     'invitation_request_already_accepted' => ':name already join another team.',
     'invitation_request_license_limit_reached' => 'You have already invited two members to your team and have reached the limit. <a href="https://dashboard.witty.works/team/subscription">Upgrade</a> to invite more members!',
+    'witty_editor_copy_button' => 'Copy text to clipboard',
+    'witty_editor_example_button' => 'Show Example',
+    'witty_editor_example_text' => 'The basics: Witty highlights biased language in orange: 
+   
+Hey guys,
+    
+We have a large software project that will take many man-hours to complete. Who would like to join us? Bring your extraordinary expertise and strong technical background. We are also looking for a digital native.
+
+P.S. Your wives are welcome at the board\'s Christmas party.
+
+Witty highlights positive terms in green:
+ 
+We are a creative team.
+   
+Witty corrects grammar and spelling mistakes. They are highlighted in red:
+
+This is a spelling mistacke. 
+
+Wait... there is more. Witty highlights issues that make your language more complicated in yellow:
+    
+This is actually a very long meeting.
+',
 ];

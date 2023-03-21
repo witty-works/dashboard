@@ -307,8 +307,7 @@ Bitte verwende Witty öfter und klicke auf die hervorgehobenen Begriffe.',
     'corporate_rules_none_opened_user' => 'Du hast Wörter in <a href="https://dashboard.witty.works/user/language/dictionary" target="_blank">dein Wörterbuch</a> eingetragen, aber du hast dir die vorgeschlagene Alternative noch nie angesehen, wenn das Wort unterstrichen wurde.',
     'help' => 'Hilfe',
     'witty_editor_description' => 'Sollte Witty auf einer Website nicht funktioniert, kopiere einfach deinen Text und fügen Sie ihn hier zur Prüfung ein.',
-    'witty_editor_viral_copy_text' => 'Geprüft mit witty.works auf inklusive Sprache',
-    'witty_editor_placeholder_text' => 'Hier Text eingeben oder einfügen',
+    'witty_editor_viral_copy_text' => 'Geprüft mit <a href="https://witty.works">witty.works</a> auf inklusive Sprache',
     'witty_download_already_installed' => 'Logge dich ein, um Witty auszuprobieren.',
     'witty_download_already_signedin' => 'Probiere Witty jetzt aus!',
     'witty_download_installed' => 'Du hast Witty bereits installiert.',
@@ -383,4 +382,23 @@ Was bringt dir das?
 Falls du Fragen hast, nimm Kontakt mit :name (:email) auf. 🙂
 
 ',
+    'witty_editor_copy_button' => 'Text in die Zwischenablage kopieren',
+    'witty_editor_example_button' => 'Beispiel zeigen',
+    'witty_editor_example_text' => 'Die Grundlagen:
+
+Witty hebt voreingenommene Sprache orange hervor:
+
+Hallo Kollegen, wir haben ein großes Softwareprojekt, das viele Arbeitsstunden in Anspruch nehmen wird. Wer möchte bei uns mitmachen? Bringen Sie Ihr außergewöhnliches Fachwissen und Ihren starken technischen Hintergrund ein. Wir suchen einen Digital Native.
+
+PS Ihre Frauen sind bei der Weihnachtsfeier des Vorstandes herzlich willkommen.
+
+Positive Begriffe hebt Witty grün hervor: Wir sind ein kreatives Team.
+
+Witty korrigiert Grammatik- und Rechtschreibfehler.
+
+Sie sind rot markiert: Dies ist ein Rechtschreibbfehler.
+
+Warten Sie ... es gibt noch mehr.
+
+Witty hebt Wörter in Gelb hervor, die deine Sprache komplizierter machen: Dies ist eigentlich ein sehr langes Meeting.',
 ];
