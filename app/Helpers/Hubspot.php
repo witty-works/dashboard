@@ -11,6 +11,8 @@ use HubSpot\Client\Crm\Contacts\Model\SimplePublicObjectInput as ContactsSimpleP
 use HubSpot\Client\Crm\Companies\Model\Filter as CompaniesFilter;
 use HubSpot\Client\Crm\Companies\Model\FilterGroup as CompaniesFilterGroup;
 use HubSpot\Client\Crm\Companies\Model\PublicObjectSearchRequest as CompaniesPublicObjectSearchRequest;
+use Illuminate\Mail\Message;
+use Illuminate\Support\Facades\Mail;
 
 // https://henrywang.nl/hubspot-contact-properties-list/
 class Hubspot
@@ -74,21 +76,51 @@ class Hubspot
         return ['id' => $result['id'], 'hubspot_source' => 'OFFLINE'];
     }
 
-    public function updateContact($contactId, User $user)
+    public function updateContact(User $user)
     {
+        if (empty($user->hubspot_id)) {
+            return false;
+        }
+
         $data = $user->getHubspotData(true);
         $newProperties = new ContactsSimplePublicObjectInput();
         $newProperties->setProperties($data);
 
-        $this->api->crm()->contacts()->basicApi()->update($contactId, $newProperties);
+        $this->api->crm()->contacts()->basicApi()->update($user->hubspot_id, $newProperties);
 
         return true;
     }
 
-    public function updateUserFromContact(User $user, $contact)
+    public function updateUserFromContact(User $user, $contact, $updateHubspot = false)
     {
+        if (!empty($contact['properties']['hs_additional_emails'])) {
+            $additionalEmails = explode(';', $contact['properties']['hs_additional_emails']);
+            $additionalEmails[] = $contact['properties']['email'];
+            $users = User::whereIn('email', $additionalEmails)->where('email', '!=', $user->email)->get();
+
+            // this contact's emails are associated to multiple user accounts
+            if (count($users) > 0) {
+                // send notification
+                if ($user->hubspot_id !== 0) {
+                    Mail::send([], [], function (Message $message) use ($users, $contact) {
+                        $html = "<a href=\"https://app-eu1.hubspot.com/contacts/24904016/contact/{$contact['id']}\">Contact</a>";
+                        $html .= ' is associated with emails for different user accounts<br>';
+                        $html .= 'Problematic emails: ' . implode(', ', $users->pluck('email')->toArray());
+
+                        $message->to('support@witty.works')
+                            ->subject('Overlapping emails in HubSpot contacts')
+                            ->from('support@witty.works')
+                            ->html($html);
+                    });
+                }
+
+                unset($contact['id']);
+                $updateHubspot = false;
+            }
+        }
+
         if (empty($contact['id'])) {
-            $user->hubspot_id = null;
+            $user->hubspot_id = 0;
         } else {
             $user->hubspot_id = $contact['id'];
         }
@@ -113,7 +145,13 @@ class Hubspot
 
         $user->saveQuietly();
 
-        return $user->wasChanged();
+        $result = $user->wasChanged();
+
+        if ($updateHubspot) {
+            $this->updateContact($user);
+        }
+
+        return $result;
     }
 
 
@@ -136,7 +174,15 @@ class Hubspot
         $searchRequest = new ContactsPublicObjectSearchRequest();
         $searchRequest->setFilterGroups($filterGroups);
 
-        $searchRequest->setProperties(['hs_analytics_source', 'associatedcompanyid', 'sales_readiness']);
+        $fetchProperties = [
+            'hs_analytics_source',
+            'associatedcompanyid',
+            'sales_readiness',
+            'email',
+            'hs_additional_emails',
+        ];
+
+        $searchRequest->setProperties($fetchProperties);
 
         // @var CollectionResponseWithTotalSimplePublicObject $results
         $results = $this->api->crm()->contacts()->searchApi()->doSearch($searchRequest);

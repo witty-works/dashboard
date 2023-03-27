@@ -60,8 +60,7 @@ class SyncUserToHubSpot implements ShouldQueue
         $contact = $this->hubspot->findContact($user);
         if ($contact) {
             $oldHubspotCompanyId = $user->hubspot_company_id;
-            $changed = $this->hubspot->updateUserFromContact($user, $contact);
-            $this->hubspot->updateContact($contact['id'], $user);
+            $changed = $this->hubspot->updateUserFromContact($user, $contact, true);
 
             // company ID changed, so we may need to update other users in HubSpot
             // ** disabled due to recursion issues **
