@@ -89,7 +89,7 @@ class SyncUserToHubSpot implements ShouldQueue
                 $contact = $this->hubspot->createContact($user);
             } else {
                 // create via hubspot 'hubspotutk' cookie
-                $this->hubspot->createContactViaForm($user, $user->hubspotutk);
+                $this->hubspot->createContactViaForm($user);
             }
 
             if (empty($contact)) {

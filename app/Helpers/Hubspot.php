@@ -22,7 +22,7 @@ class Hubspot
         $this->api = Factory::createWithAccessToken(config('hubspot.access_token'));
     }
 
-    public function createContactViaForm(User $user, $hubspotutk)
+    public function createContactViaForm(User $user)
     {
         $data = [
             'fields' => [
@@ -40,7 +40,7 @@ class Hubspot
                 ],
             ],
             'context' => [
-                'hutk' => $hubspotutk,
+                'hutk' => $user->hubspotutk,
             ],
         ];
 
