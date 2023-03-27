@@ -123,7 +123,7 @@
         </div>
         @endif
 
-        @if(config('lumki.show_lumki'))
+        @if(config('lumki.show_lumki') || app('impersonate')->isImpersonating())
         @lumki
         @endif
 
