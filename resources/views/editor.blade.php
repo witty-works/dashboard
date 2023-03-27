@@ -57,6 +57,15 @@
                                     text = @json(nl2br(__('content.witty_editor_example_text')), JSON_HEX_QUOT);
                                     this.html.insert(text);
                                     this.undo.saveStep();
+
+                                    const event = new KeyboardEvent('keyup', {
+                                        key: 'Enter',
+                                        bubbles: true,
+                                        cancelable: true
+                                    });
+
+                                    const editorElement = document.querySelector('.fr-element');
+                                    editorElement.dispatchEvent(event);
                                 }
                             });
 
