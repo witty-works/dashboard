@@ -22,7 +22,7 @@ return [
     | No onboarding for impersonation
     |--------------------------------------------------------------------------
     |
-    | If the onboarding survey should be shown when impersonatin a user
+    | If the onboarding survey should be shown when impersonating a user
     |
     | possible values: true/false
     |
@@ -56,8 +56,6 @@ return [
             'store_href' => 'https://addons.mozilla.org/en-US/firefox/addon/witty/',
         ],
     ],
-    'browser_redirect' => env('BROWSER_REDIRECT', true),
-    'browser_check_time' => env('BROWSER_CHECK_TIME', 3000),
     'try_out_url' => 'https://www.witty.works/try-out-witty',
     'download_url' => 'https://www.witty.works/install-witty',
 
