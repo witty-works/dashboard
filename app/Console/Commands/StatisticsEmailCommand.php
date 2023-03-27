@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Team;
 use Illuminate\Console\Command;
 use Illuminate\Mail\Message;
 use Illuminate\Support\Facades\DB;
@@ -68,7 +69,10 @@ class StatisticsEmailCommand extends Command
         $html .= "<ul>";
         $team_subscriptions_created_by_week = DB::select("SELECT SUM(subcount)+1 AS count, team_id, name FROM (SELECT COUNT(*) as subcount, team_id FROM team_user GROUP BY team_id UNION SELECT COUNT(*) as subcount, team_id FROM team_invitations GROUP BY team_id) AS counts INNER JOIN teams ON counts.team_id = teams.id GROUP BY team_id, name");
         foreach ($team_subscriptions_created_by_week as $result) {
-            $html .= "<li>{$result->name} (id: {$result->team_id}): {$result->count}</li>";
+            $team = Team::find($result->team_id);
+            $owner = $team->owner;
+            $impersonateUrl = config('app.url') . '/impersonate/take/' . $owner->id;
+            $html .= "<li>{$result->name} (team id: {$result->team_id}, <a href=\"{$impersonateUrl}\">{$owner->email}</a>): {$result->count}</li>";
         }
         $html .= "</ul>";
 
