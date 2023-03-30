@@ -512,6 +512,10 @@ input:checked+.slider:before {
     color: #9489db;
 }
 
+.wittyworks-upgrade-banner-text a {
+    text-decoration: underline;
+}
+
 .flash-message {
     margin-bottom: 0;
 }
