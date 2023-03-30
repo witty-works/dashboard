@@ -1,10 +1,10 @@
 <div class="wittyworks-upgrade-banner" id="wittyworks-upgrade-banner">
     <div>
         <div class="wittyworks-upgrade-banner-title">
-            {{ __('content.invite_team_members_title') }}
+            {!! __('content.invite_team_members_title') !!}
         </div>
         <div class="wittyworks-upgrade-banner-text">
-            {{ __('content.invite_team_members_text') }}
+            {!! __('content.invite_team_members_text') !!}
         </div>
     </div>
     <div class="wittyworks-upgrade-banner-button-container">

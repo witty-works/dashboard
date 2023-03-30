@@ -1,13 +1,13 @@
 <div class="wittyworks-upgrade-banner" id="wittyworks-upgrade-banner">
     <div>
         <div class="wittyworks-upgrade-banner-title">
-            {{ __('content.upgrade_title') }}
+            {!! __('content.upgrade_title') !!}
         </div>
         <div class="wittyworks-upgrade-banner-text">
             @if($user->ownsTeam($user->currentTeam))
-            {{ __('content.upgrade_text') }}
+            {!! __('content.upgrade_text') !!}
             @else
-            {{ __('content.upgrade_ask_owner_text') }}
+            {!! __('content.upgrade_ask_owner_text') !!}
             @endif
         </div>
     </div>

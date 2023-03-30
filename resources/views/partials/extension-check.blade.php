@@ -37,10 +37,10 @@
     <div id="install-witty" style="display: none" class="wittyworks-upgrade-banner">
         <div>
             <div class="wittyworks-upgrade-banner-title">
-                {{ __('content.onboarding_install_witty_title') }}
+                {!! __('content.onboarding_install_witty_title') !!}
             </div>
             <div class="wittyworks-upgrade-banner-text">
-                {{ __('content.onboarding_install_witty_text') }}
+                {!! __('content.onboarding_install_witty_text') !!}
             </div>
         </div>
         <div class="wittyworks-upgrade-banner-button-container">
@@ -59,10 +59,10 @@
     <div id="login-witty" style="display: none" class="wittyworks-upgrade-banner">
         <div>
             <div class="wittyworks-upgrade-banner-title">
-                {{ __('content.onboarding_login_witty_title') }}
+                {!! __('content.onboarding_login_witty_title') !!}
             </div>
             <div class="wittyworks-upgrade-banner-text">
-                {{ __('content.onboarding_login_witty_text') }}
+                {!! __('content.onboarding_login_witty_text') !!}
             </div>
         </div>
         <div class="wittyworks-upgrade-banner-button-container">
@@ -75,10 +75,10 @@
     <div id="upgrade-witty-version" style="display: none" class="wittyworks-upgrade-banner">
         <div>
             <div class="wittyworks-upgrade-banner-title">
-                {{ __('content.upgrade_witty_version_title') }}
+                {!! __('content.upgrade_witty_version_title') !!}
             </div>
             <div class="wittyworks-upgrade-banner-text">
-                {{ __('content.upgrade_witty_version_text') }}
+                {!! __('content.upgrade_witty_version_text') !!}
             </div>
         </div>
         <div class="wittyworks-upgrade-banner-button-container">

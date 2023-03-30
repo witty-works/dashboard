@@ -1,10 +1,10 @@
 <div class="wittyworks-upgrade-banner" id="wittyworks-upgrade-banner">
     <div>
         <div class="wittyworks-upgrade-banner-title">
-            {{ __('content.mailing_consent_title') }}
+            {!! __('content.mailing_consent_title') !!}
         </div>
         <div class="wittyworks-upgrade-banner-text">
-            {{ __('content.mailing_consent_text') }}
+            {!! __('content.mailing_consent_text') !!}
         </div>
     </div>
 
