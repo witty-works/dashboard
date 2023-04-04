@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use App\Jobs\SyncUserToHubSpot;
 use App\Models\User;
 
-class SyncToHubspotCommand extends AbstractSyncCommand
+class SyncToHubspotContactsCommand extends AbstractSyncCommand
 {
     /**
      * The name and signature of the console command.

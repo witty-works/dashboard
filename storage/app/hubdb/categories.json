@@ -1,0 +1,354 @@
+{
+    "cultural-diversity": {
+        "hs_name": "Cultural Diversity",
+        "icon": {
+            "src": "https:\/\/www.witty.works\/hubfs\/icon%20-%20racial%20bias-1.svg",
+            "width": "400",
+            "height": "400"
+        },
+        "sort": "1",
+        "translations": {
+            "en": {
+                "hs_name": "Cultural Diversity",
+                "canonical_url": "https:\/\/www.witty.works\/en\/categories\/cultural-diversity",
+                "name": "Cultural Diversity",
+                "is_active": "0",
+                "emoji": "",
+                "lead_title": "Witty alerts you to biases and stereotypes surrounding ethnicity, nationality, race, and language. Offered alternatives and inspirations help you foster a culture of acceptance, respect, and mutual appreciation.",
+                "lead_text": "<p>Our world is full of people from all walks of life and backgrounds. They have different ancestries, languages, traditions, and ways of life. Their biographies and ethnic and cultural identities transcend national borders. Witty flags cultural stereotyping, discriminatory language related to migration, Yiddish pejoratives, and the vocabulary of Nazi Germany. We point out racist slurs and language with racist undertones and connotations. You can mitigate risks related to language barriers by avoiding abbreviations, acronyms, fillers, and empty words that contribute to misunderstandings in multilingual environments.<\/p>",
+                "lead_image": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Group%2051-1.webp",
+                    "width": "605",
+                    "height": "404",
+                    "alt": ""
+                },
+                "example_image": "",
+                "example_image_alt_text": ""
+            },
+            "de": {
+                "hs_name": "Kulturelle Diversit\u00e4t",
+                "canonical_url": "https:\/\/www.witty.works\/de\/kategorien\/kulturelle-diversit\u00e4t",
+                "name": "Kulturelle Diversit\u00e4t",
+                "is_active": "0",
+                "emoji": "",
+                "lead_title": "",
+                "lead_text": "<strong>Witty sensibilisiert dich f\u00fcr Voreingenommenheiten und Stereotypen rund um Ethnizit\u00e4t, Nationalit\u00e4t, Rasse und Sprache. Mit inklusiven Alternativen und Inspirationen tr\u00e4gst du zu mehr gegenseitiger Akzeptanz, Respekt und Wertsch\u00e4tzung bei.<\/strong><br><br>Unsere Welt ist voller Menschen aus allen Gesellschaftsschichten und den verschiedensten Wurzeln. Sie haben unterschiedliche Vorfahren, Traditionen, Lebensweisen und Erstsprachen. Ihre Biografien und ethnischen und kulturellen Identit\u00e4ten \u00fcberschreiten nationale Grenzen. Witty weist auf kulturelle und ethnozentrische Klischees hin und auf diskriminierende Sprache im Zusammenhang mit Migration. Wir heben rassistische Sprache sowie auf W\u00f6rter und S\u00e4tze mit rassistischen Untert\u00f6nen und Konnotationen hervor. Und du kannst Witty nutzen, um Sprachbarrieren zu beseitigen: Geh sparsam mit Abk\u00fcrzungen, Akronymen, F\u00fcllw\u00f6rtern und Worth\u00fclsen um, die in mehrsprachigen und multikulturellen Umgebungen zu Missverst\u00e4ndnissen f\u00fchren k\u00f6nnen.",
+                "lead_image": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/SnapCrab_NoName_2023-4-22_14-32-3_No-00.png",
+                    "width": "1524",
+                    "height": "1021",
+                    "alt": ""
+                },
+                "example_image": "",
+                "example_image_alt_text": ""
+            }
+        },
+        "diversity_dimension_drivers": {
+            "unconscious_bias": [
+                "abbreviation",
+                "anglicism",
+                "color",
+                "culture",
+                "filler",
+                "hollow",
+                "migration",
+                "plain_language",
+                "racist_source",
+                "style",
+                "yiddish-pejoratives"
+            ],
+            "openly_discriminating": [
+                "racism",
+                "xenophobia"
+            ]
+        }
+    },
+    "gender-orientation": {
+        "hs_name": "",
+        "icon": {
+            "src": "https:\/\/www.witty.works\/hubfs\/icon%20-%20gender%20bias.svg",
+            "width": "400",
+            "height": "400"
+        },
+        "sort": "2",
+        "translations": {
+            "en": {
+                "hs_name": "Gender + Orientation",
+                "canonical_url": "https:\/\/www.witty.works\/en\/categories\/gender-orientation",
+                "name": "Gender + Orientation",
+                "is_active": "0",
+                "emoji": "",
+                "lead_title": "",
+                "lead_text": "<p><strong>Witty raises awareness about overt or covert gendered concepts, while offering inclusive alternatives and inspiring you to rethink how you frame ideas.<\/strong><\/p>\n<p><span>Biases and stereotypes about gender, gender identities, and sexual orientation are deeply ingrained in how we think and speak. Witty detects binarist and heteronormative language. It alerts you to language that perpetuates patriarchal concepts of leadership. Witty flags gender stereotyping that limits people to traditional ideas about gender roles, gender identities, gender expressions, and sexual orientation. <\/span><span>And, Witty highlights the generic masculine that undercuts the representation of marginalized genders and gender non-conforming people. <\/span><\/p>",
+                "lead_image": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Group%2072.webp",
+                    "width": "605",
+                    "height": "404",
+                    "alt": ""
+                },
+                "example_image": "",
+                "example_image_alt_text": ""
+            },
+            "de": {
+                "hs_name": "Geschlecht + Orientierung",
+                "canonical_url": "https:\/\/www.witty.works\/de\/kategorien\/geschlecht-orientierung",
+                "name": "Geschlecht + Orientierung",
+                "is_active": "0",
+                "emoji": "",
+                "lead_title": "",
+                "lead_text": "<p><strong>Witty macht auf offene und versteckte geschlechtsspezifische Konzepte aufmerksam, bietet Alternativen an und inspiriert dich, Ideen inklusiv umzudenken.<\/strong><\/p>\n<p>Vorurteile und Klischees \u00fcber Geschlecht, geschlechtliche Identit\u00e4ten und sexuelle Orientierung sind tief in unserem Denken und Sprechen verankert. Witty deckt binaristische und heteronormative Sprache auf. Es macht dich auf Ausdr\u00fccke aufmerksam, die patriarchalische Vorstellungen von F\u00fchrung festschreiben. Witty weist auf Geschlechterstereotypen hin, die andere Leute auf traditionelle Vorstellungen von Geschlechterrollen, Geschlechtsidentit\u00e4ten, Geschlechtsausdr\u00fccken und sexueller Orientierung beschr\u00e4nken. Und Witty sensibilisiert f\u00fcr die T\u00fccken des generischen Maskulinums, das die Repr\u00e4sentation von marginalisierten Geschlechtern und nicht geschlechtskonformen Personen untergr\u00e4bt.<\/p>",
+                "lead_image": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Group%2072.webp",
+                    "width": "605",
+                    "height": "404",
+                    "alt": ""
+                },
+                "example_image": "",
+                "example_image_alt_text": ""
+            }
+        },
+        "diversity_dimension_drivers": {
+            "unconscious_bias": [
+                "binary_pronouns",
+                "female_stereotype",
+                "function",
+                "gender_identity",
+                "gender_specific_abbreviation",
+                "gendered_denominations_ending",
+                "generic_plural",
+                "hidden_image",
+                "leadership",
+                "male_stereotype",
+                "sexual_orientation",
+                "titles"
+            ],
+            "openly_discriminating": [
+                "homophobia",
+                "sexism",
+                "transphobia"
+            ]
+        }
+    },
+    "ability-physicality": {
+        "hs_name": "",
+        "icon": {
+            "src": "https:\/\/www.witty.works\/hubfs\/icon%20-%20disabled%20bias-1.svg",
+            "width": "400",
+            "height": "400"
+        },
+        "sort": "3",
+        "translations": {
+            "en": {
+                "hs_name": "Ability + Physicality",
+                "canonical_url": "https:\/\/www.witty.works\/en\/categories\/ability-physicality",
+                "name": "Ability + Physicality",
+                "is_active": "0",
+                "emoji": "",
+                "lead_title": "",
+                "lead_text": "<p><strong>Witty flags language that misrepresents natural human diversity and maginlizes people based on dis\/abilities, physical differences, or invisible illnesses. With Witty's suggestions you contribute to building a space where everyone feels they belong, no matter their size, shape, skin, or hair; their illnesses others can't see; or the barriers to their participation they navigate.<\/strong><\/p>\n<p><span>Most of us are taught to believe that having a disability, an illness, or physical attributes different from aesthetic fashions, suggests otherness. In fact, 15% of the world\u2019s population experiences some form of disability (<\/span><a href=\"https:\/\/bit.ly\/3PoZWH7\" rel=\"noopener\" target=\"_blank\">World Bank<\/a><span>), and one in four US Americans feels beauty&nbsp; Witty offers inclusive alternatives to words and phrases that pigeonhole and marginalize people living with disabilities and barriers to their participation. It detects ableist slurs and biases in eleven dimensions, from vision, hearing, and speech to learning, cognitive perception, mental well-being, to illnesses and physical differences. <\/span><\/p>",
+                "lead_image": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Group%2074.webp",
+                    "width": "605",
+                    "height": "404",
+                    "alt": ""
+                },
+                "example_image": "",
+                "example_image_alt_text": ""
+            },
+            "de": {
+                "hs_name": "Geschicklichkeit + K\u00f6rperlichkeit",
+                "canonical_url": "https:\/\/www.witty.works\/de\/kategorien\/geschicklichkeit-k\u00f6rperlichkeit",
+                "name": "Geschicklichkeit + K\u00f6rperlichkeit",
+                "is_active": "0",
+                "emoji": "",
+                "lead_title": "",
+                "lead_text": "<p>Mit Wittys Vorschl\u00e4gen tr\u00e4gst du dazu bei, ein Umfeld zu schaffen, in dem sich alle zugeh\u00f6rig f\u00fchlen, unabh\u00e4ngig von ihrer Gr\u00f6\u00dfe, K\u00f6rperform, ihrer Haut oder ihren Haaren, unabh\u00e4ngig von Krankheiten, die andere nicht sehen k\u00f6nnen, oder den Hindernissen, die sie in ihrer Teilhabe einschr\u00e4nken.<\/p>\n<p>Die meisten von uns werden in dem Glauben erzogen, dass Behinderungen, K\u00f6rperlichkeiten und Krankheiten ein Zeichen f\u00fcr Andersartigkeit ist. Tats\u00e4chlich sind 15 Prozent der Weltbev\u00f6lkerung in irgendeiner Form von einer Behinderung betroffen (Weltbank). Witty weist auf Sprache hin, die die nat\u00fcrliche menschliche Vielfalt falsch darstellt oder Menschen auf k\u00f6rperliche Merkmale, Krankheiten und Behinderungen reduziert, sie in Schubladen steckt und ausgrenzt. Es identifiziert ableistische Ausdr\u00fccke und Voreingenommenheiten in elf Dimensionen, vom Sehen, H\u00f6ren und Sprechen \u00fcber Lernen, kognitive Wahrnehmung und geistiges Wohlbefinden bis hin zu unsichtbaren Krankheiten und k\u00f6rperlichen Unterschieden.<\/p>\n<p>&nbsp;<\/p>\n<p>&nbsp;<\/p>",
+                "lead_image": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Group%2074.webp",
+                    "width": "605",
+                    "height": "404",
+                    "alt": ""
+                },
+                "example_image": "",
+                "example_image_alt_text": ""
+            }
+        },
+        "diversity_dimension_drivers": {
+            "unconscious_bias": [
+                "ability",
+                "behavior",
+                "cognitive_ability",
+                "cognitive_perception",
+                "hearing",
+                "learning",
+                "medical_state",
+                "mental_wellbeing",
+                "mobility",
+                "speech",
+                "vision"
+            ],
+            "openly_discriminating": [
+                "ableism"
+            ]
+        }
+    },
+    "religion": {
+        "hs_name": "",
+        "icon": {
+            "src": "https:\/\/www.witty.works\/hubfs\/icon%20-%20faith%20bias.svg",
+            "width": "400",
+            "height": "400"
+        },
+        "sort": "4",
+        "translations": {
+            "en": {
+                "hs_name": "Religion",
+                "canonical_url": "https:\/\/www.witty.works\/en\/categories\/religion",
+                "name": "Religion",
+                "is_active": "0",
+                "emoji": "",
+                "lead_title": "",
+                "lead_text": "<p><strong>Faith-based belief systems and organized religions have shaped \u2013 and for many continue to shape \u2013 how we frame ideas and communicate ethics and values. Witty detects antisemitism and anti-muslim language but also points out more subtle faith-based expressions at odds with accepting religious diversity.<\/strong><\/p>\n<p><span>By using stories and pictures in our heads to share ideas, religions have played a vital role in forming and cultivating stereotypes. Even people who don\u2019t believe or are intensely private about their faith use language shaped by the religions that dominate the culture they live in.&nbsp;<\/span><\/p>",
+                "lead_image": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Group%2055%20(1).webp",
+                    "width": "605",
+                    "height": "404",
+                    "alt": ""
+                },
+                "example_image": "",
+                "example_image_alt_text": ""
+            },
+            "de": {
+                "hs_name": "Glauben",
+                "canonical_url": "https:\/\/www.witty.works\/de\/kategorien\/glauben",
+                "name": "Glauben",
+                "is_active": "0",
+                "emoji": "",
+                "lead_title": "",
+                "lead_text": "<strong>Glaubenssysteme und organisierte Religionen haben gepr\u00e4gt, wie wir Ideen formulieren und ethische Wertvorstellungen kommunizieren. Und f\u00fcr viele Menschen ist das auch heute so. Witty zeigt antisemitische und anti-muslimische Begriffe auf, sensibilisiert aber auch f\u00fcr subtilere Glaubens\u00e4u\u00dferungen, die im Widerspruch zu religi\u00f6ser Vielfalt stehen.<\/strong><br><br>Indem Religionen Geschichten und Bilder in unseren K\u00f6pfen aufgreifen, um Ideen und Werte zu vermitteln, spielen sie eine wichtige Rolle beim Herausbilden und Kultivieren von Stereotypen und Voreingenommenheiten. Selbst Menschen, die nicht gl\u00e4ubig sind oder ihren Glauben nicht offen leben, verwenden Begriffe und Konzepte, die durch Religionen beeinflusst wurden. Und zwar den Religionen, die die Kultur, in der sie leben, dominieren.",
+                "lead_image": "",
+                "example_image": "",
+                "lead_image_alt_text": "",
+                "example_image_alt_text": ""
+            }
+        },
+        "diversity_dimension_drivers": {
+            "openly_discriminating": [
+                "antimuslim",
+                "antisemitism"
+            ],
+            "unconscious_bias": [
+                "belief"
+            ]
+        }
+    },
+    "acquired-diversity": {
+        "hs_name": "",
+        "icon": {
+            "src": "https:\/\/www.witty.works\/hubfs\/icon%20-%20age%20bias-1.svg",
+            "width": "400",
+            "height": "400"
+        },
+        "sort": "5",
+        "translations": {
+            "en": {
+                "hs_name": "Acquired Diversity",
+                "canonical_url": "https:\/\/www.witty.works\/en\/categories\/acquired-diversity",
+                "name": "Acquired Diversity",
+                "is_active": "0",
+                "emoji": "",
+                "lead_title": "",
+                "lead_text": "<p style=\"font-size: 14px;\"><strong>Acquired diversity refers to characteristics a person acquires in the course of their life, from age to education, from trauma to status. Witty\u2018s inclusive suggestions help you create an appreciative and accessible climate for all. <\/strong><\/p>\n<p style=\"font-size: 14px;\">Think of the many experiences, past and present, that shape a life: We age, adapt to changes in socioeconomic status, get an education, form life partnerships or marry, find and make families, experience loss, separation, and trauma. We are veterans, live with difficulties others can\u2019t see, have accidents, and manage changes in our faculties and capabilities. We are survivors of conflict, violence, and incarceration. The sum of our experiences and perspectives gained constitute the acquired diversity we bring to the table.&nbsp;&nbsp;<\/p>\n<p style=\"font-size: 14px;\">Witty alerts you to language that:<\/p>\n<ul style=\"font-size: 14px;\">\n<li>excludes or marginalizes people based on acquired characteristics.<\/li>\n<li>trivializes the impact of difficult experiences and traumatizing life events.<\/li>\n<li>reinforces social stigma and biases surrounding acquired diversity, such as age, class, or veteran status.<\/li>\n<li>is used in microaggression against people of different experiences.<\/li>\n<\/ul>",
+                "lead_image": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Group%2074.webp",
+                    "width": "605",
+                    "height": "404",
+                    "alt": ""
+                },
+                "example_image": "",
+                "example_image_alt_text": ""
+            },
+            "de": {
+                "hs_name": "Erworbene Diversit\u00e4t",
+                "canonical_url": "https:\/\/www.witty.works\/de\/kategorien\/erworbene-diversit\u00e4t",
+                "name": "Erworbene Diversit\u00e4t",
+                "is_active": "0",
+                "emoji": "",
+                "lead_title": "",
+                "lead_text": "<strong>Erworbene Vielfalt bezieht sich auf Merkmale, die eine Person im Laufe ihres Lebens erworben hat, von Alter, Bildung und pers\u00f6nlichem Status bis hin zu traumatischen Erlebnissen. Wittys inklusive Vorschl\u00e4ge helfen dir, ein wertsch\u00e4tzendes und offenes Miteinander f\u00fcr alle zu gestalten.<\/strong><br><br>Denke an die vielen Erfahrungen, die ein Leben pr\u00e4gen: Wir altern, passen uns an Ver\u00e4nderungen im sozio\u00f6konomischen Status an, machen eine Ausbildung, gehen Lebenspartnerschaften ein oder heiraten, gr\u00fcnden und finden Familien, erleben Verlust, Trennung und Trauma. Wir sind Veteran*innen, leben mit Schwierigkeiten, die andere nicht sehen k\u00f6nnen, haben Unf\u00e4lle und lernen, kreativ mit Ver\u00e4nderungen in unseren F\u00e4higkeiten und Fertigkeiten umzugehen. Wir sind \u00dcberlebende von Konflikten, Gewalt und Inhaftierung. Die Summe unserer Erfahrungen und Perspektiven macht die erworbene Vielfalt aus, mit der wir unser Umfeld bereichern. &nbsp;<br><br>Witty macht dich auf Sprache aufmerksam, die:<br>\n<ul>\n<li>Menschen aufgrund von erworbenen Eigenschaften ausschlie\u00dft oder ausgrenzt.<\/li>\n<li>die die Auswirkungen schwieriger Erfahrungen und traumatischer Lebensereignisse verharmlost.<\/li>\n<li>die soziale Stigmatisierung und Vorurteile in Bezug auf erworbene Unterschiede wie Alter, Gesellschaftsschicht oder Veteranenstatus verst\u00e4rken.<\/li>\n<li>als Mikroaggression gegen Menschen mit anderen Erfahrungen eingesetzt wird.<\/li>\n<\/ul>",
+                "lead_image": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Group%2074.webp",
+                    "width": "605",
+                    "height": "404",
+                    "alt": ""
+                },
+                "example_image": "",
+                "example_image_alt_text": ""
+            }
+        },
+        "diversity_dimension_drivers": {
+            "age": [
+                "age",
+                "age_old",
+                "age_young"
+            ],
+            "unconscious_bias": [
+                "classism"
+            ]
+        }
+    },
+    "social-motive": {
+        "hs_name": "",
+        "icon": {
+            "src": "https:\/\/www.witty.works\/hubfs\/icon%20-%20sexual%20orientation.svg",
+            "width": "400",
+            "height": "400"
+        },
+        "sort": "6",
+        "translations": {
+            "en": {
+                "hs_name": "Social Motive",
+                "canonical_url": "https:\/\/www.witty.works\/en\/categories\/social-motive",
+                "name": "Social Motive",
+                "is_active": "0",
+                "emoji": "",
+                "lead_title": "",
+                "lead_text": "<p><strong>Witty flags language that communicates a desire for self-advancement, and language with violent and competitive undertones. And it raise awareness for language that expresses an appreciation for community, belonging, and emotional safety.<\/strong><\/p>\n<p><strong>Social motives are&nbsp;what drive people's thinking, feeling, and behavior in their interactions with others. &nbsp;&nbsp;<\/strong><\/p>",
+                "lead_image": "",
+                "example_image": "",
+                "lead_image_alt_text": "",
+                "example_image_alt_text": ""
+            },
+            "de": {
+                "hs_name": "Soziales Motiv",
+                "canonical_url": "https:\/\/www.witty.works\/de\/kategorien\/soziales-motiv",
+                "name": "Soziales Motiv",
+                "is_active": "0",
+                "emoji": "",
+                "lead_title": "",
+                "lead_text": "<strong>Lorem Ipsum<\/strong><span>&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged<\/span>",
+                "lead_image": "",
+                "example_image": "",
+                "lead_image_alt_text": "",
+                "example_image_alt_text": ""
+            }
+        },
+        "diversity_dimension_drivers": {
+            "unconscious_bias": [
+                "agentic",
+                "exaggerating",
+                "formality",
+                "military_source",
+                "sports_terms"
+            ],
+            "inclusive": [
+                "communal",
+                "d_and_i",
+                "emotional_security"
+            ],
+            "openly_discriminating": [
+                "offensive_language"
+            ]
+        }
+    }
+}

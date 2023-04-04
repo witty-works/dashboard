@@ -1,0 +1,186 @@
+{
+    "openly_discriminating": {
+        "hs_name": "",
+        "inclusive": "false",
+        "sort": "0",
+        "emoji": "\ud83d\udeab",
+        "translations": {
+            "en": {
+                "hs_name": "Openly discriminating",
+                "canonical_url": "https:\/\/www.witty.works\/en\/proficiency-levels\/openly-discriminating",
+                "name": "Openly discriminating",
+                "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
+                "lead_text": "<p><strong>We recommend refraining from using any offensive language and hate speech. <\/strong>The <a href=\"https:\/\/www.un.org\/en\/hate-speech\/understanding-hate-speech\/what-is-hate-speech#:~:text=Hate%20speech%20is%20%E2%80%9Cdiscriminatory%E2%80%9D%20(,of%20an%20individual%20or%20group.\" rel=\"noopener\" target=\"_blank\">United Nations defines hate speech<\/a> as \"'discriminatory' (biased, bigoted or intolerant) or 'pejorative' (prejudiced, contemptuous or demeaning) of an individual or group.\"<\/p>\n<p><strong>Using offensive language and hate speech in the workplace...<\/strong><strong><br><\/strong><\/p>\n<ul>\n<li style=\"color: #000000;\" aria-level=\"1\"><span style=\"font-size: 12px; color: #000000;\">has legal implications.<\/span><\/li>\n<li style=\"color: #000000;\" aria-level=\"1\"><span style=\"font-size: 12px; color: #000000;\">can prompt disciplinary action.<\/span><\/li>\n<li style=\"color: #000000;\" aria-level=\"1\"><span style=\"font-size: 12px; color: #000000;\">contributes to a dehumanizing workplace climate for everyone, including but not limited to victims, witnesses, and bystanders.<\/span><\/li>\n<li style=\"color: #000000;\" aria-level=\"1\"><span style=\"font-size: 12px; color: #000000;\">may cause lasting damage to your career and professional standing.<\/span><\/li>\n<\/ul>",
+                "lead_image": "",
+                "lead_image_alt_text": ""
+            },
+            "de": {
+                "hs_name": "Offene Diskriminierung",
+                "canonical_url": "https:\/\/www.witty.works\/en\/kompetenzstufen\/offene-diskriminierung",
+                "name": "Offene Diskriminierung",
+                "description": "",
+                "lead_text": "",
+                "lead_image": "",
+                "lead_image_alt_text": ""
+            }
+        }
+    },
+    "unconscious_bias": {
+        "hs_name": "",
+        "inclusive": "false",
+        "sort": "1",
+        "emoji": "\ud83d\udca1",
+        "translations": {
+            "en": {
+                "hs_name": "Unconscious bias",
+                "canonical_url": "https:\/\/www.witty.works\/en\/proficiency-levels\/unconscious-bias",
+                "name": "Unconscious bias",
+                "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
+                "lead_text": "<p>Cognitive biases generally apply to how our brain uses data, while implicit biases color how we use that data through the lens of an individual\u2019s personal characteristics. Both types of bias\u2014cognitive and implicit\u2014reflect the mind\u2019s inappropriate application of shortcuts to newly available information, leading to assumptions and conclusions that do not truly fit the data at hand.&nbsp; (Comp. <a href=\"https:\/\/bulletin.entnet.org\/home\/article\/21247268\/cognitive-and-implicit-bias-as-barriers-to-optimal-patient-management#:~:text=Cognitive%20biases%20generally%20apply%20to,%2C%20gender%2C%20and%20socioeconomic%20status.\" style=\"color: #00b0f0;\"><span>this source<\/span><\/a>).<\/p>\n<br>\n<p>Cognitive bias <a href=\"https:\/\/www.techtarget.com\/searchenterpriseai\/definition\/cognitive-bias#:~:text=Cognitive%20bias%20is%20a%20systematic,large%20amounts%20of%20information%20quickly.\" style=\"color: #00b0f0;\"><span>is caused by the tendency of the human brain to simplify information processing<\/span><\/a> through a filter of personal experience and preferences. The filtering process is a coping mechanism that enables the brain to prioritize and process large amounts of information quickly.<\/p>\n<h2>Examples<\/h2>\n<ul>\n<li style=\"color: #000000;\" aria-level=\"1\"><span style=\"font-size: 12px; color: #000000;\">Confirmation bias - we are drawn to details that confirm our own beliefs.<\/span><\/li>\n<li style=\"color: #000000;\" aria-level=\"1\"><span style=\"font-size: 12px; color: #000000;\">Stereotypical bias - we discard specifics to form generalities.<\/span><\/li>\n<li style=\"color: #000000;\" aria-level=\"1\"><span style=\"font-size: 12px; color: #000000;\">Identifiable victim bias - to stay focused, we favor the immediate, relatable thing in front of us.<\/span><\/li>\n<\/ul>\n<p><a href=\"https:\/\/perception.org\/research\/implicit-bias\/\" style=\"color: #00b0f0;\"><span>Implicit bias<\/span><\/a><span style=\"color: #000000;\"> describes when we have attitudes towards people or associate stereotypes with them without our conscious knowledge. Research suggests <\/span><a href=\"https:\/\/plato.stanford.edu\/entries\/implicit-bias\/\" style=\"color: #00b0f0;\"><span>that people can act on the basis of prejudice and stereotypes without intending to do so<\/span><\/a><span style=\"color: #000000;\">, and these actions <\/span><a href=\"https:\/\/nccc.georgetown.edu\/bias\/module-3\/1.php\" style=\"color: #00b0f0;\"><span>can be in direct contradiction to a person's espoused beliefs and values<\/span><\/a><span style=\"color: #000000;\">. We all have implicit biases, even if we do not act on them\u2014they shape how we perceive people, their actions, and characteristics.<\/span><\/p>\n<h2><span style=\"color: #000000;\">Examples<\/span><\/h2>\n<ul>\n<li style=\"color: #000000;\" aria-level=\"1\"><span style=\"font-size: 12px; color: #000000;\">Bob or Rashid? Being more receptive to familiar-sounding names.<\/span><\/li>\n<li style=\"color: #000000;\" aria-level=\"1\"><span style=\"font-size: 12px; color: #000000;\">A 50-year old programmer? Assuming people age out of a innovation-driven field.<\/span><\/li>\n<li style=\"color: #000000;\" aria-level=\"1\"><span style=\"font-size: 12px; color: #000000;\">Beauty or brains? Assuming looks are unlikely to coincide with intelligence and skills.<\/span><\/li>\n<\/ul>",
+                "lead_image": "",
+                "lead_image_alt_text": ""
+            },
+            "de": {
+                "hs_name": "Unbewusste Voreingenommenheiten",
+                "canonical_url": "https:\/\/www.witty.works\/en\/kompetenzstufen\/unbewusste-voreingenommenheiten",
+                "name": "Unbewusste Voreingenommenheiten",
+                "description": "",
+                "lead_text": "",
+                "lead_image": "",
+                "lead_image_alt_text": ""
+            }
+        }
+    },
+    "race": {
+        "hs_name": "",
+        "inclusive": "false",
+        "sort": "2",
+        "emoji": "",
+        "translations": {
+            "en": {
+                "hs_name": "Race",
+                "canonical_url": "",
+                "name": "Race",
+                "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
+                "lead_text": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
+                "lead_image": "",
+                "lead_image_alt_text": ""
+            }
+        }
+    },
+    "age": {
+        "hs_name": "",
+        "inclusive": "false",
+        "sort": "2",
+        "emoji": "",
+        "translations": {
+            "en": {
+                "hs_name": "Age",
+                "canonical_url": "",
+                "name": "Age",
+                "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
+                "lead_text": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
+                "lead_image": "",
+                "lead_image_alt_text": ""
+            }
+        }
+    },
+    "belief": {
+        "hs_name": "",
+        "inclusive": "false",
+        "sort": "2",
+        "emoji": ""
+    },
+    "gender_identity": {
+        "hs_name": "",
+        "inclusive": "false",
+        "sort": "2",
+        "emoji": ""
+    },
+    "agency": {
+        "hs_name": "",
+        "inclusive": "false",
+        "sort": "2",
+        "emoji": ""
+    },
+    "pregnancy": {
+        "hs_name": "",
+        "inclusive": "false",
+        "sort": "2",
+        "emoji": ""
+    },
+    "color": {
+        "hs_name": "",
+        "inclusive": "false",
+        "sort": "3",
+        "emoji": ""
+    },
+    "class": {
+        "hs_name": "",
+        "inclusive": "false",
+        "sort": "3",
+        "emoji": ""
+    },
+    "sexual_orientation": {
+        "hs_name": "",
+        "inclusive": "false",
+        "sort": "3",
+        "emoji": ""
+    },
+    "communality": {
+        "hs_name": "",
+        "inclusive": "true",
+        "sort": "3",
+        "emoji": ""
+    },
+    "genetic_information": {
+        "hs_name": "",
+        "inclusive": "false",
+        "sort": "3",
+        "emoji": ""
+    },
+    "national_origin": {
+        "hs_name": "",
+        "inclusive": "false",
+        "sort": "4",
+        "emoji": ""
+    },
+    "disability": {
+        "hs_name": "",
+        "inclusive": "false",
+        "sort": "4",
+        "emoji": ""
+    },
+    "nationality": {
+        "hs_name": "",
+        "inclusive": "false",
+        "sort": "5",
+        "emoji": ""
+    },
+    "inclusive": {
+        "hs_name": "",
+        "inclusive": "true",
+        "sort": "20",
+        "emoji": "\u2705",
+        "translations": {
+            "en": {
+                "hs_name": "Inclusive",
+                "canonical_url": "https:\/\/www.witty.works\/en\/proficiency-levels\/inclusive",
+                "name": "Inclusive",
+                "description": "Well done! Witty highlights inclusive words and phrases you use in your writing. These inclusive expressions emphasize cooperation, improve representation, and promote diversity, equity, inclusion, and belonging.",
+                "lead_text": "<strong>Lorem Ipsum<\/strong><span>&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged<\/span>",
+                "lead_image": "",
+                "lead_image_alt_text": ""
+            },
+            "de": {
+                "hs_name": "Inklusive",
+                "canonical_url": "https:\/\/www.witty.works\/en\/kompetenzstufen\/inklusive",
+                "name": "Inklusive",
+                "description": "",
+                "lead_text": "",
+                "lead_image": "",
+                "lead_image_alt_text": ""
+            }
+        }
+    }
+}
