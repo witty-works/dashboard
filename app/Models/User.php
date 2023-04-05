@@ -180,7 +180,7 @@ class User extends Authenticatable implements MustVerifyEmail
         }
     }
 
-    public function subscribed($name = 'witty', $price = null)
+    public function subscribed($name = 'teams', $price = null)
     {
         $team = $this->currentTeam;
         if ($team) {
@@ -188,7 +188,7 @@ class User extends Authenticatable implements MustVerifyEmail
         }
     }
 
-    public function subscription($name = 'witty')
+    public function subscription($name = 'teams')
     {
         $team = $this->currentTeam;
         if ($team) {
