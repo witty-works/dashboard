@@ -36,7 +36,7 @@
         </div>
     </x-slot>
 
-    @if($user->subscribed() && !\App\Models\LanguageGuidelines::isForcedOnTeam(Auth::user(), 'show_inspiration_alternatives'))
+    @if($user->subscribed() && !\App\Models\LanguageGuidelines::isForcedOnTeam(Auth::user(), 'expert_mode'))
     <x-slot name="actions">
         @include('partials/save_cancel_action')
     </x-slot>
