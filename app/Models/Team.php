@@ -52,16 +52,16 @@ class Team extends JetstreamTeam
         'deleted' => TeamDeleted::class,
     ];
 
-    public function subscribed($name = 'witty', $price = null)
+    public function subscribed($name = 'teams', $price = null)
     {
-        if ($name === 'witty' && $price === null) {
+        if ($name === 'teams' && $price === null) {
             $price = config('stripe.plans.witty_teams.price_id');
         }
 
         return $this->parentSubscribed($name, $price);
     }
 
-    public function subscription($name = 'witty')
+    public function subscription($name = 'teams')
     {
         return $this->parentSubscription($name);
     }
