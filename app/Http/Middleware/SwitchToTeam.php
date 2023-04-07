@@ -8,12 +8,25 @@ use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Platformsh\ConfigReader\Config;
 
 class SwitchToTeam
 {
     public function handle(Request $request, Closure $next)
     {
-        $invitation = $this->ensureUserHasCurrentTeam($request);
+        $user = $request->user();
+
+        if ($user instanceof User) {
+            $invitation = $this->ensureUserHasCurrentTeam($user);
+        } elseif (
+            !Route::is('mock-login')
+            && config('app.mock_login')
+            && (new Config())->branch !== 'dev'
+        ) {
+            return redirect()->route('mock-login', ['email' => config('app.mock_login')]);
+        } else {
+            $invitation = null;
+        }
 
         $response = $next($request);
         if ($invitation instanceof TeamInvitation) {
@@ -23,18 +36,13 @@ class SwitchToTeam
             );
         }
 
-        $this->checkTeam($request->user());
+        $this->checkTeam($user);
 
         return $response;
     }
 
-    protected function ensureUserHasCurrentTeam(Request $request)
+    protected function ensureUserHasCurrentTeam(User $user)
     {
-        $user = $request->user();
-        if (!$user instanceof User) {
-            return;
-        }
-
         if ('team-invitations.accept' === Route::currentRouteName()) {
             return;
         }
