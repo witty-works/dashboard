@@ -841,7 +841,7 @@
 
 
     getChartData('topSubcategories').then(data => {
-        if (!data || !data.events ) {
+        if (!data || !data.events || !data.subcategories ) {
             handle_no_data('loadingIconTopCatagories');
             return;
         }
@@ -1085,7 +1085,7 @@
     });
 
     getChartData('topWords', 30, 'day', 'corporate_rules').then(data => {
-        if((data && data.events && data.events.popover_open)) {
+        if(data && data.events && data.events.popover_open) {
             const openedCorporatewords = data.events.popover_open;
             for (const [key, value] of Object.entries(openedCorporatewords)) {
                 xValuesTopCorporateWordsOpened.push(key);
@@ -1112,7 +1112,7 @@
 
             document.getElementById("topWordsChartCorporateRulesWrapper").style.display = "flex";
         } else {
-            if ( "{{ __($dictionaryItems > 0) }}" ) {
+            if ({{ $dictionaryItems}}) {
                 document.getElementById("corporateRulesButNoneOpened").style.display = "flex";
             } else {
                 document.getElementById("noCorporateRulesWrapper").style.display = "flex";
