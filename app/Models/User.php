@@ -337,6 +337,10 @@ class User extends Authenticatable implements MustVerifyEmail
             'writing_streak' => $this->getWritingStreakPast30Days(),
         ];
 
+        if (!empty($this->company_name)) {
+            $data['company'] = $this->company_name;
+        }
+
         if ($this->currentTeam && $this->ownsTeam($this->currentTeam)) {
             $data['has_team_language_rules'] = $this->currentTeam->hasLanguageRules() ? $true : $false;
             $data['has_team_privacy_set'] = $this->currentTeam->hasConfiguredPrivacy() ? $true : $false;

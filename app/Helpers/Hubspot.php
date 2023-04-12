@@ -212,6 +212,12 @@ class Hubspot
         $searchRequest = new CompaniesPublicObjectSearchRequest();
         $searchRequest->setFilterGroups([$filterGroup]);
 
+        $fetchProperties = [
+            'name',
+        ];
+
+        $searchRequest->setProperties($fetchProperties);
+
         // @var CollectionResponseWithTotalSimplePublicObject $results
         $results = $this->api->crm()->companies()->searchApi()->doSearch($searchRequest);
         if ($results->getTotal() !== 1) {
