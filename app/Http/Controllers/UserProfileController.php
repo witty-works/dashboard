@@ -71,7 +71,9 @@ class UserProfileController extends BaseUserProfileController
             ]);
 
             $user->role = $validated['role'];
-            $user->company_name = $validated['company_name'];
+            if (!empty($validated['company_name'])) {
+                $user->company_name = $validated['company_name'];
+            }
             $user->save();
 
             if (!empty($validated['languages'])) {
