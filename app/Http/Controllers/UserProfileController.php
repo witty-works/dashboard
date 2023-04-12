@@ -24,9 +24,10 @@ class UserProfileController extends BaseUserProfileController
         $users = null;
         $requestInvite = null;
         if (
-            (!$user->currentTeam
-                || $user->currentTeam->getTotalUserCount() <= 1)
-            && !$user->invitations->count()
+            !$user->invitations->count()
+            && (!$user->currentTeam
+                || $user->currentTeam->getTotalUserCount() <= 1
+            )
         ) {
             try {
                 $hubspot = new Hubspot();
@@ -35,6 +36,11 @@ class UserProfileController extends BaseUserProfileController
             }
 
             if (!empty($company)) {
+                if (!empty($company['properties']['name'])) {
+                    $user->currentTeam->name = $company['properties']['name'];
+                    $user->currentTeam->save();
+                }
+
                 $users = $this->getCompanyUsers($user);
                 $requestInvite = false;
                 foreach ($users as $companyUser) {
@@ -65,6 +71,7 @@ class UserProfileController extends BaseUserProfileController
             ]);
 
             $user->role = $validated['role'];
+            $user->company_name = $validated['company_name'];
             $user->save();
 
             if (!empty($validated['languages'])) {
