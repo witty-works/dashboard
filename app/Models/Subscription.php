@@ -56,6 +56,6 @@ class Subscription extends CashierSubscription
 
     public function isPaidByInvoice()
     {
-        return $this->stripe_id === 'invoice';
+        return strpos($this->stripe_id, 'invoice') === 0;
     }
 }
