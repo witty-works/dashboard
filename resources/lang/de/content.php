@@ -78,7 +78,7 @@ return [
     'manage_role' => 'Rolle verwalten',
     'leave_team' => 'Team verlassen',
     'remove_team_member' => 'Teammitglied entfernen',
-    'accept_invitation' => 'Einladung annehmen',
+    'accept_invitation' => 'Account erstellen & Einladung annehmen',
     'api_tokens_allow_third_party_services' => 'API-Token ermöglichen es Drittanbietern, sich in deinem Namen bei unserer Anwendung zu authentifizieren.',
     'you_may_delete' => 'Du kannst alle deine vorhandenen Token löschen, wenn sie nicht mehr benötigt werden.',
     'please_copy_your_new_api_token' => 'Bitte kopiere deinen neuen API-Token. Zu deiner Sicherheit wird es nicht mehr angezeigt.',
@@ -319,7 +319,7 @@ Bitte verwende Witty öfter und klicke auf die hervorgehobenen Begriffe.',
     'invitation_request_explanation' => 'Hey, 
 
 :name (:email) ist nun auch bei Witty und fragt, ob du an einer Zusammenarbeit interessiert bist.  🧡',
-    'accept_invitation_request' => 'Willkommen im Team, :name!',
+    'accept_invitation_request' => ':name hinzufügen',
     'if_you_did_not_expect_request' => 'Was bringt ein Team?
 
 <b>Gemeinsam könnt ihr euch effektiver für Inklusion starkmachen:</b>

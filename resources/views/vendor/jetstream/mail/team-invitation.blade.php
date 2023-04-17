@@ -4,7 +4,7 @@
 {!! __('content.invitation_email_welcome') !!}
 
 @component('mail::button', ['url' => $acceptUrl])
-{{ __('Accept Invitation') }}
+{{ __('content.accept_invitation') }}
 @endcomponent
 
 {!! __('content.if_you_did_not_expect') !!}
