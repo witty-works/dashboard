@@ -82,7 +82,7 @@ return [
     'manage_role' => 'Manage Role',
     'leave_team' => 'Leave Team',
     'remove_team_member' => 'Remove Team Member',
-    'accept_invitation' => 'Accept Invitation',
+    'accept_invitation' => 'Create an account & Accept Invitation',
     'api_tokens_allow_third_party_services' => 'API tokens allow third-party services to authenticate with our application on your behalf.',
     'you_may_delete' => 'You may delete any of your existing tokens if they are no longer needed.',
     'please_copy_your_new_api_token' => 'Please copy your new API token. For your security, it won\'t be shown again.',
@@ -318,7 +318,7 @@ Please use Witty more often and click on the highlighted terms.',
     'invitation_request_explanation' => 'Yay, 
 
 :name (:email) just joined Witty and is interested in collaborating. 🧡',
-    'accept_invitation_request' => 'Welcome :name!',
+    'accept_invitation_request' => 'Add :name',
     'if_you_did_not_expect_request' => 'Why form a team?
 
 <b>A team amplifies your voice for more inclusion:</b>
