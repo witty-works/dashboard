@@ -24,21 +24,6 @@
         <!-- LOGGED IN -->
         @if($user->hasCompletedOnboarding())
         <div class="wittyworks-navigation-top-half">
-            <x-jet-nav-link class="wittyworks-navigation-item lato-small-paragraph-title-h4" href="{{ route('profile.show') }}">
-                {{ $user->name}}
-            </x-jet-nav-link>
-            @if ($team_edit)
-            <br />
-            <x-jet-nav-link class="wittyworks-team-name lato-paragraph-text-p " href="{{ route('teams.show') }}">
-                {{ $team->name }}
-            </x-jet-nav-link>
-            @elseif ($team)
-            <br />
-            <div class="wittyworks-navigation-label-wrapper lato-paragraph-text-p">
-                {{ $team->name }}
-            </div>
-            @endif
-
             @if ($team_edit)
             <div class="wittyworks-navigation-account-toggle-wrapper">
                 <x-jet-nav-link id="personal_account" class="wittyworks-navigation-item lato-small-paragraph-title-h4" href="{{ route('user.language-settings') }}" :active="$open_tab === 'user'">
