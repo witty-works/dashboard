@@ -20,8 +20,8 @@ class Form extends Component
 
     protected $rules = [
         'false_positive_id' => 'int|nullable',
-        'false_positive' => 'required|min:2',
-        'language_code' => 'nullable|size:2',
+        'false_positive' => 'required|string|min:2|max:250',
+        'language_code' => 'nullable|string|size:2',
     ];
 
     /**
