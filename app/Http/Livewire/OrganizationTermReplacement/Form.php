@@ -29,8 +29,8 @@ class Form extends Component
 
     protected $rules = [
         'term_replacement_id' => 'int|nullable',
-        'term' => 'required|min:1',
-        'replacement' => 'required|min:1|different:term',
+        'term' => 'required|min:1|max:250',
+        'replacement' => 'required|min:1|max:250|different:term',
         'explanation' => 'required_with:url,emoji|max:100',
         'url' => 'nullable|url|max:250',
         'emoji' => 'nullable',
