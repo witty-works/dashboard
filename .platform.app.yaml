@@ -129,6 +129,13 @@ web:
             root: "public"
             index:
                 - index.php
+            headers:
+                Strict-Transport-Security: max-age=31536000; includeSubDomains
+                X-Frame-Options: SAMEORIGIN
+                X-XSS-Protection: "1; mode=block"
+                X-Content-Type-Options: nosniff
+                Content-Security-Policy: "object-src 'none' upgrade-insecure-requests form-action 'self' frame-ancestors 'self'"
+                Referrer-Policy: strict-origin-when-cross-origin
             allow: true
             passthru: "/index.php"
             rules:

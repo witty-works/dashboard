@@ -64,9 +64,9 @@ class LanguageGuidelines extends Model
             'preferred_variants' => ['de-DE', 'en-US'],
             'disabled_categories' => [],
             'disabled_categories_force' => [
-                'inclusive' => true,
-                'style' => true,
-                'orthography' => true,
+                'inclusive',
+                'style',
+                'orthography',
             ],
         ];
 
@@ -153,7 +153,7 @@ class LanguageGuidelines extends Model
                 if (!$subscribed) {
                     $disabled_categories_force = [];
                     foreach ($this->disabled_categories_force as $key => $value) {
-                        $disabled_categories_force[$key] = true;
+                        $disabled_categories_force[] = $key;
                     }
                 } else {
                     $disabled_categories_force = $this->disabled_categories_force;
