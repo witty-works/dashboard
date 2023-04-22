@@ -8,7 +8,7 @@
 
     <div>
         <form wire:submit.prevent="{{ $submit }}" class="w-full">
-    
+            @csrf
             @if (isset($actions))
                 <div class="container border-radius-top">
                     {{ $form }}
