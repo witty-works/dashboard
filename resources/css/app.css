@@ -287,6 +287,18 @@ a {
     align-items: center;
     flex-wrap: nowrap;
     margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.guidelines-form-section-ident {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: nowrap;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    margin-left: 1em;
 }
 
 .guidelines-form-section--apply-for-all {
@@ -375,6 +387,10 @@ a {
     background-color: #ccc;
     -webkit-transition: .4s;
     transition: .4s;
+}
+
+.disabled {
+    cursor: not-allowed !important;
 }
 
 .slider:before {

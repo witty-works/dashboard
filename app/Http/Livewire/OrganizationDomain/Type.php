@@ -17,7 +17,7 @@ class Type extends Component
         'type' => 'required|string|in:allow,allow_witty_works,deny',
     ];
 
-    public $team;
+    public $model;
 
     /**
      * Mount the component.
@@ -25,9 +25,9 @@ class Type extends Component
      * @param  mixed  $team
      * @return void
      */
-    public function mount($team)
+    public function mount($model)
     {
-        $this->team = $team;
+        $this->model = $model;
 
         $this->resetForm();
     }
@@ -40,7 +40,7 @@ class Type extends Component
             abort(403);
         }
 
-        $languageGuidelines = $this->getLanguageGuidelines($this->team);
+        $languageGuidelines = LanguageGuidelines::getLanguageGuidelines($this->model);
 
         $languageGuidelines->domain_list_type = $this->type;
 
