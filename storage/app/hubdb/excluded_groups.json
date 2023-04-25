@@ -70,8 +70,7 @@
                 "name": "People looking for decision support",
                 "description": "People looking for a credible source of information to make up their mind about something",
                 "lead_text": "",
-                "lead_image": "",
-                "lead_image_alt_text": ""
+                "lead_image": []
             },
             "de": {
                 "hs_name": "Menschen auf der Suche nach Entscheidungshilfe",
@@ -79,8 +78,7 @@
                 "name": "Menschen auf der Suche nach Entscheidungshilfe",
                 "description": "Menschen, die nach einer vertrauensw\u00fcrdigen Quelle f\u00fcr Informationen suchen, um eine Entscheidung zu treffen",
                 "lead_text": "",
-                "lead_image": "",
-                "lead_image_alt_text": ""
+                "lead_image": []
             }
         }
     },
@@ -93,8 +91,7 @@
                 "name": "Purpose-driven people",
                 "description": "People inspired and motivated by a greater shared purpose",
                 "lead_text": "",
-                "lead_image": "",
-                "lead_image_alt_text": ""
+                "lead_image": []
             },
             "de": {
                 "hs_name": "Menschen, die durch gemeinsame Anliegen motiviert werden",
@@ -102,8 +99,7 @@
                 "name": "Menschen, die durch gemeinsame Anliegen motiviert werden",
                 "description": "Menschen, die durch gro\u00dfe gemeinsame Anliegen inspiriert und motiviert werden",
                 "lead_text": "",
-                "lead_image": "",
-                "lead_image_alt_text": ""
+                "lead_image": []
             }
         }
     },
@@ -116,8 +112,7 @@
                 "name": "People of diverse backgrounds",
                 "description": "People with a ethnic, racial, or cultural background that is not white",
                 "lead_text": "",
-                "lead_image": "",
-                "lead_image_alt_text": ""
+                "lead_image": []
             }
         }
     },
@@ -130,8 +125,7 @@
                 "name": "LGBTQIA+",
                 "description": "People in the LGBTQIA+ community",
                 "lead_text": "",
-                "lead_image": "",
-                "lead_image_alt_text": ""
+                "lead_image": []
             },
             "de": {
                 "hs_name": "LGBTQIA+ Gemeinschaft",
@@ -139,8 +133,7 @@
                 "name": "LGBTQIA+ Gemeinschaft",
                 "description": "Menschen in der LGBTQIA+ Gemeinschaft",
                 "lead_text": "",
-                "lead_image": "",
-                "lead_image_alt_text": ""
+                "lead_image": []
             }
         }
     },
@@ -184,8 +177,7 @@
                 "name": "People who identify as women",
                 "description": "Everyone who identifies as a woman",
                 "lead_text": "",
-                "lead_image": "",
-                "lead_image_alt_text": ""
+                "lead_image": []
             },
             "de": {
                 "hs_name": "Menschen, die sich als Frau identifizieren",
@@ -193,8 +185,7 @@
                 "name": "Menschen, die sich als Frau identifizieren",
                 "description": "Menschen, die sich als Frau identifizieren",
                 "lead_text": "",
-                "lead_image": "",
-                "lead_image_alt_text": ""
+                "lead_image": []
             }
         }
     },
@@ -207,8 +198,7 @@
                 "name": "Second-language speakers of English",
                 "description": "People whose first language isn't English",
                 "lead_text": "",
-                "lead_image": "",
-                "lead_image_alt_text": ""
+                "lead_image": []
             },
             "de": {
                 "hs_name": "Menschen, deren Erstsprache nicht Deutsch ist",
@@ -216,8 +206,7 @@
                 "name": "Menschen, deren Erstsprache nicht Deutsch ist",
                 "description": "Menschen, deren Erstsprache nicht Deutsch ist",
                 "lead_text": "",
-                "lead_image": "",
-                "lead_image_alt_text": ""
+                "lead_image": []
             }
         }
     },
@@ -230,8 +219,7 @@
                 "name": "People with linguistic or language barriers",
                 "description": "People from diverse language backgrounds and people with different ways of processing language",
                 "lead_text": "",
-                "lead_image": "",
-                "lead_image_alt_text": ""
+                "lead_image": []
             },
             "de": {
                 "hs_name": "Menschen mit Sprachbarrieren",
@@ -239,8 +227,7 @@
                 "name": "Menschen mit Sprachbarrieren",
                 "description": "Menschen mit einer Sprachh\u00fcrde und Menschen, die Sprache anders verarbeiten",
                 "lead_text": "",
-                "lead_image": "",
-                "lead_image_alt_text": ""
+                "lead_image": []
             }
         }
     },
@@ -253,8 +240,7 @@
                 "name": "People with short attention spans",
                 "description": "People working under time constraints, multi-tasking, or managing with a shorter attention span",
                 "lead_text": "",
-                "lead_image": "",
-                "lead_image_alt_text": ""
+                "lead_image": []
             },
             "de": {
                 "hs_name": "Menschen mit kurzer Aufmerksamkeitsspanne",
@@ -262,8 +248,7 @@
                 "name": "Menschen mit kurzer Aufmerksamkeitsspanne",
                 "description": "Menschen, die unter Zeitdruck arbeiten, multitasken oder eine k\u00fcrzere Aufmerksamkeitsspanne haben",
                 "lead_text": "",
-                "lead_image": "",
-                "lead_image_alt_text": ""
+                "lead_image": []
             }
         }
     },
@@ -276,8 +261,7 @@
                 "name": "People in non-traditional gendered jobs",
                 "description": "People in occupations and roles historically dominated by another gender",
                 "lead_text": "",
-                "lead_image": "",
-                "lead_image_alt_text": ""
+                "lead_image": []
             },
             "de": {
                 "hs_name": "Menschen in nicht-traditionell geschlechtsspezifischen Berufen",
@@ -285,8 +269,7 @@
                 "name": "Menschen in nicht-traditionell geschlechtsspezifischen Berufen",
                 "description": "Menschen in Berufen und Rollen, die historisch von einem anderen Geschlecht dominiert wurden",
                 "lead_text": "",
-                "lead_image": "",
-                "lead_image_alt_text": ""
+                "lead_image": []
             }
         }
     }

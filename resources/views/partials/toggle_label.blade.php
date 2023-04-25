@@ -1,5 +1,4 @@
-@if(!empty($disabled))
-
+@if(!empty($disabled && !is_bool($disabled)))
   @if($disabled === 'locked' || $disabled === 'locked_upgrade')
       @include('partials.locked')
   @endif

@@ -89,25 +89,23 @@ class SyncToHubspotCategoriesCommand extends Command
                         }
 
                         $translation = $data[$alias . '_translations'][$id];
+                        $translation = $this->cleanRow($translation);
                         unset($translation['sort']);
-                        unset($translation['introduction']);
-                        unset($translation['solution']);
 
                         $row["translations"][$lang] = $translation;
                     }
                 }
 
                 if (isset($row['canonical_url']) && !str_ends_with($row['canonical_url'], '/' . $row['hs_path'])) {
-                    $this->info("Canonical URL '{$row['canonical_url']}' does not end with '/{$row['hs_path']}' for '{$row['name']}'");
+                    $this->warn("Canonical URL '{$row['canonical_url']}' does not end with '/{$row['hs_path']}' for '{$row['name']}'");
                 }
 
-                unset($row['hs_path']);
-                unset($row['hs_created_at']);
-                unset($row['hs_updated_at']);
-                unset($row['hs_child_table_id']);
-                unset($row['language']);
-                unset($row['resources']);
-                unset($row['category_name']);
+                $converted_name = str_replace([' + ', ' '], ['-', '-'], strtolower($row['hs_name']));
+                if (!empty($row['hs_path']) && !empty($row['hs_name']) && $row['hs_path'] != $converted_name) {
+                    $this->warn("Page Title '{$row['hs_name']}' ('$converted_name') mis-aligned with Page Path '{$row['hs_path']}' for '{$row['name']}'");
+                }
+
+                $row = $this->cleanRow($row);
                 if ($alias === 'categories_translations') {
                     unset($row['category']);
                 }
@@ -116,14 +114,18 @@ class SyncToHubspotCategoriesCommand extends Command
                     unset($row['diversity_dimension_driver']);
                 }
 
-                foreach (['lead_image', 'icon'] as $imageKey) {
-                    if (!empty($row[$imageKey])) {
-                        $image = explode(',', $row[$imageKey]);
-                        $row[$imageKey] = ['src' => $image[0], 'width' => $image[1] ?? '', 'height' => $image[2] ?? ''];
-                        if (isset($row[$imageKey . '_alt_text'])) {
-                            $row[$imageKey]['alt'] = $row[$imageKey . '_alt_text'];
-                            unset($row[$imageKey . '_alt_text']);
+                foreach (['lead_image', 'example_image', 'icon'] as $imageKey) {
+                    if (array_key_exists($imageKey, $row)) {
+                        $image = [];
+                        if (!empty($row[$imageKey])) {
+                            $image = explode(',', $row[$imageKey]);
+                            $image = ['src' => $image[0], 'width' => $image[1] ?? '', 'height' => $image[2] ?? ''];
+                            $image['alt'] = $row[$imageKey . '_alt_text'] ?? '';
                         }
+
+                        unset($row[$imageKey . '_alt_text']);
+
+                        $row[$imageKey] = $image;
                     }
                 }
 
@@ -234,6 +236,22 @@ class SyncToHubspotCategoriesCommand extends Command
         }
 
         $this->info("Wrote HubSpot HubDB data to '$path'.");
+    }
+
+    protected function cleanRow($row)
+    {
+        unset($row['hs_path']);
+        unset($row['hs_created_at']);
+        unset($row['hs_updated_at']);
+        unset($row['hs_child_table_id']);
+        unset($row['language']);
+        unset($row['resources']);
+        unset($row['category_name']);
+
+        unset($row['introduction']);
+        unset($row['solution']);
+
+        return $row;
     }
 
     public static function loadTableData($tableName)
