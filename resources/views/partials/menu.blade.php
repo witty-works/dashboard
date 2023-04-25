@@ -1,11 +1,12 @@
 <?php
     use Illuminate\Support\Facades\Auth;
 
-    $links = [      
+    $links = [
+        'category-settings' => __('guidelines.language'),
         'language-settings' => __('guidelines.language_settings_label'),
+        'privacy-settings' => __('guidelines.privacy_settings_label'),
         'dictionary' => __('guidelines.dictionary_label'),
         'ignored-words' => __('guidelines.ignore_words_label'),
-        'privacy-settings' => __('guidelines.privacy_settings_label'),
     ];
     
 
@@ -26,11 +27,11 @@
         <div class="wittyworks-navigation-top-half">
             @if ($team_edit)
             <div class="wittyworks-navigation-account-toggle-wrapper">
-                <x-jet-nav-link id="personal_account" class="wittyworks-navigation-item lato-small-paragraph-title-h4" href="{{ route('user.language-settings') }}" :active="$open_tab === 'user'">
+                <x-jet-nav-link id="personal_account" class="wittyworks-navigation-item lato-small-paragraph-title-h4" href="{{ route('user.language-guidelines') }}" :active="$open_tab === 'user'">
                     {{ __('guidelines.personal_account') }}
                 </x-jet-nav-link>
                 <div class="wittyworks-navigation-account-divider">|</div>
-                 <x-jet-nav-link id="team_account" class="wittyworks-navigation-item lato-small-paragraph-title-h4" href="{{ route('teams.language-settings') }}" :active="$open_tab === 'team'">
+                 <x-jet-nav-link id="team_account" class="wittyworks-navigation-item lato-small-paragraph-title-h4" href="{{ route('teams.language-guidelines') }}" :active="$open_tab === 'team'">
                     {{ __('guidelines.team_account') }}
                 </x-jet-nav-link>
             </div>
@@ -61,16 +62,19 @@
                 </x-jet-nav-link>
                 @endif
 
+                @foreach($links as $route => $label)
+                @if($loop->first)
                 <div class="wittyworks-navigation-label-wrapper lato-paragraph-text-p">
                     <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/language.svg') }}" alt="" />
-                    <x-jet-nav-link class="wittyworks-navigation-sub-link lato-small-text-p" href="{{ route('user.' . key($links)) }}">{{ __('guidelines.language') }}</x-jet-nav-link>
+                    <x-jet-nav-link class="wittyworks-navigation-sub-link lato-small-text-p" href="{{ route('user.' . $route) }}" :active="request()->routeIs('user.' . $route)">{{ $label }}</x-jet-nav-link>
                 </div>
 
                 <div class="wittyworks-navigation-sub-wrapper">
-                    @foreach($links as $route => $label)
+                @else
                     <x-jet-nav-link class="wittyworks-navigation-sub-link lato-small-text-p" href="{{ route('user.' . $route) }}" :active="request()->routeIs('user.' . $route)">{{ $label }}</x-jet-nav-link>
                     <br />
-                    @endforeach
+                @endif
+                @endforeach
                 </div>
             </div>
             @endif
@@ -92,16 +96,19 @@
                     {{ __('content.analytics') }}
                 </x-jet-nav-link>
 
+                @foreach($links as $route => $label)
+                @if($loop->first)
                 <div class="wittyworks-navigation-label-wrapper lato-paragraph-text-p">
                     <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/language.svg') }}" alt="" />
-                    <x-jet-nav-link class="wittyworks-navigation-sub-link lato-small-text-p" href="{{ route('teams.' . key($links)) }}">{{ __('teams.language') }}</x-jet-nav-link>
+                    <x-jet-nav-link class="wittyworks-navigation-sub-link lato-small-text-p" href="{{ route('teams.' . $route) }}" :active="request()->routeIs('teams.' . $route)">{{ $label }}</x-jet-nav-link>
                 </div>
 
                 <div class="wittyworks-navigation-sub-wrapper">
-                    @foreach($links as $route => $label)
+                @else
                     <x-jet-nav-link class="wittyworks-navigation-sub-link lato-small-text-p" href="{{ route('teams.' . $route) }}" :active="request()->routeIs('teams.' . $route)">{{ $label }}</x-jet-nav-link>
                     <br />
-                    @endforeach
+                @endif
+                @endforeach
                 </div>
             </div>
             @endif

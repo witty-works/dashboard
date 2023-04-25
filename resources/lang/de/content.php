@@ -401,4 +401,5 @@ Sie sind rot markiert: Dies ist ein Rechtschreibbfehler.
 Warten Sie ... es gibt noch mehr.
 
 Witty hebt Wörter in Gelb hervor, die deine Sprache komplizierter machen: Dies ist eigentlich ein sehr langes Meeting.',
+    'learn_more' => 'learn more',
 ];
