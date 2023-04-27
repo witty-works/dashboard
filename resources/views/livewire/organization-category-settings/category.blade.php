@@ -1,14 +1,12 @@
 <x-jet-form-section class="py-10" submit="updateLanguageGuidelinesCategory">
     <x-slot name="title">
-        <div class="flex">
-            <img src="{{ $config['icon']['src'] }}" alt="{{ $config['translation']['name'] }} Icon" width="36" class="padding: 5px;" />
-            {{ $config['translation']['name'] }}
-            @if(!empty($config['translation']['example_image']['src']))
-            <span class="ml-3" onmouseover="document.getElementById('{{ $category }}-image').style.display = 'block';" onmouseout="document.getElementById('{{ $category }}-image').style.display = 'none';">
-                (i)
-            </span>
-            @endif
-        </div>
+    <div class="headline-row">
+        <img width="36" src="{{ $config['icon']['src'] }}" alt="{{ $config['translation']['name'] }} Icon"/>
+        {{ $config['translation']['name'] }}
+        @if(!empty($config['translation']['example_image']['src']))
+        @include('partials.info_hover', ['category' => $category, 'name' => $config['translation']['name'], 'config' => $config])
+        @endif
+    </div>
     </x-slot>
 
     <x-slot name="description">
@@ -64,8 +62,13 @@
             @include('partials.toggle_label', ['disabled' => $disabled])
 
             @if(!empty($proficiencyLevelData['translation']['lead_text']))
-            &nbsp;<a href="javascript: return false;" onclick="document.getElementById('{{ $category}}-{{ $proficiencyLevel }}').style.display = (document.getElementById('{{ $category}}-{{ $proficiencyLevel }}').style.display === 'none' ? 'block' : 'none');">
-                <img src="{{ asset('arrow-down-sign-to-navigate_small.png') }}" />
+            <a href="javascript: return false;" class="wittyworks-margin-left" onclick="
+                document.getElementById('arrow-down-icon-{{ $category}}-{{ $proficiencyLevel }}').style.display == 'none' ? document.getElementById('arrow-down-icon-{{ $category}}-{{ $proficiencyLevel }}').style.display = 'block' : document.getElementById('arrow-down-icon-{{ $category}}-{{ $proficiencyLevel }}').style.display = 'none';
+                document.getElementById('arrow-up-icon-{{ $category}}-{{ $proficiencyLevel }}').style.display == 'none' ? document.getElementById('arrow-up-icon-{{ $category}}-{{ $proficiencyLevel }}').style.display = 'block' : document.getElementById('arrow-up-icon-{{ $category}}-{{ $proficiencyLevel }}').style.display = 'none';
+                document.getElementById('{{ $category}}-{{ $proficiencyLevel }}').style.display = (document.getElementById('{{ $category}}-{{ $proficiencyLevel }}').style.display === 'none' ? 'block' : 'none');"
+            >
+                <img id="arrow-down-icon-{{ $category}}-{{ $proficiencyLevel }}" src="{{ asset('arrow-down-sign-to-navigate_small.svg') }}" />
+                <img id="arrow-up-icon-{{ $category}}-{{ $proficiencyLevel }}" src="{{ asset('arrow-up-sign-to-navigate_small.svg') }}" style="display: none;" />
             </a>
             @endif
         </div>
@@ -97,7 +100,7 @@
             <x-triple-toggle
                 id="dimensions['{{$ddd}}']"
                 name="dimensions_{{$ddd}}"
-                value="1"
+                :value="$dimensions[$ddd]"
                 :label="$label"
                 wire:model.defer="dimensions.{{$ddd}}"
                 :disabled="(bool)$disabled"
@@ -105,10 +108,7 @@
             @endif
             
             @if(!empty($diversityDimensionDrivers[$ddd]['translation']['example_image']['src']))
-            <div class="m-3" onmouseover="document.getElementById('{{ $ddd }}-image').style.display = 'block';" onmouseout="document.getElementById('{{ $ddd }}-image').style.display = 'none';">
-                (i)
-            </div>
-            <img id="{{ $ddd }}-image" style="display: none;" src="{{ $diversityDimensionDrivers[$ddd]['translation']['example_image']['src'] }}" alt="{{ $diversityDimensionDrivers[$ddd]['translation']['example_image']['alt'] }}">
+            @include('partials.info_hover', ['category' => $ddd, 'name' => $diversityDimensionDrivers[$ddd]['translation']['hs_name'], 'config' => $diversityDimensionDrivers[$ddd]])
             @endif
         </div>
         <x-jet-input-error for="dimensions" class="mt-2" />

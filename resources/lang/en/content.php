@@ -400,4 +400,5 @@ Wait... there is more. Witty highlights issues that make your language more comp
 This is actually a very long meeting.
 ',
     'learn_more' => 'Dig deeper',
+    'example' => 'Example',
 ];
