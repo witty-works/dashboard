@@ -4,8 +4,7 @@
         "emoji": "\ud83d\ude09",
         "category": "cultural-diversity",
         "related_subcategories": [],
-        "proficiency_level": "unconscious_bias",
-        "excluded": [],
+        "proficiency_level": "language-clarity",
         "translations": {
             "en": {
                 "hs_name": "Abbreviation",
@@ -82,7 +81,6 @@
         "category": "ability-physicality",
         "related_subcategories": [],
         "proficiency_level": "unconscious_bias",
-        "excluded": [],
         "translations": {
             "en": {
                 "hs_name": "Ability",
@@ -154,7 +152,6 @@
         "category": "ability-physicality",
         "related_subcategories": [],
         "proficiency_level": "openly_discriminating",
-        "excluded": [],
         "translations": {
             "en": {
                 "hs_name": "Ableist",
@@ -226,11 +223,10 @@
         "category": "acquired-diversity",
         "related_subcategories": [],
         "proficiency_level": "age",
-        "excluded": [],
         "translations": {
             "en": {
                 "hs_name": "Age information",
-                "canonical_url": "https:\/\/www.witty.works\/en\/categories\/acquired-diversity\/age-information",
+                "canonical_url": "https:\/\/www.witty.works\/en\/categories\/acquired-diversity\/age-informationlity",
                 "is_active": "1",
                 "name": "Is age relevant to your message?",
                 "short_explanation": "Is age relevant to your message?",
@@ -298,7 +294,6 @@
         "category": "acquired-diversity",
         "related_subcategories": [],
         "proficiency_level": "age",
-        "excluded": [],
         "translations": {
             "en": {
                 "hs_name": "50 years and older",
@@ -375,7 +370,6 @@
         "category": "acquired-diversity",
         "related_subcategories": [],
         "proficiency_level": "age",
-        "excluded": [],
         "translations": {
             "en": {
                 "hs_name": "25 years and younger",
@@ -452,12 +446,6 @@
             "male_stereotype"
         ],
         "proficiency_level": "unconscious_bias",
-        "excluded": [
-            "are-team-minded",
-            "who-identify-as-women",
-            "motivated-by-a-shared-purpose",
-            "belong-to-generation-z"
-        ],
         "translations": {
             "en": {
                 "hs_name": "Agentic language",
@@ -539,7 +527,6 @@
         "category": "cultural-diversity",
         "related_subcategories": [],
         "proficiency_level": "unconscious_bias",
-        "excluded": [],
         "translations": {
             "de": {
                 "hs_name": "Anglizismen",
@@ -580,7 +567,6 @@
         "category": "religion",
         "related_subcategories": [],
         "proficiency_level": "openly_discriminating",
-        "excluded": [],
         "translations": {
             "en": {
                 "hs_name": "Islamophobia and anti-muslim sentiment",
@@ -652,7 +638,6 @@
         "category": "religion",
         "related_subcategories": [],
         "proficiency_level": "openly_discriminating",
-        "excluded": [],
         "translations": {
             "en": {
                 "hs_name": "Anti-semitism",
@@ -724,7 +709,6 @@
         "category": "ability-physicality",
         "related_subcategories": [],
         "proficiency_level": "unconscious_bias",
-        "excluded": [],
         "translations": {
             "en": {
                 "hs_name": "Behavior",
@@ -796,7 +780,6 @@
         "category": "religion",
         "related_subcategories": [],
         "proficiency_level": "unconscious_bias",
-        "excluded": [],
         "translations": {
             "en": {
                 "hs_name": "Belief",
@@ -873,7 +856,6 @@
         "category": "gender-orientation",
         "related_subcategories": [],
         "proficiency_level": "unconscious_bias",
-        "excluded": [],
         "translations": {
             "en": {
                 "hs_name": "Binary pronouns",
@@ -945,7 +927,6 @@
         "category": "acquired-diversity",
         "related_subcategories": [],
         "proficiency_level": "unconscious_bias",
-        "excluded": [],
         "translations": {
             "en": {
                 "hs_name": "Classism",
@@ -1021,8 +1002,7 @@
         "emoji": "\ud83d\ude12",
         "category": "ability-physicality",
         "related_subcategories": [],
-        "proficiency_level": "unconscious_bias",
-        "excluded": [],
+        "proficiency_level": "invisible",
         "translations": {
             "en": {
                 "hs_name": "Cognitive ability",
@@ -1093,8 +1073,7 @@
         "emoji": "\ud83d\ude12",
         "category": "ability-physicality",
         "related_subcategories": [],
-        "proficiency_level": "unconscious_bias",
-        "excluded": [],
+        "proficiency_level": "invisible",
         "translations": {
             "en": {
                 "hs_name": "Cognitive perception",
@@ -1171,9 +1150,6 @@
             "xenophobia"
         ],
         "proficiency_level": "unconscious_bias",
-        "excluded": [
-            "of-diverse-backgrounds"
-        ],
         "translations": {
             "en": {
                 "hs_name": "Color",
@@ -1250,7 +1226,6 @@
             "leadership"
         ],
         "proficiency_level": "inclusive",
-        "excluded": [],
         "translations": {
             "en": {
                 "hs_name": "Communal language",
@@ -1337,7 +1312,6 @@
         "category": "cultural-diversity",
         "related_subcategories": [],
         "proficiency_level": "unconscious_bias",
-        "excluded": [],
         "translations": {
             "en": {
                 "hs_name": "Culture",
@@ -1411,7 +1385,6 @@
             "communal"
         ],
         "proficiency_level": "inclusive",
-        "excluded": [],
         "translations": {
             "en": {
                 "hs_name": "DEIB",
@@ -1493,7 +1466,6 @@
         "category": "social-motive",
         "related_subcategories": [],
         "proficiency_level": "inclusive",
-        "excluded": [],
         "translations": {
             "en": {
                 "hs_name": "Positive emotions",
@@ -1568,11 +1540,6 @@
             "hollow"
         ],
         "proficiency_level": "unconscious_bias",
-        "excluded": [
-            "with-shorter-attention-spans",
-            "with-linguistic-or-language-barriers",
-            "whose-first-language-isnt-xyz"
-        ],
         "translations": {
             "en": {
                 "hs_name": "Exaggeration",
@@ -1654,7 +1621,6 @@
         "category": "gender-orientation",
         "related_subcategories": [],
         "proficiency_level": "unconscious_bias",
-        "excluded": [],
         "translations": {
             "en": {
                 "hs_name": "Female stereotype",
@@ -1728,12 +1694,7 @@
             "exaggerating",
             "hollow"
         ],
-        "proficiency_level": "unconscious_bias",
-        "excluded": [
-            "with-shorter-attention-spans",
-            "with-linguistic-or-language-barriers",
-            "whose-first-language-isnt-xyz"
-        ],
+        "proficiency_level": "language-clarity",
         "translations": {
             "en": {
                 "hs_name": "Filler words",
@@ -1812,14 +1773,13 @@
     "formality": {
         "hs_name": "",
         "emoji": "\ud83e\uddca",
-        "category": "social-motive",
+        "category": "acquired-diversity",
         "related_subcategories": [],
         "proficiency_level": "unconscious_bias",
-        "excluded": [],
         "translations": {
             "en": {
                 "hs_name": "Formality",
-                "canonical_url": "https:\/\/www.witty.works\/en\/categories\/social-motive\/formality",
+                "canonical_url": "https:\/\/www.witty.works\/en\/categories\/acquired-diversity\/formality",
                 "is_active": "1",
                 "name": "A less formal tone makes you sound more accessible",
                 "short_explanation": "Weniger F\u00f6rmlichkeit schafft mehr emotionale N\u00e4he",
@@ -1850,7 +1810,7 @@
             },
             "de": {
                 "hs_name": "F\u00f6rmlichkeit",
-                "canonical_url": "https:\/\/www.witty.works\/de\/kategorien\/soziale-motivation\/f\u00f6rmlichkeit",
+                "canonical_url": "https:\/\/www.witty.works\/de\/kategorien\/erworbene-diversit%C3%A4t\/f\u00f6rmlichkeit",
                 "is_active": "1",
                 "name": "Weniger F\u00f6rmlichkeit schafft mehr emotionale N\u00e4he",
                 "short_explanation": "A less formal tone makes you sound more accessible",
@@ -1893,11 +1853,6 @@
             "titles"
         ],
         "proficiency_level": "unconscious_bias",
-        "excluded": [
-            "who-identify-as-women",
-            "who-are-lgbqtqia+",
-            "working-non-traditional-gendered-jobs "
-        ],
         "translations": {
             "en": {
                 "hs_name": "Generic masculine",
@@ -1984,11 +1939,6 @@
             "sexual_orientation"
         ],
         "proficiency_level": "unconscious_bias",
-        "excluded": [
-            "belong-to-generation-z",
-            "who-identify-as-non-binary",
-            "who-are-lgbqtqia+"
-        ],
         "translations": {
             "en": {
                 "hs_name": "Gender binary",
@@ -2065,7 +2015,6 @@
         "category": "gender-orientation",
         "related_subcategories": [],
         "proficiency_level": "unconscious_bias",
-        "excluded": [],
         "translations": {
             "en": {
                 "hs_name": "Gender-specific abbreviation",
@@ -2137,7 +2086,6 @@
         "category": "gender-orientation",
         "related_subcategories": [],
         "proficiency_level": "unconscious_bias",
-        "excluded": [],
         "translations": {
             "de": {
                 "hs_name": "Inklusive Endung",
@@ -2183,11 +2131,6 @@
             "titles"
         ],
         "proficiency_level": "unconscious_bias",
-        "excluded": [
-            "who-identify-as-women",
-            "who-are-lgbqtqia+",
-            "working-non-traditional-gendered-jobs "
-        ],
         "translations": {
             "en": {
                 "hs_name": "Generic plural",
@@ -2259,7 +2202,6 @@
         "category": "ability-physicality",
         "related_subcategories": [],
         "proficiency_level": "unconscious_bias",
-        "excluded": [],
         "translations": {
             "en": {
                 "hs_name": "Hearing",
@@ -2341,10 +2283,6 @@
             "titles"
         ],
         "proficiency_level": "unconscious_bias",
-        "excluded": [
-            "who-identify-as-women",
-            "who-are-lgbqtqia+"
-        ],
         "translations": {
             "en": {
                 "hs_name": "Gender cues",
@@ -2428,13 +2366,7 @@
             "exaggerating",
             "filler"
         ],
-        "proficiency_level": "unconscious_bias",
-        "excluded": [
-            "with-shorter-attention-spans",
-            "with-linguistic-or-language-barriers",
-            "whose-first-language-isnt-xyz",
-            "looking-for-decision-support"
-        ],
+        "proficiency_level": "language-clarity",
         "translations": {
             "en": {
                 "hs_name": "Empty words",
@@ -2516,7 +2448,6 @@
         "category": "gender-orientation",
         "related_subcategories": [],
         "proficiency_level": "openly_discriminating",
-        "excluded": [],
         "translations": {
             "en": {
                 "hs_name": "Homophobia",
@@ -2594,12 +2525,6 @@
             "titles"
         ],
         "proficiency_level": "unconscious_bias",
-        "excluded": [
-            "are-team-minded",
-            "who-identify-as-women",
-            "motivated-by-a-shared-purpose",
-            "belong-to-generation-z"
-        ],
         "translations": {
             "en": {
                 "hs_name": "Traditional leadership",
@@ -2676,7 +2601,6 @@
         "category": "ability-physicality",
         "related_subcategories": [],
         "proficiency_level": "unconscious_bias",
-        "excluded": [],
         "translations": {
             "en": {
                 "hs_name": "Learning ability",
@@ -2748,7 +2672,6 @@
         "category": "gender-orientation",
         "related_subcategories": [],
         "proficiency_level": "unconscious_bias",
-        "excluded": [],
         "translations": {
             "en": {
                 "hs_name": "Male stereotype",
@@ -2820,7 +2743,6 @@
         "category": "ability-physicality",
         "related_subcategories": [],
         "proficiency_level": "unconscious_bias",
-        "excluded": [],
         "translations": {
             "en": {
                 "hs_name": "Medical state",
@@ -2892,7 +2814,6 @@
         "category": "ability-physicality",
         "related_subcategories": [],
         "proficiency_level": "unconscious_bias",
-        "excluded": [],
         "translations": {
             "en": {
                 "hs_name": "Mental wellbeing",
@@ -2964,7 +2885,6 @@
         "category": "cultural-diversity",
         "related_subcategories": [],
         "proficiency_level": "unconscious_bias",
-        "excluded": [],
         "translations": {
             "en": {
                 "hs_name": "Migration background",
@@ -3036,7 +2956,6 @@
         "category": "social-motive",
         "related_subcategories": [],
         "proficiency_level": "unconscious_bias",
-        "excluded": [],
         "translations": {
             "en": {
                 "hs_name": "Military source",
@@ -3108,7 +3027,6 @@
         "category": "ability-physicality",
         "related_subcategories": [],
         "proficiency_level": "unconscious_bias",
-        "excluded": [],
         "translations": {
             "en": {
                 "hs_name": "Mobility",
@@ -3180,7 +3098,6 @@
         "category": "social-motive",
         "related_subcategories": [],
         "proficiency_level": "openly_discriminating",
-        "excluded": [],
         "translations": {
             "en": {
                 "hs_name": "Offensive language",
@@ -3255,12 +3172,7 @@
             "filler",
             "hollow"
         ],
-        "proficiency_level": "unconscious_bias",
-        "excluded": [
-            "with-shorter-attention-spans",
-            "with-linguistic-or-language-barriers",
-            "whose-first-language-isnt-xyz"
-        ],
+        "proficiency_level": "language-clarity",
         "translations": {
             "en": {
                 "hs_name": "Plain English",
@@ -3337,7 +3249,6 @@
         "category": "cultural-diversity",
         "related_subcategories": [],
         "proficiency_level": "openly_discriminating",
-        "excluded": [],
         "translations": {
             "en": {
                 "hs_name": "Racism",
@@ -3409,7 +3320,6 @@
         "category": "cultural-diversity",
         "related_subcategories": [],
         "proficiency_level": "unconscious_bias",
-        "excluded": [],
         "translations": {
             "en": {
                 "hs_name": "Race",
@@ -3486,7 +3396,6 @@
         "category": "gender-orientation",
         "related_subcategories": [],
         "proficiency_level": "openly_discriminating",
-        "excluded": [],
         "translations": {
             "en": {
                 "hs_name": "Sexism",
@@ -3558,7 +3467,6 @@
         "category": "gender-orientation",
         "related_subcategories": [],
         "proficiency_level": "unconscious_bias",
-        "excluded": [],
         "translations": {
             "en": {
                 "hs_name": "Sexual orientation",
@@ -3635,7 +3543,6 @@
         "category": "ability-physicality",
         "related_subcategories": [],
         "proficiency_level": "unconscious_bias",
-        "excluded": [],
         "translations": {
             "en": {
                 "hs_name": "Speech ability",
@@ -3707,7 +3614,6 @@
         "category": "social-motive",
         "related_subcategories": [],
         "proficiency_level": "unconscious_bias",
-        "excluded": [],
         "translations": {
             "en": {
                 "hs_name": "Sports terms",
@@ -3778,8 +3684,7 @@
         "emoji": "\ud83d\ude1f",
         "category": "cultural-diversity",
         "related_subcategories": [],
-        "proficiency_level": "unconscious_bias",
-        "excluded": [],
+        "proficiency_level": "language-clarity",
         "translations": {
             "en": {
                 "hs_name": "Style issue",
@@ -3866,12 +3771,6 @@
             "male_stereotype"
         ],
         "proficiency_level": "unconscious_bias",
-        "excluded": [
-            "who-identify-as-women",
-            "who-are-lgbqtqia+",
-            "working-non-traditional-gendered-jobs ",
-            "of-diverse-backgrounds"
-        ],
         "translations": {
             "en": {
                 "hs_name": "Jobs",
@@ -3948,7 +3847,6 @@
         "category": "gender-orientation",
         "related_subcategories": [],
         "proficiency_level": "openly_discriminating",
-        "excluded": [],
         "translations": {
             "en": {
                 "hs_name": "Transphobia",
@@ -4020,7 +3918,6 @@
         "category": "ability-physicality",
         "related_subcategories": [],
         "proficiency_level": "unconscious_bias",
-        "excluded": [],
         "translations": {
             "en": {
                 "hs_name": "Vision",
@@ -4092,7 +3989,6 @@
         "category": "cultural-diversity",
         "related_subcategories": [],
         "proficiency_level": "openly_discriminating",
-        "excluded": [],
         "translations": {
             "en": {
                 "hs_name": "Xenophobia",
@@ -4164,7 +4060,6 @@
         "category": "cultural-diversity",
         "related_subcategories": [],
         "proficiency_level": "unconscious_bias",
-        "excluded": [],
         "translations": {
             "en": {
                 "hs_name": "Yiddish pejoratives",

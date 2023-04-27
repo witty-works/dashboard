@@ -1,14 +1,19 @@
 <x-jet-form-section class="py-10" submit="updateLanguageGuidelinesCategory">
     <x-slot name="title">
-        <div class="flex" onmouseover="document.getElementById('{{ $category}}-image').style.display = 'block';" onmouseout="document.getElementById('{{ $category}}-image').style.display = 'none';">
+        <div class="flex">
             <img src="{{ $config['icon']['src'] }}" width="36" style="padding: 5px;" />
             {{ $config['translation']['name'] }}
+            @if(!empty($config['translation']['example_image']['src']))
+            <span class="ml-3" onmouseover="document.getElementById('{{ $category }}-image').style.display = 'block';" onmouseout="document.getElementById('{{ $category }}-image').style.display = 'none';">
+                (i)
+            </span>
+            @endif
         </div>
     </x-slot>
 
     <x-slot name="description">
         @if(!empty($config['translation']['example_image']['src']))
-        <img id="{{ $category}}-image" style="display: none;" src="{{ $config['translation']['example_image']['src'] }}" alt="{{ $config['translation']['example_image']['alt'] }}">
+        <img id="{{ $category }}-image" style="display: none;" src="{{ $config['translation']['example_image']['src'] }}" alt="{{ $config['translation']['example_image']['alt'] }}">
         @endif
     </x-slot>
 
@@ -43,14 +48,18 @@
 
             @include('partials.toggle_label', ['disabled' => $disabled])
 
+            @if(!empty($proficiencyLevelData['translation']['lead_text']))
             &nbsp;<a href="javascript: return false;" onclick="document.getElementById('{{ $category}}-{{ $proficiencyLevel }}').style.display = (document.getElementById('{{ $category}}-{{ $proficiencyLevel }}').style.display === 'none' ? 'block' : 'none');">
                 <img src="{{ asset('arrow-down-sign-to-navigate_small.png') }}" />
             </a>
+            @endif
         </div>
         <x-jet-input-error for="dimensions" class="mt-2" />
+        @if(!empty($proficiencyLevelData['translation']['lead_text']))
         <div id="{{ $category }}-{{ $proficiencyLevel }}" style="display: none" class="lato-paragraph-text-p">
             {!! $proficiencyLevelData['translation']['lead_text'] !!}
         </div>
+        @endif
         @foreach ($list as $ddd)
         @if(isset($diversityDimensionDrivers[$ddd]['translation']))
         <div class="guidelines-form-section-ident lato-small-text-p">
@@ -58,9 +67,7 @@
                 $label = '<a href="'.$diversityDimensionDrivers[$ddd]['translation']['canonical_url'].'" />';
                 $label.= $diversityDimensionDrivers[$ddd]['translation']['hs_name'];
                 $label.= '</a>';
-                if ($proficiencyLevel !== 'openly_discriminating') {
-                    $label.= ' - '.$diversityDimensionDrivers[$ddd]['translation']['name'];
-                }
+                $label.= ' - '.$diversityDimensionDrivers[$ddd]['translation']['name'];
             @endphp
             @if($proficiencyLevel === 'openly_discriminating' || !$model->subscribed())
             <x-jet-checkbox
@@ -82,10 +89,10 @@
             @endif
 
             @if(!empty($diversityDimensionDrivers[$ddd]['translation']['example_image']['src']))
-            <div class="flex m-3" onmouseover="document.getElementById('{{ $ddd}}-image').style.display = 'block';" onmouseout="document.getElementById('{{ $ddd}}-image').style.display = 'none';">
+            <div class="flex m-3" onmouseover="document.getElementById('{{ $ddd }}-image').style.display = 'block';" onmouseout="document.getElementById('{{ $ddd }}-image').style.display = 'none';">
                 (i)
             </div>
-            <img id="{{ $ddd}}-image" style="display: none;" src="{{ $diversityDimensionDrivers[$ddd]['translation']['example_image']['src'] }}" alt="{{ $diversityDimensionDrivers[$ddd]['translation']['example_image']['alt'] }}">
+            <img id="{{ $ddd }}-image" style="display: none;" src="{{ $diversityDimensionDrivers[$ddd]['translation']['example_image']['src'] }}" alt="{{ $diversityDimensionDrivers[$ddd]['translation']['example_image']['alt'] }}">
             @endif
         </div>
         <x-jet-input-error for="dimensions" class="mt-2" />

@@ -43,17 +43,19 @@
             }
         },
         "diversity_dimension_drivers": {
-            "unconscious_bias": [
+            "language-clarity": [
                 "abbreviation",
+                "filler",
+                "hollow",
+                "plain_language",
+                "style"
+            ],
+            "unconscious_bias": [
                 "anglicism",
                 "color",
                 "culture",
-                "filler",
-                "hollow",
                 "migration",
-                "plain_language",
                 "racist_source",
-                "style",
                 "yiddish-pejoratives"
             ],
             "openly_discriminating": [
@@ -179,8 +181,6 @@
             "unconscious_bias": [
                 "ability",
                 "behavior",
-                "cognitive_ability",
-                "cognitive_perception",
                 "hearing",
                 "learning",
                 "medical_state",
@@ -191,6 +191,10 @@
             ],
             "openly_discriminating": [
                 "ableism"
+            ],
+            "invisible": [
+                "cognitive_ability",
+                "cognitive_perception"
             ]
         }
     },
@@ -292,7 +296,8 @@
                 "age_young"
             ],
             "unconscious_bias": [
-                "classism"
+                "classism",
+                "formality"
             ]
         }
     },
@@ -333,7 +338,6 @@
             "unconscious_bias": [
                 "agentic",
                 "exaggerating",
-                "formality",
                 "military_source",
                 "sports_terms"
             ],

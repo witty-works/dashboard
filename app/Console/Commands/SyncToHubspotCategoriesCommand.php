@@ -42,8 +42,6 @@ class SyncToHubspotCategoriesCommand extends Command
         $tables = [
             'subcategories' => 'diversity_dimension_drivers_translations',
             'base_subcategories' => 'diversity_dimension_drivers',
-            'excluded_group_translations' => 'excluded_groups_translations',
-            'excluded_groups' => 'excluded_groups',
             'proficiency_level_translations' => 'proficiency_levels_translations',
             'proficiency_levels' => 'proficiency_levels',
             'categories' => 'categories_translations',
@@ -94,6 +92,10 @@ class SyncToHubspotCategoriesCommand extends Command
 
                         $row["translations"][$lang] = $translation;
                     }
+                }
+
+                if (!empty($row['inclusive'])) {
+                    $row['inclusive'] = json_decode($row['inclusive']);
                 }
 
                 if (isset($row['canonical_url']) && !str_ends_with($row['canonical_url'], '/' . $row['hs_path'])) {
@@ -158,16 +160,6 @@ class SyncToHubspotCategoriesCommand extends Command
                     foreach ($proficiencyLevels as $proficiencyLevel) {
                         if (isset($data['proficiency_levels'][$proficiencyLevel]['name'])) {
                             $row['proficiency_level'] = $data['proficiency_levels'][$proficiencyLevel]['name'];
-                        }
-                    }
-
-                    $excludedGroups = $row['excluded'] === ''
-                        ? [] : explode(',', $row['excluded']);
-
-                    $row['excluded'] = [];
-                    foreach ($excludedGroups as $excludedGroup) {
-                        if (isset($data['excluded_groups'][$excludedGroup]['name'])) {
-                            $row['excluded'][] = $data['excluded_groups'][$excludedGroup]['name'];
                         }
                     }
 
@@ -247,6 +239,7 @@ class SyncToHubspotCategoriesCommand extends Command
         unset($row['language']);
         unset($row['resources']);
         unset($row['category_name']);
+        unset($row['excluded']);
 
         unset($row['introduction']);
         unset($row['solution']);
