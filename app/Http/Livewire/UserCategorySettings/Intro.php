@@ -22,4 +22,8 @@ class Intro extends Component
     {
         return view('livewire.user-category-settings.intro');
     }
+
+    public function resetForm()
+    {
+    }
 }

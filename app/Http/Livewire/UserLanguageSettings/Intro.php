@@ -22,4 +22,8 @@ class Intro extends Component
     {
         return view('livewire.user-language-settings.intro');
     }
+
+    public function resetForm()
+    {
+    }
 }

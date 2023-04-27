@@ -6,8 +6,8 @@
     </x-slot>
 
     <x-slot name="description">
-        @if($team->getFalsePositivesLimitReached() && Auth::user()->ownsTeam($team) && !$team->subscribed())
-           {!! __('guidelines.term_replacement_limit_reached', ['max_count' => $team->getTermReplacementsCount(), 'url' => route('teams.subscription')]) !!}
+        @if($model->getFalsePositivesLimitReached() && Auth::user()->ownsTeam($model) && !$model->subscribed())
+           {!! __('guidelines.term_replacement_limit_reached', ['max_count' => $model->getTermReplacementsCount(), 'url' => route('teams.subscription')]) !!}
         @else
             {!! Str::markdown(__('guidelines.create_new_term_replacement_description')) !!}
         @endif
@@ -60,7 +60,7 @@
         <div class="w-full col-span-6 sm:col-span-4 mt-5">
             <x-jet-label for="language_code">
                 {!! __('guidelines.matching_type_label') !!}
-                @if(!$team->subscribed())
+                @if(!$model->subscribed())
                 <span class="pl-3">
                 @include('partials.witty-teams-only')
                 </span>
@@ -72,7 +72,7 @@
                 class="mt-1 block w-full"
                 wire:model.defer="matching_type"
                 wire:change="showHideWordType"
-                :disabled="!$team->subscribed()"
+                :disabled="!$model->subscribed()"
             />
 
             <x-jet-input-error for="matching_type" class="mt-2" />
@@ -88,7 +88,7 @@
                 :options="\App\Models\TermReplacement::WORD_TYPES"
                 class="mt-1 block w-full"
                 wire:model.defer="word_type"
-                :disabled="!$team->subscribed()"
+                :disabled="!$model->subscribed()"
             />
         </div>
         @endif

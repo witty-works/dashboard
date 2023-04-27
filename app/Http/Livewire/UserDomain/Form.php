@@ -19,17 +19,17 @@ class Form extends OrganizationForm
      *
      * @var mixed
      */
-    public $user;
+    public $model;
 
     /**
      * Mount the component.
      *
-     * @param  mixed  $user
+     * @param  mixed  $model
      * @return void
      */
-    public function mount($user)
+    public function mount($model)
     {
-        $this->user = Auth::user();
+        $this->model = $model;
 
         $this->resetForm();
     }
@@ -43,10 +43,14 @@ class Form extends OrganizationForm
     {
         $this->validate();
 
+        if (Auth::user()->id !== $this->model->id) {
+            abort(403);
+        }
+
         $this->domain = Domain::validateDomain($this->domain);
 
         $query = Domain::query()
-            ->where('user_id', $this->user->id)
+            ->where('user_id', $this->model->id)
             ->where('domain', $this->domain);
 
         if ($this->domain_id) {
@@ -55,7 +59,7 @@ class Form extends OrganizationForm
         }
 
         if (!empty($domain)) {
-            if ($this->user->id !== $domain->user_id) {
+            if ($this->model->id !== $domain->user_id) {
                 $message = __('guidelines.domain_error');
                 throw ValidationException::withMessages(['domain' => $message]);
             }
@@ -70,7 +74,7 @@ class Form extends OrganizationForm
         }
 
         $domain->domain = $this->domain;
-        $domain->user_id = $this->user->id;
+        $domain->user_id = $this->model->id;
 
         $domain->save();
         $domain->dispatchEventToPosthog();

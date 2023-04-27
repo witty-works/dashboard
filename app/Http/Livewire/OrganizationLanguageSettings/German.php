@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\OrganizationLanguageSettings;
 
 use App\Http\Livewire\TeamsGuidelineTrait;
-use App\Models\GuidelinesInterface;
 use App\Models\LanguageGuidelines;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
@@ -38,7 +37,7 @@ class German extends Component
 
         $languageGuidelines = LanguageGuidelines::getLanguageGuidelines($this->model);
 
-        $this->gendered_roles_formats = $languageGuidelines->gendered_roles_formats;
+        $this->gendered_roles_formats = $languageGuidelines->getGenderedRolesFormats();
         if (empty($this->gendered_roles_formats)) {
             return;
         }
@@ -51,7 +50,7 @@ class German extends Component
 
         $this->german_rules_force = (bool) $languageGuidelines->german_rules_force;
         $this->german_gender_ending = $languageGuidelines->german_gender_ending;
-        $this->gendered_roles_format = $languageGuidelines->gendered_roles_format;
+        $this->gendered_roles_format = $languageGuidelines->getGenderedRolesFormat();
     }
 
     public function updateLanguageGuidelinesGerman()
@@ -68,17 +67,13 @@ class German extends Component
 
         $languageGuidelines->german_gender_ending = $this->german_gender_ending;
 
-        if ($this->model->subscribed()) {
-            $languageGuidelines->gendered_roles_format = $this->gendered_roles_format;
-        }
+        $languageGuidelines->gendered_roles_format = $this->gendered_roles_format = $languageGuidelines->getGenderedRolesFormat($this->gendered_roles_format);
 
         $languageGuidelines->save();
         $languageGuidelines->dispatchEventToPosthog((new \ReflectionClass($this))->getShortName());
 
         $this->emit('saved');
         $this->updateHelpHero();
-
-        $this->gendered_roles_format = $languageGuidelines->gendered_roles_format;
     }
 
     /**

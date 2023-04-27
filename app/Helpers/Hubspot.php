@@ -237,4 +237,11 @@ class Hubspot
 
         return $this->api->cms()->hubdb()->tablesApi()->exportTable($tableName, $format);
     }
+
+    public function publishTable($tableName)
+    {
+        $this->api->cms()->hubdb()->tablesApi()->publishDraftTable($tableName);
+
+        return true;
+    }
 }

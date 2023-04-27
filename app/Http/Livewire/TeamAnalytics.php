@@ -17,17 +17,17 @@ class TeamAnalytics extends Component
         'team_analytics' => 'nullable|boolean',
     ];
 
-    public $user;
+    public $model;
 
     /**
      * Mount the component.
      *
-     * @param  mixed  $team
+     * @param  mixed  $model
      * @return void
      */
-    public function mount($user)
+    public function mount($model)
     {
-        $this->user = Auth::user();
+        $this->model = $model;
 
         $this->resetForm();
     }
@@ -36,8 +36,8 @@ class TeamAnalytics extends Component
     {
         $this->resetErrorBag();
 
-        $this->team_analytics = (bool) $this->user->team_analytics;
-        if (!$this->user->subscribed()) {
+        $this->team_analytics = (bool) $this->model->team_analytics;
+        if (!$this->model->subscribed()) {
             $this->team_analytics = true;
         }
     }
@@ -46,16 +46,20 @@ class TeamAnalytics extends Component
     {
         $this->validate();
 
-        if (!$this->user->subscribed()) {
+        if (Auth::user()->id !== $this->model->id) {
+            abort(403);
+        }
+
+        if (!$this->model->subscribed()) {
             $this->team_analytics = true;
         }
 
-        $this->user->team_analytics = (bool) $this->team_analytics;
-        $this->user->save();
+        $this->model->team_analytics = (bool) $this->team_analytics;
+        $this->model->save();
 
         $this->emit('saved');
 
-        dispatch(new SyncUserToNlpApi($this->user, 'high'));
+        dispatch(new SyncUserToNlpApi($this->model, 'high'));
     }
 
     /**

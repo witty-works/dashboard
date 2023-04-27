@@ -22,7 +22,12 @@ class Category extends OrganizationCategorySettingsCategory
 
     public function mount($model, $category = null, $config = null)
     {
-        parent::mount($model, $category = null, $config = null);
+        parent::mount($model, $category, $config);
+    }
+
+    public function resetForm()
+    {
+        parent::resetForm();
     }
 
     public function updateLanguageGuidelinesCategory()
@@ -31,6 +36,10 @@ class Category extends OrganizationCategorySettingsCategory
             $this->mount($this->model);
 
             return;
+        }
+
+        foreach ($this->dimensions as $ddd => $enabled) {
+            $this->dimensions[$ddd] = (int)$enabled;
         }
 
         $this->validate();

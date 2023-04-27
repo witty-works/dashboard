@@ -16,7 +16,7 @@
                     <th class="py-2 lato-paragraph-text-p">{{ __('guidelines.replacement_label') }}</th>     
                     <th class="py-2 lato-paragraph-text-p">{{ __('guidelines.emoji_short_label') }}</th>
                     <th class="py-2 lato-paragraph-text-p">{{ __('guidelines.matching_type_label') }}</th>     
-                    @if (Auth::user()->hasTeamPermission($team, 'edit_guidelines') && empty($hide_actions))
+                    @if (Auth::user()->hasTeamPermission($model, 'edit_guidelines') && empty($hide_actions))
                     <th class="py-2 lato-paragraph-text-p">{{ __('guidelines.action_label') }}</th>     
                     @endif
                 </tr>
@@ -34,7 +34,7 @@
                     {{ __('guidelines.'.$term_replacement->matching_type) }}
                     @endif
                 </td>
-                @if (Auth::user()->hasTeamPermission($team, 'edit_guidelines') && empty($hide_actions))
+                @if (Auth::user()->hasTeamPermission($model, 'edit_guidelines') && empty($hide_actions))
                 <td class="border px-4 py-2 text-center container-row">
                     <button onclick="document.getElementById('organization_term_replacements').scrollIntoView({behavior: 'smooth'});" wire:click="editTermReplacement({{ $term_replacement->id }})" class="button primary-button-red ">
                         {{ __('content.edit') }}

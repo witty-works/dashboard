@@ -46,7 +46,7 @@ class Inspirations extends Component
             abort(403);
         }
 
-        if ($this->user->subscribed()) {
+        if ($this->model->subscribed()) {
             $languageGuidelines = LanguageGuidelines::getLanguageGuidelines($this->model);
             $languageGuidelines->show_inspiration_alternatives = (bool) $this->show_inspiration_alternatives;
 

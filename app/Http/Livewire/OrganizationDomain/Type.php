@@ -22,7 +22,7 @@ class Type extends Component
     /**
      * Mount the component.
      *
-     * @param  mixed  $team
+     * @param  mixed  $model
      * @return void
      */
     public function mount($model)
@@ -36,7 +36,7 @@ class Type extends Component
     {
         $this->validate();
 
-        if (!Auth::user()->hasTeamPermission($this->team, 'edit_guidelines')) {
+        if (!Auth::user()->hasTeamPermission($this->model, 'edit_guidelines')) {
             abort(403);
         }
 
@@ -47,6 +47,7 @@ class Type extends Component
         $languageGuidelines->save();
 
         $this->emit('typeChange');
+        $this->emit('saved');
     }
 
     /**
@@ -63,7 +64,7 @@ class Type extends Component
     {
         $this->resetErrorBag();
 
-        $this->type = $this->team->getDomainListType();
+        $this->type = $this->model->getDomainListType();
     }
 
     public function cancel()
@@ -71,10 +72,5 @@ class Type extends Component
         $this->resetForm();
 
         return $this->render();
-    }
-
-    protected function getLanguageGuidelines($team)
-    {
-        return LanguageGuidelines::firstOrNew(['team_id' => $team->id]);
     }
 }

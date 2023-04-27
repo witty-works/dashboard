@@ -47,13 +47,7 @@
             if ($proficiencyLevel === 'openly_discriminating') {
                 $disabled = true;
             } else {
-                $upgrade = $proficiencyLevel !== 'unconscious_bias' && !$model->subscribed();
-
-                if ($upgrade) {
-                    $disabled = 'upgrade';
-                } else {
-                    $disabled = false;
-                }
+                $disabled = false;
             }
         @endphp
         <div class="guidelines-form-section lato-small-text-p">
@@ -67,8 +61,8 @@
                 document.getElementById('arrow-up-icon-{{ $category}}-{{ $proficiencyLevel }}').style.display == 'none' ? document.getElementById('arrow-up-icon-{{ $category}}-{{ $proficiencyLevel }}').style.display = 'block' : document.getElementById('arrow-up-icon-{{ $category}}-{{ $proficiencyLevel }}').style.display = 'none';
                 document.getElementById('{{ $category}}-{{ $proficiencyLevel }}').style.display = (document.getElementById('{{ $category}}-{{ $proficiencyLevel }}').style.display === 'none' ? 'block' : 'none');"
             >
-                <img id="arrow-down-icon-{{ $category}}-{{ $proficiencyLevel }}" src="{{ asset('arrow-down-sign-to-navigate_small.svg') }}" />
-                <img id="arrow-up-icon-{{ $category}}-{{ $proficiencyLevel }}" src="{{ asset('arrow-up-sign-to-navigate_small.svg') }}" style="display: none;" />
+                <img id="arrow-down-icon-{{ $category}}-{{ $proficiencyLevel }}" src="{{ asset('arrow-down-sign-to-navigate_small.svg') }}" alt="{{ __('content.open') }}" />
+                <img id="arrow-up-icon-{{ $category}}-{{ $proficiencyLevel }}" src="{{ asset('arrow-up-sign-to-navigate_small.svg') }}" alt="{{ __('content.close') }}" style="display: none;" />
             </a>
             @endif
         </div>

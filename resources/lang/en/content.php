@@ -401,4 +401,5 @@ This is actually a very long meeting.
 ',
     'learn_more' => 'Dig deeper',
     'example' => 'Example',
+    'open' => 'Open',
 ];

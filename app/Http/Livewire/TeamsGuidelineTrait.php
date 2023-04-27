@@ -32,8 +32,4 @@ trait TeamsGuidelineTrait
     {
         $this->mount($this->model);
     }
-
-    protected function resetForm()
-    {
-    }
 }

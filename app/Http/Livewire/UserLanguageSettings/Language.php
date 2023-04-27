@@ -24,7 +24,7 @@ class Language extends Component
         'preferred_variants_en' => 'nullable|string|in:en-US,en-GB',
     ];
 
-    public $user;
+    public $model;
 
     protected function resetForm()
     {

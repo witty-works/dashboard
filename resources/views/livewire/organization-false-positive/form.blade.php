@@ -6,8 +6,8 @@
     </x-slot>
 
     <x-slot name="description">
-        @if($team->getFalsePositivesLimitReached() && Auth::user()->ownsTeam($team) && !$team->subscribed())
-            {!! __('guidelines.false_positive_limit_reached', ['max_count' => $team->getFalsePositivesCount(), 'url' => route('teams.subscription')]) !!}
+        @if($model->getFalsePositivesLimitReached() && Auth::user()->ownsTeam($model) && !$model->subscribed())
+            {!! __('guidelines.false_positive_limit_reached', ['max_count' => $model->getFalsePositivesCount(), 'url' => route('teams.subscription')]) !!}
         @else
             {!! Str::markdown(__('guidelines.create_new_false_positive_description')) !!}
         @endif
@@ -22,7 +22,7 @@
                 class="mt-1 block w-full textarea-as-input"
                 wire:model.defer="false_positive"
                 autocomplete="false_positive"
-                :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')"
+                :disabled="! Auth::user()->hasTeamPermission($model, 'edit_guidelines')"
             />
 
             <x-jet-input-error for="false_positive" class="mt-2" />
@@ -35,7 +35,7 @@
                 :options="\App\Models\FalsePositive::LANGUAGE_CODES"
                 class="mt-1 block w-full"
                 wire:model.defer="language_code"
-                :disabled="! Auth::user()->hasTeamPermission($team, 'edit_guidelines')"
+                :disabled="! Auth::user()->hasTeamPermission($model, 'edit_guidelines')"
             />
 
                 <x-jet-input-error for="language_code" class="mt-2" />
@@ -43,7 +43,7 @@
 --}}
     </x-slot>
 
-    @if (Auth::user()->hasTeamPermission($team, 'edit_guidelines'))
+    @if (Auth::user()->hasTeamPermission($model, 'edit_guidelines'))
     <x-slot name="actions">
         @include('partials/save_cancel_action')
     </x-slot>

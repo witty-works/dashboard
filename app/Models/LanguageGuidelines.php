@@ -6,9 +6,9 @@ use App\Console\Commands\SyncToHubspotCategoriesCommand;
 use App\Helpers\PosthogHelper;
 use App\Http\Controllers\Livewire\UserGuidelinesController;
 use App\Jobs\SendEventToPosthog;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -25,7 +25,7 @@ class LanguageGuidelines extends Model
 
     protected $attributes = [
         'german_gender_ending' => '*in',
-        'gendered_roles_format' => null,
+        'gendered_roles_format' => 'binary_gender',
         'show_inspiration_alternatives' => false,
         'german_rules_force' => true,
         'show_inspiration_alternatives_force' => true,
@@ -80,12 +80,7 @@ class LanguageGuidelines extends Model
 
     public static function getLanguageGuidelines($model)
     {
-        if ($model instanceof Team) {
-            $filter = ['team_id' => $model->id];
-        } else {
-            $filter = ['user_id' => $model->id];
-        }
-
+        $filter = [$model instanceof Team ? 'team_id' : 'user_id'  => $model->id];
         $languageGuideline = LanguageGuidelines::firstOrNew($filter);
         $subscribed = $model->subscribed();
 
@@ -101,6 +96,16 @@ class LanguageGuidelines extends Model
         return $languageGuideline;
     }
 
+    public function team(): BelongsTo
+    {
+        return $this->belongsTo(Team::class);
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public static function getTeamGuidelines(User $user)
     {
         $team = $user->currentTeam;
@@ -112,45 +117,41 @@ class LanguageGuidelines extends Model
         return self::getLanguageGuidelines($team);
     }
 
-    public function genderedRolesFormats(): Attribute
+    public function getGenderedRolesFormats()
     {
-        $disabled_categories = $this->disabled_categories;
+        if (in_array('gendered_denominations_ending', $this->disabled_categories)) {
+            return [];
+        }
 
-        return Attribute::make(
-            get: function ($value) use ($disabled_categories) {
-                if (in_array('gendered_denominations_ending', $disabled_categories)) {
-                    return [];
-                }
-
-                return in_array('advanced_gendered_denominations_ending', $disabled_categories)
-                    ? GuidelinesInterface::GENDERED_ROLES_FORMAT
-                    : GuidelinesInterface::GENDERED_ROLES_FORMAT_ADVANCED;
-            },
-        );
+        $subscribed = $this->team_id ? $this->team->subscribed() : $this->user->subscribed();
+        return $subscribed && !in_array('advanced_gendered_denominations_ending', $this->disabled_categories)
+            ? GuidelinesInterface::GENDERED_ROLES_FORMAT_ADVANCED
+            : GuidelinesInterface::GENDERED_ROLES_FORMAT;
     }
 
-    protected function genderedRolesFormat(): Attribute
+    public function getGenderedRolesFormat($genderedRolesFormat = null)
     {
-        $genderedRolesFormats = $this->gendered_roles_formats;
+        $subscribed = $this->team_id ? $this->team->subscribed() : $this->user->subscribed();
+        if (!$subscribed) {
+            return 'binary_gender';
+        }
 
-        $func = function ($value) use ($genderedRolesFormats) {
-            if (!array_key_exists($value, $genderedRolesFormats)) {
-                return key($genderedRolesFormats);
-            }
+        if ($genderedRolesFormat === null) {
+            $genderedRolesFormat = $this->gender_roles_format;
+        }
 
-            return $value;
-        };
+        $genderedRolesFormats = $this->getGenderedRolesFormats();
+        if (!array_key_exists($genderedRolesFormat, $genderedRolesFormats)) {
+            return key($genderedRolesFormats);
+        }
 
-        return Attribute::make(
-            get: $func,
-            set: $func,
-        );
+        return $genderedRolesFormat;
     }
 
     /**
-     * 
-     * @param mixed $diversityDimensionDriver 
-     * @param mixed $subscribed 
+     *
+     * @param mixed $diversityDimensionDriver
+     * @param mixed $subscribed
      * @param str|null $enabled  DISABLED|BASIC_ENABLED|ADVANCED_ENABLED
      * @return str|null          DISABLED|BASIC_ENABLED|ADVANCED_ENABLED
      */

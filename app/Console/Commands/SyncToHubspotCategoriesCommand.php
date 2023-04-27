@@ -23,6 +23,8 @@ class SyncToHubspotCategoriesCommand extends Command
      */
     protected $description = 'Sync category data from Hubspot HubDB';
 
+    protected static $tableData = [];
+
     /**
      * Execute the console command.
      *
@@ -52,6 +54,7 @@ class SyncToHubspotCategoriesCommand extends Command
         foreach ($tables as $table => $alias) {
             $this->info("Fetch '$alias' data from '$table' table.");
 
+            $hubspot->publishTable($table);
             $file = $hubspot->exportTable($table, $draft);
 
             //read csv headers
@@ -254,29 +257,33 @@ class SyncToHubspotCategoriesCommand extends Command
 
     public static function loadTableData($tableName)
     {
-        $file = storage_path("app/hubdb/$tableName.json");
-        $data = json_decode(file_get_contents($file), true);
+        if (!array_key_exists($tableName, self::$tableData)) {
+            $file = storage_path("app/hubdb/$tableName.json");
+            $data = json_decode(file_get_contents($file), true);
 
-        Collection::macro('toLocale', function (string $locale) {
-            return $this->map(function ($value) use ($locale) {
-                if (empty($value['translations'][$locale])) {
-                    return null;
-                }
+            Collection::macro('toLocale', function (string $locale) {
+                return $this->map(function ($value) use ($locale) {
+                    if (empty($value['translations'][$locale])) {
+                        return null;
+                    }
 
-                $value['translation'] = $value['translations'][$locale];
-                unset($value['translations']);
+                    $value['translation'] = $value['translations'][$locale];
+                    unset($value['translations']);
 
-                if (isset($value['emoji'])) {
-                    $value['translation']['emoji_name'] = $value['emoji'] . ' ' . $value['translation']['hs_name'];
-                }
+                    if (isset($value['emoji'])) {
+                        $value['translation']['emoji_name'] = $value['emoji'] . ' ' . $value['translation']['hs_name'];
+                    }
 
-                return $value;
+                    return $value;
+                });
             });
-        });
 
 
-        $collection = collect($data);
+            $collection = collect($data);
 
-        return $collection->toLocale(Config::get('app.locale'));
+            self::$tableData[$tableName] = $collection->toLocale(Config::get('app.locale'));
+        }
+
+        return self::$tableData[$tableName];
     }
 }

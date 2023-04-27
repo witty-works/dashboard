@@ -51,6 +51,11 @@ class Category extends Component
             $this->config = $config;
         }
 
+        $this->traitMount($model);
+    }
+
+    protected function resetForm()
+    {
         $languageGuidelines = LanguageGuidelines::getLanguageGuidelines($this->model);
         $this->proficiencyLevels = $languageGuidelines->proficiencyLevels;
         $this->diversityDimensionDrivers = $languageGuidelines->diversityDimensionDrivers;
@@ -61,7 +66,7 @@ class Category extends Component
                 continue;
             }
 
-            if ($languageGuidelines->isCategoryAvailable($ddd, $this->model->subscribed())) {;
+            if ($languageGuidelines->isCategoryAvailable($ddd, $this->model->subscribed())) {
                 if (!in_array('advanced_' . $ddd, $disabledCategories)) {
                     $this->dimensions[$ddd] = LanguageGuidelines::ADVANCED_ENABLED;
                 } elseif (!in_array($ddd, $disabledCategories)) {
@@ -73,13 +78,12 @@ class Category extends Component
         }
 
         $disabledCategoriesForce = (array) $languageGuidelines->disabled_categories_force;
-        $this->dimensions_force = in_array($this->category, $disabledCategoriesForce);
+        if (!$this->model->subscribed()) {
+            $this->dimensions_force = true;
+        } else {
+            $this->dimensions_force = in_array($this->category, $disabledCategoriesForce);
+        }
 
-        $this->traitMount($model);
-    }
-
-    protected function resetForm()
-    {
         $this->resetErrorBag();
     }
 
@@ -117,6 +121,10 @@ class Category extends Component
 
     public function updateLanguageGuidelinesCategory()
     {
+        foreach ($this->dimensions as $ddd => $enabled) {
+            $this->dimensions[$ddd] = (int)$enabled;
+        }
+
         $this->validate();
 
         if (!Auth::user()->hasTeamPermission($this->model, 'edit_guidelines')) {

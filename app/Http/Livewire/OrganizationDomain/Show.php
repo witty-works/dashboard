@@ -17,20 +17,20 @@ class Show extends Component
 
     protected $listeners = ['saved', 'typeChange'];
 
-    public $team;
+    public $model;
 
     public $hide_actions;
 
-    public function mount($team, $hide_actions = False)
+    public function mount($model, $hide_actions = False)
     {
-        $this->team = $team;
+        $this->model = $model;
         $this->hide_actions = $hide_actions;
     }
 
     public function render()
     {
         $user = Auth::user();
-        if (!$user->hasTeamPermission($this->team, 'read')) {
+        if (!$user->hasTeamPermission($this->model, 'read')) {
             abort(403);
         }
 
@@ -40,7 +40,7 @@ class Show extends Component
                 new Domain(['domain' => 'witty.works'])
             ]);
         } else {
-            $list = Domain::all()->where('team_id', $this->team->id)->sortByDesc('created_at');
+            $list = Domain::all()->where('team_id', $this->model->id)->sortByDesc('created_at');
         }
 
         return view('livewire.organization-domain.show', [
@@ -62,7 +62,7 @@ class Show extends Component
 
     public function editDomain(Domain $domain)
     {
-        if (!Auth::user()->hasTeamPermission($this->team, 'edit_guidelines')) {
+        if (!Auth::user()->hasTeamPermission($this->model, 'edit_guidelines')) {
             abort(403);
         }
 
@@ -71,7 +71,7 @@ class Show extends Component
 
     public function deleteDomain(Domain $domain)
     {
-        if (!Auth::user()->hasTeamPermission($this->team, 'edit_guidelines')) {
+        if (!Auth::user()->hasTeamPermission($this->model, 'edit_guidelines')) {
             abort(403);
         }
 
