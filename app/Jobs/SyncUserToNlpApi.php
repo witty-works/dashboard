@@ -45,7 +45,7 @@ class SyncUserToNlpApi extends AbstractSyncToNlpApi
 
         $domains = $this->getDomains($user->domains, 'deny');
 
-        $config = self::getConfig(LanguageGuidelines::getLanguageGuidelines(['user_id' => $user->id]), true);
+        $config = self::getConfig(LanguageGuidelines::getLanguageGuidelines($user), true);
 
         $data = [
             'id' => $user->posthogId(),

@@ -49,7 +49,7 @@ class SyncOrganizationToNlpApi extends AbstractSyncToNlpApi
 
         $plan = $team->planId();
 
-        $guidelines = LanguageGuidelines::getLanguageGuidelines(['team_id' => $team->id]);
+        $guidelines = LanguageGuidelines::getLanguageGuidelines($team);
         $config = self::getConfig($guidelines, !$team->subscribed());
 
         $config['categories'] = [];

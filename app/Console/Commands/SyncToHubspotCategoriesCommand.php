@@ -69,6 +69,8 @@ class SyncToHubspotCategoriesCommand extends Command
                 $rows[$key] = array_combine($keys, $row);
                 if (array_key_exists('is_active', $rows[$key]) && empty($rows[$key]['is_active'])) {
                     unset($rows[$key]);
+                } else {
+                    $rows[$key] = preg_replace('/font-size:[^;]+;/', '', $rows[$key]);
                 }
             }
 
