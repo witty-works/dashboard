@@ -393,11 +393,7 @@ We are a creative team.
 
 Witty corrects grammar and spelling mistakes. They are highlighted in red:
 
-This is a spelling mistacke. 
-
-Wait ... there is more. Witty highlights more advanced forms of unconscious biased or exclusion in yellow:
-
-We had many meetings to examine at the ROI of our MVP.',
+This is a spelling mistacke.',
     'learn_more' => 'Dig deeper',
     'example' => 'Example',
     'open' => 'Open',

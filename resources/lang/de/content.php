@@ -398,11 +398,7 @@ Wir sind ein kreatives Team.
 
 Witty korrigiert Grammatik- und Rechtschreibfehler. Sie werden in Rot hervorgehoben:
 
-Dies ist ein Rechtschreipfehler. 
-
-Moment ... da ist noch mehr. Witty hebt fortgeschrittenere Formen von unbewusster Voreingenommenheit oder Ausgrenzung in Gelb hervor:
-
-Wir hatten viele Treffen, um den ROI unseres MVP zu prüfen.',
+Dies ist ein Rechtschreipfehler.',
     'learn_more' => 'Warum das so ist',
     'example' => 'Beispiel',
     'open' => 'Öffnen',
