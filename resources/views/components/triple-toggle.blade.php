@@ -1,5 +1,6 @@
-<div class="tripple-toggle {{ $value === 2 ? 'active' : ($value === 1 ? 'middle active' : '') }}" id="tripple-toggle-{!! $attributes->get('name') !!}" {{ empty($disabled) ? '' : 'disabled' }}></div>
+<div class="tripple-toggle {{ $value === 2 ? 'active' : ($value === 1 ? 'middle active' : '') }} {{ empty($disabled) ? '' : ' disabled' }}" id="tripple-toggle-{!! $attributes->get('name') !!}"></div>
 <input type="hidden" id="{!! $attributes->get('name') !!}" {!! $attributes->merge() !!} />
+@if(empty($disabled))
 <script>
     document.querySelector('#tripple-toggle-{!! $attributes->get('name') !!}').addEventListener('click', function() {
         toggle = document.querySelector('#tripple-toggle-{!! $attributes->get('name') !!}');
@@ -24,6 +25,7 @@
         hiddenInput.dispatchEvent(new Event('input'));
     });
 </script>
+@endif
 
 <div class="lato-small-text-p">{!! $label !!}</div>
 @include('partials.toggle_label', ['disabled' => $disabled ?? false])
