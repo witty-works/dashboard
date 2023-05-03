@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Livewire;
 
+use App\Console\Commands\SyncToHubspotCategoriesCommand;
 use App\Http\Controllers\TeamControllerTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,7 +11,7 @@ class OrganizationGuidelinesController extends UserGuidelinesController
 {
     use TeamControllerTrait;
 
-    protected function languageSettings(Request $request, $tab = null)
+    protected function settings(Request $request, $tab = null)
     {
         $team = $this->getCurrentTeam($request);
 
@@ -19,7 +20,8 @@ class OrganizationGuidelinesController extends UserGuidelinesController
         }
 
         $tabs = [
-            self::CUSTOMIZE_WITTY => 'teams.language-settings',
+            self::CATEGORY_SETTINGS => 'teams.category-settings',
+            self::LANGUAGE_SETTINGS => 'teams.language-settings',
             self::TERM_REPLACEMENTS => 'teams.dictionary',
             self::FALSE_POSITIVES => 'teams.ignored-words',
             self::DOMAINS => 'teams.privacy-settings',
@@ -29,6 +31,7 @@ class OrganizationGuidelinesController extends UserGuidelinesController
             'team' => $team,
             'tab' => $tab,
             'tabs' => $tabs,
+            'categories' => SyncToHubspotCategoriesCommand::loadTableData('categories'),
         ]);
     }
 }

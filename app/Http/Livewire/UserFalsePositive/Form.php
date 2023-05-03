@@ -17,17 +17,17 @@ class Form extends OrganizationForm
      *
      * @var mixed
      */
-    public $user;
+    public $model;
 
     /**
      * Mount the component.
      *
-     * @param  mixed  $user
+     * @param  mixed  $model
      * @return void
      */
-    public function mount($user)
+    public function mount($model)
     {
-        $this->user = Auth::user();
+        $this->model = $model;
 
         $this->resetForm();
     }
@@ -42,7 +42,7 @@ class Form extends OrganizationForm
         $this->validate();
 
         $query = FalsePositive::query()
-            ->where('user_id', $this->user->id)
+            ->where('user_id', $this->model->id)
             ->where('false_positive', $this->false_positive);
 
         if ($this->false_positive_id) {
@@ -51,13 +51,13 @@ class Form extends OrganizationForm
         }
 
         if (!empty($falsePositive)) {
-            if ($this->user->id !== $falsePositive->user_id) {
+            if ($this->model->id !== $falsePositive->user_id) {
                 $message = __('guidelines.false_positive_error');
                 throw ValidationException::withMessages(['false_positive' => $message]);
             }
         } else {
-            if ($this->user->getFalsePositivesLimitReached()) {
-                $message = __('guidelines.false_positive_limit_reached_error', ['max_count' => $this->user->getFalsePositivesCount()]);
+            if ($this->model->getFalsePositivesLimitReached()) {
+                $message = __('guidelines.false_positive_limit_reached_error', ['max_count' => $this->model->getFalsePositivesCount()]);
                 throw ValidationException::withMessages(['false_positive' => $message]);
             }
 
@@ -72,7 +72,7 @@ class Form extends OrganizationForm
 
         $falsePositive->false_positive = $this->false_positive;
         $falsePositive->language_code = null;
-        $falsePositive->user_id = $this->user->id;
+        $falsePositive->user_id = $this->model->id;
 
         $falsePositive->save();
         $falsePositive->dispatchEventToPosthog();

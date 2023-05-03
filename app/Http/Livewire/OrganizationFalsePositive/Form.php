@@ -29,17 +29,17 @@ class Form extends Component
      *
      * @var mixed
      */
-    public $team;
+    public $model;
 
     /**
      * Mount the component.
      *
-     * @param  mixed  $team
+     * @param  mixed  $model
      * @return void
      */
-    public function mount($team)
+    public function mount($model)
     {
-        $this->team = $team;
+        $this->model = $model;
 
         $this->resetForm();
     }
@@ -77,12 +77,12 @@ class Form extends Component
         $this->validate();
 
         $user = Auth::user();
-        if (!$user->hasTeamPermission($this->team, 'edit_guidelines')) {
+        if (!$user->hasTeamPermission($this->model, 'edit_guidelines')) {
             abort(403);
         }
 
         $query = FalsePositive::query()
-            ->where('team_id', $this->team->id)
+            ->where('team_id', $this->model->id)
             ->where('false_positive', $this->false_positive);
 
         if ($this->false_positive_id) {
@@ -91,13 +91,13 @@ class Form extends Component
         }
 
         if (!empty($falsePositive)) {
-            if ($this->team->id !== $falsePositive->team_id) {
+            if ($this->model->id !== $falsePositive->team_id) {
                 $message = __('guidelines.false_positive_error');
                 throw ValidationException::withMessages(['false_positive' => $message]);
             }
         } else {
-            if ($this->team->getFalsePositivesLimitReached()) {
-                $message = __('guidelines.false_positive_limit_reached_error', ['max_count' => $this->team->getFalsePositivesCount()]);
+            if ($this->model->getFalsePositivesLimitReached()) {
+                $message = __('guidelines.false_positive_limit_reached_error', ['max_count' => $this->model->getFalsePositivesCount()]);
                 throw ValidationException::withMessages(['false_positive' => $message]);
             }
 
@@ -112,7 +112,7 @@ class Form extends Component
 
         $falsePositive->false_positive = $this->false_positive;
         $falsePositive->language_code = null;
-        $falsePositive->team_id = $this->team->id;
+        $falsePositive->team_id = $this->model->id;
 
         $falsePositive->save();
         $falsePositive->dispatchEventToPosthog();

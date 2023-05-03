@@ -40,21 +40,21 @@ class Form extends Component
     ];
 
     /**
-     * The team instance.
+     * The model instance.
      *
      * @var mixed
      */
-    public $team;
+    public $model;
 
     /**
      * Mount the component.
      *
-     * @param  mixed  $team
+     * @param  mixed  $model
      * @return void
      */
-    public function mount($team)
+    public function mount($model)
     {
-        $this->team = $team;
+        $this->model = $model;
 
         $this->resetForm();
     }
@@ -84,7 +84,7 @@ class Form extends Component
 
     public function render()
     {
-        $this->cleanValues($this->team->subscribed());
+        $this->cleanValues($this->model->subscribed());
 
         $params = ['language_codes' => $this->getLanguageCodes()];
         return view('livewire.organization-term-replacement.form', $params);
@@ -135,9 +135,9 @@ class Form extends Component
     public function storeTermReplacement()
     {
         $this->validate();
-        $this->cleanValues($this->team->subscribed());
+        $this->cleanValues($this->model->subscribed());
 
-        if (!Auth::user()->hasTeamPermission($this->team, 'edit_guidelines')) {
+        if (!Auth::user()->hasTeamPermission($this->model, 'edit_guidelines')) {
             abort(403);
         }
 
@@ -145,7 +145,7 @@ class Form extends Component
         $this->replacement = trim($this->replacement);
 
         $query = TermReplacement::query()
-            ->where('team_id', $this->team->id)
+            ->where('team_id', $this->model->id)
             ->where('term', $this->term);
 
         if ($this->language_code) {
@@ -167,13 +167,13 @@ class Form extends Component
         }
 
         if (!empty($termReplacement)) {
-            if ($this->team->id !== $termReplacement->team_id) {
+            if ($this->model->id !== $termReplacement->team_id) {
                 $message = __('guidelines.term_replacement_error');
                 throw ValidationException::withMessages(['term' => $message]);
             }
         } else {
-            if ($this->team->getTermReplacementsLimitReached()) {
-                $message = __('guidelines.term_replacement_limit_reached_error', ['max_count' => $this->team->getTermReplacementsCount()]);
+            if ($this->model->getTermReplacementsLimitReached()) {
+                $message = __('guidelines.term_replacement_limit_reached_error', ['max_count' => $this->model->getTermReplacementsCount()]);
                 throw ValidationException::withMessages(['term' => $message]);
             }
 
@@ -191,7 +191,7 @@ class Form extends Component
         $termReplacement->emoji = $this->emoji;
         $termReplacement->language_code = $this->language_code;
         $termReplacement->word_type = $this->word_type;
-        $termReplacement->team_id = $this->team->id;
+        $termReplacement->team_id = $this->model->id;
 
         $termReplacement->save();
         $termReplacement->dispatchEventToPosthog();

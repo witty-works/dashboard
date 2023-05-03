@@ -379,24 +379,26 @@ If you have any questions, contact :name (:email). 🙂
     'invitation_request_license_limit_reached' => 'You have already invited two members to your team and have reached the limit. <a href="https://dashboard.witty.works/team/subscription">Upgrade</a> to invite more members!',
     'witty_editor_copy_button' => 'Copy text to clipboard',
     'witty_editor_example_button' => 'Show Example',
-    'witty_editor_example_text' => 'The basics: Witty highlights biased language in orange: 
-   
+    'witty_editor_example_text' => 'The basics: Witty highlights language containing unconscious biased in orange: 
+
 Hey guys,
-    
-We have a large software project that will take many man-hours to complete. Who would like to join us? Bring your extraordinary expertise and strong technical background. We are also looking for a digital native.
+
+We have a large software project that will take man-hours to complete. Who would like to join us? Bring your extraordinary expertise and strong technical background. We are also looking for a digital native.
 
 P.S. Your wives are welcome at the board\'s Christmas party.
 
 Witty highlights positive terms in green:
- 
+
 We are a creative team.
-   
+
 Witty corrects grammar and spelling mistakes. They are highlighted in red:
 
 This is a spelling mistacke. 
 
-Wait... there is more. Witty highlights issues that make your language more complicated in yellow:
-    
-This is actually a very long meeting.
-',
+Wait ... there is more. Witty highlights more advanced forms of unconscious biased or exclusion in yellow:
+
+We had many meetings to examine at the ROI of our MVP.',
+    'learn_more' => 'Dig deeper',
+    'example' => 'Example',
+    'open' => 'Open',
 ];

@@ -18,17 +18,17 @@ class StoreContext extends Component
         'store_context' => 'nullable|boolean',
     ];
 
-    public $team;
+    public $model;
 
     /**
      * Mount the component.
      *
-     * @param  mixed  $team
+     * @param  mixed  $model
      * @return void
      */
-    public function mount($team)
+    public function mount($model)
     {
-        $this->team = $team;
+        $this->model = $model;
 
         $this->resetForm();
     }
@@ -37,8 +37,8 @@ class StoreContext extends Component
     {
         $this->resetErrorBag();
 
-        $this->store_context = (bool) $this->team->store_context;
-        if (!$this->team->subscribed()) {
+        $this->store_context = (bool) $this->model->store_context;
+        if (!$this->model->subscribed()) {
             $this->store_context = true;
         }
     }
@@ -47,17 +47,17 @@ class StoreContext extends Component
     {
         $this->validate();
 
-        if (!Auth::user()->hasTeamPermission($this->team, 'update')) {
+        if (!Auth::user()->hasTeamPermission($this->model, 'update')) {
             abort(403);
         }
 
-        if (!$this->team->subscribed()) {
+        if (!$this->model->subscribed()) {
             $this->store_context = true;
         }
 
-        $this->team->store_context = (bool) $this->store_context;
+        $this->model->store_context = (bool) $this->store_context;
 
-        $this->team->save();
+        $this->model->save();
 
         $this->emit('saved');
         $this->updateHelpHero();

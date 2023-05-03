@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ConnectedAccount as ModelsConnectedAccount;
 use App\Models\User;
 use Laravel\Socialite\AbstractUser;
 use Laravel\Socialite\Two\InvalidStateException;
@@ -99,6 +100,14 @@ class OAuthController extends BaseOAuthController
             return response()
                 ->json($this->getAccessTokenResponse($provider));
         } catch (\Exception $e) {
+            # refresh token has expired?
+            $connectedAccount = ModelsConnectedAccount::where('refresh_token', $refreshToken);
+            if ($connectedAccount) {
+                $connectedAccount->token = null;
+                $connectedAccount->refresh_token = null;
+                $connectedAccount->save();
+            }
+
             return response()->json(['error' => 'Not authorized.'], 403);
         }
     }

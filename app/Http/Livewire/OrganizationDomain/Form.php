@@ -27,17 +27,17 @@ class Form extends Component
      *
      * @var mixed
      */
-    public $team;
+    public $model;
 
     /**
      * Mount the component.
      *
-     * @param  mixed  $team
+     * @param  mixed  $model
      * @return void
      */
-    public function mount($team)
+    public function mount($model)
     {
-        $this->team = $team;
+        $this->model = $model;
 
         $this->resetForm();
     }
@@ -45,7 +45,7 @@ class Form extends Component
     public function render()
     {
         return view('livewire.organization-domain.form', [
-            'show' => $this->team->getDomainListType() !== 'allow_witty_works'
+            'show' => $this->model->getDomainListType() !== 'allow_witty_works'
         ]);
     }
 
@@ -81,15 +81,14 @@ class Form extends Component
     {
         $this->validate();
 
-        $user = Auth::user();
-        if (!$user->hasTeamPermission($this->team, 'edit_guidelines')) {
+        if (!Auth::user()->hasTeamPermission($this->model, 'edit_guidelines')) {
             abort(403);
         }
 
         $this->domain = Domain::validateDomain($this->domain);
 
         $query = Domain::query()
-            ->where('team_id', $this->team->id)
+            ->where('team_id', $this->model->id)
             ->where('domain', $this->domain);
 
         if ($this->domain_id) {
@@ -98,7 +97,7 @@ class Form extends Component
         }
 
         if (!empty($domain)) {
-            if ($this->team->id !== $domain->team_id) {
+            if ($this->model->id !== $domain->team_id) {
                 $message = __('guidelines.domain_error');
                 throw ValidationException::withMessages(['domain' => $message]);
             }
@@ -113,7 +112,7 @@ class Form extends Component
         }
 
         $domain->domain = $this->domain;
-        $domain->team_id = $this->team->id;
+        $domain->team_id = $this->model->id;
 
         $domain->save();
         $domain->dispatchEventToPosthog();

@@ -48,11 +48,24 @@ class SyncOrganizationToNlpApi extends AbstractSyncToNlpApi
 
         $plan = $team->planId();
 
-        $guidelines = LanguageGuidelines::firstOrNew(['team_id' => $team->id]);
+        $guidelines = LanguageGuidelines::getLanguageGuidelines($team);
         $config = self::getConfig($guidelines, !$team->subscribed());
+
+        $config['categories'] = [];
         foreach (GuidelinesInterface::DISABLED_CATEGORIES as $category) {
-            $config[$category] = [
+            $config['categories'][$category] = [
                 'value' => !in_array($category, $guidelines->disabled_categories),
+                'status' => (null === $guidelines->disabled_categories_force
+                    || in_array($category, $guidelines->disabled_categories_force)
+                    || !$team->subscribed()
+                ) ? 'force' : 'suggestion',
+            ];
+        }
+
+        foreach ($guidelines->diversityDimensionDrivers as $ddd => $dddConfig) {
+            $category = $dddConfig['category'] ?? null;
+            $config['categories'][$ddd] = [
+                'value' => !in_array($ddd, $guidelines->disabled_categories),
                 'status' => (null === $guidelines->disabled_categories_force
                     || in_array($category, $guidelines->disabled_categories_force)
                     || !$team->subscribed()

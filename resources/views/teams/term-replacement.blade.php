@@ -4,12 +4,12 @@
 
 <div>
     <div class="py-10">
-        @livewire('organization-term-replacement.form', ['team' => $team])
+        @livewire('organization-term-replacement.form', ['model' => $team])
     </div>
 </div>
 
 <div>
     <div class="py-10">
-        @livewire('organization-term-replacement.show', ['team' => $team])
+        @livewire('organization-term-replacement.show', ['model' => $team])
     </div>
 </div>

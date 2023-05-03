@@ -72,6 +72,13 @@ https://github.com/nvie/gitflow/wiki/Installation
 
 - For local test emails see: http://mail.lndo.site/
 
+# Add a subscription
+
+Follow https://www.notion.so/witty-works/Manual-subscriptions-afbefd554e3245e0b82c36ede76ddabb with the following differences
+
+* Use `lando mysql laravel` to connect to MySQL
+* In the two `INSERT` statements replace the `stripe_price` with `price_1Kl7JnCKySiDI8CQEbY6vN2H`
+
 # Using Stripe in development
 
 - Install Stripe CLI https://stripe.com/docs/stripe-cli

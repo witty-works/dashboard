@@ -28,7 +28,6 @@ return [
     'upgrade_to_witty_teams' => 'Please upgrade to a Witty Teams subscription',
     'ask_owner_to_buy_or_leave_to_create_own_team' => 'Please ask the team owner :name (:email) to buy Witty licenses or leave your current team to create own team.',
     'accepted_invitation' => 'Great! You have accepted the invitation to join the ":team" team.',
-    'language' => 'Team Language',
     'witty_teams_only' => 'Upgrade',
     'locked_by_team' => 'This setting has been locked by your team administrators.',
     'license_count_error' => 'There was an error updating the license count.',

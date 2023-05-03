@@ -13,7 +13,7 @@
             <thead>
                 <tr>
                     <th class="py-2 lato-paragraph-text-p">{{ __('guidelines.false_positive_label') }}</th>
-                    @if (Auth::user()->hasTeamPermission($team, 'edit_guidelines') && empty($hide_actions))
+                    @if (Auth::user()->hasTeamPermission($model, 'edit_guidelines') && empty($hide_actions))
                     <th class="py-2 lato-paragraph-text-p">{{ __('guidelines.action_label') }}</th>     
                     @endif
                 </tr>
@@ -22,7 +22,7 @@
             @foreach ($list as $false_positive)
             <tr @if($loop->even)class="bg-grey"@endif>
                 <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $false_positive->false_positive }} {{ $false_positive->language_code ? "($false_positive->language_code)" : '' }} </td>
-                @if (Auth::user()->hasTeamPermission($team, 'edit_guidelines') && empty($hide_actions))
+                @if (Auth::user()->hasTeamPermission($model, 'edit_guidelines') && empty($hide_actions))
                 <td class="border px-4 py-2 text-center container-row">
                     <button onclick="document.getElementById('organization_false_positives').scrollIntoView({behavior: 'smooth'});" wire:click="editFalsePositive({{ $false_positive->id }})" class="button primary-button-red ">
                         {{ __('content.edit') }}

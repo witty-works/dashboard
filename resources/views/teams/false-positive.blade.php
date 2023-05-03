@@ -4,12 +4,12 @@
 
 <div>
     <div class="py-10">
-        @livewire('organization-false-positive.form', ['team' => $team])
+        @livewire('organization-false-positive.form', ['model' => $team])
     </div>
 </div>
 
 <div>
     <div class="py-10">
-        @livewire('organization-false-positive.show', ['team' => $team])
+        @livewire('organization-false-positive.show', ['model' => $team])
     </div>
 </div>

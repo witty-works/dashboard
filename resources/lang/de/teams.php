@@ -23,7 +23,6 @@ return [
     'ask_owner_to_buy_or_leave_to_create_own_team' => 'Bitte frag deine*n Teameigentümer*in :name (:email), Witty Lizenzen zu kaufen, oder verlasse dein aktuelles Team, um ein eigenes Team zu erstellen.',
     'accepted_invitation' => 'Toll! Du hast die Einladung angenommen, dem Team ":team" beizutreten.',
     'subscription' => 'Team-Abonnement',
-    'language' => 'Team-Sprache',
     'witty_teams_only' => 'Upgrade',
     'plan_headline' => 'Abonnement',
     'profile' => 'Profil',

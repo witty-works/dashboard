@@ -4,20 +4,20 @@
 
 <div>
     <div class="py-10">
-        @livewire('user-term-replacement.form', ['user' => $user])
+        @livewire('user-term-replacement.form', ['model' => $user])
     </div>
 </div>
 
 <div>
     <div class="py-10">
-        @livewire('user-term-replacement.show', ['user' => $user])
+        @livewire('user-term-replacement.show', ['model' => $user])
     </div>
 </div>
 
 @if($user->currentTeam)
 <div>
     <div class="py-10">
-        @livewire('organization-term-replacement.show', ['team' => $user->currentTeam, 'hide_actions' => true])
+        @livewire('organization-term-replacement.show', ['model' => $user->currentTeam, 'hide_actions' => true])
     </div>
 </div>
 @endif

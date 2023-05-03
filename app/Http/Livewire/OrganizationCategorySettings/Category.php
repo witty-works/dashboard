@@ -1,0 +1,161 @@
+<?php
+
+namespace App\Http\Livewire\OrganizationCategorySettings;
+
+use App\Http\Livewire\TeamsGuidelineTrait;
+use App\Jobs\SyncOrganizationToNlpApi;
+use App\Models\LanguageGuidelines;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Auth;
+use Livewire\Component;
+
+class Category extends Component
+{
+    use AuthorizesRequests;
+    use TeamsGuidelineTrait {
+        mount as traitMount;
+    }
+
+    protected $listeners = ['saved'];
+
+    public $dimensions;
+    public $dimensions_force;
+
+    protected $rules = [
+        'dimensions.*' => 'nullable|int|max:2',
+        'dimensions_force' => 'nullable|boolean',
+    ];
+
+    public $model;
+
+    public $category;
+
+    public $config;
+
+    public $proficiencyLevels;
+
+    public $diversityDimensionDrivers;
+
+    /**
+     * Mount the component.
+     *
+     * @param  mixed  $model
+     * @return void
+     */
+    public function mount($model, $category = null, $config = null)
+    {
+        if ($category !== null) {
+            $this->category = $category;
+        }
+        if ($config !== null) {
+            $this->config = $config;
+        }
+
+        $this->traitMount($model);
+    }
+
+    protected function resetForm()
+    {
+        $languageGuidelines = LanguageGuidelines::getLanguageGuidelines($this->model);
+        $this->proficiencyLevels = $languageGuidelines->proficiencyLevels;
+        $this->diversityDimensionDrivers = $languageGuidelines->diversityDimensionDrivers;
+
+        $disabledCategories = (array) $languageGuidelines->disabled_categories;
+        foreach ($languageGuidelines->diversityDimensionDrivers as $ddd => $config) {
+            if (empty($config['category']) || $config['category'] !== $this->category) {
+                continue;
+            }
+
+            if ($languageGuidelines->isCategoryAvailable($ddd, $this->model->subscribed())) {
+                if (!in_array('advanced_' . $ddd, $disabledCategories)) {
+                    $this->dimensions[$ddd] = LanguageGuidelines::ADVANCED_ENABLED;
+                } elseif (!in_array($ddd, $disabledCategories)) {
+                    $this->dimensions[$ddd] = LanguageGuidelines::BASIC_ENABLED;
+                } else {
+                    $this->dimensions[$ddd] = LanguageGuidelines::DISABLED;
+                }
+            }
+        }
+
+        $disabledCategoriesForce = (array) $languageGuidelines->disabled_categories_force;
+        if (!$this->model->subscribed()) {
+            $this->dimensions_force = true;
+        } else {
+            $this->dimensions_force = in_array($this->category, $disabledCategoriesForce);
+        }
+
+        $this->resetErrorBag();
+    }
+
+    protected function processDimensions(LanguageGuidelines $languageGuidelines)
+    {
+        $dimensions = [];
+
+        foreach ($this->dimensions as $ddd => $enabled) {
+            $dimensions[$ddd] = $languageGuidelines->isCategoryAvailable($ddd, $this->model->subscribed(), $enabled);
+            $proficiencyLevel = $languageGuidelines->diversityDimensionDrivers[$ddd]['proficiency_level'] ?? null;
+
+            switch ($dimensions[$ddd]) {
+                case LanguageGuidelines::ADVANCED_ENABLED:
+                    $languageGuidelines->inPlaceUpateArray('advanced_' . $ddd, 'disabled_categories', true);
+                    $languageGuidelines->inPlaceUpateArray($ddd, 'disabled_categories', true);
+                    break;
+                case LanguageGuidelines::BASIC_ENABLED:
+                    if ($proficiencyLevel !== 'openly_discriminating') {
+                        $languageGuidelines->inPlaceUpateArray('advanced_' . $ddd, 'disabled_categories', false);
+                    }
+                    $languageGuidelines->inPlaceUpateArray($ddd, 'disabled_categories', true);
+                    break;
+                case LanguageGuidelines::DISABLED:
+                default:
+                    if ($proficiencyLevel !== 'openly_discriminating') {
+                        $languageGuidelines->inPlaceUpateArray('advanced_' . $ddd, 'disabled_categories', false);
+                    }
+                    $languageGuidelines->inPlaceUpateArray($ddd, 'disabled_categories', false);
+                    break;
+            }
+        }
+
+        return $dimensions;
+    }
+
+    public function updateLanguageGuidelinesCategory()
+    {
+        foreach ($this->dimensions as $ddd => $enabled) {
+            $this->dimensions[$ddd] = (int)$enabled;
+        }
+
+        $this->validate();
+
+        if (!Auth::user()->hasTeamPermission($this->model, 'edit_guidelines')) {
+            abort(403);
+        }
+
+        $languageGuidelines = LanguageGuidelines::getLanguageGuidelines($this->model);
+        $languageGuidelines->save();
+
+        $this->dimensions = $this->processDimensions($languageGuidelines);
+
+        if (!$this->model->subscribed()) {
+            $this->dimensions_force = true;
+        }
+        $languageGuidelines->inPlaceUpateArray($this->category, 'disabled_categories_force', !$this->dimensions_force);
+
+        $languageGuidelines->dispatchEventToPosthog((new \ReflectionClass($this))->getShortName());
+
+        $this->emit('saved');
+        $this->updateHelpHero();
+
+        dispatch(new SyncOrganizationToNlpApi($this->model, 'high'));
+    }
+
+    /**
+     * Render the component.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function render()
+    {
+        return view('livewire.organization-category-settings.category');
+    }
+}

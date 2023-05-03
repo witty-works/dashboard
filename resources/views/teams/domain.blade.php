@@ -4,31 +4,31 @@
 
 <div>
     <div class="py-10">
-        @livewire('teams.store-context', ['team' => $team])
+        @livewire('teams.store-context', ['model' => $team])
     </div>
 </div>
           
 <div>
     <div class="py-10">
-        @livewire('teams.analytics-user-access', ['team' => $team])
+        @livewire('teams.analytics-user-access', ['model' => $team])
     </div>
 </div>
 
 
 <div>
     <div class="py-10">
-        @livewire('organization-domain.type', ['team' => $team])
+        @livewire('organization-domain.type', ['model' => $team])
     </div>
 </div>
 
 <div>
     <div class="py-10">
-        @livewire('organization-domain.form', ['team' => $team])
+        @livewire('organization-domain.form', ['model' => $team])
     </div>
 </div>
 
 <div>
     <div class="py-10">
-        @livewire('organization-domain.show', ['team' => $team])
+        @livewire('organization-domain.show', ['model' => $team])
     </div>
 </div>

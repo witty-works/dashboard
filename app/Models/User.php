@@ -183,17 +183,21 @@ class User extends Authenticatable implements MustVerifyEmail
     public function subscribed($name = 'teams', $price = null)
     {
         $team = $this->currentTeam;
-        if ($team) {
-            return $team->subscribed($name, $price);
+        if (!$team) {
+            return false;
         }
+
+        return $team->subscribed($name, $price);
     }
 
     public function subscription($name = 'teams')
     {
         $team = $this->currentTeam;
-        if ($team) {
-            return $team->subscription($name);
+        if (!$team) {
+            return null;
         }
+
+        return $team->subscription($name);
     }
 
     public function getTermReplacementsCount()
