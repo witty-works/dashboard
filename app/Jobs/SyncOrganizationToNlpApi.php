@@ -2,7 +2,6 @@
 
 namespace App\Jobs;
 
-use App\Console\Commands\SyncToHubspotCategoriesCommand;
 use App\Models\GuidelinesInterface;
 use App\Models\LanguageGuidelines;
 use App\Models\Team;
@@ -63,8 +62,8 @@ class SyncOrganizationToNlpApi extends AbstractSyncToNlpApi
             ];
         }
 
-        foreach ($guidelines->diversityDimensionDrivers as $ddd => $config) {
-            $category = $config['category'] ?? null;
+        foreach ($guidelines->diversityDimensionDrivers as $ddd => $dddConfig) {
+            $category = $dddConfig['category'] ?? null;
             $config['categories'][$ddd] = [
                 'value' => !in_array($ddd, $guidelines->disabled_categories),
                 'status' => (null === $guidelines->disabled_categories_force

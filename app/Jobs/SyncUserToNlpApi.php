@@ -45,7 +45,16 @@ class SyncUserToNlpApi extends AbstractSyncToNlpApi
 
         $domains = $this->getDomains($user->domains, 'deny');
 
-        $config = self::getConfig(LanguageGuidelines::getLanguageGuidelines($user), true);
+        $guidelines = LanguageGuidelines::getLanguageGuidelines($user);
+        $config = self::getConfig($guidelines, true);
+
+        $config['categories'] = [];
+        foreach ($guidelines->diversityDimensionDrivers as $ddd => $dddConfig) {
+            $config['categories'][$ddd] = [
+                'value' => !in_array($ddd, $guidelines->disabled_categories),
+                'status' => 'force',
+            ];
+        }
 
         $data = [
             'id' => $user->posthogId(),
