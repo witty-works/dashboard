@@ -12,18 +12,18 @@ class Form extends OrganizationForm
 {
     use AuthorizesRequests;
 
-    public $user;
+    public $model;
 
-    public function mount($user)
+    public function mount($model)
     {
-        $this->user = Auth::user();
+        $this->model = $model;
 
         $this->resetForm();
     }
 
     public function render()
     {
-        $this->cleanValues($this->user->subscribed());
+        $this->cleanValues($this->model->subscribed());
 
         $params = ['language_codes' => $this->getLanguageCodes()];
         return view('livewire.user-term-replacement.form', $params);
@@ -32,10 +32,15 @@ class Form extends OrganizationForm
     public function storeTermReplacement()
     {
         $this->validate();
-        $this->cleanValues($this->user->subscribed());
+
+        if (Auth::user()->id !== $this->model->id) {
+            abort(403);
+        }
+
+        $this->cleanValues($this->model->subscribed());
 
         $query = TermReplacement::query()
-            ->where('user_id', $this->user->id)
+            ->where('user_id', $this->model->id)
             ->where('term', $this->term);
 
         if ($this->language_code) {
@@ -57,13 +62,13 @@ class Form extends OrganizationForm
         }
 
         if (!empty($termReplacement)) {
-            if ($this->user->id !== $termReplacement->user_id) {
+            if ($this->model->id !== $termReplacement->user_id) {
                 $message = __('guidelines.term_replacement_error');
                 throw ValidationException::withMessages(['term' => $message]);
             }
         } else {
-            if ($this->user->getTermReplacementsLimitReached()) {
-                $message = __('guidelines.term_replacement_limit_reached_error', ['max_count' => $this->user->getTermReplacementsCount()]);
+            if ($this->model->getTermReplacementsLimitReached()) {
+                $message = __('guidelines.term_replacement_limit_reached_error', ['max_count' => $this->model->getTermReplacementsCount()]);
                 throw ValidationException::withMessages(['term' => $message]);
             }
 
@@ -81,7 +86,7 @@ class Form extends OrganizationForm
         $termReplacement->emoji = $this->emoji;
         $termReplacement->language_code = $this->language_code;
         $termReplacement->word_type = $this->word_type;
-        $termReplacement->user_id = $this->user->id;
+        $termReplacement->user_id = $this->model->id;
 
         $termReplacement->save();
         $termReplacement->dispatchEventToPosthog();

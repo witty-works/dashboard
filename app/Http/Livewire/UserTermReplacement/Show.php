@@ -15,16 +15,16 @@ class Show extends Component
 
     protected $listeners = ['saved'];
 
-    public $user;
+    public $model;
 
-    public function mount()
+    public function mount($model)
     {
-        $this->user = Auth::user();
+        $this->model = $model;
     }
 
     public function render()
     {
-        $list = TermReplacement::all()->where('user_id', $this->user->id)->sortByDesc('created_at');
+        $list = TermReplacement::all()->where('user_id', $this->model->id)->sortByDesc('created_at');
 
         return view('livewire.user-term-replacement.show', ['list' => $list]);
     }
@@ -37,6 +37,10 @@ class Show extends Component
 
     public function editTermReplacement(TermReplacement $termReplacement)
     {
+        if (Auth::user()->id !== $this->model->id) {
+            abort(403);
+        }
+
         $this->emit('edit', $termReplacement->id);
     }
 

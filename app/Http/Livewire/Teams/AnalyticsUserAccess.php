@@ -16,17 +16,17 @@ class AnalyticsUserAccess extends Component
         'user_access_to_team_analytics' => 'nullable|boolean',
     ];
 
-    public $team;
+    public $model;
 
     /**
      * Mount the component.
      *
-     * @param  mixed  $team
+     * @param  mixed  $model
      * @return void
      */
-    public function mount($team)
+    public function mount($model)
     {
-        $this->team = $team;
+        $this->model = $model;
 
         $this->resetForm();
     }
@@ -35,26 +35,26 @@ class AnalyticsUserAccess extends Component
     {
         $this->resetErrorBag();
 
-        $this->user_access_to_team_analytics = (bool) $this->team->user_access_to_team_analytics;
-        if (!$this->team->subscribed()) {
+        $this->user_access_to_team_analytics = (bool) $this->model->user_access_to_team_analytics;
+        if (!$this->model->subscribed()) {
             $this->user_access_to_team_analytics = true;
         }
     }
 
     public function updateUserAccessToTeamAnalytics()
     {
-        if (!Auth::user()->hasTeamPermission($this->team, 'update')) {
+        if (!Auth::user()->hasTeamPermission($this->model, 'update')) {
             abort(403);
         }
 
         $this->validate();
 
-        if (!$this->team->subscribed()) {
+        if (!$this->model->subscribed()) {
             $this->user_access_to_team_analytics = true;
         }
 
-        $this->team->user_access_to_team_analytics = (bool) $this->user_access_to_team_analytics;
-        $this->team->save();
+        $this->model->user_access_to_team_analytics = (bool) $this->user_access_to_team_analytics;
+        $this->model->save();
 
         $this->emit('saved');
     }

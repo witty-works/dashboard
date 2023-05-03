@@ -121,25 +121,6 @@ abstract class AbstractSyncToNlpApi implements ShouldQueue
 
     protected function getConfig($guidelines, $forceDefault)
     {
-        $guidelines->expert_mode_force = $guidelines->expert_mode_force ?? $forceDefault;
-
-        $config['maximum_importance'] = [
-            'value' => $guidelines->expert_mode ? 3 : 2,
-            'status' => $guidelines->expert_mode_force ? 'force' : 'suggestion',
-        ];
-
-        $config['simple_language'] = [
-            'value' => (bool) $guidelines->simple_language,
-            'status' => $guidelines->expert_mode_force ? 'force' : 'suggestion',
-        ];
-
-        $guidelines->english_rules_force = $guidelines->english_rules_force ?? $forceDefault;
-
-        $config['singular_they'] = [
-            'value' => $guidelines->singular_they ? 'all_pronouns' : 'he_or_she',
-            'status' => $guidelines->english_rules_force ? 'force' : 'suggestion',
-        ];
-
         $guidelines->show_inspiration_alternatives_force
             = $guidelines->show_inspiration_alternatives_force ?? $forceDefault;
 

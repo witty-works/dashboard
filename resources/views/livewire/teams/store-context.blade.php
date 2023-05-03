@@ -14,14 +14,14 @@
                 value="1"
                 wire:model.defer="store_context"
                 :label="__('teams.store_context')"
-                :disabled="! Auth::user()->hasTeamPermission($team, 'update') || !$team->subscribed()"
+                :disabled="!$model->subscribed() ? 'upgrade' : (Auth::user()->hasTeamPermission($model, 'update') ? false : 'locked')"
             />
 
             <x-jet-input-error for="store_context" class="mt-2" />
         </div>
     </x-slot>
 
-    @if (Auth::user()->hasTeamPermission($team, 'update') && $team->subscribed())
+    @if (Auth::user()->hasTeamPermission($model, 'update') && $model->subscribed())
     <x-slot name="actions">
         @include('partials/save_cancel_action')
     </x-slot>

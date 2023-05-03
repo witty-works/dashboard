@@ -15,23 +15,23 @@ class Show extends Component
 
     protected $listeners = ['saved'];
 
-    public $team;
+    public $model;
 
     public $hide_actions;
 
-    public function mount($team, $hide_actions = False)
+    public function mount($model, $hide_actions = False)
     {
-        $this->team = $team;
+        $this->model = $model;
         $this->hide_actions = $hide_actions;
     }
 
     public function render()
     {
-        if (!Auth::user()->hasTeamPermission($this->team, 'read')) {
+        if (!Auth::user()->hasTeamPermission($this->model, 'read')) {
             abort(403);
         }
 
-        $list = FalsePositive::all()->where('team_id', $this->team->id)->sortByDesc('created_at');
+        $list = FalsePositive::all()->where('team_id', $this->model->id)->sortByDesc('created_at');
 
         return view('livewire.organization-false-positive.show', ['list' => $list]);
     }
@@ -44,7 +44,7 @@ class Show extends Component
 
     public function editFalsePositive(FalsePositive $falsePositive)
     {
-        if (!Auth::user()->hasTeamPermission($this->team, 'edit_guidelines')) {
+        if (!Auth::user()->hasTeamPermission($this->model, 'edit_guidelines')) {
             abort(403);
         }
 
@@ -53,7 +53,7 @@ class Show extends Component
 
     public function deleteFalsePositive(FalsePositive $falsePositive)
     {
-        if (!Auth::user()->hasTeamPermission($this->team, 'edit_guidelines')) {
+        if (!Auth::user()->hasTeamPermission($this->model, 'edit_guidelines')) {
             abort(403);
         }
 

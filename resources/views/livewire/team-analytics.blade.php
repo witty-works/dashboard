@@ -14,14 +14,14 @@
                 value="1"
                 wire:model.defer="team_analytics"
                 :label="__('guidelines.team_analytics_participate')"
-                :disabled="!$user->subscribed()"
+                :disabled="!$model->subscribed() ? 'upgrade' : false"
             />
 
             <x-jet-input-error for="team_analytics" class="mt-2" />
         </div>
     </x-slot>
 
-    @if ($user->subscribed())
+    @if ($model->subscribed())
     <x-slot name="actions">
         @include('partials/save_cancel_action')
     </x-slot>

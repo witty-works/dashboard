@@ -15,14 +15,14 @@
                     value="1"
                     wire:model.defer="user_access_to_team_analytics"
                     :label="__('guidelines.allow_team_analytics')"
-                    :disabled="!$team->subscribed()"
+                    :disabled="!$model->subscribed() ? 'upgrade' : (Auth::user()->hasTeamPermission($model, 'update') ? false : 'locked')"
                 />
 
                 <x-jet-input-error for="user_access_to_team_analytics" class="mt-2" />
             </div>
         </x-slot>
 
-        @if ($team->subscribed())
+        @if ($model->subscribed())
         <x-slot name="actions">
             @include('partials/save_cancel_action')
         </x-slot>

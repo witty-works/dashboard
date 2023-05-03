@@ -1,7 +1,10 @@
 @php
 $pagetitle = __('guidelines.language');
 switch ($tab) {
-    case \App\Http\Controllers\Livewire\UserGuidelinesController::CUSTOMIZE_WITTY:
+    case \App\Http\Controllers\Livewire\UserGuidelinesController::CATEGORY_SETTINGS:
+        $pagetitle = __('guidelines.language');
+        break;
+    case \App\Http\Controllers\Livewire\UserGuidelinesController::LANGUAGE_SETTINGS:
         $pagetitle = __('guidelines.language_settings_label');
         break;
     case \App\Http\Controllers\Livewire\UserGuidelinesController::TERM_REPLACEMENTS:
@@ -21,8 +24,10 @@ switch ($tab) {
         <div class="wittyworks-page lg:ml-20">
             @include('partials.banners')
             @if($team)
-                @if($tab === \App\Http\Controllers\Livewire\OrganizationGuidelinesController::CUSTOMIZE_WITTY)
-                    @include('teams/organization-guidelines')
+                @if($tab === \App\Http\Controllers\Livewire\OrganizationGuidelinesController::CATEGORY_SETTINGS)
+                    @include('teams/category-settings')
+                @elseif($tab === \App\Http\Controllers\Livewire\OrganizationGuidelinesController::LANGUAGE_SETTINGS)
+                    @include('teams/language-settings')
                 @elseif($tab === \App\Http\Controllers\Livewire\OrganizationGuidelinesController::TERM_REPLACEMENTS)
                     @include('teams/term-replacement')
                 @elseif($tab === \App\Http\Controllers\Livewire\OrganizationGuidelinesController::FALSE_POSITIVES)

@@ -287,6 +287,18 @@ a {
     align-items: center;
     flex-wrap: nowrap;
     margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.guidelines-form-section-ident {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: nowrap;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    margin-left: 1em;
 }
 
 .guidelines-form-section--apply-for-all {
@@ -375,6 +387,10 @@ a {
     background-color: #ccc;
     -webkit-transition: .4s;
     transition: .4s;
+}
+
+.disabled {
+    cursor: not-allowed !important;
 }
 
 .slider:before {
@@ -950,4 +966,77 @@ input:checked+.slider:before {
 /* page inside editor */
 .fr-element {
     max-width: 80%;
+}
+
+.headline-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center
+}
+
+.information-text {
+    background: linear-gradient(114.59deg, #F06464 1.6%, #F277D0 32.79%, #9489DB 71.64%);
+    height: 2.8em;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    font-size: 18px;
+    font-weight: 600;
+    color: white;
+    font-family: Lato, Arial, Helvetica, sans-serif;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
+}
+
+.information-image {
+    background-color: #f5f5f5;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
+    position: absolute; 
+    left: 0; 
+    top: 0; 
+    visibility: hidden; 
+    z-index: -1;
+}
+
+/* Tripple toggle */
+.tripple-toggle {
+    width: 50px;
+    height: 20px;
+    border-radius: 20px;
+    background-color: lightgrey;
+    position: relative;
+    cursor: pointer;
+    margin-right: 1em;
+}
+.tripple-toggle:before {
+    content: "";
+    width: 16px;
+    height: 16px;
+    background-color: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    transition: all 0.3s ease-in-out;
+}
+.tripple-toggle.active:before {
+    transform: translateX(30px);
+    background-color: white;
+}
+
+.tripple-toggle.active {
+    background-color: #5FCA7D;
+}
+
+.tripple-toggle.active.middle:before {
+    transform: translateX(15px);
+    background-color: white;
+}
+
+.tripple-toggle.active.middle {
+    background-color: #f1b04c;
 }

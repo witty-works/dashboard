@@ -17,17 +17,17 @@ class Type extends Component
         'type' => 'required|string|in:allow,allow_witty_works,deny',
     ];
 
-    public $team;
+    public $model;
 
     /**
      * Mount the component.
      *
-     * @param  mixed  $team
+     * @param  mixed  $model
      * @return void
      */
-    public function mount($team)
+    public function mount($model)
     {
-        $this->team = $team;
+        $this->model = $model;
 
         $this->resetForm();
     }
@@ -36,17 +36,18 @@ class Type extends Component
     {
         $this->validate();
 
-        if (!Auth::user()->hasTeamPermission($this->team, 'edit_guidelines')) {
+        if (!Auth::user()->hasTeamPermission($this->model, 'edit_guidelines')) {
             abort(403);
         }
 
-        $languageGuidelines = $this->getLanguageGuidelines($this->team);
+        $languageGuidelines = LanguageGuidelines::getLanguageGuidelines($this->model);
 
         $languageGuidelines->domain_list_type = $this->type;
 
         $languageGuidelines->save();
 
         $this->emit('typeChange');
+        $this->emit('saved');
     }
 
     /**
@@ -63,7 +64,7 @@ class Type extends Component
     {
         $this->resetErrorBag();
 
-        $this->type = $this->team->getDomainListType();
+        $this->type = $this->model->getDomainListType();
     }
 
     public function cancel()
@@ -71,10 +72,5 @@ class Type extends Component
         $this->resetForm();
 
         return $this->render();
-    }
-
-    protected function getLanguageGuidelines($team)
-    {
-        return LanguageGuidelines::firstOrNew(['team_id' => $team->id]);
     }
 }

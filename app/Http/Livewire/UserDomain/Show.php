@@ -20,7 +20,7 @@ class Show extends Component
      *
      * @var mixed
      */
-    public $user;
+    public $model;
 
     /**
      * Mount the component.
@@ -28,14 +28,14 @@ class Show extends Component
      * @param  mixed  $userGuidelines
      * @return void
      */
-    public function mount()
+    public function mount($model)
     {
-        $this->user = Auth::user();
+        $this->model = $model;
     }
 
     public function render()
     {
-        $list = Domain::all()->where('user_id', $this->user->id)->sortByDesc('created_at');
+        $list = Domain::all()->where('user_id', $this->model->id)->sortByDesc('created_at');
 
         return view('livewire.user-domain.show', ['list' => $list]);
     }
@@ -48,6 +48,10 @@ class Show extends Component
 
     public function editDomain(Domain $domain)
     {
+        if (Auth::user()->id !== $this->model->id) {
+            abort(403);
+        }
+
         $this->emit('edit', $domain->id);
     }
 
