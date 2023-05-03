@@ -384,23 +384,25 @@ Falls du Fragen hast, nimm Kontakt mit :name (:email) auf. 🙂
 ',
     'witty_editor_copy_button' => 'Text in die Zwischenablage kopieren',
     'witty_editor_example_button' => 'Beispiel zeigen',
-    'witty_editor_example_text' => 'Die Grundlagen:
+    'witty_editor_example_text' => 'Die Grundlagen: Witzige Highlights Sprache mit unbewussten voreingenommen in Orange: 
 
-Witty hebt voreingenommene Sprache orange hervor:
+Hallo Leute,
 
-Hallo Kollegen, wir haben ein großes Softwareprojekt, das viele Arbeitsstunden in Anspruch nehmen wird. Wer möchte bei uns mitmachen? Bringen Sie Ihr außergewöhnliches Fachwissen und Ihren starken technischen Hintergrund ein. Wir suchen einen Digital Native.
+Wir haben ein großes Softwareprojekt, das viele Arbeitsstunden in Anspruch nehmen wird. Wer möchte sich unserer Mannschaft anschließen? Bringt euer außergewöhnliches Fachwissen und euren starken technischen Hintergrund mit. Wir suchen auch nach einem Digital Native.
 
-PS Ihre Frauen sind bei der Weihnachtsfeier des Vorstandes herzlich willkommen.
+P.S. Ihre Ehefrauen sind bei der Weihnachtsfeier des Vorstands willkommen.
 
-Positive Begriffe hebt Witty grün hervor: Wir sind ein kreatives Team.
+Witzig unterstreicht positive Begriffe in Grün:
 
-Witty korrigiert Grammatik- und Rechtschreibfehler.
+Wir sind ein kreatives Team.
 
-Sie sind rot markiert: Dies ist ein Rechtschreibbfehler.
+Witty korrigiert Grammatik- und Rechtschreibfehler. Sie werden in Rot hervorgehoben:
 
-Warten Sie ... es gibt noch mehr.
+Dies ist ein Rechtschreipfehler. 
 
-Witty hebt Wörter in Gelb hervor, die deine Sprache komplizierter machen: Dies ist eigentlich ein sehr langes Meeting.',
+Moment ... da ist noch mehr. Witty hebt fortgeschrittenere Formen von unbewusster Voreingenommenheit oder Ausgrenzung in Gelb hervor:
+
+Wir hatten viele Treffen, um den ROI unseres MVP zu prüfen.',
     'learn_more' => 'Warum das so ist',
     'example' => 'Beispiel',
     'open' => 'Öffnen',
