@@ -33,7 +33,7 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
 
         RateLimiter::for('login', function (Request $request) {
-            return Limit::perMinute(5)->by($request->email . $request->ip());
+            return Limit::perMinute(5)->by(strtolower($request->email) . $request->ip());
         });
 
         RateLimiter::for('two-factor', function (Request $request) {

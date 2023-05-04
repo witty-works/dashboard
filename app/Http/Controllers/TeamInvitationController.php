@@ -93,7 +93,7 @@ class TeamInvitationController extends BaseTeamInvitationController
      */
     public function destroy(Request $request, TeamInvitation $invitation)
     {
-        if ($request->user()->email !== $invitation->email) {
+        if (strtolower($request->user()->email) !== strtolower($invitation->email)) {
             abort(403, 'Unauthorized action.');
         }
 

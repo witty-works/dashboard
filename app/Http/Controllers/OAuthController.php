@@ -58,7 +58,7 @@ class OAuthController extends BaseOAuthController
             $account = $user->currentConnectedAccount;
             if ($account && $account->token) {
                 $data = [
-                    'email' => $user->email,
+                    'email' => strtolower($user->email),
                     'access_token' => $account->token,
                     'refresh_token' => $account->refresh_token,
                 ];
