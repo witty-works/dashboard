@@ -62,7 +62,7 @@ class Category extends Component
 
         $disabledCategories = (array) $languageGuidelines->disabled_categories;
         foreach ($languageGuidelines->diversityDimensionDrivers as $ddd => $config) {
-            if (empty($config['category']) || $config['category'] !== $this->category) {
+            if ($ddd === 'gendered_denominations_ending' || empty($config['category']) || $config['category'] !== $this->category) {
                 continue;
             }
 

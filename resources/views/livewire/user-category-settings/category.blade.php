@@ -81,7 +81,7 @@
         </div>
         @endif
         @foreach ($list as $ddd)
-        @if(isset($diversityDimensionDrivers[$ddd]['translation']))
+        @if(isset($diversityDimensionDrivers[$ddd]['translation']) && isset($dimensions[$ddd]))
         <div class="guidelines-form-section-ident lato-small-text-p">
             @php
                 $label = '<a href="'.$diversityDimensionDrivers[$ddd]['translation']['canonical_url'].'" />';

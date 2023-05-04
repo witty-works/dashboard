@@ -25,7 +25,7 @@ class LanguageGuidelines extends Model
 
     protected $attributes = [
         'german_gender_ending' => '*in',
-        'gendered_roles_format' => 'binary_gender',
+        'gendered_roles_format' => 'inclusive_gender',
         'show_inspiration_alternatives' => false,
         'german_rules_force' => true,
         'show_inspiration_alternatives_force' => true,
@@ -117,32 +117,11 @@ class LanguageGuidelines extends Model
         return self::getLanguageGuidelines($team);
     }
 
-    public function getGenderedRolesFormats()
-    {
-        if (in_array('gendered_denominations_ending', $this->disabled_categories)) {
-            return [];
-        }
-
-        $subscribed = $this->team_id ? $this->team->subscribed() : $this->user->subscribed();
-        return $subscribed && !in_array('advanced_gendered_denominations_ending', $this->disabled_categories)
-            ? GuidelinesInterface::GENDERED_ROLES_FORMAT_ADVANCED
-            : GuidelinesInterface::GENDERED_ROLES_FORMAT;
-    }
-
     public function getGenderedRolesFormat($genderedRolesFormat = null)
     {
         $subscribed = $this->team_id ? $this->team->subscribed() : $this->user->subscribed();
-        if (!$subscribed) {
-            return 'binary_gender';
-        }
-
-        if ($genderedRolesFormat === null) {
-            $genderedRolesFormat = $this->gender_roles_format;
-        }
-
-        $genderedRolesFormats = $this->getGenderedRolesFormats();
-        if (!array_key_exists($genderedRolesFormat, $genderedRolesFormats)) {
-            return key($genderedRolesFormats);
+        if (!$subscribed || !array_key_exists($genderedRolesFormat, GuidelinesInterface::GENDERED_ROLES_FORMAT)) {
+            return key(GuidelinesInterface::GENDERED_ROLES_FORMAT);
         }
 
         return $genderedRolesFormat;
