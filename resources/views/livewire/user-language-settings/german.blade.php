@@ -8,7 +8,6 @@
     </x-slot>
 
     <x-slot name="form" submit="updateLanguageGuidelinesGerman">
-        @if(array_key_exists('inclusive_gender', $gendered_roles_formats))
         <div class="margin-bottom">
             {!! __('guidelines.german_gender_ending') !!}
         </div>
@@ -28,7 +27,6 @@
 
             @include('partials.toggle_label', ['disabled' => \App\Models\LanguageGuidelines::isForcedOnTeam($model, 'german_rules')])
         </div>
-        @endif
 
         <div class="margin-bottom">{!! __('guidelines.gendered_roles_format') !!}</div>
 
@@ -37,7 +35,7 @@
         <div class="flex flex-row">
             <div>
                 <x-select id="gendered_roles_format"
-                    :options="$gendered_roles_formats"
+                    :options="\App\Models\GuidelinesInterface::GENDERED_ROLES_FORMAT"
                     class="guidelines-form-section-dropdown margin-bottom"
                     wire:model.defer="gendered_roles_format"
                     :disabled="\App\Models\LanguageGuidelines::isForcedOnTeam($model, 'german_rules')"
@@ -46,11 +44,11 @@
                 <x-jet-input-error for="gendered_roles_format" class="mt-2" />
             </div>
 
-            @include('partials.toggle_label', ['disabled' => \App\Models\LanguageGuidelines::isForcedOnTeam(Auth::user(), 'german_rules')])
+            @include('partials.toggle_label', ['disabled' => \App\Models\LanguageGuidelines::isForcedOnTeam($model, 'german_rules')])
         </div>
     </x-slot>
 
-    @if(!\App\Models\LanguageGuidelines::isForcedOnTeam($model, 'german_rules'))
+    @if($model->subscribed() && !\App\Models\LanguageGuidelines::isForcedOnTeam($model, 'german_rules'))
     <x-slot name="actions">
         @include('partials/save_cancel_action')
     </x-slot>
