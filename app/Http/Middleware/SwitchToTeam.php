@@ -29,6 +29,7 @@ class SwitchToTeam
         }
 
         $response = $next($request);
+
         if ($invitation instanceof TeamInvitation) {
             return redirect()->route(
                 'team-invitations.accept',
@@ -43,7 +44,11 @@ class SwitchToTeam
 
     protected function ensureUserHasCurrentTeam(User $user)
     {
-        if ('team-invitations.accept' === Route::currentRouteName()) {
+        if (
+            'team-invitations.accept' === Route::currentRouteName()
+            || 'profile.onboarding' === Route::currentRouteName()
+            || 'download' === Route::currentRouteName()
+        ) {
             return;
         }
 

@@ -25,7 +25,7 @@ class ResolveSocialiteUser implements ResolvesSocialiteUsers
         $user->name = $user->nickname = $user->user['nickname'] = $user->user['name'] ?? '';
         $user->user['email'] = User::getEmailFromProvider($user->user);
         if (!empty($user->user['email'])) {
-            $user->email = $user->user['email'];
+            $user->email = strtolower($user->user['email']);
         }
 
         return $user;
