@@ -101,7 +101,7 @@ class OAuthController extends BaseOAuthController
                 ->json($this->getAccessTokenResponse($provider));
         } catch (\Exception $e) {
             # refresh token has expired?
-            $connectedAccount = ModelsConnectedAccount::where('refresh_token', $refreshToken);
+            $connectedAccount = ModelsConnectedAccount::where('refresh_token', $refreshToken)->first();
             if ($connectedAccount) {
                 $connectedAccount->token = null;
                 $connectedAccount->refresh_token = null;
