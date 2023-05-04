@@ -8,7 +8,6 @@
     </x-slot>
 
     <x-slot name="form" submit="updateLanguageGuidelinesGerman">
-        @if(array_key_exists('inclusive_gender', $gendered_roles_formats))
         <div class="margin-bottom">
             {!! __('guidelines.german_gender_ending') !!}
         </div>
@@ -19,11 +18,17 @@
                 :options="\App\Models\GuidelinesInterface::GERMAN_GENDER_ENDING"
                 class="guidelines-form-section-dropdown"
                 wire:model.defer="german_gender_ending"
+                :disabled="!$model->subscribed()"
             />
 
             <x-jet-input-error for="german_gender_ending" class="mt-2" />
+
+            @if(!$model->subscribed())
+              <div class="p-3">
+                @include('partials.witty-teams-only')
+              </div>
+            @endif
         </div>
-        @endif
 
         <div class="margin-bottom">
             {!! __('guidelines.gendered_roles_format') !!}
@@ -31,16 +36,14 @@
 
         <div class="lato-small-text-p">{!! __('guidelines.manage_organization_guidelines_description_german_form_sub_title') !!}</div>
         <div class="flex flex-row">
-            <div>
-                <x-select id="gendered_roles_format"
-                    :options="$gendered_roles_formats"
-                    class="guidelines-form-section-dropdown margin-bottom"
-                    wire:model.defer="gendered_roles_format"
-                    :disabled="!$model->subscribed()"
-                />
+            <x-select id="gendered_roles_format"
+                :options="\App\Models\GuidelinesInterface::GENDERED_ROLES_FORMAT"
+                class="guidelines-form-section-dropdown margin-bottom"
+                wire:model.defer="gendered_roles_format"
+                :disabled="!$model->subscribed()"
+            />
 
-                <x-jet-input-error for="gendered_roles_format" class="mt-2" />
-            </div>
+            <x-jet-input-error for="gendered_roles_format" class="mt-2" />
 
             @if(!$model->subscribed())
               <div class="p-3">
@@ -50,6 +53,7 @@
         </div>
     </x-slot>
 
+    @if($model->subscribed())
     <x-slot name="actions">
         <div class="guidelines-form-section--apply-for-all">
             <x-jet-checkbox
@@ -65,5 +69,6 @@
         @include('partials/save_cancel_action')
         @endif
     </x-slot>
+    @endif
 
 </x-jet-form-section>

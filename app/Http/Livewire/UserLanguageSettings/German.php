@@ -18,7 +18,6 @@ class German extends Component
     public $enabled;
     public $german_gender_ending;
     public $gendered_roles_format;
-    public $gendered_roles_formats;
 
     protected $rules = [
         'german_gender_ending' => 'nullable|string|in::in,*in,/in,_in,In,/-in',
@@ -34,11 +33,6 @@ class German extends Component
         $this->enabled = false;
 
         $languageGuidelines = LanguageGuidelines::getLanguageGuidelines($this->model);
-
-        $this->gendered_roles_formats = $languageGuidelines->getGenderedRolesFormats();
-        if (empty($this->gendered_roles_formats)) {
-            return;
-        }
 
         $preferredVariants = $this->mountAttribute(
             $this->model,
@@ -75,9 +69,14 @@ class German extends Component
             abort(403);
         }
 
+        if (!$this->model->subscribed()) {
+            return;
+        }
+
         $languageGuidelines = LanguageGuidelines::getLanguageGuidelines($this->model);
 
         $languageGuidelines->german_gender_ending = $this->german_gender_ending;
+
         $languageGuidelines->gendered_roles_format = $this->gendered_roles_format = $languageGuidelines->getGenderedRolesFormat($this->gendered_roles_format);
 
         $languageGuidelines->save();

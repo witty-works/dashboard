@@ -19,7 +19,6 @@ class German extends Component
     public $german_rules_force;
     public $german_gender_ending;
     public $gendered_roles_format;
-    public $gendered_roles_formats;
 
     protected $rules = [
         'german_rules_force' => 'nullable|boolean',
@@ -36,11 +35,6 @@ class German extends Component
         $this->enabled = false;
 
         $languageGuidelines = LanguageGuidelines::getLanguageGuidelines($this->model);
-
-        $this->gendered_roles_formats = $languageGuidelines->getGenderedRolesFormats();
-        if (empty($this->gendered_roles_formats)) {
-            return;
-        }
 
         foreach ($languageGuidelines->preferred_variants as $variant) {
             if (strpos($variant, 'de') === 0) {
@@ -59,6 +53,10 @@ class German extends Component
 
         if (!Auth::user()->hasTeamPermission($this->model, 'edit_guidelines')) {
             abort(403);
+        }
+
+        if (!$this->model->subscribed()) {
+            return;
         }
 
         $languageGuidelines = LanguageGuidelines::getLanguageGuidelines($this->model);
