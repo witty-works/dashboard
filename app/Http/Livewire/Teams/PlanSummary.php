@@ -108,20 +108,22 @@ class PlanSummary extends Component
 
     protected function getLicenseOptions($licenseCount)
     {
-        $keys = range(max(10, $licenseCount), 150, 5);
+        $keys = range(max(20, $licenseCount), 150, 5);
 
-        $count = 9;
+        $count = 19;
         while ($count >= $licenseCount) {
             array_unshift($keys, $count);
             $count--;
         }
 
         $licenseOptions = [];
+        $price = config('stripe.plans.witty_teams.price') * 100;
+        $currency = new Currency(config('stripe.currency'));
         foreach ($keys as $key) {
             $licenseCount = $this->convertLicenseCountToString($key);
             $params = [
                 'count' => $key,
-                'amount' => Cashier::formatAmount(18000 * $key, new Currency('USD'), config('app.locale'))
+                'amount' => Cashier::formatAmount($price * $key, $currency, config('app.locale'))
             ];
             $licenseOptions[$licenseCount] = __('teams.amount_per_year', $params);
         }

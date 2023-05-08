@@ -2,6 +2,7 @@
 
 return [
 
+    'currency' => 'USD',
     'plans' => [
         'witty_free' => [
             'price_id' => env('STRIPE_PRICE_WITTY_FREE'),
@@ -24,6 +25,7 @@ return [
         ],
         'witty_teams' => [
             'price_id' => env('STRIPE_PRICE_WITTY_TEAMS'),
+            'price' => 178.80,
             'checkout' => true,
             'demo' => false,
             'features' => [
@@ -44,7 +46,7 @@ return [
         ],
         'witty_enterprise' => [
             'price_id' => env('STRIPE_PRICE_WITTY_ENTERPRISE'),
-            'price' => 850,
+            'price' => 240,
             'checkout' => false,
             'demo' => true,
             'features' => [
