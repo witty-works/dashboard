@@ -397,4 +397,5 @@ This is a spelling mistacke.',
     'learn_more' => 'Dig deeper',
     'example' => 'Example',
     'open' => 'Open',
+    'triple_toggle' => 'Click multiple times to switch from \'off\' to \'on\' to \'advanced\'',
 ];
