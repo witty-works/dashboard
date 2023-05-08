@@ -402,4 +402,5 @@ Dies ist ein Rechtschreipfehler.',
     'learn_more' => 'Warum das so ist',
     'example' => 'Beispiel',
     'open' => 'Öffnen',
+    'triple_toggle' => 'Klicken Sie mehrmals, um von \'Aus\' zu \'Ein\' zu \'Erweitert\' zu wechseln',
 ];

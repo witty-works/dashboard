@@ -26,6 +26,7 @@ variables:
 hooks:
     build: |
         set -e
+        rm public/.htaccess
         composer install --no-ansi --no-dev --no-interaction --no-plugins --no-progress --no-scripts --optimize-autoloader
         # https://docs.platform.sh/languages/nodejs/nvm.html#how-to-use-nvm-to-run-different-versions-of-nodejs
         unset NPM_CONFIG_PREFIX
