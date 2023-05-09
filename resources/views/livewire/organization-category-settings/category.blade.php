@@ -1,12 +1,12 @@
 <x-jet-form-section class="py-10" submit="updateLanguageGuidelinesCategory">
     <x-slot name="title">
-    <div class="headline-row">
-        <img width="36" src="{{ $config['icon']['src'] }}" alt="{{ $config['translation']['name'] }} Icon"/>
-        {{ $config['translation']['name'] }}
-        @if(!empty($config['translation']['example_image']['src']))
-        @include('partials.info_hover', ['category' => $category, 'name' => $config['translation']['name'], 'config' => $config])
-        @endif
-    </div>
+        <div class="headline-row">
+            <img width="45" class="category_icon" src="{{ $config['icon']['src'] }}" alt="{{ $config['translation']['name'] }} Icon"/>
+            {{ $config['translation']['name'] }}
+            @if(!empty($config['translation']['example_image']['src']))
+            @include('partials.info_hover', ['category' => $category, 'name' => $config['translation']['name'], 'config' => $config])
+            @endif
+        </div>
     </x-slot>
 
     <x-slot name="description">
@@ -69,7 +69,7 @@
         </div>
         <x-jet-input-error for="dimensions" class="mt-2" />
         @if(!empty($proficiencyLevelData['translation']['lead_text']))
-        <div id="{{ $category }}-{{ $proficiencyLevel }}" style="display: none" class="lato-paragraph-text-p">
+        <div id="{{ $category }}-{{ $proficiencyLevel }}" style="display: none" class="proficiency-level-p">
             {!! $proficiencyLevelData['translation']['lead_text'] !!}
         </div>
         @endif

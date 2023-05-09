@@ -94,6 +94,16 @@ a {
     color: #9489DB;
 }
 
+.proficiency-level-p {
+    font-family: Lato, Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 1.3;
+    color: #000000;
+    margin-bottom: 0.5rem;
+}
+
 
 .lato-paragraph-text-p {
     font-family: Lato, Arial, Helvetica, sans-serif;
@@ -296,9 +306,9 @@ a {
     justify-content: flex-start;
     align-items: center;
     flex-wrap: nowrap;
-    margin-top: 1em;
-    margin-bottom: 1em;
-    margin-left: 1em;
+    margin-top: 0.4em;
+    margin-bottom: 0.4em;
+    margin-left: 0em;
 }
 
 .guidelines-form-section--apply-for-all {
@@ -995,10 +1005,10 @@ input:checked+.slider:before {
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
     box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
-    position: absolute; 
-    left: 0; 
-    top: 0; 
-    visibility: hidden; 
+    position: absolute;
+    left: 0;
+    top: 0;
+    visibility: hidden;
     z-index: -1;
 }
 
@@ -1012,6 +1022,7 @@ input:checked+.slider:before {
     cursor: pointer;
     margin-right: 1em;
 }
+
 .tripple-toggle:before {
     content: "";
     width: 16px;
@@ -1023,6 +1034,7 @@ input:checked+.slider:before {
     left: 2px;
     transition: all 0.3s ease-in-out;
 }
+
 .tripple-toggle.active:before {
     transform: translateX(30px);
     background-color: white;
@@ -1039,4 +1051,8 @@ input:checked+.slider:before {
 
 .tripple-toggle.active.middle {
     background-color: #f1b04c;
+}
+
+.category_icon {
+    margin-right: 0.5rem;
 }

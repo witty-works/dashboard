@@ -23,7 +23,7 @@ class Onboarding
             ];
 
             if (!$user->hasCompletedOnboarding() && !in_array($currentRouteName, $routes)) {
-                return redirect()->route('profile.onboarding');
+                return redirect()->route('profile.onboarding', ['onboarding' => '1']);
             }
         }
 

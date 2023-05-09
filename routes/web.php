@@ -79,10 +79,6 @@ Route::group(
             Route::group(['middleware' => ['auth:' . config('fortify.guard')]], function () {
                 Route::get('/', [WelcomeController::class, 'show'])->name('root');
 
-                Route::get('/download', function () {
-                    return redirect(config('app.download_url'));
-                })->name('download');
-
                 Route::get('/editor', function () {
                     return view('editor');
                 })->name('editor');
@@ -186,6 +182,11 @@ Route::group(['middleware' => config('socialstream.middleware', ['web'])], funct
     Route::get('/team-invitations/{invitation}', [TeamInvitationController::class, 'acceptSigned'])
         ->middleware(['signed'])
         ->name('team-invitations.accept-signed');
+
+    Route::get('/download', function () {
+        return redirect(config('app.download_url'));
+    })->name('download');
+
 });
 
 /*

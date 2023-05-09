@@ -17,7 +17,7 @@ class SwitchToTeam
         $user = $request->user();
 
         if ($user instanceof User) {
-            $invitation = $this->ensureUserHasCurrentTeam($user);
+            $invitation = $this->ensureUserHasCurrentTeam($request, $user);
         } elseif (
             !Route::is('mock-login')
             && config('app.mock_login')
@@ -33,7 +33,7 @@ class SwitchToTeam
         if ($invitation instanceof TeamInvitation) {
             return redirect()->route(
                 'team-invitations.accept',
-                ['invitation' => $invitation]
+                ['invitation' => $invitation, 'onboarding' => '1']
             );
         }
 
@@ -42,13 +42,9 @@ class SwitchToTeam
         return $response;
     }
 
-    protected function ensureUserHasCurrentTeam(User $user)
+    protected function ensureUserHasCurrentTeam(Request $request, User $user)
     {
-        if (
-            'team-invitations.accept' === Route::currentRouteName()
-            || 'profile.onboarding' === Route::currentRouteName()
-            || 'download' === Route::currentRouteName()
-        ) {
+        if ($request->get('onboarding') || 'download' === Route::currentRouteName()) {
             return;
         }
 
