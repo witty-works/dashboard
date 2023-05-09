@@ -148,7 +148,7 @@ workers:
         size: "S"
         commands:
             start: |
-                php artisan queue:work --queue=high,medium,low,default
+                php artisan queue:work --tries=100 --queue=high,medium,low,default
         disk: 256
         relationships:
             database: "rdbms:mysql"
