@@ -324,7 +324,7 @@
                 "lead_video": "",
                 "lead_image": [],
                 "example_image": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Age.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/50%20years%20and%20older.png",
                     "width": "605",
                     "height": "406",
                     "alt": " An illustration of Witty showing the phrase 'Our next lead communications should be a digital native [proficient in solutions].' The words brackets are shown as alternatives."
@@ -405,7 +405,7 @@
                 "lead_video": "",
                 "lead_image": [],
                 "example_image": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/young.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/25%20years%20and%20younger.png",
                     "width": "605",
                     "height": "401",
                     "alt": " An illustration of Witty showing the phrase 'Isn't she too young for the project?'.  'Shall we give her this opportunity to grow?' is proposed as an alternative."
@@ -490,7 +490,12 @@
                     "height": "1446",
                     "alt": "Illustration: A man in a suit with his arms akimbo The image title says Agentic language."
                 },
-                "example_image": [],
+                "example_image": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Agentic%20language.png",
+                    "width": "605",
+                    "height": "433",
+                    "alt": "An illustration of Witty showing the phrase ' In Q4, Brandon, our Head of Sales, out-performed competitors, growing total revenue [our sales team grew total revenue] by 53%.' The words in brackets are shown as alternatives."
+                },
                 "soft_explanation": "<p style=\"\"><span style=\"color: #000000;\">As we grow up, we learn to associate words like <\/span><em><span style=\"color: #000000;\">take charge<\/span><\/em><span style=\"color: #000000;\">, <\/span><em><span style=\"color: #000000;\">determined<\/span><\/em><span style=\"color: #000000;\">, or <\/span><em><span style=\"color: #000000;\">outperforming <\/span><\/em><span style=\"color: #000000;\">with men, power, and the pursuit of personal success. These words are called <\/span><em><span style=\"color: #000000;\">agentic<\/span><\/em><span style=\"color: #000000;\">. They put self-advancement over collaboration. But women and Generation Z are socialized to value collaboration. By avoiding agentic words, you help build an environment where all genders and ages feel they can thrive.<\/span><\/p>",
                 "hard_facts": "<p>In companies that favor agentic words, men are more likely to be considered leadership material. If agentic language is associated with leadership, can\u2019t women simply adopt agentic language to show their capacity to lead and succeed? Unfortunately, it\u2019s not that easy.<\/p>\n<p>Studies show that women who \u201cspeak agentic\u201d are judged more harshly and considered less likable than their male counterparts. In 3 out of 4 performance reviews, women are criticized for assertiveness in tone and language. This assertiveness double-bind is the <em>Goldilocks Dilemma<\/em>. Not catering to expectations of how women should speak adversely affects their access to promotions or career opportunities. And not speaking like leaders does, too.&nbsp;<\/p>\n<p>The opposite of agentic words are <a href=\"https:\/\/www.witty.works\/en\/subcategories\/communal-language\" rel=\"noopener\" target=\"_blank\">communal words<\/a>. By replacing agentic with communal concepts, organizations show they value team-minded thinking and mutual support. Which, in turn, raises their workplace appeal among people who identify as female and those who prefer working in teams.<\/p>",
                 "hero_figure": "https:\/\/www.witty.works\/hubfs\/Swithun%20Mason%20-%20MaonBreese%20-%20Quote%202%20-%20En%20(1).png,1536,864,",
@@ -905,7 +910,12 @@
                     "height": "525",
                     "alt": "Illustration: One person says, \"He? She?\" Another person says, \"They.\" A third person responds with a heart in rainbow colors."
                 },
-                "example_image": [],
+                "example_image": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Binary%20Pronouns.png",
+                    "width": "605",
+                    "height": "431",
+                    "alt": "An illustration of Witty showing the phrase 'If someone needs help,\u00a0he or she\u00a0[they] can always ask me.\u2019 The words in brackets are shown as alternatives."
+                },
                 "soft_explanation": "Many people use <em>he or she <\/em>and&nbsp;<em>her or him<\/em> in an honest effort to include all genders. But gender isn't binary, neither biologically nor socially. As a result, these promoun options exclude a large section of the gender spectrum and render it invisible. To signal you welcome all genders, address people directly with <em>you<\/em> or their name. You can share your pronouns inviting others to share theirs. You can use the singular they or use genderneutral options, such as <em>we<\/em>, <em>all<\/em>, <em>everyone<\/em>, or <em>people<\/em>.&nbsp;",
                 "hard_facts": "<p><strong>USA: <\/strong>According to a 2021 study by the Williams Institute, an estimated 1.2 million American adults aged between 18 and 60 identify as non-binary, making up 11% of the LGBTQ population in that age bracket. A 2020 survey by The Trevor Project found that 26% of LGBTQ youth (ages 13\u201324) in the U.S. identify as non-binary.<\/p>\n<p><strong>Brazil:<\/strong> A 2021 survey published in Scientific Reports found that 1.19% of Brazilian adults identify as non-binary.<\/p>\n<p><strong>Canada: <\/strong>In April 2022, Statistics Canada released findings from the 2021 census, making Canada the first country to ask a core question about gender identity, and found that 41,355 Canadians aged 15 and over identified as nonbinary<\/p>\n<p><strong>Switzerland: <\/strong>A 2021 survey found that 0.4% of adults in Switzerland describe themselves as non-binary. The survey of 2,690 Swiss residents was weighted to be reflective of the entire population.<\/p>\n<p>From: Wikipedia, <a href=\"https:\/\/en.wikipedia.org\/wiki\/Non-binary_gender\" rel=\"noopener\" target=\"_blank\">Non-binary gender <\/a><\/p>",
                 "hero_figure": "https:\/\/www.witty.works\/hubfs\/Singular%20They.png,1024,576,",
@@ -1444,7 +1454,12 @@
                     "height": "525",
                     "alt": "Illustration of a diverse group with 5 people of different ages, body shapes and ethnic background"
                 },
-                "example_image": [],
+                "example_image": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/DEIB.png",
+                    "width": "605",
+                    "height": "427",
+                    "alt": "An illustration of Witty showing the phrase 'We want to create a diversity-friendly [an atmosphere together where everyone feels safe and free to contribute] environment.' The words in brackets are shown as alternatives."
+                },
                 "soft_explanation": "Diversity, equity, inclusion, and belonging, DEIB for short, stand at the heart of a lively dialog that is broad and growing. Engaging people in meaningful DEIB conversations can drive empathy in an organization. It can raise awareness and garner support for an accepting and welcoming workplace. Building a common vocabulary around DEIB and feeling at home with DEIB concepts, helps avoid confusion and misunderstandings in conversations. And it can effect positive change.",
                 "hard_facts": "<p>Whether they're customers or employees, people feel striving for more diversity, equity, inclusion and belonging are important goals in both workplace culture and business. 38 percent of consumers are more likely to trust brands that emphasize diversity in their advertising. The likelihood to trust a diversity-minded brand is even higher among people with diverse backgrounds: Latinx+ (85%), People of Color (79%), Asian and Pacific Islanders (79%), LGBTQ (85%), millennials (77%), and teens (76%).<\/p>\n<p>In employer branding, a serious commitment to diversity, equity, inclusion, and belonging could secure future pipeline and candidate pools. Generation Z is clear on the values they expect future employers to have. In a Monster study, 83% pointed to a company\u2019s commitment to diversity and inclusion as an important factor when choosing an employer.<\/p>\n<p>People who identify as women, too, spotlight DEIB as a factor in their career choices. In a 2022 McKinsey study, women leaders were more than 1.5 times as likely as men at their level to have changed jobs because they wanted to work for a company more committed to DEI.<\/p>",
                 "hero_figure": "https:\/\/www.witty.works\/hubfs\/Testimonial%20Swithun%20of%20Mason%20Breese.png,1024,576,",
@@ -1599,7 +1614,12 @@
                     "height": "525",
                     "alt": "Illustration showing a person in pants who says, great, awesome, excellent, fantastic! All in upper case. A person in a skirt stands listening"
                 },
-                "example_image": [],
+                "example_image": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Exaggeration.png",
+                    "width": "605",
+                    "height": "407",
+                    "alt": "An illustration of Witty showing the phrase ' Trust us with your brand. We\u2019re the\u00a0best [We build trust]\u00a0in the business.' The words in brackets are shown as alternatives."
+                },
                 "soft_explanation": "The best! The greatest! Loud messages are everywhere. We\u2019re led to believe that joining the loud crowd will let us reach and convince readers. True, exaggeration grabs attention. It\u2019s also likely to damage our credibility. Social-media savvy Generation Z is especially quick to see through over-the-top claims. Keeping our messaging honest and straightforward helps&nbsp; people build trust and identify us as a reliable source.",
                 "hard_facts": "<p>Dramatizing, embellishing, overstating, and hyperbole aim to draw attention, impress, and influence. But audiences know: If something sounds too good to be true, it probably is. Exaggerations give statements an untrue ring, and they expose an underlying intention - manipulation. And this can negatively affect first impressions. Research shows audiences can read intentions behind over-exaggerations without falling for them.<br>In a bid to attract talent, companies are tempted to use hyperbolic missives about their achievements. This <em>bragging <\/em>can deter people from applying. Because they doubt the company\u2019s credibility \u2013 or feel they can\u2019t measure up. Another drawback of exaggerations: They challenge people to prove us wrong.&nbsp;<br>When we want to make a point or communicate an idea that we feel is important, we look for ways to amplify our message. When used judiciously, one well-placed exaggeration can help make our argument more memorable. Hyperbole has its place in making a story or statement entertaining. But if you want to connect and build relationships and trust in a business environment, understatement, verifiable arguments, and specific language are the way to go.<\/p>",
                 "hero_figure": "https:\/\/www.witty.works\/hubfs\/76%25%20see%20advertising%20as%20exaggerated%20EN.png,1024,576,",
@@ -1917,7 +1937,12 @@
                     "height": "409",
                     "alt": "Illustration: A man in a suit with his arms akimbo stands in the spotlight surrounded by a diverse crowd in the shadows"
                 },
-                "example_image": [],
+                "example_image": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Generic%20masculine.png",
+                    "width": "605",
+                    "height": "457",
+                    "alt": "An illustration of Witty showing the phrase ' when\u00a0a doctor [doctors]\u00a0is on non-resident call,\u00a0he [they]\u00a0is required to provide patient treatment.' The words in brackets are shown as alternatives."
+                },
                 "soft_explanation": "<p style=\"\"><span style=\"color: #000000;\">A superhero, a surgeon, and a priest walk into a bar*. If you\u2019re picturing three men, your brain has tripped over gender stereotypes. These stereotypes are triggered by the traditional gender images around us. It takes our brain some backtracking, or a nudge, to realize these three could be women, non-binary, or a mixed group. You have several options to nudge brains into including all genders (see below).<\/span><\/p>\n<p><span style=\" color: #000000;\"><span style=\"\">*The punchline? Is \u201cOuch.\u201d <\/span><span style=\" color: #000000;\">\ud83e\udd71<\/span><\/span><\/p>",
                 "hard_facts": "<p style=\"\"><span style=\"color: #000000;\">The idea of men as the human default is deeply embedded in our culture. This male bias informs our legal language. It shapes how our brain reads the gender of roles like <em>officer<\/em> or <em>leader<\/em>. This bias is reinforced by language and imagery that draws on gender stereotypes. At the same time, our brain\u2019s tendency toward male reading of functions undercuts the representation of women and gender non-conforming people. And it limits people to traditional gender roles, gender identities, and gender expressions. Our gender reading of words can shift as more people take on non-traditional gender roles. And there is evidence that the language we choose to use not only reflects but creates gender perception. A 2019 study showed that gender-neutral pronouns increase positive attitudes toward women and LGBTQIA+ people. Language is the key to making inclusion happen.<\/span><\/p>\n<h3 style=\"\"><span style=\"color: #000000;\">What you can do to <\/span><span style=\"color: #000000;\">include all gender possibilities<\/span><\/h3>\n<p>1 - Focus on the activity.&nbsp;<br>2 - Avoid words with a gendered undertone like <em>rockstar<\/em>, <em>guru<\/em>, or <em>superhero<\/em>.<br>3 - Rephrase with plurals or gender-neutral words.&nbsp;<br>4 - Nudge brains back on track with the gender-neutral <em>they<\/em>.<\/p>",
                 "hero_figure": "https:\/\/www.witty.works\/hubfs\/63.9%25%20of%20officers%20are%20male%20EN%20.png,1024,576,",
@@ -2003,7 +2028,12 @@
                     "height": "525",
                     "alt": "Illustration of a diverse group of people of diffent gender identities, ages, ethnic backgrounds, and body shapes who are all LGBTQUIA+"
                 },
-                "example_image": [],
+                "example_image": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Gender%20binary.png",
+                    "width": "605",
+                    "height": "376",
+                    "alt": "An illustration of Witty showing the phrase 'Ladies and gentlemen [Hello everyone].\u2019 The words in brackets are shown as alternatives."
+                },
                 "soft_explanation": "<p>From baby colors to family roles to segregated bathrooms, the idea of a two-gender world touches every aspect of society. We are taught to presume a gender based on biology. Once assigned, this gender becomes part of who we are to others. It sets expectations: how to look, how to behave, and who to love. And it stays - for life.<\/p>\n<p>But our understanding of the gender spectrum is growing in leaps and bounds. Society is changing. Help all gender identities feel safe and free to express themselves. Share your pronouns. And ask yourself, \"What would I write if this person wasn\u2019t a specific gender?\"<\/p>",
                 "hard_facts": "<p>The gender binary is a social and cultural construct. It classifies all people into one of two genders - female or male. These genders are assigned at birth based on a child's biological sex. Societal norms set gender-specific expectations for looks, clothing, and behavior. They determine how a gender should move and speak, their role in public and in private, and the gender they should feel attracted to. Non-conforming gender identities and expressions are noted \u2013 and judged, even penalized.<\/p>\n<p>The gender binary ignores the complex reality of gender. A person's internal sense of their gender can change, not only throughout their life but throughout the day. A person may feel their body, assigned cisgender, or social gender does not reflect how they themself identify, express, or experience their gender.&nbsp;<\/p>\n<p>The more we learn about gender, the less we know. It's younger generations who raise awareness of gender diversity. Younger people are more accepting of gender identities beyond the binary. They're more likely to experience their own gender as fluid. And Gen Z are starting to reshape the workplace. Studies indicate, they expect future employers to share their values and reflect their diversity. And that includes gender identities.<\/p>",
                 "hero_figure": "https:\/\/www.witty.works\/hubfs\/Witty%20Works%20Learning%20bite%20non-binary%20ipsos.png,1024,576,",
@@ -2267,7 +2297,7 @@
                 "lead_video": "",
                 "lead_image": [],
                 "example_image": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/deaf%20ear.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Hearing.png",
                     "width": "605",
                     "height": "404",
                     "alt": "An illustration of Witty showing the phrase 'They used to turn a deaf ear to [ignore] such requests'. The words in brackets are shown as alternatives."
@@ -2446,7 +2476,12 @@
                     "height": "525",
                     "alt": "Witty Works illustration: One person says,\" That's how we move the needle on sales.\" The other person says, \"Great\" but secretly wonders, \"Needles?\" "
                 },
-                "example_image": [],
+                "example_image": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/empty%20words-1.png",
+                    "width": "605",
+                    "height": "399",
+                    "alt": "An illustration of Witty showing the phrase 'Sure, we can identify  easy low-hanging fruits [opportunities].' The words in brackets are shown as alternatives."
+                },
                 "soft_explanation": "Empty words are everywhere. They promise an <em>attractive salary<\/em>, tempt us with a <em>flat hierarchy<\/em>, or offer <em>personalized customer experiences<\/em>. These words are so vague and over-used, they\u2019ve become meaningless. Empty words bore and annoy us. And the vagueness can feel calculated - like hiding because someone can\u2019t or won\u2019t be tangible. You want to help people connect with your message in a meaningful way? Be authentic. Be specific. Use numbers and vivid examples.",
                 "hard_facts": "<p>While empty words and generic expressions are frustrating, you may feel they\u2019re mostly harmless. They\u2019re not. They affect overall business success and the bottom line.<\/p>\n<ul>\n<li>Empty words limit your talent pipeline. Vagueness in job ads puts off qualified people who prefer tangibility and transparency. Why invest time in applying if a company isn\u2019t upfront about the facts you need to make an informed decision?<\/li>\n<li>Tired clich\u00e9s render your brand invisible. With generic messages out of the blah-blah dictionary of business, your marketing, advertising, and talent acquisition sound like everybody else. How can audiences see what makes you different?<\/li>\n<li>Foggy company values, vision, and mission leave people cold \u2013 or confused about their purpose. Working together toward shared milestones is challenging when the overall goal and purpose remain obscure. And corporate speak won't tell you how to get there.<\/li>\n<\/ul>\nVivid language and specific messages help people see you, relate to you, and understand what\u2019s essential to you.<br>\n<p>&nbsp;<\/p>",
                 "hero_figure": "https:\/\/www.witty.works\/hubfs\/41%25%20feel%20left%20out%20and%20disengaged%20by%20excessive%20use%20of%20business%20jargon.png,1024,576,",
@@ -2604,7 +2639,12 @@
                     "height": "450",
                     "alt": "Illustration of a diverse group with 5 people of different ages, body shapes and ethnic background"
                 },
-                "example_image": [],
+                "example_image": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Traditional%20leadership.png",
+                    "width": "605",
+                    "height": "367",
+                    "alt": "An illustration of Witty showing the phrase 'We'll meet the new\u00a0boss [supervisor] later.' The words in brackets are shown as alternatives."
+                },
                 "soft_explanation": "<p>Throughout history, ideas of an effective leader matched ideas of masculine traits \u2013 single-minded, competitive, and authoritarian. People with feminine traits were not deemed leadership material. But our ideas of what we need from leaders today are evolving. Avoiding male-leader stereotypes helps build a space where people with the ability to be supportive, to encourage, and inspire us to work together toward a common cause can take on leadership responsibilities, regardless of their gender identity.<\/p>",
                 "hard_facts": "<p>Much of the discussion of and research into successful leadership styles revolves around gender stereotypes \u2013 society\u2019s expectation of what constitutes masculine or feminine traits and behaviors. Numerous studies show that the biggest difference between women leaders and their male counterparts isn\u2019t how effective they are. The biggest gap is in how others see and rate their respective effectiveness.<\/p>\n<p>The growing complexity and faster pace in the corporate environments of the digital age changes what organizations and employees need to be productive. And these changing needs are reshaping leadership. Driven by the demand for more innovation and close collaboration in cross-disciplinary teams, organizations are becoming less hierarchical. And employees need empowerment as they continuously adapt to new situations. At the same time, evidence suggests leadership focused on transformation is becoming more communal, inclusive, and people-centered \u2013 qualities stereotyped as feminine. And that women leaders are adopting more behaviors stereotyped as masculine. The downside to this gendered perspective? It can pigeonhole women and people who take a collaborative approach into managing people and teams at the cost of rising to C-level positions. A trend that can affect an organization's overall business outcome.<\/p>\n<p>By raising awareness for the outdated ideas about leadership and framing leadership in gender-neutral terms, you can contribute to a more gender-diverse leadership environment and support a company\u2019s overall success and the bottom line.<\/p>",
                 "hero_figure": "https:\/\/www.witty.works\/hubfs\/In%20the%20UK%20for%20every%2010%20percent%20increase%20in%20gender%20diversity%20on%20the%20senior-executive%20team.png,800,400,",
@@ -2893,7 +2933,12 @@
                 "sub_head": "",
                 "lead_video": "",
                 "lead_image": [],
-                "example_image": [],
+                "example_image": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Mental%20wellbeing-1.png",
+                    "width": "605",
+                    "height": "386",
+                    "alt": "An illustration of Witty showing the phrase 'Mason is so OCD [perfectionist] when it comes to filing.' The words in brackets are shown as alternatives."
+                },
                 "soft_explanation": "",
                 "hard_facts": "",
                 "hero_figure": "",
@@ -3419,7 +3464,12 @@
                     "height": "525",
                     "alt": "Illustration of a man and a woman with speech bubbles. One speech bubble shows a tangle of lines. The other speech bubble show a neatly roled up line "
                 },
-                "example_image": [],
+                "example_image": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Plain%20English.png",
+                    "width": "605",
+                    "height": "455",
+                    "alt": "An illustration of Witty showing the phrase 'In the light of the upcoming launch of our new series of aircraft engines.' \u2018We're launching our new series of aircraft engines soon.\u00a0\u2019 is shown as alternatives."
+                },
                 "soft_explanation": "Every day, we have to read and understand large amounts of information: emails, reports, presentations, and manuals. We share complex subject matter in teams where many speak English as a second language. And more often than not, we're in a hurry. We don't have time to read text twice to make sure we understand all the information it contains. But misunderstandings can be frustrating - and expensive. With clear and straightforward language, you help everyone collaborate effectively, keep engaged and stay productive.",
                 "hard_facts": "<p><span style=\"\">Plain English is a style of writing that keeps the needs of listeners and readers in mind. The goal is to avoid misunderstandings and make sure everyone understands text the first time they hear or read it. You want people to grasp information quickly and take informed action? Plain and straightforward language is a great way to achieve that and manage language diversity at the same time.<\/span><\/p>\n<p><strong><span style=\"\">Plain English is an important for smooth collaboration in environments where\u2026<\/span><\/strong><\/p>\n<ul>\n<li><span style=\"\">People who use English as a second language work together.<\/span><\/li>\n<li><span style=\"\">People with and without language and linguistic barriers exchange information.<\/span><\/li>\n<li><span style=\"\">People must read and act on information quickly.<\/span><\/li>\n<li><span style=\"\">People read in stressful or distracting situations.<\/span><\/li>\n<li><span style=\"\">People are in a hurry.<\/span><\/li>\n<\/ul>\n<p><strong><span style=\"\">What you can do<\/span><\/strong><\/p>\n<ul>\n<li><span>Use everyday words and expressions. <\/span><\/li>\n<li><span>Keep language clear and easy to understand.<\/span><\/li>\n<li><span>Keep sentences short: Use up to 15\u201320 words.<\/span><\/li>\n<li><span>Avoid jargon.<\/span><\/li>\n<li><span>Write out acronyms and abbreviations. <\/span><\/li>\n<li><span>Use \"you\" and the active voice. <\/span><\/li>\n<li><span>Give instructions in clear calls to action.<\/span><\/li>\n<\/ul>",
                 "hero_figure": "https:\/\/www.witty.works\/hubfs\/Making%20a%20bigger%20impact%20for%20inclusion%20together..png,1024,576,",
@@ -3789,7 +3839,12 @@
                 "sub_head": "",
                 "lead_video": "",
                 "lead_image": [],
-                "example_image": [],
+                "example_image": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Speech%20ability.png",
+                    "width": "605",
+                    "height": "386",
+                    "alt": "An illustration of Witty showing the phrase,\u2019 The starter is sputtering [misfiring] again.' The words in brackets are shown as alternatives."
+                },
                 "soft_explanation": "",
                 "hard_facts": "",
                 "hero_figure": "",
@@ -3860,7 +3915,12 @@
                 "sub_head": "",
                 "lead_video": "",
                 "lead_image": [],
-                "example_image": [],
+                "example_image": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Sports%20terms.png",
+                    "width": "605",
+                    "height": "427",
+                    "alt": "An illustration of Witty showing the phrase 'Purchasing is throwing us a curveball [demanding greater concessions than we can make].' The words in brackets are shown as alternatives."
+                },
                 "soft_explanation": "",
                 "hard_facts": "",
                 "hero_figure": "",
@@ -4022,7 +4082,12 @@
                     "height": "525",
                     "alt": "Illustration of pairs of men and women as astronauts, artists, care workers, professors, construction workers"
                 },
-                "example_image": [],
+                "example_image": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Jobs.png",
+                    "width": "605",
+                    "height": "445",
+                    "alt": "An illustration of Witty showing the phrase ' Software engineer [Software development , Software engineering,  Software engineer \u2013 all genders].' The words in brackets are shown as alternatives."
+                },
                 "soft_explanation": "We use job titles to understand if we\u2019re a good fit for the position a company is looking to fill. And that includes our gender. As many as 79% of jobs ads imply, if unintentionally, the gender of the person expected to do that job. Childhood role models, too, influence who we see when we think of a job. These biases limit candidate pools, pipelines - and the career options and prospects of people of all genders and backgrounds. For an inclusive approach, explore more gender-neutral ways of describing areas of responsibility.",
                 "hard_facts": "<p>Research suggests that we develop gender stereotypes about occupations at a very early age. Evidence of this bias appears in the speech of children as young as 3 years old. It influences whether we can picture our grown-up self in a particular job and thus our career choices. And it affects how we read job titles, not as reference to an advertised role but as an expression of the level of inclusiveness of a company\u2019s culture. How job titles are phrased subtly influences our perception of anticipated career prospects as well as our sense of belonging. They can signal how open a company is to gender-inclusive promotion practices, how much prestige it attaches to a position, and whether it values diverse perspectives and workplace flexibility. Findings suggest that stereotypically male job titles may lead women to assume the company employs more men than women and that women would not be a good fit for that position. In short, they make a job look less appealing to them.<br>Replacing gender-coded titles with more gender-neutral options across the organization can be a powerful signal. It communicates to staff and potential candidates that a company is serious about promoting diversity, equality, inclusion, and belonging. And it shows awareness of and the willingness to address the organization-level mechanisms that reinforce and maintain existing inequalities at work.<\/p>",
                 "hero_figure": "https:\/\/www.witty.works\/hubfs\/witty%20works%20learning%20bite%20job%20titles%20UK%20licensed%20doctors.png,1024,576,",
@@ -4093,8 +4158,8 @@
                 "hs_name": "Transphobia",
                 "canonical_url": "https:\/\/www.witty.works\/en\/categories\/gender-orientation\/transphobia",
                 "is_active": "1",
-                "name": "Stellt eine transfeindliche Verunglimpfung dar",
-                "short_explanation": "Stellt eine transfeindliche Verunglimpfung dar",
+                "name": "Addresses trans hostile slurs and hate speech",
+                "short_explanation": "Constitutes a trans hostile slur",
                 "sub_head": "",
                 "lead_video": "",
                 "lead_image": [],
@@ -4124,7 +4189,7 @@
                 "hs_name": "Transphobie",
                 "canonical_url": "https:\/\/www.witty.works\/de\/kategorien\/geschlecht-orientierung\/transphobie",
                 "is_active": "1",
-                "name": "Stellt eine transfeindliche Verunglimpfung dar",
+                "name": "Umfasst transfeindliche Verunglimpfungen und Hassrede",
                 "short_explanation": "Stellt eine transfeindliche Verunglimpfung dar",
                 "sub_head": "",
                 "lead_video": "",
