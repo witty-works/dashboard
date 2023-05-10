@@ -82,6 +82,17 @@
         @endif
         @foreach ($list as $ddd)
         @if(isset($diversityDimensionDrivers[$ddd]['translation']) && isset($dimensions[$ddd]))
+        @php
+        $checkbox = $proficiencyLevel === 'openly_discriminating' || !$model->subscribed();
+        if ($proficiencyLevel === 'openly_discriminating') {
+            $disabled = true;
+            $minValue = \App\Models\LanguageGuidelines::BASIC_ENABLED;
+        } else if ($force) {
+            $minValue = \App\Models\LanguageGuidelines::teamCategoryValue($model, $ddd);
+        } else {
+            $minValue = \App\Models\LanguageGuidelines::DISABLED;
+        }
+        @endphp
         <div class="guidelines-form-section-ident lato-small-text-p">
             @php
                 $label = '<a href="'.$diversityDimensionDrivers[$ddd]['translation']['canonical_url'].'" />';
@@ -89,13 +100,13 @@
                 $label.= '</a>';
                 $label.= ' - '.$diversityDimensionDrivers[$ddd]['translation']['name'];
             @endphp
-            @if($proficiencyLevel === 'openly_discriminating' || !$model->subscribed())
+            @if($checkbox)
             <x-jet-checkbox
                 id="dimensions['{{$ddd}}']"
                 value="1"
                 :label="$label"
                 wire:model.defer="dimensions.{{$ddd}}"
-                :disabled="(bool)$disabled"
+                :disabled="$minValue === 1 && (bool)$disabled"
             />
             @else
             <x-triple-toggle
@@ -104,7 +115,8 @@
                 :value="$dimensions[$ddd]"
                 :label="$label"
                 wire:model.defer="dimensions.{{$ddd}}"
-                :disabled="(bool)$disabled"
+                :disabled="$minValue === 2 && (bool)$disabled"
+                :minValue="$minValue"
             />
             @endif
 
@@ -118,10 +130,8 @@
         @endforeach
     </x-slot>
 
-    @if(!\App\Models\LanguageGuidelines::isForcedOnTeam($model, 'disabled_categories', $category))
     <x-slot name="actions">
         @include('partials/save_cancel_action')
     </x-slot>
-    @endif
 
 </x-jet-form-section>

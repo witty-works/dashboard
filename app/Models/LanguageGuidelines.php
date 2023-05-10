@@ -274,6 +274,25 @@ class LanguageGuidelines extends Model
         return $teamGuidelines->{$section . '_force'} ? 'locked' : false;
     }
 
+    public static function teamCategoryValue(User $user, $category)
+    {
+        $teamGuidelines = self::getTeamGuidelines($user);
+
+        if (!$teamGuidelines) {
+            return false;
+        }
+
+        if (in_array('advanced_' . $category, $teamGuidelines->disabled_categories)) {
+            if (in_array($category, $teamGuidelines->disabled_categories)) {
+                return self::DISABLED;
+            }
+
+            return self::BASIC_ENABLED;
+        }
+
+        return self::ADVANCED_ENABLED;
+    }
+
     public static function doUserTeamSettingsDiffer($user, $type)
     {
         if (!$user->currentTeam) {

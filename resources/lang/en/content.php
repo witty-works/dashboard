@@ -408,4 +408,5 @@ This is a spelling mistacke.',
     'consultant' => 'DEI consultant',
     'recommended' => 'Recommdended by friend or colleague',
     'search_engine' => 'Search engine',
+    'triple_toggle_no_disable' => 'Click to switch from \'on\' to \'advanced\', \'off\' removed by team administators',
 ];
