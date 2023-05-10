@@ -15,6 +15,13 @@ abstract class AbstractDeleteFromNlpApi implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    /**
+     * The number of times the job may be attempted.
+     *
+     * @var int
+     */
+    public $tries = 50;
+
     public function deleteRules($url)
     {
         $endpoint = config('app.nlp_api_endpoint');
