@@ -106,16 +106,6 @@
     </x-slot>
 
     <x-slot name="actions">
-        <div class="guidelines-form-section--apply-for-all">
-            <x-jet-checkbox
-                id="dimensions_force"
-                value="1"
-                :label="__('guidelines.set_for_all')"
-                wire:model.defer="dimensions_force"
-                :disabled="!$model->subscribed()"
-            />
-        </div>
-
         @if (Auth::user()->hasTeamPermission($model, 'edit_guidelines'))
         @include('partials/save_cancel_action')
         @endif

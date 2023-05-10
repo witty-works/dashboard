@@ -123,7 +123,6 @@ Route::group(
 
                     Route::redirect('/user/language', '/user/language/customize-witty')->name('user.language-guidelines');
                     Route::get('/user/language/customize-witty', [UserGuidelinesController::class, 'categorySettings'])->name('user.category-settings');
-                    Route::get('/user/language/customize-witty/reset', [UserGuidelinesController::class, 'resetCategorySettings'])->name('user.category-settings-reset');
                     Route::get('/user/language/language-settings', [UserGuidelinesController::class, 'languageSettings'])->name('user.language-settings');
                     Route::get('/user/language/language-settings/reset', [UserGuidelinesController::class, 'resetLanguageSettings'])->name('user.language-settings-reset');
                     Route::get('/user/language/dictionary', [UserGuidelinesController::class, 'termReplacements'])->name('user.dictionary');
