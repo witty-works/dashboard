@@ -15,6 +15,13 @@ abstract class AbstractSyncToNlpApi implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    /**
+     * The number of times the job may be attempted.
+     *
+     * @var int
+     */
+    public $tries = 50;
+
     public function updateRules($url, $data)
     {
         $endpoint = config('app.nlp_api_endpoint');
