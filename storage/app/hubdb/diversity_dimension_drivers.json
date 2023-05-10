@@ -3065,7 +3065,12 @@
                 "sub_head": "",
                 "lead_video": "",
                 "lead_image": [],
-                "example_image": [],
+                "example_image": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/F%C3%A4higkeiten.png",
+                    "width": "671",
+                    "height": "483",
+                    "alt": "Eine Illustration von Witty des Satzes 'Eine unserer ersten Ma\u00dfnahmen war die Einrichtung von [behindertengerechten] Toiletten.'. Als Alternative f\u00fcr den Begriff in Klammern wird 'barrierefreien' vorgeschlagen. "
+                },
                 "soft_explanation": "",
                 "hard_facts": "",
                 "hero_figure": "",
