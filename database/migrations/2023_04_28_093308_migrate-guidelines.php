@@ -117,7 +117,7 @@ return new class extends Migration
 
         // gendered_roles_format / singular_they
         if ($model->subscribed()) {
-            if (in_array($guidelines->gendered_roles_format, GuidelinesInterface::GENDERED_ROLES_FORMAT_ADVANCED)) {
+            if (in_array($guidelines->gendered_roles_format, GuidelinesInterface::GENDERED_ROLES_FORMAT)) {
                 $key = array_search('advanced_gendered_denominations_ending', $disabledCategories);
                 if ($key) {
                     array_splice($disabledCategories, $key, 1);
