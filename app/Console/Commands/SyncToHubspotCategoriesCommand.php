@@ -193,6 +193,20 @@ class SyncToHubspotCategoriesCommand extends Command
                         $data['categories'][$row['category']]['diversity_dimension_drivers'][$row['proficiency_level']][] = $row['name'];
                     }
 
+                    if (!empty($row['translations'])) {
+                        foreach ($row['translations'] as $lang => $translation) {
+                            $canonicalURL = $lang === 'en'
+                                ? 'https://www.witty.works/en/categories/'
+                                : 'https://www.witty.works/de/kategorien/';
+
+                            $canonicalURL .= $data['categories'][$row['category']]['translations'][$lang]['hs_path'];
+                            $canonicalURL .= '/' . $translation['hs_path'];
+                            if ($translation['canonical_url'] != $canonicalURL) {
+                                $this->warn("Canonical url mismatch: {$translation['canonical_url']} vs. {$canonicalURL}");
+                            }
+                        }
+                    }
+
                     if (isset($data['categories'][$row['category']]['name'])) {
                         $row['category'] = $data['categories'][$row['category']]['name'];
                     } elseif (empty($row['category'])) {
@@ -202,9 +216,24 @@ class SyncToHubspotCategoriesCommand extends Command
                     }
                 }
 
-                if ($alias === 'categories' && !empty($row['diversity_dimension_drivers'])) {
-                    foreach (array_keys($row['diversity_dimension_drivers']) as $proficiencyLevel) {
-                        sort($row['diversity_dimension_drivers'][$proficiencyLevel]);
+                if ($alias === 'categories') {
+                    if (!empty($row['diversity_dimension_drivers'])) {
+                        foreach (array_keys($row['diversity_dimension_drivers']) as $proficiencyLevel) {
+                            sort($row['diversity_dimension_drivers'][$proficiencyLevel]);
+                        }
+                    }
+
+                    if (!empty($row['translations'])) {
+                        foreach ($row['translations'] as $lang => $translation) {
+                            $canonicalURL = $lang === 'en'
+                                ? 'https://www.witty.works/en/categories/'
+                                : 'https://www.witty.works/de/kategorien/';
+
+                            $canonicalURL .= $translation['hs_path'];
+                            if ($translation['canonical_url'] != $canonicalURL) {
+                                $this->warn("Canonical url mismatch: {$translation['canonical_url']} vs. {$canonicalURL}");
+                            }
+                        }
                     }
                 }
 
@@ -240,7 +269,6 @@ class SyncToHubspotCategoriesCommand extends Command
 
     protected function cleanRow($row)
     {
-        unset($row['hs_path']);
         unset($row['hs_created_at']);
         unset($row['hs_updated_at']);
         unset($row['hs_child_table_id']);
