@@ -13,7 +13,7 @@ use Illuminate\Console\Command;
 
 class StoreWritingStreakKpiCommand extends Command
 {
-    protected $signature = 'writing-streak-kpi {--ids=} {--team-ids=} {--date=} {--e}';
+    protected $signature = 'writing-streak-kpi {--date=} {--e}';
 
     protected $description = 'Store writing streak KPI';
 
