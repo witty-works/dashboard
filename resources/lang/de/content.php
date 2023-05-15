@@ -412,4 +412,5 @@ Dies ist ein Rechtschreipfehler.',
     'consultant' => 'DEI-Beratung',
     'recommended' => 'Empfohlen durch bekannte Person',
     'search_engine' => 'Suchmaschine',
+    'you_explored' => 'Du hast',
 ];

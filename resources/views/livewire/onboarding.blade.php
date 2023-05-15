@@ -77,7 +77,7 @@
                         <x-jet-input-error for="request_invite" class="mt-2" />
                     </div>
                 </div>
-                @elseif($request_invite === null && $user->isSharedEmailAccount())
+                @elseif($request_invite === null && $user && $user->isSharedEmailAccount())
                 <div class="w-full col-span-6 sm:col-span-4 margin-bottom">
                     <x-jet-label for="company_name" value="{!! __('content.company_name') !!}" />
 
