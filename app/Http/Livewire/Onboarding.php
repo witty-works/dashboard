@@ -23,11 +23,16 @@ class Onboarding extends Component
      */
     public function mount($user)
     {
-        $this->user = $user;
-        $this->showingModal = !$user->hasCompletedOnboarding();
-
         $this->users = null;
         $this->request_invite = null;
+        $this->showingModal = false;
+        $this->user = $user;
+        if (!$user) {
+            return;
+        }
+
+        $this->showingModal = !$user->hasCompletedOnboarding();
+
         if (
             !$user->invitations->count()
             && (!$user->currentTeam
