@@ -4,13 +4,21 @@
             <div class="wittyworks-page lg:ml-20">
                 @include('partials.banners')
                 <div class="ibarra-sub-title-h1 margin-top">
+                    @if(request()->get('onboarding'))
+                    {{ __('content.witty_editor_try_out') }}
+                    @else
                     {{ __('content.witty_editor') }}
+                    @endif
                 </div>
                 
                 <div>
                     <div class="py-10">
-                        <div class="w-full col-span-6 sm:col-span-4 margin-bottom">
+                        <div class="w-full col-span-6 sm:col-span-4 margin-bottom flex">
+                            @if(request()->get('onboarding'))
+                            {!! __('content.witty_editor_onboarding_description') !!}
+                            @else
                             {!! __('content.witty_editor_description') !!}
+                            @endif
                         </div>
 
                         <link rel='stylesheet' type='text/css' href='https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css' />
@@ -19,7 +27,11 @@
                         <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js'></script> 
 
                         <div id="witty_editor">
+                            @if(request()->get('onboarding'))
+                            {!! nl2br(__('content.witty_editor_example_text')) !!}
+                            @else
                             {!! clean(Request::get('content')) !!}
+                            @endif
                         </div>
 
                         <script type="text/javascript">
@@ -75,6 +87,7 @@
                                 attribution: false,
                                 documentReady: true,
                                 spellcheck: false,
+                                enter: FroalaEditor.ENTER_BR,
                                 toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'fontSize', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'insertLink', 'clearFormatting', 'undo', 'redo', 'copy', 'example', 'help'],
                                 toolbarButtonsMD: ['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'fontSize', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'insertLink', 'clearFormatting', 'undo', 'redo', 'copy', 'example', 'help'],
                                 toolbarButtonsSM: ['fullscreen', 'bold', 'underline', 'strikeThrough', 'fontSize', 'insertLink', 'undo', 'redo', 'copy', 'example', 'help'],

@@ -85,9 +85,6 @@ Route::group(
 
                 Route::get('/subscribe', [StripeController::class, 'subscribe'])->name('stripe.subscribe');
 
-                Route::get('/user/onboarding', [UserProfileController::class, 'onboarding'])
-                    ->name('profile.onboarding');
-
                 Route::post('/user/onboarding', [UserProfileController::class, 'storeOnboarding'])
                     ->name('profile.onboarding.store');
 
