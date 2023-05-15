@@ -403,4 +403,6 @@ Dies ist ein Rechtschreipfehler.',
     'example' => 'Beispiel',
     'open' => 'Öffnen',
     'triple_toggle' => 'Klicken Sie mehrmals, um von \'Aus\' zu \'Ein\' zu \'Erweitert\' zu wechseln',
+    'witty_editor_onboarding_description' => '<b>Klicke in das Feld unten</b><img src="https://www.witty.works/hubfs/arrow-1.png" style="transform: scaleX(-1);" width="70" alt="" /> und dann auf ein unterstrichenes Wort, um Alternativen angezeigt zu bekommen..',
+    'witty_editor_try_out' => 'Probiere Witty aus',
 ];

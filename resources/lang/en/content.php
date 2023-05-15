@@ -398,4 +398,6 @@ This is a spelling mistacke.',
     'example' => 'Example',
     'open' => 'Open',
     'triple_toggle' => 'Click multiple times to switch from \'off\' to \'on\' to \'advanced\'',
+    'witty_editor_onboarding_description' => '<b>Click in the document below</b><img src="https://www.witty.works/hubfs/arrow-1.png" style="transform: scaleX(-1);" width="70" alt="" /> and then click on an underlined word to see alternatives.',
+    'witty_editor_try_out' => 'Try out Witty',
 ];
