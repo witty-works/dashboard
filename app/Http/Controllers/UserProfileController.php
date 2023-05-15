@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\Hubspot;
 use App\Jobs\SyncUserToNlpApi;
 use App\Mail\TeamInvitationRequest as MailTeamInvitationRequest;
 use App\Models\LanguageGuidelines;
@@ -14,50 +13,16 @@ use Laravel\Jetstream\Http\Controllers\Livewire\UserProfileController as BaseUse
 
 class UserProfileController extends BaseUserProfileController
 {
-    public function onboarding(Request $request)
-    {
-        $user = $request->user();
-        if (empty($user)) {
-            return redirect()->route('root');
-        }
+    const HOW_DID_YOU_FIND = [
+        '' => 'content.please_select',
+        'search_engine' => 'content.search_engine',
+        'recommended' => 'content.recommended',
+        'social_media' => 'content.social_media',
+        'blog' => 'content.blog',
+        'consultant' => 'content.consultant',
+        'other' => 'content.other'
+    ];
 
-        $users = null;
-        $requestInvite = null;
-        if (
-            !$user->invitations->count()
-            && (!$user->currentTeam
-                || $user->currentTeam->getTotalUserCount() <= 1
-            )
-        ) {
-            try {
-                $hubspot = new Hubspot();
-                $company = $hubspot->findCompanyByUser($user);
-            } catch (\Exception $e) {
-            }
-
-            if (!empty($company)) {
-                if (!empty($company['properties']['name'])) {
-                    $user->currentTeam->name = $company['properties']['name'];
-                    $user->currentTeam->save();
-                }
-
-                $users = $this->getCompanyUsers($user);
-                $requestInvite = false;
-                foreach ($users as $companyUser) {
-                    if ($companyUser->teamRole($companyUser->currentTeam)->key !== 'user') {
-                        $requestInvite = true;
-                        break;
-                    }
-                }
-            }
-        }
-
-        return view('profile.onboarding', [
-            'user' => $request->user(),
-            'users' => $users,
-            'request_invite' => $requestInvite,
-        ]);
-    }
 
     public function storeOnboarding(Request $request)
     {
@@ -66,13 +31,17 @@ class UserProfileController extends BaseUserProfileController
             $validated = $request->validate([
                 'role' => 'required|in:executive,lead,employee',
                 'languages' => 'nullable',
-                'company_name' => 'nullable',
+                'company_name' => 'nullable|max:100',
+                'how_did_you_find' => 'nullable|in:'.implode(',', array_keys(self::HOW_DID_YOU_FIND)),
                 'request_invite' => 'boolean',
             ]);
 
             $user->role = $validated['role'];
             if (!empty($validated['company_name'])) {
                 $user->company_name = $validated['company_name'];
+            }
+            if (!empty($validated['how_did_you_find'])) {
+                $user->how_did_you_find = $validated['how_did_you_find'];
             }
             $user->save();
 

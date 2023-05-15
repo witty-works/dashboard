@@ -25,11 +25,16 @@
         <!-- Scripts -->
         @include('partials/sentry')
         <script src="{{ mix('js/app.js') }}" defer></script>
-        @include('partials/hubspot', ['user' => Auth::user()])
+        @php
+            $user = Auth::user();   
+        @endphp
+        @include('partials/hubspot', ['user' => $user])
         @include('partials/posthog')
     </head>
     <body class="font-sans antialiased">
         @include('partials/gtm-body')
+        @livewire('onboarding', ['user' => $user])
+
         <x-jet-banner />
 
         <div>
