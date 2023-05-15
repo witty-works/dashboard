@@ -307,6 +307,15 @@ class User extends Authenticatable implements MustVerifyEmail
         return Kpi::getWritingStreakPast30Days($this);
     }
 
+    public function getCompanyUsers()
+    {
+        return User::where('email', '!=', $this->email)
+            ->where('id', '!=', $this->id)
+            ->where('current_team_id', '!=', $this->team_id)
+            ->where('email', 'LIKE', '%@' . $this->getEmailDomain())
+            ->get();
+    }
+
     public function getHubspotCompanyUserCount()
     {
         return self::where('hubspot_company_id', $this->hubspot_company_id)->count();
