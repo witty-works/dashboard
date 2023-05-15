@@ -23,7 +23,6 @@
 
         @auth
         <!-- LOGGED IN -->
-        @if($user->hasCompletedOnboarding())
         <div class="wittyworks-navigation-top-half">
             @if ($team_edit)
             <div class="wittyworks-navigation-account-toggle-wrapper">
@@ -113,7 +112,6 @@
             </div>
             @endif
         </div>
-        @endif
 
         @if(config('lumki.show_lumki') || app('impersonate')->isImpersonating())
         @lumki
@@ -124,12 +122,10 @@
                 <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/editor.svg') }}" alt="" />
                 {{ __('content.witty_editor') }}
             </x-jet-nav-link>
-            @if($user->hasCompletedOnboarding())
             <x-jet-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('academy') }}" alt="Academy" :active="request()->routeIs('academy')">
                 <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/bulb.svg') }}" alt=""/>
                 {{ __('content.academy') }}
             </x-jet-nav-link>
-            @endif
             <x-jet-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('logout', ['provider' => 'azureadb2c']) }}">
                 <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/logout.svg') }}" alt="" />
                 {{ __('content.log_out') }}
