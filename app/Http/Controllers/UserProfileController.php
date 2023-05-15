@@ -70,7 +70,7 @@ class UserProfileController extends BaseUserProfileController
 
             if (!empty($validated['request_invite'])) {
                 $teams = [];
-                $users = $this->getCompanyUsers($user);
+                $users = $user->getCompanyUsers();
                 foreach ($users as $companyUser) {
                     if ($companyUser->teamRole($companyUser->currentTeam)->key != 'user') {
                         if (empty($teams[$companyUser->currentTeam->id])) {
@@ -104,14 +104,5 @@ class UserProfileController extends BaseUserProfileController
         }
 
         return redirect()->route('root');
-    }
-
-    protected function getCompanyUsers($user)
-    {
-        return User::where('email', '!=', $user->email)
-            ->where('id', '!=', $user->id)
-            ->where('current_team_id', '!=', $user->team_id)
-            ->where('email', 'LIKE', '%@' . $user->getEmailDomain())
-            ->get();
     }
 }
