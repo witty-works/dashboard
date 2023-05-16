@@ -118,6 +118,19 @@ All words added to this list will become highlighted by Witty, and your custom r
     'v' => 'Verb',
     's' => 'Noun',
     'word_type_label' => 'Word type',
-    'advanced_toggle_title' => 'advanced toggle title',
-    'advanced_toggle_description' => 'advanced toggle description',
+    'advanced_toggle_title' => 'Set Your Proficiency Level',
+    'advanced_toggle_description' => 'In the paid version, you can choose from three levels of proficiency for many categories:
+<br/>
+
+<ul>
+
+<li>grey - off</li>
+
+<li>light green - basic</li>
+<li>dark green - advanced</li>
+</ul>
+
+To understand what that means, let\'s have a look at the category <a href="https://www.witty.works/en/categories/ability-physicality/vision" target="_blank">vision</a>. On a basic level the phrase <i>"the one eyed among the blind"</i> would be highlighted. When the advanced biases are switched on, even subtle unconscious biases like the phrase <i>"See you later"</i> will be highlighted.
+<br/>
+This allows you to fine-tune Witty to your specific needs and priorities. <span style="color:#f06464">We recommend to choose the Basic level at the beginning.</span>',
 ];
