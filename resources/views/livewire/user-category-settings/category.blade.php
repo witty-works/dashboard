@@ -1,7 +1,7 @@
 <x-jet-form-section class="py-10" submit="updateLanguageGuidelinesCategory">
     <x-slot name="title">
         <div class="headline-row">
-            <img width="45" class="category_icon" src="{{ $config['icon']['src'] }}" alt="{{ $config['translation']['name'] }} Icon"/>
+            <img width="60" class="category_icon" src="{{ $config['icon']['src'] }}" alt="{{ $config['translation']['name'] }} Icon"/>
             {{ $config['translation']['name'] }}
             @if(!empty($config['translation']['example_image']['src']))
             @include('partials.info_hover', ['category' => $category, 'name' => $config['translation']['name'], 'config' => $config])
@@ -57,7 +57,7 @@
             }
         @endphp
 
-        <div class="guidelines-form-section lato-small-text-p">
+        <div class="guidelines-form-section lato-small-text-p guidelines-form-section-proficiency-level">
             <b>{{ $proficiencyLevelData['translation']['hs_name'] }}</b>
 
             @include('partials.toggle_label', ['disabled' => $disabled])
