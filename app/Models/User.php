@@ -146,7 +146,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function posthogId()
     {
-        return 'dashboard-user:' . $this->id;
+        return config('posthog.dashboard_user_id_override', 'dashboard-user:' . $this->id);
     }
 
     public function posthogTeamId()
