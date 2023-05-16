@@ -1,6 +1,6 @@
 @if($model->subscribed())
+@if(\App\Models\LanguageGuidelines::doUserTeamSettingsDiffer($model, 'category-settings'))
 <div class="pt-10">
-    @if(\App\Models\LanguageGuidelines::doUserTeamSettingsDiffer($model, 'category-settings'))
     <x-jet-section-title>
         <x-slot name="title" class="ibarra-sub-title-h2">
             {{ __('guidelines.reset_to_team_suggestions_title') }}
@@ -20,7 +20,7 @@
             </div>
         </x-slot>
     </x-jet-section-title>
-    @endif
 </div>
+@endif
 @livewire('organization-category-settings.intro', ['model' => $model->currentTeam])
 @endif
