@@ -154,12 +154,30 @@ class Hubspot
         return $result;
     }
 
-
     public function findContact(User $user)
     {
-        $properties = ['email', 'hs_additional_emails'];
+        $fetchProperties = [
+            'hs_analytics_source',
+            'associatedcompanyid',
+            'sales_readiness',
+            'email',
+            'hs_additional_emails',
+        ];
+
+        if ($user->hubspot_id) {
+            $contact = $this->api->crm()->contacts()->basicApi()->getById($user->hubspot_id, $fetchProperties);
+
+            // 'hs_additional_emails' could also be checked but ideally we map customers based on their primary email
+            if (
+                !empty($contact['properties']['email'])
+                && strtolower($contact['properties']['email']) === strtolower($user->email)
+            ) {
+                return $contact;
+            }
+        }
+
         $filterGroups = [];
-        foreach ($properties as $property) {
+        foreach (['email', 'hs_additional_emails'] as $property) {
             $filter = new ContactsFilter();
             $filter
                 ->setOperator('EQ')
@@ -173,14 +191,6 @@ class Hubspot
 
         $searchRequest = new ContactsPublicObjectSearchRequest();
         $searchRequest->setFilterGroups($filterGroups);
-
-        $fetchProperties = [
-            'hs_analytics_source',
-            'associatedcompanyid',
-            'sales_readiness',
-            'email',
-            'hs_additional_emails',
-        ];
 
         $searchRequest->setProperties($fetchProperties);
 
