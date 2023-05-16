@@ -295,6 +295,9 @@ class LanguageGuidelines extends Model
                     if (in_array($ddd, $languageGuidelines->disabled_categories) !== in_array($ddd, $teamLanguageGuidelines->disabled_categories)) {
                         return true;
                     }
+                    if (in_array('advanced_' .$ddd, $languageGuidelines->disabled_categories) !== in_array('advanced_' .$ddd, $teamLanguageGuidelines->disabled_categories)) {
+                        return true;
+                    }
                 }
                 break;
             case UserGuidelinesController::LANGUAGE_SETTINGS:

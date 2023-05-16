@@ -1,4 +1,4 @@
-<div title="{{ __('content.triple_toggle') }}" class="tripple-toggle {{ $value === 2 ? 'active' : ($value === 1 ? 'middle active' : '') }} {{ empty($disabled) ? '' : ' disabled' }}" id="tripple-toggle-{!! $attributes->get('name') !!}"></div>
+<div title="{{ empty($disabled) ? __('content.triple_toggle') : '' }}" class="tripple-toggle {{ $value === 2 ? 'active' : ($value === 1 ? 'middle active' : '') }} {{ empty($disabled) ? '' : ' disabled' }}" id="tripple-toggle-{!! $attributes->get('name') !!}"></div>
 <input type="hidden" id="{!! $attributes->get('name') !!}" {!! $attributes->merge() !!} />
 @if(empty($disabled))
 <script>

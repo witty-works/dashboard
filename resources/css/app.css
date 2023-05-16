@@ -300,6 +300,11 @@ a {
     margin-bottom: 1em;
 }
 
+.guidelines-form-section-proficiency-level {
+    margin-top: 2em;
+    margin-bottom: 0.25em;
+}
+
 .guidelines-form-section-ident {
     display: flex;
     flex-direction: row;
@@ -1041,7 +1046,7 @@ input:checked+.slider:before {
 }
 
 .tripple-toggle.active {
-    background-color: #5FCA7D;
+    background-color: darkgreen;
 }
 
 .tripple-toggle.active.middle:before {
@@ -1050,7 +1055,7 @@ input:checked+.slider:before {
 }
 
 .tripple-toggle.active.middle {
-    background-color: #f1b04c;
+    background-color: #5FCA7D;
 }
 
 .category_icon {

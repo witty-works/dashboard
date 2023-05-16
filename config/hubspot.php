@@ -8,10 +8,11 @@ return [
     'form_id' => env('HUBSPOT_FORM_ID', "01dc84ed-dd08-4f21-a445-abb71e37cf0d"),
     # https://developers.hubspot.com/docs/api/usage-details#rate-limits
     'rate' => [
-        # 2 requests per Job (fetch + write) => 100 / 2 = 50
-        'limit' => env('HUBSPOT_RATE_LIMIT', 50),
+        # ~2 API requests per Job (fetch + write) => 150 per 10s / 2 = 75 = 7.5 per second
+        # optionally 1 search requests => 4 per second
+        'limit' => env('HUBSPOT_RATE_LIMIT', 35),
         'interval_seconds' => env('HUBSPOT_RATE_INTERVAL_SECONDS', 10),
         'multiplier' => env('HUBSPOT_RATE_MULTIPLIER', 3),
-        'until' => env('HUBSPOT_RETRY_HOURS', 2),
+        'until' => env('HUBSPOT_RETRY_HOURS', 4),
     ],
 ];
