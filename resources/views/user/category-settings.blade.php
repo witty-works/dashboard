@@ -3,9 +3,7 @@
         {{ __('guidelines.language') }}
     </div>
 
-    @if($user->subscribed())
     @livewire('user-category-settings.intro', ['model' => $user])
-    @endif
 
     @foreach ($categories as $category => $config)
     @livewire('user-category-settings.category', ['model' => $user, 'category' => $category, 'config' => $config])

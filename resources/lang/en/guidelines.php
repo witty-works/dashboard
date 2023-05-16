@@ -118,4 +118,6 @@ All words added to this list will become highlighted by Witty, and your custom r
     'v' => 'Verb',
     's' => 'Noun',
     'word_type_label' => 'Word type',
+    'advanced_toggle_title' => 'advanced toggle title',
+    'advanced_toggle_description' => 'advanced toggle description',
 ];
