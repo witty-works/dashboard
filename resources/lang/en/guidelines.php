@@ -121,7 +121,7 @@ All words added to this list will become highlighted by Witty, and your custom r
     'advanced_toggle_title' => 'Set Your Proficiency Level',
     'advanced_toggle_description' => 'With Witty Teams, you can choose from three levels of proficiency for many categories:',
     'advanced_toggle_disclaimer' => 'This allows you to fine-tune Witty to your specific needs and priorities. <span style="color:#f06464">We recommend to choose the Basic level at the beginning.</span>',
-    'advanced_toggle_example' => 'To understand what that means, let\'s have a look at the category <a href="https://www.witty.works/en/categories/ability-physicality/vision" target="_blank">vision</a>. On a basic level the phrase <i>"the one eyed among the blind"</i> would be highlighted. When the advanced biases are switched on, even subtle unconscious biases like the phrase <i>"See you later"</i> will be highlighted.',
+    'advanced_toggle_example' => 'To understand what that means, let\'s have a look at the category <a href="https://www.witty.works/en/categories/ability-physicality/vision" target="_blank">vision</a>. On a basic level the phrase <i>"the one eyed among the blind"</i> would be highlighted. When the advanced biases are switched on, even subtle unconscious biases like the phrase <i>"See you soon"</i> will be highlighted.',
     'toggle_advanced_vs' => 'Basic vs. Advanced',
     'proficiency_level_off' => 'Off',
     'proficiency_level_basic' => 'Basic',
