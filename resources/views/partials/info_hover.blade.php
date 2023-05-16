@@ -14,5 +14,9 @@
 </span>
 <div id="{{ $category }}-image" class="information-image">
     <div class="information-text">{{ __('content.example') }}: {{ $name }}</div>
+    @if(!empty($text))
+        {!! $text !!}
+    @else
     <img src="{{ $config['translation']['example_image']['src'] }}" alt="{{ $config['translation']['example_image']['alt'] }}" width=400/>
+    @endif
 </div>

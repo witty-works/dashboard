@@ -119,18 +119,15 @@ Alle Wörter, die zu dieser Liste hinzufügst, werden von Witty hervorgehoben, u
     's' => 'Substantiv',
     'word_type_label' => 'Wortart',
     'advanced_toggle_title' => 'Lege fest, wieviel Witty unterstreicht',
-    'advanced_toggle_description' => 'In der kostenpflichtigen Version kannst du aus für viele Kategorien aus drei Kompetenzstufen wählen:
+    'advanced_toggle_description' => 'Mit Witty Teams kannst du aus für viele Kategorien aus drei Kompetenzstufen wählen:
 <br/>
 
-<ul>
-
-<li>Basic (hellgrün)</li>
-
-<li>Fortgeschritten (dunkelgrün)</li>
-<li>Aus (grau)</li>
-</ul>
-
-Um zu verstehen, was das bedeutet, lass uns einen Blick auf die Kategorie <a href="https://www.witty.works/de/kategorien/f%C3%A4higkeiten-erkrankungen-k%C3%B6rperlichkeit/seh-f%C3%A4higkeit" target="_blank">Vision</a> werfen. Ist <i>Basic</i> ausgewählt, würde der Satz <i>"der Einäugige unter den Blinden"</i> hervorgehoben werden. Wenn <i>fortgeschritten</i> eingeschaltet ist, werden auch subtile unbewusste Vorurteile wie der Satz <i>”Wir sehen uns später"</i> hervorgehoben.
-<br/>
+<div class="py-3">
+<span class="tripple-toggle">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>Aus&nbsp;&nbsp;&nbsp;&nbsp;
+<span class="tripple-toggle active middle">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>Basic&nbsp;&nbsp;&nbsp;&nbsp;
+<span class="tripple-toggle active">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>Fortgeschritten
+</div>
 So kannst du Witty genau auf deine Bedürfnisse und Prioritäten abstimmen. <span style="color:#f06464">Wir empfehlen, zu Beginn die Stufe <i>Basic</i> zu wählen.</span>',
+    'advanced_toggle_example' => 'Um zu verstehen, was das bedeutet, lass uns einen Blick auf die Kategorie <a href="https://www.witty.works/de/kategorien/f%C3%A4higkeiten-erkrankungen-k%C3%B6rperlichkeit/seh-f%C3%A4higkeit" target="_blank">Vision</a> werfen. Ist <i>Basic</i> ausgewählt, würde der Satz <i>"der Einäugige unter den Blinden"</i> hervorgehoben werden. Wenn <i>fortgeschritten</i> eingeschaltet ist, werden auch subtile unbewusste Vorurteile wie der Satz <i>”Wir sehen uns später"</i> hervorgehoben.',
+    'toggle_advanced_vs' => 'Basic vs. Fortgeschritten'
 ];

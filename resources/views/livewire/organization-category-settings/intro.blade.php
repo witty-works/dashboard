@@ -6,7 +6,10 @@
         </x-slot>
 
         <x-slot name="description" class="lato-paragraph-text-p">
-            {!! __('guidelines.advanced_toggle_description') !!}
+            <div class="headline-row">
+                {!! __('guidelines.advanced_toggle_description') !!}
+                @include('partials.info_hover', ['category' => 'foo', 'name' => __('guidelines.toggle_advanced_vs'), 'text' => __('guidelines.advanced_toggle_example')])
+            </div>
         </x-slot>
     </x-jet-section-title>
 </div>
