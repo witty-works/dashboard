@@ -227,15 +227,9 @@ class Hubspot
         return $results->getResults()[0];
     }
 
-    public function exportTable($tableName, $draft = false)
+    public function exportTable($tableName)
     {
-        $format = 'CSV';
-
-        if ($draft) {
-            return $this->api->cms()->hubdb()->tablesApi()->exportDraftTable($tableName, $format);
-        }
-
-        return $this->api->cms()->hubdb()->tablesApi()->exportTable($tableName, $format);
+        return $this->api->cms()->hubdb()->tablesApi()->exportTable($tableName, 'CSV');
     }
 
     public function publishTable($tableName)

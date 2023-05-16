@@ -14,7 +14,7 @@ class SyncToHubspotCategoriesCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'hubspot:hubdb {--d}';
+    protected $signature = 'hubspot:hubdb';
 
     /**
      * The console command description.
@@ -32,12 +32,8 @@ class SyncToHubspotCategoriesCommand extends Command
      */
     public function handle()
     {
-        $draft = $this->option('d', false);
-
-        $draftText = $draft ? 'draft' : 'prod';
-
         $path = storage_path('app/hubdb');
-        $this->info("Reading HubSpot HubDB $draftText data into $path");
+        $this->info("Publishing and reading HubSpot HubDB data into $path");
 
         $hubspot = new Hubspot();
 
@@ -55,7 +51,7 @@ class SyncToHubspotCategoriesCommand extends Command
             $this->info("Fetch '$alias' data from '$table' table.");
 
             $hubspot->publishTable($table);
-            $file = $hubspot->exportTable($table, $draft);
+            $file = $hubspot->exportTable($table);
 
             //read csv headers
             $keys = $file->fgetcsv();
