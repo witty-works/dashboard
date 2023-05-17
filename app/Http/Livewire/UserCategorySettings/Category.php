@@ -30,6 +30,16 @@ class Category extends OrganizationCategorySettingsCategory
         parent::resetForm();
     }
 
+    protected function readDimensions($disabledCategories)
+    {
+        if (LanguageGuidelines::isForcedOnTeam($this->model, 'disabled_categories', $this->category)) {
+            $languageGuidelines = LanguageGuidelines::getLanguageGuidelines($this->model->currentTeam);
+            $disabledCategories = (array) $languageGuidelines->disabled_categories;
+        }
+
+        return parent::readDimensions($disabledCategories);
+    }
+
     public function updateLanguageGuidelinesCategory()
     {
         if (LanguageGuidelines::isForcedOnTeam($this->model, 'disabled_categories', $this->category)) {

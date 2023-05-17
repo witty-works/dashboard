@@ -49,7 +49,7 @@ class SyncUserToNlpApi extends AbstractSyncToNlpApi
         $config = self::getConfig($guidelines, true);
 
         $config['categories'] = [];
-        foreach ($guidelines->diversityDimensionDrivers as $ddd => $dddConfig) {
+        foreach ($guidelines->getDiversityDimensionDrivers(null, true) as $ddd => $dddConfig) {
             $config['categories'][$ddd] = [
                 'value' => !in_array($ddd, $guidelines->disabled_categories),
                 'status' => 'force',

@@ -287,15 +287,15 @@ class SyncToHubspotCategoriesCommand extends Command
 
             Collection::macro('toLocale', function (string $locale) {
                 return $this->map(function ($value) use ($locale) {
-                    if (empty($value['translations'][$locale])) {
-                        return null;
-                    }
+                    if (!empty($value['translations'][$locale])) {
+                        $value['translation'] = $value['translations'][$locale];
+                        unset($value['translations']);
 
-                    $value['translation'] = $value['translations'][$locale];
-                    unset($value['translations']);
-
-                    if (isset($value['emoji'])) {
-                        $value['translation']['emoji_name'] = $value['emoji'] . ' ' . $value['translation']['hs_name'];
+                        if (isset($value['emoji'])) {
+                            $value['translation']['emoji_name'] = $value['emoji'] . ' ' . $value['translation']['hs_name'];
+                        }
+                    } else {
+                        $value['translation'] = null;
                     }
 
                     return $value;
