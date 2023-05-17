@@ -130,7 +130,13 @@
                 <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/logout.svg') }}" alt="" />
                 {{ __('content.log_out') }}
             </x-jet-nav-link>
-            <div class="wittyworks-navigation-username lato-small-text-p">{{ $user->name }}</div>
+            <div class="wittyworks-navigation-username lato-small-text-p">
+                {{ $user->name }}
+
+                <x-jet-button data-attr="posthog-feedback-button" secondary style="display: none">
+                    {{ __('content.feedback') }}
+                </x-jet-button>
+            </div>
         </div>
         @else
         <!-- LOGGED OUT -->
@@ -150,5 +156,11 @@
                 <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/login.svg') }}" alt="" />
                     {{ __('content.log_in_register') }}
             </x-jet-nav-link>
+
+            <div class="wittyworks-navigation-username lato-small-text-p">
+                <x-jet-button data-attr="posthog-feedback-button" secondary style="display: none">
+                    {{ __('content.feedback') }}
+                </x-jet-button>
+            </div>
         </div>
         @endauth
