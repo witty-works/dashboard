@@ -103,7 +103,8 @@ class Team extends JetstreamTeam
 
     public function posthogId()
     {
-        return config('posthog.dashboard_team_id_override', 'dashboard-team:' . $this->id);
+        return config('posthog.dashboard_team_id_override')
+            ?? 'dashboard-team:' . $this->id;
     }
 
     public function getUserLicensesCount()
