@@ -62,6 +62,7 @@ abstract class AbstractSyncCommand extends Command
                 $this->handleTeam($team);
                 $results['success'][] = $team->id;
             } catch (\Exception $e) {
+                $this->error("Failed on team {$team->id}: {$e->getMessage()}");
                 $results['failure'][] = $team->id;
             }
         }
@@ -95,6 +96,7 @@ abstract class AbstractSyncCommand extends Command
                 $this->handleUser($user);
                 $results['success'][] = $user->id;
             } catch (\Exception $e) {
+                $this->error("Failed on user {$user->id}: {$e->getMessage()}");
                 $results['failure'][] = $user->id;
             }
         }
