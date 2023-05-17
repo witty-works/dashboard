@@ -89,11 +89,13 @@ class LanguageGuidelines extends Model
         $languageGuideline = LanguageGuidelines::firstOrNew($filter);
 
         if (!$model->subscribed()) {
+            $disabled_categories = $languageGuideline->disabled_categories;
             foreach ($languageGuideline->getDiversityDimensionDrivers(null, true, true) as $ddd => $config) {
-                if (!in_array($ddd, $languageGuideline->disabled_categories)) {
-                    $languageGuideline->disabled_categories[] = $ddd;
+                if (!in_array($ddd, $disabled_categories)) {
+                    $disabled_categories[] = $ddd;
                 }
             }
+            $languageGuideline->disabled_categories = $disabled_categories;
         }
 
         return $languageGuideline;
