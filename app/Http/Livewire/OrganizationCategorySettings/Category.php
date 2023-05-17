@@ -58,24 +58,10 @@ class Category extends Component
     {
         $languageGuidelines = LanguageGuidelines::getLanguageGuidelines($this->model);
         $this->proficiencyLevels = $languageGuidelines->proficiencyLevels;
-        $this->diversityDimensionDrivers = $languageGuidelines->diversityDimensionDrivers;
+        $this->diversityDimensionDrivers = $languageGuidelines->getDiversityDimensionDrivers($this->category);
 
         $disabledCategories = (array) $languageGuidelines->disabled_categories;
-        foreach ($languageGuidelines->diversityDimensionDrivers as $ddd => $config) {
-            if ($ddd === 'gendered_denominations_ending' || empty($config['category']) || $config['category'] !== $this->category) {
-                continue;
-            }
-
-            if ($languageGuidelines->isCategoryAvailable($ddd, $this->model->subscribed())) {
-                if (!in_array('advanced_' . $ddd, $disabledCategories)) {
-                    $this->dimensions[$ddd] = LanguageGuidelines::ADVANCED_ENABLED;
-                } elseif (!in_array($ddd, $disabledCategories)) {
-                    $this->dimensions[$ddd] = LanguageGuidelines::BASIC_ENABLED;
-                } else {
-                    $this->dimensions[$ddd] = LanguageGuidelines::DISABLED;
-                }
-            }
-        }
+        $this->readDimensions($disabledCategories);
 
         $disabledCategoriesForce = (array) $languageGuidelines->disabled_categories_force;
         if (!$this->model->subscribed()) {
@@ -87,15 +73,38 @@ class Category extends Component
         $this->resetErrorBag();
     }
 
+    protected function readDimensions($disabledCategories)
+    {
+        foreach ($this->diversityDimensionDrivers as $ddd => $config) {
+            if ($ddd === 'gendered_denominations_ending') {
+                continue;
+            }
+
+            if (!in_array('advanced_' . $ddd, $disabledCategories)) {
+                $this->dimensions[$ddd] = LanguageGuidelines::ADVANCED_ENABLED;
+            } elseif (!in_array($ddd, $disabledCategories)) {
+                $this->dimensions[$ddd] = LanguageGuidelines::BASIC_ENABLED;
+            } else {
+                $this->dimensions[$ddd] = LanguageGuidelines::DISABLED;
+            }
+        }
+    }
+
     protected function processDimensions(LanguageGuidelines $languageGuidelines)
     {
         $dimensions = [];
 
         foreach ($this->dimensions as $ddd => $enabled) {
-            $dimensions[$ddd] = $languageGuidelines->isCategoryAvailable($ddd, $this->model->subscribed(), $enabled);
-            $proficiencyLevel = $languageGuidelines->diversityDimensionDrivers[$ddd]['proficiency_level'] ?? null;
+            $proficiencyLevel = $this->diversityDimensionDrivers[$ddd]['proficiency_level'] ?? null;
+            if ($proficiencyLevel === 'openly_discriminating') {
+                $enabled = LanguageGuidelines::BASIC_ENABLED;
+            } elseif (empty($enabled)) {
+                $enabled = LanguageGuidelines::DISABLED;
+            } elseif (!$this->model->subscribed()) {
+                $enabled = LanguageGuidelines::BASIC_ENABLED;
+            }
 
-            switch ($dimensions[$ddd]) {
+            switch ($enabled) {
                 case LanguageGuidelines::ADVANCED_ENABLED:
                     $languageGuidelines->inPlaceUpateArray('advanced_' . $ddd, 'disabled_categories', true);
                     $languageGuidelines->inPlaceUpateArray($ddd, 'disabled_categories', true);
