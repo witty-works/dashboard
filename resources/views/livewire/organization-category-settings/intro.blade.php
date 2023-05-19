@@ -9,10 +9,10 @@
             <div class="headline-row">
                 {!! __('guidelines.advanced_toggle_description') !!}
 
-                <div class="py-3">
-                    <span class="tripple-toggle">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>{{ __('guidelines.proficiency_level_off') }}&nbsp;&nbsp;&nbsp;&nbsp;
-                    <span class="tripple-toggle active middle">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>{{ __('guidelines.proficiency_level_basic') }}&nbsp;&nbsp;&nbsp;&nbsp;
-                    <span class="tripple-toggle active">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>{{ __('guidelines.proficiency_level_advanced') }}
+                <div class="py-3 container-row" style="align-items: center; !important">
+                    <div class="tripple-toggle"></div>{{ __('guidelines.proficiency_level_off') }}
+                    <div class="tripple-toggle active middle wittyworks-margin-left"></div>{{ __('guidelines.proficiency_level_basic') }}
+                    <div class="tripple-toggle active wittyworks-margin-left"></div>{{ __('guidelines.proficiency_level_advanced') }}
                 </div>
 
                 {!! __('guidelines.advanced_toggle_disclaimer') !!}
