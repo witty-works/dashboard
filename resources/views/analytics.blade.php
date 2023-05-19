@@ -4,181 +4,199 @@
     $dictionaryItems = isset($team) ? $team->getTotalTermReplacementsCount() : $user->getTotalTermReplacementsCount() + $user->currentTeam->getTotalTermReplacementsCount();
 ?>
 <x-app-layout :pagetitle="__('content.analytics')">
-    <div class="wittyworks-navigation-wrapper">@livewire('navigation-menu')</div>
-        <div class="wittyworks-page-wrapper">
-            <div class="wittyworks-page lg:ml-20">
-                @include('partials.banners')
-                <div class="ibarra-sub-title-h1 margin-top">
-                    {{ __('content.analytics') }}
-                </div>
-                <div id="lastRefresh" class="lato-small-text-p wittyworks-margin-right container-row margin-top" style="visibility: hidden; align-items: center;"></div>
-                <div class="ibarra-sub-title-h2 wittyworks-margin-top">{{ __('content.activity') }}</div>
-                <div class="wittyworks-form-section container border-radius">
-                    <div id="loadingIconActivity" class="loading-icon-wrapper" style="width: 100%">
-                        <div class="lds-grid">
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                        </div>
-                    </div>
-                    <div id="activityChartWrapperNoData" style="visibility: hidden; width: 100%">
-                        <div class="lato-small-text-p warning-message">{!! __('content.no_data_events') !!}</div>
-                        <div class="image-container">
-                            <img src="{{ url('svg/screenshots/activity.png') }}" alt="activity" class="image wittyworks-margin-top">
-                            <div class="centered-image-text">{{ __('content.no_data_image_text') }}</div>
-                        </div>
-                    </div>
-                    <div id="activityChartWrapper" style="visibility: hidden; width: 100%">
-                        <div class="wittyworks-margin-top">
-                            <div class="container-column" style="margin-left: 2em;">
-                                <div class="container-row" style="align-items: center">
-                                    <div id="checkDaysInRow" class="lato-small-text-p"></div>
-                                </div>
-                                <div class="container-row" >
-                                    <div id="changeInPopoverPercentage" class="lato-small-text-p"></div>
-                                </div>
-                                <div class="container-row" >
-                                    <div id="changeInAlternativePercentage" class="lato-small-text-p"></div>
-                                </div>
-                                <div class="container-row">
-                                    <div id="changeInIgnorePercentage" class="lato-small-text-p"></div>                           
-                                </div>
-                                <div class="container-row" >
-                                    <div id="changeInLearningBitesPercentage" class="lato-small-text-p"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="container-row wittyworks-margin-right wittyworks-margin-top" style="margin-left: 2em;">
-                            <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.start_of_week') }}</div>
-                            <div id="startOfWeekDropdown"></div>
-                        </div>
-                        <div class="container-row wittyworks-margin-top">
-                            <canvas id="eventsChart" class="wittyworks-analytics-chart-extra-large"></canvas>
-                        </div>
-                        @if(isset($team) && !empty($team_edit))
-                        <div class="container-row wittyworks-margin-top">
-                            <canvas id="dauChart" class="wittyworks-analytics-chart-extra-large"></canvas>
-                        </div>
-                        @endif
-                        <div class="container-row wittyworks-margin-top">
-                            <canvas id="requestRatiosChartDoughnut" class="wittyworks-analytics-chart-small"></canvas>
-                            @php
-                                $eventsCharts = ["eventsPopoverChart", "eventsAlternativeChart", "eventsIgnoreChart", "eventsLearningBitesChart"];
-                                for ($i = 0; $i < count($eventsCharts); $i++) {
-                                    echo '<canvas id="' . $eventsCharts[$i] . '" class="wittyworks-analytics-chart-small wittyworks-margin-right" ></canvas>';
-                                }
-                            @endphp
-                        </div>
-                    </div>
-                </div>
+<div class="wittyworks-navigation-wrapper">@livewire('navigation-menu')</div>
+<div class="wittyworks-page-wrapper">
+   <div class="wittyworks-page lg:ml-20">
+      @include('partials.banners')
+      <div class="ibarra-sub-title-h1 margin-top">
+         {{ __('content.analytics') }}
+      </div>
+      <div id="lastRefresh" class="lato-small-text-p wittyworks-margin-right container-row margin-top" style="visibility: hidden; align-items: center;"></div>
+      <div class="analytics-tab-container"> 
+         <a class="analytics-tab" id="overview-tab" onclick="handleTabClick('overview')" style="text-decoration: underline;">Overview</a>
+         <a class="analytics-tab" id="top-categories-tab" onclick="handleTabClick('top-categories')">Top Categories</a>
+         <a class="analytics-tab" id="top-words-tab" onclick="handleTabClick('top-words')">Top Words</a>
+      </div>
 
-                <div id="topCategoriesChartWrapper" style="visibility: hidden; width: 100%">
-                    <div class="ibarra-sub-title-h2 wittyworks-margin-top">{{ __('content.top_categories') }}</div>
-                    <div class="wittyworks-form-section container border-radius">
-                        <div id="loadingIconTopCatagories" class="loading-icon-wrapper"  style="width: 100%">
-                            <div class="lds-grid">
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="chart-container-row wittyworks-margin-top">
-                                <canvas
-                                    id="topSubCategoriesChart"
-                                    class="wittyworks-analytics-chart-top-categories wittyworks-margin-top">
-                                </canvas>
-                                <div id="categoryOverview" class="wittyworks-margin-left wittyworks-margin-top"></div>
-                            </div>
-                            <div class="chart-container-row wittyworks-margin-top">
-                                <canvas
-                                    id="categoriesRadar"
-                                    class="wittyworks-analytics-chart-medium-radar">
-                                </canvas>
-                                <div id="topSubcategoriesDoughnutWrapper" class="container-column">
-                                    <canvas
-                                        id="topSubCategoriesOpenedChartDoughnut"
-                                        class="wittyworks-analytics-chart-medium">
-                                    </canvas>
-                                    <canvas
-                                        id="topSubCategoriesIgnoredChartDoughnut"
-                                        class="wittyworks-analytics-chart-medium">
-                                    </canvas>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="topWordsChartWrapper" style="visibility: hidden; width: 100%">
-                    <div class="ibarra-sub-title-h2 wittyworks-margin-top">{{ __('content.top_words') }}</div>
-                    <div class="wittyworks-form-section container border-radius">
-                        <div id="loadingIconTopWords" class="loading-icon-wrapper" style="width: 100%">
-                            <div class="lds-grid">
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="container-row wittyworks-margin-top">
-                                <canvas
-                                    id="topWordsChart"
-                                    class="wittyworks-analytics-chart-extra-large wittyworks-margin-top">
-                                </canvas>
-                            </div>
-                            <div id="topWordsChartCorporateRulesWrapper" class="chart-container-row wittyworks-margin-top" style="display: none; width: 100%; align-items:center">
-                                <canvas
-                                    id="topWordsChartCorporateRules"
-                                    class="wittyworks-analytics-chart-medium wittyworks-margin-top">
-                                </canvas>
-                            </div>
-                            <div id="noCorporateRulesWrapper" class="container-row wittyworks-margin-top" style="display: none;">
-                                <div class="lato-small-text-p">{!! empty($user) ? __('content.no_corporate_rules') : __('content.no_corporate_rules_user') !!}</div>
-                            </div>
-                            <div id="corporateRulesButNoneOpened" class="container-row wittyworks-margin-top" style="display: none;">
-                                <div class="lato-small-text-p">{!! empty($user) ? __('content.corporate_rules_none_opened') : __('content.corporate_rules_none_opened_user') !!}</div>
-                            </div>
-                            <div class="chart-container-row wittyworks-margin-top">
-                            <canvas
-                                id="wordsRadar"
-                                class="wittyworks-analytics-chart-medium-radar">
-                            </canvas>
-                            <div id="topWordsDoughnutWrapper" class="container-column">
-                                <canvas
-                                    id="topWordsChartDoughnut"
-                                    class="wittyworks-analytics-chart-medium">
-                                </canvas>
-                                <canvas
-                                    id="topWordsChartDoughnutWeek"
-                                    class="wittyworks-analytics-chart-medium">
-                                </canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+      <!-- Overview content here -->
+      <div class="tab-pane fade" id="overview" role="tabpanel" aria-labelledby="overview-tab">
+         <div class="ibarra-sub-title-h2 wittyworks-margin-top">{{ __('content.activity') }}</div>
+         <div class="wittyworks-form-section container border-radius">
+            <div id="loadingIconActivity" class="loading-icon-wrapper" style="width: 100%">
+               <div class="lds-grid">
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+               </div>
             </div>
-        </div>
-    </div>
+            <div id="activityChartWrapperNoData" style="visibility: hidden; width: 100%">
+               <div class="lato-small-text-p warning-message">{!! __('content.no_data_events') !!}</div>
+               <div class="image-container">
+                  <img src="{{ url('svg/screenshots/activity.png') }}" alt="activity" class="image wittyworks-margin-top">
+                  <div class="centered-image-text">{{ __('content.no_data_image_text') }}</div>
+               </div>
+            </div>
+            <div id="activityChartWrapper" style="visibility: hidden; width: 100%">
+               <div class="wittyworks-margin-top">
+                  <div class="container-column" style="margin-left: 2em;">
+                     <div class="container-row" style="align-items: center">
+                        <div id="checkDaysInRow" class="lato-small-text-p"></div>
+                     </div>
+                     <div class="container-row" >
+                        <div id="changeInPopoverPercentage" class="lato-small-text-p"></div>
+                     </div>
+                     <div class="container-row" >
+                        <div id="changeInAlternativePercentage" class="lato-small-text-p"></div>
+                     </div>
+                     <div class="container-row">
+                        <div id="changeInIgnorePercentage" class="lato-small-text-p"></div>
+                     </div>
+                     <div class="container-row" >
+                        <div id="changeInLearningBitesPercentage" class="lato-small-text-p"></div>
+                     </div>
+                  </div>
+               </div>
+               <div class="container-row wittyworks-margin-right wittyworks-margin-top" style="margin-left: 2em;">
+                  <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.start_of_week') }}</div>
+                  <div id="startOfWeekDropdown"></div>
+               </div>
+               <div class="container-row wittyworks-margin-top">
+                  <canvas id="eventsChart" class="wittyworks-analytics-chart-extra-large"></canvas>
+               </div>
+               @if(isset($team) && !empty($team_edit))
+               <div class="container-row wittyworks-margin-top">
+                  <canvas id="dauChart" class="wittyworks-analytics-chart-extra-large"></canvas>
+               </div>
+               @endif
+               <div class="container-row wittyworks-margin-top">
+                  <canvas id="requestRatiosChartDoughnut" class="wittyworks-analytics-chart-small"></canvas>
+                  @php
+                  $eventsCharts = ["eventsPopoverChart", "eventsAlternativeChart", "eventsIgnoreChart", "eventsLearningBitesChart"];
+                  for ($i = 0; $i < count($eventsCharts); $i++) {
+                  echo '
+                  <canvas id="' . $eventsCharts[$i] . '" class="wittyworks-analytics-chart-small wittyworks-margin-right" ></canvas>
+                  ';
+                  }
+                  @endphp
+               </div>
+            </div>
+         </div>
+      </div>
+    
+      <!-- Top categories content here -->
+      <div class="tab-pane fade" id="top-categories" role="tabpanel" aria-labelledby="top-categories-tab">
+         <div id="topCategoriesChartWrapper" style="visibility: hidden; width: 100%">
+            <div class="ibarra-sub-title-h2 wittyworks-margin-top">{{ __('content.top_categories') }}</div>
+            <div class="wittyworks-form-section container border-radius">
+               <div id="loadingIconTopCatagories" class="loading-icon-wrapper"  style="width: 100%">
+                  <div class="lds-grid">
+                     <div></div>
+                     <div></div>
+                     <div></div>
+                     <div></div>
+                     <div></div>
+                     <div></div>
+                     <div></div>
+                     <div></div>
+                     <div></div>
+                  </div>
+               </div>
+               <div>
+                  <div class="chart-container-row wittyworks-margin-top">
+                     <canvas
+                        id="topSubCategoriesChart"
+                        class="wittyworks-analytics-chart-top-categories wittyworks-margin-top">
+                     </canvas>
+                     <div id="categoryOverview" class="wittyworks-margin-left wittyworks-margin-top"></div>
+                  </div>
+                  <div class="chart-container-row wittyworks-margin-top">
+                     <canvas
+                        id="categoriesRadar"
+                        class="wittyworks-analytics-chart-medium-radar">
+                     </canvas>
+                     <div id="topSubcategoriesDoughnutWrapper" class="container-column">
+                        <canvas
+                           id="topSubCategoriesOpenedChartDoughnut"
+                           class="wittyworks-analytics-chart-medium">
+                        </canvas>
+                        <canvas
+                           id="topSubCategoriesIgnoredChartDoughnut"
+                           class="wittyworks-analytics-chart-medium">
+                        </canvas>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+     
+      <!-- Top words content here -->
+      <div class="tab-pane fade" id="top-words" role="tabpanel" aria-labelledby="top-words-tab">
+         <div id="topWordsChartWrapper" style="visibility: hidden; width: 100%">
+            <div class="ibarra-sub-title-h2 wittyworks-margin-top">{{ __('content.top_words') }}</div>
+            <div class="wittyworks-form-section container border-radius">
+               <div id="loadingIconTopWords" class="loading-icon-wrapper" style="width: 100%">
+                  <div class="lds-grid">
+                     <div></div>
+                     <div></div>
+                     <div></div>
+                     <div></div>
+                     <div></div>
+                     <div></div>
+                     <div></div>
+                     <div></div>
+                     <div></div>
+                  </div>
+               </div>
+               <div>
+                  <div class="container-row wittyworks-margin-top">
+                     <canvas
+                        id="topWordsChart"
+                        class="wittyworks-analytics-chart-extra-large wittyworks-margin-top">
+                     </canvas>
+                  </div>
+                  <div id="topWordsChartCorporateRulesWrapper" class="chart-container-row wittyworks-margin-top" style="display: none; width: 100%; align-items:center">
+                     <canvas
+                        id="topWordsChartCorporateRules"
+                        class="wittyworks-analytics-chart-medium wittyworks-margin-top">
+                     </canvas>
+                  </div>
+                  <div id="noCorporateRulesWrapper" class="container-row wittyworks-margin-top" style="display: none;">
+                     <div class="lato-small-text-p">{!! empty($user) ? __('content.no_corporate_rules') : __('content.no_corporate_rules_user') !!}</div>
+                  </div>
+                  <div id="corporateRulesButNoneOpened" class="container-row wittyworks-margin-top" style="display: none;">
+                     <div class="lato-small-text-p">{!! empty($user) ? __('content.corporate_rules_none_opened') : __('content.corporate_rules_none_opened_user') !!}</div>
+                  </div>
+                  <div class="chart-container-row wittyworks-margin-top">
+                     <canvas
+                        id="wordsRadar"
+                        class="wittyworks-analytics-chart-medium-radar">
+                     </canvas>
+                     <div id="topWordsDoughnutWrapper" class="container-column">
+                        <canvas
+                           id="topWordsChartDoughnut"
+                           class="wittyworks-analytics-chart-medium">
+                        </canvas>
+                        <canvas
+                           id="topWordsChartDoughnutWeek"
+                           class="wittyworks-analytics-chart-medium">
+                        </canvas>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
 </x-app-layout>
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js" rossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -1121,4 +1139,19 @@
     });
 };
 load_charts(false, 1);
+
+function handleTabClick(clickedTabId) {
+    const allTabs = ['overview', 'top-categories', 'top-words'];
+    allTabs.forEach(tab => {
+        if (tab !== clickedTabId) {
+            document.getElementById(tab).style.display = 'none';
+            document.getElementById(tab + '-tab').style.textDecoration = 'none';
+
+        } else {
+            document.getElementById(tab).style.display = 'block';
+            document.getElementById(tab + '-tab').style.textDecoration = 'underline';
+        }
+
+    });    
+} 
 </script>

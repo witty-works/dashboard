@@ -1067,3 +1067,15 @@ input:checked+.slider:before {
 .category_icon {
     margin-right: 0.5rem;
 }
+
+.analytics-tab-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1em;
+}
+
+.analytics-tab {
+    cursor: pointer;
+}
