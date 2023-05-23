@@ -1019,8 +1019,8 @@ input:checked+.slider:before {
 
 /* Tripple toggle */
 .tripple-toggle {
-    width: 50px;
-    height: 20px;
+    min-width: 50px;
+    min-height: 20px;
     border-radius: 20px;
     background-color: lightgrey;
     position: relative;
@@ -1030,8 +1030,8 @@ input:checked+.slider:before {
 
 .tripple-toggle:before {
     content: "";
-    width: 16px;
-    height: 16px;
+    min-width: 16px;
+    min-height: 16px;
     background-color: white;
     border-radius: 50%;
     position: absolute;
