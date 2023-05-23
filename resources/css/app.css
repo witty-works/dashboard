@@ -1058,6 +1058,11 @@ input:checked+.slider:before {
     background-color: #5FCA7D;
 }
 
+.tripple-toggle-lock {
+    margin-left: -0.7em;
+    margin-top: -0.7em;
+}
+
 .category_icon {
     margin-right: 0.5rem;
 }
