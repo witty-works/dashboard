@@ -13,6 +13,5 @@ return [
         'limit' => env('HUBSPOT_RATE_LIMIT', 35),
         'interval_seconds' => env('HUBSPOT_RATE_INTERVAL_SECONDS', 10),
         'multiplier' => env('HUBSPOT_RATE_MULTIPLIER', 3),
-        'until' => env('HUBSPOT_RETRY_HOURS', 4),
     ],
 ];
