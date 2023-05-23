@@ -5,6 +5,7 @@ namespace App\Actions\Socialstream;
 use App\Http\Controllers\OAuthController;
 use App\Models\User;
 use JoelButcher\Socialstream\Contracts\ResolvesSocialiteUsers;
+use GuzzleHttp\Exception\ClientException;
 
 class ResolveSocialiteUser implements ResolvesSocialiteUsers
 {
@@ -16,11 +17,15 @@ class ResolveSocialiteUser implements ResolvesSocialiteUsers
      */
     public function resolve($provider, $policy = 'login')
     {
-        $provider = OAuthController::getProvider($provider, $policy);
+        try {
+            $provider = OAuthController::getProvider($provider, $policy);
 
-        $user = $provider
-            ->with(['policy' => $policy])
-            ->user();
+            $user = $provider
+                ->with(['policy' => $policy])
+                ->user();
+        } catch (ClientException $e) {
+            abort(400);
+        }
 
         $user->name = $user->nickname = $user->user['nickname'] = $user->user['name'] ?? '';
         $user->user['email'] = User::getEmailFromProvider($user->user);

@@ -6,6 +6,7 @@ use App\Http\Controllers\OAuthController;
 use JoelButcher\Socialstream\Contracts\GeneratesProviderRedirect;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use GuzzleHttp\Exception\ClientException;
 
 class GenerateRedirectForProvider implements GeneratesProviderRedirect
 {
@@ -18,11 +19,15 @@ class GenerateRedirectForProvider implements GeneratesProviderRedirect
      */
     public function generate(string $provider, $policy = 'login')
     {
-        $provider = OAuthController::getProvider($provider, $policy);
+        try {
+            $provider = OAuthController::getProvider($provider, $policy);
 
-        return $provider
-            ->with(['policy' => $policy])
-            ->redirect();
+            return $provider
+                ->with(['policy' => $policy])
+                ->redirect();
+        } catch (ClientException $e) {
+            abort(400);
+        }
     }
     /**
      * Generates the logout for a given provider.
