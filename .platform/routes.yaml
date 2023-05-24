@@ -3,7 +3,17 @@
 # Each route describes how an incoming URL is going
 # to be processed by Platform.sh.
 
-"https://{default}/":
+"https://dashboard.{default}/":
     type: upstream
     primary: true
     upstream: "dashboard:http"
+
+"https://{default}/":
+    type: redirect
+    to: https://dashboard.{default}/
+
+"https://roadmap.{default}/":
+    type: upstream
+    upstream: "proxy:http"
+    cache:
+        enabled: false
