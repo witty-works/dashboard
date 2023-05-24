@@ -6,7 +6,7 @@
         </x-slot>
 
         <x-slot name="description" class="lato-paragraph-text-p">
-            <div class="headline-row">
+            <div class="headline-row container border-radius">
                 {!! __('guidelines.advanced_toggle_description') !!}
 
                 <div class="py-3 container-row" style="align-items: center; !important">

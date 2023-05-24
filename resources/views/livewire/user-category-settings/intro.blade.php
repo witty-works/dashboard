@@ -7,11 +7,9 @@
         </x-slot>
 
         <x-slot name="description" class="lato-paragraph-text-p">
-            <div>
+            <div class="container border-radius">
                 {!! __('guidelines.reset_to_team_suggestions_description') !!}
-            </div>
 
-            <div>
                 <form action="{{ route('user.category-settings-reset') }}">
                 <x-jet-button>
                     {{ __('guidelines.reset_to_team') }}
