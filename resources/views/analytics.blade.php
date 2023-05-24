@@ -12,17 +12,26 @@
          {{ __('content.analytics') }}
       </div>
       <div id="lastRefresh" class="lato-small-text-p wittyworks-margin-right container-row margin-top" style="visibility: hidden; align-items: center;"></div>
-      <div class="analytics-tab-container"> 
-         <a class="analytics-tab" id="overview-tab" onclick="handleTabClick('overview')" style="text-decoration: underline;">Overview</a>
-         <a class="analytics-tab" id="top-categories-tab" onclick="handleTabClick('top-categories')">Top Categories</a>
-         <a class="analytics-tab" id="top-words-tab" onclick="handleTabClick('top-words')">Top Words</a>
+      <div class="analytics-tab-container">
+         <div class="analytics-tab" id="overview-tab" onclick="handleTabClick('overview')" style="color: #9489DB;">
+            Overview
+            <div class="analytics-tab-line" id="overview-line"></div>
+        </div>
+         <div class="analytics-tab" id="top-categories-tab" onclick="handleTabClick('top-categories')">
+            Top Categories
+            <div id="top-categories-line"></div>
+        </div>
+         <div class="analytics-tab" id="top-words-tab" onclick="handleTabClick('top-words')">
+            Top Words
+            <div id="top-words-line"></div>
+        </div>
       </div>
 
       <!-- Overview content here -->
-      <div class="tab-pane fade" id="overview" role="tabpanel" aria-labelledby="overview-tab">
-         <div class="ibarra-sub-title-h2 wittyworks-margin-top">{{ __('content.activity') }}</div>
+      <div id="overview" role="tabpanel" aria-labelledby="overview-tab">
+         <div class="ibarra-sub-title-h2 margin-top">{{ __('content.activity') }}</div>
          <div class="wittyworks-form-section container border-radius">
-            <div id="loadingIconActivity" class="loading-icon-wrapper" style="width: 100%">
+            <div id="loading-icon-overview" class="loading-icon-wrapper" style="width: 100%">
                <div class="lds-grid">
                   <div></div>
                   <div></div>
@@ -35,14 +44,14 @@
                   <div></div>
                </div>
             </div>
-            <div id="activityChartWrapperNoData" style="visibility: hidden; width: 100%">
+            <div id="overview-wrapperNoData" style="visibility: hidden; width: 100%">
                <div class="lato-small-text-p warning-message">{!! __('content.no_data_events') !!}</div>
                <div class="image-container">
                   <img src="{{ url('svg/screenshots/activity.png') }}" alt="activity" class="image wittyworks-margin-top">
                   <div class="centered-image-text">{{ __('content.no_data_image_text') }}</div>
                </div>
             </div>
-            <div id="activityChartWrapper" style="visibility: hidden; width: 100%">
+            <div id="overview-wrapper" style="visibility: hidden; width: 100%">
                <div class="wittyworks-margin-top">
                   <div class="container-column" style="margin-left: 2em;">
                      <div class="container-row" style="align-items: center">
@@ -90,11 +99,11 @@
       </div>
     
       <!-- Top categories content here -->
-      <div class="tab-pane fade" id="top-categories" role="tabpanel" aria-labelledby="top-categories-tab">
-         <div id="topCategoriesChartWrapper" style="visibility: hidden; width: 100%">
-            <div class="ibarra-sub-title-h2 wittyworks-margin-top">{{ __('content.top_categories') }}</div>
+      <div id="top-categories" role="tabpanel" style="display: none;" aria-labelledby="top-categories-tab">
+         <div id="top-categories-wrapper" style="width: 100%">
+            <div class="ibarra-sub-title-h2 margin-top">{{ __('content.top_categories') }}</div>
             <div class="wittyworks-form-section container border-radius">
-               <div id="loadingIconTopCatagories" class="loading-icon-wrapper"  style="width: 100%">
+               <div id="loading-icon-top-categories" class="loading-icon-wrapper"  style="width: 100%">
                   <div class="lds-grid">
                      <div></div>
                      <div></div>
@@ -107,7 +116,7 @@
                      <div></div>
                   </div>
                </div>
-               <div>
+               <div id="top-categories-content" style="visibility: hidden; width: 100%">
                   <div class="chart-container-row wittyworks-margin-top">
                      <canvas
                         id="topSubCategoriesChart"
@@ -137,11 +146,11 @@
       </div>
      
       <!-- Top words content here -->
-      <div class="tab-pane fade" id="top-words" role="tabpanel" aria-labelledby="top-words-tab">
-         <div id="topWordsChartWrapper" style="visibility: hidden; width: 100%">
-            <div class="ibarra-sub-title-h2 wittyworks-margin-top">{{ __('content.top_words') }}</div>
+      <div id="top-words" role="tabpanel" style="display: none;" aria-labelledby="top-words-tab">
+         <div id="top-words-wrapper" style="width: 100%">
+            <div class="ibarra-sub-title-h2 margin-top">{{ __('content.top_words') }}</div>
             <div class="wittyworks-form-section container border-radius">
-               <div id="loadingIconTopWords" class="loading-icon-wrapper" style="width: 100%">
+               <div id="loading-icon-top-words" class="loading-icon-wrapper" style="width: 100%">
                   <div class="lds-grid">
                      <div></div>
                      <div></div>
@@ -154,7 +163,7 @@
                      <div></div>
                   </div>
                </div>
-               <div>
+               <div id="top-words-content" style="visibility: hidden; width: 100%">
                   <div class="container-row wittyworks-margin-top">
                      <canvas
                         id="topWordsChart"
@@ -203,17 +212,18 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/locale/de.js" rossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
-    function load_charts(refresh, startOfWeek) {
+    function load_charts(refresh, startOfWeek, chartType = 'overview') {
+        console.log('load_charts',chartType);
         if (refresh) {
             document.getElementById('lastRefresh').style.visibility = 'hidden';
-            document.getElementById("loadingIconActivity").style.display = "flex";
-            document.getElementById("activityChartWrapper").style.visibility = "hidden";
+            document.getElementById("loading-icon-overview").style.display = "flex";
+            document.getElementById("overview-wrapper").style.visibility = "hidden";
 
-            document.getElementById("loadingIconTopWords").style.display = "flex";
-            document.getElementById("topWordsChartWrapper").style.visibility = "hidden";
+            document.getElementById("loading-icon-top-words").style.display = "flex";
+            document.getElementById("top-words-wrapper").style.visibility = "hidden";
 
-            document.getElementById("loadingIconTopCatagories").style.display = "flex";
-            document.getElementById("topCategoriesChartWrapper").style.visibility = "hidden";
+            document.getElementById("loading-icon-top-catagories").style.display = "flex";
+            document.getElementById("top-categories-wrapper").style.visibility = "hidden";
         }
 
     const colors = [
@@ -434,9 +444,9 @@
         });
     }
 
-    getChartData('total').then(data => {
+    chartType == 'overview' && getChartData('total').then(data => {
         if (!data || !data.events || !data.events.popover_open || Object.entries(data.events.popover_open).filter(([key, value]) => value > 0).length == 0) {
-            handle_no_data('loadingIconActivity', 'activityChartWrapperNoData');
+            handle_no_data('loadingIconActivity', 'overview-wrapperNoData');
             return;
         }
         const events = data.events || {};
@@ -657,7 +667,7 @@
            
         getChartData('dau', 30, 'week').then(data => {
         if (!data || !data.events || !data.events.popover_open || Object.entries(data.events.popover_open).filter(([key, value]) => value > 0).length == 0) {
-            handle_no_data('loadingIconActivity', 'activityChartWrapperNoData');
+            handle_no_data('loadingIconActivity', 'overview-wrapperNoData');
             return;
         }
         const events = data.events || {};
@@ -754,18 +764,19 @@
                 }
             });
         }
-            document.getElementById("loadingIconActivity").style.display = "none";
-            document.getElementById("activityChartWrapperNoData").style.display = "none";
-            document.getElementById("activityChartWrapper").style.visibility = "visible";
+            document.getElementById("loading-icon-overview").style.display = "none";
+            document.getElementById("overview-wrapperNoData").style.display = "none";
+            document.getElementById("overview-wrapper").style.visibility = "visible";
         });
         }
     });
 
-    getChartData('topSubcategories', 7).then(data => {
+    chartType == 'top-categories' && getChartData('topSubcategories', 7).then(data => {
         if (!data || !data.events ) {
-            handle_no_data('loadingIconTopCatagories');
+            handle_no_data('loading-icon-top-categories');
             return;
         }
+        console.log('topSubcategories', data);
         const eventsPopoverOpenedWeekUnsorted = data.events.popover_open || {};
         const openedWeek = Object.entries(eventsPopoverOpenedWeekUnsorted).sort((a, b) => b[1] - a[1]).slice(0, 8);
         for (const [key, value] of openedWeek) {
@@ -777,7 +788,7 @@
 
         getChartData('topSubcategories', 14).then(data => {
         if (!data || !data.events ) {
-            handle_no_data('loadingIconTopCatagories');
+            handle_no_data('loading-icon-top-categories');
             return;
         }
         const openedTwoWeeks = data.events.popover_open || {};
@@ -797,8 +808,8 @@
 
         if (yTopSubCategoriesTwoWeeks.every((val, i, arr) => val === arr[0]) || yTopSubCategoriesWeek.every((val, i, arr) => val === arr[0])) {
             document.getElementById("categoriesRadar").style.display = "none";
-            document.getElementById("loadingIconTopCatagories").style.display = "none";
-            document.getElementById("topCategoriesChartWrapper").style.visibility = "visible";
+            document.getElementById("loading-icon-top-categories").style.display = "none";
+            document.getElementById("top-categories-wrapper").style.visibility = "visible";
 
             document.getElementById("topSubcategoriesDoughnutWrapper").classList.remove("container-column");
             document.getElementById("topSubcategoriesDoughnutWrapper").classList.add("container-row");
@@ -852,15 +863,15 @@
                     }
                 },
             });
-            document.getElementById("loadingIconTopCatagories").style.display = "none";
-            document.getElementById("topCategoriesChartWrapper").style.visibility = "visible";
         });
+        document.getElementById("loading-icon-top-categories").style.display = "none";
+        document.getElementById("top-categories-content").style.visibility = "visible";
     });
 
 
-    getChartData('topSubcategories').then(data => {
+    chartType == 'overview' && getChartData('topSubcategories').then(data => {
         if (!data || !data.events || !data.subcategories ) {
-            handle_no_data('loadingIconTopCatagories');
+            handle_no_data('loading-icon-top-categories');
             return;
         }
 
@@ -945,9 +956,9 @@
                          
     });
 
-    getChartData('topWords', 7).then(data => {
+    chartType == 'top-words' && getChartData('topWords', 7).then(data => {
         if (!data || !data.events ) {
-            handle_no_data('loadingIconTopWords');
+            handle_no_data('loading-icon-top-words');
             return;
         }
         const xTopWordsWeek = [];
@@ -964,7 +975,7 @@
 
         getChartData('topWords', 14).then(data => {
         if (!data || !data.events ) {
-            handle_no_data('loadingIconTopWords');
+            handle_no_data('loading-icon-top-words');
             return;
         }
         const openedTwoWeeks = data.events.popover_open || {};
@@ -983,8 +994,8 @@
 
         if (yTopWordsTwoWeeks.every((val, i, arr) => val === arr[0]) || yTopWordsWeek.every((val, i, arr) => val === arr[0])) {
             document.getElementById("wordsRadar").style.display = "none";
-            document.getElementById("loadingIconTopWords").style.display = "none";
-            document.getElementById("topWordsChartWrapper").style.visibility = "visible";
+            document.getElementById("loading-icon-top-words").style.display = "none";
+            document.getElementById("top-words-wrapper").style.visibility = "visible";
 
             document.getElementById("topWordsDoughnutWrapper").classList.remove("container-column");
             document.getElementById("topWordsDoughnutWrapper").classList.add("container-row");
@@ -1039,15 +1050,16 @@
                     }],
                 }
             });
-            document.getElementById("loadingIconTopWords").style.display = "none";
-            document.getElementById("topWordsChartWrapper").style.visibility = "visible";
+           
         });
+        document.getElementById("loading-icon-top-words").style.display = "none";
+        document.getElementById("top-words-content").style.visibility = "visible";
     });
 
 
-    getChartData('topWords').then(data => {
+    chartType == 'top-words' && getChartData('topWords').then(data => {
         if (!data || !data.events ) {
-            handle_no_data('loadingIconTopWords');
+            handle_no_data('loading-icon-top-words');
             return;
         }
         const ignored = data.events.ignore || {};
@@ -1102,7 +1114,7 @@
         );
     });
 
-    getChartData('topWords', 30, 'day', 'corporate_rules').then(data => {
+    chartType == 'top-words' && getChartData('topWords', 30, 'day', 'corporate_rules').then(data => {
         if(data && data.events && data.events.popover_open) {
             const openedCorporatewords = data.events.popover_open;
             for (const [key, value] of Object.entries(openedCorporatewords)) {
@@ -1144,14 +1156,22 @@ function handleTabClick(clickedTabId) {
     const allTabs = ['overview', 'top-categories', 'top-words'];
     allTabs.forEach(tab => {
         if (tab !== clickedTabId) {
+            document.getElementById(tab + '-tab').style.color = '#808080';
+            document.getElementById(tab + '-line').classList.remove('analytics-tab-line');
             document.getElementById(tab).style.display = 'none';
-            document.getElementById(tab + '-tab').style.textDecoration = 'none';
-
+            if (tab !== 'overview') { 
+                document.getElementById(tab + '-content').style.visibility = "hidden";
+            } else {
+                document.getElementById(tab + '-wrapper').style.visibility = "hidden";
+            }
         } else {
+            document.getElementById(tab + '-tab').style.color = '#9489DB';
+            document.getElementById(tab + '-line').classList.add('analytics-tab-line');
+            document.getElementById('loading-icon-' + tab).style.display = 'flex';
+            document.getElementById('loading-icon-' + tab).style.visibility = 'visible';
+            load_charts(false, 1, tab);
             document.getElementById(tab).style.display = 'block';
-            document.getElementById(tab + '-tab').style.textDecoration = 'underline';
         }
-
     });    
 } 
 </script>
