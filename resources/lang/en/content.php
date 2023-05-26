@@ -409,4 +409,7 @@ This is a spelling mistacke.',
     'recommended' => 'Recommdended by friend or colleague',
     'search_engine' => 'Search engine',
     'feedback' => 'Give Feedback',
+    'analytic_overview_tab_title' => 'Overview',
+    'analytic_top_categories_tab_title' => 'Top Categories',
+    'analytic_top_words_tab_title' => 'Top Words',
 ];

@@ -881,7 +881,7 @@ input:checked+.slider:before {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    margin-top: 31em;
+    margin-top: 20em;
 }
 
 [type='radio'] {
@@ -1067,3 +1067,31 @@ input:checked+.slider:before {
 .category_icon {
     margin-right: 0.5rem;
 }
+
+.analytics-tab-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1em;
+    border-bottom: 1px solid #dddddd;
+}
+
+.analytics-tab {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    text-transform: uppercase;
+    color: #808080;
+    margin-bottom: 1em;
+}
+
+  .analytics-tab-line {
+    position: absolute;
+    content: '';
+    border-bottom: 3px solid #9489db;
+    width: 100%;
+    transform: translateX(-50%);
+    bottom: -1em;
+    left: 50%;
+  }

@@ -414,4 +414,7 @@ Dies ist ein Rechtschreipfehler.',
     'search_engine' => 'Suchmaschine',
     'you_explored' => 'Du hast',
     'feedback' => 'Rückmeldung',
+    'analytic_overview_tab_title' => 'Überblick',
+    'analytic_top_categories_tab_title' => 'Top-Kategorien',
+    'analytic_top_words_tab_title' => 'Top-Wörter',
 ];
