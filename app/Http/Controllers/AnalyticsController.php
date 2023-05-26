@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\Categories;
+use App\Console\Commands\SyncToHubspotCategoriesCommand;
 use App\Models\Kpi;
 use App\Models\Team;
 use App\Models\User;
@@ -15,10 +15,14 @@ use Illuminate\Support\Facades\DB;
 class AnalyticsController extends Controller
 {
     protected $refresh;
+    protected $categories;
+    protected $diversityDimensionDrivers;
 
     public function __construct(Request $request)
     {
         $this->refresh = $request->get('refresh', false);
+        $this->categories = SyncToHubspotCategoriesCommand::loadTableData('categories');
+        $this->diversityDimensionDrivers = SyncToHubspotCategoriesCommand::loadTableData('diversity_dimension_drivers');
     }
 
     public function user(Request $request)
@@ -64,7 +68,7 @@ class AnalyticsController extends Controller
 
         $properties = PosthogHelper::getUserFilter($user);
 
-        return $this->fetchJson($request, $properties, $user);
+        return $this->buildJson($request, $properties, $user);
     }
 
     public function organizationApi(Request $request)
@@ -74,10 +78,10 @@ class AnalyticsController extends Controller
 
         $properties = PosthogHelper::getOrganizationFilter($user->currentTeam);
 
-        return $this->fetchJson($request, $properties, $user->currentTeam);
+        return $this->buildJson($request, $properties, $user->currentTeam);
     }
 
-    protected function fetchEventData($events, $properties, $interval, $from, $math = 'total')
+    protected function buildFilter($properties, $filters, $interval, $from, $math)
     {
         $filter = [
             'events' => [
@@ -90,6 +94,25 @@ class AnalyticsController extends Controller
             'interval' => $interval,
             'date_from' => $from,
         ];
+
+        if (!empty($filters)) {
+            $filter['properties'] = [
+                'type' => 'AND',
+                'values' => [
+                    [
+                        'type' => 'OR',
+                        'values' => $filters
+                    ]
+                ]
+            ];
+        }
+
+        return $filter;
+    }
+
+    protected function buildEventData($events, $properties, $filters, $interval, $from, $math = 'total')
+    {
+        $filter = $this->buildFilter($properties, $filters, $interval, $from, $math);
 
         $data = [];
         foreach ($events as $event) {
@@ -106,28 +129,34 @@ class AnalyticsController extends Controller
         return $data;
     }
 
-    protected function fetchBreakdown($events, $properties, $breakdown, $interval, $from, $math = 'total')
+    protected function buildBreakdown($events, $properties, $filters, $breakdown, $interval, $from, $math = 'total')
     {
-        $properties['values'][] = [
-            'key' => 'request__data_category',
-            'value' => 'orthography',
-            'operator' => 'is_not',
-            'type' => 'event',
-        ];
+        if (empty($filters)) {
+            // filter out orthography by default
+            $properties[] = [
+                'key' => 'response__data__category',
+                'value' => 'orthography',
+                'operator' => 'is_not',
+                'type' => 'event',
+            ];
+        }
 
-        $filter = [
-            'events' => [
-                [
-                    'properties' => $properties,
-                    'math' => $math,
+        $filter = $this->buildFilter($properties, $filters, $interval, $from, $math);
+
+        $filter['display'] = 'ActionsBarValue';
+        $filter['breakdown'] = $breakdown;
+
+        if (!empty($filters)) {
+            $filter['properties'] = [
+                'type' => 'AND',
+                'values' => [
+                    [
+                        'type' => 'OR',
+                        'values' => $filters
+                    ]
                 ]
-            ],
-            'filter_test_accounts' => false,
-            'interval' => $interval,
-            'date_from' => $from,
-            'display' => 'ActionsBarValue',
-            'breakdown' => $breakdown,
-        ];
+            ];
+        }
 
         $data = [];
         foreach ($events as $event) {
@@ -153,58 +182,86 @@ class AnalyticsController extends Controller
         return floor($differenceInWeeks);
     }
 
-    protected function fetchJson(Request $request, $properties, $model)
+    protected function buildJson(Request $request, $properties, $model)
     {
-        $from = $this->fetchFrom($request);
-        $fromPosthog = "-{$from}d";
-        $interval = $this->fetchInterval($request);
-        $chart = $request->get('chart');
+        $rules = [
+            'chart' => 'required|in:dau,total,topSubcategories,topWords',
+            'interval' => 'in:day,week,month',
+            'from' => 'required',
+            'lang' => 'nullable|in:en,de',
+            'events' => 'nullable|array|in:check,popover_open,alternative,ignore,learning_bites',
+            'categories' => 'nullable|array|in:' . implode(',', $this->categories->keys()->toArray()),
+            'diversity_dimension_drivers' => 'nullable|array|in:' . implode(',', $this->diversityDimensionDrivers->keys()->toArray()),
+        ];
 
-        $filterField = 'response__data__category';
-        $filters = $this->fetchCategoryFilters($request);
-        if (empty($filters)) {
-            $filters = $this->fetchSubcategoryFilters($request);
-            $filterField = 'response__data__subcategory';
+        $validated = $request->validate($rules);
+
+        $chart = $validated['chart'];
+        $interval = $validated['interval'] ?? 'day';
+        $from = $validated['from'] ?? '30d';
+        $lang = $validated['lang'] ?? null;
+        $events = $validated['events'] ?? null;
+        $categories = $validated['categories'] ?? [];
+        $diversityDimensionDrivers = $validated['diversity_dimension_drivers'] ?? [];
+
+        // BC code
+        if (is_numeric($from)) {
+            $from = "{$from}d";
         }
 
-        if (!empty($filters)) {
-            $filterType = $this->fetchFilterType($request);
+        $from = "-{$from}";
 
-            foreach ($filters as $filter) {
-                $values[] = [
-                    'key' => $filterField,
-                    'value' => $filter,
-                    'operator' => $filterType,
-                    'type' => 'event',
-                ];
-            }
+        if (!empty($lang)) {
+            $properties[] = [
+                'key' => 'response__data__language',
+                'value' => $lang,
+                'operator' => 'exact',
+                'type' => 'event',
+            ];
+        }
 
-            if ($filterType === 'is_not' || count($values) === 1) {
-                $properties['values'] = array_merge($properties['values'], $values);
-            } else {
-                $properties['values'] = [
-                    'type' => 'AND',
-                    'values' => [
-                        [
-                            'type' => 'AND',
-                            'values' => $properties['values'],
-                        ],
-                        [
-                            'type' => 'OR',
-                            'values' => $values,
-                        ]
-                    ],
-                ];
-            }
+        $filters = [];
+        if (!empty($categories)) {
+            $filters[] = [
+                'key' => 'response__data__category',
+                'value' => $categories,
+                'operator' => 'exact',
+                'type' => 'event',
+            ];
+        }
+
+        if (!empty($diversityDimensionDrivers)) {
+            $filters[] = [
+                'key' => 'response__data__subcategory',
+                'value' => $diversityDimensionDrivers,
+                'operator' => 'exact',
+                'type' => 'event',
+            ];
         }
 
         switch ($chart) {
             case 'dau':
-                $events = ['popover_open', 'alternative', 'ignore', 'learning_bites'];
-                $data = $this->fetchEventData($events, $properties, $interval, $fromPosthog, 'dau');
+                if (!is_array($events)) {
+                    $events = ['popover_open', 'alternative', 'ignore', 'learning_bites'];
+                }
 
+                $data = $this->buildEventData($events, $properties, $filters, $interval, $from, 'dau');
                 if ($model instanceof Team && !empty($data['events']['popover_open'])) {
-                    $fromUserCount = $from + 10;
+                    // handle "-30d" => 30 | "-3w" => 21 | "-5m" => 150
+                    switch (substr($from, -1)) {
+                        case 'm':
+                            $multiplier = -30;
+                            break;
+                        case 'w':
+                            $multiplier = -7;
+                            break;
+                        case 'd':
+                        default:
+                            $multiplier = -1;
+                            break;
+                    }
+                    $fromUserCount = ((int) $from * $multiplier) + 10;
+
                     $userCount = Kpi::where('team_id', $model->id)
                         ->where('kpi', Kpi::TEAM_COUNT)
                         ->whereRaw("date > DATE_SUB(NOW(), INTERVAL {$fromUserCount} DAY)")
@@ -229,8 +286,13 @@ class AnalyticsController extends Controller
 
                 break;
             case 'total':
-                $events = ['check', 'popover_open', 'alternative', 'ignore', 'learning_bites'];
-                $data = $this->fetchEventData($events, $properties, $interval, $fromPosthog);
+                if (!is_array($events)) {
+                    $events = ['check', 'popover_open', 'alternative', 'ignore', 'learning_bites'];
+                } else {
+                    array_unshift($events, 'check');
+                }
+
+                $data = $this->buildEventData($events, $properties, $filters, $interval, $from);
 
                 $writingStreak = 0;
                 $writingStreakComplete = true;
@@ -301,26 +363,29 @@ class AnalyticsController extends Controller
                 $data['writing_streak'] = $writingStreak;
                 break;
             case 'topSubcategories':
-                $events = ['popover_open', 'alternative', 'ignore'];
-                $data = $this->fetchBreakdown(
+                if (!is_array($events)) {
+                    $events = ['popover_open', 'alternative', 'ignore'];
+                }
+
+                $data = $this->buildBreakdown(
                     $events,
                     $properties,
+                    $filters,
                     'response__data__subcategory',
                     $interval,
-                    $fromPosthog
+                    $from
                 );
 
-                $locale = session('locale', 'en');
                 foreach ($events as $event) {
                     if (!empty($data['events'][$event])) {
                         $subcategories = [];
                         foreach ($data['events'][$event] as $subcategory => $count) {
-                            if (empty(Categories::CATEGORIES[$subcategory])) {
+                            if (empty($this->diversityDimensionDrivers[$subcategory]['translation']['hs_name'])) {
                                 continue;
                             }
 
-                            $category = Categories::CATEGORIES[$subcategory];
-                            $subcategories[$category['name'][$locale]] = $count;
+                            $category = $this->diversityDimensionDrivers[$subcategory];
+                            $subcategories[$category['translation']['hs_name']] = $count;
 
                             $data['subcategories'][$event][$subcategory] = $category;
                         }
@@ -329,8 +394,11 @@ class AnalyticsController extends Controller
                 }
                 break;
             case 'topWords':
-                $events = ['popover_open', 'alternative', 'ignore'];
-                $data = $this->fetchBreakdown($events, $properties, 'response__data_text', $interval, $fromPosthog);
+                if (!is_array($events)) {
+                    $events = ['popover_open', 'alternative', 'ignore'];
+                }
+
+                $data = $this->buildBreakdown($events, $properties, $filters, 'response__data_text', $interval, $from);
                 break;
             default:
                 return response()->json(['error' => 400, 'message' => "Unsupported chart type '$chart'"], 400);
@@ -338,35 +406,5 @@ class AnalyticsController extends Controller
         }
 
         return response()->json($data);
-    }
-
-    protected function fetchFilterType(Request $request)
-    {
-        return $request->get('filter_type', 'exact');
-    }
-
-    protected function fetchSubcategoryFilters(Request $request)
-    {
-        return $request->get('subcategory_filters', []);
-    }
-
-    protected function fetchCategoryFilters(Request $request)
-    {
-        return $request->get('category_filters', []);
-    }
-
-    protected function fetchOrthography(Request $request)
-    {
-        return $request->get('orthography', true);
-    }
-
-    protected function fetchInterval(Request $request)
-    {
-        return $request->get('interval', 'day');
-    }
-
-    protected function fetchFrom(Request $request)
-    {
-        return max(min((int)$request->get('from', '30'), 30), 1);
     }
 }

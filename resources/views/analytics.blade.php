@@ -978,8 +978,8 @@ $categoriesWithSubcategories = [
 
         let i = 0;
         for (const [key, value] of Object.entries(subcategories).slice(0, 15)) {
-            let url = subcategories[key].url[locale];
-            let label = subcategories[key].name[locale];
+            let url = subcategories[key]['translation']['canonical_url'];
+            let label = subcategories[key]['translation']['hs_name'];
 
             listOfLinks += `<div class="link-box" style="background-color:${colors[i]}"></div>`;
 
