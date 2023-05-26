@@ -412,4 +412,5 @@ This is a spelling mistacke.',
     'analytic_overview_tab_title' => 'Overview',
     'analytic_top_categories_tab_title' => 'Top Categories',
     'analytic_top_words_tab_title' => 'Top Words',
+    'roadmap' => 'Roadmap',
 ];
