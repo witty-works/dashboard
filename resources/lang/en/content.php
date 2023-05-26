@@ -408,5 +408,5 @@ This is a spelling mistacke.',
     'consultant' => 'DEI consultant',
     'recommended' => 'Recommdended by friend or colleague',
     'search_engine' => 'Search engine',
-    'feedback' => 'Send Feedback',
+    'feedback' => 'Give Feedback',
 ];
