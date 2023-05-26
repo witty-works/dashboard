@@ -413,4 +413,5 @@ Dies ist ein Rechtschreipfehler.',
     'recommended' => 'Empfohlen durch bekannte Person',
     'search_engine' => 'Suchmaschine',
     'you_explored' => 'Du hast',
+    'feedback' => 'Feedback schicken',
 ];
