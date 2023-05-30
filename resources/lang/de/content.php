@@ -384,21 +384,12 @@ Falls du Fragen hast, nimm Kontakt mit :name (:email) auf. 🙂
 ',
     'witty_editor_copy_button' => 'Text in die Zwischenablage kopieren',
     'witty_editor_example_button' => 'Beispiel zeigen',
-    'witty_editor_example_text' => 'Die Grundlagen: Witzige Highlights Sprache mit unbewussten voreingenommen in Orange: 
+    'witty_editor_example_text' => '<h2>Die Grundlagen</h2><h4>Witty hebt Sprache, die unbewusste Vorurteile enthält, Orange hervor:</h4><br><br><em>An die Mannschaft,<br>wir haben ein großes Softwareprojekt, das 100 Manntage in Anspruch nehmen wird. Bring dein außergewöhnliches Fachwissen und deinen starken technischen Hintergrund mit. Wir suchen auch Digital Natives.</em><br><br><em>P.S. eure Ehefrauen sind auf der Weihnachtsfeier herzlich willkommen.</em><br><br><h4>Witty hebt inklusive Begriffe in Grün hervor:</h4><br><em>Wir sind teamorientiert und unterstützen uns gegenseitig.</em><br><br><h4>Witty hebt Grammatik- und Rechtschreibfehler in Rot hervor:</h4><br><em>Das ist ein Rechtsschreibfehler.</em>
 
-Hallo Leute,
+<h2>Wo funktioniert Witty?</h2>
+<p>Witty funktioniert automatisch auf den <a href="https://www.witty.works/witty-works-where-you-do" rel="noopener" target="_blank" style="color: rgb(85, 184, 233);">meisten Webseiten</a>, auf denen du schreibst. Wenn du Microsoft-Produkte verwendest, nutze stattdessen unseren <a href="http://dashboard.witty.works/editor" rel="noopener" target="_blank" style=" color: rgb(85, 184, 233);">Editor</a>.</p>
 
-Wir haben ein großes Softwareprojekt, das viele Arbeitsstunden in Anspruch nehmen wird. Wer möchte sich unserer Mannschaft anschließen? Bringt euer außergewöhnliches Fachwissen und euren starken technischen Hintergrund mit. Wir suchen auch nach einem Digital Native.
-
-P.S. Ihre Ehefrauen sind bei der Weihnachtsfeier des Vorstands willkommen.
-
-Witzig unterstreicht positive Begriffe in Grün:
-
-Wir sind ein kreatives Team.
-
-Witty korrigiert Grammatik- und Rechtschreibfehler. Sie werden in Rot hervorgehoben:
-
-Dies ist ein Rechtschreipfehler.',
+<div><img src="https://www.witty.works/hubfs/Screenshot%202023-03-16%20at%2016.15.39.png" alt="Logo von Google Docs, Notion, Gmail, LinkedIn, Personio und Greenhouse" style="width:100%; padding:top:20px" ></div>',
     'learn_more' => 'Warum das so ist',
     'example' => 'Beispiel',
     'open' => 'Öffnen',
@@ -417,5 +408,4 @@ Dies ist ein Rechtschreipfehler.',
     'analytic_overview_tab_title' => 'Überblick',
     'analytic_top_categories_tab_title' => 'Top-Kategorien',
     'analytic_top_words_tab_title' => 'Top-Wörter',
-    'roadmap' => 'Roadmap',
 ];
