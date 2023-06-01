@@ -453,21 +453,12 @@ If you have any questions, contact :name (:email). 🙂
     'invitation_request_license_limit_reached' => 'You have already invited two members to your team and have reached the limit. <a href="https://dashboard.witty.works/team/subscription">Upgrade</a> to invite more members!',
     'witty_editor_copy_button' => 'Copy text to clipboard',
     'witty_editor_example_button' => 'Show Example',
-    'witty_editor_example_text' => 'The basics: Witty highlights language containing unconscious biased in orange: 
+    'witty_editor_example_text' => '<h2>The basics</h2><h4>Witty highlights language containing unconscious biased in orange:</h4><br><br><em>Hey guys,<br>We have a large software project that will take man-hours to complete. Who would like to join us? Bring your extraordinary expertise and strong technical background. We are also looking for a digital native.</em><br><br><em>P.S. Your wives are welcome at the board\'s Christmas party.</em><br><br><h4>Witty highlights positive terms in green:</h4><br><em>We are a creative team.</em><br><br><h4>Witty highlights grammar and spelling mistakes in red:</h4><br><em>This is a spelling mistacke.</em>
 
-Hey guys,
+<h2>Where Witty works</h2>
+<p>Witty works on <a href="https://www.witty.works/witty-works-where-you-do" rel="noopener" target="_blank" style="box-sizing: border-box; background-color: transparent; cursor: pointer; text-decoration: none; transition: all 0.2s ease-in-out 0s; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: 30px; text-transform: none; color: rgb(85, 184, 233);">most webpage</a> where you write. &nbsp;Witty is activated automatically. If you use Microsoft products, use our <a href="http://dashboard.witty.works/editor" rel="noopener" target="_blank" style="box-sizing: border-box; background-color: transparent; cursor: pointer; text-decoration: none; transition: all 0.2s ease-in-out 0s; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: 30px; text-transform: none; color: rgb(85, 184, 233);">Editor</a> instead.</p>
 
-We have a large software project that will take man-hours to complete. Who would like to join us? Bring your extraordinary expertise and strong technical background. We are also looking for a digital native.
-
-P.S. Your wives are welcome at the board\'s Christmas party.
-
-Witty highlights positive terms in green:
-
-We are a creative team.
-
-Witty corrects grammar and spelling mistakes. They are highlighted in red:
-
-This is a spelling mistacke.',
+<div><img src="https://www.witty.works/hubfs/Screenshot%202023-03-16%20at%2016.15.39.png" alt="Logo of Google Docs, Notion, Gmail, LinkedIn, Personio and greenhouse" style="width:100%; padding:top:20px" ></div>',
     'learn_more' => 'Dig deeper',
     'example' => 'Example',
     'open' => 'Open',
@@ -481,5 +472,9 @@ This is a spelling mistacke.',
     'consultant' => 'DEI consultant',
     'recommended' => 'Recommdended by friend or colleague',
     'search_engine' => 'Search engine',
-    'feedback' => 'Send Feedback',
+    'feedback' => 'Give Feedback',
+    'analytic_overview_tab_title' => 'Overview',
+    'analytic_top_categories_tab_title' => 'Top Categories',
+    'analytic_top_words_tab_title' => 'Top Words',
+    'roadmap' => 'Roadmap',
 ];

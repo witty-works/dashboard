@@ -32,11 +32,6 @@ class SyncUserToHubSpot implements ShouldQueue
         $this->id = $user->id;
     }
 
-    public function retryUntil()
-    {
-        return now()->addHour(config('hubspot.rate.until'));
-    }
-
     public function middleware()
     {
         $rateLimitedMiddleware = new RateLimited(false);

@@ -141,23 +141,24 @@
         @else
         <!-- LOGGED OUT -->
         <div class="wittyworks-navigation-top-half">
-            <x-jet-nav-link class="wittyworks-navigation-link-wrapper" href="{{ route('editor') }}">
+            <x-jet-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('editor') }}">
                 <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/editor.svg') }}" alt="" />
                 {{ __('content.witty_editor') }}
             </x-jet-nav-link>
         </div>
         <div class="wittyworks-navigation-bottom-half">
-            <x-jet-nav-link class="wittyworks-navigation-link-wrapper" href="https://www.witty.works/pricing" target="_blank" rel="noopener">
+            <x-jet-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="https://www.witty.works/pricing" target="_blank" rel="noopener">
                 <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/star.svg') }}" alt="" />
                 {{ __('teams.pricing') }}
             </x-jet-nav-link>
 
-            <x-jet-nav-link class="wittyworks-navigation-link-wrapper" href="{{ route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'login']) }}">
+            <x-jet-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'login']) }}">
                 <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/login.svg') }}" alt="" />
                     {{ __('content.log_in_register') }}
             </x-jet-nav-link>
 
             <div class="wittyworks-navigation-username lato-small-text-p">
+                <br />
                 <x-jet-button data-attr="posthog-feedback-button" secondary style="display: none">
                     {{ __('content.feedback') }}
                 </x-jet-button>

@@ -183,7 +183,6 @@ Route::group(['middleware' => config('socialstream.middleware', ['web'])], funct
     Route::get('/download', function () {
         return redirect(config('app.download_url'));
     })->name('download');
-
 });
 
 /*
@@ -191,6 +190,8 @@ Route::group(['middleware' => config('socialstream.middleware', ['web'])], funct
 | \SOCIALSTREAM
 |------------------
 */
+
+Route::get('/roadmap', [WelcomeController::class, 'roadmap'])->name('roadmap');
 
 Route::post(
     '/stripe/webhook',

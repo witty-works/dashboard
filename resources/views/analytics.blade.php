@@ -77,247 +77,273 @@ $categoriesWithSubcategories = [
 
 ?>
 <x-app-layout :pagetitle="__('content.analytics')">
-    <div class="wittyworks-navigation-wrapper">@livewire('navigation-menu')</div>
-        <div class="wittyworks-page-wrapper">
-            <div class="wittyworks-page lg:ml-20">
-                @include('partials.banners')
-                <div class="ibarra-sub-title-h1 margin-top">
-                    {{ __('content.analytics') }}
-                </div>
-                <div id="lastRefresh" class="lato-small-text-p wittyworks-margin-right container-row margin-top" style="visibility: hidden; align-items: center;"></div>
-               
-                <div class="container-row"> 
+<div class="wittyworks-navigation-wrapper">@livewire('navigation-menu')</div>
+<div class="wittyworks-page-wrapper">
+   <div class="wittyworks-page lg:ml-20">
+      @include('partials.banners')
+      <div class="ibarra-sub-title-h1 margin-top">
+         {{ __('content.analytics') }}
+      </div>
+      <div id="lastRefresh" class="lato-small-text-p wittyworks-margin-right container-row margin-top" style="visibility: hidden; align-items: center;"></div>
+      <div class="container-row"> 
+        <div class="drowdown-wrapper">
+            <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.chart_time_range') }}</div>
+            <select class="dropdown margin-right" id="timerangeDropdown" onchange="setTimerange()">
+                <option value="7">{{ __('content.chart_time_range_week') }}</option>
+                <option value="30">{{ __('content.chart_time_range_month') }}</option>
+                <option value="90">{{ __('content.chart_time_range_quarter') }}</option>
+                <option value="365">{{ __('content.chart_time_range_year') }}</option>
+                <option value="9999999">{{ __('content.chart_time_range_all') }}</option>
+            </select>
+        </div>
 
-                    <div class="drowdown-wrapper">
-                        <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.chart_time_range') }}</div>
-                        <select class="dropdown margin-right" id="timerangeDropdown" onchange="setTimerange()">
-                            <option value="7">{{ __('content.chart_time_range_week') }}</option>
-                            <option value="30">{{ __('content.chart_time_range_month') }}</option>
-                            <option value="90">{{ __('content.chart_time_range_quarter') }}</option>
-                            <option value="365">{{ __('content.chart_time_range_year') }}</option>
-                            <option value="9999999">{{ __('content.chart_time_range_all') }}</option>
-                        </select>
-                    </div>
+        <div class="drowdown-wrapper">
+            <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.language_filter') }}</div>
+            <select class="dropdown margin-right" id="languageDropdown" onchange="setLanguage()">
+                <option value="EN">{{ __('content.language_filter_en') }}</option>
+                <option value="DE">{{ __('content.language_filter_de') }}</option>
+                <option value="BOTH">{{ __('content.language_filter_both') }}</option>
+            </select>
+        </div>
 
-                    <div class="drowdown-wrapper">
-                        <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.language_filter') }}</div>
-                        <select class="dropdown margin-right" id="languageDropdown" onchange="setLanguage()">
-                            <option value="EN">{{ __('content.language_filter_en') }}</option>
-                            <option value="DE">{{ __('content.language_filter_de') }}</option>
-                            <option value="BOTH">{{ __('content.language_filter_both') }}</option>
-                        </select>
-                    </div>
-
-                    <div class="dropdown">
-                        <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.category_filter') }}</div>
-                        <div class="dropdown-content">
-                            <div class="sub-dropdown">
-                                <?php foreach ($categoriesWithSubcategories as $category => $subcategories): ?>
-                                    <div onmouseover="document.getElementById('<?php echo $category; ?>').style.display = 'block';"
-                                        onmouseout="document.getElementById('<?php echo $category; ?>').style.display = 'none';">
-                                        <input type="checkbox" name="<?php echo $category; ?>" value="{{ __('content.'.$category) }}">
-                                        <label for="<?php echo $category; ?>">{{ __('content.'.$category) }}</label>
-                                    </div>
-                                    <div class="dropdown">
-                                        <div class="dropdown-content" id="<?php echo $category; ?>" style="display: none;">
-                                            <?php foreach ($subcategories as $subcategory): ?>
-                                                <div class="sub-dropdown">
-                                                    <input type="checkbox" name="<?php echo $subcategory; ?>" value="{{ __('content.'.$subcategory) }}">
-                                                    <label for="<?php echo $subcategory; ?>">{{ __('content.'.$subcategory) }}</label>
-                                                </div>
-                                            <?php endforeach; ?>
-                                        </div>
+        <div class="dropdown">
+            <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.category_filter') }}</div>
+            <div class="dropdown-content">
+                <div class="sub-dropdown">
+                    <?php foreach ($categoriesWithSubcategories as $category => $subcategories): ?>
+                        <div onmouseover="document.getElementById('<?php echo $category; ?>').style.display = 'block';"
+                            onmouseout="document.getElementById('<?php echo $category; ?>').style.display = 'none';">
+                            <input type="checkbox" name="<?php echo $category; ?>" value="{{ __('content.'.$category) }}">
+                            <label for="<?php echo $category; ?>">{{ __('content.'.$category) }}</label>
+                        </div>
+                        <div class="dropdown">
+                            <div class="dropdown-content" id="<?php echo $category; ?>" style="display: none;">
+                                <?php foreach ($subcategories as $subcategory): ?>
+                                    <div class="sub-dropdown">
+                                        <input type="checkbox" name="<?php echo $subcategory; ?>" value="{{ __('content.'.$subcategory) }}">
+                                        <label for="<?php echo $subcategory; ?>">{{ __('content.'.$subcategory) }}</label>
                                     </div>
                                 <?php endforeach; ?>
                             </div>
                         </div>
-                    </div>
-                </div>
-
-                <div class="ibarra-sub-title-h2 wittyworks-margin-top">{{ __('content.activity') }}</div>
-                <div class="wittyworks-form-section container border-radius">
-                    <div id="loadingIconActivity" class="loading-icon-wrapper" style="width: 100%">
-                        <div class="lds-grid">
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                        </div>
-                    </div>
-                    <div id="activityChartWrapperNoData" style="visibility: hidden; width: 100%">
-                        <div class="lato-small-text-p warning-message">{!! __('content.no_data_events') !!}</div>
-                        <div class="image-container">
-                            <img src="{{ url('svg/screenshots/activity.png') }}" alt="activity" class="image wittyworks-margin-top">
-                            <div class="centered-image-text">{{ __('content.no_data_image_text') }}</div>
-                        </div>
-                    </div>
-                    <div id="activityChartWrapper" style="visibility: hidden; width: 100%">
-                        <div class="wittyworks-margin-top">
-                            <div class="container-column" style="margin-left: 2em;">
-                                <div class="container-row" style="align-items: center">
-                                    <div id="checkDaysInRow" class="lato-small-text-p"></div>
-                                </div>
-                                <div class="container-row" >
-                                    <div id="changeInPopoverPercentage" class="lato-small-text-p"></div>
-                                </div>
-                                <div class="container-row" >
-                                    <div id="changeInAlternativePercentage" class="lato-small-text-p"></div>
-                                </div>
-                                <div class="container-row">
-                                    <div id="changeInIgnorePercentage" class="lato-small-text-p"></div>                           
-                                </div>
-                                <div class="container-row" >
-                                    <div id="changeInLearningBitesPercentage" class="lato-small-text-p"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="container-row wittyworks-margin-right wittyworks-margin-top" style="margin-left: 2em;">
-                            <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.start_of_week') }}</div>
-                            <div id="startOfWeekDropdown"></div>
-                        </div>
-                        <div class="container-row wittyworks-margin-top">
-                            <canvas id="eventsChart" class="wittyworks-analytics-chart-extra-large"></canvas>
-                        </div>
-                        @if(isset($team) && !empty($team_edit))
-                        <div class="container-row wittyworks-margin-top">
-                            <canvas id="dauChart" class="wittyworks-analytics-chart-extra-large"></canvas>
-                        </div>
-                        @endif
-                        <div class="container-row wittyworks-margin-top">
-                            <canvas id="requestRatiosChartDoughnut" class="wittyworks-analytics-chart-small"></canvas>
-                            @php
-                                $eventsCharts = ["eventsPopoverChart", "eventsAlternativeChart", "eventsIgnoreChart", "eventsLearningBitesChart"];
-                                for ($i = 0; $i < count($eventsCharts); $i++) {
-                                    echo '<canvas id="' . $eventsCharts[$i] . '" class="wittyworks-analytics-chart-small wittyworks-margin-right" ></canvas>';
-                                }
-                            @endphp
-                        </div>
-                    </div>
-                </div>
-
-                <div id="topCategoriesChartWrapper" style="visibility: hidden; width: 100%">
-                    <div class="ibarra-sub-title-h2 wittyworks-margin-top">{{ __('content.top_categories') }}</div>
-                    <div class="wittyworks-form-section container border-radius">
-                        <div id="loadingIconTopCatagories" class="loading-icon-wrapper"  style="width: 100%">
-                            <div class="lds-grid">
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="chart-container-row wittyworks-margin-top">
-                                <canvas
-                                    id="topSubCategoriesChart"
-                                    class="wittyworks-analytics-chart-top-categories wittyworks-margin-top">
-                                </canvas>
-                                <div id="categoryOverview" class="wittyworks-margin-left wittyworks-margin-top"></div>
-                            </div>
-                            <div class="chart-container-row wittyworks-margin-top">
-                                <canvas
-                                    id="categoriesRadar"
-                                    class="wittyworks-analytics-chart-medium-radar">
-                                </canvas>
-                                <div id="topSubcategoriesDoughnutWrapper" class="container-column">
-                                    <canvas
-                                        id="topSubCategoriesOpenedChartDoughnut"
-                                        class="wittyworks-analytics-chart-medium">
-                                    </canvas>
-                                    <canvas
-                                        id="topSubCategoriesIgnoredChartDoughnut"
-                                        class="wittyworks-analytics-chart-medium">
-                                    </canvas>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="topWordsChartWrapper" style="visibility: hidden; width: 100%">
-                    <div class="ibarra-sub-title-h2 wittyworks-margin-top">{{ __('content.top_words') }}</div>
-                    <div class="wittyworks-form-section container border-radius">
-                        <div id="loadingIconTopWords" class="loading-icon-wrapper" style="width: 100%">
-                            <div class="lds-grid">
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="container-row wittyworks-margin-top">
-                                <canvas
-                                    id="topWordsChart"
-                                    class="wittyworks-analytics-chart-extra-large wittyworks-margin-top">
-                                </canvas>
-                            </div>
-                            <div id="topWordsChartCorporateRulesWrapper" class="chart-container-row wittyworks-margin-top" style="display: none; width: 100%; align-items:center">
-                                <canvas
-                                    id="topWordsChartCorporateRules"
-                                    class="wittyworks-analytics-chart-medium wittyworks-margin-top">
-                                </canvas>
-                            </div>
-                            <div id="noCorporateRulesWrapper" class="container-row wittyworks-margin-top" style="display: none;">
-                                <div class="lato-small-text-p">{!! empty($user) ? __('content.no_corporate_rules') : __('content.no_corporate_rules_user') !!}</div>
-                            </div>
-                            <div id="corporateRulesButNoneOpened" class="container-row wittyworks-margin-top" style="display: none;">
-                                <div class="lato-small-text-p">{!! empty($user) ? __('content.corporate_rules_none_opened') : __('content.corporate_rules_none_opened_user') !!}</div>
-                            </div>
-                            <div class="chart-container-row wittyworks-margin-top">
-                            <canvas
-                                id="wordsRadar"
-                                class="wittyworks-analytics-chart-medium-radar">
-                            </canvas>
-                            <div id="topWordsDoughnutWrapper" class="container-column">
-                                <canvas
-                                    id="topWordsChartDoughnut"
-                                    class="wittyworks-analytics-chart-medium">
-                                </canvas>
-                                <canvas
-                                    id="topWordsChartDoughnutWeek"
-                                    class="wittyworks-analytics-chart-medium">
-                                </canvas>
-                            </div>
-                        </div>
-                    </div>
+                    <?php endforeach; ?>
                 </div>
             </div>
         </div>
-    </div>
+        </div>
+
+      <div class="analytics-tab-container">
+         <div class="analytics-tab" id="overview-tab" onclick="handleTabClick('overview')" style="color: #9489DB;">
+            {{ __('content.analytic_overview_tab_title') }}
+            <div class="analytics-tab-line" id="overview-line"></div>
+        </div>
+         <div class="analytics-tab" id="top-categories-tab" onclick="handleTabClick('top-categories')">
+            {{ __('content.analytic_top_categories_tab_title') }}
+            <div id="top-categories-line"></div>
+        </div>
+         <div class="analytics-tab" id="top-words-tab" onclick="handleTabClick('top-words')">
+            {{ __('content.analytic_top_words_tab_title') }}
+            <div id="top-words-line"></div>
+        </div>
+      </div>
+
+      <!-- Overview content here -->
+      <div id="overview" role="tabpanel" aria-labelledby="overview-tab">
+         <div class="ibarra-sub-title-h2 margin-top">{{ __('content.activity') }}</div>
+         <div class="wittyworks-form-section container border-radius">
+            <div id="loading-icon-overview" class="loading-icon-wrapper" style="width: 100%">
+               <div class="lds-grid">
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+               </div>
+            </div>
+            <div id="overview-wrapperNoData" style="visibility: hidden; width: 100%">
+               <div class="lato-small-text-p warning-message">{!! __('content.no_data_events') !!}</div>
+               <div class="image-container">
+                  <img src="{{ url('svg/screenshots/activity.png') }}" alt="activity" class="image wittyworks-margin-top">
+                  <div class="centered-image-text">{{ __('content.no_data_image_text') }}</div>
+               </div>
+            </div>
+            <div id="overview-wrapper" style="visibility: hidden; width: 100%">
+               <div class="wittyworks-margin-top">
+                  <div class="container-column" style="margin-left: 2em;">
+                     <div class="container-row" style="align-items: center">
+                        <div id="checkDaysInRow" class="lato-small-text-p"></div>
+                     </div>
+                     <div class="container-row" >
+                        <div id="changeInPopoverPercentage" class="lato-small-text-p"></div>
+                     </div>
+                     <div class="container-row" >
+                        <div id="changeInAlternativePercentage" class="lato-small-text-p"></div>
+                     </div>
+                     <div class="container-row">
+                        <div id="changeInIgnorePercentage" class="lato-small-text-p"></div>
+                     </div>
+                     <div class="container-row" >
+                        <div id="changeInLearningBitesPercentage" class="lato-small-text-p"></div>
+                     </div>
+                  </div>
+               </div>
+               <div class="container-row wittyworks-margin-right wittyworks-margin-top" style="margin-left: 2em;">
+                  <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.start_of_week') }}</div>
+                  <div id="startOfWeekDropdown"></div>
+               </div>
+               <div class="container-row wittyworks-margin-top">
+                  <canvas id="eventsChart" class="wittyworks-analytics-chart-extra-large"></canvas>
+               </div>
+               @if(isset($team) && !empty($team_edit))
+               <div class="container-row wittyworks-margin-top">
+                  <canvas id="dauChart" class="wittyworks-analytics-chart-extra-large"></canvas>
+               </div>
+               @endif
+               <div class="container-row wittyworks-margin-top">
+                  <canvas id="requestRatiosChartDoughnut" class="wittyworks-analytics-chart-small"></canvas>
+                  @php
+                  $eventsCharts = ["eventsPopoverChart", "eventsAlternativeChart", "eventsIgnoreChart", "eventsLearningBitesChart"];
+                  for ($i = 0; $i < count($eventsCharts); $i++) {
+                  echo '
+                  <canvas id="' . $eventsCharts[$i] . '" class="wittyworks-analytics-chart-small wittyworks-margin-right" ></canvas>
+                  ';
+                  }
+                  @endphp
+               </div>
+            </div>
+         </div>
+      </div>
+    
+      <!-- Top categories content here -->
+      <div id="top-categories" role="tabpanel" style="display: none;" aria-labelledby="top-categories-tab">
+         <div id="top-categories-wrapper" style="width: 100%">
+            <div class="ibarra-sub-title-h2 margin-top">{{ __('content.top_categories') }}</div>
+            <div class="wittyworks-form-section container border-radius">
+               <div id="loading-icon-top-categories" class="loading-icon-wrapper"  style="width: 100%">
+                  <div class="lds-grid">
+                     <div></div>
+                     <div></div>
+                     <div></div>
+                     <div></div>
+                     <div></div>
+                     <div></div>
+                     <div></div>
+                     <div></div>
+                     <div></div>
+                  </div>
+               </div>
+               <div id="top-categories-content" style="visibility: hidden; width: 100%">
+                  <div class="chart-container-row wittyworks-margin-top">
+                     <canvas
+                        id="topSubCategoriesChart"
+                        class="wittyworks-analytics-chart-top-categories wittyworks-margin-top">
+                     </canvas>
+                     <div id="categoryOverview" class="wittyworks-margin-left wittyworks-margin-top"></div>
+                  </div>
+                  <div class="chart-container-row wittyworks-margin-top">
+                     <canvas
+                        id="categoriesRadar"
+                        class="wittyworks-analytics-chart-medium-radar">
+                     </canvas>
+                     <div id="topSubcategoriesDoughnutWrapper" class="container-column">
+                        <canvas
+                           id="topSubCategoriesOpenedChartDoughnut"
+                           class="wittyworks-analytics-chart-medium">
+                        </canvas>
+                        <canvas
+                           id="topSubCategoriesIgnoredChartDoughnut"
+                           class="wittyworks-analytics-chart-medium">
+                        </canvas>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+     
+      <!-- Top words content here -->
+      <div id="top-words" role="tabpanel" style="display: none;" aria-labelledby="top-words-tab">
+         <div id="top-words-wrapper" style="width: 100%">
+            <div class="ibarra-sub-title-h2 margin-top">{{ __('content.top_words') }}</div>
+            <div class="wittyworks-form-section container border-radius">
+               <div id="loading-icon-top-words" class="loading-icon-wrapper" style="width: 100%">
+                  <div class="lds-grid">
+                     <div></div>
+                     <div></div>
+                     <div></div>
+                     <div></div>
+                     <div></div>
+                     <div></div>
+                     <div></div>
+                     <div></div>
+                     <div></div>
+                  </div>
+               </div>
+               <div id="top-words-content" style="visibility: hidden; width: 100%">
+                  <div class="container-row wittyworks-margin-top">
+                     <canvas
+                        id="topWordsChart"
+                        class="wittyworks-analytics-chart-extra-large wittyworks-margin-top">
+                     </canvas>
+                  </div>
+                  <div id="topWordsChartCorporateRulesWrapper" class="chart-container-row wittyworks-margin-top" style="display: none; width: 100%; align-items:center">
+                     <canvas
+                        id="topWordsChartCorporateRules"
+                        class="wittyworks-analytics-chart-medium wittyworks-margin-top">
+                     </canvas>
+                  </div>
+                  <div id="noCorporateRulesWrapper" class="container-row wittyworks-margin-top" style="display: none;">
+                     <div class="lato-small-text-p">{!! empty($user) ? __('content.no_corporate_rules') : __('content.no_corporate_rules_user') !!}</div>
+                  </div>
+                  <div id="corporateRulesButNoneOpened" class="container-row wittyworks-margin-top" style="display: none;">
+                     <div class="lato-small-text-p">{!! empty($user) ? __('content.corporate_rules_none_opened') : __('content.corporate_rules_none_opened_user') !!}</div>
+                  </div>
+                  <div class="chart-container-row wittyworks-margin-top">
+                     <canvas
+                        id="wordsRadar"
+                        class="wittyworks-analytics-chart-medium-radar">
+                     </canvas>
+                     <div id="topWordsDoughnutWrapper" class="container-column">
+                        <canvas
+                           id="topWordsChartDoughnut"
+                           class="wittyworks-analytics-chart-medium">
+                        </canvas>
+                        <canvas
+                           id="topWordsChartDoughnutWeek"
+                           class="wittyworks-analytics-chart-medium">
+                        </canvas>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
 </x-app-layout>
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js" rossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/locale/de.js" rossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
-    function load_charts(refresh, startOfWeek, timerange = 30) {
+    function load_charts(refresh, startOfWeek, chartType = 'overview', timerange = 30) {
+        console.log('load_charts',chartType);
         if (refresh) {
             document.getElementById('lastRefresh').style.visibility = 'hidden';
-            document.getElementById("loadingIconActivity").style.display = "flex";
-            document.getElementById("activityChartWrapper").style.visibility = "hidden";
+            document.getElementById("loading-icon-overview").style.display = "flex";
+            document.getElementById("overview-wrapper").style.visibility = "hidden";
 
-            document.getElementById("loadingIconTopWords").style.display = "flex";
-            document.getElementById("topWordsChartWrapper").style.visibility = "hidden";
+            document.getElementById("loading-icon-top-words").style.display = "flex";
+            document.getElementById("top-words-wrapper").style.visibility = "hidden";
 
-            document.getElementById("loadingIconTopCatagories").style.display = "flex";
-            document.getElementById("topCategoriesChartWrapper").style.visibility = "hidden";
+            document.getElementById("loading-icon-top-catagories").style.display = "flex";
+            document.getElementById("top-categories-wrapper").style.visibility = "hidden";
         }
 
         const colors = [
@@ -540,9 +566,9 @@ $categoriesWithSubcategories = [
         });
     }
 
-    getChartData('total', timerange).then(data => {
+    chartType == 'overview' && getChartData('total', timerange).then(data => {
         if (!data || !data.events || !data.events.popover_open || Object.entries(data.events.popover_open).filter(([key, value]) => value > 0).length == 0) {
-            handle_no_data('loadingIconActivity', 'activityChartWrapperNoData');
+            handle_no_data('loadingIconActivity', 'overview-wrapperNoData');
             return;
         }
         const events = data.events || {};
@@ -763,7 +789,7 @@ $categoriesWithSubcategories = [
            
         getChartData('dau', timerange, 'week').then(data => {
         if (!data || !data.events || !data.events.popover_open || Object.entries(data.events.popover_open).filter(([key, value]) => value > 0).length == 0) {
-            handle_no_data('loadingIconActivity', 'activityChartWrapperNoData');
+            handle_no_data('loadingIconActivity', 'overview-wrapperNoData');
             return;
         }
         const events = data.events || {};
@@ -860,18 +886,19 @@ $categoriesWithSubcategories = [
                 }
             });
         }
-            document.getElementById("loadingIconActivity").style.display = "none";
-            document.getElementById("activityChartWrapperNoData").style.display = "none";
-            document.getElementById("activityChartWrapper").style.visibility = "visible";
+            document.getElementById("loading-icon-overview").style.display = "none";
+            document.getElementById("overview-wrapperNoData").style.display = "none";
+            document.getElementById("overview-wrapper").style.visibility = "visible";
         });
         }
     });
 
-    getChartData('topSubcategories', 7).then(data => {
+    chartType == 'top-categories' && getChartData('topSubcategories', 7).then(data => {
         if (!data || !data.events ) {
-            handle_no_data('loadingIconTopCatagories');
+            handle_no_data('loading-icon-top-categories');
             return;
         }
+        console.log('topSubcategories', data);
         const eventsPopoverOpenedWeekUnsorted = data.events.popover_open || {};
         const openedWeek = Object.entries(eventsPopoverOpenedWeekUnsorted).sort((a, b) => b[1] - a[1]).slice(0, 8);
         for (const [key, value] of openedWeek) {
@@ -883,7 +910,7 @@ $categoriesWithSubcategories = [
 
         getChartData('topSubcategories', 14).then(data => {
         if (!data || !data.events ) {
-            handle_no_data('loadingIconTopCatagories');
+            handle_no_data('loading-icon-top-categories');
             return;
         }
         const openedTwoWeeks = data.events.popover_open || {};
@@ -903,8 +930,8 @@ $categoriesWithSubcategories = [
 
         if (yTopSubCategoriesTwoWeeks.every((val, i, arr) => val === arr[0]) || yTopSubCategoriesWeek.every((val, i, arr) => val === arr[0])) {
             document.getElementById("categoriesRadar").style.display = "none";
-            document.getElementById("loadingIconTopCatagories").style.display = "none";
-            document.getElementById("topCategoriesChartWrapper").style.visibility = "visible";
+            document.getElementById("loading-icon-top-categories").style.display = "none";
+            document.getElementById("top-categories-wrapper").style.visibility = "visible";
 
             document.getElementById("topSubcategoriesDoughnutWrapper").classList.remove("container-column");
             document.getElementById("topSubcategoriesDoughnutWrapper").classList.add("container-row");
@@ -958,15 +985,15 @@ $categoriesWithSubcategories = [
                     }
                 },
             });
-            document.getElementById("loadingIconTopCatagories").style.display = "none";
-            document.getElementById("topCategoriesChartWrapper").style.visibility = "visible";
         });
+        document.getElementById("loading-icon-top-categories").style.display = "none";
+        document.getElementById("top-categories-content").style.visibility = "visible";
     });
 
 
-    getChartData('topSubcategories', timerange).then(data => {
+    chartType == 'overview' && getChartData('topSubcategories', timerange).then(data => {
         if (!data || !data.events || !data.subcategories ) {
-            handle_no_data('loadingIconTopCatagories');
+            handle_no_data('loading-icon-top-categories');
             return;
         }
 
@@ -1051,9 +1078,9 @@ $categoriesWithSubcategories = [
                          
     });
 
-    getChartData('topWords', 7).then(data => {
+    chartType == 'top-words' && getChartData('topWords', 7).then(data => {
         if (!data || !data.events ) {
-            handle_no_data('loadingIconTopWords');
+            handle_no_data('loading-icon-top-words');
             return;
         }
         const xTopWordsWeek = [];
@@ -1070,7 +1097,7 @@ $categoriesWithSubcategories = [
 
         getChartData('topWords', 14).then(data => {
         if (!data || !data.events ) {
-            handle_no_data('loadingIconTopWords');
+            handle_no_data('loading-icon-top-words');
             return;
         }
         const openedTwoWeeks = data.events.popover_open || {};
@@ -1089,8 +1116,8 @@ $categoriesWithSubcategories = [
 
         if (yTopWordsTwoWeeks.every((val, i, arr) => val === arr[0]) || yTopWordsWeek.every((val, i, arr) => val === arr[0])) {
             document.getElementById("wordsRadar").style.display = "none";
-            document.getElementById("loadingIconTopWords").style.display = "none";
-            document.getElementById("topWordsChartWrapper").style.visibility = "visible";
+            document.getElementById("loading-icon-top-words").style.display = "none";
+            document.getElementById("top-words-wrapper").style.visibility = "visible";
 
             document.getElementById("topWordsDoughnutWrapper").classList.remove("container-column");
             document.getElementById("topWordsDoughnutWrapper").classList.add("container-row");
@@ -1145,15 +1172,16 @@ $categoriesWithSubcategories = [
                     }],
                 }
             });
-            document.getElementById("loadingIconTopWords").style.display = "none";
-            document.getElementById("topWordsChartWrapper").style.visibility = "visible";
+           
         });
+        document.getElementById("loading-icon-top-words").style.display = "none";
+        document.getElementById("top-words-content").style.visibility = "visible";
     });
 
 
-    getChartData('topWords', timerange).then(data => {
+    chartType == 'top-words' && getChartData('topWords', timerange).then(data => {
         if (!data || !data.events ) {
-            handle_no_data('loadingIconTopWords');
+            handle_no_data('loading-icon-top-words');
             return;
         }
         const ignored = data.events.ignore || {};
@@ -1208,7 +1236,7 @@ $categoriesWithSubcategories = [
         );
     });
 
-    getChartData('topWords', timerange, 'day', 'corporate_rules').then(data => {
+    chartType == 'top-words' && getChartData('topWords', timerange, 'day', 'corporate_rules').then(data => {
         if(data && data.events && data.events.popover_open) {
             const openedCorporatewords = data.events.popover_open;
             for (const [key, value] of Object.entries(openedCorporatewords)) {
@@ -1252,4 +1280,27 @@ function setTimerange() {
 }
 
 load_charts(false, 1);
+
+function handleTabClick(clickedTabId) {
+    const allTabs = ['overview', 'top-categories', 'top-words'];
+    allTabs.forEach(tab => {
+        if (tab !== clickedTabId) {
+            document.getElementById(tab + '-tab').style.color = '#808080';
+            document.getElementById(tab + '-line').classList.remove('analytics-tab-line');
+            document.getElementById(tab).style.display = 'none';
+            if (tab !== 'overview') { 
+                document.getElementById(tab + '-content').style.visibility = "hidden";
+            } else {
+                document.getElementById(tab + '-wrapper').style.visibility = "hidden";
+            }
+        } else {
+            document.getElementById(tab + '-tab').style.color = '#9489DB';
+            document.getElementById(tab + '-line').classList.add('analytics-tab-line');
+            document.getElementById('loading-icon-' + tab).style.display = 'flex';
+            document.getElementById('loading-icon-' + tab).style.visibility = 'visible';
+            load_charts(false, 1, tab);
+            document.getElementById(tab).style.display = 'block';
+        }
+    });    
+} 
 </script>

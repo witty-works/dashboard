@@ -18,9 +18,10 @@ dependencies:
 
 variables:
     env:
-        # Update these for your desired NVM and Node versions.
-        NVM_VERSION: v0.39.0
-        NODE_VERSION: v14.18.1
+        # https://github.com/nvm-sh/nvm/releases
+        NVM_VERSION: v0.39.3
+        # https://nodejs.org/ro/download/releases
+        NODE_VERSION: v14.21.3
 
 # The hooks that will be performed when the package is deployed.
 hooks:
