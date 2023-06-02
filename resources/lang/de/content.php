@@ -408,4 +408,5 @@ Falls du Fragen hast, nimm Kontakt mit :name (:email) auf. 🙂
     'analytic_overview_tab_title' => 'Überblick',
     'analytic_top_categories_tab_title' => 'Top-Kategorien',
     'analytic_top_words_tab_title' => 'Top-Wörter',
+    'roadmap' => 'Roadmap',
 ];
