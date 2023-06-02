@@ -191,7 +191,7 @@ class AnalyticsController extends Controller
             'lang' => 'nullable|in:en,de',
             'events' => 'nullable|array|in:check,popover_open,alternative,ignore,learning_bites',
             'categories' => 'nullable|array|in:' . implode(',', $this->categories->keys()->toArray()),
-            'diversity_dimension_drivers' => 'nullable|array|in:' . implode(',', $this->diversityDimensionDrivers->keys()->toArray()),
+            'diversity_dimension_drivers' => 'nullable|array|in:' . implode(',', $this->diversityDimensionDrivers->keys()->toArray()), //aka subcategories
         ];
 
         $validated = $request->validate($rules);

@@ -1097,7 +1097,7 @@ input:checked+.slider:before {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin-top: 1em;
+    margin-top: 4em;
     border-bottom: 1px solid #dddddd;
 }
 

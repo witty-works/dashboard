@@ -85,21 +85,21 @@ $categoriesWithSubcategories = [
          {{ __('content.analytics') }}
       </div>
       <div id="lastRefresh" class="lato-small-text-p wittyworks-margin-right container-row margin-top" style="visibility: hidden; align-items: center;"></div>
-      <div class="container-row"> 
+      <div class="container-row margin-top"> 
         <div class="drowdown-wrapper">
             <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.chart_time_range') }}</div>
-            <select class="dropdown margin-right" id="timerangeDropdown" onchange="setTimerange()">
-                <option value="7">{{ __('content.chart_time_range_week') }}</option>
-                <option value="30">{{ __('content.chart_time_range_month') }}</option>
-                <option value="90">{{ __('content.chart_time_range_quarter') }}</option>
-                <option value="365">{{ __('content.chart_time_range_year') }}</option>
-                <option value="9999999">{{ __('content.chart_time_range_all') }}</option>
+            <select class="dropdown margin-right" id="timerangeDropdown" onchange="setParams()">
+                <option value="1w">{{ __('content.chart_time_range_week') }}</option>
+                <option value="1m">{{ __('content.chart_time_range_month') }}</option>
+                <option value="3m">{{ __('content.chart_time_range_quarter') }}</option>
+                <option value="1y">{{ __('content.chart_time_range_year') }}</option>
+                <!-- <option value="9999999">{{ __('content.chart_time_range_all') }}</option> -->
             </select>
         </div>
 
         <div class="drowdown-wrapper">
             <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.language_filter') }}</div>
-            <select class="dropdown margin-right" id="languageDropdown" onchange="setLanguage()">
+            <select class="dropdown margin-right" id="languageDropdown" onchange="setParams()">
                 <option value="EN">{{ __('content.language_filter_en') }}</option>
                 <option value="DE">{{ __('content.language_filter_de') }}</option>
                 <option value="BOTH">{{ __('content.language_filter_both') }}</option>
@@ -135,7 +135,7 @@ $categoriesWithSubcategories = [
       <div class="analytics-tab-container">
          <div class="analytics-tab" id="overview-tab" onclick="handleTabClick('overview')" style="color: #9489DB;">
             {{ __('content.analytic_overview_tab_title') }}
-            <div class="analytics-tab-line" id="overview-line"></div>
+            <div class="analytics-tab-line" id="overview-line"></div> 
         </div>
          <div class="analytics-tab" id="top-categories-tab" onclick="handleTabClick('top-categories')">
             {{ __('content.analytic_top_categories_tab_title') }}
@@ -332,8 +332,8 @@ $categoriesWithSubcategories = [
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/locale/de.js" rossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
-    function load_charts(refresh, startOfWeek, chartType = 'overview', timerange = 30) {
-        console.log('load_charts',chartType);
+    function load_charts(refresh, startOfWeek, chartType = 'overview', timerange = 30, interval = 'week', lang = null, categories = null, diversity_dimension_drivers = null) {
+        console.log('load_charts', chartType);
         if (refresh) {
             document.getElementById('lastRefresh').style.visibility = 'hidden';
             document.getElementById("loading-icon-overview").style.display = "flex";
@@ -444,7 +444,7 @@ $categoriesWithSubcategories = [
         }
     }
 
-    async function getChartData(chart, from = 30, interval = 'day', filter = null) {
+    async function getChartData(chart, from = '1m', interval = 'day', filter = null) {
         let analyticsUrl = '/api/user/analytics?refresh=' + refresh + '&chart=';
         if (window.location.href.includes('team')) {
             analyticsUrl = '/api/team/analytics?refresh=' + refresh + '&chart=';
@@ -1273,10 +1273,19 @@ $categoriesWithSubcategories = [
     });
 };
 
-function setTimerange() {
-    const dropdown = document.getElementById("timerangeDropdown");
-    const selectedOption = dropdown.options[dropdown.selectedIndex].value;
-    load_charts(false, 1, parseInt(selectedOption));
+function setParams() {
+    const activeTab = document.getElementsByClassName("analytics-tab-line")[0].id.replace('-line', '');
+    console.log('activeTab', activeTab);
+    const timeRangeDropdown = document.getElementById("timerangeDropdown");
+    const languageDropdown = document.getElementById("languageDropdown");
+
+    const selectedTimeRangeOption = timeRangeDropdown.options[timeRangeDropdown.selectedIndex].value;
+    const selectedLanguageOption = languageDropdown.options[languageDropdown.selectedIndex].value;
+
+    const interval = selectedTimeRangeOption == '1w' ? 'day' : selectedTimeRangeOption == '1m' ? 'day' : selectedTimeRangeOption == '3m' ? 'week' : 'month';
+ 
+    //refresh, startOfWeek, chartType, timerange, interval, lang, categories, diversity_dimension_drivers
+    load_charts(false, 1, activeTab, selectedTimeRangeOption, interval, selectedLanguageOption);
 }
 
 load_charts(false, 1);
