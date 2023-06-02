@@ -81,6 +81,15 @@ class PosthogHelper
         }
 
         return Cache::remember($key, config('posthog.insights_cache_time'), function () use ($url, $filter) {
+            if ($filter['events'][0]['id'] === 'check') {
+                foreach ($filter['events'][0]['properties'] as $propertyKey => $property) {
+                    if ($property['key'] === 'response__data__language') {
+                        $filter['events'][0]['properties'][$propertyKey]['key'] = 'response__language';
+                        break;
+                    }
+                }
+            }
+
             $response = Http::withToken(config('posthog.personal_api_key'))
                 ->post($url, $filter);
 
@@ -89,6 +98,7 @@ class PosthogHelper
             }
 
             $data = $response->collect()->all();
+
             $data['last_refresh'] = Carbon::now();
 
             return $data;
@@ -103,14 +113,11 @@ class PosthogHelper
         }
 
         return [
-            'type' => 'AND',
-            'values' => [
-                [
-                    'key' => 'response__organizationId',
-                    'value' => $postHogId,
-                    'operator' => 'exact',
-                    'type' => 'event',
-                ]
+            [
+                'key' => 'response__organizationId',
+                'value' => $postHogId,
+                'operator' => 'exact',
+                'type' => 'event',
             ]
         ];
     }
@@ -123,14 +130,11 @@ class PosthogHelper
         }
 
         return [
-            'type' => 'AND',
-            'values' => [
-                [
-                    'key' => 'dashboard_id',
-                    'value' => $postHogId,
-                    'operator' => 'exact',
-                    'type' => 'person',
-                ]
+            [
+                'key' => 'dashboard_id',
+                'value' => $postHogId,
+                'operator' => 'exact',
+                'type' => 'person',
             ]
         ];
     }
