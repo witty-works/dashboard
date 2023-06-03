@@ -364,7 +364,7 @@ class SyncToHubspotCategoriesCommand extends Command
 
             $collection = collect($data);
 
-            $locale = request()->get('locale', app()->getLocale());
+            $locale = request()->header('X-App-Locale', app()->getLocale());
             self::$tableData[$tableName] = $collection->toLocale($locale);
         }
 

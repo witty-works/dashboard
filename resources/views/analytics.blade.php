@@ -334,7 +334,13 @@
             analyticsUrl += '&subcategories[]=' + filter;
         }
         analyticsUrl += "&locale={{ app()->getLocale() }}";
-        const response = await fetch(analyticsUrl);
+        const response = await fetch(analyticsUrl, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'X-App-Locale': '{{ app()->getLocale() }}',
+            },
+        });
         const data = await response.json();
         return data;
     }
