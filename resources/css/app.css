@@ -572,9 +572,9 @@ input:checked+.slider:before {
 .wittyworks-footer-language-switcher {
     display: flex;
     flex-direction: row;
-    align-items: center;
-    margin-top: 6em;
-    margin-right: 2em;
+    margin-right: 15%;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
     margin-left: auto;
 }
 

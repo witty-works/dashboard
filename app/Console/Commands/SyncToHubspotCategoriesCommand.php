@@ -5,7 +5,6 @@ namespace App\Console\Commands;
 use App\Helpers\Hubspot;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Config;
 
 class SyncToHubspotCategoriesCommand extends Command
 {
@@ -24,6 +23,62 @@ class SyncToHubspotCategoriesCommand extends Command
     protected $description = 'Sync category data from Hubspot HubDB';
 
     protected static $tableData = [];
+
+    protected $defaultData = [
+        'diversity_dimension_drivers' => [
+            "casing" => [
+                "category" => "orthography",
+                "emoji" => "❌",
+            ],
+            "compounding" => [
+                "category" => "orthography",
+                "emoji" => "⚠️",
+            ],
+            "confused_words" => [
+                "category" => "orthography",
+                "emoji" => "❌",
+            ],
+            "grammar" => [
+                "category" => "orthography",
+                "emoji" => "❌",
+            ],
+            "misc" => [
+                "category" => "orthography",
+                "emoji" => "🤔",
+            ],
+            "orthography" => [
+                "category" => "orthography",
+                "emoji" => "❌",
+            ],
+            "punctuation" => [
+                "category" => "orthography",
+                "emoji" => "❌",
+            ],
+            "repetitions" => [
+                "category" => "orthography",
+                "emoji" => "⚠️",
+            ],
+            "typography" => [
+                "category" => "orthography",
+                "emoji" => "❌",
+            ],
+            "typos" => [
+                "category" => "orthography",
+                "emoji" => "❌",
+            ],
+            "corporate_rules" => [
+                "category" => "corporate_rules",
+                "translations" => [
+                    "en" => [
+                        "hs_name" => "Dictionary",
+                    ],
+                    "de" => [
+                        "hs_name" => "Wörterbuch",
+                    ],
+                ],
+            ],
+        ],
+    ];
 
     /**
      * Execute the console command.
@@ -255,6 +310,10 @@ class SyncToHubspotCategoriesCommand extends Command
                 ksort($finalData);
             }
 
+            if (!empty($this->defaultData[$alias])) {
+                $finalData += $this->defaultData[$alias];
+            }
+
             $json = json_encode($finalData, JSON_PRETTY_PRINT);
             $file = $path . "/$alias.json";
             file_put_contents($file, $json);
@@ -305,7 +364,8 @@ class SyncToHubspotCategoriesCommand extends Command
 
             $collection = collect($data);
 
-            self::$tableData[$tableName] = $collection->toLocale(Config::get('app.locale'));
+            $locale = request()->header('X-App-Locale', app()->getLocale());
+            self::$tableData[$tableName] = $collection->toLocale($locale);
         }
 
         return self::$tableData[$tableName];
