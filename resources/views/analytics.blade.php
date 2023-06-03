@@ -331,7 +331,7 @@
         }
         analyticsUrl += chart + '&from=' + from + '&interval=' + interval
         if(filter) {
-            analyticsUrl += '&category_filters[]=' + filter;
+            analyticsUrl += '&subcategories[]=' + filter;
         }
         analyticsUrl += "&locale={{ app()->getLocale() }}";
         const response = await fetch(analyticsUrl);

@@ -4688,5 +4688,56 @@
                 "anchor": ""
             }
         }
+    },
+    "casing": {
+        "category": "orthography",
+        "emoji": "\u274c"
+    },
+    "compounding": {
+        "category": "orthography",
+        "emoji": "\u26a0\ufe0f"
+    },
+    "confused_words": {
+        "category": "orthography",
+        "emoji": "\u274c"
+    },
+    "grammar": {
+        "category": "orthography",
+        "emoji": "\u274c"
+    },
+    "misc": {
+        "category": "orthography",
+        "emoji": "\ud83e\udd14"
+    },
+    "orthography": {
+        "category": "orthography",
+        "emoji": "\u274c"
+    },
+    "punctuation": {
+        "category": "orthography",
+        "emoji": "\u274c"
+    },
+    "repetitions": {
+        "category": "orthography",
+        "emoji": "\u26a0\ufe0f"
+    },
+    "typography": {
+        "category": "orthography",
+        "emoji": "\u274c"
+    },
+    "typos": {
+        "category": "orthography",
+        "emoji": "\u274c"
+    },
+    "corporate_rules": {
+        "category": "corporate_rules",
+        "translations": {
+            "en": {
+                "hs_name": "Dictionary"
+            },
+            "de": {
+                "hs_name": "W\u00f6rterbuch"
+            }
+        }
     }
 }
