@@ -310,6 +310,9 @@ class LanguageGuidelines extends Model
                 $diversityDimensionDrivers = SyncToHubspotCategoriesCommand::loadTableData('diversity_dimension_drivers');
 
                 foreach ($diversityDimensionDrivers as $ddd => $config) {
+                    if (!empty($config['category']) && $config['category'] === 'orthography') {
+                        continue;
+                    }
                     if (in_array($ddd, $languageGuidelines->disabled_categories) !== in_array($ddd, $teamLanguageGuidelines->disabled_categories)) {
                         return true;
                     }
