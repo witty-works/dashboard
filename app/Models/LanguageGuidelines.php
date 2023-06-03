@@ -334,15 +334,11 @@ class LanguageGuidelines extends Model
     {
         switch ($type) {
             case UserGuidelinesController::CATEGORY_SETTINGS:
-                $diversityDimensionDrivers = SyncToHubspotCategoriesCommand::loadTableData('diversity_dimension_drivers');
-
-                foreach ($diversityDimensionDrivers as $ddd => $config) {
-                    $disabledCategories = $teamLanguageGuidelines->disabled_categories;
-                    if (in_array('orthography', $disabledCategories)) {
-                        unset($disabledCategories[array_search('orthography', $disabledCategories)]);
-                    }
-                    $this->disabled_categories = $disabledCategories;
+                $disabledCategories = $teamLanguageGuidelines->disabled_categories;
+                if (in_array('orthography', $disabledCategories)) {
+                    unset($disabledCategories[array_search('orthography', $disabledCategories)]);
                 }
+                $this->disabled_categories = $disabledCategories;
 
                 break;
             case UserGuidelinesController::LANGUAGE_SETTINGS:
