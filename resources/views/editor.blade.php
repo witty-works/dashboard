@@ -35,25 +35,28 @@
                         </div>
 
                         <script type="text/javascript">
-                            FroalaEditor.DefineIcon('copy', {
-                                template: 'image',
-                                SRC: @json(URL::asset('copy.png')),
-                                ALT: @json(__('content.witty_editor_copy_button'))
-                            });
-                            FroalaEditor.RegisterCommand('copy', {
-                                title: @json(__('content.witty_editor_copy_button')),
-                                focus: false,
-                                undo: false,
-                                refreshAfterCallback: false,
-                                callback: function () {
-                                    let text = this.html.get();
-                                    text+= @json(__('content.witty_editor_viral_copy_text'), JSON_HEX_QUOT);
-                                    let type = "text/html";
-                                    let blob = new Blob([text], { type });
-                                    let data = [new ClipboardItem({ [type]: blob })];
-                                    navigator.clipboard.write(data);
-                                }
-                            });
+                            if (typeof ClipboardItem === 'function') {
+                                FroalaEditor.DefineIcon('copy', {
+                                    template: 'image',
+                                    SRC: @json(URL::asset('copy.png')),
+                                    ALT: @json(__('content.witty_editor_copy_button'))
+                                });
+
+                                FroalaEditor.RegisterCommand('copy', {
+                                    title: @json(__('content.witty_editor_copy_button')),
+                                    focus: false,
+                                    undo: false,
+                                    refreshAfterCallback: false,
+                                    callback: function () {
+                                        let text = this.html.get();
+                                        text+= @json(__('content.witty_editor_viral_copy_text'), JSON_HEX_QUOT);
+                                        let type = "text/html";
+                                        let blob = new Blob([text], { type });
+                                        let data = [new ClipboardItem({ [type]: blob })];
+                                        navigator.clipboard.write(data);
+                                    }
+                                });
+                            }
 
                             FroalaEditor.DefineIcon('example', {
                                 template: 'image',
