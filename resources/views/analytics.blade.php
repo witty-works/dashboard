@@ -453,6 +453,7 @@ $categoriesWithSubcategories = [
         if(filter) {
             analyticsUrl += '&category_filters[]=' + filter;
         }
+        analyticsUrl += "&locale={{ app()->getLocale() }}";
         const response = await fetch(analyticsUrl);
         const data = await response.json();
 

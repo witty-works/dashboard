@@ -16,13 +16,13 @@ class AnalyticsController extends Controller
 {
     protected $refresh;
     protected $categories;
-    protected $diversityDimensionDrivers;
+    protected $subcategories;
 
     public function __construct(Request $request)
     {
         $this->refresh = $request->get('refresh', false);
         $this->categories = SyncToHubspotCategoriesCommand::loadTableData('categories');
-        $this->diversityDimensionDrivers = SyncToHubspotCategoriesCommand::loadTableData('diversity_dimension_drivers');
+        $this->subcategories = SyncToHubspotCategoriesCommand::loadTableData('diversity_dimension_drivers');
     }
 
     public function user(Request $request)
@@ -191,7 +191,7 @@ class AnalyticsController extends Controller
             'lang' => 'nullable|in:en,de',
             'events' => 'nullable|array|in:check,popover_open,alternative,ignore,learning_bites',
             'categories' => 'nullable|array|in:' . implode(',', $this->categories->keys()->toArray()),
-            'diversity_dimension_drivers' => 'nullable|array|in:' . implode(',', $this->diversityDimensionDrivers->keys()->toArray()), //aka subcategories
+            'subcategories' => 'nullable|array|in:' . implode(',', $this->subcategories->keys()->toArray()),
         ];
 
         $validated = $request->validate($rules);
@@ -202,7 +202,7 @@ class AnalyticsController extends Controller
         $lang = $validated['lang'] ?? null;
         $events = $validated['events'] ?? null;
         $categories = $validated['categories'] ?? [];
-        $diversityDimensionDrivers = $validated['diversity_dimension_drivers'] ?? [];
+        $subcategories = $validated['subcategories'] ?? [];
 
         // BC code
         if (is_numeric($from)) {
@@ -230,10 +230,10 @@ class AnalyticsController extends Controller
             ];
         }
 
-        if (!empty($diversityDimensionDrivers)) {
+        if (!empty($subcategories)) {
             $filters[] = [
                 'key' => 'response__data__subcategory',
-                'value' => $diversityDimensionDrivers,
+                'value' => $subcategories,
                 'operator' => 'exact',
                 'type' => 'event',
             ];
@@ -380,11 +380,11 @@ class AnalyticsController extends Controller
                     if (!empty($data['events'][$event])) {
                         $subcategories = [];
                         foreach ($data['events'][$event] as $subcategory => $count) {
-                            if (empty($this->diversityDimensionDrivers[$subcategory]['translation']['hs_name'])) {
+                            if (empty($this->subcategories[$subcategory]['translation']['hs_name'])) {
                                 continue;
                             }
 
-                            $category = $this->diversityDimensionDrivers[$subcategory];
+                            $category = $this->subcategories[$subcategory];
                             $subcategories[$category['translation']['hs_name']] = $count;
 
                             $data['subcategories'][$event][$subcategory] = $category;
