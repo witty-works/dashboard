@@ -1323,14 +1323,15 @@ document.addEventListener("DOMContentLoaded", function() {
   setCheckboxSelectLabels();
   let toggleNext = document.querySelectorAll('.toggle-next');
   document.addEventListener('click', function(e) {
+    const checkboxes = document.querySelector('.checkboxes');
         if (!e.target.classList.contains('checkboxes') && 
             !e.target.classList.contains('toggle-next') && 
             !e.target.classList.length == 0  && 
             !e.target.classList.contains('ckkBox') && 
             !e.target.classList.contains('inner-wrap') &&
-            !e.target.classList.contains('checkbox-wrapper')
+            !e.target.classList.contains('checkbox-wrapper') &&
+            checkboxes.style.display !== 'none'
         ) {
-            const checkboxes = document.querySelector('.checkboxes');
             checkboxes.style.display = 'none';
             setParams()
         }
