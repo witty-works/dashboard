@@ -1119,3 +1119,75 @@ input:checked+.slider:before {
     bottom: -1em;
     left: 50%;
   }
+
+
+  
+.checkbox-wrapper {
+    background-color: #ffffff;
+    border: 1px solid #6b7280;
+    border-radius: 8px;
+    padding: 5px 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-bottom: 1em;
+    min-width: 220px;
+    max-width: 220px;
+    flex-wrap: wrap;
+    min-height: 42px;
+}
+
+.ckkBox.val {
+    background-color: transparent;
+    border: none;
+}
+
+.ckkBox.val:hover {
+    background-color: transparent;
+    border: none;
+}
+
+.ckkBox.val:checked {
+    background-color: transparent;
+    border: none;
+}
+  
+label {
+  cursor: pointer;
+}
+  
+.ellipsis {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.apply-selection {
+  display: none;
+  width: 100%;
+  margin: 0;
+  padding: 5px 10px;
+  border-bottom: 1px solid #ccc;
+}
+  
+.ajax-link {
+    display: none;
+}
+    
+.checkboxes {
+  display: none;
+  border: 1px solid rgb(118, 118, 118);
+  border-radius: 8px;
+  position: absolute;
+  background-color: #6b6765;
+  color: #ffffff;
+  margin-top: 2.2em;
+  margin-left: -0.9em;
+  min-width: 200px;
+  font-size: 10px;
+  z-index: 9999999;
+}
+
+.inner-wrap {
+    padding: 1em;
+  }
