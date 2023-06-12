@@ -93,14 +93,13 @@ $categoriesWithSubcategories = [
                 <option value="1m">{{ __('content.chart_time_range_month') }}</option>
                 <option value="3m">{{ __('content.chart_time_range_quarter') }}</option>
                 <option value="1y">{{ __('content.chart_time_range_year') }}</option>
-                <!-- <option value="9999999">{{ __('content.chart_time_range_all') }}</option> -->
             </select>
         </div>
 
         <div class="drowdown-wrapper">
             <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.language_filter') }}</div>
             <select class="dropdown margin-right" id="languageDropdown" onchange="setParams()">
-                <option value="null">{{ __('content.language_filter_both') }}</option>
+                <option value="">{{ __('content.language_filter_both') }}</option>
                 <option value="en">{{ __('content.language_filter_en') }}</option>
                 <option value="de">{{ __('content.language_filter_de') }}</option>
             </select>
@@ -306,7 +305,7 @@ $categoriesWithSubcategories = [
                   <div id="topWordsChartCorporateRulesWrapper" class="chart-container-row wittyworks-margin-top" style="display: none; width: 100%; align-items:center">
                      <canvas
                         id="topWordsChartCorporateRules"
-                        class="wittyworks-analytics-chart-medium wittyworks-margin-top">
+                        class="wittyworks-analytics-chart-extra-large wittyworks-margin-top">
                      </canvas>
                   </div>
                   <div id="noCorporateRulesWrapper" class="container-row wittyworks-margin-top" style="display: none;">
@@ -436,32 +435,43 @@ $categoriesWithSubcategories = [
         return [xValues, yValues];
     }
 
-    function handleNoData(loadingIconId, sectionIdNoData = null) {
-        document.getElementById(loadingIconId).style.display = "none";
+    function handleNoData(loadingIconId, sectionIdNoData = null, chartId = null) {
+        console.log('HANDLENODATA', sectionIdNoData, document.getElementById(sectionIdNoData));
+
+        if (document.getElementById(loadingIconId)) {
+            document.getElementById(loadingIconId).style.display = "none";
+        } 
         if (sectionIdNoData) {
             document.getElementById(sectionIdNoData).style.visibility = "visible";
+            document.getElementById(sectionIdNoData).style.display = "block";
             const sectionId = sectionIdNoData.replace("NoData", "");
             document.getElementById(sectionId).style.display = "none";
+        } else if (chartId && document.getElementById(chartId)) {
+            document.getElementById(chartId).style.display = "none";
         }
     }
 
     async function getChartData(chart, from = '1w', interval = 'day', categories, language) {
-        console.log('getChartData', chart, from, interval, categories, language)
-        if (!language) {
-            language = [];
-        }
-
         let analyticsUrl = '/api/user/analytics?refresh=' + refresh + '&chart=';
         if (window.location.href.includes('team')) {
             analyticsUrl = '/api/team/analytics?refresh=' + refresh + '&chart=';
         }
-        analyticsUrl += chart + '&from=' + from + '&interval=' + interval + '&categories=' + categories + '&lang=' + language + '&locale={{ app()->getLocale() }}';
+        const formattedCategories = categories.map(category => 'categories[]=' + category).join('&');
+        analyticsUrl += chart + '&from=' + from + '&interval=' + interval + '&' + formattedCategories + '&lang=' + language + '&locale={{ app()->getLocale() }}';
+
+        console.log('getChartData', analyticsUrl)
 
         const response = await fetch(analyticsUrl);
-        const data = await response.json();
-        console.log('response', data);
-
-        return data;
+        console.log('response', response);
+         
+        try {
+            const data = await response.json();
+            console.log('data', data);
+            return data;
+        } catch (e) {
+            console.log('error', e);
+            return null;
+        }
     }
 
     function createBarChart(chartId, xValues, yValues, text, display, singeColor) {
@@ -899,7 +909,7 @@ $categoriesWithSubcategories = [
     //ALWAYS ONLY past week
     chartType == 'top-categories' && getChartData('topSubcategories', '1w', interval, categories, language).then(data => {
         if (!data || !data.events ) {
-            handleNoData('loading-icon-top-categories');
+            handleNoData('loading-icon-top-categories', null, 'topSubcategories');
             return;
         }
         const eventsPopoverOpenedWeekUnsorted = data.events.popover_open || {};
@@ -913,7 +923,7 @@ $categoriesWithSubcategories = [
 
         getChartData('topSubcategories', '2w', interval, categories, language).then(data => {
         if (!data || !data.events ) {
-            handleNoData('loading-icon-top-categories');
+            handleNoData('loading-icon-top-categories', null, 'topSubcategories');
             return;
         }
         const openedTwoWeeks = data.events.popover_open || {};
@@ -994,9 +1004,9 @@ $categoriesWithSubcategories = [
     });
 
 
-    chartType == 'overview' && getChartData('topSubcategories', timerange, interval, categories, language).then(data => {
+    (chartType == 'overview' || chartType == 'top-categories') && getChartData('topSubcategories', timerange, interval, categories, language).then(data => {
         if (!data || !data.events || !data.subcategories ) {
-            handleNoData('loading-icon-top-categories');
+            handleNoData('loading-icon-top-categories', null, 'topSubcategories');
             return;
         }
 
@@ -1084,7 +1094,7 @@ $categoriesWithSubcategories = [
     //ALWAYS ONLY past week
     chartType == 'top-words' && getChartData('topWords', '1w', interval, categories, language).then(data => {
         if (!data || !data.events ) {
-            handleNoData('loading-icon-top-words');
+            handleNoData('loading-icon-top-words', null, 'topWords');
             return;
         }
         const xTopWordsWeek = [];
@@ -1101,7 +1111,7 @@ $categoriesWithSubcategories = [
 
         getChartData('topWords', '2w', interval, categories, language).then(data => {
         if (!data || !data.events ) {
-            handleNoData('loading-icon-top-words');
+            handleNoData('loading-icon-top-words', null, 'topWords');
             return;
         }
         const openedTwoWeeks = data.events.popover_open || {};
@@ -1185,7 +1195,7 @@ $categoriesWithSubcategories = [
 
     chartType == 'top-words' && getChartData('topWords', timerange, interval, categories, language).then(data => {
         if (!data || !data.events ) {
-            handleNoData('loading-icon-top-words');
+            handleNoData('loading-icon-top-words', null, 'topWords');
             return;
         }
         const ignored = data.events.ignore || {};
@@ -1287,9 +1297,6 @@ function setParams(startOfWeek = 1) {
     const selectedLanguageOption = languageDropdown.options[languageDropdown.selectedIndex].value;
 
     const interval = selectedTimeRangeOption == '1w' ? 'day' : selectedTimeRangeOption == '1m' ? 'day' : selectedTimeRangeOption == '3m' ? 'week' : 'month';
- 
-    console.log('setting params', startOfWeek, activeTab, selectedTimeRangeOption, interval, selectedLanguageOption, categories)
-    //refresh, startOfWeek, chartType, timerange, interval, lang, categories, diversity_dimension_drivers
     load_charts(false, startOfWeek, activeTab, selectedTimeRangeOption, interval, selectedLanguageOption, categories);
 }
 
