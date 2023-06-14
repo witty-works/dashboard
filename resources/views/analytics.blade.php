@@ -1,8 +1,10 @@
 <?php 
     $filter = isset($team) ? ['team_id' => $team->id] : ['user_id' => $user->id];
     $has_term_replacements = \App\Models\TermReplacement::where($filter)->exists();
-    $dictionaryItems = isset($team) ? $team->getTotalTermReplacementsCount() : $user->getTotalTermReplacementsCount() + $user->currentTeam->getTotalTermReplacementsCount();
-
+    $dictionaryItems = isset($team)
+        ? $team->getTotalTermReplacementsCount()
+        : $user->getTotalTermReplacementsCount() + $user->currentTeam->getTotalTermReplacementsCount()
+    ;
 
 ?>
 <x-app-layout :pagetitle="__('content.analytics')">
@@ -14,7 +16,7 @@
          {{ __('content.analytics') }}
       </div>
       <div id="lastRefresh" class="lato-small-text-p wittyworks-margin-right container-row margin-top" style="visibility: hidden; align-items: center;"></div>
-      <div class="container-row margin-top"> 
+      <div class="container-row margin-top">
         <div class="drowdown-wrapper">
             <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.chart_time_range') }}</div>
             <select class="dropdown margin-right" id="timerangeDropdown" onchange="setParams()">
@@ -58,7 +60,7 @@
       <div class="analytics-tab-container">
          <div class="analytics-tab" id="overview-tab" onclick="handleTabClick('overview')" style="color: #9489DB;">
             {{ __('content.analytic_overview_tab_title') }}
-            <div class="analytics-tab-line" id="overview-line"></div> 
+            <div class="analytics-tab-line" id="overview-line"></div>
         </div>
          <div class="analytics-tab" id="top-categories-tab" onclick="handleTabClick('top-categories')">
             {{ __('content.analytic_top_categories_tab_title') }}
@@ -132,7 +134,7 @@
                   $eventsCharts = ["eventsPopoverChart", "eventsAlternativeChart", "eventsIgnoreChart", "eventsLearningBitesChart"];
                   for ($i = 0; $i < count($eventsCharts); $i++) {
                   echo '
-                  <canvas id="' . $eventsCharts[$i] . '" class="wittyworks-analytics-chart-small wittyworks-margin-right" ></canvas>
+                  <canvas id="' . $eventsCharts[$i] . '" class="wittyworks-analytics-chart-small wittyworks-margin-right"></canvas>
                   ';
                   }
                   @endphp
@@ -351,7 +353,8 @@
 
         if (document.getElementById(loadingIconId)) {
             document.getElementById(loadingIconId).style.display = "none";
-        } 
+        }
+
         if (sectionIdNoData) {
             document.getElementById(sectionIdNoData).style.visibility = "visible";
             document.getElementById(sectionIdNoData).style.display = "block";
@@ -492,7 +495,9 @@
     }
 
     chartType == 'overview' && getChartData('total', timerange, interval, categories, language).then(data => {
-        if (!data || !data.events || !data.events.popover_open || Object.entries(data.events.popover_open).filter(([key, value]) => value > 0).length == 0) {
+        if (!data?.events?.popover_open
+            || Object.entries(data.events.popover_open).filter(([key, value]) => value > 0).length == 0
+        ) {
             handleNoData('loadingIconActivity', 'overview-wrapperNoData');
             return;
         }
@@ -588,9 +593,9 @@
 
                 if (lastRefreshMinutes >= 3) {
                     return document.getElementById("lastRefresh").innerHTML = '{{ __('content.last_refreshed') }} &nbsp;' + lastRefreshFormatted + '&nbsp; &nbsp; <a class="button primary-button-red" onclick="load_charts(true, startOfWeek)">{{ __('content.refresh_data') }}</a>';
-                } else {
-                    return document.getElementById("lastRefresh").innerHTML = '{{ __('content.last_refreshed') }} &nbsp;' + lastRefreshFormatted;
                 }
+
+                return document.getElementById("lastRefresh").innerHTML = '{{ __('content.last_refreshed') }} &nbsp;' + lastRefreshFormatted;
             };
 
             updateSection();
@@ -712,7 +717,9 @@
             );
            
         getChartData('dau', timerange, 'week', categories, language).then(data => {
-        if (!data || !data.events || !data.events.popover_open || Object.entries(data.events.popover_open).filter(([key, value]) => value > 0).length == 0) {
+        if (!data?.events?.popover_open
+            || Object.entries(data.events.popover_open).filter(([key, value]) => value > 0).length == 0
+        ) {
             handleNoData('loadingIconActivity', 'overview-wrapperNoData');
             return;
         }
@@ -852,7 +859,9 @@
             }
         }
 
-        if (yTopSubCategoriesTwoWeeks.every((val, i, arr) => val === arr[0]) || yTopSubCategoriesWeek.every((val, i, arr) => val === arr[0])) {
+        if (yTopSubCategoriesTwoWeeks.every((val, i, arr) => val === arr[0])
+            || yTopSubCategoriesWeek.every((val, i, arr) => val === arr[0])
+        ) {
             document.getElementById("categoriesRadar").style.display = "none";
             document.getElementById("loading-icon-top-categories").style.display = "none";
             document.getElementById("top-categories-wrapper").style.visibility = "visible";
@@ -1207,7 +1216,13 @@ function setParams(startOfWeek = 1) {
     const selectedTimeRangeOption = timeRangeDropdown.options[timeRangeDropdown.selectedIndex].value;
     const selectedLanguageOption = languageDropdown.options[languageDropdown.selectedIndex].value;
 
-    const interval = selectedTimeRangeOption == '1w' ? 'day' : selectedTimeRangeOption == '1m' ? 'day' : selectedTimeRangeOption == '3m' ? 'week' : 'month';
+    const interval = selectedTimeRangeOption == '1w'
+        ? 'day'
+        : selectedTimeRangeOption == '1m'
+            ? 'day'
+            : selectedTimeRangeOption == '3m'
+                ? 'week' : 'month'
+    ;
     load_charts(false, startOfWeek, activeTab, selectedTimeRangeOption, interval, selectedLanguageOption, categories);
 }
 
@@ -1220,7 +1235,7 @@ function handleTabClick(clickedTabId) {
             document.getElementById(tab + '-tab').style.color = '#808080';
             document.getElementById(tab + '-line').classList.remove('analytics-tab-line');
             document.getElementById(tab).style.display = 'none';
-            if (tab !== 'overview') { 
+            if (tab !== 'overview') {
                 document.getElementById(tab + '-content').style.visibility = "hidden";
             } else {
                 document.getElementById(tab + '-wrapper').style.visibility = "hidden";
@@ -1233,8 +1248,8 @@ function handleTabClick(clickedTabId) {
             setParams();
             document.getElementById(tab).style.display = 'block';
         }
-    });    
-} 
+    });
+}
 
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -1242,13 +1257,13 @@ document.addEventListener("DOMContentLoaded", function() {
   let toggleNext = document.querySelectorAll('.toggle-next');
   document.addEventListener('click', function(e) {
     const checkboxes = document.querySelector('.checkboxes');
-        if (!e.target.classList.contains('checkboxes') && 
-            !e.target.classList.contains('toggle-next') && 
-            !e.target.classList.length == 0  && 
-            !e.target.classList.contains('ckkBox') && 
-            !e.target.classList.contains('inner-wrap') &&
-            !e.target.classList.contains('checkbox-wrapper') &&
-            checkboxes.style.display !== 'none'
+        if (!e.target.classList.contains('checkboxes')
+            && !e.target.classList.contains('toggle-next')
+            && !e.target.classList.length == 0
+            && !e.target.classList.contains('ckkBox')
+            && !e.target.classList.contains('inner-wrap')
+            && !e.target.classList.contains('checkbox-wrapper')
+            && checkboxes.style.display !== 'none'
         ) {
             checkboxes.style.display = 'none';
             setParams()
