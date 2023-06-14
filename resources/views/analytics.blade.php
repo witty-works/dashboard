@@ -1,79 +1,10 @@
 <?php 
     $filter = isset($team) ? ['team_id' => $team->id] : ['user_id' => $user->id];
     $has_term_replacements = \App\Models\TermReplacement::where($filter)->exists();
-    $dictionaryItems = isset($team) ? $team->getTotalTermReplacementsCount() : $user->getTotalTermReplacementsCount() + $user->currentTeam->getTotalTermReplacementsCount();
-
-$categoriesWithSubcategories = [
-    'category_filter_cultural_diversity' => [
-        'category_filter_cultural_diversity_racism',
-        'category_filter_cultural_diversity_xenophobia',
-        'category_filter_cultural_diversity_cultural_stereotype',
-        'category_filter_cultural_diversity_migration_background',
-        'category_filter_cultural_diversity_nazi_language',
-        'category_filter_cultural_diversity_yiddish_pejoratives',
-        'category_filter_cultural_diversity_ancestry',
-        'category_filter_cultural_diversity_color',
-        'category_filter_cultural_diversity_abbreviation',
-        'category_filter_cultural_diversity_clarity',
-        'category_filter_cultural_diversity_empty_words',
-        'category_filter_cultural_diversity_filler_words',
-        'category_filter_cultural_diversity_plain_english'
-    ],
-    'category_filter_gender_orientation' => [
-        'category_filter_gender_orientation_homophobia',
-        'category_filter_gender_orientation_sexism',
-        'category_filter_gender_orientation_transphobia',
-        'category_filter_gender_orientation_binary_pronouns',
-        'category_filter_gender_orientation_female_stereotype',
-        'category_filter_gender_orientation_gender_binary',
-        'category_filter_gender_orientation_gender_cues',
-        'category_filter_gender_orientation_gender_specific_abbreviation',
-        'category_filter_gender_orientation_generic_masculine',
-        'category_filter_gender_orientation_generic_plural',
-        'category_filter_gender_orientation_jobs',
-        'category_filter_gender_orientation_male_stereotype',
-        'category_filter_gender_orientation_male_stereotype',
-        'category_filter_gender_orientation_sexual_orientation',
-        'category_filter_gender_orientation_traditional_leadership',
-    ],
-    'category_filter_ability_physicality' => [
-        'category_filter_ability_physicality_ableist',
-        'category_filter_ability_physicality_ability',
-        'category_filter_ability_physicality_physicality',
-        'category_filter_ability_physicality_behavior',
-        'category_filter_ability_physicality_medical_state',
-        'category_filter_ability_physicality_mobility',
-        'category_filter_ability_physicality_cognitive_ability',
-        'category_filter_ability_physicality_cognitive_perception',
-        'category_filter_ability_physicality_hearing',
-        'category_filter_ability_physicality_learning_ability',
-        'category_filter_ability_physicality_mental_wellbeing',
-        'category_filter_ability_physicality_speech_ability',
-        'category_filter_ability_physicality_vision',
-    ],
-    'category_filter_religion' => [
-        'category_filter_religion_anti_semitism',
-        'category_filter_religion_islamophobia_anti_muslim_sentiment',
-        'category_filter_religion_belief',
-    ],
-    'category_filter_acquired_diversity' => [
-        'category_filter_acquired_diversity_classism',
-        'category_filter_acquired_diversity_formality',
-        'category_filter_acquired_diversity_25_years',
-        'category_filter_acquired_diversity_50_years',
-        'category_filter_acquired_diversity_age_information',
-    ],
-    'category_filter_social_motive' => [
-        'category_filter_social_motive_offensive_language',
-        'category_filter_social_motive_agentic_language',
-        'category_filter_social_motive_exaggeration',
-        'category_filter_social_motive_military_inspired_lingo',
-        'category_filter_social_motive_sports_terms',
-        'category_filter_social_motive_communal_language',
-        'category_filter_social_motive_DEIB',
-        'category_filter_social_motive_positive_emotions',
-    ]
-]
+    $dictionaryItems = isset($team)
+        ? $team->getTotalTermReplacementsCount()
+        : $user->getTotalTermReplacementsCount() + $user->currentTeam->getTotalTermReplacementsCount()
+    ;
 
 ?>
 <x-app-layout :pagetitle="__('content.analytics')">
@@ -85,7 +16,7 @@ $categoriesWithSubcategories = [
          {{ __('content.analytics') }}
       </div>
       <div id="lastRefresh" class="lato-small-text-p wittyworks-margin-right container-row margin-top" style="visibility: hidden; align-items: center;"></div>
-      <div class="container-row margin-top"> 
+      <div class="container-row margin-top">
         <div class="drowdown-wrapper">
             <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.chart_time_range') }}</div>
             <select class="dropdown margin-right" id="timerangeDropdown" onchange="setParams()">
@@ -100,42 +31,37 @@ $categoriesWithSubcategories = [
         <div class="drowdown-wrapper">
             <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.language_filter') }}</div>
             <select class="dropdown margin-right" id="languageDropdown" onchange="setParams()">
-                <option value="EN">{{ __('content.language_filter_en') }}</option>
-                <option value="DE">{{ __('content.language_filter_de') }}</option>
-                <option value="BOTH">{{ __('content.language_filter_both') }}</option>
+                <option value="">{{ __('content.language_filter_both') }}</option>
+                <option value="en">{{ __('content.language_filter_en') }}</option>
+                <option value="de">{{ __('content.language_filter_de') }}</option>
             </select>
         </div>
 
-        <div class="dropdown">
+
+        <div class="drowdown-wrapper">
             <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.category_filter') }}</div>
-            <div class="dropdown-content">
-                <div class="sub-dropdown">
-                    <?php foreach ($categoriesWithSubcategories as $category => $subcategories): ?>
-                        <div onmouseover="document.getElementById('<?php echo $category; ?>').style.display = 'block';"
-                            onmouseout="document.getElementById('<?php echo $category; ?>').style.display = 'none';">
-                            <input type="checkbox" name="<?php echo $category; ?>" value="{{ __('content.'.$category) }}">
-                            <label for="<?php echo $category; ?>">{{ __('content.'.$category) }}</label>
+                <div class="checkbox-wrapper">
+                    <button class="form-control toggle-next ellipsis lato-small-text-p">{{ __('content.all_categories') }}</button>
+
+                    <div class="checkboxes" id="Categories">
+                        <div class="inner-wrap">
+                            @foreach ($categories as $category => $category_data)
+                            <label>
+                                <input type="checkbox" value="{{ $category }}" class="ckkBox val" checked/>
+                                <span>{{ $category_data['translation']['hs_name'] }}</span>
+                            </label><br>
+                            @endforeach
                         </div>
-                        <div class="dropdown">
-                            <div class="dropdown-content" id="<?php echo $category; ?>" style="display: none;">
-                                <?php foreach ($subcategories as $subcategory): ?>
-                                    <div class="sub-dropdown">
-                                        <input type="checkbox" name="<?php echo $subcategory; ?>" value="{{ __('content.'.$subcategory) }}">
-                                        <label for="<?php echo $subcategory; ?>">{{ __('content.'.$subcategory) }}</label>
-                                    </div>
-                                <?php endforeach; ?>
-                            </div>
-                        </div>
-                    <?php endforeach; ?>
+                    </div>
+
                 </div>
             </div>
-        </div>
         </div>
 
       <div class="analytics-tab-container">
          <div class="analytics-tab" id="overview-tab" onclick="handleTabClick('overview')" style="color: #9489DB;">
             {{ __('content.analytic_overview_tab_title') }}
-            <div class="analytics-tab-line" id="overview-line"></div> 
+            <div class="analytics-tab-line" id="overview-line"></div>
         </div>
          <div class="analytics-tab" id="top-categories-tab" onclick="handleTabClick('top-categories')">
             {{ __('content.analytic_top_categories_tab_title') }}
@@ -209,7 +135,7 @@ $categoriesWithSubcategories = [
                   $eventsCharts = ["eventsPopoverChart", "eventsAlternativeChart", "eventsIgnoreChart", "eventsLearningBitesChart"];
                   for ($i = 0; $i < count($eventsCharts); $i++) {
                   echo '
-                  <canvas id="' . $eventsCharts[$i] . '" class="wittyworks-analytics-chart-small wittyworks-margin-right" ></canvas>
+                  <canvas id="' . $eventsCharts[$i] . '" class="wittyworks-analytics-chart-small wittyworks-margin-right"></canvas>
                   ';
                   }
                   @endphp
@@ -293,7 +219,7 @@ $categoriesWithSubcategories = [
                   <div id="topWordsChartCorporateRulesWrapper" class="chart-container-row wittyworks-margin-top" style="display: none; width: 100%; align-items:center">
                      <canvas
                         id="topWordsChartCorporateRules"
-                        class="wittyworks-analytics-chart-medium wittyworks-margin-top">
+                        class="wittyworks-analytics-chart-extra-large wittyworks-margin-top">
                      </canvas>
                   </div>
                   <div id="noCorporateRulesWrapper" class="container-row wittyworks-margin-top" style="display: none;">
@@ -332,7 +258,7 @@ $categoriesWithSubcategories = [
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/locale/de.js" rossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
-    function load_charts(refresh, startOfWeek, chartType = 'overview', timerange = 30, interval = 'week', lang = null, categories = null, diversity_dimension_drivers = null) {
+    function load_charts(refresh, startOfWeek, chartType = 'overview', timerange = '1w', interval = 'day', language = [], categories = []) {
         console.log('load_charts', chartType);
         if (refresh) {
             document.getElementById('lastRefresh').style.visibility = 'hidden';
@@ -417,43 +343,40 @@ $categoriesWithSubcategories = [
 
         Chart.defaults.global.defaultFontColor = '#000000';
 
-    function aggregate_chart_data_by_week(xValues, yValues) {
-        var aggregatedData = [];
-        var aggregatedLabels = [];
-        var currentXValue = xValues[0];
-        var currentYValue = yValues[0];
-        for (var i = 1; i <= xValues.length; i++) {
-            if (xValues[i] == currentXValue) {
-                currentYValue += yValues[i];
-            } else {
-                aggregatedData.push(currentYValue);
-                aggregatedLabels.push( "{{ __('content.week') }}" + " " + currentXValue);
-                currentXValue = xValues[i];
-                currentYValue = yValues[i];
-            }
+    function formatChartLabels(xValues, yValues) {
+        for (var i = 0; i < xValues.length; i++) {
+            xValues[i] = moment(xValues[i]).format('MM.DD.YYYY');
         }
-        return [aggregatedLabels, aggregatedData];
+        return [xValues, yValues];
     }
 
-    function handle_no_data(loadingIconId, sectionIdNoData = null) {
-        document.getElementById(loadingIconId).style.display = "none";
+    function handleNoData(loadingIconId, sectionIdNoData = null, chartId = null) {
+        console.log('HANDLENODATA', sectionIdNoData, document.getElementById(sectionIdNoData));
+
+        if (document.getElementById(loadingIconId)) {
+            document.getElementById(loadingIconId).style.display = "none";
+        }
+
         if (sectionIdNoData) {
             document.getElementById(sectionIdNoData).style.visibility = "visible";
+            document.getElementById(sectionIdNoData).style.display = "block";
             const sectionId = sectionIdNoData.replace("NoData", "");
             document.getElementById(sectionId).style.display = "none";
+        } else if (chartId && document.getElementById(chartId)) {
+            document.getElementById(chartId).style.display = "none";
         }
     }
 
-    async function getChartData(chart, from = '1m', interval = 'day', filter = null) {
+    async function getChartData(chart, from = '1w', interval = 'day', categories, language) {
         let analyticsUrl = '/api/user/analytics?refresh=' + refresh + '&chart=';
         if (window.location.href.includes('team')) {
             analyticsUrl = '/api/team/analytics?refresh=' + refresh + '&chart=';
         }
-        analyticsUrl += chart + '&from=' + from + '&interval=' + interval
-        if(filter) {
-            analyticsUrl += '&subcategories[]=' + filter;
-        }
-        analyticsUrl += "&locale={{ app()->getLocale() }}";
+        const formattedCategories = categories.map(category => 'categories[]=' + category).join('&');
+        analyticsUrl += chart + '&from=' + from + '&interval=' + interval + '&' + formattedCategories + '&lang=' + language + '&locale={{ app()->getLocale() }}';
+
+        console.log('getChartData', analyticsUrl)
+
         const response = await fetch(analyticsUrl, {
             method: 'GET',
             headers: {
@@ -461,10 +384,17 @@ $categoriesWithSubcategories = [
                 'X-App-Locale': '{{ app()->getLocale() }}',
             },
         });
-        const data = await response.json();
 
-        console.log('getChartData', chart, from, interval, filter, data);
-        return data;
+        console.log('response', response);
+         
+        try {
+            const data = await response.json();
+            console.log('data', data);
+            return data;
+        } catch (e) {
+            console.log('error', e);
+            return null;
+        }
     }
 
     function createBarChart(chartId, xValues, yValues, text, display, singeColor) {
@@ -573,9 +503,11 @@ $categoriesWithSubcategories = [
         });
     }
 
-    chartType == 'overview' && getChartData('total', timerange).then(data => {
-        if (!data || !data.events || !data.events.popover_open || Object.entries(data.events.popover_open).filter(([key, value]) => value > 0).length == 0) {
-            handle_no_data('loadingIconActivity', 'overview-wrapperNoData');
+    chartType == 'overview' && getChartData('total', timerange, interval, categories, language).then(data => {
+        if (!data?.events?.popover_open
+            || Object.entries(data.events.popover_open).filter(([key, value]) => value > 0).length == 0
+        ) {
+            handleNoData('loadingIconActivity', 'overview-wrapperNoData');
             return;
         }
         const events = data.events || {};
@@ -587,7 +519,7 @@ $categoriesWithSubcategories = [
             if (event === 'popover_open') {
                for (const [date, count] of Object.entries(value)) {
                     xValuesPopoverOpen.push(date);
-                    xValuesPopoverOpenIntervallWeek.push(moment(date).startOf('week').isoWeekday(startOfWeek).week());
+                    // xValuesPopoverOpenIntervallWeek.push(moment(date).startOf('week').isoWeekday(startOfWeek).week());
                     yValuesPopoverOpen.push(count);
                 }
             } else if (event === 'ignore') {
@@ -641,8 +573,6 @@ $categoriesWithSubcategories = [
             const changeInIgnorePercentage = (((totalWeeklyIgnore - totalWeeklyIgnorePrevious) / (totalWeeklyIgnorePrevious == 0 ? 1 : totalWeeklyIgnorePrevious)) * 100).toFixed(0).replace('-', '');
             const changeInAlternativePercentage = (((totalWeeklyAlternative - totalWeeklyAlternativePrevious) / (totalWeeklyAlternativePrevious == 0 ? 1 : totalWeeklyAlternativePrevious)) * 100).toFixed(0).replace('-', '');
             
-            const aggregatedCheckChatData =  aggregate_chart_data_by_week(xValuesPopoverOpenIntervallWeek, yValuesCheck);
-
             document.getElementById("checkDaysInRow").innerHTML =  '{{ __('content.writing_streak') }}' + '&nbsp; <span class="lato-small-paragraph-title-h4-purple">' +  writing_streak + '&nbsp</span>' + '{{ __('content.in_a_row') }}';
             document.getElementById("changeInLearningBitesPercentage").innerHTML =  '{{ __('content.you_clicked') }}' + '&nbsp; <span class="lato-small-paragraph-title-h4-purple">' + changeInLearningBitesPercentage + '%</span>&nbsp;' + (changeInLearningBitesPercentage >= 0 ? '{{ __('content.learning_bites_requests_week_positive') }}' : '{{ __('content.learning_bites_requests_week_negative') }}');
             document.getElementById("changeInPopoverPercentage").innerHTML =  '{{ __('content.you_explored') }}' + '&nbsp; <span class="lato-small-paragraph-title-h4-purple">' + changeInPopoverPercentage + '%</span>&nbsp;' + (changeInPopoverPercentage >= 0 ? '{{ __('content.popover_open_week_positive') }}' : '{{ __('content.popover_open_week_negative') }}');
@@ -650,7 +580,7 @@ $categoriesWithSubcategories = [
             document.getElementById("changeInIgnorePercentage").innerHTML =  '{{ __('content.you_ignored') }}' + '&nbsp; <span class="lato-small-paragraph-title-h4-purple">' + changeInIgnorePercentage + '%</span>&nbsp;' + (changeInIgnorePercentage >= 0 ? '{{ __('content.ignored_words_week_positive') }}' : '{{ __('content.ignored_words_week_negative') }}');
 
             //insert drowdown with two options to id startOfWeekDropdown
-            const startOfWeekDropdown = document.getElementById("startOfWeekDropdown").innerHTML = `<select id="startOfWeek" class="dropdown" onchange="load_charts(true, this.value)">
+            const startOfWeekDropdown = document.getElementById("startOfWeekDropdown").innerHTML = `<select id="startOfWeek" class="dropdown" onchange="setParams(this.value)">
                 <option value="1">{{ __('content.monday') }}</option>
                 <option value="6">{{ __('content.saturday') }}</option>
                 <option value="7">{{ __('content.sunday') }}</option>
@@ -672,9 +602,9 @@ $categoriesWithSubcategories = [
 
                 if (lastRefreshMinutes >= 3) {
                     return document.getElementById("lastRefresh").innerHTML = '{{ __('content.last_refreshed') }} &nbsp;' + lastRefreshFormatted + '&nbsp; &nbsp; <a class="button primary-button-red" onclick="load_charts(true, startOfWeek)">{{ __('content.refresh_data') }}</a>';
-                } else {
-                    return document.getElementById("lastRefresh").innerHTML = '{{ __('content.last_refreshed') }} &nbsp;' + lastRefreshFormatted;
                 }
+
+                return document.getElementById("lastRefresh").innerHTML = '{{ __('content.last_refreshed') }} &nbsp;' + lastRefreshFormatted;
             };
 
             updateSection();
@@ -683,10 +613,11 @@ $categoriesWithSubcategories = [
             }, 30000);
             document.getElementById('lastRefresh').style.visibility = 'visible';
 
-            const aggregatedPopoverOpenData = aggregate_chart_data_by_week(xValuesPopoverOpenIntervallWeek, yValuesPopoverOpen)[1];
-            const aggregatedAlternativeData = aggregate_chart_data_by_week(xValuesPopoverOpenIntervallWeek, yValuesAlternative)[1];
-            const aggregatedIgnoreData = aggregate_chart_data_by_week(xValuesPopoverOpenIntervallWeek, yValuesIgnore)[1];
-            const aggregatedLearningBitesData = aggregate_chart_data_by_week(xValuesPopoverOpenIntervallWeek, yValuesLearningBites)[1];
+            const aggregatedCheckChatData =  formatChartLabels(xValuesPopoverOpen, yValuesCheck);
+            const aggregatedPopoverOpenData = formatChartLabels(xValuesPopoverOpen, yValuesPopoverOpen)[1];
+            const aggregatedAlternativeData = formatChartLabels(xValuesPopoverOpen, yValuesAlternative)[1];
+            const aggregatedIgnoreData = formatChartLabels(xValuesPopoverOpen, yValuesIgnore)[1];
+            const aggregatedLearningBitesData = formatChartLabels(xValuesPopoverOpen, yValuesLearningBites)[1];
 
             if(aggregatedLearningBitesData.every(Number.isInteger)) {
                 ctx = document.getElementById('eventsChart').getContext('2d');
@@ -794,9 +725,11 @@ $categoriesWithSubcategories = [
                 "{{ __('content.title_doughnut_chart_event_ratio') }}",
             );
            
-        getChartData('dau', timerange, 'week').then(data => {
-        if (!data || !data.events || !data.events.popover_open || Object.entries(data.events.popover_open).filter(([key, value]) => value > 0).length == 0) {
-            handle_no_data('loadingIconActivity', 'overview-wrapperNoData');
+        getChartData('dau', timerange, 'week', categories, language).then(data => {
+        if (!data?.events?.popover_open
+            || Object.entries(data.events.popover_open).filter(([key, value]) => value > 0).length == 0
+        ) {
+            handleNoData('loadingIconActivity', 'overview-wrapperNoData');
             return;
         }
         const events = data.events || {};
@@ -900,12 +833,12 @@ $categoriesWithSubcategories = [
         }
     });
 
-    chartType == 'top-categories' && getChartData('topSubcategories', 7).then(data => {
+    //ALWAYS ONLY past week
+    chartType == 'top-categories' && getChartData('topSubcategories', '1w', interval, categories, language).then(data => {
         if (!data || !data.events ) {
-            handle_no_data('loading-icon-top-categories');
+            handleNoData('loading-icon-top-categories', null, 'topSubcategories');
             return;
         }
-        console.log('topSubcategories', data);
         const eventsPopoverOpenedWeekUnsorted = data.events.popover_open || {};
         const openedWeek = Object.entries(eventsPopoverOpenedWeekUnsorted).sort((a, b) => b[1] - a[1]).slice(0, 8);
         for (const [key, value] of openedWeek) {
@@ -915,9 +848,9 @@ $categoriesWithSubcategories = [
             }
         }
 
-        getChartData('topSubcategories', 14).then(data => {
+        getChartData('topSubcategories', '2w', interval, categories, language).then(data => {
         if (!data || !data.events ) {
-            handle_no_data('loading-icon-top-categories');
+            handleNoData('loading-icon-top-categories', null, 'topSubcategories');
             return;
         }
         const openedTwoWeeks = data.events.popover_open || {};
@@ -935,7 +868,9 @@ $categoriesWithSubcategories = [
             }
         }
 
-        if (yTopSubCategoriesTwoWeeks.every((val, i, arr) => val === arr[0]) || yTopSubCategoriesWeek.every((val, i, arr) => val === arr[0])) {
+        if (yTopSubCategoriesTwoWeeks.every((val, i, arr) => val === arr[0])
+            || yTopSubCategoriesWeek.every((val, i, arr) => val === arr[0])
+        ) {
             document.getElementById("categoriesRadar").style.display = "none";
             document.getElementById("loading-icon-top-categories").style.display = "none";
             document.getElementById("top-categories-wrapper").style.visibility = "visible";
@@ -998,9 +933,9 @@ $categoriesWithSubcategories = [
     });
 
 
-    chartType == 'overview' && getChartData('topSubcategories', timerange).then(data => {
+    (chartType == 'overview' || chartType == 'top-categories') && getChartData('topSubcategories', timerange, interval, categories, language).then(data => {
         if (!data || !data.events || !data.subcategories ) {
-            handle_no_data('loading-icon-top-categories');
+            handleNoData('loading-icon-top-categories', null, 'topSubcategories');
             return;
         }
 
@@ -1085,9 +1020,10 @@ $categoriesWithSubcategories = [
                          
     });
 
-    chartType == 'top-words' && getChartData('topWords', 7).then(data => {
+    //ALWAYS ONLY past week
+    chartType == 'top-words' && getChartData('topWords', '1w', interval, categories, language).then(data => {
         if (!data || !data.events ) {
-            handle_no_data('loading-icon-top-words');
+            handleNoData('loading-icon-top-words', null, 'topWords');
             return;
         }
         const xTopWordsWeek = [];
@@ -1102,9 +1038,9 @@ $categoriesWithSubcategories = [
             }
         }
 
-        getChartData('topWords', 14).then(data => {
+        getChartData('topWords', '2w', interval, categories, language).then(data => {
         if (!data || !data.events ) {
-            handle_no_data('loading-icon-top-words');
+            handleNoData('loading-icon-top-words', null, 'topWords');
             return;
         }
         const openedTwoWeeks = data.events.popover_open || {};
@@ -1186,9 +1122,9 @@ $categoriesWithSubcategories = [
     });
 
 
-    chartType == 'top-words' && getChartData('topWords', timerange).then(data => {
+    chartType == 'top-words' && getChartData('topWords', timerange, interval, categories, language).then(data => {
         if (!data || !data.events ) {
-            handle_no_data('loading-icon-top-words');
+            handleNoData('loading-icon-top-words', null, 'topWords');
             return;
         }
         const ignored = data.events.ignore || {};
@@ -1243,7 +1179,7 @@ $categoriesWithSubcategories = [
         );
     });
 
-    chartType == 'top-words' && getChartData('topWords', timerange, 'day', 'corporate_rules').then(data => {
+    chartType == 'top-words' && getChartData('topWords', timerange, 'day', categories, language).then(data => {
         if(data && data.events && data.events.popover_open) {
             const openedCorporatewords = data.events.popover_open;
             for (const [key, value] of Object.entries(openedCorporatewords)) {
@@ -1280,19 +1216,23 @@ $categoriesWithSubcategories = [
     });
 };
 
-function setParams() {
+function setParams(startOfWeek = 1) {
+    const categories = getSelectedCategories();
     const activeTab = document.getElementsByClassName("analytics-tab-line")[0].id.replace('-line', '');
-    console.log('activeTab', activeTab);
     const timeRangeDropdown = document.getElementById("timerangeDropdown");
     const languageDropdown = document.getElementById("languageDropdown");
 
     const selectedTimeRangeOption = timeRangeDropdown.options[timeRangeDropdown.selectedIndex].value;
     const selectedLanguageOption = languageDropdown.options[languageDropdown.selectedIndex].value;
 
-    const interval = selectedTimeRangeOption == '1w' ? 'day' : selectedTimeRangeOption == '1m' ? 'day' : selectedTimeRangeOption == '3m' ? 'week' : 'month';
- 
-    //refresh, startOfWeek, chartType, timerange, interval, lang, categories, diversity_dimension_drivers
-    load_charts(false, 1, activeTab, selectedTimeRangeOption, interval, selectedLanguageOption);
+    const interval = selectedTimeRangeOption == '1w'
+        ? 'day'
+        : selectedTimeRangeOption == '1m'
+            ? 'day'
+            : selectedTimeRangeOption == '3m'
+                ? 'week' : 'month'
+    ;
+    load_charts(false, startOfWeek, activeTab, selectedTimeRangeOption, interval, selectedLanguageOption, categories);
 }
 
 load_charts(false, 1);
@@ -1304,7 +1244,7 @@ function handleTabClick(clickedTabId) {
             document.getElementById(tab + '-tab').style.color = '#808080';
             document.getElementById(tab + '-line').classList.remove('analytics-tab-line');
             document.getElementById(tab).style.display = 'none';
-            if (tab !== 'overview') { 
+            if (tab !== 'overview') {
                 document.getElementById(tab + '-content').style.visibility = "hidden";
             } else {
                 document.getElementById(tab + '-wrapper').style.visibility = "hidden";
@@ -1314,9 +1254,87 @@ function handleTabClick(clickedTabId) {
             document.getElementById(tab + '-line').classList.add('analytics-tab-line');
             document.getElementById('loading-icon-' + tab).style.display = 'flex';
             document.getElementById('loading-icon-' + tab).style.visibility = 'visible';
-            load_charts(false, 1, tab);
+            setParams();
             document.getElementById(tab).style.display = 'block';
         }
-    });    
-} 
+    });
+}
+
+
+document.addEventListener("DOMContentLoaded", function() {
+  setCheckboxSelectLabels();
+  let toggleNext = document.querySelectorAll('.toggle-next');
+  document.addEventListener('click', function(e) {
+    const checkboxes = document.querySelector('.checkboxes');
+        if (!e.target.classList.contains('checkboxes')
+            && !e.target.classList.contains('toggle-next')
+            && !e.target.classList.length == 0
+            && !e.target.classList.contains('ckkBox')
+            && !e.target.classList.contains('inner-wrap')
+            && !e.target.classList.contains('checkbox-wrapper')
+            && checkboxes.style.display !== 'none'
+        ) {
+            checkboxes.style.display = 'none';
+            setParams()
+        }
+    });
+  for (let i = 0; i < toggleNext.length; i++) {
+    toggleNext[i].addEventListener('click', function() {
+      const checkboxes = this.nextElementSibling;
+      if (checkboxes.style.display === 'none') {
+        checkboxes.style.display = 'block';
+      } else {
+        checkboxes.style.display = 'none';
+        setParams()
+      }
+    });
+  }
+  
+  let ckkBoxes = document.querySelectorAll('.ckkBox');
+  for (let j = 0; j < ckkBoxes.length; j++) {
+    ckkBoxes[j].addEventListener('change', function() {
+        if (this.value === 'all_categories') {
+            const checkboxes = this.parentElement.parentElement.querySelectorAll('.ckkBox');
+            for (let m = 0; m < checkboxes.length; m++) {
+            checkboxes[m].checked = this.checked;
+            }
+        }
+      setCheckboxSelectLabels();
+    });
+  }
+});
+
+function getSelectedCategories () {
+    const checkboxes = document.querySelectorAll('.ckkBox');
+    const selectedCategories = [];
+    for (let i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].checked) {
+            selectedCategories.push(checkboxes[i].value);
+        }
+    }
+    return selectedCategories;
+}
+
+function setCheckboxSelectLabels(elem) {
+  const wrappers = document.querySelectorAll('.checkbox-wrapper');
+  for (let k = 0; k < wrappers.length; k++) {
+    const checkboxes = wrappers[k].querySelectorAll('.ckkBox');
+    const label = wrappers[k].querySelector('.checkboxes').getAttribute('id');
+    let prevText = '';
+    for (let l = 0; l < checkboxes.length; l++) {
+        const button = wrappers[k].querySelector('button');
+        const numberOfChecked = wrappers[k].querySelectorAll('input.val[type="checkbox"]:checked').length;
+        if (numberOfChecked === 6) {
+            button.textContent = 'All categories';
+        } else if (numberOfChecked === 0) {
+            button.textContent = 'None selected';
+        } else if (checkboxes[l].checked) {
+            const newText = checkboxes[l].nextElementSibling.innerHTML;
+            const btnText = prevText + newText.replace(/&amp;/g, '&');
+            button.textContent = btnText;
+            prevText = button.textContent + ', ';
+        }
+    }
+  }
+}
 </script>
