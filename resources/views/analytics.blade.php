@@ -3,77 +3,6 @@
     $has_term_replacements = \App\Models\TermReplacement::where($filter)->exists();
     $dictionaryItems = isset($team) ? $team->getTotalTermReplacementsCount() : $user->getTotalTermReplacementsCount() + $user->currentTeam->getTotalTermReplacementsCount();
 
-$categoriesWithSubcategories = [
-    'category_filter_cultural_diversity' => [
-        'category_filter_cultural_diversity_racism',
-        'category_filter_cultural_diversity_xenophobia',
-        'category_filter_cultural_diversity_cultural_stereotype',
-        'category_filter_cultural_diversity_migration_background',
-        'category_filter_cultural_diversity_nazi_language',
-        'category_filter_cultural_diversity_yiddish_pejoratives',
-        'category_filter_cultural_diversity_ancestry',
-        'category_filter_cultural_diversity_color',
-        'category_filter_cultural_diversity_abbreviation',
-        'category_filter_cultural_diversity_clarity',
-        'category_filter_cultural_diversity_empty_words',
-        'category_filter_cultural_diversity_filler_words',
-        'category_filter_cultural_diversity_plain_english'
-    ],
-    'category_filter_gender_orientation' => [
-        'category_filter_gender_orientation_homophobia',
-        'category_filter_gender_orientation_sexism',
-        'category_filter_gender_orientation_transphobia',
-        'category_filter_gender_orientation_binary_pronouns',
-        'category_filter_gender_orientation_female_stereotype',
-        'category_filter_gender_orientation_gender_binary',
-        'category_filter_gender_orientation_gender_cues',
-        'category_filter_gender_orientation_gender_specific_abbreviation',
-        'category_filter_gender_orientation_generic_masculine',
-        'category_filter_gender_orientation_generic_plural',
-        'category_filter_gender_orientation_jobs',
-        'category_filter_gender_orientation_male_stereotype',
-        'category_filter_gender_orientation_male_stereotype',
-        'category_filter_gender_orientation_sexual_orientation',
-        'category_filter_gender_orientation_traditional_leadership',
-    ],
-    'category_filter_ability_physicality' => [
-        'category_filter_ability_physicality_ableist',
-        'category_filter_ability_physicality_ability',
-        'category_filter_ability_physicality_physicality',
-        'category_filter_ability_physicality_behavior',
-        'category_filter_ability_physicality_medical_state',
-        'category_filter_ability_physicality_mobility',
-        'category_filter_ability_physicality_cognitive_ability',
-        'category_filter_ability_physicality_cognitive_perception',
-        'category_filter_ability_physicality_hearing',
-        'category_filter_ability_physicality_learning_ability',
-        'category_filter_ability_physicality_mental_wellbeing',
-        'category_filter_ability_physicality_speech_ability',
-        'category_filter_ability_physicality_vision',
-    ],
-    'category_filter_religion' => [
-        'category_filter_religion_anti_semitism',
-        'category_filter_religion_islamophobia_anti_muslim_sentiment',
-        'category_filter_religion_belief',
-    ],
-    'category_filter_acquired_diversity' => [
-        'category_filter_acquired_diversity_classism',
-        'category_filter_acquired_diversity_formality',
-        'category_filter_acquired_diversity_25_years',
-        'category_filter_acquired_diversity_50_years',
-        'category_filter_acquired_diversity_age_information',
-    ],
-    'category_filter_social_motive' => [
-        'category_filter_social_motive_offensive_language',
-        'category_filter_social_motive_agentic_language',
-        'category_filter_social_motive_exaggeration',
-        'category_filter_social_motive_military_inspired_lingo',
-        'category_filter_social_motive_sports_terms',
-        'category_filter_social_motive_communal_language',
-        'category_filter_social_motive_DEIB',
-        'category_filter_social_motive_positive_emotions',
-    ]
-]
 
 ?>
 <x-app-layout :pagetitle="__('content.analytics')">
@@ -112,31 +41,13 @@ $categoriesWithSubcategories = [
                     <button class="form-control toggle-next ellipsis lato-small-text-p">{{ __('content.all_categories') }}</button>
 
                     <div class="checkboxes" id="Categories">
-                        <div class="inner-wrap">     
+                        <div class="inner-wrap">
+                            @foreach ($categories as $category => $category_data)
                             <label>
-                                <input type="checkbox" value="cultural-diversity" class="ckkBox val" checked/>
-                                <span>{{ __('content.category_filter_cultural_diversity') }}</span>
+                                <input type="checkbox" value="{{ $category }}" class="ckkBox val" checked/>
+                                <span>{{ $category_data['translation']['hs_name'] }}</span>
                             </label><br>
-                            <label>
-                                <input type="checkbox" value="gender-orientation" class="ckkBox val" checked/>
-                                <span>{{ __('content.category_filter_gender_orientation') }}</span>
-                            </label><br>
-                            <label>
-                                <input type="checkbox" value="ability-physicality" class="ckkBox val" checked/>
-                                <span>{{ __('content.category_filter_ability_physicality') }}</span>
-                            </label><br>
-                            <label>
-                                <input type="checkbox" value="religion" class="ckkBox val" checked/>
-                                <span>{{ __('content.category_filter_religion') }}</span>
-                            </label><br>
-                            <label>
-                                <input type="checkbox" value="acquired-diversity" class="ckkBox val" checked/>
-                                <span>{{ __('content.category_filter_acquired_diversity') }}</span>
-                            </label><br>
-                            <label>
-                                <input type="checkbox" value="social-motive" class="ckkBox val" checked />
-                                <span>{{ __('content.category_filter_social_motive') }}</span>
-                            </label><br>
+                            @endforeach
                         </div>
                     </div>
 

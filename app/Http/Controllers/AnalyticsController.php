@@ -32,7 +32,10 @@ class AnalyticsController extends Controller
             abort(403);
         }
 
-        return view('analytics', ['user' => $user]);
+        return view('analytics', [
+            'user' => $user,
+            'categories' => $this->categories,
+        ]);
     }
 
     protected function teamAnalyticsAllowed(User $user = null)
@@ -56,6 +59,7 @@ class AnalyticsController extends Controller
         return view('analytics', [
             'team' => $user->currentTeam,
             'team_edit' => $user->hasTeamPermission($user->currentTeam, 'edit_guidelines'),
+            'categories' => $this->categories,
         ]);
     }
 
