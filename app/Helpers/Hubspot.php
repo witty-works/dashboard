@@ -70,7 +70,7 @@ class Hubspot
             $contactInput->setProperties($data);
 
             $result = $this->api->crm()->contacts()->basicApi()->create($contactInput);
-        } catch (\HubSpot\Client\Crm\Contacts\ApiException $e) {
+        } catch (ApiException $e) {
             return [];
         }
 
@@ -172,6 +172,9 @@ class Hubspot
                 if ($e->getCode() !== 404) {
                     throw $e;
                 }
+
+                $user->hubspot_id = 0;
+                $user->save();
             }
 
             // 'hs_additional_emails' could also be checked but ideally we map customers based on their primary email
