@@ -11,6 +11,7 @@ use HubSpot\Client\Crm\Contacts\Model\SimplePublicObjectInput as ContactsSimpleP
 use HubSpot\Client\Crm\Companies\Model\Filter as CompaniesFilter;
 use HubSpot\Client\Crm\Companies\Model\FilterGroup as CompaniesFilterGroup;
 use HubSpot\Client\Crm\Companies\Model\PublicObjectSearchRequest as CompaniesPublicObjectSearchRequest;
+use HubSpot\Client\Crm\Contacts\ApiException;
 use Illuminate\Mail\Message;
 use Illuminate\Support\Facades\Mail;
 
@@ -165,7 +166,13 @@ class Hubspot
         ];
 
         if ($user->hubspot_id) {
-            $contact = $this->api->crm()->contacts()->basicApi()->getById($user->hubspot_id, $fetchProperties);
+            try {
+                $contact = $this->api->crm()->contacts()->basicApi()->getById($user->hubspot_id, $fetchProperties);
+            } catch (ApiException $e) {
+                if ($e->getCode() !== 404) {
+                    throw $e;
+                }
+            }
 
             // 'hs_additional_emails' could also be checked but ideally we map customers based on their primary email
             if (
