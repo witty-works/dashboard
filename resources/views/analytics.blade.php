@@ -87,7 +87,7 @@
                   <div></div>
                </div>
             </div>
-            <div id="overview-wrapperNoData" style="visibility: hidden; width: 100%">
+            <div id="overview-no-data" style="visibility: hidden; width: 100%">
                <div class="lato-small-text-p warning-message">{!! __('content.no_data_events') !!}</div>
                <div class="image-container">
                   <img src="{{ url('svg/screenshots/activity.png') }}" alt="activity" class="image wittyworks-margin-top">
@@ -159,6 +159,13 @@
                      <div></div>
                   </div>
                </div>
+               <div id="top-categories-no-data" style="visibility: hidden; width: 100%">
+                    <div class="lato-small-text-p warning-message">{!! __('content.no_data_events') !!}</div>
+                    <div class="image-container">
+                        <img src="{{ url('svg/screenshots/activity.png') }}" alt="activity" class="image wittyworks-margin-top">
+                        <div class="centered-image-text">{{ __('content.no_data_image_text') }}</div>
+                    </div>
+               </div>
                <div id="top-categories-content" style="visibility: hidden; width: 100%">
                   <div class="chart-container-row wittyworks-margin-top">
                      <canvas
@@ -205,6 +212,13 @@
                      <div></div>
                      <div></div>
                   </div>
+               </div>
+               <div id="top-words-no-data" style="visibility: hidden; width: 100%">
+                    <div class="lato-small-text-p warning-message">{!! __('content.no_data_events') !!}</div>
+                    <div class="image-container">
+                        <img src="{{ url('svg/screenshots/activity.png') }}" alt="activity" class="image wittyworks-margin-top">
+                        <div class="centered-image-text">{{ __('content.no_data_image_text') }}</div>
+                    </div>
                </div>
                <div id="top-words-content" style="visibility: hidden; width: 100%">
                   <div class="container-row wittyworks-margin-top">
@@ -347,17 +361,13 @@
     }
 
     function handleNoData(loadingIconId, sectionIdNoData = null, chartId = null) {
-        console.log('HANDLENODATA', sectionIdNoData, document.getElementById(sectionIdNoData));
-
         if (document.getElementById(loadingIconId)) {
             document.getElementById(loadingIconId).style.display = "none";
         }
-
+       
         if (sectionIdNoData) {
             document.getElementById(sectionIdNoData).style.visibility = "visible";
             document.getElementById(sectionIdNoData).style.display = "block";
-            const sectionId = sectionIdNoData.replace("NoData", "");
-            document.getElementById(sectionId).style.display = "none";
         } else if (chartId && document.getElementById(chartId)) {
             document.getElementById(chartId).style.display = "none";
         }
@@ -380,6 +390,8 @@
                 'X-App-Locale': '{{ app()->getLocale() }}',
             },
         });
+
+        console.log('response', response);
          
         try {
             const data = await response.json();
@@ -501,7 +513,7 @@
         if (!data?.events?.popover_open
             || Object.entries(data.events.popover_open).filter(([key, value]) => value > 0).length == 0
         ) {
-            handleNoData('loadingIconActivity', 'overview-wrapperNoData');
+            handleNoData('loading-icon-overview', 'overview-no-data');
             return;
         }
         const events = data.events || {};
@@ -723,7 +735,6 @@
         if (!data?.events?.popover_open
             || Object.entries(data.events.popover_open).filter(([key, value]) => value > 0).length == 0
         ) {
-            handleNoData('loadingIconActivity', 'overview-wrapperNoData');
             return;
         }
         const events = data.events || {};
@@ -821,7 +832,7 @@
             });
         }
             document.getElementById("loading-icon-overview").style.display = "none";
-            document.getElementById("overview-wrapperNoData").style.display = "none";
+            document.getElementById("overview-no-data").style.display = "none";
             document.getElementById("overview-wrapper").style.visibility = "visible";
         });
         }
@@ -830,7 +841,6 @@
     //ALWAYS ONLY past week
     chartType == 'top-categories' && getChartData('topSubcategories', '1w', interval, categories, language).then(data => {
         if (!data || !data.events ) {
-            handleNoData('loading-icon-top-categories', null, 'topSubcategories');
             return;
         }
         const eventsPopoverOpenedWeekUnsorted = data.events.popover_open || {};
@@ -844,7 +854,6 @@
 
         getChartData('topSubcategories', '2w', interval, categories, language).then(data => {
         if (!data || !data.events ) {
-            handleNoData('loading-icon-top-categories', null, 'topSubcategories');
             return;
         }
         const openedTwoWeeks = data.events.popover_open || {};
@@ -866,9 +875,6 @@
             || yTopSubCategoriesWeek.every((val, i, arr) => val === arr[0])
         ) {
             document.getElementById("categoriesRadar").style.display = "none";
-            document.getElementById("loading-icon-top-categories").style.display = "none";
-            document.getElementById("top-categories-wrapper").style.visibility = "visible";
-
             document.getElementById("topSubcategoriesDoughnutWrapper").classList.remove("container-column");
             document.getElementById("topSubcategoriesDoughnutWrapper").classList.add("container-row");
             document.getElementById("topSubcategoriesDoughnutWrapper").style.width = "100%";
@@ -929,7 +935,7 @@
 
     (chartType == 'overview' || chartType == 'top-categories') && getChartData('topSubcategories', timerange, interval, categories, language).then(data => {
         if (!data || !data.events || !data.subcategories ) {
-            handleNoData('loading-icon-top-categories', null, 'topSubcategories');
+            handleNoData('loading-icon-top-categories', 'top-categories-no-data', 'topSubcategories');
             return;
         }
 
@@ -1011,13 +1017,15 @@
             yValuesTopSubCategoriesIgnoredCutDoughnut,
             "{{ __('content.title_categories_ignored_doughnut_chart_month') }}",
         );
-                         
+
+        document.getElementById("loading-icon-top-categories").style.display = "none";
+        document.getElementById("top-categories-content").style.visibility = "visible";
+        document.getElementById("top-categories-content").style.display = "block";
     });
 
     //ALWAYS ONLY past week
     chartType == 'top-words' && getChartData('topWords', '1w', interval, categories, language).then(data => {
         if (!data || !data.events ) {
-            handleNoData('loading-icon-top-words', null, 'topWords');
             return;
         }
         const xTopWordsWeek = [];
@@ -1034,7 +1042,6 @@
 
         getChartData('topWords', '2w', interval, categories, language).then(data => {
         if (!data || !data.events ) {
-            handleNoData('loading-icon-top-words', null, 'topWords');
             return;
         }
         const openedTwoWeeks = data.events.popover_open || {};
@@ -1053,9 +1060,6 @@
 
         if (yTopWordsTwoWeeks.every((val, i, arr) => val === arr[0]) || yTopWordsWeek.every((val, i, arr) => val === arr[0])) {
             document.getElementById("wordsRadar").style.display = "none";
-            document.getElementById("loading-icon-top-words").style.display = "none";
-            document.getElementById("top-words-wrapper").style.visibility = "visible";
-
             document.getElementById("topWordsDoughnutWrapper").classList.remove("container-column");
             document.getElementById("topWordsDoughnutWrapper").classList.add("container-row");
             document.getElementById("topWordsDoughnutWrapper").style.width = "100%";
@@ -1111,14 +1115,11 @@
             });
            
         });
-        document.getElementById("loading-icon-top-words").style.display = "none";
-        document.getElementById("top-words-content").style.visibility = "visible";
     });
-
 
     chartType == 'top-words' && getChartData('topWords', timerange, interval, categories, language).then(data => {
         if (!data || !data.events ) {
-            handleNoData('loading-icon-top-words', null, 'topWords');
+            handleNoData('loading-icon-top-words', 'top-words-no-data', 'topWords');
             return;
         }
         const ignored = data.events.ignore || {};
@@ -1171,6 +1172,10 @@
             true,
             false
         );
+
+        document.getElementById("loading-icon-top-words").style.display = "none";
+        document.getElementById("top-words-content").style.visibility = "visible";
+        document.getElementById("top-words-content").style.display = "block";
     });
 
     chartType == 'top-words' && getChartData('topWords', timerange, 'day', categories, language).then(data => {
@@ -1211,8 +1216,20 @@
 };
 
 function setParams(startOfWeek = 1) {
-    const categories = getSelectedCategories();
     const activeTab = document.getElementsByClassName("analytics-tab-line")[0].id.replace('-line', '');
+    if (activeTab) {
+        document.getElementById('loading-icon-' + activeTab).style.display = 'flex';
+        document.getElementById('loading-icon-' + activeTab).style.visibility = 'visible';
+        document.getElementById(activeTab + '-no-data').style.display = 'none';
+
+        if (activeTab === 'overview' && document.getElementById(activeTab + '-wrapper')){
+            document.getElementById(activeTab + '-wrapper').style.visibility = "hidden";
+        } else if (document.getElementById(activeTab + '-content')) {
+            document.getElementById(activeTab + '-content').style.visibility = "hidden";
+        }
+    }
+
+    const categories = getSelectedCategories();
     const timeRangeDropdown = document.getElementById("timerangeDropdown");
     const languageDropdown = document.getElementById("languageDropdown");
 
@@ -1246,6 +1263,7 @@ function handleTabClick(clickedTabId) {
         } else {
             document.getElementById(tab + '-tab').style.color = '#9489DB';
             document.getElementById(tab + '-line').classList.add('analytics-tab-line');
+            document.getElementById(tab + '-no-data').style.display = 'none';
             document.getElementById('loading-icon-' + tab).style.display = 'flex';
             document.getElementById('loading-icon-' + tab).style.visibility = 'visible';
             setParams();
