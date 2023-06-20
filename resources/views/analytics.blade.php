@@ -24,7 +24,6 @@
                 <option value="1m">{{ __('content.chart_time_range_month') }}</option>
                 <option value="3m">{{ __('content.chart_time_range_quarter') }}</option>
                 <option value="1y">{{ __('content.chart_time_range_year') }}</option>
-                <!-- <option value="9999999">{{ __('content.chart_time_range_all') }}</option> -->
             </select>
         </div>
 
@@ -42,7 +41,6 @@
             <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.category_filter') }}</div>
                 <div class="checkbox-wrapper">
                     <button class="form-control toggle-next ellipsis lato-small-text-p">{{ __('content.all_categories') }}</button>
-
                     <div class="checkboxes" id="Categories">
                         <div class="inner-wrap">
                             @foreach ($categories as $category => $category_data)
@@ -53,7 +51,6 @@
                             @endforeach
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -259,7 +256,6 @@
 
 <script>
     function load_charts(refresh, startOfWeek, chartType = 'overview', timerange = '1w', interval = 'day', language = [], categories = []) {
-        console.log('load_charts', chartType);
         if (refresh) {
             document.getElementById('lastRefresh').style.visibility = 'hidden';
             document.getElementById("loading-icon-overview").style.display = "flex";
@@ -384,8 +380,6 @@
                 'X-App-Locale': '{{ app()->getLocale() }}',
             },
         });
-
-        console.log('response', response);
          
         try {
             const data = await response.json();

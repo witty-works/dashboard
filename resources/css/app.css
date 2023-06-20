@@ -1068,6 +1068,10 @@ input:checked+.slider:before {
     margin-right: 0.5rem;
 }
 
+.drowdown-wrapper {
+    white-space: nowrap;
+}
+
 .dropdown {
     position: relative;
     display: inline-block;
@@ -1092,6 +1096,7 @@ input:checked+.slider:before {
 .dropdown-content input[type="checkbox"] {
     margin-right: 5px;
 }
+
 .analytics-tab-container {
     display: flex;
     flex-direction: row;
@@ -1118,10 +1123,8 @@ input:checked+.slider:before {
     transform: translateX(-50%);
     bottom: -1em;
     left: 50%;
-  }
+}
 
-
-  
 .checkbox-wrapper {
     background-color: #ffffff;
     border: 1px solid #6b7280;
@@ -1137,17 +1140,7 @@ input:checked+.slider:before {
     min-height: 42px;
 }
 
-.ckkBox.val {
-    background-color: transparent;
-    border: none;
-}
-
-.ckkBox.val:hover {
-    background-color: transparent;
-    border: none;
-}
-
-.ckkBox.val:checked {
+.ckkBox.val, .ckkBox.val:hover, .ckkBox.val:checked {
     background-color: transparent;
     border: none;
 }
@@ -1190,4 +1183,4 @@ label {
 
 .inner-wrap {
     padding: 1em;
-  }
+}
