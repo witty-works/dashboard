@@ -5,7 +5,7 @@
         ? $team->getTotalTermReplacementsCount()
         : $user->getTotalTermReplacementsCount() + $user->currentTeam->getTotalTermReplacementsCount()
     ;
-
+    $is_premium_user = isset($team) ? $team->subscribed() : $user->subscribed();
 ?>
 <x-app-layout :pagetitle="__('content.analytics')">
 <div class="wittyworks-navigation-wrapper">@livewire('navigation-menu')</div>
@@ -18,8 +18,14 @@
       <div id="lastRefresh" class="lato-small-text-p wittyworks-margin-right container-row margin-top" style="visibility: hidden; align-items: center;"></div>
       <div class="container-row margin-top">
         <div class="drowdown-wrapper">
-            <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.chart_time_range') }}</div>
-            <select class="dropdown margin-right" id="timerangeDropdown" onchange="setParams()">
+
+            <div class="container-row">
+                <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.chart_time_range') }}</div>
+                @if (!$is_premium_user)
+                <div style="margin-left: -1.5em"> @include('partials.locked')</div>
+                @endif
+            </div>
+            <select class="dropdown margin-right" id="timerangeDropdown" onchange="setParams()" {{ $is_premium_user ? '' : 'disabled' }}>
                 <option value="1w">{{ __('content.chart_time_range_week') }}</option>
                 <option value="1m">{{ __('content.chart_time_range_month') }}</option>
                 <option value="3m">{{ __('content.chart_time_range_quarter') }}</option>
@@ -381,8 +387,6 @@
         const formattedCategories = categories.map(category => 'categories[]=' + category).join('&');
         analyticsUrl += chart + '&from=' + from + '&interval=' + interval + '&' + formattedCategories + '&lang=' + language + '&locale={{ app()->getLocale() }}';
 
-        console.log('getChartData', analyticsUrl)
-
         const response = await fetch(analyticsUrl, {
             method: 'GET',
             headers: {
@@ -390,15 +394,11 @@
                 'X-App-Locale': '{{ app()->getLocale() }}',
             },
         });
-
-        console.log('response', response);
          
         try {
             const data = await response.json();
-            console.log('data', data);
             return data;
         } catch (e) {
-            console.log('error', e);
             return null;
         }
     }
