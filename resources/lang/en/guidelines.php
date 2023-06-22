@@ -95,7 +95,7 @@ All words added to this list will become highlighted by Witty, and your custom r
     'team_analytics' => 'Team Analytics',
     'team_analytics_participate' => 'Participate',
     'user_access_to_team_analytics' => 'Team Analytics Access',
-    'user_access_to_team_analytics_description' => 'Should non-administrators have access to team analytics?',
+    'user_access_to_team_analytics_description' => 'Should non-administrators have access to team analytics? Depending on your team-culture transparency can help. However, if you do share the data with your team make sure they are able to interpret the data properly.',
     'domain_error' => 'There was an error storing the URL. Please reload the page.',
     'false_positive_error' => 'There was an error storing the ignore word. Please reload the page.',
     'term_replacement_error' => 'There was an error storing the dictionary word. Please reload the page.',
