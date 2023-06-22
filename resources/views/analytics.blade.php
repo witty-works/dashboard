@@ -126,7 +126,7 @@
                <div class="container-row wittyworks-margin-top">
                   <canvas id="eventsChart" class="wittyworks-analytics-chart-extra-large"></canvas>
                </div>
-               @if(isset($team) && !empty($team_edit))
+               @if (isset($team) && !empty($team_edit))
                <div class="container-row wittyworks-margin-top">
                   <canvas id="dauChart" class="wittyworks-analytics-chart-extra-large"></canvas>
                </div>
@@ -381,7 +381,7 @@
         }
     }
 
-    async function getChartData(chart, from = '1w', interval = 'day', categories, language) {
+    async function getChartData(chart, from = '1w', interval = 'day', language, categories, subcategories = []) {
         let analyticsUrl = '/api/user/analytics?refresh=' + refresh + '&chart=';
         if (window.location.href.includes('team')) {
             analyticsUrl = '/api/team/analytics?refresh=' + refresh + '&chart=';
@@ -392,7 +392,12 @@
             formattedCategories = '&' + categories.map(category => 'categories[]=' + category).join('&');
         }
 
-        analyticsUrl += chart + '&from=' + from + '&interval=' + interval + '&lang=' + language + formattedCategories;
+        let formattedSubcategories = '';
+        if (subcategories && subcategories.length) {
+            formattedSubcategories = '&' + subcategories.map(category => 'subcategories[]=' + subcategories).join('&');
+        }
+
+        analyticsUrl += chart + '&from=' + from + '&interval=' + interval + '&lang=' + language + formattedCategories + formattedSubcategories;
 
         const response = await fetch(analyticsUrl, {
             method: 'GET',
@@ -516,7 +521,7 @@
         });
     }
 
-    chartType == 'overview' && getChartData('total', timerange, interval, categories, language).then(data => {
+    chartType == 'overview' && getChartData('total', timerange, interval, language, categories).then(data => {
         if (!data?.events?.popover_open
             || Object.entries(data.events.popover_open).filter(([key, value]) => value > 0).length == 0
         ) {
@@ -632,7 +637,7 @@
             const aggregatedIgnoreData = formatChartLabels(xValuesPopoverOpen, yValuesIgnore, interval)[1];
             const aggregatedLearningBitesData = formatChartLabels(xValuesPopoverOpen, yValuesLearningBites, interval)[1];
 
-            if(aggregatedLearningBitesData.every(Number.isInteger)) {
+            if (aggregatedLearningBitesData.every(Number.isInteger)) {
                 ctx = document.getElementById('eventsChart').getContext('2d');
                 new Chart(ctx, {
                     type: "line",
@@ -738,7 +743,7 @@
                 "{{ __('content.title_doughnut_chart_event_ratio') }}",
             );
            
-        getChartData('dau', timerange, 'week', categories, language).then(data => {
+        getChartData('dau', timerange, 'week', language, categories).then(data => {
         if (!data?.events?.popover_open
             || Object.entries(data.events.popover_open).filter(([key, value]) => value > 0).length == 0
         ) {
@@ -770,7 +775,7 @@
                 }
             }
         }
-        if(document.getElementById('dauChart')) {
+        if (document.getElementById('dauChart')) {
 
             ctx = document.getElementById('dauChart').getContext('2d');
             new Chart(ctx, {
@@ -846,7 +851,7 @@
     });
 
     //ALWAYS ONLY past week
-    chartType == 'top-categories' && getChartData('topSubcategories', '1w', interval, categories, language).then(data => {
+    chartType == 'top-categories' && getChartData('topSubcategories', '1w', interval, language, categories).then(data => {
         if (!data || !data.events ) {
             return;
         }
@@ -859,7 +864,7 @@
             }
         }
 
-        getChartData('topSubcategories', '2w', interval, categories, language).then(data => {
+        getChartData('topSubcategories', '2w', interval, language, categories).then(data => {
         if (!data || !data.events ) {
             return;
         }
@@ -940,7 +945,7 @@
     });
 
 
-    (chartType == 'overview' || chartType == 'top-categories') && getChartData('topSubcategories', timerange, interval, categories, language).then(data => {
+    (chartType == 'overview' || chartType == 'top-categories') && getChartData('topSubcategories', timerange, interval, language, categories).then(data => {
         if (!data || !data.events || !data.subcategories ) {
             handleNoData('loading-icon-top-categories', 'top-categories-no-data', 'topSubcategories');
             return;
@@ -1031,7 +1036,7 @@
     });
 
     //ALWAYS ONLY past week
-    chartType == 'top-words' && getChartData('topWords', '1w', interval, categories, language).then(data => {
+    chartType == 'top-words' && getChartData('topWords', '1w', interval, language, categories, ['corporate_rules']).then(data => {
         if (!data || !data.events ) {
             return;
         }
@@ -1047,7 +1052,7 @@
             }
         }
 
-        getChartData('topWords', '2w', interval, categories, language).then(data => {
+        getChartData('topWords', '2w', interval, language, categories, ['corporate_rules']).then(data => {
         if (!data || !data.events ) {
             return;
         }
@@ -1124,7 +1129,7 @@
         });
     });
 
-    chartType == 'top-words' && getChartData('topWords', timerange, interval, categories, language).then(data => {
+    chartType == 'top-words' && getChartData('topWords', timerange, interval, language, categories, ['corporate_rules']).then(data => {
         if (!data || !data.events ) {
             handleNoData('loading-icon-top-words', 'top-words-no-data', 'topWords');
             return;
@@ -1176,14 +1181,14 @@
         document.getElementById("top-words-content").style.display = "block";
     });
 
-    chartType == 'top-words' && getChartData('topWords', timerange, 'day', categories, language).then(data => {
-        if(data && data.events && data.events.popover_open) {
+    chartType == 'top-words' && getChartData('topWords', timerange, 'day', language, categories, ['corporate_rules']).then(data => {
+        if (data && data.events && data.events.popover_open) {
             const openedCorporatewords = data.events.popover_open;
             for (const [key, value] of Object.entries(openedCorporatewords)) {
                 xValuesTopCorporateWordsOpened.push(key);
                 yValuesTopCorporateWordsOpened.push(value);
             }
-            if(xValuesTopCorporateWordsOpened.length >= 10) {
+            if (xValuesTopCorporateWordsOpened.length >= 10) {
                 xValuesTopCorporateWordsOpened.slice(0, 10);
                 yValuesTopCorporateWordsOpened.slice(0, 10);
             } else if (xValuesTopCorporateWordsOpened.length > 0) {
