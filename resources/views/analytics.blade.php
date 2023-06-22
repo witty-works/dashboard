@@ -26,7 +26,6 @@
                 @endif
             </div>
             <select class="dropdown margin-right" id="timerangeDropdown" onchange="setParams()" {{ $is_premium_user ? '' : 'disabled' }}>
-                <option value="1w">{{ __('content.chart_time_range_week') }}</option>
                 <option value="1m">{{ __('content.chart_time_range_month') }}</option>
                 <option value="3m">{{ __('content.chart_time_range_quarter') }}</option>
                 <option value="1y">{{ __('content.chart_time_range_year') }}</option>
@@ -269,7 +268,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/locale/de.js" rossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
-    function load_charts(refresh, startOfWeek, chartType = 'overview', timerange = '1w', interval = 'day', language = [], categories = []) {
+    function load_charts(refresh, startOfWeek, chartType = 'overview', timerange = '1m', interval = 'week', language = [], categories = []) {
         if (refresh) {
             document.getElementById('lastRefresh').style.visibility = 'hidden';
             document.getElementById("loading-icon-overview").style.display = "flex";
@@ -353,11 +352,21 @@
 
         Chart.defaults.global.defaultFontColor = '#000000';
 
-    function formatChartLabels(xValues, yValues) {
-        for (var i = 0; i < xValues.length; i++) {
-            xValues[i] = moment(xValues[i]).format('MM.DD.YYYY');
+    function formatChartLabels(xValues, yValues, interval) {
+        const formattedXValues = [];
+        
+        if (interval == 'week') {
+            for (var i = 0; i < xValues.length; i++) {
+                console.log(formattedXValues[i]);
+                formattedXValues[i] = '{{ __('content.week') }} ' + moment(xValues[i]).startOf('week').isoWeekday(startOfWeek).week() + ' ' + moment(xValues[i]).startOf('week').isoWeekday(startOfWeek).year();
+            }
+        } else if (interval == 'month') {
+            for (var i = 0; i < xValues.length; i++) {
+                formattedXValues[i] = moment(xValues[i]).format('MMMM YYYY');
+            }
         }
-        return [xValues, yValues];
+
+        return [formattedXValues, yValues];
     }
 
     function handleNoData(loadingIconId, sectionIdNoData = null, chartId = null) {
@@ -618,11 +627,11 @@
             }, 30000);
             document.getElementById('lastRefresh').style.visibility = 'visible';
 
-            const aggregatedCheckChatData =  formatChartLabels(xValuesPopoverOpen, yValuesCheck);
-            const aggregatedPopoverOpenData = formatChartLabels(xValuesPopoverOpen, yValuesPopoverOpen)[1];
-            const aggregatedAlternativeData = formatChartLabels(xValuesPopoverOpen, yValuesAlternative)[1];
-            const aggregatedIgnoreData = formatChartLabels(xValuesPopoverOpen, yValuesIgnore)[1];
-            const aggregatedLearningBitesData = formatChartLabels(xValuesPopoverOpen, yValuesLearningBites)[1];
+            const aggregatedCheckChatData =  formatChartLabels(xValuesPopoverOpen, yValuesCheck, interval);
+            const aggregatedPopoverOpenData = formatChartLabels(xValuesPopoverOpen, yValuesPopoverOpen, interval)[1];
+            const aggregatedAlternativeData = formatChartLabels(xValuesPopoverOpen, yValuesAlternative, interval)[1];
+            const aggregatedIgnoreData = formatChartLabels(xValuesPopoverOpen, yValuesIgnore, interval)[1];
+            const aggregatedLearningBitesData = formatChartLabels(xValuesPopoverOpen, yValuesLearningBites, interval)[1];
 
             if(aggregatedLearningBitesData.every(Number.isInteger)) {
                 ctx = document.getElementById('eventsChart').getContext('2d');
@@ -1226,13 +1235,7 @@ function setParams(startOfWeek = 1) {
     const selectedTimeRangeOption = timeRangeDropdown.options[timeRangeDropdown.selectedIndex].value;
     const selectedLanguageOption = languageDropdown.options[languageDropdown.selectedIndex].value;
 
-    const interval = selectedTimeRangeOption == '1w'
-        ? 'day'
-        : selectedTimeRangeOption == '1m'
-            ? 'day'
-            : selectedTimeRangeOption == '3m'
-                ? 'week' : 'month'
-    ;
+    const interval = selectedTimeRangeOption == '1y' ? 'month' : 'week';
     load_charts(false, startOfWeek, activeTab, selectedTimeRangeOption, interval, selectedLanguageOption, categories);
 }
 
