@@ -225,7 +225,7 @@ class AnalyticsController extends Controller
         }
 
         $filters = [];
-        if (!empty($categories)) {
+        if (!empty($categories) && count($categories) != $this->categories->count()) {
             $filters[] = [
                 'key' => 'response__data__category',
                 'value' => $categories,
