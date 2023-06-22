@@ -25,10 +25,10 @@
                 <div style="margin-left: -1.5em"> @include('partials.locked')</div>
                 @endif
             </div>
-            <select class="dropdown margin-right" id="timerangeDropdown" onchange="setParams()" {{ $is_premium_user ? '' : 'disabled' }}>
+            <select class="dropdown margin-right" id="timerangeDropdown" onchange="setParams()">
                 <option value="1m">{{ __('content.chart_time_range_month') }}</option>
-                <option value="3m">{{ __('content.chart_time_range_quarter') }}</option>
-                <option value="1y">{{ __('content.chart_time_range_year') }}</option>
+                <option value="3m" {{ $is_premium_user ? '' : 'disabled' }}>{{ __('content.chart_time_range_quarter') }}</option>
+                <option value="1y" {{ $is_premium_user ? '' : 'disabled' }}>{{ __('content.chart_time_range_year') }}</option>
             </select>
         </div>
 
@@ -357,7 +357,6 @@
         
         if (interval == 'week') {
             for (var i = 0; i < xValues.length; i++) {
-                console.log(formattedXValues[i]);
                 formattedXValues[i] = '{{ __('content.week') }} ' + moment(xValues[i]).startOf('week').isoWeekday(startOfWeek).week() + ' ' + moment(xValues[i]).startOf('week').isoWeekday(startOfWeek).year();
             }
         } else if (interval == 'month') {
