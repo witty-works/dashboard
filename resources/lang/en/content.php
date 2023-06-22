@@ -230,7 +230,7 @@ Ask your team administrators <a href="mailto::email">:name</a> to upgrade to <a 
     'ignored_words_week_negative' => 'less inclusive suggestions',
     'ignored_words_week_positive' => 'more inclusive suggestions',
     'top_categories' => 'The inclusion topics your team explored',
-    'top_words' => 'The inclusion words your team explored',
+    'top_words' => 'The dictionary words your team explored',
     'learning_bites_label_line_chart' => 'Why clicks',
     'popover_label_line_chart' => 'Explored',
     'ignored_label_line_chart' => 'Dismissed',
@@ -413,7 +413,7 @@ If you have any questions, contact :name (:email). 🙂
     'search_engine' => 'Search engine',
     'feedback' => 'Give Feedback',
     'analytic_overview_tab_title' => 'Overview',
-    'analytic_top_categories_tab_title' => 'Top Categories',
-    'analytic_top_words_tab_title' => 'Top Words',
+    'analytic_top_categories_tab_title' => 'Diversity Dimensions',
+    'analytic_top_words_tab_title' => 'Dictionary Words',
     'roadmap' => 'Roadmap',
 ];

@@ -218,7 +218,7 @@ Bitte dein*e Team-Administrator*in <a href="mailto::email">:name</a>, auf <a hre
     'activity' => 'Nutzungsübersicht',
     'writing_streak' => 'Du hast Witty',
     'top_categories' => 'Deine am häufigsten hervorgehobenen Kategorien',
-    'top_words' => 'Deine am häufigsten hervorgehobenen Wörter',
+    'top_words' => 'Deine am häufigsten hervorgehobenen Wörter aus dem Wörterbuch',
     'learning_bites_label_line_chart' => 'Klicks auf "Warum?"',
     'popover_label_line_chart' => 'Angeschaut',
     'ignored_label_line_chart' => 'Verworfen',
@@ -418,7 +418,7 @@ Falls du Fragen hast, nimm Kontakt mit :name (:email) auf. 🙂
     'you_explored' => 'Du hast',
     'feedback' => 'Rückmeldung',
     'analytic_overview_tab_title' => 'Überblick',
-    'analytic_top_categories_tab_title' => 'Top-Kategorien',
-    'analytic_top_words_tab_title' => 'Top-Wörter',
+    'analytic_top_categories_tab_title' => 'Diversitäts Dimensionen',
+    'analytic_top_words_tab_title' => 'Wörterbuch',
     'roadmap' => 'Roadmap',
 ];

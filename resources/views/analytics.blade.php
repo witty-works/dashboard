@@ -227,12 +227,6 @@
                     </div>
                </div>
                <div id="top-words-content" style="visibility: hidden; width: 100%">
-                  <div class="container-row wittyworks-margin-top">
-                     <canvas
-                        id="topWordsChart"
-                        class="wittyworks-analytics-chart-extra-large wittyworks-margin-top">
-                     </canvas>
-                  </div>
                   <div id="topWordsChartCorporateRulesWrapper" class="chart-container-row wittyworks-margin-top" style="display: none; width: 100%; align-items:center">
                      <canvas
                         id="topWordsChartCorporateRules"
@@ -384,8 +378,13 @@
         if (window.location.href.includes('team')) {
             analyticsUrl = '/api/team/analytics?refresh=' + refresh + '&chart=';
         }
-        const formattedCategories = categories.map(category => 'categories[]=' + category).join('&');
-        analyticsUrl += chart + '&from=' + from + '&interval=' + interval + '&' + formattedCategories + '&lang=' + language + '&locale={{ app()->getLocale() }}';
+
+        let formattedCategories = '';
+        if (categories && categories.length) {
+            formattedCategories = '&' + categories.map(category => 'categories[]=' + category).join('&');
+        }
+
+        analyticsUrl += chart + '&from=' + from + '&interval=' + interval + '&lang=' + language + formattedCategories;
 
         const response = await fetch(analyticsUrl, {
             method: 'GET',
@@ -1162,15 +1161,6 @@
             xValuesTopWordsIgnoredCutDoughnut,
             yValuesTopWordsIgnoredCutDoughnut,
             "{{ __('content.title_words_ignored_doughnut_chart_month') }}",
-        );
-       
-        createBarChart(
-            "topWordsChart",
-            xValuesTopWordsOpenedCut,
-            yValuesTopWordsOpenedCut,
-            "{{ __('content.title_words_bar_chart_month') }}",
-            true,
-            false
         );
 
         document.getElementById("loading-icon-top-words").style.display = "none";
