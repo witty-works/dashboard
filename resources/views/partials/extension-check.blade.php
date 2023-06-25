@@ -44,13 +44,7 @@
             </div>
         </div>
         <div class="wittyworks-upgrade-banner-button-container">
-            @php
-                $url = config('app.download_url');
-                if (strpos($url, 'http') !== 0) {
-                    $url = route($url);
-                }
-            @endphp
-            <a href="{{ $url }}" class="button primary-button-purple">
+            <a href="{{ route('download') }}" class="button primary-button-purple">
                 {{ __('content.onboarding_install_witty_button') }}
             </a>
         </div>
