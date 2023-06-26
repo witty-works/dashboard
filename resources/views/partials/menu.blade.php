@@ -154,7 +154,12 @@
 
             <x-jet-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'login']) }}">
                 <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/login.svg') }}" alt="" />
-                    {{ __('content.log_in_register') }}
+                    {{ __('content.log_in') }}
+            </x-jet-nav-link>
+
+            <x-jet-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'register']) }}">
+                <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/register.svg') }}" alt="" />
+                    {{ __('content.register') }}
             </x-jet-nav-link>
 
             <div class="wittyworks-navigation-username lato-small-text-p">
