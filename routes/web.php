@@ -181,7 +181,7 @@ Route::group(['middleware' => config('socialstream.middleware', ['web'])], funct
         ->name('team-invitations.accept-signed');
 
     Route::get('/download', function () {
-        return redirect(config('app.download_url'));
+        return view('download');
     })->name('download');
 });
 

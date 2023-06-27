@@ -56,8 +56,6 @@ return [
             'store_href' => 'https://addons.mozilla.org/en-US/firefox/addon/witty/',
         ],
     ],
-    'try_out_url' => 'https://www.witty.works/try-out-witty',
-    'download_url' => 'https://www.witty.works/install-witty',
 
     /*
     |--------------------------------------------------------------------------
