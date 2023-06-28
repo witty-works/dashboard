@@ -86,7 +86,7 @@ class SyncUserToHubSpot implements ShouldQueue
                     dispatch(new SyncUserToHubSpot($otherUser));
                 }
             }
-        } else {
+        } elseif ($user->hubspot_id !== 0) {
             if (empty($user->hubspotutk)) {
                 $contact = $this->hubspot->createContact($user);
             } else {

@@ -320,7 +320,7 @@ class OAuthController extends BaseOAuthController
         }
 
         if ($newUser) {
-            return redirect(config('app.download_url'));
+            return redirect()->route('download');
         }
 
         $redirectUri = session()->get('socialstream.previous_url');

@@ -94,7 +94,7 @@ Alle Wörter, die zu dieser Liste hinzufügst, werden von Witty hervorgehoben, u
     'team_analytics_description' => 'Team-Analysen ermöglichen es, Trends zu erkennen, wie dein Team Witty verwendet, um zu sehen, wo das Team hervorragend ist und wo mehr Arbeit in Richtung einer inklusiven Sprache und, was noch wichtiger ist, einer inklusiven Kultur erforderlich ist.',
     'team_analytics' => 'Team-Statistiken',
     'user_access_to_team_analytics' => 'Zugriff auf die Team-Statistik',
-    'user_access_to_team_analytics_description' => 'Sollten Nicht-Administratoren Zugang zu den Team-Statistiken haben?',
+    'user_access_to_team_analytics_description' => 'Sollten Nicht-Administratoren Zugriff auf Teamanalysen haben? Abhängig von deiner Teamkultur kann Transparenz hilfreich sein. Wenn du die Daten jedoch mit deinem Team teilst, stelle sicher, dass dieses die Daten richtig interpretiert werden können.',
     'domain_error' => 'Es ist ein Fehler beim Speichern der URL aufgetreten. Bitte lade die Seite neu.',
     'false_positive_error' => 'Beim Speichern ist ein Fehler aufgetreten. Bitte lade die Seite neu.',
     'term_replacement_error' => 'Es ist ein Fehler beim Speichern im Wörterbuchwort aufgetreten. Bitte lade die Seite neu.',
