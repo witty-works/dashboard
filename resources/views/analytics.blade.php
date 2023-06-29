@@ -95,12 +95,12 @@
             <div id="overview-no-data" style="visibility: hidden; width: 100%">
                <div class="lato-small-text-p warning-message">{!! __('content.no_data_events') !!}</div>
                <div class="image-container">
-                  <img src="{{ url('svg/screenshots/activity.png') }}" alt="activity" class="image wittyworks-margin-top">
+                  <img src="{{ url('svg/screenshots/activity.png') }}" alt="activity" class="image">
                   <div class="centered-image-text">{{ __('content.no_data_image_text') }}</div>
                </div>
             </div>
             <div id="overview-wrapper" style="visibility: hidden; width: 100%">
-               <div class="wittyworks-margin-top">
+               <!-- <div class="wittyworks-margin-top">
                   <div class="container-column" style="margin-left: 2em;">
                      <div class="container-row" style="align-items: center">
                         <div id="checkDaysInRow" class="lato-small-text-p"></div>
@@ -118,20 +118,20 @@
                         <div id="changeInLearningBitesPercentage" class="lato-small-text-p"></div>
                      </div>
                   </div>
-               </div>
-               <div class="container-row wittyworks-margin-right wittyworks-margin-top" style="margin-left: 2em;">
+               </div> -->
+               <div class="container-row wittyworks-margin-right">
                   <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.start_of_week') }}</div>
                   <div id="startOfWeekDropdown"></div>
                </div>
                <div class="container-row wittyworks-margin-top">
                   <canvas id="eventsChart" class="wittyworks-analytics-chart-extra-large"></canvas>
                </div>
-               @if (isset($team) && !empty($team_edit))
+               <!-- @if(isset($team) && !empty($team_edit))
                <div class="container-row wittyworks-margin-top">
                   <canvas id="dauChart" class="wittyworks-analytics-chart-extra-large"></canvas>
                </div>
-               @endif
-               <div class="container-row wittyworks-margin-top">
+               @endif -->
+               <!-- <div class="container-row wittyworks-margin-top">
                   <canvas id="requestRatiosChartDoughnut" class="wittyworks-analytics-chart-small"></canvas>
                   @php
                   $eventsCharts = ["eventsPopoverChart", "eventsAlternativeChart", "eventsIgnoreChart", "eventsLearningBitesChart"];
@@ -141,7 +141,7 @@
                   ';
                   }
                   @endphp
-               </div>
+               </div> -->
             </div>
          </div>
       </div>
@@ -167,19 +167,19 @@
                <div id="top-categories-no-data" style="visibility: hidden; width: 100%">
                     <div class="lato-small-text-p warning-message">{!! __('content.no_data_events') !!}</div>
                     <div class="image-container">
-                        <img src="{{ url('svg/screenshots/activity.png') }}" alt="activity" class="image wittyworks-margin-top">
+                        <img src="{{ url('svg/screenshots/activity.png') }}" alt="activity" class="image">
                         <div class="centered-image-text">{{ __('content.no_data_image_text') }}</div>
                     </div>
                </div>
                <div id="top-categories-content" style="visibility: hidden; width: 100%">
-                  <div class="chart-container-row wittyworks-margin-top">
+                  <div class="chart-container-row">
                      <canvas
                         id="topSubCategoriesChart"
-                        class="wittyworks-analytics-chart-top-categories wittyworks-margin-top">
+                        class="wittyworks-analytics-chart-top-categories">
                      </canvas>
-                     <div id="categoryOverview" class="wittyworks-margin-left wittyworks-margin-top"></div>
+                     <div id="categoryOverview" class="wittyworks-margin-left"></div>
                   </div>
-                  <div class="chart-container-row wittyworks-margin-top">
+                  <!-- <div class="chart-container-row wittyworks-margin-top">
                      <canvas
                         id="categoriesRadar"
                         class="wittyworks-analytics-chart-medium-radar">
@@ -194,7 +194,7 @@
                            class="wittyworks-analytics-chart-medium">
                         </canvas>
                      </div>
-                  </div>
+                  </div> -->
                </div>
             </div>
          </div>
@@ -221,15 +221,15 @@
                <div id="top-words-no-data" style="visibility: hidden; width: 100%">
                     <div class="lato-small-text-p warning-message">{!! __('content.no_data_events') !!}</div>
                     <div class="image-container">
-                        <img src="{{ url('svg/screenshots/activity.png') }}" alt="activity" class="image wittyworks-margin-top">
+                        <img src="{{ url('svg/screenshots/activity.png') }}" alt="activity" class="image">
                         <div class="centered-image-text">{{ __('content.no_data_image_text') }}</div>
                     </div>
                </div>
                <div id="top-words-content" style="visibility: hidden; width: 100%">
-                  <div id="topWordsChartCorporateRulesWrapper" class="chart-container-row wittyworks-margin-top" style="display: none; width: 100%; align-items:center">
+                <div class="chart-container-row">
                      <canvas
                         id="topWordsChartCorporateRules"
-                        class="wittyworks-analytics-chart-extra-large wittyworks-margin-top">
+                        class="wittyworks-analytics-chart-extra-large">
                      </canvas>
                   </div>
                   <div id="noCorporateRulesWrapper" class="container-row wittyworks-margin-top" style="display: none;">
@@ -238,7 +238,7 @@
                   <div id="corporateRulesButNoneOpened" class="container-row wittyworks-margin-top" style="display: none;">
                      <div class="lato-small-text-p">{!! empty($user) ? __('content.corporate_rules_none_opened') : __('content.corporate_rules_none_opened_user') !!}</div>
                   </div>
-                  <div class="chart-container-row wittyworks-margin-top">
+                  <!-- <div class="chart-container-row wittyworks-margin-top">
                      <canvas
                         id="wordsRadar"
                         class="wittyworks-analytics-chart-medium-radar">
@@ -253,7 +253,7 @@
                            class="wittyworks-analytics-chart-medium">
                         </canvas>
                      </div>
-                  </div>
+                  </div> -->
                </div>
             </div>
          </div>
@@ -261,7 +261,6 @@
    </div>
 </div>
 </x-app-layout>
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js" rossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -476,50 +475,50 @@
         });
     }
 
-    function createDoughnutChart(chartId, xValues, yValues, text) {
-        if (yValues.every((val, i, arr) => val === 0)) {
-            document.getElementById(chartId).style.display = "none";
-            return;
-        }
+    // function createDoughnutChart(chartId, xValues, yValues, text) {
+    //     if (yValues.every((val, i, arr) => val === 0)) {
+    //         document.getElementById(chartId).style.display = "none";
+    //         return;
+    //     }
 
-        document.getElementById(chartId).style.display = 'flex';
-        const ctx = document.getElementById(chartId).getContext('2d');
-        new Chart(ctx, {
-                type: "doughnut",
-                data: {
-                    labels: xValues,
-                    datasets: [{
-                    backgroundColor: [colors[6], colors[8], colors[10],colors[12], colors[14]],
-                    data: yValues
-                    }]
-                },
-                options: {
-                    legend: {display: false},
-                    maintainAspectRatio: false,
-                    responsive: true,
-                    tooltips: {
-                        yAlign: 'bottom',
-                        callbacks: {
-                            labelColor: function(tooltipItem, chart) {
-                                return {
-                                    backgroundColor: chart.data.datasets[tooltipItem.datasetIndex].backgroundColor[tooltipItem.index],
-                                    fontColor: "red",
+    //     document.getElementById(chartId).style.display = 'flex';
+    //     const ctx = document.getElementById(chartId).getContext('2d');
+    //     new Chart(ctx, {
+    //             type: "doughnut",
+    //             data: {
+    //                 labels: xValues,
+    //                 datasets: [{
+    //                 backgroundColor: [colors[6], colors[8], colors[10],colors[12], colors[14]],
+    //                 data: yValues
+    //                 }]
+    //             },
+    //             options: {
+    //                 legend: {display: false},
+    //                 maintainAspectRatio: false,
+    //                 responsive: true,
+    //                 tooltips: {
+    //                     yAlign: 'bottom',
+    //                     callbacks: {
+    //                         labelColor: function(tooltipItem, chart) {
+    //                             return {
+    //                                 backgroundColor: chart.data.datasets[tooltipItem.datasetIndex].backgroundColor[tooltipItem.index],
+    //                                 fontColor: "red",
 
-                                }
-                            },
-                        },
-                        backgroundColor: '#ffffff',
-                        bodyFontColor: '#000000',
-                    },
-                    title: {
-                        display: true,
-                        text: text,
-                        fontSize: 16,
-                        fontStyle: 'normal',
-                    }
-                }
-        });
-    }
+    //                             }
+    //                         },
+    //                     },
+    //                     backgroundColor: '#ffffff',
+    //                     bodyFontColor: '#000000',
+    //                 },
+    //                 title: {
+    //                     display: true,
+    //                     text: text,
+    //                     fontSize: 16,
+    //                     fontStyle: 'normal',
+    //                 }
+    //             }
+    //     });
+    // }
 
     chartType == 'overview' && getChartData('total', timerange, interval, language, categories).then(data => {
         if (!data?.events?.popover_open
@@ -557,45 +556,45 @@
                 }
             }
             //CURRENT WEEK
-            const yValuesLearningBitesWeek = yValuesLearningBites.slice(-7);
-            const xValuesLearningBitesWeek = xValuesLearningBites.slice(-7);
-            const yValuesPopoverOpenWeek = yValuesPopoverOpen.slice(-7);
-            const yValuesIgnoreWeek = yValuesIgnore.slice(-7);
-            const yValuesAlternativeWeek = yValuesAlternative.slice(-7);
+            // const yValuesLearningBitesWeek = yValuesLearningBites.slice(-7);
+            // const xValuesLearningBitesWeek = xValuesLearningBites.slice(-7);
+            // const yValuesPopoverOpenWeek = yValuesPopoverOpen.slice(-7);
+            // const yValuesIgnoreWeek = yValuesIgnore.slice(-7);
+            // const yValuesAlternativeWeek = yValuesAlternative.slice(-7);
 
             //PREVIOUS WEEK
-            const yValuesLearningBitesWeekPrevious = yValuesLearningBites.slice(-14, -7);
-            const xValuesLearningBitesWeekPrevious = xValuesLearningBites.slice(-14, -7);
-            const yValuesPopoverOpenWeekPrevious = yValuesPopoverOpen.slice(-14, -7);
-            const yValuesIgnoreWeekPrevious = yValuesIgnore.slice(-14, -7);
-            const yValuesAlternativeWeekPrevious = yValuesAlternative.slice(-14, -7);
+            // const yValuesLearningBitesWeekPrevious = yValuesLearningBites.slice(-14, -7);
+            // const xValuesLearningBitesWeekPrevious = xValuesLearningBites.slice(-14, -7);
+            // const yValuesPopoverOpenWeekPrevious = yValuesPopoverOpen.slice(-14, -7);
+            // const yValuesIgnoreWeekPrevious = yValuesIgnore.slice(-14, -7);
+            // const yValuesAlternativeWeekPrevious = yValuesAlternative.slice(-14, -7);
             
             //TOTAL WEEK
-            const totalWeeklyLearningBites = yValuesLearningBitesWeek.map(Number).reduce((a, b) => a + b, 0);
-            const totalWeeklyPopoverOpen = yValuesPopoverOpenWeek.map(Number).reduce((a, b) => a + b, 0);
-            const totalWeeklyIgnore = yValuesIgnoreWeek.map(Number).reduce((a, b) => a + b, 0);
-            const totalWeeklyAlternative = yValuesAlternativeWeek.map(Number).reduce((a, b) => a + b, 0);
-            const totalWeeklyPopoverClose = totalWeeklyPopoverOpen - totalWeeklyIgnore - totalWeeklyAlternative;
-            const weeklyEvents = [totalWeeklyIgnore, totalWeeklyAlternative, totalWeeklyPopoverClose];
+            // const totalWeeklyLearningBites = yValuesLearningBitesWeek.map(Number).reduce((a, b) => a + b, 0);
+            // const totalWeeklyPopoverOpen = yValuesPopoverOpenWeek.map(Number).reduce((a, b) => a + b, 0);
+            // const totalWeeklyIgnore = yValuesIgnoreWeek.map(Number).reduce((a, b) => a + b, 0);
+            // const totalWeeklyAlternative = yValuesAlternativeWeek.map(Number).reduce((a, b) => a + b, 0);
+            // const totalWeeklyPopoverClose = totalWeeklyPopoverOpen - totalWeeklyIgnore - totalWeeklyAlternative;
+            // const weeklyEvents = [totalWeeklyIgnore, totalWeeklyAlternative, totalWeeklyPopoverClose];
             
             //TOTAL WEEK PREVIOUS
-            const totalWeeklyLearningBitesPrevious = yValuesLearningBitesWeekPrevious.map(Number).reduce((a, b) => a + b, 0);
-            const totalWeeklyPopoverOpenPrevious = yValuesPopoverOpenWeekPrevious.map(Number).reduce((a, b) => a + b, 0);
-            const totalWeeklyIgnorePrevious = yValuesIgnoreWeekPrevious.map(Number).reduce((a, b) => a + b, 0);
-            const totalWeeklyAlternativePrevious = yValuesAlternativeWeekPrevious.map(Number).reduce((a, b) => a + b, 0);
-            const weeklyEventsPrevious = [totalWeeklyLearningBitesPrevious, totalWeeklyPopoverOpenPrevious, totalWeeklyIgnorePrevious, totalWeeklyAlternativePrevious];
+            // const totalWeeklyLearningBitesPrevious = yValuesLearningBitesWeekPrevious.map(Number).reduce((a, b) => a + b, 0);
+            // const totalWeeklyPopoverOpenPrevious = yValuesPopoverOpenWeekPrevious.map(Number).reduce((a, b) => a + b, 0);
+            // const totalWeeklyIgnorePrevious = yValuesIgnoreWeekPrevious.map(Number).reduce((a, b) => a + b, 0);
+            // const totalWeeklyAlternativePrevious = yValuesAlternativeWeekPrevious.map(Number).reduce((a, b) => a + b, 0);
+            // const weeklyEventsPrevious = [totalWeeklyLearningBitesPrevious, totalWeeklyPopoverOpenPrevious, totalWeeklyIgnorePrevious, totalWeeklyAlternativePrevious];
 
             //WEEKLY CHANGE
-            const changeInLearningBitesPercentage = (((totalWeeklyLearningBites - totalWeeklyLearningBitesPrevious) / (totalWeeklyLearningBitesPrevious == 0 ? 1 : totalWeeklyLearningBitesPrevious)) * 100).toFixed(0).replace('-', '');
-            const changeInPopoverPercentage = (((totalWeeklyPopoverOpen - totalWeeklyPopoverOpenPrevious) / (totalWeeklyPopoverOpenPrevious == 0 ? 1 : totalWeeklyPopoverOpenPrevious)) * 100).toFixed(0).replace('-', '');
-            const changeInIgnorePercentage = (((totalWeeklyIgnore - totalWeeklyIgnorePrevious) / (totalWeeklyIgnorePrevious == 0 ? 1 : totalWeeklyIgnorePrevious)) * 100).toFixed(0).replace('-', '');
-            const changeInAlternativePercentage = (((totalWeeklyAlternative - totalWeeklyAlternativePrevious) / (totalWeeklyAlternativePrevious == 0 ? 1 : totalWeeklyAlternativePrevious)) * 100).toFixed(0).replace('-', '');
+            // const changeInLearningBitesPercentage = (((totalWeeklyLearningBites - totalWeeklyLearningBitesPrevious) / (totalWeeklyLearningBitesPrevious == 0 ? 1 : totalWeeklyLearningBitesPrevious)) * 100).toFixed(0).replace('-', '');
+            // const changeInPopoverPercentage = (((totalWeeklyPopoverOpen - totalWeeklyPopoverOpenPrevious) / (totalWeeklyPopoverOpenPrevious == 0 ? 1 : totalWeeklyPopoverOpenPrevious)) * 100).toFixed(0).replace('-', '');
+            // const changeInIgnorePercentage = (((totalWeeklyIgnore - totalWeeklyIgnorePrevious) / (totalWeeklyIgnorePrevious == 0 ? 1 : totalWeeklyIgnorePrevious)) * 100).toFixed(0).replace('-', '');
+            // const changeInAlternativePercentage = (((totalWeeklyAlternative - totalWeeklyAlternativePrevious) / (totalWeeklyAlternativePrevious == 0 ? 1 : totalWeeklyAlternativePrevious)) * 100).toFixed(0).replace('-', '');
             
-            document.getElementById("checkDaysInRow").innerHTML =  '{{ __('content.writing_streak') }}' + '&nbsp; <span class="lato-small-paragraph-title-h4-purple">' +  writing_streak + '&nbsp</span>' + '{{ __('content.in_a_row') }}';
-            document.getElementById("changeInLearningBitesPercentage").innerHTML =  '{{ __('content.you_clicked') }}' + '&nbsp; <span class="lato-small-paragraph-title-h4-purple">' + changeInLearningBitesPercentage + '%</span>&nbsp;' + (changeInLearningBitesPercentage >= 0 ? '{{ __('content.learning_bites_requests_week_positive') }}' : '{{ __('content.learning_bites_requests_week_negative') }}');
-            document.getElementById("changeInPopoverPercentage").innerHTML =  '{{ __('content.you_explored') }}' + '&nbsp; <span class="lato-small-paragraph-title-h4-purple">' + changeInPopoverPercentage + '%</span>&nbsp;' + (changeInPopoverPercentage >= 0 ? '{{ __('content.popover_open_week_positive') }}' : '{{ __('content.popover_open_week_negative') }}');
-            document.getElementById("changeInAlternativePercentage").innerHTML =  '{{ __('content.you_selected') }}' + '&nbsp; <span class="lato-small-paragraph-title-h4-purple">' + changeInAlternativePercentage + '%</span>&nbsp;' + (changeInAlternativePercentage >= 0 ? '{{ __('content.alternative_clicked_week_positive') }}' : '{{ __('content.alternative_clicked_week_negative') }}');
-            document.getElementById("changeInIgnorePercentage").innerHTML =  '{{ __('content.you_ignored') }}' + '&nbsp; <span class="lato-small-paragraph-title-h4-purple">' + changeInIgnorePercentage + '%</span>&nbsp;' + (changeInIgnorePercentage >= 0 ? '{{ __('content.ignored_words_week_positive') }}' : '{{ __('content.ignored_words_week_negative') }}');
+            // document.getElementById("checkDaysInRow").innerHTML =  '{{ __('content.writing_streak') }}' + '&nbsp; <span class="lato-small-paragraph-title-h4-purple">' +  writing_streak + '&nbsp</span>' + '{{ __('content.in_a_row') }}';
+            // document.getElementById("changeInLearningBitesPercentage").innerHTML =  '{{ __('content.you_clicked') }}' + '&nbsp; <span class="lato-small-paragraph-title-h4-purple">' + changeInLearningBitesPercentage + '%</span>&nbsp;' + (changeInLearningBitesPercentage >= 0 ? '{{ __('content.learning_bites_requests_week_positive') }}' : '{{ __('content.learning_bites_requests_week_negative') }}');
+            // document.getElementById("changeInPopoverPercentage").innerHTML =  '{{ __('content.you_explored') }}' + '&nbsp; <span class="lato-small-paragraph-title-h4-purple">' + changeInPopoverPercentage + '%</span>&nbsp;' + (changeInPopoverPercentage >= 0 ? '{{ __('content.popover_open_week_positive') }}' : '{{ __('content.popover_open_week_negative') }}');
+            // document.getElementById("changeInAlternativePercentage").innerHTML =  '{{ __('content.you_selected') }}' + '&nbsp; <span class="lato-small-paragraph-title-h4-purple">' + changeInAlternativePercentage + '%</span>&nbsp;' + (changeInAlternativePercentage >= 0 ? '{{ __('content.alternative_clicked_week_positive') }}' : '{{ __('content.alternative_clicked_week_negative') }}');
+            // document.getElementById("changeInIgnorePercentage").innerHTML =  '{{ __('content.you_ignored') }}' + '&nbsp; <span class="lato-small-paragraph-title-h4-purple">' + changeInIgnorePercentage + '%</span>&nbsp;' + (changeInIgnorePercentage >= 0 ? '{{ __('content.ignored_words_week_positive') }}' : '{{ __('content.ignored_words_week_negative') }}');
 
             //insert drowdown with two options to id startOfWeekDropdown
             const startOfWeekDropdown = document.getElementById("startOfWeekDropdown").innerHTML = `<select id="startOfWeek" class="dropdown" onchange="setParams(this.value)">
@@ -696,157 +695,156 @@
                 });
             }
 
-            createBarChart(
-                "eventsLearningBitesChart",
-                xValuesLearningBitesWeek,
-                yValuesLearningBitesWeek,
-                @json(__('content.title_bar_chart_learning_bites')),
-                false,
-                true
-            );
+            // createBarChart(
+            //     "eventsLearningBitesChart",
+            //     xValuesLearningBitesWeek,
+            //     yValuesLearningBitesWeek,
+            //     @json(__('content.title_bar_chart_learning_bites')),
+            //     false,
+            //     true
+            // );
 
-            createBarChart(
-                "eventsPopoverChart",
-                xValuesLearningBitesWeek,
-                yValuesPopoverOpenWeek,
-                "{{ __('content.title_bar_chart_popover') }}",
-                false,
-                true
-            );
+            // createBarChart(
+            //     "eventsPopoverChart",
+            //     xValuesLearningBitesWeek,
+            //     yValuesPopoverOpenWeek,
+            //     "{{ __('content.title_bar_chart_popover') }}",
+            //     false,
+            //     true
+            // );
 
-            createBarChart(
-                "eventsIgnoreChart",
-                xValuesLearningBitesWeek,
-                yValuesIgnoreWeek,
-                "{{ __('content.title_bar_chart_ignored') }}",
-                false,
-                true
-            );
+            // createBarChart(
+            //     "eventsIgnoreChart",
+            //     xValuesLearningBitesWeek,
+            //     yValuesIgnoreWeek,
+            //     "{{ __('content.title_bar_chart_ignored') }}",
+            //     false,
+            //     true
+            // );
 
-            createBarChart(
-                "eventsAlternativeChart",
-                xValuesLearningBitesWeek,
-                yValuesAlternativeWeek,
-                "{{ __('content.title_bar_chart_alternative') }}",
-                false,
-                true
-            );
+            // createBarChart(
+            //     "eventsAlternativeChart",
+            //     xValuesLearningBitesWeek,
+            //     yValuesAlternativeWeek,
+            //     "{{ __('content.title_bar_chart_alternative') }}",
+            //     false,
+            //     true
+            // );
 
-                createDoughnutChart(
-                "requestRatiosChartDoughnut",
-                [
-                "{{ __('content.ignored_doughnut_chart_event_ratio') }}",
-                "{{ __('content.alternative_doughnut_chart_event_ratio') }}",
-                "{{ __('content.popover_closed_doughnut_chart_event_ratio') }}"
-                ],
-                weeklyEvents,
-                "{{ __('content.title_doughnut_chart_event_ratio') }}",
-            );
+                // createDoughnutChart(
+                // "requestRatiosChartDoughnut",
+                // [
+                // "{{ __('content.ignored_doughnut_chart_event_ratio') }}",
+                // "{{ __('content.alternative_doughnut_chart_event_ratio') }}",
+                // "{{ __('content.popover_closed_doughnut_chart_event_ratio') }}"
+                // ],
+                // weeklyEvents,
+                // "{{ __('content.title_doughnut_chart_event_ratio') }}",
+            // );
            
-        getChartData('dau', timerange, 'week', language, categories).then(data => {
-        if (!data?.events?.popover_open
-            || Object.entries(data.events.popover_open).filter(([key, value]) => value > 0).length == 0
-        ) {
-            return;
-        }
-        const events = data.events || {};
+        // getChartData('dau', timerange, 'week', language, categories).then(data => {
+        // if (!data?.events?.popover_open
+        //     || Object.entries(data.events.popover_open).filter(([key, value]) => value > 0).length == 0
+        // ) {
+        //     return;
+        // }
+        // const events = data.events || {};
 
-        for (const [event, value] of Object.entries(events)) {
-            if (event === 'popover_open') {
-                for (const [date, count] of Object.entries(value)) {
-                    xIntervallDauWeek.push(date);
-                    yValuesDauPopoverOpen.push(count);
-                }
-            } else if (event === 'ignore') {
-                for (const [date, count] of Object.entries(value)) {
-                    yValuesDauIgnore.push(count);
-                }
-            } else if (event === 'alternative') {
-                for (const [date, count] of Object.entries(value)) {
-                    yValuesDauAlternative.push(count);
-                }
-            } else if (event === 'learning_bites') {
-                for (const [date, count] of Object.entries(value)) {
-                    yValuesDauLearningBites.push(count);
-                }
-            } else if (event === 'user_count') {
-                for (const [date, count] of Object.entries(value)) {
-                    yValuesDauUserCount.push(count);
-                }
-            }
-        }
-        if (document.getElementById('dauChart')) {
-
-            ctx = document.getElementById('dauChart').getContext('2d');
-            new Chart(ctx, {
-                type: "line",
-                data: {
-                    labels: aggregatedCheckChatData[0],  //until posthog offers select start of week
-                    datasets: [
-                        {
-                            data: yValuesDauUserCount,
-                            borderColor: colors[2],
-                            fill: false,
-                            label: "{{ __('content.user_count_label_line_chart_dau') }}",
-                        },
-                        {
-                            data: yValuesDauPopoverOpen,
-                            borderColor: colors[6],
-                            fill: false,
-                            label: "{{ __('content.popover_label_line_chart_dau') }}",
-                        },
-                        {
-                            data: yValuesDauAlternative,
-                            borderColor: colors[8],
-                            fill: false,
-                            label: "{{ __('content.alternative_label_line_chart_dau') }}",
-                        },
-                        {
-                            data: yValuesDauIgnore,
-                            borderColor: colors[10],
-                            fill: false,
-                            label:  "{{ __('content.ignored_label_line_chart_dau') }}",
-                        },
-                        {
-                            data: yValuesDauLearningBites,
-                            borderColor: colors[12],
-                            fill: false,
-                            label: @json(__('content.learning_bites_label_line_chart_dau')),
-                        },
-                    ]
-                },
-                options: {
-                    events: [],
-                    maintainAspectRatio: false,
-                    responsive: true,
-                    animation: {
-                        duration: 0
-                    },
-                    title: {
-                    display: true,
-                    text: "{{ __('content.title_line_chart_dau') }}",
-                    fontSize: 16,
-                    fontStyle: 'normal'
-                    },
-                    scales:{
-                        yAxes: [{
-                            ticks: {
-                                min: 0,
-                                callback: function(value, index, values) {
-                                    if (Math.floor(value) === value) {
-                                        return value;
-                                    }
-                                }
-                            }
-                        }],
-                    }
-                }
-            });
-        }
+        // for (const [event, value] of Object.entries(events)) {
+        //     if (event === 'popover_open') {
+        //         for (const [date, count] of Object.entries(value)) {
+        //             xIntervallDauWeek.push(date);
+        //             yValuesDauPopoverOpen.push(count);
+        //         }
+        //     } else if (event === 'ignore') {
+        //         for (const [date, count] of Object.entries(value)) {
+        //             yValuesDauIgnore.push(count);
+        //         }
+        //     } else if (event === 'alternative') {
+        //         for (const [date, count] of Object.entries(value)) {
+        //             yValuesDauAlternative.push(count);
+        //         }
+        //     } else if (event === 'learning_bites') {
+        //         for (const [date, count] of Object.entries(value)) {
+        //             yValuesDauLearningBites.push(count);
+        //         }
+        //     } else if (event === 'user_count') {
+        //         for (const [date, count] of Object.entries(value)) {
+        //             yValuesDauUserCount.push(count);
+        //         }
+        //     }
+        // }
+        // if(document.getElementById('dauChart')) {
+        //     ctx = document.getElementById('dauChart').getContext('2d');
+        //     new Chart(ctx, {
+        //         type: "line",
+        //         data: {
+        //             labels: aggregatedCheckChatData[0],  //until posthog offers select start of week
+        //             datasets: [
+        //                 {
+        //                     data: yValuesDauUserCount,
+        //                     borderColor: colors[2],
+        //                     fill: false,
+        //                     label: "{{ __('content.user_count_label_line_chart_dau') }}",
+        //                 },
+        //                 {
+        //                     data: yValuesDauPopoverOpen,
+        //                     borderColor: colors[6],
+        //                     fill: false,
+        //                     label: "{{ __('content.popover_label_line_chart_dau') }}",
+        //                 },
+        //                 {
+        //                     data: yValuesDauAlternative,
+        //                     borderColor: colors[8],
+        //                     fill: false,
+        //                     label: "{{ __('content.alternative_label_line_chart_dau') }}",
+        //                 },
+        //                 {
+        //                     data: yValuesDauIgnore,
+        //                     borderColor: colors[10],
+        //                     fill: false,
+        //                     label:  "{{ __('content.ignored_label_line_chart_dau') }}",
+        //                 },
+        //                 {
+        //                     data: yValuesDauLearningBites,
+        //                     borderColor: colors[12],
+        //                     fill: false,
+        //                     label: @json(__('content.learning_bites_label_line_chart_dau')),
+        //                 },
+        //             ]
+        //         },
+        //         options: {
+        //             events: [],
+        //             maintainAspectRatio: false,
+        //             responsive: true,
+        //             animation: {
+        //                 duration: 0
+        //             },
+        //             title: {
+        //             display: true,
+        //             text: "{{ __('content.title_line_chart_dau') }}",
+        //             fontSize: 16,
+        //             fontStyle: 'normal'
+        //             },
+        //             scales:{
+        //                 yAxes: [{
+        //                     ticks: {
+        //                         min: 0,
+        //                         callback: function(value, index, values) {
+        //                             if (Math.floor(value) === value) {
+        //                                 return value;
+        //                             }
+        //                         }
+        //                     }
+        //                 }],
+        //             }
+        //         }
+        //     });
+        // }
             document.getElementById("loading-icon-overview").style.display = "none";
             document.getElementById("overview-no-data").style.display = "none";
             document.getElementById("overview-wrapper").style.visibility = "visible";
-        });
+        // });
         }
     });
 
@@ -864,82 +862,82 @@
             }
         }
 
-        getChartData('topSubcategories', '2w', interval, language, categories).then(data => {
-        if (!data || !data.events ) {
-            return;
-        }
-        const openedTwoWeeks = data.events.popover_open || {};
-        for (const [key, value] of Object.entries(openedTwoWeeks)) {
-            if (!xTopSubCategoriesWeek.includes(key)) {
-                delete openedTwoWeeks[key];
-            }
-        }
+        // getChartData('topSubcategories', '2w', interval, language, categories).then(data => {
+        // if (!data || !data.events ) {
+        //     return;
+        // }
+        // const openedTwoWeeks = data.events.popover_open || {};
+        // for (const [key, value] of Object.entries(openedTwoWeeks)) {
+        //     if (!xTopSubCategoriesWeek.includes(key)) {
+        //         delete openedTwoWeeks[key];
+        //     }
+        // }
 
-        for (const [key, value] of openedWeek) {
-            if (key && value && openedTwoWeeks[key]) {
-                yTopSubCategoriesTwoWeeks.push(openedTwoWeeks[key] - value);
-            } else {
-                yTopSubCategoriesTwoWeeks.push(0);
-            }
-        }
+        // for (const [key, value] of openedWeek) {
+        //     if (key && value && openedTwoWeeks[key]) {
+        //         yTopSubCategoriesTwoWeeks.push(openedTwoWeeks[key] - value);
+        //     } else {
+        //         yTopSubCategoriesTwoWeeks.push(0);
+        //     }
+        // }
 
-        if (yTopSubCategoriesTwoWeeks.every((val, i, arr) => val === arr[0])
-            || yTopSubCategoriesWeek.every((val, i, arr) => val === arr[0])
-        ) {
-            document.getElementById("categoriesRadar").style.display = "none";
-            document.getElementById("topSubcategoriesDoughnutWrapper").classList.remove("container-column");
-            document.getElementById("topSubcategoriesDoughnutWrapper").classList.add("container-row");
-            document.getElementById("topSubcategoriesDoughnutWrapper").style.width = "100%";
-            document.getElementById("topSubcategoriesDoughnutWrapper").style.justifyContent = "space-around";
-            return;
-        }
+        // if (yTopSubCategoriesTwoWeeks.every((val, i, arr) => val === arr[0])
+        //     || yTopSubCategoriesWeek.every((val, i, arr) => val === arr[0])
+        // ) {
+        //     document.getElementById("categoriesRadar").style.display = "none";
+        //     document.getElementById("topSubcategoriesDoughnutWrapper").classList.remove("container-column");
+        //     document.getElementById("topSubcategoriesDoughnutWrapper").classList.add("container-row");
+        //     document.getElementById("topSubcategoriesDoughnutWrapper").style.width = "100%";
+        //     document.getElementById("topSubcategoriesDoughnutWrapper").style.justifyContent = "space-around";
+        //     return;
+        // }
 
-        const dataCategories = {
-                labels: xTopSubCategoriesWeek,
-                datasets: [{
-                    label: "{{ __('content.title_categories_radar_chart_last_week') }}",
-                    data: yTopSubCategoriesTwoWeeks,
-                    fill: true,
-                    backgroundColor: 'hsla(247, 52.8%, 75.9%, 0.5)',
-                    borderColor: 'hsla(248, 53.2%, 60.6%, 0.5)'
-                }, {
-                    label: "{{ __('content.title_categories_radar_chart_current_week') }}",
-                    data: yTopSubCategoriesWeek,
-                    fill: true,
-                    backgroundColor: 'hsla(247, 54.1%, 88.0%, 0.5)',
-                    borderColor: 'hsla(247, 52.8%, 75.9%, 0.5)'
-                }]
-                };
+        // const dataCategories = {
+        //         labels: xTopSubCategoriesWeek,
+        //         datasets: [{
+        //             label: "{{ __('content.title_categories_radar_chart_last_week') }}",
+        //             data: yTopSubCategoriesTwoWeeks,
+        //             fill: true,
+        //             backgroundColor: 'hsla(247, 52.8%, 75.9%, 0.5)',
+        //             borderColor: 'hsla(248, 53.2%, 60.6%, 0.5)'
+        //         }, {
+        //             label: "{{ __('content.title_categories_radar_chart_current_week') }}",
+        //             data: yTopSubCategoriesWeek,
+        //             fill: true,
+        //             backgroundColor: 'hsla(247, 54.1%, 88.0%, 0.5)',
+        //             borderColor: 'hsla(247, 52.8%, 75.9%, 0.5)'
+        //         }]
+        //         };
   
-            ctx = document.getElementById('categoriesRadar').getContext('2d');
-            new Chart(ctx, {
-                type: 'radar',
-                    data: dataCategories,
-                    options: {
-                        maintainAspectRatio: false,
-                        responsive: true,
-                        events: [],
-                        elements: {
-                        line: {
-                            borderWidth: 1
-                        },
-                        opacity: 0.5,
-                        scales:{
-                            yAxes: [{
-                                ticks: {
-                                    min: 0,
-                                    callback: function(value, index, values) {
-                                        if (Math.floor(value) === value) {
-                                            return value;
-                                        }
-                                    }
-                                }
-                            }],
-                        }
-                    }
-                },
-            });
-        });
+        //     ctx = document.getElementById('categoriesRadar').getContext('2d');
+        //     new Chart(ctx, {
+        //         type: 'radar',
+        //             data: dataCategories,
+        //             options: {
+        //                 maintainAspectRatio: false,
+        //                 responsive: true,
+        //                 events: [],
+        //                 elements: {
+        //                 line: {
+        //                     borderWidth: 1
+        //                 },
+        //                 opacity: 0.5,
+        //                 scales:{
+        //                     yAxes: [{
+        //                         ticks: {
+        //                             min: 0,
+        //                             callback: function(value, index, values) {
+        //                                 if (Math.floor(value) === value) {
+        //                                     return value;
+        //                                 }
+        //                             }
+        //                         }
+        //                     }],
+        //                 }
+        //             }
+        //         },
+        //     });
+        // });
         document.getElementById("loading-icon-top-categories").style.display = "none";
         document.getElementById("top-categories-content").style.visibility = "visible";
     });
@@ -976,35 +974,34 @@
         }
 
         document.getElementById("categoryOverview").innerHTML = listOfLinks;
-
-        const ignored = data.events.ignore || {};
+       
         const opened = data.events.popover_open || {};
-        const alternative = data.events.alternative || {};
-
-        for (const [key, value] of Object.entries(ignored)) {
-            xValuesTopSubCategoriesIgnored.push(key);
-            yValuesTopSubCategoriesIgnored.push(value);
-        }
+        // const ignored = data.events.ignore || {};
+        // const alternative = data.events.alternative || {};
 
         for (const [key, value] of Object.entries(opened)) {
             xValuesTopSubCategoriesOpened.push(key);
             yValuesTopSubCategoriesOpened.push(value);
         }
 
-        for (const [key, value] of Object.entries(alternative)) {
-            xValuesTopSubCategoriesAlternative.push(key);
-            yValuesTopSubCategoriesAlternative.push(value);
-        }
+        // for (const [key, value] of Object.entries(ignored)) {
+        //     xValuesTopSubCategoriesIgnored.push(key);
+        //     yValuesTopSubCategoriesIgnored.push(value);
+        // }
 
-        const xValuesTopSubCategoriesIgnoredCutDoughnut = xValuesTopSubCategoriesIgnored.slice(0, 5);
-        const yValuesTopSubCategoriesIgnoredCutDoughnut = yValuesTopSubCategoriesIgnored.slice(0, 5);
+        // for (const [key, value] of Object.entries(alternative)) {
+        //     xValuesTopSubCategoriesAlternative.push(key);
+        //     yValuesTopSubCategoriesAlternative.push(value);
+        // }
 
         const xValuesTopSubCategoriesOpenedCut = xValuesTopSubCategoriesOpened.slice(0, 15);
         const yValuesTopSubCategoriesOpenedCut = yValuesTopSubCategoriesOpened.slice(0, 15);
 
-        const xValuesTopSubCategoriesAlternativeCutDoughnut = xValuesTopSubCategoriesAlternative.slice(0, 5);
-        const yValuesTopSubCategoriesAlternativeCutDoughnut = yValuesTopSubCategoriesAlternative.slice(0, 5);
+        // const xValuesTopSubCategoriesAlternativeCutDoughnut = xValuesTopSubCategoriesAlternative.slice(0, 5);
+        // const yValuesTopSubCategoriesAlternativeCutDoughnut = yValuesTopSubCategoriesAlternative.slice(0, 5);
     
+        // const xValuesTopSubCategoriesIgnoredCutDoughnut = xValuesTopSubCategoriesIgnored.slice(0, 5);
+        // const yValuesTopSubCategoriesIgnoredCutDoughnut = yValuesTopSubCategoriesIgnored.slice(0, 5);
 
         createBarChart(
             "topSubCategoriesChart",
@@ -1015,173 +1012,174 @@
             false
         );
 
-        createDoughnutChart(
-            "topSubCategoriesOpenedChartDoughnut",
-            xValuesTopSubCategoriesAlternativeCutDoughnut,
-            yValuesTopSubCategoriesAlternativeCutDoughnut,
-            "{{ __('content.title_categories_alternative_doughnut_chart_month') }}",
+        // createDoughnutChart(
+        //     "topSubCategoriesOpenedChartDoughnut",
+        //     xValuesTopSubCategoriesAlternativeCutDoughnut,
+        //     yValuesTopSubCategoriesAlternativeCutDoughnut,
+        //     "{{ __('content.title_categories_alternative_doughnut_chart_month') }}",
 
-        );
+        // );
     
-        createDoughnutChart(
-            "topSubCategoriesIgnoredChartDoughnut",
-            xValuesTopSubCategoriesIgnoredCutDoughnut,
-            yValuesTopSubCategoriesIgnoredCutDoughnut,
-            "{{ __('content.title_categories_ignored_doughnut_chart_month') }}",
-        );
+        // createDoughnutChart(
+        //     "topSubCategoriesIgnoredChartDoughnut",
+        //     xValuesTopSubCategoriesIgnoredCutDoughnut,
+        //     yValuesTopSubCategoriesIgnoredCutDoughnut,
+        //     "{{ __('content.title_categories_ignored_doughnut_chart_month') }}",
+        // );
 
         document.getElementById("loading-icon-top-categories").style.display = "none";
         document.getElementById("top-categories-content").style.visibility = "visible";
         document.getElementById("top-categories-content").style.display = "block";
     });
 
-    //ALWAYS ONLY past week
-    chartType == 'top-words' && getChartData('topWords', '1w', interval, language, categories, ['corporate_rules']).then(data => {
-        if (!data || !data.events ) {
-            return;
-        }
-        const xTopWordsWeek = [];
-        const yTopWordsWeek = [];
-        const yTopWordsTwoWeeks = [];
-        const popoverOpenedWeekUnsorted = data.events.popover_open || {};
-        const openedWeek = Object.entries(popoverOpenedWeekUnsorted).sort((a, b) => b[1] - a[1]).slice(0, 8);
-        for (const [key, value] of openedWeek) {
-            if (key && value) {
-                xTopWordsWeek.push(key);
-                yTopWordsWeek.push(value);
-            }
-        }
+    // chartType == 'top-words' && getChartData('topWords', '1w', interval, language, categories, ['corporate_rules']).then(data => {
+    //     if (!data || !data.events ) {
+    //         return;
+    //     }
+    //     const xTopWordsWeek = [];
+    //     const yTopWordsWeek = [];
+    //     const yTopWordsTwoWeeks = [];
+    //     const popoverOpenedWeekUnsorted = data.events.popover_open || {};
+    //     const openedWeek = Object.entries(popoverOpenedWeekUnsorted).sort((a, b) => b[1] - a[1]).slice(0, 8);
+    //     for (const [key, value] of openedWeek) {
+    //         if (key && value) {
+    //             xTopWordsWeek.push(key);
+    //             yTopWordsWeek.push(value);
+    //         }
+    //     }
 
-        getChartData('topWords', '2w', interval, language, categories, ['corporate_rules']).then(data => {
-        if (!data || !data.events ) {
-            return;
-        }
-        const openedTwoWeeks = data.events.popover_open || {};
-        for (const [key, value] of Object.entries(openedTwoWeeks)) {
-            if (!xTopWordsWeek.includes(key)) {
-                delete openedTwoWeeks[key];
-            }
-        }
-        for (const [key, value] of openedWeek) {
-            if (key && value && openedTwoWeeks[key]) {
-                yTopWordsTwoWeeks.push(openedTwoWeeks[key] - value);
-            } else if (key && value) {
-                yTopWordsTwoWeeks.push(0);
-            }
-        }
+    //     getChartData('topWords', '2w', interval, language, categories, ['corporate_rules']).then(data => {
+    //     if (!data || !data.events ) {
+    //         return;
+    //     }
+    //     const openedTwoWeeks = data.events.popover_open || {};
+    //     for (const [key, value] of Object.entries(openedTwoWeeks)) {
+    //         if (!xTopWordsWeek.includes(key)) {
+    //             delete openedTwoWeeks[key];
+    //         }
+    //     }
+    //     for (const [key, value] of openedWeek) {
+    //         if (key && value && openedTwoWeeks[key]) {
+    //             yTopWordsTwoWeeks.push(openedTwoWeeks[key] - value);
+    //         } else if (key && value) {
+    //             yTopWordsTwoWeeks.push(0);
+    //         }
+    //     }
 
-        if (yTopWordsTwoWeeks.every((val, i, arr) => val === arr[0]) || yTopWordsWeek.every((val, i, arr) => val === arr[0])) {
-            document.getElementById("wordsRadar").style.display = "none";
-            document.getElementById("topWordsDoughnutWrapper").classList.remove("container-column");
-            document.getElementById("topWordsDoughnutWrapper").classList.add("container-row");
-            document.getElementById("topWordsDoughnutWrapper").style.width = "100%";
-            document.getElementById("topWordsDoughnutWrapper").style.justifyContent = "space-around";
-            return;
-        }
+    //     if (yTopWordsTwoWeeks.every((val, i, arr) => val === arr[0]) || yTopWordsWeek.every((val, i, arr) => val === arr[0])) {
+    //         document.getElementById("wordsRadar").style.display = "none";
+    //         document.getElementById("topWordsDoughnutWrapper").classList.remove("container-column");
+    //         document.getElementById("topWordsDoughnutWrapper").classList.add("container-row");
+    //         document.getElementById("topWordsDoughnutWrapper").style.width = "100%";
+    //         document.getElementById("topWordsDoughnutWrapper").style.justifyContent = "space-around";
+    //         return;
+    //     }
 
-        const dataCategories = {
-            labels:
-            xTopWordsWeek,
-            datasets: [{
-                label: "{{ __('content.title_words_radar_chart_last_week') }}",
-                data: yTopWordsTwoWeeks,
-                fill: true,
-                backgroundColor: 'hsla(247, 52.8%, 75.9%, 0.5)',
-                    borderColor: 'hsla(248, 53.2%, 60.6%, 0.5)'
-            }, {
-                label: "{{ __('content.title_words_radar_chart_current_week') }}",
-                data: yTopWordsWeek,
-                fill: true,
-                backgroundColor: 'hsla(247, 54.1%, 88.0%, 0.5)',
-                    borderColor: 'hsla(247, 52.8%, 75.9%, 0.5)'
+    //     const dataCategories = {
+    //         labels:
+    //         xTopWordsWeek,
+    //         datasets: [{
+    //             label: "{{ __('content.title_words_radar_chart_last_week') }}",
+    //             data: yTopWordsTwoWeeks,
+    //             fill: true,
+    //             backgroundColor: 'hsla(247, 52.8%, 75.9%, 0.5)',
+    //                 borderColor: 'hsla(248, 53.2%, 60.6%, 0.5)'
+    //         }, {
+    //             label: "{{ __('content.title_words_radar_chart_current_week') }}",
+    //             data: yTopWordsWeek,
+    //             fill: true,
+    //             backgroundColor: 'hsla(247, 54.1%, 88.0%, 0.5)',
+    //                 borderColor: 'hsla(247, 52.8%, 75.9%, 0.5)'
     
-            }]
-        };
+    //         }]
+    //     };
 
-        ctx = document.getElementById('wordsRadar').getContext('2d');
-        new Chart(ctx, {
-            type: 'radar',
-            data: dataCategories,
-            options: {
-                events: [],
-                maintainAspectRatio: false,
-                responsive: true,
-                elements: {
-                    line: {
-                        borderWidth: 1
-                        }
-                    }
-                },
-                scales:{
-                    yAxes: [{
-                        ticks: {
-                            min: 0,
-                            callback: function(value, index, values) {
-                                if (Math.floor(value) === value) {
-                                    return value;
-                                }
-                            }
-                        }
-                    }],
-                }
-            });
+    //     ctx = document.getElementById('wordsRadar').getContext('2d');
+    //     new Chart(ctx, {
+    //         type: 'radar',
+    //         data: dataCategories,
+    //         options: {
+    //             events: [],
+    //             maintainAspectRatio: false,
+    //             responsive: true,
+    //             elements: {
+    //                 line: {
+    //                     borderWidth: 1
+    //                     }
+    //                 }
+    //             },
+    //             scales:{
+    //                 yAxes: [{
+    //                     ticks: {
+    //                         min: 0,
+    //                         callback: function(value, index, values) {
+    //                             if (Math.floor(value) === value) {
+    //                                 return value;
+    //                             }
+    //                         }
+    //                     }
+    //                 }],
+    //             }
+    //         });
            
-        });
-    });
+    //     });
+    // });
 
-    chartType == 'top-words' && getChartData('topWords', timerange, interval, language, categories, ['corporate_rules']).then(data => {
+    // chartType == 'top-words' && getChartData('topWords', timerange, interval, language, categories, ['corporate_rules']).then(data => {
+    //     if (!data || !data.events ) {
+    //         handleNoData('loading-icon-top-words', 'top-words-no-data', 'topWords');
+    //         return;
+    //     }
+
+        // const opened = data.events.popover_open || {};
+        // const ignored = data.events.ignore || {};
+        // const alternative = data.events.alternative || {};
+
+
+        // for (const [key, value] of Object.entries(opened)) {
+        //     xValuesTopWordsOpened.push(key);
+        //     yValuesTopWordsOpened.push(value);
+        // }
+
+        // for (const [key, value] of Object.entries(ignored)) {
+        //     xValuesTopWordsIgnored.push(key);
+        //     yValuesTopWordsIgnored.push(value);
+        // }
+
+        // for (const [key, value] of Object.entries(alternative)) {
+        //     xValuesTopWordsAlternative.push(key);
+        //     yValuesTopWordsAlternative.push(value);
+        // }
+
+        // const xValuesTopWordsOpenedCut = xValuesTopWordsOpened.slice(0, 15);
+        // const yValuesTopWordsOpenedCut = yValuesTopWordsOpened.slice(0, 15);
+
+        // const xValuesTopWordsIgnoredCutDoughnut = xValuesTopWordsIgnored.slice(0, 5);
+        // const yValuesTopWordsIgnoredCutDoughnut = yValuesTopWordsIgnored.slice(0, 5);
+     
+        // const xValuesTopWordsAlternativeCutDoughnut = xValuesTopWordsAlternative.slice(0, 5);
+        // const yValuesTopWordsAlternativeCutDoughnut = yValuesTopWordsAlternative.slice(0, 5);
+
+        // createDoughnutChart(
+        //     "topWordsChartDoughnut",
+        //     xValuesTopWordsAlternativeCutDoughnut,
+        //     yValuesTopWordsAlternativeCutDoughnut,
+        //     "{{ __('content.title_words_alternative_doughnut_chart_month') }}",
+        // );
+
+        // createDoughnutChart(
+        //     "topWordsChartDoughnutWeek",
+        //     xValuesTopWordsIgnoredCutDoughnut,
+        //     yValuesTopWordsIgnoredCutDoughnut,
+        //     "{{ __('content.title_words_ignored_doughnut_chart_month') }}",
+        // );
+    // });
+
+    chartType == 'top-words' && getChartData('topWords', timerange, 'day', language, categories, ['corporate_rules']).then(data => {
         if (!data || !data.events ) {
             handleNoData('loading-icon-top-words', 'top-words-no-data', 'topWords');
             return;
         }
-        const ignored = data.events.ignore || {};
-        const opened = data.events.popover_open || {};
-        const alternative = data.events.alternative || {};
-
-        for (const [key, value] of Object.entries(ignored)) {
-            xValuesTopWordsIgnored.push(key);
-            yValuesTopWordsIgnored.push(value);
-        }
-
-        for (const [key, value] of Object.entries(opened)) {
-            xValuesTopWordsOpened.push(key);
-            yValuesTopWordsOpened.push(value);
-        }
-
-        for (const [key, value] of Object.entries(alternative)) {
-            xValuesTopWordsAlternative.push(key);
-            yValuesTopWordsAlternative.push(value);
-        }
-
-        const xValuesTopWordsIgnoredCutDoughnut = xValuesTopWordsIgnored.slice(0, 5);
-        const yValuesTopWordsIgnoredCutDoughnut = yValuesTopWordsIgnored.slice(0, 5);
-
-        const xValuesTopWordsOpenedCut = xValuesTopWordsOpened.slice(0, 15);
-        const yValuesTopWordsOpenedCut = yValuesTopWordsOpened.slice(0, 15);
-     
-        const xValuesTopWordsAlternativeCutDoughnut = xValuesTopWordsAlternative.slice(0, 5);
-        const yValuesTopWordsAlternativeCutDoughnut = yValuesTopWordsAlternative.slice(0, 5);
-
-        createDoughnutChart(
-            "topWordsChartDoughnut",
-            xValuesTopWordsAlternativeCutDoughnut,
-            yValuesTopWordsAlternativeCutDoughnut,
-            "{{ __('content.title_words_alternative_doughnut_chart_month') }}",
-        );
-
-        createDoughnutChart(
-            "topWordsChartDoughnutWeek",
-            xValuesTopWordsIgnoredCutDoughnut,
-            yValuesTopWordsIgnoredCutDoughnut,
-            "{{ __('content.title_words_ignored_doughnut_chart_month') }}",
-        );
-
-        document.getElementById("loading-icon-top-words").style.display = "none";
-        document.getElementById("top-words-content").style.visibility = "visible";
-        document.getElementById("top-words-content").style.display = "block";
-    });
-
-    chartType == 'top-words' && getChartData('topWords', timerange, 'day', language, categories, ['corporate_rules']).then(data => {
         if (data && data.events && data.events.popover_open) {
             const openedCorporatewords = data.events.popover_open;
             for (const [key, value] of Object.entries(openedCorporatewords)) {
@@ -1206,8 +1204,9 @@
                 true,
                 false
             );
-
-            document.getElementById("topWordsChartCorporateRulesWrapper").style.display = "flex";
+            document.getElementById("loading-icon-top-words").style.display = "none";
+            document.getElementById("top-words-content").style.visibility = "visible";
+            document.getElementById("top-words-content").style.display = "block";
         } else {
             if ({{ $dictionaryItems}}) {
                 document.getElementById("corporateRulesButNoneOpened").style.display = "flex";
@@ -1220,6 +1219,9 @@
 
 function setParams(startOfWeek = 1) {
     const activeTab = document.getElementsByClassName("analytics-tab-line")[0].id.replace('-line', '');
+    document.getElementById("noCorporateRulesWrapper").style.display = "none";
+    document.getElementById("corporateRulesButNoneOpened").style.display = "none";
+
     if (activeTab) {
         document.getElementById('loading-icon-' + activeTab).style.display = 'flex';
         document.getElementById('loading-icon-' + activeTab).style.visibility = 'visible';

@@ -975,7 +975,6 @@ input:checked+.slider:before {
     color: #f06464;
     font-size: 22px;
     font-weight: 600;
-    margin-top: 2rem;
 }
 
 /* page inside editor */
@@ -1141,8 +1140,8 @@ input:checked+.slider:before {
 }
 
 .ckkBox.val, .ckkBox.val:hover, .ckkBox.val:checked {
-    background-color: transparent;
     border: none;
+    margin-right: 0.5em;
 }
   
 label {
@@ -1166,19 +1165,37 @@ label {
 .ajax-link {
     display: none;
 }
-    
-.checkboxes {
-  display: none;
-  border: 1px solid rgb(118, 118, 118);
-  border-radius: 8px;
-  position: absolute;
-  background-color: #6b6765;
-  color: #ffffff;
-  margin-top: 2.2em;
-  margin-left: -0.9em;
-  min-width: 200px;
-  font-size: 10px;
-  z-index: 9999999;
+
+@media (prefers-color-scheme: dark) {
+    .checkboxes {
+        display: none;    
+        border-radius: 8px;
+        position: absolute;
+        background-color: #6b6765;
+        color: #ffffff;
+        margin-top: 2.2em;
+        margin-left: -0.9em;
+        min-width: 200px;
+        font-size: 16px;
+        z-index: 9999999;
+        box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    .checkboxes {
+        display: none;
+        border-radius: 8px;
+        position: absolute;
+        background-color: #eee9e3;
+        color: #000000;
+        margin-top: 2.2em;
+        margin-left: -0.9em;
+        min-width: 200px;
+        font-size: 16px;
+        z-index: 9999999;
+        box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
+    }
 }
 
 .inner-wrap {
