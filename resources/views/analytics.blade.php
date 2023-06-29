@@ -1,7 +1,11 @@
 <?php 
     $filter = isset($team) ? ['team_id' => $team->id] : ['user_id' => $user->id];
     $has_term_replacements = \App\Models\TermReplacement::where($filter)->exists();
-    $dictionaryItems = isset($team) ? $team->getTotalTermReplacementsCount() : $user->getTotalTermReplacementsCount() + $user->currentTeam->getTotalTermReplacementsCount();
+    $dictionaryItems = isset($team)
+        ? $team->getTotalTermReplacementsCount()
+        : $user->getTotalTermReplacementsCount() + $user->currentTeam->getTotalTermReplacementsCount()
+    ;
+    $is_premium_user = isset($team) ? $team->subscribed() : $user->subscribed();
 ?>
 <x-app-layout :pagetitle="__('content.analytics')">
 <div class="wittyworks-navigation-wrapper">@livewire('navigation-menu')</div>
@@ -12,6 +16,50 @@
          {{ __('content.analytics') }}
       </div>
       <div id="lastRefresh" class="lato-small-text-p wittyworks-margin-right container-row margin-top" style="visibility: hidden; align-items: center;"></div>
+      <div class="container-row margin-top">
+        <div class="drowdown-wrapper">
+
+            <div class="container-row">
+                <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.chart_time_range') }}</div>
+                @if (!$is_premium_user)
+                <div style="margin-left: -1.5em"> @include('partials.locked')</div>
+                @endif
+            </div>
+            <select class="dropdown margin-right" id="timerangeDropdown" onchange="setParams()">
+                <option value="1m">{{ __('content.chart_time_range_month') }}</option>
+                <option value="3m" {{ $is_premium_user ? '' : 'disabled' }}>{{ __('content.chart_time_range_quarter') }}</option>
+                <option value="1y" {{ $is_premium_user ? '' : 'disabled' }}>{{ __('content.chart_time_range_year') }}</option>
+            </select>
+        </div>
+
+        <div class="drowdown-wrapper">
+            <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.language_filter') }}</div>
+            <select class="dropdown margin-right" id="languageDropdown" onchange="setParams()">
+                <option value="">{{ __('content.language_filter_both') }}</option>
+                <option value="en">{{ __('content.language_filter_en') }}</option>
+                <option value="de">{{ __('content.language_filter_de') }}</option>
+            </select>
+        </div>
+
+
+        <div class="drowdown-wrapper">
+            <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.category_filter') }}</div>
+                <div class="checkbox-wrapper">
+                    <button class="form-control toggle-next ellipsis lato-small-text-p">{{ __('content.all_categories') }}</button>
+                    <div class="checkboxes" id="Categories">
+                        <div class="inner-wrap">
+                            @foreach ($categories as $category => $category_data)
+                            <label>
+                                <input type="checkbox" value="{{ $category }}" class="ckkBox val" checked/>
+                                <span>{{ $category_data['translation']['hs_name'] }}</span>
+                            </label><br>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
       <div class="analytics-tab-container">
          <div class="analytics-tab" id="overview-tab" onclick="handleTabClick('overview')" style="color: #9489DB;">
             {{ __('content.analytic_overview_tab_title') }}
@@ -44,7 +92,7 @@
                   <div></div>
                </div>
             </div>
-            <div id="overview-wrapperNoData" style="visibility: hidden; width: 100%">
+            <div id="overview-no-data" style="visibility: hidden; width: 100%">
                <div class="lato-small-text-p warning-message">{!! __('content.no_data_events') !!}</div>
                <div class="image-container">
                   <img src="{{ url('svg/screenshots/activity.png') }}" alt="activity" class="image wittyworks-margin-top">
@@ -78,7 +126,7 @@
                <div class="container-row wittyworks-margin-top">
                   <canvas id="eventsChart" class="wittyworks-analytics-chart-extra-large"></canvas>
                </div>
-               @if(isset($team) && !empty($team_edit))
+               @if (isset($team) && !empty($team_edit))
                <div class="container-row wittyworks-margin-top">
                   <canvas id="dauChart" class="wittyworks-analytics-chart-extra-large"></canvas>
                </div>
@@ -89,7 +137,7 @@
                   $eventsCharts = ["eventsPopoverChart", "eventsAlternativeChart", "eventsIgnoreChart", "eventsLearningBitesChart"];
                   for ($i = 0; $i < count($eventsCharts); $i++) {
                   echo '
-                  <canvas id="' . $eventsCharts[$i] . '" class="wittyworks-analytics-chart-small wittyworks-margin-right" ></canvas>
+                  <canvas id="' . $eventsCharts[$i] . '" class="wittyworks-analytics-chart-small wittyworks-margin-right"></canvas>
                   ';
                   }
                   @endphp
@@ -115,6 +163,13 @@
                      <div></div>
                      <div></div>
                   </div>
+               </div>
+               <div id="top-categories-no-data" style="visibility: hidden; width: 100%">
+                    <div class="lato-small-text-p warning-message">{!! __('content.no_data_events') !!}</div>
+                    <div class="image-container">
+                        <img src="{{ url('svg/screenshots/activity.png') }}" alt="activity" class="image wittyworks-margin-top">
+                        <div class="centered-image-text">{{ __('content.no_data_image_text') }}</div>
+                    </div>
                </div>
                <div id="top-categories-content" style="visibility: hidden; width: 100%">
                   <div class="chart-container-row wittyworks-margin-top">
@@ -163,17 +218,18 @@
                      <div></div>
                   </div>
                </div>
+               <div id="top-words-no-data" style="visibility: hidden; width: 100%">
+                    <div class="lato-small-text-p warning-message">{!! __('content.no_data_events') !!}</div>
+                    <div class="image-container">
+                        <img src="{{ url('svg/screenshots/activity.png') }}" alt="activity" class="image wittyworks-margin-top">
+                        <div class="centered-image-text">{{ __('content.no_data_image_text') }}</div>
+                    </div>
+               </div>
                <div id="top-words-content" style="visibility: hidden; width: 100%">
-                  <div class="container-row wittyworks-margin-top">
-                     <canvas
-                        id="topWordsChart"
-                        class="wittyworks-analytics-chart-extra-large wittyworks-margin-top">
-                     </canvas>
-                  </div>
                   <div id="topWordsChartCorporateRulesWrapper" class="chart-container-row wittyworks-margin-top" style="display: none; width: 100%; align-items:center">
                      <canvas
                         id="topWordsChartCorporateRules"
-                        class="wittyworks-analytics-chart-medium wittyworks-margin-top">
+                        class="wittyworks-analytics-chart-extra-large wittyworks-margin-top">
                      </canvas>
                   </div>
                   <div id="noCorporateRulesWrapper" class="container-row wittyworks-margin-top" style="display: none;">
@@ -212,8 +268,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/locale/de.js" rossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
-    function load_charts(refresh, startOfWeek, chartType = 'overview') {
-        console.log('load_charts',chartType);
+    function load_charts(refresh, startOfWeek, chartType = 'overview', timerange = '1m', interval = 'week', language = [], categories = []) {
         if (refresh) {
             document.getElementById('lastRefresh').style.visibility = 'hidden';
             document.getElementById("loading-icon-overview").style.display = "flex";
@@ -226,114 +281,124 @@
             document.getElementById("top-categories-wrapper").style.visibility = "hidden";
         }
 
-    const colors = [
-        "#241c5b",
-        "#33277f",
-        "#3a2c91",
-        "#4132a4",
-        "#4837b6",
-        "#5240c5",
-        "#6352ca",
-        "#7365d0",
-        "#8477d5",
-        "#9489DB",
-        "#a9a1e2",
-        "#bfb8e9",
-        "#cac4ed",
-        "#d4d0f1",
-        "#dfdcf4",
-    ];
+        const colors = [
+            "#241c5b",
+            "#33277f",
+            "#3a2c91",
+            "#4132a4",
+            "#4837b6",
+            "#5240c5",
+            "#6352ca",
+            "#7365d0",
+            "#8477d5",
+            "#9489DB",
+            "#a9a1e2",
+            "#bfb8e9",
+            "#cac4ed",
+            "#d4d0f1",
+            "#dfdcf4",
+        ];
 
-    const xIntervallDauWeek = [];
-    const yValuesDauCheck = [];
-    const yValuesDauIgnore = [];
-    const yValuesDauAlternative = [];
-    const yValuesDauPopoverOpen = [];
-    const yValuesDauLearningBites = [];
+        const xIntervallDauWeek = [];
+        const yValuesDauCheck = [];
+        const yValuesDauIgnore = [];
+        const yValuesDauAlternative = [];
+        const yValuesDauPopoverOpen = [];
+        const yValuesDauLearningBites = [];
 
-    const xValuesCheck = [];
-    const xValuesPopoverOpenIntervallWeek = [];
-    const yValuesCheck = [];
-    const yValuesCheckWeek = [];
+        const xValuesCheck = [];
+        const xValuesPopoverOpenIntervallWeek = [];
+        const yValuesCheck = [];
+        const yValuesCheckWeek = [];
 
-    const xValuesPopoverOpen = [];
-    const yValuesPopoverOpen = [];
-    const yValuesPopoverOpenWeek = [];
+        const xValuesPopoverOpen = [];
+        const yValuesPopoverOpen = [];
+        const yValuesPopoverOpenWeek = [];
 
-    const xValuesIgnore = [];
-    const xValuesIgnoreIntervallWeek = [];
-    const yValuesIgnore = [];
-    const yValuesIgnoreWeek = [];
+        const xValuesIgnore = [];
+        const xValuesIgnoreIntervallWeek = [];
+        const yValuesIgnore = [];
+        const yValuesIgnoreWeek = [];
 
-    const xValuesAlternative = [];
-    const yValuesAlternative = [];
-    const yValuesAlternativeWeek = [];
+        const xValuesAlternative = [];
+        const yValuesAlternative = [];
+        const yValuesAlternativeWeek = [];
 
-    const xValuesLearningBites = [];
-    const yValuesLearningBites = [];
-    const yValuesLearningBitesWeek = [];
+        const xValuesLearningBites = [];
+        const yValuesLearningBites = [];
+        const yValuesLearningBitesWeek = [];
 
-    const yValuesDauUserCount = [];
+        const yValuesDauUserCount = [];
 
-    const xTopSubCategoriesWeek = [];
-    const yTopSubCategoriesWeek = [];
-    const yTopSubCategoriesTwoWeeks = [];
+        const xTopSubCategoriesWeek = [];
+        const yTopSubCategoriesWeek = [];
+        const yTopSubCategoriesTwoWeeks = [];
 
-    const xValuesTopSubCategoriesIgnored = [];
-    const yValuesTopSubCategoriesIgnored = [];
-    const xValuesTopSubCategoriesOpened = [];
-    const yValuesTopSubCategoriesOpened = [];
-    const xValuesTopSubCategoriesAlternative = [];
-    const yValuesTopSubCategoriesAlternative = [];
+        const xValuesTopSubCategoriesIgnored = [];
+        const yValuesTopSubCategoriesIgnored = [];
+        const xValuesTopSubCategoriesOpened = [];
+        const yValuesTopSubCategoriesOpened = [];
+        const xValuesTopSubCategoriesAlternative = [];
+        const yValuesTopSubCategoriesAlternative = [];
 
-    const xValuesTopWordsIgnored = [];
-    const yValuesTopWordsIgnored = [];
-    const xValuesTopWordsOpened = [];
-    const yValuesTopWordsOpened = [];
-    const xValuesTopWordsAlternative = [];
-    const yValuesTopWordsAlternative = [];
-    const xValuesTopCorporateWordsOpened = [];
-    const yValuesTopCorporateWordsOpened = [];
+        const xValuesTopWordsIgnored = [];
+        const yValuesTopWordsIgnored = [];
+        const xValuesTopWordsOpened = [];
+        const yValuesTopWordsOpened = [];
+        const xValuesTopWordsAlternative = [];
+        const yValuesTopWordsAlternative = [];
+        const xValuesTopCorporateWordsOpened = [];
+        const yValuesTopCorporateWordsOpened = [];
 
-    Chart.defaults.global.defaultFontColor = '#000000';
+        Chart.defaults.global.defaultFontColor = '#000000';
 
-    function aggregate_chart_data_by_week(xValues, yValues) {
-        var aggregatedData = [];
-        var aggregatedLabels = [];
-        var currentXValue = xValues[0];
-        var currentYValue = yValues[0];
-        for (var i = 1; i <= xValues.length; i++) {
-            if (xValues[i] == currentXValue) {
-                currentYValue += yValues[i];
-            } else {
-                aggregatedData.push(currentYValue);
-                aggregatedLabels.push( "{{ __('content.week') }}" + " " + currentXValue);
-                currentXValue = xValues[i];
-                currentYValue = yValues[i];
+    function formatChartLabels(xValues, yValues, interval) {
+        const formattedXValues = [];
+        
+        if (interval == 'week') {
+            for (var i = 0; i < xValues.length; i++) {
+                formattedXValues[i] = '{{ __('content.week') }} ' + moment(xValues[i]).startOf('week').isoWeekday(startOfWeek).week() + ' ' + moment(xValues[i]).startOf('week').isoWeekday(startOfWeek).year();
+            }
+        } else if (interval == 'month') {
+            for (var i = 0; i < xValues.length; i++) {
+                formattedXValues[i] = moment(xValues[i]).format('MMMM YYYY');
             }
         }
-        return [aggregatedLabels, aggregatedData];
+
+        return [formattedXValues, yValues];
     }
 
-    function handle_no_data(loadingIconId, sectionIdNoData = null) {
-        document.getElementById(loadingIconId).style.display = "none";
+    function handleNoData(loadingIconId, sectionIdNoData = null, chartId = null) {
+        if (document.getElementById(loadingIconId)) {
+            document.getElementById(loadingIconId).style.display = "none";
+        }
+       
         if (sectionIdNoData) {
             document.getElementById(sectionIdNoData).style.visibility = "visible";
-            const sectionId = sectionIdNoData.replace("NoData", "");
-            document.getElementById(sectionId).style.display = "none";
+            document.getElementById(sectionIdNoData).style.display = "block";
+        } else if (chartId && document.getElementById(chartId)) {
+            document.getElementById(chartId).style.display = "none";
         }
     }
 
-    async function getChartData(chart, from = 30, interval = 'day', filter = null) {
+    async function getChartData(chart, from = '1w', interval = 'day', language, categories, subcategories = []) {
         let analyticsUrl = '/api/user/analytics?refresh=' + refresh + '&chart=';
         if (window.location.href.includes('team')) {
             analyticsUrl = '/api/team/analytics?refresh=' + refresh + '&chart=';
         }
-        analyticsUrl += chart + '&from=' + from + '&interval=' + interval
-        if(filter) {
-            analyticsUrl += '&subcategories[]=' + filter;
+
+        let formattedCategories = '';
+        if (categories && categories.length) {
+            formattedCategories = '&' + categories.map(category => 'categories[]=' + category).join('&');
         }
-        analyticsUrl += "&locale={{ app()->getLocale() }}";
+
+        let formattedSubcategories = '';
+        if (subcategories && subcategories.length) {
+            formattedSubcategories = '&' + subcategories.map(category => 'subcategories[]=' + subcategories).join('&');
+        }
+
+        analyticsUrl += chart + '&from=' + from + '&interval=' + interval + '&lang=' + language + formattedCategories + formattedSubcategories;
+
         const response = await fetch(analyticsUrl, {
             method: 'GET',
             headers: {
@@ -341,8 +406,13 @@
                 'X-App-Locale': '{{ app()->getLocale() }}',
             },
         });
-        const data = await response.json();
-        return data;
+         
+        try {
+            const data = await response.json();
+            return data;
+        } catch (e) {
+            return null;
+        }
     }
 
     function createBarChart(chartId, xValues, yValues, text, display, singeColor) {
@@ -451,9 +521,11 @@
         });
     }
 
-    chartType == 'overview' && getChartData('total').then(data => {
-        if (!data || !data.events || !data.events.popover_open || Object.entries(data.events.popover_open).filter(([key, value]) => value > 0).length == 0) {
-            handle_no_data('loadingIconActivity', 'overview-wrapperNoData');
+    chartType == 'overview' && getChartData('total', timerange, interval, language, categories).then(data => {
+        if (!data?.events?.popover_open
+            || Object.entries(data.events.popover_open).filter(([key, value]) => value > 0).length == 0
+        ) {
+            handleNoData('loading-icon-overview', 'overview-no-data');
             return;
         }
         const events = data.events || {};
@@ -465,7 +537,7 @@
             if (event === 'popover_open') {
                for (const [date, count] of Object.entries(value)) {
                     xValuesPopoverOpen.push(date);
-                    xValuesPopoverOpenIntervallWeek.push(moment(date).startOf('week').isoWeekday(startOfWeek).week());
+                    // xValuesPopoverOpenIntervallWeek.push(moment(date).startOf('week').isoWeekday(startOfWeek).week());
                     yValuesPopoverOpen.push(count);
                 }
             } else if (event === 'ignore') {
@@ -519,8 +591,6 @@
             const changeInIgnorePercentage = (((totalWeeklyIgnore - totalWeeklyIgnorePrevious) / (totalWeeklyIgnorePrevious == 0 ? 1 : totalWeeklyIgnorePrevious)) * 100).toFixed(0).replace('-', '');
             const changeInAlternativePercentage = (((totalWeeklyAlternative - totalWeeklyAlternativePrevious) / (totalWeeklyAlternativePrevious == 0 ? 1 : totalWeeklyAlternativePrevious)) * 100).toFixed(0).replace('-', '');
             
-            const aggregatedCheckChatData =  aggregate_chart_data_by_week(xValuesPopoverOpenIntervallWeek, yValuesCheck);
-
             document.getElementById("checkDaysInRow").innerHTML =  '{{ __('content.writing_streak') }}' + '&nbsp; <span class="lato-small-paragraph-title-h4-purple">' +  writing_streak + '&nbsp</span>' + '{{ __('content.in_a_row') }}';
             document.getElementById("changeInLearningBitesPercentage").innerHTML =  '{{ __('content.you_clicked') }}' + '&nbsp; <span class="lato-small-paragraph-title-h4-purple">' + changeInLearningBitesPercentage + '%</span>&nbsp;' + (changeInLearningBitesPercentage >= 0 ? '{{ __('content.learning_bites_requests_week_positive') }}' : '{{ __('content.learning_bites_requests_week_negative') }}');
             document.getElementById("changeInPopoverPercentage").innerHTML =  '{{ __('content.you_explored') }}' + '&nbsp; <span class="lato-small-paragraph-title-h4-purple">' + changeInPopoverPercentage + '%</span>&nbsp;' + (changeInPopoverPercentage >= 0 ? '{{ __('content.popover_open_week_positive') }}' : '{{ __('content.popover_open_week_negative') }}');
@@ -528,7 +598,7 @@
             document.getElementById("changeInIgnorePercentage").innerHTML =  '{{ __('content.you_ignored') }}' + '&nbsp; <span class="lato-small-paragraph-title-h4-purple">' + changeInIgnorePercentage + '%</span>&nbsp;' + (changeInIgnorePercentage >= 0 ? '{{ __('content.ignored_words_week_positive') }}' : '{{ __('content.ignored_words_week_negative') }}');
 
             //insert drowdown with two options to id startOfWeekDropdown
-            const startOfWeekDropdown = document.getElementById("startOfWeekDropdown").innerHTML = `<select id="startOfWeek" class="dropdown" onchange="load_charts(true, this.value)">
+            const startOfWeekDropdown = document.getElementById("startOfWeekDropdown").innerHTML = `<select id="startOfWeek" class="dropdown" onchange="setParams(this.value)">
                 <option value="1">{{ __('content.monday') }}</option>
                 <option value="6">{{ __('content.saturday') }}</option>
                 <option value="7">{{ __('content.sunday') }}</option>
@@ -550,9 +620,9 @@
 
                 if (lastRefreshMinutes >= 3) {
                     return document.getElementById("lastRefresh").innerHTML = '{{ __('content.last_refreshed') }} &nbsp;' + lastRefreshFormatted + '&nbsp; &nbsp; <a class="button primary-button-red" onclick="load_charts(true, startOfWeek)">{{ __('content.refresh_data') }}</a>';
-                } else {
-                    return document.getElementById("lastRefresh").innerHTML = '{{ __('content.last_refreshed') }} &nbsp;' + lastRefreshFormatted;
                 }
+
+                return document.getElementById("lastRefresh").innerHTML = '{{ __('content.last_refreshed') }} &nbsp;' + lastRefreshFormatted;
             };
 
             updateSection();
@@ -561,12 +631,13 @@
             }, 30000);
             document.getElementById('lastRefresh').style.visibility = 'visible';
 
-            const aggregatedPopoverOpenData = aggregate_chart_data_by_week(xValuesPopoverOpenIntervallWeek, yValuesPopoverOpen)[1];
-            const aggregatedAlternativeData = aggregate_chart_data_by_week(xValuesPopoverOpenIntervallWeek, yValuesAlternative)[1];
-            const aggregatedIgnoreData = aggregate_chart_data_by_week(xValuesPopoverOpenIntervallWeek, yValuesIgnore)[1];
-            const aggregatedLearningBitesData = aggregate_chart_data_by_week(xValuesPopoverOpenIntervallWeek, yValuesLearningBites)[1];
+            const aggregatedCheckChatData =  formatChartLabels(xValuesPopoverOpen, yValuesCheck, interval);
+            const aggregatedPopoverOpenData = formatChartLabels(xValuesPopoverOpen, yValuesPopoverOpen, interval)[1];
+            const aggregatedAlternativeData = formatChartLabels(xValuesPopoverOpen, yValuesAlternative, interval)[1];
+            const aggregatedIgnoreData = formatChartLabels(xValuesPopoverOpen, yValuesIgnore, interval)[1];
+            const aggregatedLearningBitesData = formatChartLabels(xValuesPopoverOpen, yValuesLearningBites, interval)[1];
 
-            if(aggregatedLearningBitesData.every(Number.isInteger)) {
+            if (aggregatedLearningBitesData.every(Number.isInteger)) {
                 ctx = document.getElementById('eventsChart').getContext('2d');
                 new Chart(ctx, {
                     type: "line",
@@ -672,9 +743,10 @@
                 "{{ __('content.title_doughnut_chart_event_ratio') }}",
             );
            
-        getChartData('dau', 30, 'week').then(data => {
-        if (!data || !data.events || !data.events.popover_open || Object.entries(data.events.popover_open).filter(([key, value]) => value > 0).length == 0) {
-            handle_no_data('loadingIconActivity', 'overview-wrapperNoData');
+        getChartData('dau', timerange, 'week', language, categories).then(data => {
+        if (!data?.events?.popover_open
+            || Object.entries(data.events.popover_open).filter(([key, value]) => value > 0).length == 0
+        ) {
             return;
         }
         const events = data.events || {};
@@ -703,7 +775,7 @@
                 }
             }
         }
-        if(document.getElementById('dauChart')) {
+        if (document.getElementById('dauChart')) {
 
             ctx = document.getElementById('dauChart').getContext('2d');
             new Chart(ctx, {
@@ -772,18 +844,17 @@
             });
         }
             document.getElementById("loading-icon-overview").style.display = "none";
-            document.getElementById("overview-wrapperNoData").style.display = "none";
+            document.getElementById("overview-no-data").style.display = "none";
             document.getElementById("overview-wrapper").style.visibility = "visible";
         });
         }
     });
 
-    chartType == 'top-categories' && getChartData('topSubcategories', 7).then(data => {
+    //ALWAYS ONLY past week
+    chartType == 'top-categories' && getChartData('topSubcategories', '1w', interval, language, categories).then(data => {
         if (!data || !data.events ) {
-            handle_no_data('loading-icon-top-categories');
             return;
         }
-        console.log('topSubcategories', data);
         const eventsPopoverOpenedWeekUnsorted = data.events.popover_open || {};
         const openedWeek = Object.entries(eventsPopoverOpenedWeekUnsorted).sort((a, b) => b[1] - a[1]).slice(0, 8);
         for (const [key, value] of openedWeek) {
@@ -793,9 +864,8 @@
             }
         }
 
-        getChartData('topSubcategories', 14).then(data => {
+        getChartData('topSubcategories', '2w', interval, language, categories).then(data => {
         if (!data || !data.events ) {
-            handle_no_data('loading-icon-top-categories');
             return;
         }
         const openedTwoWeeks = data.events.popover_open || {};
@@ -813,11 +883,10 @@
             }
         }
 
-        if (yTopSubCategoriesTwoWeeks.every((val, i, arr) => val === arr[0]) || yTopSubCategoriesWeek.every((val, i, arr) => val === arr[0])) {
+        if (yTopSubCategoriesTwoWeeks.every((val, i, arr) => val === arr[0])
+            || yTopSubCategoriesWeek.every((val, i, arr) => val === arr[0])
+        ) {
             document.getElementById("categoriesRadar").style.display = "none";
-            document.getElementById("loading-icon-top-categories").style.display = "none";
-            document.getElementById("top-categories-wrapper").style.visibility = "visible";
-
             document.getElementById("topSubcategoriesDoughnutWrapper").classList.remove("container-column");
             document.getElementById("topSubcategoriesDoughnutWrapper").classList.add("container-row");
             document.getElementById("topSubcategoriesDoughnutWrapper").style.width = "100%";
@@ -876,9 +945,9 @@
     });
 
 
-    chartType == 'overview' && getChartData('topSubcategories').then(data => {
+    (chartType == 'overview' || chartType == 'top-categories') && getChartData('topSubcategories', timerange, interval, language, categories).then(data => {
         if (!data || !data.events || !data.subcategories ) {
-            handle_no_data('loading-icon-top-categories');
+            handleNoData('loading-icon-top-categories', 'top-categories-no-data', 'topSubcategories');
             return;
         }
 
@@ -960,12 +1029,15 @@
             yValuesTopSubCategoriesIgnoredCutDoughnut,
             "{{ __('content.title_categories_ignored_doughnut_chart_month') }}",
         );
-                         
+
+        document.getElementById("loading-icon-top-categories").style.display = "none";
+        document.getElementById("top-categories-content").style.visibility = "visible";
+        document.getElementById("top-categories-content").style.display = "block";
     });
 
-    chartType == 'top-words' && getChartData('topWords', 7).then(data => {
+    //ALWAYS ONLY past week
+    chartType == 'top-words' && getChartData('topWords', '1w', interval, language, categories, ['corporate_rules']).then(data => {
         if (!data || !data.events ) {
-            handle_no_data('loading-icon-top-words');
             return;
         }
         const xTopWordsWeek = [];
@@ -980,9 +1052,8 @@
             }
         }
 
-        getChartData('topWords', 14).then(data => {
+        getChartData('topWords', '2w', interval, language, categories, ['corporate_rules']).then(data => {
         if (!data || !data.events ) {
-            handle_no_data('loading-icon-top-words');
             return;
         }
         const openedTwoWeeks = data.events.popover_open || {};
@@ -1001,9 +1072,6 @@
 
         if (yTopWordsTwoWeeks.every((val, i, arr) => val === arr[0]) || yTopWordsWeek.every((val, i, arr) => val === arr[0])) {
             document.getElementById("wordsRadar").style.display = "none";
-            document.getElementById("loading-icon-top-words").style.display = "none";
-            document.getElementById("top-words-wrapper").style.visibility = "visible";
-
             document.getElementById("topWordsDoughnutWrapper").classList.remove("container-column");
             document.getElementById("topWordsDoughnutWrapper").classList.add("container-row");
             document.getElementById("topWordsDoughnutWrapper").style.width = "100%";
@@ -1059,14 +1127,11 @@
             });
            
         });
-        document.getElementById("loading-icon-top-words").style.display = "none";
-        document.getElementById("top-words-content").style.visibility = "visible";
     });
 
-
-    chartType == 'top-words' && getChartData('topWords').then(data => {
+    chartType == 'top-words' && getChartData('topWords', timerange, interval, language, categories, ['corporate_rules']).then(data => {
         if (!data || !data.events ) {
-            handle_no_data('loading-icon-top-words');
+            handleNoData('loading-icon-top-words', 'top-words-no-data', 'topWords');
             return;
         }
         const ignored = data.events.ignore || {};
@@ -1110,25 +1175,20 @@
             yValuesTopWordsIgnoredCutDoughnut,
             "{{ __('content.title_words_ignored_doughnut_chart_month') }}",
         );
-       
-        createBarChart(
-            "topWordsChart",
-            xValuesTopWordsOpenedCut,
-            yValuesTopWordsOpenedCut,
-            "{{ __('content.title_words_bar_chart_month') }}",
-            true,
-            false
-        );
+
+        document.getElementById("loading-icon-top-words").style.display = "none";
+        document.getElementById("top-words-content").style.visibility = "visible";
+        document.getElementById("top-words-content").style.display = "block";
     });
 
-    chartType == 'top-words' && getChartData('topWords', 30, 'day', 'corporate_rules').then(data => {
-        if(data && data.events && data.events.popover_open) {
+    chartType == 'top-words' && getChartData('topWords', timerange, 'day', language, categories, ['corporate_rules']).then(data => {
+        if (data && data.events && data.events.popover_open) {
             const openedCorporatewords = data.events.popover_open;
             for (const [key, value] of Object.entries(openedCorporatewords)) {
                 xValuesTopCorporateWordsOpened.push(key);
                 yValuesTopCorporateWordsOpened.push(value);
             }
-            if(xValuesTopCorporateWordsOpened.length >= 10) {
+            if (xValuesTopCorporateWordsOpened.length >= 10) {
                 xValuesTopCorporateWordsOpened.slice(0, 10);
                 yValuesTopCorporateWordsOpened.slice(0, 10);
             } else if (xValuesTopCorporateWordsOpened.length > 0) {
@@ -1157,6 +1217,32 @@
         }
     });
 };
+
+function setParams(startOfWeek = 1) {
+    const activeTab = document.getElementsByClassName("analytics-tab-line")[0].id.replace('-line', '');
+    if (activeTab) {
+        document.getElementById('loading-icon-' + activeTab).style.display = 'flex';
+        document.getElementById('loading-icon-' + activeTab).style.visibility = 'visible';
+        document.getElementById(activeTab + '-no-data').style.display = 'none';
+
+        if (activeTab === 'overview' && document.getElementById(activeTab + '-wrapper')){
+            document.getElementById(activeTab + '-wrapper').style.visibility = "hidden";
+        } else if (document.getElementById(activeTab + '-content')) {
+            document.getElementById(activeTab + '-content').style.visibility = "hidden";
+        }
+    }
+
+    const categories = getSelectedCategories();
+    const timeRangeDropdown = document.getElementById("timerangeDropdown");
+    const languageDropdown = document.getElementById("languageDropdown");
+
+    const selectedTimeRangeOption = timeRangeDropdown.options[timeRangeDropdown.selectedIndex].value;
+    const selectedLanguageOption = languageDropdown.options[languageDropdown.selectedIndex].value;
+
+    const interval = selectedTimeRangeOption == '1y' ? 'month' : 'week';
+    load_charts(false, startOfWeek, activeTab, selectedTimeRangeOption, interval, selectedLanguageOption, categories);
+}
+
 load_charts(false, 1);
 
 function handleTabClick(clickedTabId) {
@@ -1166,7 +1252,7 @@ function handleTabClick(clickedTabId) {
             document.getElementById(tab + '-tab').style.color = '#808080';
             document.getElementById(tab + '-line').classList.remove('analytics-tab-line');
             document.getElementById(tab).style.display = 'none';
-            if (tab !== 'overview') { 
+            if (tab !== 'overview') {
                 document.getElementById(tab + '-content').style.visibility = "hidden";
             } else {
                 document.getElementById(tab + '-wrapper').style.visibility = "hidden";
@@ -1174,11 +1260,90 @@ function handleTabClick(clickedTabId) {
         } else {
             document.getElementById(tab + '-tab').style.color = '#9489DB';
             document.getElementById(tab + '-line').classList.add('analytics-tab-line');
+            document.getElementById(tab + '-no-data').style.display = 'none';
             document.getElementById('loading-icon-' + tab).style.display = 'flex';
             document.getElementById('loading-icon-' + tab).style.visibility = 'visible';
-            load_charts(false, 1, tab);
+            setParams();
             document.getElementById(tab).style.display = 'block';
         }
-    });    
-} 
+    });
+}
+
+
+document.addEventListener("DOMContentLoaded", function() {
+  setCheckboxSelectLabels();
+  let toggleNext = document.querySelectorAll('.toggle-next');
+  document.addEventListener('click', function(e) {
+    const checkboxes = document.querySelector('.checkboxes');
+        if (!e.target.classList.contains('checkboxes')
+            && !e.target.classList.contains('toggle-next')
+            && !e.target.classList.length == 0
+            && !e.target.classList.contains('ckkBox')
+            && !e.target.classList.contains('inner-wrap')
+            && !e.target.classList.contains('checkbox-wrapper')
+            && checkboxes.style.display !== 'none'
+        ) {
+            checkboxes.style.display = 'none';
+            setParams()
+        }
+    });
+  for (let i = 0; i < toggleNext.length; i++) {
+    toggleNext[i].addEventListener('click', function() {
+      const checkboxes = this.nextElementSibling;
+      if (checkboxes.style.display === 'none') {
+        checkboxes.style.display = 'block';
+      } else {
+        checkboxes.style.display = 'none';
+        setParams()
+      }
+    });
+  }
+  
+  let ckkBoxes = document.querySelectorAll('.ckkBox');
+  for (let j = 0; j < ckkBoxes.length; j++) {
+    ckkBoxes[j].addEventListener('change', function() {
+        if (this.value === 'all_categories') {
+            const checkboxes = this.parentElement.parentElement.querySelectorAll('.ckkBox');
+            for (let m = 0; m < checkboxes.length; m++) {
+            checkboxes[m].checked = this.checked;
+            }
+        }
+      setCheckboxSelectLabels();
+    });
+  }
+});
+
+function getSelectedCategories () {
+    const checkboxes = document.querySelectorAll('.ckkBox');
+    const selectedCategories = [];
+    for (let i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].checked) {
+            selectedCategories.push(checkboxes[i].value);
+        }
+    }
+    return selectedCategories;
+}
+
+function setCheckboxSelectLabels(elem) {
+  const wrappers = document.querySelectorAll('.checkbox-wrapper');
+  for (let k = 0; k < wrappers.length; k++) {
+    const checkboxes = wrappers[k].querySelectorAll('.ckkBox');
+    const label = wrappers[k].querySelector('.checkboxes').getAttribute('id');
+    let prevText = '';
+    for (let l = 0; l < checkboxes.length; l++) {
+        const button = wrappers[k].querySelector('button');
+        const numberOfChecked = wrappers[k].querySelectorAll('input.val[type="checkbox"]:checked').length;
+        if (numberOfChecked === 6) {
+            button.textContent = 'All categories';
+        } else if (numberOfChecked === 0) {
+            button.textContent = 'None selected';
+        } else if (checkboxes[l].checked) {
+            const newText = checkboxes[l].nextElementSibling.innerHTML;
+            const btnText = prevText + newText.replace(/&amp;/g, '&');
+            button.textContent = btnText;
+            prevText = button.textContent + ', ';
+        }
+    }
+  }
+}
 </script>
