@@ -83,8 +83,8 @@
 
                     <x-jet-input
                         name="company_name"
-                        type="textarea"
-                        class="mt-1 block w-full textarea-as-input"
+                        type="text"
+                        class="mt-1 block w-full"
                         value="{{ old('company_name') }}"
                     />
                     <x-jet-input-error for="company_name" class="mt-2" />
