@@ -1205,3 +1205,7 @@ label {
 .guidelines-form-section-lock {
     margin-left: 1rem;
 }
+
+.toggle-next {
+    cursor: pointer;
+}

@@ -44,8 +44,8 @@
 
         <div class="drowdown-wrapper">
             <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.category_filter') }}</div>
-                <div class="checkbox-wrapper">
-                    <button class="form-control toggle-next ellipsis lato-small-text-p">{{ __('content.all_categories') }}</button>
+                <div class="toggle-next checkbox-wrapper">
+                    <button class="ellipsis lato-small-text-p">{{ __('content.all_categories') }}</button>
                     <div class="checkboxes" id="Categories">
                         <div class="inner-wrap">
                             @foreach ($categories as $category => $category_data)
@@ -1274,15 +1274,15 @@ function handleTabClick(clickedTabId) {
 
 document.addEventListener("DOMContentLoaded", function() {
   setCheckboxSelectLabels();
+  const checkboxes = document.querySelector('.checkboxes');
   let toggleNext = document.querySelectorAll('.toggle-next');
   document.addEventListener('click', function(e) {
-    const checkboxes = document.querySelector('.checkboxes');
         if (!e.target.classList.contains('checkboxes')
-            && !e.target.classList.contains('toggle-next')
             && !e.target.classList.length == 0
             && !e.target.classList.contains('ckkBox')
             && !e.target.classList.contains('inner-wrap')
             && !e.target.classList.contains('checkbox-wrapper')
+            && !e.target.classList.contains('ellipsis')
             && checkboxes.style.display !== 'none'
         ) {
             checkboxes.style.display = 'none';
@@ -1290,14 +1290,10 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
   for (let i = 0; i < toggleNext.length; i++) {
-    toggleNext[i].addEventListener('click', function() {
-      const checkboxes = this.nextElementSibling;
-      if (checkboxes.style.display === 'none') {
+    toggleNext[i].addEventListener('click', function(e) {
+      if (checkboxes.style.display === 'none' || !checkboxes.style.display) {
         checkboxes.style.display = 'block';
-      } else {
-        checkboxes.style.display = 'none';
-        setParams()
-      }
+      } 
     });
   }
   
