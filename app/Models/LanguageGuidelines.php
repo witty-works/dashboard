@@ -124,6 +124,10 @@ class LanguageGuidelines extends Model
 
     public function getGenderedRolesFormat($genderedRolesFormat = null)
     {
+        if ($genderedRolesFormat === null) {
+            $genderedRolesFormat = $this->gendered_roles_format;
+        }
+
         $subscribed = $this->team_id ? $this->team->subscribed() : $this->user->subscribed();
         if (!$subscribed || !array_key_exists($genderedRolesFormat, GuidelinesInterface::GENDERED_ROLES_FORMAT)) {
             return key(GuidelinesInterface::GENDERED_ROLES_FORMAT);
