@@ -25,20 +25,47 @@
                 <div style="margin-left: -1.5em"> @include('partials.locked')</div>
                 @endif
             </div>
-            <select class="dropdown margin-right" id="timerangeDropdown" onchange="setParams()">
-                <option value="1m">{{ __('content.chart_time_range_month') }}</option>
-                <option value="3m" {{ $is_premium_user ? '' : 'disabled' }}>{{ __('content.chart_time_range_quarter') }}</option>
-                <option value="1y" {{ $is_premium_user ? '' : 'disabled' }}>{{ __('content.chart_time_range_year') }}</option>
-            </select>
+            @php
+                $ranges = [
+                    '1m' => __('content.chart_time_range_month'),
+                    '3m' => __('content.chart_time_range_quarter'),
+                    '1y' => __('content.chart_time_range_year'),
+                ];
+                if ($is_premium_user) {
+                    $disabled = false;
+                } else {
+                    $disabled = [
+                        '1m' => false,
+                        '3m' => true,
+                        '1y' => true,
+                    ];
+                }
+            @endphp
+            <x-select
+                :options="$ranges"
+                :disabled="$disabled"
+                class="dropdown margin-right"
+                id="timerangeDropdown"
+                onchange="setParams()"
+            />
         </div>
 
         <div class="drowdown-wrapper">
             <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.language_filter') }}</div>
-            <select class="dropdown margin-right" id="languageDropdown" onchange="setParams()">
-                <option value="">{{ __('content.language_filter_both') }}</option>
-                <option value="en">{{ __('content.language_filter_en') }}</option>
-                <option value="de">{{ __('content.language_filter_de') }}</option>
-            </select>
+
+            @php
+                $ranges = [
+                    '' => __('content.language_filter_both'),
+                    'en' => __('content.language_filter_en'),
+                    'de' => __('content.language_filter_de'),
+                ];
+            @endphp
+            <x-select
+                :options="$ranges"
+                class="dropdown margin-right"
+                id="languageDropdown"
+                onchange="setParams()"
+            />
         </div>
 
 
