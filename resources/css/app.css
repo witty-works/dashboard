@@ -330,6 +330,7 @@ a {
     justify-content: flex-start;
     align-items: center;
     flex-wrap: wrap;
+    cursor: pointer;
 }
 
 .guidelines-form-section-toggle {
