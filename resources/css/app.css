@@ -1077,6 +1077,7 @@ input:checked+.slider:before {
     display: inline-block;
     border-radius: 8px;
     min-width: 220px;
+    cursor: pointer;
 }
   
 .dropdown-content {
@@ -1127,7 +1128,7 @@ input:checked+.slider:before {
 
 .checkbox-wrapper {
     background-color: #ffffff;
-    border: 1px solid #6b7280;
+    border: 1px solid rgb(209, 213, 219);
     border-radius: 8px;
     padding: 5px 10px;
     display: flex;
