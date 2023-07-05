@@ -25,27 +25,54 @@
                 <div style="margin-left: -1.5em"> @include('partials.locked')</div>
                 @endif
             </div>
-            <select class="dropdown margin-right" id="timerangeDropdown" onchange="setParams()">
-                <option value="1m">{{ __('content.chart_time_range_month') }}</option>
-                <option value="3m" {{ $is_premium_user ? '' : 'disabled' }}>{{ __('content.chart_time_range_quarter') }}</option>
-                <option value="1y" {{ $is_premium_user ? '' : 'disabled' }}>{{ __('content.chart_time_range_year') }}</option>
-            </select>
+            @php
+                $ranges = [
+                    '1m' => __('content.chart_time_range_month'),
+                    '3m' => __('content.chart_time_range_quarter'),
+                    '1y' => __('content.chart_time_range_year'),
+                ];
+                if ($is_premium_user) {
+                    $disabled = false;
+                } else {
+                    $disabled = [
+                        '1m' => false,
+                        '3m' => true,
+                        '1y' => true,
+                    ];
+                }
+            @endphp
+            <x-select
+                :options="$ranges"
+                :disabled="$disabled"
+                class="dropdown margin-right"
+                id="timerangeDropdown"
+                onchange="setParams()"
+            />
         </div>
 
         <div class="drowdown-wrapper">
             <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.language_filter') }}</div>
-            <select class="dropdown margin-right" id="languageDropdown" onchange="setParams()">
-                <option value="">{{ __('content.language_filter_both') }}</option>
-                <option value="en">{{ __('content.language_filter_en') }}</option>
-                <option value="de">{{ __('content.language_filter_de') }}</option>
-            </select>
+
+            @php
+                $ranges = [
+                    '' => __('content.language_filter_both'),
+                    'en' => __('content.language_filter_en'),
+                    'de' => __('content.language_filter_de'),
+                ];
+            @endphp
+            <x-select
+                :options="$ranges"
+                class="dropdown margin-right"
+                id="languageDropdown"
+                onchange="setParams()"
+            />
         </div>
 
 
         <div class="drowdown-wrapper">
             <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.category_filter') }}</div>
-                <div class="checkbox-wrapper">
-                    <button class="form-control toggle-next ellipsis lato-small-text-p">{{ __('content.all_categories') }}</button>
+                <div class="toggle-next checkbox-wrapper">
+                    <button class="ellipsis lato-small-text-p">{{ __('content.all_categories') }}</button>
                     <div class="checkboxes" id="Categories">
                         <div class="inner-wrap">
                             @foreach ($categories as $category => $category_data)
@@ -1274,15 +1301,15 @@ function handleTabClick(clickedTabId) {
 
 document.addEventListener("DOMContentLoaded", function() {
   setCheckboxSelectLabels();
+  const checkboxes = document.querySelector('.checkboxes');
   let toggleNext = document.querySelectorAll('.toggle-next');
   document.addEventListener('click', function(e) {
-    const checkboxes = document.querySelector('.checkboxes');
         if (!e.target.classList.contains('checkboxes')
-            && !e.target.classList.contains('toggle-next')
             && !e.target.classList.length == 0
             && !e.target.classList.contains('ckkBox')
             && !e.target.classList.contains('inner-wrap')
             && !e.target.classList.contains('checkbox-wrapper')
+            && !e.target.classList.contains('ellipsis')
             && checkboxes.style.display !== 'none'
         ) {
             checkboxes.style.display = 'none';
@@ -1290,14 +1317,10 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
   for (let i = 0; i < toggleNext.length; i++) {
-    toggleNext[i].addEventListener('click', function() {
-      const checkboxes = this.nextElementSibling;
-      if (checkboxes.style.display === 'none') {
+    toggleNext[i].addEventListener('click', function(e) {
+      if (checkboxes.style.display === 'none' || !checkboxes.style.display) {
         checkboxes.style.display = 'block';
-      } else {
-        checkboxes.style.display = 'none';
-        setParams()
-      }
+      } 
     });
   }
   

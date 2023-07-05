@@ -330,6 +330,7 @@ a {
     justify-content: flex-start;
     align-items: center;
     flex-wrap: wrap;
+    cursor: pointer;
 }
 
 .guidelines-form-section-toggle {
@@ -1076,6 +1077,7 @@ input:checked+.slider:before {
     display: inline-block;
     border-radius: 8px;
     min-width: 220px;
+    cursor: pointer;
 }
   
 .dropdown-content {
@@ -1126,7 +1128,7 @@ input:checked+.slider:before {
 
 .checkbox-wrapper {
     background-color: #ffffff;
-    border: 1px solid #6b7280;
+    border: 1px solid rgb(209, 213, 219);
     border-radius: 8px;
     padding: 5px 10px;
     display: flex;
@@ -1204,4 +1206,8 @@ label {
 
 .guidelines-form-section-lock {
     margin-left: 1rem;
+}
+
+.toggle-next {
+    cursor: pointer;
 }
