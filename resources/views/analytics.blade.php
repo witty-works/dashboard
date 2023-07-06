@@ -290,6 +290,7 @@
 </x-app-layout>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/0.7.0/chartjs-plugin-datalabels.min.js" rossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js" rossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/locale/de.js" rossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
@@ -479,6 +480,7 @@
                     }],
                     yAxes: [{
                         ticks: {
+                            beginAtZero: true,
                             min: 0,
                             callback: function(value, index, values) {
                                 if (Math.floor(value) === value) {
@@ -487,6 +489,16 @@
                             }
                         }
                     }],
+                },
+                plugins: {
+                    datalabels: {
+                        anchor: 'end',
+                        align: 'top',
+                        formatter: (val) => {
+                            return val/1000 + 'test';
+                        },
+
+                    }
                 },
                 legend: {
                     display: display,
@@ -717,7 +729,12 @@
                                     }
                                 }
                             }],
-                        }
+                        },
+                        plugins: {
+                            datalabels: {
+                                display: false,
+                            }
+                        },
                     }
                 });
             }
