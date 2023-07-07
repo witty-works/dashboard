@@ -290,6 +290,7 @@
 </x-app-layout>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/0.7.0/chartjs-plugin-datalabels.min.js" rossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js" rossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/locale/de.js" rossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
@@ -407,7 +408,7 @@
         }
     }
 
-    async function getChartData(chart, from = '1w', interval = 'day', language, categories, subcategories = []) {
+    async function getChartData(chart, from = '1w', interval = 'day', language, categories, subcategories = [], to = null) {
         let analyticsUrl = '/api/user/analytics?refresh=' + refresh + '&chart=';
         if (window.location.href.includes('team')) {
             analyticsUrl = '/api/team/analytics?refresh=' + refresh + '&chart=';
@@ -441,64 +442,90 @@
         }
     }
 
-    function createBarChart(chartId, xValues, yValues, text, display, singeColor) {
+    function createBarChart(chartId, xValues, yValues, text, display, singeColor, chart, from, interval, language, categories, subcategories = []) {
         if (yValues.every((val, i, arr) => val === 0)) {
             document.getElementById(chartId).style.display = "none";
             return;
         }
 
-        document.getElementById(chartId).style.display = 'flex';
-        const ctx = document.getElementById(chartId).getContext('2d');
+        const newFrom = from.slice(0, 1) * 2 + from.slice(1, 2);
+        const to = from; 
+        getChartData(chart, newFrom, interval, language, categories, subcategories = [], to).then(data => {
+            document.getElementById(chartId).style.display = 'flex';
+            const ctx = document.getElementById(chartId).getContext('2d');
 
-        new Chart(ctx, {
-            type: "bar",
-            data: {
-                labels: xValues,
-                datasets: [{
-                    data: yValues,
-                    backgroundColor: singeColor ? colors[10] : colors,
-                    fill: false,
-                }]
-            },
-            options: {
-                events: [],
-                maintainAspectRatio: false,
-                responsive: true,
-                title: {
-                display: true,
-                text: text,
-                fontSize: 16,
-                fontStyle: 'normal',
-                font: {
-                    family: "Lato",
+            new Chart(ctx, {
+                type: "bar",
+                data: {
+                    labels: xValues,
+                    datasets: [{
+                        data: yValues,
+                        backgroundColor: singeColor ? colors[10] : colors,
+                        fill: false,
+                    }]
                 },
-                },
-                scales:{
-                    xAxes: [{
-                        display: display,
-                    }],
-                    yAxes: [{
-                        ticks: {
-                            min: 0,
-                            callback: function(value, index, values) {
-                                if (Math.floor(value) === value) {
-                                    return value;
+                options: {
+                    events: [],
+                    maintainAspectRatio: false,
+                    responsive: true,
+                    title: {
+                    display: true,
+                    text: text,
+                    fontSize: 16,
+                    fontStyle: 'normal',
+                    font: {
+                        family: "Lato",
+                    },
+                    },
+                    scales:{
+                        xAxes: [{
+                            display: display,
+                        }],
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true,
+                                min: 0,  
+                                max: Math.max(...yValues) + 1,                              
+                                callback: function(value, index, values) {
+                                    if (Math.floor(value) === value) {
+                                        return value;
+                                    }
                                 }
                             }
+                        }],
+                    },
+                    plugins: {
+                        datalabels: {
+                            anchor: 'end',
+                            align: 'top',
+                            rotation: 315,
+                            formatter: (currentValue) => {
+                                const index = yValues.indexOf(currentValue);
+                                const currentLabel = xValues[index];
+                                const previousPeriodPopoverOpened = data.events.popover_open || {};
+                                if (previousPeriodPopoverOpened[currentLabel]) {                           
+                                    const diff = currentValue - previousPeriodPopoverOpened[currentLabel];
+                                    const percentage = (diff / previousPeriodPopoverOpened[currentLabel] * 100).toFixed(0);
+                                    if (percentage == 0) return '';
+                                    return percentage >= 0 ? '+' + percentage + '%' : percentage + '%';
+                                } else {
+                                    return '';
+                                }
+                            },
                         }
-                    }],
-                },
-                legend: {
-                    display: display,
-                },
-                legend: {
-                    display: false
-                },
-                tooltips: {
-                    label: false
-                    
+                    },
+                    legend: {
+                        display: display,
+                    },
+                    legend: {
+                        display: false
+                    },
+                    tooltips: {
+                        label: false
+                        
+                    }
                 }
-            }
+            });
         });
     }
 
@@ -717,7 +744,12 @@
                                     }
                                 }
                             }],
-                        }
+                        },
+                        plugins: {
+                            datalabels: {
+                                display: false,
+                            }
+                        },
                     }
                 });
             }
@@ -1036,7 +1068,12 @@
             yValuesTopSubCategoriesOpenedCut,
             "{{ __('content.title_categories_bar_chart_month') }}",
             true,
-            false
+            false,
+            'topSubcategories', 
+            timerange, 
+            interval, 
+            language, 
+            categories
         );
 
         // createDoughnutChart(
@@ -1229,7 +1266,13 @@
                 yValuesTopCorporateWordsOpened,
                 "{{ __('content.title_words_bar_chart_month_corporate_rules') }}",
                 true,
-                false
+                false,
+                'topWords', 
+                timerange, 
+                'day',
+                language, 
+                categories, 
+                ['corporate_rules']
             );
             document.getElementById("loading-icon-top-words").style.display = "none";
             document.getElementById("top-words-content").style.visibility = "visible";
