@@ -253,12 +253,18 @@
                     </div>
                </div>
                <div id="top-words-content" style="visibility: hidden; width: 100%">
-                <div class="chart-container-row">
-                     <canvas
-                        id="topWordsChartCorporateRules"
-                        class="wittyworks-analytics-chart-extra-large">
-                     </canvas>
-                  </div>
+                    <div class="chart-container-row">
+                        <canvas
+                            id="topWordsChartCorporateRules"
+                            class="wittyworks-analytics-chart-extra-large">
+                        </canvas>
+                    </div>
+                    <div class="chart-container-row wittyworks-margin-top">
+                        <canvas
+                            id="topWordsChart"
+                            class="wittyworks-analytics-chart-extra-large wittyworks-margin-top">
+                        </canvas>
+                    </div>
                   <div id="noCorporateRulesWrapper" class="container-row wittyworks-margin-top" style="display: none;">
                      <div class="lato-small-text-p">{!! empty($user) ? __('content.no_corporate_rules') : __('content.no_corporate_rules_user') !!}</div>
                   </div>
@@ -1189,21 +1195,21 @@
     //     });
     // });
 
-    // chartType == 'top-words' && getChartData('topWords', timerange, interval, language, categories, ['corporate_rules']).then(data => {
-    //     if (!data || !data.events ) {
-    //         handleNoData('loading-icon-top-words', 'top-words-no-data', 'topWords');
-    //         return;
-    //     }
+    chartType == 'top-words' && getChartData('topWords', timerange, interval, language, categories).then(data => {
+        if (!data || !data.events ) {
+            handleNoData('loading-icon-top-words', 'top-words-no-data', 'topWords');
+            return;
+        }
 
-        // const opened = data.events.popover_open || {};
+        const opened = data.events.popover_open || {};
         // const ignored = data.events.ignore || {};
         // const alternative = data.events.alternative || {};
 
 
-        // for (const [key, value] of Object.entries(opened)) {
-        //     xValuesTopWordsOpened.push(key);
-        //     yValuesTopWordsOpened.push(value);
-        // }
+        for (const [key, value] of Object.entries(opened)) {
+            xValuesTopWordsOpened.push(key);
+            yValuesTopWordsOpened.push(value);
+        }
 
         // for (const [key, value] of Object.entries(ignored)) {
         //     xValuesTopWordsIgnored.push(key);
@@ -1215,8 +1221,8 @@
         //     yValuesTopWordsAlternative.push(value);
         // }
 
-        // const xValuesTopWordsOpenedCut = xValuesTopWordsOpened.slice(0, 15);
-        // const yValuesTopWordsOpenedCut = yValuesTopWordsOpened.slice(0, 15);
+        const xValuesTopWordsOpenedCut = xValuesTopWordsOpened.slice(0, 15);
+        const yValuesTopWordsOpenedCut = yValuesTopWordsOpened.slice(0, 15);
 
         // const xValuesTopWordsIgnoredCutDoughnut = xValuesTopWordsIgnored.slice(0, 5);
         // const yValuesTopWordsIgnoredCutDoughnut = yValuesTopWordsIgnored.slice(0, 5);
@@ -1231,13 +1237,28 @@
         //     "{{ __('content.title_words_alternative_doughnut_chart_month') }}",
         // );
 
+        createBarChart(
+            "topWordsChart",
+            xValuesTopWordsOpenedCut,
+            yValuesTopWordsOpenedCut,
+            "{{ __('content.title_words_bar_chart_month') }}",
+            true,
+            false,
+            'topWords', 
+            timerange, 
+            interval, 
+            language, 
+            categories, 
+            ['corporate_rules']
+        );
+
         // createDoughnutChart(
         //     "topWordsChartDoughnutWeek",
         //     xValuesTopWordsIgnoredCutDoughnut,
         //     yValuesTopWordsIgnoredCutDoughnut,
         //     "{{ __('content.title_words_ignored_doughnut_chart_month') }}",
         // );
-    // });
+    });
 
     chartType == 'top-words' && getChartData('topWords', timerange, 'day', language, categories, ['corporate_rules']).then(data => {
         if (!data || !data.events ) {
