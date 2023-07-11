@@ -243,7 +243,7 @@ class Form extends Component
         }
     }
 
-    protected function getLemma($text, $locale)
+    protected function getLemma($text, $lang)
     {
         $endpoint = config('app.nlp_api_endpoint');
         if (empty($endpoint['urls'])) {
@@ -254,7 +254,7 @@ class Form extends Component
 
         $data = [
             'text' => $text,
-            'locale' => $locale,
+            'lang' => $lang,
         ];
 
         try {
