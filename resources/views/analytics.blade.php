@@ -1423,9 +1423,9 @@ function setCheckboxSelectLabels(elem) {
         const button = wrappers[k].querySelector('button');
         const numberOfChecked = wrappers[k].querySelectorAll('input.val[type="checkbox"]:checked').length;
         if (numberOfChecked === 6) {
-            button.textContent = 'All categories';
+            button.textContent = @json(__('content.all_categories'));
         } else if (numberOfChecked === 0) {
-            button.textContent = 'None selected';
+            button.textContent = @json(__('content.none_selected'));
         } else if (checkboxes[l].checked) {
             const newText = checkboxes[l].nextElementSibling.innerHTML;
             const btnText = prevText + newText.replace(/&amp;/g, '&');
