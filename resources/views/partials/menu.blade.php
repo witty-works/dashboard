@@ -132,10 +132,6 @@
             </x-jet-nav-link>
             <div class="wittyworks-navigation-username lato-small-text-p">
                 {{ $user->name }}
-
-                <x-jet-button data-attr="posthog-feedback-button" secondary style="display: none">
-                    {{ __('content.feedback') }}
-                </x-jet-button>
             </div>
         </div>
         @else

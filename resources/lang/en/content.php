@@ -411,7 +411,6 @@ If you have any questions, contact :name (:email). 🙂
     'consultant' => 'DEI consultant',
     'recommended' => 'Recommdended by friend or colleague',
     'search_engine' => 'Search engine',
-    'feedback' => 'Give Feedback',
     'analytic_overview_tab_title' => 'Overview',
     'analytic_top_categories_tab_title' => 'Diversity Dimensions',
     'analytic_top_words_tab_title' => 'Dictionary Words',

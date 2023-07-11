@@ -416,7 +416,6 @@ Falls du Fragen hast, nimm Kontakt mit :name (:email) auf. 🙂
     'recommended' => 'Empfohlen durch bekannte Person',
     'search_engine' => 'Suchmaschine',
     'you_explored' => 'Du hast',
-    'feedback' => 'Rückmeldung',
     'analytic_overview_tab_title' => 'Überblick',
     'analytic_top_categories_tab_title' => 'Diversitäts Dimensionen',
     'analytic_top_words_tab_title' => 'Wörterbuch',
