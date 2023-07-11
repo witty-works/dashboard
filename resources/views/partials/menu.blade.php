@@ -157,12 +157,5 @@
                 <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/register.svg') }}" alt="" />
                     {{ __('content.register') }}
             </x-jet-nav-link>
-
-            <div class="wittyworks-navigation-username lato-small-text-p">
-                <br />
-                <x-jet-button data-attr="posthog-feedback-button" secondary style="display: none">
-                    {{ __('content.feedback') }}
-                </x-jet-button>
-            </div>
         </div>
         @endauth
