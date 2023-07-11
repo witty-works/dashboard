@@ -15,18 +15,3 @@ posthog.init(
     }
     @endif
 });
-
-document.querySelectorAll("[data-attr='posthog-feedback-button']").forEach(el => {
-    el.style.display = 'flex';
-});
-
-window.addEventListener('PHFeedbackBoxOpened', function (e) {
-    window.HelpHero?.setOptions({ show: false })
-    window.HelpHero?.setOptions({ showBeacon: false })
-});
-    
-window.addEventListener('PHFeedbackBoxClosed', function (e) {
-    window.HelpHero?.setOptions({ show: true })
-    window.HelpHero?.setOptions({ showBeacon: true })
-    window.HubSpotConversations?.widget?.load();
-});

@@ -32,7 +32,10 @@ class AnalyticsController extends Controller
             abort(403);
         }
 
-        return view('analytics', ['user' => $user]);
+        return view('analytics', [
+            'user' => $user,
+            'categories' => $this->categories,
+        ]);
     }
 
     protected function teamAnalyticsAllowed(User $user = null)
@@ -56,6 +59,7 @@ class AnalyticsController extends Controller
         return view('analytics', [
             'team' => $user->currentTeam,
             'team_edit' => $user->hasTeamPermission($user->currentTeam, 'edit_guidelines'),
+            'categories' => $this->categories,
         ]);
     }
 
@@ -81,7 +85,7 @@ class AnalyticsController extends Controller
         return $this->buildJson($request, $properties, $user->currentTeam);
     }
 
-    protected function buildFilter($properties, $filters, $interval, $from, $math)
+    protected function buildFilter($properties, $filters, $interval, $from, $to, $math)
     {
         $filter = [
             'events' => [
@@ -93,6 +97,7 @@ class AnalyticsController extends Controller
             'filter_test_accounts' => false,
             'interval' => $interval,
             'date_from' => $from,
+            'date_to' => $to,
         ];
 
         if (!empty($filters)) {
@@ -110,9 +115,9 @@ class AnalyticsController extends Controller
         return $filter;
     }
 
-    protected function buildEventData($events, $properties, $filters, $interval, $from, $math = 'total')
+    protected function buildEventData($events, $properties, $filters, $interval, $from, $to, $math = 'total')
     {
-        $filter = $this->buildFilter($properties, $filters, $interval, $from, $math);
+        $filter = $this->buildFilter($properties, $filters, $interval, $from, $to, $math);
 
         $data = [];
         foreach ($events as $event) {
@@ -129,7 +134,7 @@ class AnalyticsController extends Controller
         return $data;
     }
 
-    protected function buildBreakdown($events, $properties, $filters, $breakdown, $interval, $from, $math = 'total')
+    protected function buildBreakdown($events, $properties, $filters, $breakdown, $interval, $from, $to, $math = 'total')
     {
         if (empty($filters)) {
             // filter out orthography by default
@@ -141,7 +146,7 @@ class AnalyticsController extends Controller
             ];
         }
 
-        $filter = $this->buildFilter($properties, $filters, $interval, $from, $math);
+        $filter = $this->buildFilter($properties, $filters, $interval, $from, $to, $math);
 
         $filter['display'] = 'ActionsBarValue';
         $filter['breakdown'] = $breakdown;
@@ -188,6 +193,7 @@ class AnalyticsController extends Controller
             'chart' => 'required|in:dau,total,topSubcategories,topWords',
             'interval' => 'in:day,week,month',
             'from' => 'required',
+            'to' => 'nullable',
             'lang' => 'nullable|in:en,de',
             'events' => 'nullable|array|in:check,popover_open,alternative,ignore,learning_bites',
             'categories' => 'nullable|array|in:' . implode(',', $this->categories->keys()->toArray()),
@@ -199,6 +205,7 @@ class AnalyticsController extends Controller
         $chart = $validated['chart'];
         $interval = $validated['interval'] ?? 'day';
         $from = $validated['from'] ?? '30d';
+        $to = $validated['to'] ?? '0d';
         $lang = $validated['lang'] ?? null;
         $events = $validated['events'] ?? null;
         $categories = $validated['categories'] ?? [];
@@ -210,6 +217,7 @@ class AnalyticsController extends Controller
         }
 
         $from = "-{$from}";
+        $to = "-{$to}";
 
         if (!empty($lang)) {
             $properties[] = [
@@ -221,7 +229,7 @@ class AnalyticsController extends Controller
         }
 
         $filters = [];
-        if (!empty($categories)) {
+        if (!empty($categories) && count($categories) != $this->categories->count()) {
             $filters[] = [
                 'key' => 'response__data__category',
                 'value' => $categories,
@@ -245,7 +253,15 @@ class AnalyticsController extends Controller
                     $events = ['popover_open', 'alternative', 'ignore', 'learning_bites'];
                 }
 
-                $data = $this->buildEventData($events, $properties, $filters, $interval, $from, 'dau');
+                $data = $this->buildEventData(
+                    $events,
+                    $properties,
+                    $filters,
+                    $interval,
+                    $from,
+                    $to,
+                    'dau'
+                );
                 if ($model instanceof Team && !empty($data['events']['popover_open'])) {
                     // handle "-30d" => 30 | "-3w" => 21 | "-5m" => 150
                     switch (substr($from, -1)) {
@@ -292,7 +308,14 @@ class AnalyticsController extends Controller
                     array_unshift($events, 'check');
                 }
 
-                $data = $this->buildEventData($events, $properties, $filters, $interval, $from);
+                $data = $this->buildEventData(
+                    $events,
+                    $properties,
+                    $filters,
+                    $interval,
+                    $from,
+                    $to,
+                );
 
                 $writingStreak = 0;
                 $writingStreakComplete = true;
@@ -373,7 +396,8 @@ class AnalyticsController extends Controller
                     $filters,
                     'response__data__subcategory',
                     $interval,
-                    $from
+                    $from,
+                    $to,
                 );
 
                 foreach ($events as $event) {
@@ -398,7 +422,15 @@ class AnalyticsController extends Controller
                     $events = ['popover_open', 'alternative', 'ignore'];
                 }
 
-                $data = $this->buildBreakdown($events, $properties, $filters, 'response__data_text', $interval, $from);
+                $data = $this->buildBreakdown(
+                    $events,
+                    $properties,
+                    $filters,
+                    'response__data_text',
+                    $interval,
+                    $from,
+                    $to,
+                );
                 break;
             default:
                 return response()->json(['error' => 400, 'message' => "Unsupported chart type '$chart'"], 400);
