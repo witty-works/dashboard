@@ -15,3 +15,19 @@ posthog.init(
     }
     @endif
 });
+
+window.addEventListener('PHSurveyShown', function (e) {
+    window.PHSurveyClosed = false;
+    window.HelpHero?.setOptions({ showBeacon: false })
+    if (window.HubSpotConversations?.widget) {
+        window.HubSpotConversations?.widget?.remove()
+    }
+});
+
+window.addEventListener('PHSurveyClosed', function (e) {
+    window.PHSurveyClosed = true;
+    window.HelpHero?.setOptions({ showBeacon: true })
+    if (window.HubSpotConversations?.widget) {
+        window.HubSpotConversations?.widget?.load();
+    }
+});
