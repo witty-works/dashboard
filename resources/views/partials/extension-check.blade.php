@@ -19,18 +19,21 @@
             const extensionVersion = wittyIsInstalled.getAttribute('extension-version');
             const browsers = @json(config('app.browsers'));
             const browser = detectBrowser()
-            const newestVersions = browsers[browser]['latest_version'];
 
-            if (extensionVersion
-                && newestVersions
-                && -1 === new Intl.Collator('en').compare(extensionVersion, newestVersions)
-            ) {
-                let url = 'https://www.witty.works/en/help/how-can-i-update-witty';
+            if (browser) {
+                const newestVersions = browsers[browser]['latest_version'];
 
-                const wittyOptionsUrl = document.getElementById('witty-version-options-url');
-                wittyOptionsUrl.setAttribute('href', url)
+                if (extensionVersion
+                    && newestVersions
+                    && -1 === new Intl.Collator('en').compare(extensionVersion, newestVersions)
+                ) {
+                    let url = 'https://www.witty.works/en/help/how-can-i-update-witty';
 
-                upgradeWittyVersion.style.display = 'flex';
+                    const wittyOptionsUrl = document.getElementById('witty-version-options-url');
+                    wittyOptionsUrl.setAttribute('href', url)
+
+                    upgradeWittyVersion.style.display = 'flex';
+                }
             }
         }
     });
