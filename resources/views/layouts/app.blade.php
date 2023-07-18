@@ -25,6 +25,7 @@
         <!-- Scripts -->
         @include('partials/sentry')
         <script src="{{ mix('js/app.js') }}" defer></script>
+        @include('partials/detect_browser')
         @php
             $user = Auth::user();
         @endphp
