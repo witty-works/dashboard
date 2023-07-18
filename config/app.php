@@ -41,19 +41,21 @@ return [
     |
     */
 
-    'browser_version' => env('BROWSER_VERSION'),
     'browsers' => [
         'chrome' => [
             'image_src' => '/google-chrome-icon-transparent-4.webp',
             'store_href' => 'https://chrome.google.com/webstore/detail/meojhlodfiihbjkcnehkdcgncnhgagog',
+            'latest_version' => env('BROWSER_VERSION_CHROME'),
         ],
         'edge' => [
             'image_src' => '/Microsoft_Edge_logo_(2019).webp',
             'store_href' => 'https://microsoftedge.microsoft.com/addons/detail/icngefdfohhklfkjbohjgjnboenocbic',
+            'latest_version' => env('BROWSER_VERSION_EDGE'),
         ],
         'firefox' => [
             'image_src' => '/Firefox_logo,_2019.webp',
             'store_href' => 'https://addons.mozilla.org/en-US/firefox/addon/witty/',
+            'latest_version' => env('BROWSER_VERSION_FIREFOX'),
         ],
     ],
 

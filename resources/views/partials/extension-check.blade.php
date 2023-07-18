@@ -17,7 +17,9 @@
             }
 
             const extensionVersion = wittyIsInstalled.getAttribute('extension-version');
-            const newestVersions = @json(config('app.browser_version'));
+            const browsers = @json(config('app.browsers'));
+            const browser = detectBrowser()
+            const newestVersions = browsers[browser]['latest_version'];
 
             if (extensionVersion
                 && newestVersions
