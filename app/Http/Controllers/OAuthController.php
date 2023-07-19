@@ -22,14 +22,21 @@ use SocialiteProviders\Manager\Contracts\OAuth2\ProviderInterface;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Socialite;
 use SocialiteProviders\Manager\Config;
+use Illuminate\Support\Facades\Session;
 
 class OAuthController extends BaseOAuthController
 {
     protected $provider = 'azureadb2c';
 
-    public function logout(string $provider, GeneratesProviderRedirect $generator, $policy = 'login')
+    public function logout(string $provider)
     {
-        return $generator->logout($provider, $policy);
+        Session::flush();
+
+        Auth::logout();
+
+        $provider = OAuthController::getProvider($provider);
+
+        return redirect($provider->logout(route('login')));
     }
 
     public function redirectToProvider(string $provider, GeneratesProviderRedirect $generator, $policy = 'login')

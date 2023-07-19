@@ -29,21 +29,4 @@ class GenerateRedirectForProvider implements GeneratesProviderRedirect
             abort(400);
         }
     }
-    /**
-     * Generates the logout for a given provider.
-     *
-     * @param  string  $provider
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function logout(string $provider)
-    {
-        Session::flush();
-
-        Auth::logout();
-
-        $provider = OAuthController::getProvider($provider);
-
-        return redirect($provider->logout(route('login')));
-    }
 }
