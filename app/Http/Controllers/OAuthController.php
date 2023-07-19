@@ -97,8 +97,16 @@ class OAuthController extends BaseOAuthController
             $provider = $this->getBrowserLoginProvider();
             $provider->setRefreshToken($refreshToken);
 
+            $tokens = $this->getAccessTokenResponse($provider);
+            $connectedAccount = ModelsConnectedAccount::where('email', $tokens['email'])->first();
+            if ($connectedAccount) {
+                $connectedAccount->token = $tokens['access_token'];
+                $connectedAccount->refresh_token = $tokens['refresh_token'];
+                $connectedAccount->save();
+            }
+
             return response()
-                ->json($this->getAccessTokenResponse($provider));
+                ->json($tokens);
         } catch (\Exception $e) {
             # refresh token has expired?
             $connectedAccount = ModelsConnectedAccount::where('refresh_token', $refreshToken)->first();
