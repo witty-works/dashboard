@@ -68,6 +68,7 @@ class SyncToHubspotCategoriesCommand extends Command
             ],
             "corporate_rules" => [
                 "category" => "corporate_rules",
+                "emoji" => "❗",
                 "translations" => [
                     "en" => [
                         "hs_name" => "Dictionary",
