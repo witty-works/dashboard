@@ -19,7 +19,6 @@ return [
         'client_secret' => env('AADB2C_CLIENT_SECRET'),
         'redirect' => '/oauth/azureadb2c/callback',
         'redirect_template' => '/oauth/azureadb2c/{policy}/callback',
-        'api_redirect_template' => '/api/oauth/azureadb2c/{policy}/callback',
         'scope' => env('AADB2C_ACCESS_TOKEN_SCOPES'),
         'domain' => env('AADB2C_DOMAIN'),
         'policy' => [
@@ -27,6 +26,7 @@ return [
             'register' => env('AADB2C_POLICY_REGISTER'),
             'profile' => env('AADB2C_POLICY_PROFILE'),
             'browser_login' => env('AADB2C_POLICY'),
+            'browser_register' => env('AADB2C_POLICY_REGISTER'),
         ],
         'redirect_uri' => explode(',', env('AADB2C_BROWSER_REDIRECT_URIS')),
         'validate_redirect_uri_disabled' => env('AADB2C_VALIDATE_EXTENSION_REDIRECT_URI_DISABLED', false)
