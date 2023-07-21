@@ -4,8 +4,6 @@ namespace App\Actions\Socialstream;
 
 use App\Http\Controllers\OAuthController;
 use JoelButcher\Socialstream\Contracts\GeneratesProviderRedirect;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
 use GuzzleHttp\Exception\ClientException;
 
 class GenerateRedirectForProvider implements GeneratesProviderRedirect
