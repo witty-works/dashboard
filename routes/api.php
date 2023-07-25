@@ -16,9 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/browser-login', [OAuthController::class, 'redirectToProviderBrowserLogin'])->name('browser_login');
 Route::post('/refresh-token', [OAuthController::class, 'accessTokenFromRefreshToken'])->name('browser.refresh_token');
-Route::get('/oauth/{provider}/{policy}/callback', [OAuthController::class, 'handleProviderCallback'])->name('browser.callback');
 
 Route::group([
     'prefix' => '/user/language',
