@@ -22,14 +22,21 @@ use SocialiteProviders\Manager\Contracts\OAuth2\ProviderInterface;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Socialite;
 use SocialiteProviders\Manager\Config;
+use Illuminate\Support\Facades\Session;
 
 class OAuthController extends BaseOAuthController
 {
-    protected $provider = 'azureadb2c';
+    protected static $provider = 'azureadb2c';
 
-    public function logout(string $provider, GeneratesProviderRedirect $generator, $policy = 'login')
+    public function logout(string $provider)
     {
-        return $generator->logout($provider, $policy);
+        Session::flush();
+
+        Auth::logout();
+
+        $provider = self::getProvider($provider);
+
+        return redirect($provider->logout(route('login')));
     }
 
     public function redirectToProvider(string $provider, GeneratesProviderRedirect $generator, $policy = 'login')
@@ -52,6 +59,7 @@ class OAuthController extends BaseOAuthController
     public function redirectToProviderBrowserLogin(Request $request, GeneratesProviderRedirect $generator)
     {
         $redirectUri = $request->get('redirect_uri');
+        $register = $request->has('register');
 
         $user = $request->user();
         if ($user) {
@@ -63,12 +71,12 @@ class OAuthController extends BaseOAuthController
                     'refresh_token' => $account->refresh_token,
                 ];
 
-                return $this->returnAccessTokenResponse($data, $redirectUri);
+                return self::returnAccessTokenResponse($data, $redirectUri);
             }
         }
 
-        $response = $generator->generate($this->provider, 'browser_login');
-
+        $policy = $register ? 'browser_register' : 'browser_login';
+        $response = $generator->generate(self::$provider, $policy);
         if ($redirectUri && $this->validateRedirectUri($redirectUri)) {
             $targetUrl = $response->getTargetUrl();
             $url = parse_url($targetUrl);
@@ -94,7 +102,7 @@ class OAuthController extends BaseOAuthController
         }
 
         try {
-            $provider = $this->getBrowserLoginProvider();
+            $provider = self::getProvider(self::$provider, 'browser_login');
             $provider->setRefreshToken($refreshToken);
 
             $tokens = $this->getAccessTokenResponse($provider);
@@ -104,9 +112,6 @@ class OAuthController extends BaseOAuthController
                 $connectedAccount->refresh_token = $tokens['refresh_token'];
                 $connectedAccount->save();
             }
-
-            return response()
-                ->json($tokens);
         } catch (\Exception $e) {
             # refresh token has expired?
             $connectedAccount = ModelsConnectedAccount::where('refresh_token', $refreshToken)->first();
@@ -118,6 +123,8 @@ class OAuthController extends BaseOAuthController
 
             return response()->json(['error' => 'Not authorized.'], 403);
         }
+
+        return response()->json($tokens);
     }
 
     public function handleProviderCallback(Request $request, string $provider, ResolvesSocialiteUsers $resolver, $policy = 'login')
@@ -135,7 +142,7 @@ class OAuthController extends BaseOAuthController
         }
 
         $account = Socialstream::findConnectedAccountForProviderAndId($provider, $providerAccount->getId());
-        $tokens = $this->getAccessTokenResponse(self::getProvider($provider, 'browser_login'));
+        $tokens = $this->getAccessTokenResponse(self::getProvider($provider, $policy));
         if (!empty($tokens['access_token'])) {
             $providerAccount->token = $tokens['access_token'];
         }
@@ -223,6 +230,8 @@ class OAuthController extends BaseOAuthController
         ) {
             return true;
         }
+
+        return false;
     }
 
     protected function checkAllowedRedirectUri($redirectUri)
@@ -247,12 +256,7 @@ class OAuthController extends BaseOAuthController
             || $this->checkAllowedRedirectUri($redirectUri);
     }
 
-    protected function getBrowserLoginProvider()
-    {
-        return self::getProvider($this->provider, 'browser_login');
-    }
-
-    protected function getAccessTokenResponse(ProviderInterface $provider)
+    protected static function getAccessTokenResponse(ProviderInterface $provider)
     {
         $socialiteUser = $provider->user();
 
@@ -263,13 +267,8 @@ class OAuthController extends BaseOAuthController
         ];
     }
 
-    protected function returnAccessTokenResponse($data = null, $redirectUri = null)
+    protected function returnAccessTokenResponse($data, $redirectUri = null)
     {
-        if (empty($data)) {
-            $provider = $this->getBrowserLoginProvider();
-            $data = $this->getAccessTokenResponse($provider);
-        }
-
         if (empty($redirectUri)) {
             $redirectUri = request()->get('state');
         }
@@ -295,8 +294,10 @@ class OAuthController extends BaseOAuthController
      */
     protected function alreadyAuthenticated($user, $account, $provider, $providerAccount)
     {
-        if (self::isBrowserLogin()) {
-            return $this->returnAccessTokenResponse();
+        $policy = self::isBrowserLogin();
+        if ($policy) {
+            $provider = self::getProvider(self::$provider, $policy);
+            return $this->returnAccessTokenResponse(self::getAccessTokenResponse($provider));
         }
 
         if (!$account) {
@@ -323,8 +324,11 @@ class OAuthController extends BaseOAuthController
     protected function login($user, $newUser = false)
     {
         $loginResponse = parent::login($user);
-        if (self::isBrowserLogin()) {
-            return $this->returnAccessTokenResponse();
+
+        $policy = self::isBrowserLogin();
+        if ($policy) {
+            $provider = self::getProvider(self::$provider, $policy);
+            return $this->returnAccessTokenResponse(self::getAccessTokenResponse($provider));
         }
 
         if ($newUser) {
@@ -343,17 +347,18 @@ class OAuthController extends BaseOAuthController
 
     public static function isBrowserLogin($policy = null)
     {
-        $browserLoginPolicies = ['browser_login'];
+        $browserLoginPolicies = ['browser_login', 'browser_register'];
+
         $request = request();
         foreach ($browserLoginPolicies as $browserLoginPolicy) {
-            $url = route('browser.callback', ['provider' => 'azureadb2c', 'policy' => $browserLoginPolicy]);
+            $url = route('oauth.callback', ['provider' => 'azureadb2c', 'policy' => $browserLoginPolicy]);
             if ($request->url() === $url) {
                 $policy = $browserLoginPolicy;
                 break;
             }
         }
 
-        return in_array($policy, $browserLoginPolicies);
+        return in_array($policy, $browserLoginPolicies) ? $policy : false;
     }
 
     public static function getProvider($provider, $policy = null)
@@ -364,20 +369,9 @@ class OAuthController extends BaseOAuthController
             abort(400);
         }
 
-        if (OAuthController::isBrowserLogin($policy)) {
+        if (self::isBrowserLogin($policy)) {
             $provider->setScopes(config('services.azureadb2c.scope'));
             $provider->stateless();
-            $config = new Config(
-                config('services.azureadb2c.client_id'),
-                config('services.azureadb2c.client_secret'),
-                config('services.azureadb2c.redirect'),
-                [
-                    'domain' => config('services.azureadb2c.domain'),
-                    'policy' => config('services.azureadb2c.policy'),
-                    'redirect_template' => config('services.azureadb2c.api_redirect_template'),
-                ],
-            );
-            $provider->setConfig($config);
         }
 
         return $provider;
