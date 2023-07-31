@@ -415,4 +415,6 @@ If you have any questions, contact :name (:email). 🙂
     'analytic_top_words_tab_title' => 'Top Words',
     'roadmap' => 'Roadmap',
     'none_selected' => 'None Selected',
+    'witty_word_addin' => 'Welcome!',
+    'witty_word_addin_text' => 'You have successfully logged in to the Witty Word-Addin.<br>You can now close this window.',
 ];

@@ -183,6 +183,10 @@ Route::group(['middleware' => config('socialstream.middleware', ['web'])], funct
     Route::get('/download', function () {
         return view('download');
     })->name('download');
+
+    Route::get('/word-addin', function () {
+        return view('word-addin');
+    })->name('word-addin');
 });
 
 /*
