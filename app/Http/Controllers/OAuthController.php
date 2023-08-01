@@ -286,14 +286,14 @@ class OAuthController extends BaseOAuthController
     }
 
     /**
-     * 
-     * @param User $user 
-     * @param ConnectedAccount $account 
-     * @param string $provider 
-     * @param AbstractUser $providerAccount 
-     * @return mixed 
-     * @throws BindingResolutionException 
-     * @throws RouteNotFoundException 
+     *
+     * @param User $user
+     * @param ConnectedAccount $account
+     * @param string $provider
+     * @param AbstractUser $providerAccount
+     * @return mixed
+     * @throws BindingResolutionException
+     * @throws RouteNotFoundException
      */
     protected function alreadyAuthenticated($user, $account, $provider, $providerAccount)
     {
