@@ -259,7 +259,7 @@ class OAuthController extends BaseOAuthController
         ];
 
         if ($updateAccount) {
-            $connectedAccount = ModelsConnectedAccount::where('email', $tokens['email'])->first();
+            $connectedAccount = ModelsConnectedAccount::where('provider_id', $socialiteUser->id)->first();
             if ($connectedAccount) {
                 $connectedAccount->token = $tokens['access_token'];
                 $connectedAccount->refresh_token = $tokens['refresh_token'];
