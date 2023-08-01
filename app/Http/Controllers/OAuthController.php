@@ -21,7 +21,6 @@ use JoelButcher\Socialstream\Features;
 use SocialiteProviders\Manager\Contracts\OAuth2\ProviderInterface;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Socialite;
-use SocialiteProviders\Manager\Config;
 use Illuminate\Support\Facades\Session;
 
 class OAuthController extends BaseOAuthController
@@ -104,14 +103,7 @@ class OAuthController extends BaseOAuthController
         try {
             $provider = self::getProvider(self::$provider, 'browser_login');
             $provider->setRefreshToken($refreshToken);
-
-            $tokens = $this->getAccessTokenResponse($provider);
-            $connectedAccount = ModelsConnectedAccount::where('email', $tokens['email'])->first();
-            if ($connectedAccount) {
-                $connectedAccount->token = $tokens['access_token'];
-                $connectedAccount->refresh_token = $tokens['refresh_token'];
-                $connectedAccount->save();
-            }
+            $tokens = self::getAccessTokenResponse($provider, true);
         } catch (\Exception $e) {
             # refresh token has expired?
             $connectedAccount = ModelsConnectedAccount::where('refresh_token', $refreshToken)->first();
@@ -142,7 +134,7 @@ class OAuthController extends BaseOAuthController
         }
 
         $account = Socialstream::findConnectedAccountForProviderAndId($provider, $providerAccount->getId());
-        $tokens = $this->getAccessTokenResponse(self::getProvider($provider, $policy));
+        $tokens = self::getAccessTokenResponse(self::getProvider($provider, $policy));
         if (!empty($tokens['access_token'])) {
             $providerAccount->token = $tokens['access_token'];
         }
@@ -256,15 +248,26 @@ class OAuthController extends BaseOAuthController
             || $this->checkAllowedRedirectUri($redirectUri);
     }
 
-    protected static function getAccessTokenResponse(ProviderInterface $provider)
+    protected static function getAccessTokenResponse(ProviderInterface $provider, $updateAccount = false)
     {
         $socialiteUser = $provider->user();
 
-        return [
+        $tokens = [
             'email' => User::getEmailFromProvider($socialiteUser->user),
             'refresh_token' => $socialiteUser->accessTokenResponseBody['refresh_token'] ?? null,
             'access_token' => $socialiteUser->accessTokenResponseBody['access_token'] ?? null,
         ];
+
+        if ($updateAccount) {
+            $connectedAccount = ModelsConnectedAccount::where('email', $tokens['email'])->first();
+            if ($connectedAccount) {
+                $connectedAccount->token = $tokens['access_token'];
+                $connectedAccount->refresh_token = $tokens['refresh_token'];
+                $connectedAccount->save();
+            }
+        }
+
+        return $tokens;
     }
 
     protected function returnAccessTokenResponse($data, $redirectUri = null)
@@ -297,7 +300,7 @@ class OAuthController extends BaseOAuthController
         $policy = self::isBrowserLogin();
         if ($policy) {
             $provider = self::getProvider(self::$provider, $policy);
-            return $this->returnAccessTokenResponse(self::getAccessTokenResponse($provider));
+            return $this->returnAccessTokenResponse(self::getAccessTokenResponse($provider, true));
         }
 
         if (!$account) {
@@ -328,7 +331,9 @@ class OAuthController extends BaseOAuthController
         $policy = self::isBrowserLogin();
         if ($policy) {
             $provider = self::getProvider(self::$provider, $policy);
-            return $this->returnAccessTokenResponse(self::getAccessTokenResponse($provider));
+            $tokens = self::getAccessTokenResponse($provider, true);
+
+            return $this->returnAccessTokenResponse($tokens);
         }
 
         if ($newUser) {
