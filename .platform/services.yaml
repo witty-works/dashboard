@@ -2,3 +2,11 @@ rdbms:
     type: mariadb:10.5
     disk: 2048
 
+proxy:
+    type: varnish:6.0
+    relationships:
+        application: 'dashboard:http'
+    configuration:
+        vcl: !include
+            type: string
+            path: config.vcl
