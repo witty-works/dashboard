@@ -9,14 +9,38 @@
         'ignored-words' => __('guidelines.ignore_words_label'),
     ];
     
-
     $user = Auth::user();
     $team = $user ? $user->currentTeam : null;
     $team_edit = $team && Auth::user()->hasTeamPermission($team, 'edit_guidelines');
     $open_tab = $team_edit && (strpos(request()->path(), 'team') || strpos(request()->path(), 'livewire') !== false)
         ? 'team' : 'user';
-?>
 
+    $routeName = Route::currentRouteName();
+    $route = explode('.', $routeName);
+    $mapableRoutes = [
+        'analytics',
+        'category-settings',
+        'language-settings',
+        'dictionary',
+        'ignored-words',
+        'privacy-settings',
+    ];
+
+    $personalRoute = 'user.language-guidelines';
+    $teamRoute = 'teams.language-guidelines';
+
+    if ($route[0] === 'user') {
+        $personalRoute = $routeName;
+        if (isset($route[1]) && in_array($route[1], $mapableRoutes)) {
+            $teamRoute = 'teams.'.$route[1];
+        }
+    } elseif ($route[0] === 'teams') {
+        $teamRoute = $routeName;
+        if (isset($route[1]) && in_array($route[1], $mapableRoutes)) {
+            $personalRoute = 'user.'.$route[1];
+        }
+    }
+?>
         <a href="https://www.witty.works/">
             <img class="wittyworks-logo" src="{{ url('svg/witty-logo-white.svg') }}" alt="Witty Works" />
         </a>
@@ -26,11 +50,11 @@
         <div class="wittyworks-navigation-top-half">
             @if ($team_edit)
             <div class="wittyworks-navigation-account-toggle-wrapper">
-                <x-jet-nav-link id="personal_account" class="wittyworks-navigation-item lato-small-paragraph-title-h4" href="{{ route('user.language-guidelines') }}" :active="$open_tab === 'user'">
+                <x-jet-nav-link id="personal_account" class="wittyworks-navigation-item lato-small-paragraph-title-h4" href="{{ route($personalRoute) }}" :active="$open_tab === 'user'">
                     {{ __('guidelines.personal_account') }}
                 </x-jet-nav-link>
                 <div class="wittyworks-navigation-account-divider">|</div>
-                 <x-jet-nav-link id="team_account" class="wittyworks-navigation-item lato-small-paragraph-title-h4" href="{{ route('teams.language-guidelines') }}" :active="$open_tab === 'team'">
+                 <x-jet-nav-link id="team_account" class="wittyworks-navigation-item lato-small-paragraph-title-h4" href="{{ route($teamRoute) }}" :active="$open_tab === 'team'">
                     {{ __('guidelines.team_account') }}
                 </x-jet-nav-link>
             </div>
@@ -44,18 +68,18 @@
                 </x-jet-nav-link>
     
                 @if(!$team_edit && $team && $team->user_access_to_team_analytics)
-                <x-jet-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('user_analytics') }}">
+                <x-jet-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('user.analytics') }}">
                     <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/analytics.svg') }}" alt="analytics" />
                     {{ __('content.analytics') }}
                 </x-jet-nav-link>
 
                 <div class="wittyworks-navigation-sub-wrapper">
-                    <x-jet-nav-link class="wittyworks-navigation-sub-link lato-small-text-p" href="{{ route('user_analytics') }}" :active="request()->routeIs('user_analytics')">{{ __('guidelines.personal_account') }}</x-jet-nav-link>
+                    <x-jet-nav-link class="wittyworks-navigation-sub-link lato-small-text-p" href="{{ route('user.analytics') }}" :active="request()->routeIs('user.analytics')">{{ __('guidelines.personal_account') }}</x-jet-nav-link>
                     <br />
-                    <x-jet-nav-link class="wittyworks-navigation-sub-link lato-small-text-p" href="{{ route('team_analytics') }}" :active="request()->routeIs('team_analytics')">{{ __('guidelines.team_account') }}</x-jet-nav-link>
+                    <x-jet-nav-link class="wittyworks-navigation-sub-link lato-small-text-p" href="{{ route('teams.analytics') }}" :active="request()->routeIs('teams.analytics')">{{ __('guidelines.team_account') }}</x-jet-nav-link>
                 </div>
                 @else
-                <x-jet-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('user_analytics') }}" :active="request()->routeIs('user_analytics')">
+                <x-jet-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('user.analytics') }}" :active="request()->routeIs('user.analytics')">
                     <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/analytics.svg') }}" alt="analytics" />
                     {{ __('content.analytics') }}
                 </x-jet-nav-link>
@@ -90,7 +114,7 @@
                     {{ __('content.subscription') }}
                 </x-jet-nav-link>
 
-                <x-jet-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('team_analytics') }}" :active="request()->routeIs('team_analytics')">
+                <x-jet-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('teams.analytics') }}" :active="request()->routeIs('teams.analytics')">
                     <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/analytics.svg') }}" alt="analytics" />
                     {{ __('content.analytics') }}
                 </x-jet-nav-link>
