@@ -421,5 +421,7 @@ Falls du Fragen hast, nimm Kontakt mit :name (:email) auf. 🙂
     'all_categories' => 'Alle Kategorien',
     'none_selected' => 'Nichts ausgewählt',
     'chart_period_comparison_from' => 'Comparing the period: DE',
-    'chart_period_comparison_to' => 'to the period: DE'
+    'chart_period_comparison_to' => 'to the period: DE',
+    'witty_word_addin' => 'Willkommen!',
+    'witty_word_addin_text' => 'Du hast dich erfolgreich beim Witty Word-Addin angemeldet.<br>Du kannst dieses Fenster nun schließen.',
 ];

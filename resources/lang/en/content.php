@@ -416,6 +416,7 @@ If you have any questions, contact :name (:email). 🙂
     'roadmap' => 'Roadmap',
     'none_selected' => 'None Selected',
     'chart_period_comparison_from' => 'Comparing the period: ',
-    'chart_period_comparison_to' => 'to the period: '
-
+    'chart_period_comparison_to' => 'to the period: ',
+    'witty_word_addin' => 'Welcome!',
+    'witty_word_addin_text' => 'You have successfully logged in to the Witty Word-Addin.<br>You can now close this window.',
 ];

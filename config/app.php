@@ -181,6 +181,17 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Microsoft Application ID
+    |--------------------------------------------------------------------------
+    |
+    | https://learn.microsoft.com/en-us/azure/active-directory/develop/mark-app-as-publisher-verified
+    |
+    */
+
+    'microsoft_application_id' => env('MICROSOFT_APPLICATION_ID'),
+
+    /*
+    |--------------------------------------------------------------------------
     | NLP API
     |--------------------------------------------------------------------------
     |
