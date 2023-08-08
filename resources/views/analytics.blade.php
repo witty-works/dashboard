@@ -491,7 +491,7 @@
                             ticks: {
                                 beginAtZero: true,
                                 min: 0,  
-                                max: Math.max(...yValues) + 1,                              
+                                max: Math.max(...yValues) + Math.max(...yValues) * 0.15,            
                                 callback: function(value, index, values) {
                                     if (Math.floor(value) === value) {
                                         return value;
@@ -1271,20 +1271,15 @@
                 xValuesTopCorporateWordsOpened.push(key);
                 yValuesTopCorporateWordsOpened.push(value);
             }
-            if (xValuesTopCorporateWordsOpened.length >= 10) {
-                xValuesTopCorporateWordsOpened.slice(0, 10);
-                yValuesTopCorporateWordsOpened.slice(0, 10);
-            } else if (xValuesTopCorporateWordsOpened.length > 0) {
-                for (let i = xValuesTopCorporateWordsOpened.length; i < 10; i++) {
-                    xValuesTopCorporateWordsOpened.push("");
-                    yValuesTopCorporateWordsOpened.push(0);
-                }
-            }
+
+            const xValuesTopCorporateWordsOpenedCut = xValuesTopCorporateWordsOpened.slice(0, 15);
+            const yValuesTopCorporateWordsOpenedCut = yValuesTopCorporateWordsOpened.slice(0, 15);
+            
 
             createBarChart(
                 "topWordsChartCorporateRules",
-                xValuesTopCorporateWordsOpened,
-                yValuesTopCorporateWordsOpened,
+                xValuesTopCorporateWordsOpenedCut,
+                yValuesTopCorporateWordsOpenedCut,
                 "{{ __('content.title_words_bar_chart_month_corporate_rules') }}",
                 true,
                 false,
