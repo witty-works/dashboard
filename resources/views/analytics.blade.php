@@ -1207,8 +1207,14 @@
 
 
         for (const [key, value] of Object.entries(opened)) {
+            if (!key || !value) continue;
             xValuesTopWordsOpened.push(key);
             yValuesTopWordsOpened.push(value);
+        }
+
+        if (xValuesTopWordsOpened.length === 0) {
+            handleNoData('loading-icon-top-words', 'top-words-no-data', 'topWords');
+            return;
         }
 
         // for (const [key, value] of Object.entries(ignored)) {
@@ -1268,8 +1274,14 @@
         if (data && data.events && data.events.popover_open) {
             const openedCorporatewords = data.events.popover_open;
             for (const [key, value] of Object.entries(openedCorporatewords)) {
+                if (!key || !value) continue;
                 xValuesTopCorporateWordsOpened.push(key);
                 yValuesTopCorporateWordsOpened.push(value);
+            }
+
+            if (xValuesTopCorporateWordsOpened.length === 0) {
+                handleNoData('loading-icon-top-words', 'top-words-no-data', 'topWords');
+                return;
             }
 
             const xValuesTopCorporateWordsOpenedCut = xValuesTopCorporateWordsOpened.slice(0, 15);
