@@ -415,4 +415,7 @@ If you have any questions, contact :name (:email). 🙂
     'analytic_top_words_tab_title' => 'Top Words',
     'roadmap' => 'Roadmap',
     'none_selected' => 'None Selected',
+    'chart_period_comparison_from' => 'Comparing the period: ',
+    'chart_period_comparison_to' => 'to the period: '
+
 ];

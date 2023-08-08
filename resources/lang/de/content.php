@@ -420,4 +420,6 @@ Falls du Fragen hast, nimm Kontakt mit :name (:email) auf. 🙂
     'category_filter' => 'Kategorie wählen:',
     'all_categories' => 'Alle Kategorien',
     'none_selected' => 'Nichts ausgewählt',
+    'chart_period_comparison_from' => 'Comparing the period: DE',
+    'chart_period_comparison_to' => 'to the period: DE'
 ];
