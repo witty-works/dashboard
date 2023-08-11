@@ -232,6 +232,7 @@ Ask your team administrators <a href="mailto::email">:name</a> to upgrade to <a 
     'top_categories' => 'The inclusion topics your team explored',
     'top_words' => 'The dictionary words your team explored',
     'learning_bites_label_line_chart' => 'Why clicks',
+    'check_result_label_line_chart' => 'Highlighted',
     'popover_label_line_chart' => 'Explored',
     'ignored_label_line_chart' => 'Dismissed',
     'alternative_label_line_chart' => 'Accepted',
@@ -417,4 +418,10 @@ If you have any questions, contact :name (:email). 🙂
     'none_selected' => 'None Selected',
     'witty_word_addin' => 'Welcome!',
     'witty_word_addin_text' => 'You have successfully logged in to the Witty Word-Addin.<br>You can now close this window.',
+    'event_type' => 'Event Type',
+    'check_result' => 'Check Result',
+    'popover_open' => 'Open',
+    'alternative' => 'Alternative',
+    'ignore' => 'Ignore',
+
 ];
