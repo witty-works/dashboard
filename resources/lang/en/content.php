@@ -232,6 +232,7 @@ Ask your team administrators <a href="mailto::email">:name</a> to upgrade to <a 
     'top_categories' => 'The inclusion topics your team explored',
     'top_words' => 'The top words your team explored',
     'learning_bites_label_line_chart' => 'Why clicks',
+    'check_result_label_line_chart' => 'Highlighted',
     'popover_label_line_chart' => 'Explored',
     'ignored_label_line_chart' => 'Dismissed',
     'alternative_label_line_chart' => 'Accepted',
@@ -444,4 +445,9 @@ If you have any questions, contact :name (:email). 🙂
     'office_register_summary' => 'In a nutshell: <ul><li>We fully separate the user’s profile (like email etc.) from any data collected, e.g. <strong>in our analytics we cannot trace back who has written which text.</strong></li><li>We only store a very limited amount of your text <strong>for the purpose of improving the product</strong> (f.e. what to highlight, which alternatives to show).</li><li>In the paid version, you can even disable this kind of data collection.</li><li>Data is not shared with thirdparties.</li><li><strong>Our servers are in the EU.</strong></li></ul>',
     'office_register_further_reading' => 'Please find more details here: <a href="https://www.witty.works/trust-and-security" target="_blank" rel="noopener">Trust &amp; Security</a>, <a href="https://www.witty.works/privacy" target="_blank" rel="noopener">Privacy</a>, <a href="https://www.witty.works/terms" target="_blank" rel="noopener">Terms &amp; Conditions</a> or contact us via <a href="mailto:support@witty.works" target="_blank" rel="noopener">support@witty.works</a>',
     'you_must_consent' => 'You must consent to the terms of service.',
+    'event_type' => 'Event Type',
+    'check_result' => 'Check Result',
+    'popover_open' => 'Open',
+    'alternative' => 'Alternative',
+    'ignore' => 'Ignore',
 ];
