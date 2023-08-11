@@ -419,4 +419,8 @@ If you have any questions, contact :name (:email). 🙂
     'chart_period_comparison_to' => 'to the period: ',
     'witty_word_addin' => 'Welcome!',
     'witty_word_addin_text' => 'You have successfully logged in to the Witty Word-Addin.<br>You can now close this window.',
+    'inclusive_filter' => 'Select inclusive',
+    'inclusive_filter_non_inclusive' => 'Non-inclusive',
+    'inclusive_filter_both' => 'Both',
+    'inclusive_filter_inclusive' => 'Inclusive',
 ];

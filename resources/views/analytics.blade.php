@@ -68,6 +68,23 @@
             />
         </div>
 
+        <div class="drowdown-wrapper">
+            <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.inclusive_filter') }}</div>
+            @php
+                $ranges = [
+                    'yes' => __('content.inclusive_filter_non_inclusive'),
+                    'both' => __('content.inclusive_filter_both'),
+                    'no' => __('content.inclusive_filter_inclusive'),
+                ];
+            @endphp
+            <x-select
+                :options="$ranges"
+                class="dropdown margin-right"
+                id="inclusiveDropdown"
+                onchange="setParams()"
+            />
+        </div>
+
 
         <div class="drowdown-wrapper">
             <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.category_filter') }}</div>
@@ -304,7 +321,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/locale/de.js" rossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
-    function load_charts(refresh, startOfWeek, chartType = 'overview', timerange = '1m', interval = 'week', language = [], categories = []) {
+    function load_charts(refresh, startOfWeek, chartType = 'overview', timerange = '1m', interval = 'week', language = [], categories = [], inclusive = 'yes') {
         if (refresh) {
             document.getElementById('lastRefresh').style.visibility = 'hidden';
             document.getElementById("loading-icon-overview").style.display = "flex";
@@ -417,7 +434,7 @@
         }
     }
 
-    async function getChartData(chart, from = '1w', interval = 'day', language, categories, subcategories = [], to = null) {
+    async function getChartData(chart, from = '1w', interval = 'day', language, categories, subcategories = [], to = null, inclusive) {
         let analyticsUrl = '/api/user/analytics?refresh=' + refresh + '&chart=';
         if (window.location.href.includes('team')) {
             analyticsUrl = '/api/team/analytics?refresh=' + refresh + '&chart=';
@@ -433,7 +450,7 @@
             formattedSubcategories = '&' + subcategories.map(category => 'subcategories[]=' + subcategories).join('&');
         }
 
-        analyticsUrl += chart + '&from=' + from + '&interval=' + interval + '&lang=' + language + formattedCategories + formattedSubcategories;
+        analyticsUrl += chart + '&from=' + from + '&interval=' + interval + '&lang=' + language + '&inclusive=' + inclusive + formattedCategories + formattedSubcategories;
 
         const response = await fetch(analyticsUrl, {
             method: 'GET',
@@ -459,8 +476,6 @@
 
         const newFrom = from.slice(0, 1) * 2 + from.slice(1, 2);
         const to = from; 
-
-        console.log(from)
 
         // //endDateCurrentPeriod - from 
         // const startDateCurrentPeriod = 
@@ -518,7 +533,7 @@
         const footerText = `{{ __('content.chart_period_comparison_from') }} ${startDateCurrentPeriod} - ${endDateCurrentPeriod}, {{ __('content.chart_period_comparison_to') }} ${startDateComparePeriod} - ${endDateComparePeriod}`;
         document.getElementById(`${chartId}Footer`).innerText = footerText;
 
-        getChartData(chart, newFrom, interval, language, categories, subcategories = [], to).then(data => {
+        getChartData(chart, newFrom, interval, language, categories, subcategories = [], to, inclusive).then(data => {
             document.getElementById(chartId).style.display = 'flex';
             const ctx = document.getElementById(chartId).getContext('2d');
 
@@ -642,7 +657,7 @@
     //     });
     // }
 
-    chartType == 'overview' && getChartData('total', timerange, interval, language, categories).then(data => {
+    chartType == 'overview' && getChartData('total', timerange, interval, language, categories, null,  null, inclusive).then(data => {
         if (!data?.events?.popover_open
             || Object.entries(data.events.popover_open).filter(([key, value]) => value > 0).length == 0
         ) {
@@ -976,7 +991,7 @@
     });
 
     //ALWAYS ONLY past week
-    chartType == 'top-categories' && getChartData('topSubcategories', '1w', interval, language, categories).then(data => {
+    chartType == 'top-categories' && getChartData('topSubcategories', '1w', interval, language, categories, null, null, inclusive).then(data => {
         if (!data || !data.events ) {
             return;
         }
@@ -1070,7 +1085,7 @@
     });
 
 
-    (chartType == 'overview' || chartType == 'top-categories') && getChartData('topSubcategories', timerange, interval, language, categories).then(data => {
+    (chartType == 'overview' || chartType == 'top-categories') && getChartData('topSubcategories', timerange, interval, language, categories, null,  null, inclusive).then(data => {
         if (!data || !data.events || !data.subcategories ) {
             handleNoData('loading-icon-top-categories', 'top-categories-no-data', 'topSubcategories');
             return;
@@ -1257,7 +1272,7 @@
     //     });
     // });
 
-    chartType == 'top-words' && getChartData('topWords', timerange, interval, language, categories).then(data => {
+    chartType == 'top-words' && getChartData('topWords', timerange, interval, language, categories, null, null, inclusive).then(data => {
         if (!data || !data.events ) {
             handleNoData('loading-icon-top-words', 'top-words-no-data', 'topWords');
             return;
@@ -1328,7 +1343,7 @@
         // );
     });
 
-    chartType == 'top-words' && getChartData('topWords', timerange, 'day', language, categories, ['corporate_rules']).then(data => {
+    chartType == 'top-words' && getChartData('topWords', timerange, 'day', language, categories, ['corporate_rules'], null, inclusive).then(data => {
         if (!data || !data.events ) {
             handleNoData('loading-icon-top-words', 'top-words-no-data', 'topWords');
             return;
@@ -1397,12 +1412,14 @@ function setParams(startOfWeek = 1) {
     const categories = getSelectedCategories();
     const timeRangeDropdown = document.getElementById("timerangeDropdown");
     const languageDropdown = document.getElementById("languageDropdown");
+    const inclusiveDropdown = document.getElementById("inclusiveDropdown");
 
     const selectedTimeRangeOption = timeRangeDropdown.options[timeRangeDropdown.selectedIndex].value;
     const selectedLanguageOption = languageDropdown.options[languageDropdown.selectedIndex].value;
+    const selectedInclusiveOption = inclusiveDropdown.options[inclusiveDropdown.selectedIndex].value;
 
     const interval = selectedTimeRangeOption == '1y' ? 'month' : 'week';
-    load_charts(false, startOfWeek, activeTab, selectedTimeRangeOption, interval, selectedLanguageOption, categories);
+    load_charts(false, startOfWeek, activeTab, selectedTimeRangeOption, interval, selectedLanguageOption, categories, selectedInclusiveOption, selectedInclusiveOption);
 }
 
 load_charts(false, 1);
