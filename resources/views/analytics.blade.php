@@ -491,7 +491,7 @@
                             ticks: {
                                 beginAtZero: true,
                                 min: 0,  
-                                max: Math.max(...yValues) + 1,                              
+                                max: Math.max(...yValues) + Math.max(...yValues) * 0.15,            
                                 callback: function(value, index, values) {
                                     if (Math.floor(value) === value) {
                                         return value;
@@ -512,10 +512,10 @@
                                 if (previousPeriodPopoverOpened[currentLabel]) {                           
                                     const diff = currentValue - previousPeriodPopoverOpened[currentLabel];
                                     const percentage = (diff / previousPeriodPopoverOpened[currentLabel] * 100).toFixed(0);
-                                    if (percentage == 0) return '';
+                                    if (percentage == 0) return '+ 100 %';
                                     return percentage >= 0 ? '+' + percentage + '%' : percentage + '%';
                                 } else {
-                                    return '';
+                                    return '+ 100 %';
                                 }
                             },
                         }
@@ -1207,8 +1207,14 @@
 
 
         for (const [key, value] of Object.entries(opened)) {
+            if (!key || !value) continue;
             xValuesTopWordsOpened.push(key);
             yValuesTopWordsOpened.push(value);
+        }
+
+        if (xValuesTopWordsOpened.length === 0) {
+            handleNoData('loading-icon-top-words', 'top-words-no-data', 'topWords');
+            return;
         }
 
         // for (const [key, value] of Object.entries(ignored)) {
@@ -1268,23 +1274,24 @@
         if (data && data.events && data.events.popover_open) {
             const openedCorporatewords = data.events.popover_open;
             for (const [key, value] of Object.entries(openedCorporatewords)) {
+                if (!key || !value) continue;
                 xValuesTopCorporateWordsOpened.push(key);
                 yValuesTopCorporateWordsOpened.push(value);
             }
-            if (xValuesTopCorporateWordsOpened.length >= 10) {
-                xValuesTopCorporateWordsOpened.slice(0, 10);
-                yValuesTopCorporateWordsOpened.slice(0, 10);
-            } else if (xValuesTopCorporateWordsOpened.length > 0) {
-                for (let i = xValuesTopCorporateWordsOpened.length; i < 10; i++) {
-                    xValuesTopCorporateWordsOpened.push("");
-                    yValuesTopCorporateWordsOpened.push(0);
-                }
+
+            if (xValuesTopCorporateWordsOpened.length === 0) {
+                handleNoData('loading-icon-top-words', 'top-words-no-data', 'topWords');
+                return;
             }
+
+            const xValuesTopCorporateWordsOpenedCut = xValuesTopCorporateWordsOpened.slice(0, 15);
+            const yValuesTopCorporateWordsOpenedCut = yValuesTopCorporateWordsOpened.slice(0, 15);
+            
 
             createBarChart(
                 "topWordsChartCorporateRules",
-                xValuesTopCorporateWordsOpened,
-                yValuesTopCorporateWordsOpened,
+                xValuesTopCorporateWordsOpenedCut,
+                yValuesTopCorporateWordsOpenedCut,
                 "{{ __('content.title_words_bar_chart_month_corporate_rules') }}",
                 true,
                 false,
