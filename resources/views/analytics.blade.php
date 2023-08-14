@@ -205,6 +205,7 @@
                         class="wittyworks-analytics-chart-top-categories">
                      </canvas>
                      <div id="categoryOverview" class="wittyworks-margin-left"></div>
+                     <div class="chart-footer" id="topSubCategoriesChartFooter"></div>
                   </div>
                   <!-- <div class="chart-container-row wittyworks-margin-top">
                      <canvas
@@ -258,12 +259,14 @@
                             id="topWordsChartCorporateRules"
                             class="wittyworks-analytics-chart-extra-large">
                         </canvas>
+                        <div class="chart-footer" id="topWordsChartCorporateRulesFooter"></div>
                     </div>
                     <div class="chart-container-row wittyworks-margin-top">
                         <canvas
                             id="topWordsChart"
                             class="wittyworks-analytics-chart-extra-large wittyworks-margin-top">
                         </canvas>
+                        <div class="chart-footer" id="topWordsChartFooter"></div>
                     </div>
                   <div id="noCorporateRulesWrapper" class="container-row wittyworks-margin-top" style="display: none;">
                      <div class="lato-small-text-p">{!! empty($user) ? __('content.no_corporate_rules') : __('content.no_corporate_rules_user') !!}</div>
@@ -452,10 +455,69 @@
         if (yValues.every((val, i, arr) => val === 0)) {
             document.getElementById(chartId).style.display = "none";
             return;
-        }
+        }        
 
         const newFrom = from.slice(0, 1) * 2 + from.slice(1, 2);
         const to = from; 
+
+        console.log(from)
+
+        // //endDateCurrentPeriod - from 
+        // const startDateCurrentPeriod = 
+        // //end date is now 
+        // const endDateCurrentPeriod =  
+
+        // //startDateCurrentPeriod - from
+        // const startDateComparePeriod = 
+        // //startDateCurrentPeriod
+        // const endDateComparePeriod =
+
+
+        // Assuming today's date for the end of the current period
+           // Assuming today's date for the end of the current period
+           const currentDate = new Date();
+        const endDateCurrentPeriod = formatDate(currentDate);
+
+        function formatDate(date) {
+            const day = String(date.getDate()).padStart(2, '0');
+            const month = String(date.getMonth() + 1).padStart(2, '0'); // +1 because months are 0-based in JavaScript
+            const year = date.getFullYear();
+            return `${day}.${month}.${year}`;
+        }
+
+        let startDateCurrentPeriod;
+        switch(from) {
+            case '1m':
+                currentDate.setMonth(currentDate.getMonth() - 1);
+                break;
+            case '3m':
+                currentDate.setMonth(currentDate.getMonth() - 3);
+                break;
+            case '1y':
+                currentDate.setFullYear(currentDate.getFullYear() - 1);
+                break;
+        }
+        startDateCurrentPeriod = formatDate(currentDate);
+
+        // For comparison periods, assuming you want to compare with the previous interval of the same length
+        const endDateComparePeriod = startDateCurrentPeriod;
+
+        switch(from) {
+            case '1m':
+                currentDate.setMonth(currentDate.getMonth() - 1);
+                break;
+            case '3m':
+                currentDate.setMonth(currentDate.getMonth() - 3);
+                break;
+            case '1y':
+                currentDate.setFullYear(currentDate.getFullYear() - 1);
+                break;
+        }
+        const startDateComparePeriod = formatDate(currentDate);
+
+        const footerText = `{{ __('content.chart_period_comparison_from') }} ${startDateCurrentPeriod} - ${endDateCurrentPeriod}, {{ __('content.chart_period_comparison_to') }} ${startDateComparePeriod} - ${endDateComparePeriod}`;
+        document.getElementById(`${chartId}Footer`).innerText = footerText;
+
         getChartData(chart, newFrom, interval, language, categories, subcategories = [], to).then(data => {
             document.getElementById(chartId).style.display = 'flex';
             const ctx = document.getElementById(chartId).getContext('2d');
@@ -491,7 +553,7 @@
                             ticks: {
                                 beginAtZero: true,
                                 min: 0,  
-                                max: Math.max(...yValues) + 1,                              
+                                max: Math.max(...yValues) + Math.max(...yValues) * 0.15,            
                                 callback: function(value, index, values) {
                                     if (Math.floor(value) === value) {
                                         return value;
@@ -512,10 +574,10 @@
                                 if (previousPeriodPopoverOpened[currentLabel]) {                           
                                     const diff = currentValue - previousPeriodPopoverOpened[currentLabel];
                                     const percentage = (diff / previousPeriodPopoverOpened[currentLabel] * 100).toFixed(0);
-                                    if (percentage == 0) return '';
+                                    if (percentage == 0) return '+ 100 %';
                                     return percentage >= 0 ? '+' + percentage + '%' : percentage + '%';
                                 } else {
-                                    return '';
+                                    return '+ 100 %';
                                 }
                             },
                         }
@@ -1207,8 +1269,14 @@
 
 
         for (const [key, value] of Object.entries(opened)) {
+            if (!key || !value) continue;
             xValuesTopWordsOpened.push(key);
             yValuesTopWordsOpened.push(value);
+        }
+
+        if (xValuesTopWordsOpened.length === 0) {
+            handleNoData('loading-icon-top-words', 'top-words-no-data', 'topWords');
+            return;
         }
 
         // for (const [key, value] of Object.entries(ignored)) {
@@ -1268,23 +1336,24 @@
         if (data && data.events && data.events.popover_open) {
             const openedCorporatewords = data.events.popover_open;
             for (const [key, value] of Object.entries(openedCorporatewords)) {
+                if (!key || !value) continue;
                 xValuesTopCorporateWordsOpened.push(key);
                 yValuesTopCorporateWordsOpened.push(value);
             }
-            if (xValuesTopCorporateWordsOpened.length >= 10) {
-                xValuesTopCorporateWordsOpened.slice(0, 10);
-                yValuesTopCorporateWordsOpened.slice(0, 10);
-            } else if (xValuesTopCorporateWordsOpened.length > 0) {
-                for (let i = xValuesTopCorporateWordsOpened.length; i < 10; i++) {
-                    xValuesTopCorporateWordsOpened.push("");
-                    yValuesTopCorporateWordsOpened.push(0);
-                }
+
+            if (xValuesTopCorporateWordsOpened.length === 0) {
+                handleNoData('loading-icon-top-words', 'top-words-no-data', 'topWords');
+                return;
             }
+
+            const xValuesTopCorporateWordsOpenedCut = xValuesTopCorporateWordsOpened.slice(0, 15);
+            const yValuesTopCorporateWordsOpenedCut = yValuesTopCorporateWordsOpened.slice(0, 15);
+            
 
             createBarChart(
                 "topWordsChartCorporateRules",
-                xValuesTopCorporateWordsOpened,
-                yValuesTopCorporateWordsOpened,
+                xValuesTopCorporateWordsOpenedCut,
+                yValuesTopCorporateWordsOpenedCut,
                 "{{ __('content.title_words_bar_chart_month_corporate_rules') }}",
                 true,
                 false,

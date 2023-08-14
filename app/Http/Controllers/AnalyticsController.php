@@ -170,7 +170,9 @@ class AnalyticsController extends Controller
             $response = PosthogHelper::fetchData($filter, $this->refresh);
             if (isset($response['result'])) {
                 foreach ($response['result'] as $value) {
-                    $data['events'][$event][$value['breakdown_value']] = $value['aggregated_value'];
+                    if (!empty($value['breakdown_value'])) {
+                        $data['events'][$event][$value['breakdown_value']] = $value['aggregated_value'];
+                    }
                 }
                 $data['last_refresh'] = $response['last_refresh'];
             }

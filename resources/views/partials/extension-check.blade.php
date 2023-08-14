@@ -74,15 +74,15 @@
     <div id="upgrade-witty-version" style="display: none" class="wittyworks-upgrade-banner">
         <div>
             <div class="wittyworks-upgrade-banner-title">
-                {!! __('content.upgrade_witty_version_title') !!}
+                {!! __('content.update_witty_version_title') !!}
             </div>
             <div class="wittyworks-upgrade-banner-text">
-                {!! __('content.upgrade_witty_version_text') !!}
+                {!! __('content.update_witty_version_text') !!}
             </div>
         </div>
         <div class="wittyworks-upgrade-banner-button-container">
             <a id="witty-version-options-url" class="button primary-button-purple" target="_blank" rel="noopener">
-                {{ __('content.upgrade_witty_version_button') }}
+                {{ __('content.update_witty_version_button') }}
             </a>
         </div>
     </div>
