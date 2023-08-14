@@ -205,6 +205,7 @@
                         class="wittyworks-analytics-chart-top-categories">
                      </canvas>
                      <div id="categoryOverview" class="wittyworks-margin-left"></div>
+                     <div class="chart-footer" id="topSubCategoriesChartFooter"></div>
                   </div>
                   <!-- <div class="chart-container-row wittyworks-margin-top">
                      <canvas
@@ -258,12 +259,14 @@
                             id="topWordsChartCorporateRules"
                             class="wittyworks-analytics-chart-extra-large">
                         </canvas>
+                        <div class="chart-footer" id="topWordsChartCorporateRulesFooter"></div>
                     </div>
                     <div class="chart-container-row wittyworks-margin-top">
                         <canvas
                             id="topWordsChart"
                             class="wittyworks-analytics-chart-extra-large wittyworks-margin-top">
                         </canvas>
+                        <div class="chart-footer" id="topWordsChartFooter"></div>
                     </div>
                   <div id="noCorporateRulesWrapper" class="container-row wittyworks-margin-top" style="display: none;">
                      <div class="lato-small-text-p">{!! empty($user) ? __('content.no_corporate_rules') : __('content.no_corporate_rules_user') !!}</div>
@@ -452,10 +455,69 @@
         if (yValues.every((val, i, arr) => val === 0)) {
             document.getElementById(chartId).style.display = "none";
             return;
-        }
+        }        
 
         const newFrom = from.slice(0, 1) * 2 + from.slice(1, 2);
         const to = from; 
+
+        console.log(from)
+
+        // //endDateCurrentPeriod - from 
+        // const startDateCurrentPeriod = 
+        // //end date is now 
+        // const endDateCurrentPeriod =  
+
+        // //startDateCurrentPeriod - from
+        // const startDateComparePeriod = 
+        // //startDateCurrentPeriod
+        // const endDateComparePeriod =
+
+
+        // Assuming today's date for the end of the current period
+           // Assuming today's date for the end of the current period
+           const currentDate = new Date();
+        const endDateCurrentPeriod = formatDate(currentDate);
+
+        function formatDate(date) {
+            const day = String(date.getDate()).padStart(2, '0');
+            const month = String(date.getMonth() + 1).padStart(2, '0'); // +1 because months are 0-based in JavaScript
+            const year = date.getFullYear();
+            return `${day}.${month}.${year}`;
+        }
+
+        let startDateCurrentPeriod;
+        switch(from) {
+            case '1m':
+                currentDate.setMonth(currentDate.getMonth() - 1);
+                break;
+            case '3m':
+                currentDate.setMonth(currentDate.getMonth() - 3);
+                break;
+            case '1y':
+                currentDate.setFullYear(currentDate.getFullYear() - 1);
+                break;
+        }
+        startDateCurrentPeriod = formatDate(currentDate);
+
+        // For comparison periods, assuming you want to compare with the previous interval of the same length
+        const endDateComparePeriod = startDateCurrentPeriod;
+
+        switch(from) {
+            case '1m':
+                currentDate.setMonth(currentDate.getMonth() - 1);
+                break;
+            case '3m':
+                currentDate.setMonth(currentDate.getMonth() - 3);
+                break;
+            case '1y':
+                currentDate.setFullYear(currentDate.getFullYear() - 1);
+                break;
+        }
+        const startDateComparePeriod = formatDate(currentDate);
+
+        const footerText = `{{ __('content.chart_period_comparison_from') }} ${startDateCurrentPeriod} - ${endDateCurrentPeriod}, {{ __('content.chart_period_comparison_to') }} ${startDateComparePeriod} - ${endDateComparePeriod}`;
+        document.getElementById(`${chartId}Footer`).innerText = footerText;
+
         getChartData(chart, newFrom, interval, language, categories, subcategories = [], to).then(data => {
             document.getElementById(chartId).style.display = 'flex';
             const ctx = document.getElementById(chartId).getContext('2d');
