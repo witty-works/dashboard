@@ -1,8 +1,9 @@
-<x-jet-form-section class="py-10" submit="updateLanguageGuidelinesCategory">
+<x-jet-form-section class="py-10" submit="updateLanguageGuidelinesCategory" aria-label="{{ $config['translation']['name'] }}">
+
     <x-slot name="title">
         <div class="headline-row">
             <img width="60" class="category_icon" src="{{ $config['icon']['src'] }}" alt="{{ $config['translation']['name'] }} Icon"/>
-            {{ $config['translation']['name'] }}
+            <span>{{ $config['translation']['name'] }}</span>
             @if(!empty($config['translation']['example_image']['src']))
             @include('partials.info_hover', ['category' => $category, 'name' => $config['translation']['name'], 'config' => $config])
             @endif
@@ -18,11 +19,11 @@
     <x-slot name="form" submit="updateLanguageGuidelinesCategory">
         <p>
             {!! $config['translation']['lead_title'] !!}
-            <a href="{{ $config['translation']['canonical_url']}}" target=”_blank” rel=”noopener”>{{ __('content.learn_more') }}</a>
+            <a href="{{ $config['translation']['canonical_url']}}" target="_blank" rel="noopener noreferrer">{{ __('content.learn_more') }}</a>
         </p>
         @foreach ($proficiencyLevels as $proficiencyLevel => $proficiencyLevelData)
         @php
-            $list = $config['diversity_dimension_drivers'][$proficiencyLevel] ?? [];
+        $list = $config['diversity_dimension_drivers'][$proficiencyLevel] ?? [];
             if (empty($list)) {
                 continue;
             }
@@ -48,10 +49,9 @@
                 $disabled = true;
             } else {
                 $disabled = false;
-            }
-        @endphp
-        <div class="guidelines-form-section lato-small-text-p guidelines-form-section-proficiency-level">
-            {{ $proficiencyLevelData['translation']['hs_name'] }}
+            }        @endphp
+        <div class="guidelines-form-section lato-small-text-p guidelines-form-section-proficiency-level" aria-expanded="false">
+            <span>{{ $proficiencyLevelData['translation']['hs_name'] }}</span>
 
             @include('partials.toggle_label', ['disabled' => $disabled])
 
@@ -107,8 +107,7 @@
             @endif
         </div>
         <x-jet-input-error for="dimensions" class="mt-2" />
-        @endif
-        @endforeach
+        @endif        
         @endforeach
     </x-slot>
 

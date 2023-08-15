@@ -1,6 +1,6 @@
 <x-app-layout :pagetitle="__('content.witty_editor')">
     <div class="wittyworks-navigation-wrapper">@livewire('navigation-menu')</div>
-        <div class="wittyworks-page-wrapper">
+        <div class="wittyworks-page-wrapper" id="maincontent">
             <div class="wittyworks-page lg:ml-20">
                 @include('partials.banners')
                 <div class="ibarra-sub-title-h1 margin-top">

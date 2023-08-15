@@ -15,9 +15,10 @@
                 wire:model.defer="team_analytics"
                 :label="__('guidelines.team_analytics_participate')"
                 :disabled="!$model->subscribed() ? 'upgrade' : false"
+                aria-label="{{ __('guidelines.team_analytics_participate') }}"
             />
 
-            <x-jet-input-error for="team_analytics" class="mt-2" />
+            <x-jet-input-error for="team_analytics" class="mt-2" aria-describedby="team_analytics" />
         </div>
     </x-slot>
 

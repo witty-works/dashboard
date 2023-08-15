@@ -1,18 +1,23 @@
 @if($model->subscribed())
-<div class="pt-10">
+<div class="pt-10" aria-labelledby="advancedToggleTitle">
     <x-jet-section-title>
         <x-slot name="title" class="ibarra-sub-title-h2">
-            {{ __('guidelines.advanced_toggle_title') }}
+            <span id="advancedToggleTitle">{{ __('guidelines.advanced_toggle_title') }}</span>
         </x-slot>
 
         <x-slot name="description" class="lato-paragraph-text-p">
-            <div class="headline-row container border-radius">
-                {!! __('guidelines.advanced_toggle_description') !!}
+            <div class="headline-row container border-radius" aria-labelledby="toggleDescription">
+                <span id="toggleDescription">{!! __('guidelines.advanced_toggle_description') !!}</span>
 
-                <div class="py-3 container-row" style="align-items: center; !important">
-                    <div class="tripple-toggle"></div>{{ __('guidelines.proficiency_level_off') }}
-                    <div class="tripple-toggle active middle wittyworks-margin-left"></div>{{ __('guidelines.proficiency_level_basic') }}
-                    <div class="tripple-toggle active wittyworks-margin-left"></div>{{ __('guidelines.proficiency_level_advanced') }}
+                <div class="py-3 container-row" style="align-items: center;">
+                    <button class="tripple-toggle" aria-label="{{ __('guidelines.proficiency_toggle_off_aria_label') }}"></button>
+                    <span>{{ __('guidelines.proficiency_level_off') }}</span>
+                    
+                    <button class="tripple-toggle active middle wittyworks-margin-left" aria-label="{{ __('guidelines.proficiency_toggle_basic_aria_label') }}"></button>
+                    <span>{{ __('guidelines.proficiency_level_basic') }}</span>
+                    
+                    <button class="tripple-toggle active wittyworks-margin-left" aria-label="{{ __('guidelines.proficiency_toggle_advanced_aria_label') }}"></button>
+                    <span>{{ __('guidelines.proficiency_level_advanced') }}</span>
                 </div>
 
                 {!! __('guidelines.advanced_toggle_disclaimer') !!}
