@@ -108,7 +108,7 @@
             />
             @endif
 
-            @if(!empty($diversityDimensionDrivers[$ddd]['translation']['example_image']['src']))
+            @if($proficiencyLevel !== 'openly_discriminating' && !empty($diversityDimensionDrivers[$ddd]['translation']['example_image']['src']))
             @include('partials.info_hover', ['category' => $ddd, 'name' => $diversityDimensionDrivers[$ddd]['translation']['hs_name'], 'config' => $diversityDimensionDrivers[$ddd]])
             @endif
         </div>
