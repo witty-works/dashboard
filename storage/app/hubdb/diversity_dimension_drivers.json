@@ -153,7 +153,12 @@
                 "sub_head": "",
                 "lead_video": "",
                 "lead_image": [],
-                "example_image": [],
+                "example_image": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/F%C3%A4higkeiten-1.png",
+                    "width": "605",
+                    "height": "389",
+                    "alt": "Eine Illustration des Satzes 'Zur Hochzeit kam die ganze bucklige [liebsame und unliebsame] Verwandtschaft.'. Die von Witty vorgeschlagene Alternative ist in Klammern."
+                },
                 "example_image_advanced": "",
                 "example_image_alt_text_advanced": "",
                 "soft_explanation": "",
@@ -237,7 +242,12 @@
                 "sub_head": "",
                 "lead_video": "",
                 "lead_image": [],
-                "example_image": [],
+                "example_image": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Ableist.png",
+                    "width": "900",
+                    "height": "450",
+                    "alt": ""
+                },
                 "example_image_advanced": "",
                 "example_image_alt_text_advanced": "",
                 "soft_explanation": "",
@@ -311,7 +321,12 @@
                 "sub_head": "",
                 "lead_video": "",
                 "lead_image": [],
-                "example_image": [],
+                "example_image": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Altersangabe.png",
+                    "width": "605",
+                    "height": "413",
+                    "alt": "Eine Illustration des Satzes 'Wir brauchen reife [erfahrene] F\u00fchrungskr\u00e4fte, um radikalen Strukturwandel in kreativem Miteinander zu gestalten.\u2019 Die von Witty vorgeschlagene Alternative ist in Klammern."
+                },
                 "example_image_advanced": "",
                 "example_image_alt_text_advanced": "",
                 "soft_explanation": "",
@@ -857,7 +872,12 @@
                 "sub_head": "",
                 "lead_video": "",
                 "lead_image": [],
-                "example_image": [],
+                "example_image": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Verhalten%20(2).png",
+                    "width": "605",
+                    "height": "413",
+                    "alt": "Eine Illustration des Satzes 'In Meetings ist ihr Verhalten auff\u00e4llig [unangepasst].\u2019. Die von Witty vorgeschlagene Alternative ist in Klammern."
+                },
                 "example_image_advanced": "",
                 "example_image_alt_text_advanced": "",
                 "soft_explanation": "",
@@ -1193,7 +1213,12 @@
                 "sub_head": "",
                 "lead_video": "",
                 "lead_image": [],
-                "example_image": [],
+                "example_image": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Denkf%C3%A4higkeit.png",
+                    "width": "605",
+                    "height": "413",
+                    "alt": "Eine Illustration des Satzes 'Das war wirklich dumm [gedankenlos] von ihm.'. Die von Witty vorgeschlagene Alternative ist in Klammern."
+                },
                 "example_image_advanced": "",
                 "example_image_alt_text_advanced": "",
                 "soft_explanation": "",
@@ -1895,7 +1920,12 @@
                 "sub_head": "",
                 "lead_video": "",
                 "lead_image": [],
-                "example_image": [],
+                "example_image": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Frauenklischee.png",
+                    "width": "605",
+                    "height": "389",
+                    "alt": "Eine Illustration des Satzes 'Aktuell haben wir in der Agentur zwei Lehrt\u00f6chter [Auszubildende].\u2019. Die von Witty vorgeschlagene Alternative ist in Klammern."
+                },
                 "example_image_advanced": "",
                 "example_image_alt_text_advanced": "",
                 "soft_explanation": "",
@@ -2071,7 +2101,12 @@
                 "sub_head": "",
                 "lead_video": "",
                 "lead_image": [],
-                "example_image": [],
+                "example_image": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/F%C3%B6rmlichkeit.png",
+                    "width": "605",
+                    "height": "413",
+                    "alt": "Eine Illustration des Satzes 'Danke f\u00fcr Ihr zahlreiches Erscheinen! Wir freuen uns, Sie begr\u00fc\u00dfen zu d\u00fcrfen! [Herzlich willkommen!]\u2019. Die von Witty vorgeschlagene Alternative ist in Klammern."
+                },
                 "example_image_advanced": "",
                 "example_image_alt_text_advanced": "",
                 "soft_explanation": "",
@@ -2132,7 +2167,7 @@
                 },
                 "example_image_advanced": "",
                 "example_image_alt_text_advanced": "",
-                "soft_explanation": "<p style=\"\"><span style=\"color: #000000;\">A superhero, a surgeon, and a priest walk into a bar*. If you\u2019re picturing three men, your brain has tripped over gender stereotypes. These stereotypes are triggered by the traditional gender images around us. It takes our brain some backtracking, or a nudge, to realize these three could be women, non-binary, or a mixed group. You have several options to nudge brains into including all genders (see below).<\/span><\/p>\n<p><span style=\" color: #000000;\"><span style=\"\">*The punchline? Is \u201cOuch.\u201d <\/span><span style=\" color: #000000;\">\ud83e\udd71<\/span><\/span><\/p>",
+                "soft_explanation": "<p><span>A superhero, a surgeon, and a priest walk into a bar*. If you\u2019re picturing three men, your brain has tripped over gender stereotypes. These stereotypes are triggered by the traditional gender images around us. It takes our brain some backtracking, or a nudge, to realize these three could be women, non-binary, or a mixed group. You have several options to nudge brains into including all genders (see below). <\/span><\/p>\n<p><span>The punchline? Is \u201cOuch.\u201d \ud83e\udd71<\/span><\/p>",
                 "hard_facts": "<p style=\"\"><span style=\"color: #000000;\">The idea of men as the human default is deeply embedded in our culture. This male bias informs our legal language. It shapes how our brain reads the gender of roles like <em>officer<\/em> or <em>leader<\/em>. This bias is reinforced by language and imagery that draws on gender stereotypes. At the same time, our brain\u2019s tendency toward male reading of functions undercuts the representation of women and gender non-conforming people. And it limits people to traditional gender roles, gender identities, and gender expressions. Our gender reading of words can shift as more people take on non-traditional gender roles. And there is evidence that the language we choose to use not only reflects but creates gender perception. A 2019 study showed that gender-neutral pronouns increase positive attitudes toward women and LGBTQIA+ people. Language is the key to making inclusion happen.<\/span><\/p>\n<h3 style=\"\"><span style=\"color: #000000;\">What you can do to <\/span><span style=\"color: #000000;\">include all gender possibilities<\/span><\/h3>\n<p>1 - Focus on the activity.&nbsp;<br>2 - Avoid words with a gendered undertone like <em>rockstar<\/em>, <em>guru<\/em>, or <em>superhero<\/em>.<br>3 - Rephrase with plurals or gender-neutral words.&nbsp;<br>4 - Nudge brains back on track with the gender-neutral <em>they<\/em>.<\/p>",
                 "hero_figure": "https:\/\/www.witty.works\/hubfs\/63.9%25%20of%20officers%20are%20male%20EN%20.png,1024,576",
                 "hero_figure_alt_text": "Figure: 63.9% of officers are male. A male reading of officer renders the 36.1% who identify as female, trans, or non-binary invisible. zippia.com",
@@ -2345,10 +2380,10 @@
                 "lead_video": "",
                 "lead_image": [],
                 "example_image": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Geschlechter-Spezifische%20Abk%C3%BCrzung.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Geschlechter-Spezifische%20Abk%C3%BCrzung-1.png",
                     "width": "605",
-                    "height": "422",
-                    "alt": "Eine Illustration von Witty des Satzes 'Consultant (m\/f\/d)'. Als Alternative f\u00fcr den Begriff in Klammern wird \u2018(d\/f\/m)\u2019 vorgeschlagen."
+                    "height": "407",
+                    "alt": "Eine Illustration des Satzes 'F\u00fcr unsere Partner im Gro\u00dfraum Frankfurt sowie andere St\u00e4dte suchen wir ab sofort motivierte und engagierte Erzieher, Kinderpfleger und Sozialp\u00e4dagogen (m\/w) [(d\/w\/m)].\u2019 Die von Witty vorgeschlagene Alternative ist in eckigen Klammern."
                 },
                 "example_image_advanced": "",
                 "example_image_alt_text_advanced": "",
@@ -2470,7 +2505,12 @@
                 "sub_head": "",
                 "lead_video": "",
                 "lead_image": [],
-                "example_image": [],
+                "example_image": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Generischer%20Plural.png",
+                    "width": "605",
+                    "height": "436",
+                    "alt": "Eine Illustration des Satzes 'F\u00fcr unsere Partner im Gro\u00dfraum Frankfurt sowie andere St\u00e4dte suchen wir ab sofort motivierte und engagierte Erzieher, Kinderpfleger und Sozialp\u00e4dagogen [Erzieher*innen, Kinderpfleger*innen und Sozialp\u00e4dagog*innen].\u2019 Die von Witty vorgeschlagene Alternative ist in Klammern."
+                },
                 "example_image_advanced": "",
                 "example_image_alt_text_advanced": "",
                 "soft_explanation": "",
@@ -3003,7 +3043,12 @@
                 "sub_head": "",
                 "lead_video": "",
                 "lead_image": [],
-                "example_image": [],
+                "example_image": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Lernf%C3%A4higkeit.png",
+                    "width": "605",
+                    "height": "413",
+                    "alt": "Eine Illustration des Satzes 'F\u00fcr Auszubildende mit Lernbehinderungen [Seh- und Lesebehinderungen] entwickeln wir zur Zeit barrierefreie Lernmaterialien.'. Die von Witty vorgeschlagene Alternative ist in Klammern."
+                },
                 "example_image_advanced": "",
                 "example_image_alt_text_advanced": "",
                 "soft_explanation": "",
@@ -3082,7 +3127,12 @@
                 "sub_head": "",
                 "lead_video": "",
                 "lead_image": [],
-                "example_image": [],
+                "example_image": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/M%C3%A4nnerklischee.png",
+                    "width": "605",
+                    "height": "389",
+                    "alt": "Eine Illustration des Satzes 'Mehrere unserer Kollegen sind selbst Familienv\u00e4ter [Eltern].\u2019. Die von Witty vorgeschlagene Alternative ist in Klammern."
+                },
                 "example_image_advanced": "",
                 "example_image_alt_text_advanced": "",
                 "soft_explanation": "",
@@ -3160,7 +3210,12 @@
                 "short_explanation": "Bedient Stereotypen von Gesundheit und Krankheit",
                 "sub_head": "",
                 "lead_video": "",
-                "lead_image": [],
+                "lead_image": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Gesundheitsbild%20(1).png",
+                    "width": "605",
+                    "height": "413",
+                    "alt": "Eine Illustration des Satzes 'Seit dem Unfall ist sie ein Pflegefall [jemand mit Assistenzbedarf].\u2019. Die von Witty vorgeschlagene Alternative ist in Klammern."
+                },
                 "example_image": [],
                 "example_image_advanced": "",
                 "example_image_alt_text_advanced": "",
@@ -3670,7 +3725,12 @@
                     "height": "492",
                     "alt": "Illustration: A person curses loudly into his cell phone. Two people stand expressionless next to it with question marks in a shared thought bubble."
                 },
-                "example_image": [],
+                "example_image": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/illustration%20of%20angry%20people.png",
+                    "width": "900",
+                    "height": "450",
+                    "alt": ""
+                },
                 "example_image_advanced": "",
                 "example_image_alt_text_advanced": "",
                 "soft_explanation": "Menschen verwenden gelegentlich Kraftausdr\u00fccke, um Wut oder Frustration loszuwerden. Wenn du das auch tust, versuche, das Ganze aus der Perspektive deiner Umgebung zu betrachten. Schimpfw\u00f6rter sind darauf ausgelegt, zu verletzen, zu ver\u00e4rgern, einzusch\u00fcchtern oder zu besch\u00e4men. Offensive Sprache pr\u00e4gt wie andere dich sehen und kann eine Arbeitsatmosph\u00e4re schaffen, in der sich andere gestresst und verwundbar f\u00fchlen. Anst\u00f6\u00dfige Sprache, Kraftausdr\u00fccke, und Beleidigungen k\u00f6nnen Mobbing oder Bel\u00e4stigung gleichkommen, also verbalen, k\u00f6rperlichen, sozialen oder psychologischen Missbrauch darstellen. Menschen, die erleben, wie du andere beschimpfst, k\u00f6nnen dein Verhalten als Signal deuten, dass verbale \u00dcbergriffe in eurem gemeinsamen Umfeld akzeptabel ist.",
@@ -3749,7 +3809,12 @@
                 "sub_head": "",
                 "lead_video": "",
                 "lead_image": [],
-                "example_image": [],
+                "example_image": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/K%C3%B6rperlichkeit.png",
+                    "width": "605",
+                    "height": "412",
+                    "alt": "Eine Illustration des Satzes 'Die [hochgewachsene] Kollegin in Blau, die neben ihm steht, arbeitet im Marketing.\u2019. Witty schl\u00e4gt vor, das Wort in Klammern wegzulassen."
+                },
                 "example_image_advanced": "",
                 "example_image_alt_text_advanced": "",
                 "soft_explanation": "",
@@ -4702,7 +4767,12 @@
                 "sub_head": "",
                 "lead_video": "",
                 "lead_image": [],
-                "example_image": [],
+                "example_image": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Seh-F%C3%A4higkeit.png",
+                    "width": "605",
+                    "height": "413",
+                    "alt": "Eine Illustration des Satzes 'Den Vertrag w\u00fcrde ich blind [ungelesen] unterschreiben.'. Die von Witty vorgeschlagene Alternative ist in Klammern."
+                },
                 "example_image_advanced": "",
                 "example_image_alt_text_advanced": "",
                 "soft_explanation": "",
@@ -4818,38 +4888,6 @@
         "category": "cultural-diversity",
         "related_subcategories": [],
         "translations": {
-            "en": {
-                "hs_path": "yiddish-pejoratives",
-                "hs_name": "Yiddish pejoratives",
-                "canonical_url": "https:\/\/www.witty.works\/en\/categories\/cultural-diversity\/yiddish-pejoratives",
-                "is_active": "1",
-                "name": "Negatively reinterpret Yiddish words",
-                "short_explanation": "Negatively reinterprets a Yiddish word",
-                "sub_head": "",
-                "lead_video": "",
-                "lead_image": [],
-                "example_image": [],
-                "example_image_advanced": "",
-                "example_image_alt_text_advanced": "",
-                "soft_explanation": "",
-                "hard_facts": "",
-                "hero_figure": "",
-                "hero_figure_alt_text": "",
-                "hero_figure_url": "",
-                "hero_fact": "",
-                "hero_fact_alt_text": "",
-                "hero_fact_url": "",
-                "inclusive_sentence": "",
-                "non_inclusive_sentence": "",
-                "meme": "",
-                "meme_alt_text": "",
-                "meme_url": "",
-                "meme_2": "",
-                "meme_2_alt_text": "",
-                "meme_2_url": "",
-                "read_on": "",
-                "anchor": ""
-            },
             "de": {
                 "hs_path": "negative-verwendung-jiddischer-worte",
                 "hs_name": "Negative Verwendung jiddischer Worte",
