@@ -93,6 +93,13 @@ crons:
             if [ "$PLATFORM_BRANCH" = main ] || [ "$PLATFORM_BRANCH" = dev ]; then
                 php artisan posthog:sync
             fi
+    api-full-sync:
+        # once per day at 05:20
+        spec: "20 5 * * *"
+        cmd: |
+            if [ "$PLATFORM_BRANCH" = main ]; then
+                php artisan npl_api:sync
+            fi
     snapshot-once-per-day:
         # once per day at 12:00
         spec: "0 12 * * *"
