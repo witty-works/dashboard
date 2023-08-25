@@ -52,6 +52,11 @@ class Team extends JetstreamTeam
         'deleted' => TeamDeleted::class,
     ];
 
+    public function setNameAttribute($name)
+    {
+        $this->attributes['name'] = strip_tags($name);
+    }
+
     public function subscribed($name = 'teams', $price = null)
     {
         if ($name === 'teams' && $price === null) {
