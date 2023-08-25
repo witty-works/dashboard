@@ -91,6 +91,11 @@ class User extends Authenticatable implements MustVerifyEmail
         'profile_photo_url',
     ];
 
+    public function setNameAttribute($name)
+    {
+        $this->attributes['name'] = strip_tags($name);
+    }
+
     /**
      * Get the URL to the user's profile photo.
      *
