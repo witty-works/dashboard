@@ -98,7 +98,7 @@ crons:
         spec: "20 5 * * *"
         cmd: |
             if [ "$PLATFORM_BRANCH" = main ]; then
-                php artisan npl_api:sync
+                php artisan nlp_api:sync
             fi
     snapshot-once-per-day:
         # once per day at 12:00
