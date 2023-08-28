@@ -198,7 +198,7 @@ class AnalyticsController extends Controller
             'events' => 'nullable|array|in:check,popover_open,alternative,ignore,learning_bites',
             'categories' => 'nullable|array|in:' . implode(',', $this->categories->keys()->toArray()),
             'subcategories' => 'nullable|array|in:' . implode(',', $this->subcategories->keys()->toArray()),
-            'inclusive' => 'nullable|in:yes,no,both',
+            'inclusive' => 'nullable|in:inclusive,non_inclusive,both',
         ];
 
         $validated = $request->validate($rules);
@@ -211,7 +211,7 @@ class AnalyticsController extends Controller
         $events = $validated['events'] ?? null;
         $categories = $validated['categories'] ?? [];
         $subcategories = $validated['subcategories'] ?? [];
-        $inclusive = $validated['inclusive'] ?? 'no';
+        $inclusive = $validated['inclusive'] ?? 'non_inclusive';
 
         // BC code
         if (is_numeric($from)) {
@@ -249,13 +249,13 @@ class AnalyticsController extends Controller
                         $properties[] = [
                             'key' => 'response__data__subcategory',
                             'value' => $subcategory,
-                            'operator' => $inclusive === 'yes' ? 'exact' : 'is_not',
+                            'operator' => $inclusive === 'inclusive' ? 'exact' : 'is_not',
                             'type' => 'event',
                         ];
-                    } elseif ($inclusive === 'no') {
+                    } elseif ($inclusive === 'non_inclusive') {
                         $subcategoriesToRemove[] = $subcategory;
                     }
-                } elseif ($inclusive === 'yes') {
+                } elseif ($inclusive === 'inclusive') {
                     $subcategoriesToRemove[] = $subcategory;
                 }
             }

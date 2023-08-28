@@ -72,9 +72,9 @@
             <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.inclusive_filter') }}</div>
             @php
                 $ranges = [
-                    'yes' => __('content.inclusive_filter_non_inclusive'),
+                    'non_inclusive' => __('content.inclusive_filter_non_inclusive'),
                     'both' => __('content.inclusive_filter_both'),
-                    'no' => __('content.inclusive_filter_inclusive'),
+                    'inclusive' => __('content.inclusive_filter_inclusive'),
                 ];
             @endphp
             <x-select
