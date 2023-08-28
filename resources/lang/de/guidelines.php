@@ -6,7 +6,7 @@ return [
     'language_code_label' => 'Dieser Begriff ist',
     'manage_organization_guidelines' => 'Organisationsrichtlinien verwalten',
     'manage_organization_guidelines_description' => 'Konfiguriere Witty so, dass es besser zum Schreibstil deines Teams passt.',
-    'german_gender_ending' => 'Wähle deine bevorzugte deutsche Gender-Endung. In der Standardeinstellung verwendet Witty das Gernder-Sternchen. Lies <a href="https://be-hindernisse.org/2022/02/15/mythos-der-doppelpunkt-ist-perfekt-zum-entgendern/" target="_blank”>hier</a> warum. In <a href="https://www.witty.works/en/blog/gender-inclusive-writing-in-german" target="_blank">diesem Blogbeitrag</a> erklären wir alle Geschlechtsformen.',
+    'german_gender_ending' => 'Wähle deine bevorzugte deutsche Gender-Endung. In der Standardeinstellung verwendet Witty das Gernder-Sternchen. Lies <a href="https://be-hindernisse.org/2022/02/15/mythos-der-doppelpunkt-ist-perfekt-zum-entgendern/" target="_blank">hier</a> warum. In <a href="https://www.witty.works/en/blog/gender-inclusive-writing-in-german"  target="_blank">diesem Blogbeitrag</a> erklären wir alle Geschlechtsformen.',
     'list_false_positives' => 'Ignorierte Wörter',
     'gendered_roles_format' => 'Wähle aus, welche Gender-Endung Witty vorschlagen soll.',
     'both' => 'Die gewählte Gender-Endung und die weibliche und männliche Form vorschlagen',

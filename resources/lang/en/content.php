@@ -278,17 +278,17 @@ Please use Witty more often and click on the highlighted terms.',
     'saturday' => 'Saturday',
     'sunday' => 'Sunday',
     'start_of_week' => 'Start of week: ',
-    'chart_time_range' => 'Select time range:',
+    'chart_time_range' => 'Time-range:',
     'chart_time_range_week' => 'Week',
     'chart_time_range_month' => 'Month',
     'chart_time_range_quarter' => 'Quarter',
     'chart_time_range_year' => 'Year',
     'chart_time_range_all' => 'All',
-    'language_filter' => 'Select language:',
+    'language_filter' => 'Language:',
     'language_filter_en' => 'English',
     'language_filter_de' => 'German',
     'language_filter_both' => 'Both',
-    'category_filter' => 'Select category:',
+    'category_filter' => 'Category:',
     'all_categories' => 'All categories',
     'update_witty_version_title' => 'You don\'t have the latest version of Witty installed',
     'update_witty_version_text' => 'Please update Witty to the latest version to use the full functionality of Witty.',
@@ -394,7 +394,7 @@ If you have any questions, contact :name (:email). 🙂
     'witty_editor_example_text' => '<h2>The basics</h2><h4>Witty highlights language containing unconscious biased in orange:</h4><br><br><em>Hey guys,<br>We have a large software project that will take man-hours to complete. Who would like to join us? Bring your extraordinary expertise and strong technical background. We are also looking for a digital native.</em><br><br><em>P.S. Your wives are welcome at the board\'s Christmas party.</em><br><br><h4>Witty highlights positive terms in green:</h4><br><em>We are a creative team.</em><br><br><h4>Witty highlights grammar and spelling mistakes in red:</h4><br><em>This is a spelling mistacke.</em>
 
 <h2>Where Witty works</h2>
-<p>Witty works on <a href="https://www.witty.works/witty-works-where-you-do" rel="noopener" target="_blank" style="box-sizing: border-box; background-color: transparent; cursor: pointer; text-decoration: none; transition: all 0.2s ease-in-out 0s; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: 30px; text-transform: none; color: rgb(85, 184, 233);">most webpage</a> where you write. &nbsp;Witty is activated automatically. If you use Microsoft products, use our <a href="http://dashboard.witty.works/editor" rel="noopener" target="_blank" style="box-sizing: border-box; background-color: transparent; cursor: pointer; text-decoration: none; transition: all 0.2s ease-in-out 0s; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: 30px; text-transform: none; color: rgb(85, 184, 233);">Editor</a> instead.</p>
+<p>Witty works on <a href="https://www.witty.works/witty-works-where-you-do" rel="noopener" target="_blank" style="color: rgb(85, 184, 233);">most webpage</a> where you write. &nbsp;Witty is activated automatically. If you use Microsoft products, use our <a href="http://dashboard.witty.works/editor" rel="noopener" target="_blank" style="color: rgb(85, 184, 233);">Editor</a> instead.</p>
 
 <div><img src="https://www.witty.works/hubfs/Screenshot%202023-03-16%20at%2016.15.39.png" alt="Logo of Google Docs, Notion, Gmail, LinkedIn, Personio and greenhouse" style="width:100%; padding:top:20px" ></div>',
     'learn_more' => 'Dig deeper',
@@ -419,7 +419,7 @@ If you have any questions, contact :name (:email). 🙂
     'chart_period_comparison_to' => 'to the period: ',
     'witty_word_addin' => 'Welcome!',
     'witty_word_addin_text' => 'You have successfully logged in to the Witty Word-Addin.<br>You can now close this window.',
-    'inclusive_filter' => 'Select inclusive',
+    'inclusive_filter' => 'Inclusion',
     'inclusive_filter_non_inclusive' => 'Non-inclusive',
     'inclusive_filter_both' => 'Both',
     'inclusive_filter_inclusive' => 'Inclusive',
