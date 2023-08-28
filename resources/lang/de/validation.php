@@ -116,9 +116,9 @@ return [
             'rule-name' => 'custom-message',
         ],
     ],
-    'accepted_if' => 'accepted if',
+    'accepted_if' => ':attribute muss akzeptiert werden, wenn :other gleich :value ist.',
     'current_password' => 'current_password',
-    'prohibits' => 'prohibits',
+    'prohibits' => 'Das Feld :attribute verhindert, dass :other vorhanden ist.',
     'attributes' => [
         'term' => 'Begriff',
         'replacement' => 'Alternative',

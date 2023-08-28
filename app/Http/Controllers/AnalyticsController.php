@@ -22,7 +22,7 @@ class AnalyticsController extends Controller
     {
         $this->refresh = $request->get('refresh', false);
         $this->categories = SyncToHubspotCategoriesCommand::loadTableData('categories');
-        $this->subcategories = SyncToHubspotCategoriesCommand::loadTableData('diversity_dimension_drivers');
+        $this->subcategories = SyncToHubspotCategoriesCommand::loadTableData('diversity_dimension_drivers', true);
     }
 
     public function user(Request $request)
@@ -136,15 +136,13 @@ class AnalyticsController extends Controller
 
     protected function buildBreakdown($events, $properties, $filters, $breakdown, $interval, $from, $to, $math = 'total')
     {
-        if (empty($filters)) {
-            // filter out orthography by default
-            $properties[] = [
-                'key' => 'response__data__category',
-                'value' => 'orthography',
-                'operator' => 'is_not',
-                'type' => 'event',
-            ];
-        }
+        // filter out orthography
+        $properties[] = [
+            'key' => 'response__data__category',
+            'value' => 'orthography',
+            'operator' => 'is_not',
+            'type' => 'event',
+        ];
 
         $filter = $this->buildFilter($properties, $filters, $interval, $from, $to, $math);
 
@@ -200,6 +198,7 @@ class AnalyticsController extends Controller
             'events' => 'nullable|array|in:check,popover_open,alternative,ignore,learning_bites',
             'categories' => 'nullable|array|in:' . implode(',', $this->categories->keys()->toArray()),
             'subcategories' => 'nullable|array|in:' . implode(',', $this->subcategories->keys()->toArray()),
+            'inclusive' => 'nullable|in:inclusive,non_inclusive,both',
         ];
 
         $validated = $request->validate($rules);
@@ -212,6 +211,7 @@ class AnalyticsController extends Controller
         $events = $validated['events'] ?? null;
         $categories = $validated['categories'] ?? [];
         $subcategories = $validated['subcategories'] ?? [];
+        $inclusive = $validated['inclusive'] ?? 'non_inclusive';
 
         // BC code
         if (is_numeric($from)) {
@@ -238,6 +238,31 @@ class AnalyticsController extends Controller
                 'operator' => 'exact',
                 'type' => 'event',
             ];
+        }
+
+        if ($inclusive !== 'both') {
+            $subcategoriesToRemove = [];
+            foreach ($this->subcategories as $subcategory => $subcategoryData) {
+                $proficiencyLevel = $subcategoryData['proficiency_level'] ?? 'corporate_rules';
+                if ($proficiencyLevel === 'inclusive') {
+                    if (empty($subcategories)) {
+                        $properties[] = [
+                            'key' => 'response__data__subcategory',
+                            'value' => $subcategory,
+                            'operator' => $inclusive === 'inclusive' ? 'exact' : 'is_not',
+                            'type' => 'event',
+                        ];
+                    } elseif ($inclusive === 'non_inclusive') {
+                        $subcategoriesToRemove[] = $subcategory;
+                    }
+                } elseif ($inclusive === 'inclusive') {
+                    $subcategoriesToRemove[] = $subcategory;
+                }
+            }
+
+            if (!empty($subcategories)) {
+                $subcategories = array_diff($subcategories, $subcategoriesToRemove);
+            }
         }
 
         if (!empty($subcategories)) {
@@ -391,6 +416,7 @@ class AnalyticsController extends Controller
                 if (!is_array($events)) {
                     $events = ['popover_open', 'alternative', 'ignore'];
                 }
+                $events = ['popover_open'];
 
                 $data = $this->buildBreakdown(
                     $events,
@@ -423,6 +449,7 @@ class AnalyticsController extends Controller
                 if (!is_array($events)) {
                     $events = ['popover_open', 'alternative', 'ignore'];
                 }
+                $events = ['popover_open'];
 
                 $data = $this->buildBreakdown(
                     $events,
