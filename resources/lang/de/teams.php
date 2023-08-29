@@ -37,4 +37,5 @@ return [
     'amount_per_year' => ':count-Lizenzen – :amount pro Jahr',
     'license_count_did_not_change' => 'Die Lizenzanzahl wurde nicht geändert.',
     'to_upgrade_contact_owner' => 'Um dein Abo anzupassen, wende dich bitte an deine*n Team-Eigentümer*in.',
+    'select_license_count_aria_label' => 'Wählen die Anzahl der Lizenzen aus',
 ];

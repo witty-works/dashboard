@@ -1,6 +1,6 @@
 <x-jet-form-section submit="storeDomain">
     <x-slot name="title">
-        <div id="domains">
+        <div id="domains_title">
             {{ __('guidelines.create_domain') }}
         </div>
     </x-slot>
@@ -22,15 +22,14 @@
                 class="mt-1 block w-full"
                 wire:model.defer="domain"
                 autocomplete="domain"
+                aria-labelledby="domains_title"
             />
 
-            <x-jet-input-error for="domain" class="mt-2" />
+            <x-jet-input-error for="domain" class="mt-2" aria-describedby="domain" />
         </div>
-
     </x-slot>
 
     <x-slot name="actions">
         @include('partials/save_cancel_action')
     </x-slot>
-
 </x-jet-form-section>

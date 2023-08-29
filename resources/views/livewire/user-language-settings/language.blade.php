@@ -1,4 +1,5 @@
 <x-jet-form-section class="py-10" submit="updateLanguageGuidelinesLanguage">
+
     <x-slot name="title" class="ibarra-sub-title-h2">
         {{ __('guidelines.manage_organization_guidelines_language') }}
     </x-slot>
@@ -7,13 +8,16 @@
     </x-slot>
 
     <x-slot name="form" submit="updateLanguageGuidelinesLanguage">
-        <div class="lato-paragraph-text-p margin-bottom">{!! __('guidelines.manage_organization_guidelines_description_language') !!}</div>
 
-        <x-jet-input-error for="preferred_variants" class="mt-2" />
+        <h3 class="lato-paragraph-text-p margin-bottom">
+            {!! __('guidelines.manage_organization_guidelines_description_language') !!}
+        </h3>
 
-        <div class="lato-small-text-p">
+        <x-jet-input-error for="preferred_variants" class="mt-2" role="alert" />
+
+        <label class="lato-small-text-p" for="preferred_variants_en">
             {{ __('guidelines.user_preferred_variants_dialect') }}
-        </div>
+        </label>
 
         <div class="flex flex-row">
             <div>
@@ -23,14 +27,14 @@
                     wire:model.defer="preferred_variants_en"
                     :disabled="\App\Models\LanguageGuidelines::isForcedOnTeam($model, 'preferred_variants')"
                 />
-                <x-jet-input-error for="preferred_variants_en" class="mt-2" />
+                <x-jet-input-error for="preferred_variants_en" class="mt-2" role="alert" />
             </div>
             @include('partials.toggle_label', ['disabled' => \App\Models\LanguageGuidelines::isForcedOnTeam($model, 'preferred_variants')])
         </div>
 
-        <div class="lato-small-text-p">
+        <label class="lato-small-text-p" for="preferred_variants_de">
             {{ __('guidelines.user_preferred_variants_dialect') }}
-        </div>
+        </label>
 
         <div class="flex flex-row">
             <div>
@@ -40,16 +44,16 @@
                     wire:model.defer="preferred_variants_de"
                     :disabled="\App\Models\LanguageGuidelines::isForcedOnTeam($model, 'preferred_variants')"
                 />
-                <x-jet-input-error for="preferred_variants_de" class="mt-2" />
+                <x-jet-input-error for="preferred_variants_de" class="mt-2" role="alert" />
             </div>
             @include('partials.toggle_label', ['disabled' => \App\Models\LanguageGuidelines::isForcedOnTeam($model, 'preferred_variants')])
         </div>
     </x-slot>
 
     @if(!\App\Models\LanguageGuidelines::isForcedOnTeam($model, 'preferred_variants'))
-    <x-slot name="actions">
-        @include('partials/save_cancel_action')
-    </x-slot>
+        <x-slot name="actions">
+            @include('partials/save_cancel_action')
+        </x-slot>
     @endif
 
 </x-jet-form-section>

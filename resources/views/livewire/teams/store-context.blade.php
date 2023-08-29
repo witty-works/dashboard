@@ -15,9 +15,10 @@
                 wire:model.defer="store_context"
                 :label="__('teams.store_context')"
                 :disabled="!$model->subscribed() ? 'upgrade' : (Auth::user()->hasTeamPermission($model, 'update') ? false : 'locked')"
+                aria-label="{{ __('teams.store_context') }}"
             />
 
-            <x-jet-input-error for="store_context" class="mt-2" />
+            <x-jet-input-error for="store_context" class="mt-2" aria-describedby="store_context" />
         </div>
     </x-slot>
 
