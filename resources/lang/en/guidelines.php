@@ -51,7 +51,7 @@ All words added to this list will become highlighted by Witty, and your custom r
     'term_already_exists' => 'Term already exists',
     'explanation_label' => 'Explanation (Optional)',
     'url_label' => 'URL with further explanation (Optional)',
-    'emoji_label' => 'Emoji like 😟 or 💡 (Optional). You can get one <a href="https://emojipedia.org/" target="_blank">here</a>.',
+    'emoji_label' => 'Include an emoji, such as <span aria-label="worried face">😟</span> for expressing concern or <span aria-label="light bulb">💡</span> for an idea (Optional). Find the perfect emoji on <a href="https://emojipedia.org/" target="_blank" rel="noopener noreferrer">Emojipedia</a>.',
     'action_label' => 'Action',
     'emoji_invalid_format' => 'The emoji field may only contain a single emoji character.',
     'emoji_short_label' => 'Emoji',
@@ -122,4 +122,6 @@ All words added to this list will become highlighted by Witty, and your custom r
     'proficiency_level_off' => 'Off',
     'proficiency_level_basic' => 'Basic',
     'proficiency_level_advanced' => 'Advanced',
+    'form_reset_category_aria_label' => 'reset diversity dimension settings',
+    'form_reset_language_aria_label' => 'reset language settings',
 ];

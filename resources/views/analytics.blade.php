@@ -9,7 +9,7 @@
 ?>
 <x-app-layout :pagetitle="__('content.analytics')">
 <div class="wittyworks-navigation-wrapper">@livewire('navigation-menu')</div>
-<div class="wittyworks-page-wrapper">
+<div class="wittyworks-page-wrapper" id="maincontent">
    <div class="wittyworks-page lg:ml-20">
       @include('partials.banners')
       <div class="ibarra-sub-title-h1 margin-top">
@@ -1450,10 +1450,18 @@ function handleTabClick(clickedTabId) {
 
 
 document.addEventListener("DOMContentLoaded", function() {
-  setCheckboxSelectLabels();
-  const checkboxes = document.querySelector('.checkboxes');
-  let toggleNext = document.querySelectorAll('.toggle-next');
-  document.addEventListener('click', function(e) {
+    setCheckboxSelectLabels();
+    const checkboxes = document.querySelector('.checkboxes');
+    let toggleNext = document.querySelectorAll('.toggle-next');
+
+    document.addEventListener('keydown', function(event) {
+        if ((event.key === 'Enter' || event.keyCode === 13) && checkboxes.style.display !== 'none') {
+            checkboxes.style.display = 'none';
+            setParams();
+        }
+    });
+
+    document.addEventListener('click', function(e) {
         if (!e.target.classList.contains('checkboxes')
             && !e.target.classList.length == 0
             && !e.target.classList.contains('ckkBox')
@@ -1463,29 +1471,30 @@ document.addEventListener("DOMContentLoaded", function() {
             && checkboxes.style.display !== 'none'
         ) {
             checkboxes.style.display = 'none';
-            setParams()
+            setParams();
         }
     });
-  for (let i = 0; i < toggleNext.length; i++) {
-    toggleNext[i].addEventListener('click', function(e) {
-      if (checkboxes.style.display === 'none' || !checkboxes.style.display) {
-        checkboxes.style.display = 'block';
-      } 
-    });
-  }
-  
-  let ckkBoxes = document.querySelectorAll('.ckkBox');
-  for (let j = 0; j < ckkBoxes.length; j++) {
-    ckkBoxes[j].addEventListener('change', function() {
-        if (this.value === 'all_categories') {
-            const checkboxes = this.parentElement.parentElement.querySelectorAll('.ckkBox');
-            for (let m = 0; m < checkboxes.length; m++) {
-            checkboxes[m].checked = this.checked;
+
+    for (let i = 0; i < toggleNext.length; i++) {
+        toggleNext[i].addEventListener('click', function(e) {
+            if (checkboxes.style.display === 'none' || !checkboxes.style.display) {
+                checkboxes.style.display = 'block';
+            } 
+        });
+    }
+
+    let ckkBoxes = document.querySelectorAll('.ckkBox');
+    for (let j = 0; j < ckkBoxes.length; j++) {
+        ckkBoxes[j].addEventListener('change', function() {
+            if (this.value === 'all_categories') {
+                const checkboxes = this.parentElement.parentElement.querySelectorAll('.ckkBox');
+                for (let m = 0; m < checkboxes.length; m++) {
+                    checkboxes[m].checked = this.checked;
+                }
             }
-        }
-      setCheckboxSelectLabels();
-    });
-  }
+            setCheckboxSelectLabels();
+        });
+    }
 });
 
 function getSelectedCategories () {

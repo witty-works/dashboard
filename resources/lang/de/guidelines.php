@@ -45,7 +45,7 @@ Alle Wörter, die zu dieser Liste hinzufügst, werden von Witty hervorgehoben, u
     'manage_organization_guidelines_description_german_form_sub_title' => 'Wie soll Witty mit dem generischen Maskulinum umgehen?',
     'explanation_label' => 'Erläuterung (Optional)',
     'url_label' => 'URL mit weiterführenden Erklärungen (Optional)',
-    'emoji_label' => 'Emoticon wie 😟 oder 💡 (Optional). <a href="https://emojipedia.org/" target="_blank">Hier</a> kannst du passende Emoticons finden.',
+    'emoji_label' => 'Emoticon wie <span aria-label="worried face">😟</span> oder <span aria-label="light bulb">💡</span> (Optional). <a href="https://emojipedia.org/" target="_blank" rel="noopener noreferrer">Hier</a> kannst du passende Emoticons finden.',
     'action_label' => 'Aktion',
     'emoji_invalid_format' => 'Emoji darf nur ein einziges Emoji-Zeichen enthalten.',
     'none' => 'Nur geschlechtsneutrale Alternativen vorschlagen',
@@ -122,4 +122,6 @@ Alle Wörter, die zu dieser Liste hinzufügst, werden von Witty hervorgehoben, u
     'proficiency_level_off' => 'Aus',
     'proficiency_level_basic' => 'Grundlagen',
     'proficiency_level_advanced' => 'Erweitert',
+    'form_reset_category_aria_label' => 'Diversitätsdimensionen Einstellungen zurücksetzen',
+    'form_reset_language_aria_label' => 'Spracheinstellungen zurücksetzen',
 ];
