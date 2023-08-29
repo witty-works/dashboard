@@ -22,14 +22,8 @@
                          wire:model.defer="false_positive"
                          autocomplete="false_positive"
                          :disabled="! Auth::user()->hasTeamPermission($model, 'edit_guidelines')"
-                         aria-describedby="false_positive_label" />
+            />
             <x-jet-input-error for="false_positive" class="mt-2" />
-            
-            @unless(Auth::user()->hasTeamPermission($model, 'edit_guidelines'))
-                <p id="false_positive_help" class="text-sm text-red-600">
-                    You do not have permission to edit this field.
-                </p>
-            @endunless
         </div>
 {{--
         <div class="w-full col-span-6 sm:col-span-4 mt-5">

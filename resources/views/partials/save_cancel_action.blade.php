@@ -1,10 +1,10 @@
 <div class="flex flex-row align-middle items-center" role="toolbar" aria-label="Action buttons">
 
-    <x-jet-button aria-label="{{ __('content.save_aria_label') }}">
+    <x-jet-button>
         {{ __('content.save') }}
     </x-jet-button>
 
-    <button wire:click="cancel()" class="button secondary-button-red" aria-label="{{ __('content.cancel_aria_label') }}">
+    <button wire:click="cancel()" class="button secondary-button-red">
         {{ __('content.cancel') }}
     </button>
 

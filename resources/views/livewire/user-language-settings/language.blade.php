@@ -1,4 +1,4 @@
-<x-jet-form-section class="py-10" submit="updateLanguageGuidelinesLanguage" aria-label="{{ __('guidelines.manage_organization_guidelines_language_aria_label') }}">
+<x-jet-form-section class="py-10" submit="updateLanguageGuidelinesLanguage">
 
     <x-slot name="title" class="ibarra-sub-title-h2">
         {{ __('guidelines.manage_organization_guidelines_language') }}
@@ -9,9 +9,9 @@
 
     <x-slot name="form" submit="updateLanguageGuidelinesLanguage">
 
-        <div class="lato-paragraph-text-p margin-bottom" aria-label="{{ __('guidelines.manage_organization_guidelines_description_language_aria_label') }}">
+        <h3 class="lato-paragraph-text-p margin-bottom">
             {!! __('guidelines.manage_organization_guidelines_description_language') !!}
-        </div>
+        </h3>
 
         <x-jet-input-error for="preferred_variants" class="mt-2" role="alert" />
 
@@ -26,7 +26,6 @@
                     class="guidelines-form-section-dropdown margin-bottom"
                     wire:model.defer="preferred_variants_en"
                     :disabled="\App\Models\LanguageGuidelines::isForcedOnTeam($model, 'preferred_variants')"
-                    aria-label="{{ __('guidelines.select_preferred_variant_aria_label') }}"
                 />
                 <x-jet-input-error for="preferred_variants_en" class="mt-2" role="alert" />
             </div>
@@ -44,7 +43,6 @@
                     class="guidelines-form-section-dropdown lato-small-text-p"
                     wire:model.defer="preferred_variants_de"
                     :disabled="\App\Models\LanguageGuidelines::isForcedOnTeam($model, 'preferred_variants')"
-                    aria-label="{{ __('guidelines.select_preferred_variant_aria_label') }}"
                 />
                 <x-jet-input-error for="preferred_variants_de" class="mt-2" role="alert" />
             </div>

@@ -22,14 +22,8 @@
                          class="mt-1 block w-full textarea-as-input"
                          wire:model.defer="false_positive"
                          autocomplete="false_positive"
-                         aria-labelledby="false_positives"
-                         aria-describedby="false_positive_description" />
+            />
             <x-jet-input-error for="false_positive" class="mt-2" />
-            
-            <!-- This is a placeholder description for the textarea. You can add a more detailed description if needed. -->
-            <p id="false_positive_description" class="text-sm text-gray-600 hidden">
-                {{ __('guidelines.false_positive_description') }}
-            </p>
         </div>
 
 {{--

@@ -12,7 +12,7 @@
             {!! __('guidelines.german_gender_ending') !!}
         </div>
 
-        <div class="lato-small-text-p">{!! __('guidelines.manage_organization_guidelines_description_german_gender_ending_sub_title') !!}</div>
+        <h3 class="lato-small-text-p">{!! __('guidelines.manage_organization_guidelines_description_german_gender_ending_sub_title') !!}</h3>
         <div class="margin-bottom flex flex-row mb-5">
             <x-select id="german_gender_ending"
                 :options="\App\Models\GuidelinesInterface::GERMAN_GENDER_ENDING"
@@ -34,7 +34,7 @@
             {!! __('guidelines.gendered_roles_format') !!}
         </div>
 
-        <div class="lato-small-text-p">{!! __('guidelines.manage_organization_guidelines_description_german_form_sub_title') !!}</div>
+        <h3 class="lato-small-text-p">{!! __('guidelines.manage_organization_guidelines_description_german_form_sub_title') !!}</h3>
         <div class="flex flex-row">
             <x-select id="gendered_roles_format"
                 :options="\App\Models\GuidelinesInterface::GENDERED_ROLES_FORMAT"

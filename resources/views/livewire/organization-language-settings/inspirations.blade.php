@@ -9,9 +9,9 @@
 
     <x-slot name="form" submit="updateLanguageGuidelinesInspirations">
 
-        <div class="lato-paragraph-text-p" aria-label="{{ __('guidelines.manage_organization_guidelines_description_inspiration_aria_label') }}">
+        <h3 class="lato-paragraph-text-p">
             {!! __('guidelines.manage_organization_guidelines_description_inspiration') !!}
-        </div>
+        </h3>
 
         <div class="guidelines-form-section">
             <x-jet-checkbox

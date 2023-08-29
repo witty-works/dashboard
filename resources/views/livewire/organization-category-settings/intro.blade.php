@@ -10,14 +10,14 @@
                 <span id="toggleDescription">{!! __('guidelines.advanced_toggle_description') !!}</span>
 
                 <div class="py-3 container-row" style="align-items: center;">
-                    <button class="tripple-toggle" aria-label="{{ __('guidelines.proficiency_toggle_off_aria_label') }}"></button>
-                    <span>{{ __('guidelines.proficiency_level_off') }}</span>
+                    <button id="off" disabled="disabled" class="tripple-toggle"></button>
+                    <label for="off">{{ __('guidelines.proficiency_level_off') }}</label>
                     
-                    <button class="tripple-toggle active middle wittyworks-margin-left" aria-label="{{ __('guidelines.proficiency_toggle_basic_aria_label') }}"></button>
-                    <span>{{ __('guidelines.proficiency_level_basic') }}</span>
+                    <button id="basic" disabled="disabled" class="tripple-toggle active middle wittyworks-margin-left"></button>
+                    <label for="basic">{{ __('guidelines.proficiency_level_basic') }}</label>
                     
-                    <button class="tripple-toggle active wittyworks-margin-left" aria-label="{{ __('guidelines.proficiency_toggle_advanced_aria_label') }}"></button>
-                    <span>{{ __('guidelines.proficiency_level_advanced') }}</span>
+                    <button id="advanced" disabled="disabled" class="tripple-toggle active wittyworks-margin-left"></button>
+                    <label for="advanced">{{ __('guidelines.proficiency_level_advanced') }}</label>
                 </div>
 
                 {!! __('guidelines.advanced_toggle_disclaimer') !!}

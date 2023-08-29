@@ -2,7 +2,7 @@
 $classes = ($active ?? false) ? 'navigation-link navigation-link-active' : 'navigation-link';
 @endphp
 
-<nav aria-label="Primary Navigation">
+<nav>
     <a 
         role="link"
         aria-current="{{ $active ?? false ? 'page' : 'false' }}"

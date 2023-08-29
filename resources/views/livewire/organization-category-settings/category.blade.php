@@ -23,7 +23,7 @@
         </p>
         @foreach ($proficiencyLevels as $proficiencyLevel => $proficiencyLevelData)
         @php
-        $list = $config['diversity_dimension_drivers'][$proficiencyLevel] ?? [];
+            $list = $config['diversity_dimension_drivers'][$proficiencyLevel] ?? [];
             if (empty($list)) {
                 continue;
             }
@@ -45,13 +45,10 @@
             };
             usort($list, $callback);
 
-            if ($proficiencyLevel === 'openly_discriminating') {
-                $disabled = true;
-            } else {
-                $disabled = false;
-            }        @endphp
+            $disabled = $proficiencyLevel === 'openly_discriminating';
+        @endphp
         <div class="guidelines-form-section lato-small-text-p guidelines-form-section-proficiency-level" aria-expanded="false">
-            <span>{{ $proficiencyLevelData['translation']['hs_name'] }}</span>
+            <h3>{{ $proficiencyLevelData['translation']['hs_name'] }}</h3>
 
             @include('partials.toggle_label', ['disabled' => $disabled])
 
@@ -68,11 +65,7 @@
             @endif
         </div>
         <x-jet-input-error for="dimensions" class="mt-2" />
-        @if(!empty($proficiencyLevelData['translation']['lead_text']))
-        <div id="{{ $category }}-{{ $proficiencyLevel }}" style="display: none" class="proficiency-level-p">
-            {!! $proficiencyLevelData['translation']['lead_text'] !!}
-        </div>
-        @endif
+
         @foreach ($list as $ddd)
         @if(isset($diversityDimensionDrivers[$ddd]['translation']) && isset($dimensions[$ddd]))
         <div class="guidelines-form-section-ident lato-small-text-p">
@@ -107,7 +100,8 @@
             @endif
         </div>
         <x-jet-input-error for="dimensions" class="mt-2" />
-        @endif        
+        @endif
+        @endforeach
         @endforeach
     </x-slot>
 

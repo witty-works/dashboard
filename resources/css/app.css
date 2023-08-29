@@ -3,8 +3,7 @@
 @import "tailwindcss/utilities";
 
 h3 {
-    font-size: 1.5em !important;
-    font-weight: bold !important;
+    font-size: 1.2em !important;
 }
 
 ol,

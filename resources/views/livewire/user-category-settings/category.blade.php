@@ -58,7 +58,7 @@
         @endphp
 
         <div class="guidelines-form-section lato-small-text-p guidelines-form-section-proficiency-level">
-            <b>{{ $proficiencyLevelData['translation']['hs_name'] }}</b>
+            <h3>{{ $proficiencyLevelData['translation']['hs_name'] }}</h3>
 
             @include('partials.toggle_label', ['disabled' => $disabled])
 

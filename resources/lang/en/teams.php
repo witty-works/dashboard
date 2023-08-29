@@ -37,5 +37,5 @@ return [
     'amount_per_year' => ':count licenses - :amount per year',
     'license_count_did_not_change' => 'The license count was not changed.',
     'to_upgrade_contact_owner' => 'To upgrade, please contact your team owner.',
-    'select_license_count_aria_label' => 'select_license_count_aria_label'
+    'select_license_count_aria_label' => 'select license count',
 ];
