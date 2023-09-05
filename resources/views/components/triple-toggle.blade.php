@@ -3,17 +3,17 @@
     aria-label="{{ empty($disabled) ? __('content.triple_toggle') : __('content.triple_toggle_disabled') }}"
     aria-disabled="{{ !empty($disabled) ? 'true' : 'false' }}"
     class="tripple-toggle {{ $value === 2 ? 'active' : ($value === 1 ? 'middle active' : '') }} {{ empty($disabled) ? '' : 'disabled' }}"
-    id="tripple-toggle-{!! $attributes->get('name') !!}"
+    id="tripple-toggle-{!! $attributes->get('id') !!}"
     {{ !empty($disabled) ? 'disabled' : '' }}>
 </button>
 
-<input type="hidden" id="{!! $attributes->get('name') !!}" {!! $attributes->merge() !!} />
+<input type="hidden" id="{!! $attributes->get('id') !!}" {!! $attributes->merge()->filter(fn ($value, $key) => !in_array($key, ['label'])) !!} />
 
 @if(empty($disabled))
 <script>
-    document.querySelector('#tripple-toggle-{!! $attributes->get('name') !!}').addEventListener('click', function() {
-        let toggle = document.querySelector('#tripple-toggle-{!! $attributes->get('name') !!}');
-        let hiddenInput = document.querySelector('#{!! $attributes->get('name') !!}');
+    document.querySelector('#tripple-toggle-{!! $attributes->get('id') !!}').addEventListener('click', function() {
+        let toggle = document.querySelector('#tripple-toggle-{!! $attributes->get('id') !!}');
+        let hiddenInput = document.querySelector('#{!! $attributes->get('id') !!}');
         
         if (toggle.classList.contains('active')) {
             if (toggle.classList.contains('middle')) {
@@ -36,6 +36,6 @@
 </script>
 @endif
 
-<div class="lato-small-text-p" aria-live="polite">{!! $label !!}</div>
+<label class="lato-small-text-p" for=""tripple-toggle-{{$attributes->get("id") }}" aria-live="polite">{!! $label !!}</label>
 
 @include('partials.toggle_label', ['disabled' => $disabled ?? false])

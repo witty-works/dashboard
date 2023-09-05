@@ -78,7 +78,7 @@
 
             @if($proficiencyLevel === 'openly_discriminating' || !$model->subscribed())
             <x-jet-checkbox
-                id="dimensions['{{$ddd}}']"
+                id="dimensions_{{$ddd}}"
                 value="{{ $dimensions[$ddd] }}"
                 :label="$label"
                 wire:model.defer="dimensions.{{$ddd}}"
@@ -86,8 +86,7 @@
             />
             @else
             <x-triple-toggle
-                id="dimensions['{{$ddd}}']"
-                name="dimensions_{{$ddd}}"
+                id="dimensions_{{$ddd}}"
                 :value="$dimensions[$ddd]"
                 :label="$label"
                 wire:model.defer="dimensions.{{$ddd}}"

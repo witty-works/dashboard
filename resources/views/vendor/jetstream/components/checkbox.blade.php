@@ -1,11 +1,11 @@
-<label>
-    <div class="switch">
-        <input type="checkbox" 
-               {{ empty($disabled) ? '' : 'disabled' }} 
-               {!! $attributes->merge(['class' => 'guidelines-form-section-toggle']) !!}
-               aria-disabled="{{ empty($disabled) ? 'false' : 'true' }}" />
-        <span class="slider round {{ empty($disabled) ? '' : 'disabled' }}"></span>
-    </div>
-    <span class="lato-small-text-p">{!! $label !!}</span>
+<div class="switch">
+    <input type="checkbox"
+        {!! $attributes->merge(['class' => 'guidelines-form-section-toggle']) !!}
+        {{ empty($disabled) ? '' : 'disabled' }} 
+        aria-disabled="{{ empty($disabled) ? 'false' : 'true' }}" />
+    <span class="slider round {{ empty($disabled) ? '' : 'disabled' }}"></span>
+</div>
+<label class="lato-small-text-p" for="{{ $attributes->get("id") }}">
+    {!! $label !!}
+    @include('partials.toggle_label', ['disabled' => $disabled ?? false])
 </label>
-@include('partials.toggle_label', ['disabled' => $disabled ?? false])
