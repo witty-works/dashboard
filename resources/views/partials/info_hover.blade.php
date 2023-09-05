@@ -1,4 +1,4 @@
-<span class="ml-3"
+<span class="m-3"
     onmouseover="
         setTimeout(function() {
             document.getElementById('{{ $category }}-image').style.zIndex = '1';
@@ -27,6 +27,6 @@
     @if(!empty($text))
     <div class="information-text">{!! $text !!}</div>
     @else
-    <img src="{{ $config['translation']['example_image']['src'] }}" alt="{{ $config['translation']['example_image']['alt'] }}" width=400/>
+    <img src="{{ $config['translation']['example_image']['src'] }}" alt="{{ $config['translation']['example_image']['alt'] }}" width="400" />
     @endif
 </div>
