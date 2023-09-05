@@ -9,7 +9,7 @@
             <div class="headline-row container border-radius" aria-labelledby="toggleDescription">
                 <span id="toggleDescription">{!! __('guidelines.advanced_toggle_description') !!}</span>
 
-                <div class="py-3 container-row" style="align-items: center;">
+                <div class="py-3 container-row m-5">
                     <button id="off" disabled="disabled" class="tripple-toggle"></button>
                     <label for="off">{{ __('guidelines.proficiency_level_off') }}</label>
                     
@@ -20,8 +20,14 @@
                     <label for="advanced">{{ __('guidelines.proficiency_level_advanced') }}</label>
                 </div>
 
-                {!! __('guidelines.advanced_toggle_disclaimer') !!}
-                @include('partials.info_hover', ['category' => 'foo', 'name' => __('guidelines.toggle_advanced_vs'), 'text' => __('guidelines.advanced_toggle_example')])
+                <div class="guidelines-form-section-ident lato-small-text-p">
+                    {!! __('guidelines.advanced_toggle_advice') !!}
+                    @include('partials.info_hover', ['category' => 'foo', 'name' => __('guidelines.toggle_advanced_vs'), 'text' => __('guidelines.advanced_toggle_example')])
+                </div>
+
+                <div class="guidelines-form-section-ident lato-small-text-p">
+                    {!! __('guidelines.advanced_toggle_disclaimer') !!}
+                </div>
             </div>
         </x-slot>
     </x-jet-section-title>

@@ -118,10 +118,11 @@ Alle Wörter, die zu dieser Liste hinzufügst, werden von Witty hervorgehoben, u
     'advanced_toggle_description' => 'Mit Witty Teams kannst du für viele Kategorien aus drei Kompetenzstufen wählen:',
     'advanced_toggle_example' => 'Um zu verstehen, was das bedeutet, lass uns einen Blick auf die Kategorie <a href="https://www.witty.works/de/kategorien/f%C3%A4higkeiten-erkrankungen-k%C3%B6rperlichkeit/seh-f%C3%A4higkeit" target="_blank">Seh-Fähigkeit</a> werfen. Ist <i>Grundlagen</i> ausgewählt, würde der Satz <i>"der Einäugige unter den Blinden"</i> hervorgehoben werden. Wenn <i>Erweitert</i> eingeschaltet ist, werden auch subtile unbewusste Vorurteile wie der Satz <i>"Wir sehen uns später"</i> hervorgehoben.',
     'toggle_advanced_vs' => 'Grundlagen vs. Erweitert',
-    'advanced_toggle_disclaimer' => 'So kannst du Witty genau auf deine Bedürfnisse und Prioritäten abstimmen. <span style="color:#f06464">Wir empfehlen, zu Beginn die Stufe <i>Basic</i> zu wählen.</span>',
+    'advanced_toggle_disclaimer' => '<span style="color:#f06464">Wir empfehlen, zu Beginn die Stufe <i>Basic</i> zu wählen.</span>',
     'proficiency_level_off' => 'Aus',
     'proficiency_level_basic' => 'Grundlagen',
     'proficiency_level_advanced' => 'Erweitert',
     'form_reset_category_aria_label' => 'Diversitätsdimensionen Einstellungen zurücksetzen',
     'form_reset_language_aria_label' => 'Spracheinstellungen zurücksetzen',
+    'advanced_toggle_advice' => 'So kannst du Witty genau auf deine Bedürfnisse und Prioritäten abstimmen.',
 ];
