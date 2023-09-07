@@ -2516,7 +2516,12 @@
                 "sub_head": "",
                 "lead_video": "",
                 "lead_image": [],
-                "example_image": [],
+                "example_image": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Inklusive%20Endung.png",
+                    "width": "605",
+                    "height": "381",
+                    "alt": "Eine Illustration des Satzes \u2018Liebe Kund*innen und PartnerInnen [Partner*innen]\u2019. Die von Witty vorgeschlagene Alternative ist in Klammern."
+                },
                 "example_image_advanced": "",
                 "example_image_alt_text_advanced": "",
                 "soft_explanation": "",
