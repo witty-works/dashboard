@@ -12,7 +12,7 @@ trait GuidelinesTrait
 
     public function getTermReplacementsLimitReached()
     {
-        if ($this->getTermReplacementsCount() === config('stripe.plans.witty_enterprise.features.organization_term_replacements.count')) {
+        if ($this->getTermReplacementsCount() === LanguageGuidelines::UNLIMITED) {
             return false;
         }
 
@@ -26,7 +26,7 @@ trait GuidelinesTrait
 
     public function getFalsePositivesLimitReached()
     {
-        if ($this->getFalsePositivesCount() === config('stripe.plans.witty_enterprise.features.organization_false_positives.count')) {
+        if ($this->getFalsePositivesCount() === LanguageGuidelines::UNLIMITED) {
             return false;
         }
 
