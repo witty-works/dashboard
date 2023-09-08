@@ -52,10 +52,10 @@
                 @endif
             </li>
             <li>
-                {{ __('teams.total_of_max_used_dictionary', ['total' => $team->getTotalTermReplacementsCount(), 'max_count' => $team->getTermReplacementsCount()]) }}
+                {{ trans_choice('teams.total_of_max_used_dictionary', $team->getTermReplacementsCount(), ['total' => $team->getTotalTermReplacementsCount(), 'max_count' => $team->getTermReplacementsCount()]) }}
             </li>
             <li>
-                {{ __('teams.total_of_max_used_ignored', ['total' => $team->getTotalFalsePositivesCount(), 'max_count' => $team->getFalsePositivesCount()]) }}
+                {{ trans_choice('teams.total_of_max_used_ignored', $team->getFalsePositivesCount(), ['total' => $team->getTotalFalsePositivesCount(), 'max_count' => $team->getFalsePositivesCount()]) }}
             </li>
         </ul>
 

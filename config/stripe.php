@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\LanguageGuidelines;
+
 return [
 
     'currency' => 'USD',
@@ -55,10 +57,10 @@ return [
                 'advanced_organization_analytics' => [],
                 'saml' => [],
                 'private_cloud' => [],
-                'user_false_positives' => ['count' => 999],
-                'user_term_replacements' => ['count' => 999],
-                'organization_false_positives' => ['count' => 999],
-                'organization_term_replacements' => ['count' => 999],
+                'user_false_positives' => ['count' => LanguageGuidelines::UNLIMITED],
+                'user_term_replacements' => ['count' => LanguageGuidelines::UNLIMITED],
+                'organization_false_positives' => ['count' => LanguageGuidelines::UNLIMITED],
+                'organization_term_replacements' => ['count' => LanguageGuidelines::UNLIMITED],
                 'custom_onboarding_training' => [],
                 'customer_success_phone' => [],
             ],

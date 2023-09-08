@@ -37,6 +37,10 @@ class Subscription extends CashierSubscription
             return 'witty_free';
         }
 
+        if ('enterprise' === $this->stripe_price) {
+            return 'witty_enterprise';
+        }
+
         $stripePlans = config('stripe.plans');
         if (empty($stripePlans)) {
             return 'witty_free';

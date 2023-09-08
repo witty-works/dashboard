@@ -76,10 +76,6 @@ class Category extends Component
     protected function readDimensions($disabledCategories)
     {
         foreach ($this->diversityDimensionDrivers as $ddd => $config) {
-            if ($ddd === 'gendered_denominations_ending') {
-                continue;
-            }
-
             if (!in_array('advanced_' . $ddd, $disabledCategories)) {
                 $this->dimensions[$ddd] = LanguageGuidelines::ADVANCED_ENABLED;
             } elseif (!in_array($ddd, $disabledCategories)) {

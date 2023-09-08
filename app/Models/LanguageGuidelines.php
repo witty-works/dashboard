@@ -18,6 +18,8 @@ class LanguageGuidelines extends Model
     const BASIC_ENABLED = 1;
     const ADVANCED_ENABLED = 2;
 
+    const UNLIMITED = 999;
+
     use HasFactory;
     use GuidelinesUpdateTrait {
         fireCustomModelEvent as fireCustomModelEventParent;
