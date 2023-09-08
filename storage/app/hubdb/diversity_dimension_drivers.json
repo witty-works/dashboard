@@ -299,7 +299,12 @@
                 "sub_head": "",
                 "lead_video": "",
                 "lead_image": [],
-                "example_image": [],
+                "example_image": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Age%20information.png",
+                    "width": "605",
+                    "height": "401",
+                    "alt": "An illustration of Witty shows the phrase 'We need matured [experienced] leaders for this project.\u2019 The words in brackets are shown as alternatives."
+                },
                 "example_image_advanced": "",
                 "example_image_alt_text_advanced": "",
                 "soft_explanation": "",
@@ -1686,10 +1691,10 @@
                     "alt": "Illustration of a diverse group with 5 people of different ages, body shapes and ethnic background"
                 },
                 "example_image": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/DEIB.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/DEIB%20(1)-1.png",
                     "width": "605",
-                    "height": "427",
-                    "alt": "An illustration of Witty showing the phrase 'We want to create a diversity-friendly [an atmosphere together where everyone feels safe and free to contribute] environment.' The words in brackets are shown as alternatives."
+                    "height": "319",
+                    "alt": "An illustration of Witty showing the phrase 'We want to create an atmosphere together where everyone  feels safe and free to contribute'. The word \"safe\" is highlighted in green. "
                 },
                 "example_image_advanced": "",
                 "example_image_alt_text_advanced": "",
@@ -1776,7 +1781,12 @@
                 "sub_head": "",
                 "lead_video": "",
                 "lead_image": [],
-                "example_image": [],
+                "example_image": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Positive%20emotions.png",
+                    "width": "605",
+                    "height": "319",
+                    "alt": "An illustration of the phrase \"She gave an animated and delightful talk to the team.\" The words \"animated\" and \"delightful\" are marked in green."
+                },
                 "example_image_advanced": "",
                 "example_image_alt_text_advanced": "",
                 "soft_explanation": "",
@@ -1812,7 +1822,7 @@
                     "src": "https:\/\/www.witty.works\/hubfs\/Positive%20Emotionen.png",
                     "width": "605",
                     "height": "319",
-                    "alt": "die Stimmung in unserem Team ist lebendig"
+                    "alt": "Eine Illustration des Satzes \"Die Stimmung in unserem Team ist lebendig\". Das Wort \"lebendig\" ist gr\u00fcn unterstrichen."
                 },
                 "example_image_advanced": "",
                 "example_image_alt_text_advanced": "",
