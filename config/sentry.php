@@ -5,7 +5,7 @@ return [
     'dsn' => env('SENTRY_LARAVEL_DSN', env('SENTRY_DSN')),
 
     // capture release as git sha
-    'release' => '1.36.2',
+    'release' => '1.36.3',
 
     // When left empty or `null` the Laravel environment will be used
     'environment' => env('PLATFORM_BRANCH', 'local'),
