@@ -321,7 +321,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/locale/de.js" rossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
-    function load_charts(refresh, startOfWeek, chartType = 'overview', timerange = '1m', interval = 'week', language = [], categories = [], inclusive = 'yes') {
+    function load_charts(refresh, startOfWeek, chartType = 'overview', timerange = '1m', interval = 'week', language = [], categories = [], inclusive = 'non_inclusive') {
         if (refresh) {
             document.getElementById('lastRefresh').style.visibility = 'hidden';
             document.getElementById("loading-icon-overview").style.display = "flex";
