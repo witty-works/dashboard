@@ -13,7 +13,7 @@ class ResolveSocialiteUser implements ResolvesSocialiteUsers
      * Resolve the user for a given provider.
      *
      * @param  string  $provider
-     * @return \Laravel\Socialite\AbstractUser
+     * @return \Laravel\Socialite\Two\User
      */
     public function resolve($provider, $policy = 'login')
     {
@@ -31,6 +31,16 @@ class ResolveSocialiteUser implements ResolvesSocialiteUsers
         $user->user['email'] = User::getEmailFromProvider($user->user);
         if (!empty($user->user['email'])) {
             $user->email = strtolower($user->user['email']);
+        }
+
+        $user->data = [];
+
+        if (!empty($user->user['extension_termsOfUseConsentDateTime'])) {
+            $user->attributes['has_consented_to_terms_of_service'] = $user->user['extension_termsOfUseConsentDateTime'];
+        }
+
+        if (!empty($user->user['extension_MailingConsented'])) {
+            $user->attributes['has_consented_to_mailing'] = $user->user['extension_MailingConsented'] === 'Yes';
         }
 
         return $user;

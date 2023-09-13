@@ -33,6 +33,12 @@ return [
         'validate_redirect_uri_disabled' => env('AADB2C_VALIDATE_EXTENSION_REDIRECT_URI_DISABLED', false)
     ],
 
+    'microsoft_office' => [
+        'tenant_id' => env('MICROSOFT_TENANT_ID'),
+        'client_id' => env('MICROSOFT_CLIENT_ID'),
+        'redirect_uri' => env('MICROSOFT_CLIENT_REDIRECT_URI'),
+    ],
+
     'mailjet' => [
         'key' => env('MAILJET_APIKEY'),
         'secret' => env('MAILJET_APISECRET'),
