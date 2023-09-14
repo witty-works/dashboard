@@ -77,7 +77,7 @@ Alle Wörter, die zu dieser Liste hinzufügst, werden von Witty hervorgehoben, u
     'list_team_deny_domains_description' => 'Witty ist für alle URLs in dieser Liste für dein ganzes Team deaktiviert.',
     'dictionary_label' => 'Wörterbuch',
     'language_settings_label' => 'Spracheinstellungen',
-    'privacy_settings_label' => 'Datenschutz- einstellungen',
+    'privacy_settings_label' => 'Datenschutz&shy;einstellungen',
     'personal_account' => 'Persönlich',
     'team_account' => 'Team',
     'ignore_words_label' => 'Ignorierte Wörter',
