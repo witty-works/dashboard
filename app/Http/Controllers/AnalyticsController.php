@@ -455,7 +455,7 @@ class AnalyticsController extends Controller
                     $events,
                     $properties,
                     $filters,
-                    'response__data_text',
+                    'response__data__text',
                     $interval,
                     $from,
                     $to,
