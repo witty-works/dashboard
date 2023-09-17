@@ -59,6 +59,7 @@ class SyncUserToHubSpot implements ShouldQueue
 
         $this->hubspot = new Hubspot();
 
+        $changed = false;
         $contact = $this->hubspot->findContact($user);
         if ($contact) {
             $oldHubspotCompanyId = $user->hubspot_company_id;
