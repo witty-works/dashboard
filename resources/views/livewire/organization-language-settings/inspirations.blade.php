@@ -21,6 +21,12 @@
                 wire:model.defer="show_inspiration_alternatives"
                 :disabled="!$model->subscribed()"
             />
+
+            @if(!$model->subscribed())
+              <div class="p-3">
+                @include('partials.witty-teams-only')
+              </div>
+            @endif
         </div>
     </x-slot>
 
@@ -33,6 +39,12 @@
                 wire:model.defer="show_inspiration_alternatives_force"
                 :disabled="!$model->subscribed()"
             />
+
+            @if(!$model->subscribed())
+              <div class="p-3">
+                @include('partials.witty-teams-only')
+              </div>
+            @endif
         </div>
 
         @include('partials/save_cancel_action')
