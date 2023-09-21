@@ -19,7 +19,7 @@ dependencies:
 variables:
     env:
         # https://github.com/nvm-sh/nvm/releases
-        NVM_VERSION: v0.39.3
+        NVM_VERSION: v0.39.5
         # https://nodejs.org/ro/download/releases
         NODE_VERSION: v14.21.3
 
@@ -27,18 +27,44 @@ variables:
 hooks:
     build: |
         set -e
+
         rm public/.htaccess
+
         composer install --no-ansi --no-dev --no-interaction --no-plugins --no-progress --no-scripts --optimize-autoloader
-        # https://docs.platform.sh/languages/nodejs/nvm.html#how-to-use-nvm-to-run-different-versions-of-nodejs
-        unset NPM_CONFIG_PREFIX
-        export NVM_DIR="$PLATFORM_APP_DIR/.nvm"
-        # install.sh will automatically install NodeJS based on the presence of $NODE_VERSION
-        curl -f -o- https://raw.githubusercontent.com/nvm-sh/nvm/$NVM_VERSION/install.sh | bash
-        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-        curl -sS https://platform.sh/cli/installer | php
         php artisan config:clear
         php artisan clear-compiled
         php artisan storage:link
+
+        # https://docs.platform.sh/languages/nodejs/node-version.html#use-nvm
+        unset NPM_CONFIG_PREFIX
+        export NVM_DIR="$PLATFORM_APP_DIR/.nvm"
+
+        # Link cache with app
+        if [ ! -d "$PLATFORM_CACHE_DIR/.nvm" ]; then
+            mkdir -p $PLATFORM_CACHE_DIR/.nvm
+        fi
+        ln -s $PLATFORM_CACHE_DIR/.nvm $NVM_DIR
+
+        # Check for Node.js version and install if not present
+        if [ ! -d "$PLATFORM_CACHE_DIR/.nvm/versions/node/$NODE_VERSION" ]; then
+
+            # Get nvm install script if correct version not present
+            export NVM_INSTALL_FILE="${PLATFORM_CACHE_DIR}/nvm_${NVM_VERSION}_install.sh"
+            if [ ! -f "$NVM_INSTALL_FILE" ]; then
+                wget -nc -O "$NVM_INSTALL_FILE" "https://raw.githubusercontent.com/nvm-sh/nvm/$NVM_VERSION/install.sh"
+            fi
+
+            # Install, automatically using NODE_VERSION
+            bash $NVM_INSTALL_FILE
+        fi
+
+        # Activate nvm
+        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+        # Use the specified version
+        nvm use "$NODE_VERSION" 
+
+        # npm cache clean --force
         npm ci
         npm run production
     deploy: |
