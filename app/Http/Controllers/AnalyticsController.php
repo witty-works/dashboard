@@ -148,6 +148,7 @@ class AnalyticsController extends Controller
 
         $filter['display'] = 'ActionsBarValue';
         $filter['breakdown'] = $breakdown;
+        $filter['breakdown_type'] = 'hogql';
 
         if (!empty($filters)) {
             $filter['properties'] = [
@@ -422,7 +423,7 @@ class AnalyticsController extends Controller
                     $events,
                     $properties,
                     $filters,
-                    'response__data__subcategory',
+                    'properties.response__data__subcategory',
                     $interval,
                     $from,
                     $to,
@@ -455,7 +456,7 @@ class AnalyticsController extends Controller
                     $events,
                     $properties,
                     $filters,
-                    'response__data__text',
+                    'coalesce(properties.response__data__text, properties.response__data_text)',
                     $interval,
                     $from,
                     $to,
