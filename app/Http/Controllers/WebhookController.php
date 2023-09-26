@@ -15,7 +15,7 @@ class WebhookController extends CashierController
 {
     protected function newSubscriptionName(array $payload)
     {
-        return 'teams';
+        return 'witty';
     }
 
     public function handleCheckoutSessionCompleted(array $payload)
