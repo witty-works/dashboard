@@ -1,4 +1,4 @@
-<x-app-layout :pagetitle="__('content.office_register')">
+<x-plain-layout :pagetitle="__('content.office_register')">
     <div class="office-login-wrapper">
         <div class="office-login-image" style="background-image: url({{ asset('witty-background.png') }});"></div>
         <form class="office-login-form" action="{{ route('office_register') }}" method="POST">
