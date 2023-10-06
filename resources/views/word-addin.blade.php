@@ -6,7 +6,11 @@
             </div>
 
             <div class="py-10">
+                @if{{ request()->get('status') === 'failed' }}
+                {!! __('content.witty_word_addin_text_failed') !!}
+                @else
                 {!! __('content.witty_word_addin_text') !!}
+                @endif
             </div>
         </div>
     </div>
