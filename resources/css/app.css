@@ -1212,3 +1212,20 @@ label {
     left: -10000px;
     top: auto;
 }
+
+/* Office login  */
+.office-login-wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+.office-login-image {
+    width: 70%;
+    height: 100vh;
+}
+
+.office-login-form {
+    width: 30%;
+    height: 100vh;
+    margin: 3em;
+}
