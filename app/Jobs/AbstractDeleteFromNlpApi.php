@@ -52,7 +52,7 @@ abstract class AbstractDeleteFromNlpApi implements ShouldQueue
         }
 
         if ($response->failed() && $response->status() !== 404) {
-            throw new RuntimeException("Unable to delete '{$url}.: " . $response->json('message'));
+            throw new RuntimeException("Unable to delete '{$url}.: " . $response->body());
         }
 
         return $response;

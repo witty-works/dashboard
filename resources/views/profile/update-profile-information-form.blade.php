@@ -8,14 +8,19 @@
         <div class="wittyworks-form-section-wrapper" role="group" aria-labelledby="form-title">
         <!-- Name -->
         <div class="lato-small-text-p margin-bottom">
-            <p>{{ __('content.name') }}: &nbsp; </p> {{ $state['name'] }}
+            <div>{{ __('content.name') }}:</div>
+            <div>{{ $state['name'] }}</div>
+            
+            @if (Auth::user()->currentConnectedAccount->provider !== \App\Http\Controllers\OAuthController::OFFICE_PROVIDER)
             <a href="{{ route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'profile']) }}">
                 {!! __('content.update_your_account_profile', ['profile_url' => '']) !!}
             </a>
+            @endif
         </div>
         <!-- Email -->
         <div class="lato-small-text-p margin-bottom">
-            <p>{{ __('content.email') }}: &nbsp; </p> {{ $state['email'] }}
+            <div>{{ __('content.email') }}:</div>
+            <div>{{ $state['email'] }}</div>
         </div>
             
             @if(!Auth::user()->has_consented_to_mailing)

@@ -1,3 +1,4 @@
+@if($user)
 <x-jet-dialog-modal wire:model="showingModal" >
     <x-slot name="title">
         {{ __('content.small_onboarding_survey') }}
@@ -102,3 +103,4 @@
     <x-slot name="footer">
     </x-slot>
 </x-jet-dialog-modal>
+@endif
