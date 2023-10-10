@@ -206,7 +206,7 @@ class OAuthController extends BaseOAuthController
         return parent::login($user);
     }
 
-    public function handleProviderCallback(Request $request, string $provider, ResolvesSocialiteUsers $resolver)
+    public function handleProviderCallback(Request $request, string $provider, ResolvesSocialiteUsers $resolver, $policy = 'login')
     {
         if ($request->has('error')) {
             return Auth::check()
@@ -216,12 +216,12 @@ class OAuthController extends BaseOAuthController
 
         try {
             /** @var \Laravel\Socialite\Two\User $providerAccount */
-            $providerAccount = $resolver->resolve($provider, 'login');
+            $providerAccount = $resolver->resolve($provider, $policy);
         } catch (InvalidStateException $e) {
             $this->invalidStateHandler->handle($e);
         }
 
-        $tokens = self::getAccessTokenResponse(self::getProvider($provider, 'login'));
+        $tokens = self::getAccessTokenResponse(self::getProvider($provider, $policy));
         if (!empty($tokens['access_token'])) {
             $providerAccount->setToken($tokens['access_token']);
         }
