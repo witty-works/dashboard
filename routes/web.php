@@ -81,6 +81,8 @@ Route::group(
         */
         Route::group(['middleware' => config('jetstream.middleware', ['web'])], function () {
             Route::group(['middleware' => ['auth:' . config('fortify.guard')]], function () {
+                Route::get('/', [WelcomeController::class, 'show'])->name('root');
+
                 Route::get('/editor', function () {
                     return view('editor');
                 })->name('editor');
