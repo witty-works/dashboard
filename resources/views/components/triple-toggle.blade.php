@@ -5,16 +5,18 @@
     $value = max($value, $minValue);
 @endphp
 <div
-    @if(empty($disabled))
-        title="{{ (empty($minValue) || $minValue === \App\Models\LanguageGuidelines::DISABLED) ? __('content.triple_toggle') : __('content.triple_toggle_no_disable') }}"
-    @endif
+    title="{{ empty($disabled) 
+        ? (empty($minValue) || $minValue === \App\Models\LanguageGuidelines::DISABLED) 
+        ? __('content.tripple_toggle_unlocked') : __('content.tripple_toggle_locked_second_pos') 
+        : __('content.triple_toggle_locked_third_pos')
+    }}"
     class="tripple-toggle {{ $value === 2 ? 'active' : ($value === 1 ? 'middle active' : '') }}
     {{ empty($disabled) ? '' : ' disabled' }}"
     id="tripple-toggle-{!! $attributes->get('name') !!}"
 >
     @if($minValue === 1)
-    <div class="tripple-toggle-lock">
-        @include('partials.locked')
+    <div class="triple-toggle-lock">
+        @include('partials.triple_toggle_lock')
     </div>
     @endif
 </div>

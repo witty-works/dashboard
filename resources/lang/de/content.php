@@ -388,7 +388,6 @@ Falls du Fragen hast, nimm Kontakt mit :name (:email) auf. 🙂
     'learn_more' => 'Warum das so ist',
     'example' => 'Beispiel',
     'open' => 'Öffnen',
-    'triple_toggle' => 'Klicken Sie mehrmals, um von \'Aus\' zu \'Ein\' zu \'Erweitert\' zu wechseln',
     'witty_editor_onboarding_description' => '<b>Klicke in das Feld unten</b><img src="https://www.witty.works/hubfs/arrow-1.png" style="transform: scaleX(-1);" width="70" alt="" /> und dann auf ein unterstrichenes Wort, um Alternativen angezeigt zu bekommen..',
     'witty_editor_try_out' => 'Probiere Witty aus',
     'how_did_you_find' => 'Wie hast du uns gefunden?',
@@ -428,7 +427,6 @@ Falls du Fragen hast, nimm Kontakt mit :name (:email) auf. 🙂
     'inclusive_filter_non_inclusive' => 'Nicht inklusive',
     'inclusive_filter_both' => 'Beide',
     'inclusive_filter_inclusive' => 'Inklusiv',
-    'triple_toggle_disabled' => 'Dreifachumschaltung deaktiviert',
     'footer_aria_label' => 'Fußzeilen-Links',
     'language_switcher_aria_label' => 'Links zum Sprachwechsel',
     'skip_to_main_content' => 'Zum Hauptinhalt springen',
@@ -449,4 +447,7 @@ Falls du Fragen hast, nimm Kontakt mit :name (:email) auf. 🙂
     'office_register_further_reading' => 'Weitere Details findest Du hier: <a href="https://www.witty.works/trust-and-security" target="_blank" rel="noopener">Vertrauen & Sicherheit</a> , <a href="https://www.witty.works/privacy" target="_blank" rel="noopener">Datenschutz</a> , <a href="https://www.witty.works/terms" target="_blank" rel="noopener">Allgemeine Geschäftsbedingungen</a> oder kontaktiere uns über <a href="mailto:support@witty.works" target="_blank" rel="noopener">support@witty.works</a>',
     'you_must_consent' => 'Du musst den Nutzungsbedingungen zustimmen.',
     'witty_word_addin_text_failed' => 'Es ist uns nicht gelungen, Dich bei Witty Word-Addin anzumelden.<br> Bitte schließe dieses Fenster und versuche es erneut oder kontaktiere <a href="mailto:support@witty.works">support@witty.works</a> .',
+    'triple_toggle_locked_third_pos' => 'Team admin set to advanced. No click possible. DE',
+    'tripple_toggle_locked_second_pos' => 'Team admin set to on. Click to switch between \'advanced\' and \'on\'. DE',
+    'tripple_toggle_unlocked' => 'Unlocked. Click to switch between \'advanced\', \'on\' and \'off\'. DE',
 ];

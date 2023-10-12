@@ -1014,7 +1014,7 @@ input:checked+.slider:before {
 /* Tripple toggle */
 .tripple-toggle {
     min-width: 50px;
-    min-height: 20px;
+    min-height: 21px;
     border-radius: 20px;
     background-color: lightgrey;
     position: relative;
@@ -1024,18 +1024,18 @@ input:checked+.slider:before {
 
 .tripple-toggle:before {
     content: "";
-    min-width: 16px;
-    min-height: 16px;
+    min-width: 19px;
+    min-height: 19px;
     background-color: white;
     border-radius: 50%;
     position: absolute;
-    top: 2px;
-    left: 2px;
+    top: 1px;
+    left: 1px;
     transition: all 0.3s ease-in-out;
 }
 
 .tripple-toggle.active:before {
-    transform: translateX(30px);
+    transform: translateX(29px);
     background-color: white;
 }
 
@@ -1052,9 +1052,9 @@ input:checked+.slider:before {
     background-color: #5FCA7D;
 }
 
-.tripple-toggle-lock {
-    margin-left: -0.7em;
-    margin-top: -0.7em;
+.triple-toggle-lock {
+    margin-top: 0.1em;
+    margin-left: 1em;
 }
 
 .category_icon {
