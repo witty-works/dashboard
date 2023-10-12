@@ -32,6 +32,12 @@ abstract class AbstractSyncToNlpApi implements ShouldQueue
         }
 
         $data['sync_date'] = now()->toDateTimeString();
+
+        // DASHBOARD-N8 - Input should be a valid dictionary
+        if (empty($data['term_replacements'])) {
+            unset($data['term_replacements']);
+        }
+
         foreach ($endpoint['urls'] as $baseUrl) {
             if (empty($baseUrl)) {
                 continue;
@@ -53,7 +59,7 @@ abstract class AbstractSyncToNlpApi implements ShouldQueue
         }
 
         if ($response->failed() && $response->status() !== 404) {
-            throw new RuntimeException("Unable to write to '{$url} ({$data['id']}): " . $response->json('message'));
+            throw new RuntimeException("Unable to write to '{$url} ({$data['id']}): " . $response->body());
         }
 
         return $response;

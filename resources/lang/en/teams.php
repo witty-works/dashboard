@@ -18,8 +18,8 @@ return [
     'term_replacements' => 'Team dictionary',
     'false_positives' => 'Ignored words of your team',
     'total_of_max_used_licenses' => ':total of :max_count user licenses have been assigned',
-    'total_of_max_used_dictionary' => ':total of :max_count possible entries in the team dictionary are used',
-    'total_of_max_used_ignored' => ':total of :max_count possible ignored words are used',
+    'total_of_max_used_dictionary' => '[0,998] :total of :max_count possible entries in the team dictionary are used|[999,*] :total of unlimited possible entries in the team dictionary are used',
+    'total_of_max_used_ignored' => '[0,998] :total of :max_count possible ignored words are used|[999,*]:total of unlimited possible ignored words are used',
     'more_licenses' => 'If you like to purchase more licenses, please <a href=":url">contact</a> Witty Works.',
     'what_is_included' => 'Usage',
     'user_limit_reached_error' => 'Add more licenses to be able to to add more members to the current :max_count team members.',
@@ -37,4 +37,5 @@ return [
     'amount_per_year' => ':count licenses - :amount per year',
     'license_count_did_not_change' => 'The license count was not changed.',
     'to_upgrade_contact_owner' => 'To upgrade, please contact your team owner.',
+    'select_license_count_aria_label' => 'select license count',
 ];

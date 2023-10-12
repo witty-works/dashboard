@@ -9,7 +9,7 @@
 ?>
 <x-app-layout :pagetitle="__('content.analytics')">
 <div class="wittyworks-navigation-wrapper">@livewire('navigation-menu')</div>
-<div class="wittyworks-page-wrapper">
+<div class="wittyworks-page-wrapper" id="maincontent">
    <div class="wittyworks-page lg:ml-20">
       @include('partials.banners')
       <div class="ibarra-sub-title-h1 margin-top">
@@ -64,6 +64,23 @@
                 :options="$ranges"
                 class="dropdown margin-right"
                 id="languageDropdown"
+                onchange="setParams()"
+            />
+        </div>
+
+        <div class="drowdown-wrapper">
+            <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.inclusive_filter') }}</div>
+            @php
+                $ranges = [
+                    'non_inclusive' => __('content.inclusive_filter_non_inclusive'),
+                    'both' => __('content.inclusive_filter_both'),
+                    'inclusive' => __('content.inclusive_filter_inclusive'),
+                ];
+            @endphp
+            <x-select
+                :options="$ranges"
+                class="dropdown margin-right"
+                id="inclusiveDropdown"
                 onchange="setParams()"
             />
         </div>
@@ -209,6 +226,7 @@
                         class="wittyworks-analytics-chart-top-categories">
                      </canvas>
                      <div id="categoryOverview" class="wittyworks-margin-left"></div>
+                     <div class="chart-footer" id="topSubCategoriesChartFooter"></div>
                   </div>
                   <!-- <div class="chart-container-row wittyworks-margin-top">
                      <canvas
@@ -266,12 +284,14 @@
                             id="topWordsChartCorporateRules"
                             class="wittyworks-analytics-chart-extra-large">
                         </canvas>
+                        <div class="chart-footer" id="topWordsChartCorporateRulesFooter"></div>
                     </div>
                     <div class="chart-container-row wittyworks-margin-top">
                         <canvas
                             id="topWordsChart"
                             class="wittyworks-analytics-chart-extra-large wittyworks-margin-top">
                         </canvas>
+                        <div class="chart-footer" id="topWordsChartFooter"></div>
                     </div>
                   <div id="noCorporateRulesWrapper" class="container-row wittyworks-margin-top" style="display: none;">
                      <div class="lato-small-text-p">{!! empty($user) ? __('content.no_corporate_rules') : __('content.no_corporate_rules_user') !!}</div>
@@ -309,7 +329,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/locale/de.js" rossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
-    function load_charts(refresh, startOfWeek, chartType = 'overview', timerange = '1m', interval = 'week', language = [], categories = []) {
+    function load_charts(refresh, startOfWeek, chartType = 'overview', timerange = '1m', interval = 'week', language = [], categories = [], inclusive = 'non_inclusive') {
         if (refresh) {
             document.getElementById('lastRefresh').style.visibility = 'hidden';
             document.getElementById("loading-icon-overview").style.display = "flex";
@@ -427,7 +447,7 @@
         }
     }
 
-    async function getChartData(chart, from = '1w', interval = 'day', language, categories, subcategories = [], to = null) {
+    async function getChartData(chart, from = '1w', interval = 'day', language, categories, subcategories = [], to = null, inclusive) {
         let analyticsUrl = '/api/user/analytics?refresh=' + refresh + '&chart=';
         if (window.location.href.includes('team')) {
             analyticsUrl = '/api/team/analytics?refresh=' + refresh + '&chart=';
@@ -443,7 +463,7 @@
             formattedSubcategories = '&' + subcategories.map(category => 'subcategories[]=' + subcategories).join('&');
         }
 
-        analyticsUrl += chart + '&from=' + from + '&interval=' + interval + '&lang=' + language + formattedCategories + formattedSubcategories;
+        analyticsUrl += chart + '&from=' + from + '&interval=' + interval + '&lang=' + language + '&inclusive=' + inclusive + formattedCategories + formattedSubcategories;
 
         const response = await fetch(analyticsUrl, {
             method: 'GET',
@@ -465,11 +485,68 @@
         if (yValues.every((val, i, arr) => val === 0)) {
             document.getElementById(chartId).style.display = "none";
             return;
-        }
+        }        
 
         const newFrom = from.slice(0, 1) * 2 + from.slice(1, 2);
         const to = from; 
-        getChartData(chart, newFrom, interval, language, categories, subcategories = [], to).then(data => {
+
+        // //endDateCurrentPeriod - from 
+        // const startDateCurrentPeriod = 
+        // //end date is now 
+        // const endDateCurrentPeriod =  
+
+        // //startDateCurrentPeriod - from
+        // const startDateComparePeriod = 
+        // //startDateCurrentPeriod
+        // const endDateComparePeriod =
+
+
+        // Assuming today's date for the end of the current period
+           // Assuming today's date for the end of the current period
+           const currentDate = new Date();
+        const endDateCurrentPeriod = formatDate(currentDate);
+
+        function formatDate(date) {
+            const day = String(date.getDate()).padStart(2, '0');
+            const month = String(date.getMonth() + 1).padStart(2, '0'); // +1 because months are 0-based in JavaScript
+            const year = date.getFullYear();
+            return `${day}.${month}.${year}`;
+        }
+
+        let startDateCurrentPeriod;
+        switch(from) {
+            case '1m':
+                currentDate.setMonth(currentDate.getMonth() - 1);
+                break;
+            case '3m':
+                currentDate.setMonth(currentDate.getMonth() - 3);
+                break;
+            case '1y':
+                currentDate.setFullYear(currentDate.getFullYear() - 1);
+                break;
+        }
+        startDateCurrentPeriod = formatDate(currentDate);
+
+        // For comparison periods, assuming you want to compare with the previous interval of the same length
+        const endDateComparePeriod = startDateCurrentPeriod;
+
+        switch(from) {
+            case '1m':
+                currentDate.setMonth(currentDate.getMonth() - 1);
+                break;
+            case '3m':
+                currentDate.setMonth(currentDate.getMonth() - 3);
+                break;
+            case '1y':
+                currentDate.setFullYear(currentDate.getFullYear() - 1);
+                break;
+        }
+        const startDateComparePeriod = formatDate(currentDate);
+
+        const footerText = `{{ __('content.chart_period_comparison_from') }} ${startDateCurrentPeriod} - ${endDateCurrentPeriod}, {{ __('content.chart_period_comparison_to') }} ${startDateComparePeriod} - ${endDateComparePeriod}`;
+        document.getElementById(`${chartId}Footer`).innerText = footerText;
+
+        getChartData(chart, newFrom, interval, language, categories, subcategories = [], to, inclusive).then(data => {
             document.getElementById(chartId).style.display = 'flex';
             const ctx = document.getElementById(chartId).getContext('2d');
 
@@ -504,7 +581,7 @@
                             ticks: {
                                 beginAtZero: true,
                                 min: 0,  
-                                max: Math.max(...yValues) + 1,                              
+                                max: Math.max(...yValues) + Math.max(...yValues) * 0.15,            
                                 callback: function(value, index, values) {
                                     if (Math.floor(value) === value) {
                                         return value;
@@ -525,10 +602,10 @@
                                 if (previousPeriodPopoverOpened[currentLabel]) {                           
                                     const diff = currentValue - previousPeriodPopoverOpened[currentLabel];
                                     const percentage = (diff / previousPeriodPopoverOpened[currentLabel] * 100).toFixed(0);
-                                    if (percentage == 0) return '';
+                                    if (percentage == 0) return '+ 100 %';
                                     return percentage >= 0 ? '+' + percentage + '%' : percentage + '%';
                                 } else {
-                                    return '';
+                                    return '+ 100 %';
                                 }
                             },
                         }
@@ -593,7 +670,7 @@
     //     });
     // }
 
-    chartType == 'overview' && getChartData('total', timerange, interval, language, categories).then(data => {
+    chartType == 'overview' && getChartData('total', timerange, interval, language, categories, null,  null, inclusive).then(data => {
         if (!data?.events?.popover_open
             || Object.entries(data.events.popover_open).filter(([key, value]) => value > 0).length == 0
         ) {
@@ -939,7 +1016,7 @@
     });
 
     //ALWAYS ONLY past week
-    chartType == 'top-categories' && getChartData('topSubcategories', '1w', interval, language, categories).then(data => {
+    chartType == 'top-categories' && getChartData('topSubcategories', '1w', interval, language, categories, null, null, inclusive).then(data => {
         if (!data || !data.events ) {
             return;
         }
@@ -1033,7 +1110,7 @@
     });
 
 
-    (chartType == 'overview' || chartType == 'top-categories') && getChartData('topSubcategories', timerange, interval, language, categories).then(data => {
+    (chartType == 'overview' || chartType == 'top-categories') && getChartData('topSubcategories', timerange, interval, language, categories, null,  null, inclusive).then(data => {
         if (!data || !data.events || !data.subcategories ) {
             handleNoData('loading-icon-top-categories', 'top-categories-no-data', 'topSubcategories');
             return;
@@ -1230,7 +1307,7 @@
     //     });
     // });
 
-    chartType == 'top-words' && getChartData('topWords', timerange, interval, language, categories).then(data => {
+    chartType == 'top-words' && getChartData('topWords', timerange, interval, language, categories, null, null, inclusive).then(data => {
         if (!data || !data.events ) {
             handleNoData('loading-icon-top-words', 'top-words-no-data', 'topWords');
             return;
@@ -1242,8 +1319,14 @@
 
 
         for (const [key, value] of Object.entries(opened)) {
+            if (!key || !value) continue;
             xValuesTopWordsOpened.push(key);
             yValuesTopWordsOpened.push(value);
+        }
+
+        if (xValuesTopWordsOpened.length === 0) {
+            handleNoData('loading-icon-top-words', 'top-words-no-data', 'topWords');
+            return;
         }
 
         // for (const [key, value] of Object.entries(ignored)) {
@@ -1295,7 +1378,7 @@
         // );
     });
 
-    chartType == 'top-words' && getChartData('topWords', timerange, 'day', language, categories, ['corporate_rules']).then(data => {
+    chartType == 'top-words' && getChartData('topWords', timerange, 'day', language, categories, ['corporate_rules'], null, inclusive).then(data => {
         if (!data || !data.events ) {
             handleNoData('loading-icon-top-words', 'top-words-no-data', 'topWords');
             return;
@@ -1303,23 +1386,24 @@
         if (data && data.events && data.events.popover_open) {
             const openedCorporatewords = data.events.popover_open;
             for (const [key, value] of Object.entries(openedCorporatewords)) {
+                if (!key || !value) continue;
                 xValuesTopCorporateWordsOpened.push(key);
                 yValuesTopCorporateWordsOpened.push(value);
             }
-            if (xValuesTopCorporateWordsOpened.length >= 10) {
-                xValuesTopCorporateWordsOpened.slice(0, 10);
-                yValuesTopCorporateWordsOpened.slice(0, 10);
-            } else if (xValuesTopCorporateWordsOpened.length > 0) {
-                for (let i = xValuesTopCorporateWordsOpened.length; i < 10; i++) {
-                    xValuesTopCorporateWordsOpened.push("");
-                    yValuesTopCorporateWordsOpened.push(0);
-                }
+
+            if (xValuesTopCorporateWordsOpened.length === 0) {
+                handleNoData('loading-icon-top-words', 'top-words-no-data', 'topWords');
+                return;
             }
+
+            const xValuesTopCorporateWordsOpenedCut = xValuesTopCorporateWordsOpened.slice(0, 15);
+            const yValuesTopCorporateWordsOpenedCut = yValuesTopCorporateWordsOpened.slice(0, 15);
+            
 
             createBarChart(
                 "topWordsChartCorporateRules",
-                xValuesTopCorporateWordsOpened,
-                yValuesTopCorporateWordsOpened,
+                xValuesTopCorporateWordsOpenedCut,
+                yValuesTopCorporateWordsOpenedCut,
                 "{{ __('content.title_words_bar_chart_month_corporate_rules') }}",
                 true,
                 false,
@@ -1364,12 +1448,14 @@ function setParams(startOfWeek = 1, eventType = 'check_result') {
     const categories = getSelectedCategories();
     const timeRangeDropdown = document.getElementById("timerangeDropdown");
     const languageDropdown = document.getElementById("languageDropdown");
+    const inclusiveDropdown = document.getElementById("inclusiveDropdown");
 
     const selectedTimeRangeOption = timeRangeDropdown.options[timeRangeDropdown.selectedIndex].value;
     const selectedLanguageOption = languageDropdown.options[languageDropdown.selectedIndex].value;
+    const selectedInclusiveOption = inclusiveDropdown.options[inclusiveDropdown.selectedIndex].value;
 
     const interval = selectedTimeRangeOption == '1y' ? 'month' : 'week';
-    load_charts(false, startOfWeek, activeTab, selectedTimeRangeOption, interval, selectedLanguageOption, categories);
+    load_charts(false, startOfWeek, activeTab, selectedTimeRangeOption, interval, selectedLanguageOption, categories, selectedInclusiveOption, selectedInclusiveOption);
 }
 
 load_charts(false, 1);
@@ -1400,10 +1486,18 @@ function handleTabClick(clickedTabId) {
 
 
 document.addEventListener("DOMContentLoaded", function() {
-  setCheckboxSelectLabels();
-  const checkboxes = document.querySelector('.checkboxes');
-  let toggleNext = document.querySelectorAll('.toggle-next');
-  document.addEventListener('click', function(e) {
+    setCheckboxSelectLabels();
+    const checkboxes = document.querySelector('.checkboxes');
+    let toggleNext = document.querySelectorAll('.toggle-next');
+
+    document.addEventListener('keydown', function(event) {
+        if ((event.key === 'Enter' || event.keyCode === 13) && checkboxes.style.display !== 'none') {
+            checkboxes.style.display = 'none';
+            setParams();
+        }
+    });
+
+    document.addEventListener('click', function(e) {
         if (!e.target.classList.contains('checkboxes')
             && !e.target.classList.length == 0
             && !e.target.classList.contains('ckkBox')
@@ -1413,29 +1507,30 @@ document.addEventListener("DOMContentLoaded", function() {
             && checkboxes.style.display !== 'none'
         ) {
             checkboxes.style.display = 'none';
-            setParams()
+            setParams();
         }
     });
-  for (let i = 0; i < toggleNext.length; i++) {
-    toggleNext[i].addEventListener('click', function(e) {
-      if (checkboxes.style.display === 'none' || !checkboxes.style.display) {
-        checkboxes.style.display = 'block';
-      } 
-    });
-  }
-  
-  let ckkBoxes = document.querySelectorAll('.ckkBox');
-  for (let j = 0; j < ckkBoxes.length; j++) {
-    ckkBoxes[j].addEventListener('change', function() {
-        if (this.value === 'all_categories') {
-            const checkboxes = this.parentElement.parentElement.querySelectorAll('.ckkBox');
-            for (let m = 0; m < checkboxes.length; m++) {
-            checkboxes[m].checked = this.checked;
+
+    for (let i = 0; i < toggleNext.length; i++) {
+        toggleNext[i].addEventListener('click', function(e) {
+            if (checkboxes.style.display === 'none' || !checkboxes.style.display) {
+                checkboxes.style.display = 'block';
+            } 
+        });
+    }
+
+    let ckkBoxes = document.querySelectorAll('.ckkBox');
+    for (let j = 0; j < ckkBoxes.length; j++) {
+        ckkBoxes[j].addEventListener('change', function() {
+            if (this.value === 'all_categories') {
+                const checkboxes = this.parentElement.parentElement.querySelectorAll('.ckkBox');
+                for (let m = 0; m < checkboxes.length; m++) {
+                    checkboxes[m].checked = this.checked;
+                }
             }
-        }
-      setCheckboxSelectLabels();
-    });
-  }
+            setCheckboxSelectLabels();
+        });
+    }
 });
 
 function getSelectedCategories () {

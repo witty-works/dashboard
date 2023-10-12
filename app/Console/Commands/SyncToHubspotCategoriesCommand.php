@@ -339,36 +339,48 @@ class SyncToHubspotCategoriesCommand extends Command
         return $row;
     }
 
-    public static function loadTableData($tableName)
+    public static function loadTableData($tableName, $skipOrthography = false)
     {
-        if (!array_key_exists($tableName, self::$tableData)) {
-            $file = storage_path("app/hubdb/$tableName.json");
-            $data = json_decode(file_get_contents($file), true);
-
-            Collection::macro('toLocale', function (string $locale) {
-                return $this->map(function ($value) use ($locale) {
-                    if (!empty($value['translations'][$locale])) {
-                        $value['translation'] = $value['translations'][$locale];
-                        unset($value['translations']);
-
-                        if (isset($value['emoji'])) {
-                            $value['translation']['emoji_name'] = $value['emoji'] . ' ' . $value['translation']['hs_name'];
-                        }
-                    } else {
-                        $value['translation'] = null;
-                    }
-
-                    return $value;
-                });
-            });
-
-
-            $collection = collect($data);
-
-            $locale = request()->header('X-App-Locale', app()->getLocale());
-            self::$tableData[$tableName] = $collection->toLocale($locale);
+        $tableNameFull = $tableName . ($skipOrthography ? '-no-orthograpbhy' : '-with-orthography');
+        if (array_key_exists($tableNameFull, self::$tableData)) {
+            return self::$tableData[$tableNameFull];
         }
 
-        return self::$tableData[$tableName];
+        if (!array_key_exists($tableName, self::$tableData)) {
+            $file = storage_path("app/hubdb/$tableName.json");
+            self::$tableData[$tableName] = json_decode(file_get_contents($file), true);
+        }
+
+        $data = self::$tableData[$tableName];
+
+        Collection::macro('toLocale', function (string $locale) {
+            return $this->map(function ($value) use ($locale) {
+                if (!empty($value['translations'][$locale])) {
+                    $value['translation'] = $value['translations'][$locale];
+                    unset($value['translations']);
+
+                    if (isset($value['emoji'])) {
+                        $value['translation']['emoji_name'] = $value['emoji'] . ' ' . $value['translation']['hs_name'];
+                    }
+                } else {
+                    $value['translation'] = null;
+                }
+
+                return $value;
+            });
+        });
+
+        $collection = collect($data);
+
+        if ($skipOrthography) {
+            $collection = $collection->reject(function ($metaData) {
+                return $metaData['category'] === 'orthography';
+            });
+        }
+
+        $locale = request()->header('X-App-Locale', app()->getLocale());
+        self::$tableData[$tableNameFull] = $collection->toLocale($locale, $skipOrthography);
+
+        return self::$tableData[$tableNameFull];
     }
 }

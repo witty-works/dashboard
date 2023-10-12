@@ -70,6 +70,10 @@ Route::group(
     function () {
         Route::impersonate();
 
+        Route::get('/office-login', [OAuthController::class, 'handleOfficeSsoLogin'])->name('office_login');
+        Route::get('/office-register', [OAuthController::class, 'handleOfficeSsoRegister'])->name('office_register');
+        Route::post('/office-register', [OAuthController::class, 'handleOfficeSsoRegister'])->name('office_register_post');
+
         /*
         |------------------
         | JETSTREAM LIVEWIRE
@@ -169,7 +173,7 @@ Route::group(
 */
 Route::group(['middleware' => config('socialstream.middleware', ['web'])], function () {
     Route::get('/', [WelcomeController::class, 'show'])->name('login');
-    Route::redirect('/register', '/')->name('register');
+    Route::redirect('/register', '/oauth/azureadb2c/register')->name('register');
     Route::get('/mock-login', [OAuthController::class, 'mockLogin'])->name('mock-login');
     Route::get('/logout/{provider}', [OAuthController::class, 'logout'])->name('logout');
     Route::get('/oauth/{provider}/{policy}', [OAuthController::class, 'redirectToProvider'])->name('oauth.redirect');

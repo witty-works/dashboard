@@ -1,4 +1,5 @@
-<x-jet-form-section class="py-10" submit="updateLanguageGuidelinesInspirations">
+<x-jet-form-section class="py-10" submit="updateLanguageGuidelinesInspirations" aria-label="{{ __('guidelines.manage_organization_guidelines_inspiration') }}">
+
     <x-slot name="title">
         {{ __('guidelines.manage_organization_guidelines_inspiration') }}
     </x-slot>
@@ -7,7 +8,11 @@
     </x-slot>
 
     <x-slot name="form" submit="updateLanguageGuidelinesInspirations">
-        <div class="lato-paragraph-text-p">{!! __('guidelines.manage_organization_guidelines_description_inspiration') !!}</div>
+
+        <h3 class="lato-paragraph-text-p">
+            {!! __('guidelines.manage_organization_guidelines_description_inspiration') !!}
+        </h3>
+
         <div class="guidelines-form-section">
             <x-jet-checkbox
                 id="show_inspiration_alternatives"
@@ -16,6 +21,12 @@
                 wire:model.defer="show_inspiration_alternatives"
                 :disabled="!$model->subscribed()"
             />
+
+            @if(!$model->subscribed())
+              <div class="p-3">
+                @include('partials.witty-teams-only')
+              </div>
+            @endif
         </div>
     </x-slot>
 
@@ -28,6 +39,12 @@
                 wire:model.defer="show_inspiration_alternatives_force"
                 :disabled="!$model->subscribed()"
             />
+
+            @if(!$model->subscribed())
+              <div class="p-3">
+                @include('partials.witty-teams-only')
+              </div>
+            @endif
         </div>
 
         @include('partials/save_cancel_action')

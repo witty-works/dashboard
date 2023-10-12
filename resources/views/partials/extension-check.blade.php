@@ -39,50 +39,50 @@
     });
 </script>
 
-    <div id="install-witty" style="display: none" class="wittyworks-upgrade-banner">
+    <div id="install-witty" style="display: none" class="wittyworks-upgrade-banner" role="alert" aria-labelledby="install-witty-title" aria-describedby="install-witty-text">
         <div>
-            <div class="wittyworks-upgrade-banner-title">
+            <h2 id="install-witty-title" class="wittyworks-upgrade-banner-title">
                 {!! __('content.onboarding_install_witty_title') !!}
-            </div>
-            <div class="wittyworks-upgrade-banner-text">
+            </h2>
+            <p id="install-witty-text" class="wittyworks-upgrade-banner-text">
                 {!! __('content.onboarding_install_witty_text') !!}
-            </div>
+            </p>
         </div>
         <div class="wittyworks-upgrade-banner-button-container">
-            <a href="{{ route('download') }}" class="button primary-button-purple">
+            <a href="{{ route('download') }}" class="button primary-button-purple" role="button">
                 {{ __('content.onboarding_install_witty_button') }}
             </a>
         </div>
     </div>
 
-    <div id="login-witty" style="display: none" class="wittyworks-upgrade-banner">
+    <div id="login-witty" style="display: none" class="wittyworks-upgrade-banner" role="alert" aria-labelledby="login-witty-title" aria-describedby="login-witty-text">
         <div>
-            <div class="wittyworks-upgrade-banner-title">
+            <h2 id="login-witty-title" class="wittyworks-upgrade-banner-title">
                 {!! __('content.onboarding_login_witty_title') !!}
-            </div>
-            <div class="wittyworks-upgrade-banner-text">
+            </h2>
+            <p id="login-witty-text" class="wittyworks-upgrade-banner-text">
                 {!! __('content.onboarding_login_witty_text') !!}
-            </div>
+            </p>
         </div>
         <div class="wittyworks-upgrade-banner-button-container">
-            <a id="login-witty-url" class="button primary-button-purple" href="">
+            <a id="login-witty-url" href="#" class="button primary-button-purple" role="button">
                 {{ __('content.onboarding_login_witty_button') }}
             </a>
         </div>
     </div>
 
-    <div id="upgrade-witty-version" style="display: none" class="wittyworks-upgrade-banner">
+    <div id="upgrade-witty-version" style="display: none" class="wittyworks-upgrade-banner" role="alert" aria-labelledby="upgrade-witty-title" aria-describedby="upgrade-witty-text">
         <div>
-            <div class="wittyworks-upgrade-banner-title">
-                {!! __('content.upgrade_witty_version_title') !!}
-            </div>
-            <div class="wittyworks-upgrade-banner-text">
-                {!! __('content.upgrade_witty_version_text') !!}
-            </div>
+            <h2 id="upgrade-witty-title" class="wittyworks-upgrade-banner-title">
+                {!! __('content.update_witty_version_title') !!}
+            </h2>
+            <p id="upgrade-witty-text" class="wittyworks-upgrade-banner-text">
+                {!! __('content.update_witty_version_text') !!}
+            </p>
         </div>
         <div class="wittyworks-upgrade-banner-button-container">
-            <a id="witty-version-options-url" class="button primary-button-purple" target="_blank" rel="noopener">
-                {{ __('content.upgrade_witty_version_button') }}
+            <a id="witty-version-options-url" class="button primary-button-purple" target="_blank" rel="noopener noreferrer" role="button" aria-label="{{ __('content.update_witty_version_button') . ' (opens in a new window)' }}">
+                {{ __('content.update_witty_version_button') }}
             </a>
         </div>
     </div>

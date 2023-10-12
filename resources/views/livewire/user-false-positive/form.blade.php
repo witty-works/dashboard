@@ -1,31 +1,31 @@
 <x-jet-form-section submit="storeFalsePositive">
     <x-slot name="title">
-        <div id="false_positives">
-            {{ __('guidelines.create_false_positive') }}
-        </div>
+        <h2 id="false_positives">{{ __('guidelines.create_false_positive') }}</h2>
     </x-slot>
 
     <x-slot name="description">
-        @if($model->getFalsePositivesLimitReached() && !$model->subscribed())
-            {!! __('guidelines.false_positive_limit_reached', ['max_count' => $model->getFalsePositivesCount(), 'url' => route('teams.subscription')]) !!}
-        @else
-            {!! Str::markdown(__('guidelines.create_new_false_positive_description')) !!}
-        @endif
+        <p aria-describedby="false_positives">
+            @if($model->getFalsePositivesLimitReached() && !$model->subscribed())
+                {!! __('guidelines.false_positive_limit_reached', ['max_count' => $model->getFalsePositivesCount(), 'url' => route('teams.subscription')]) !!}
+            @else
+                {!! Str::markdown(__('guidelines.create_new_false_positive_description')) !!}
+            @endif
+        </p>
     </x-slot>
 
     <x-slot name="form">
         <div class="w-full col-span-6 sm:col-span-4">
             <x-jet-label for="false_positive" value="{!! __('guidelines.false_positive_label') !!}" />
-
+            
             <x-jet-input id="false_positive"
-                type="textarea"
-                class="mt-1 block w-full textarea-as-input"
-                wire:model.defer="false_positive"
-                autocomplete="false_positive"
+                         type="textarea"
+                         class="mt-1 block w-full textarea-as-input"
+                         wire:model.defer="false_positive"
+                         autocomplete="false_positive"
             />
-
             <x-jet-input-error for="false_positive" class="mt-2" />
         </div>
+
 {{--
         <div class="w-full col-span-6 sm:col-span-4 mt-5">
             <x-jet-label for="language_code" value="{!! __('guidelines.language_code_label') !!}" />
@@ -39,6 +39,7 @@
                 <x-jet-input-error for="language_code" class="mt-2" />
         </div>
 --}}
+
     </x-slot>
 
     <x-slot name="actions">

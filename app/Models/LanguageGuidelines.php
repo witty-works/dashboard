@@ -18,6 +18,8 @@ class LanguageGuidelines extends Model
     const BASIC_ENABLED = 1;
     const ADVANCED_ENABLED = 2;
 
+    const UNLIMITED = 999;
+
     use HasFactory;
     use GuidelinesUpdateTrait {
         fireCustomModelEvent as fireCustomModelEventParent;
@@ -75,9 +77,7 @@ class LanguageGuidelines extends Model
         $attributes += [
             'preferred_variants' => ['de-DE', 'en-US'],
             'disabled_categories' => $disabled_categories,
-            'disabled_categories_force' => [
-                'orthography',
-            ],
+            'disabled_categories_force' => [],
         ];
 
         parent::__construct($attributes);
@@ -236,7 +236,6 @@ class LanguageGuidelines extends Model
                     'force' => !$subscribed || $this->show_inspiration_alternatives_force,
                 ];
                 break;
-            case 'Orthography':
             case 'Category':
                 if (!$subscribed) {
                     $disabled_categories_force = [];
@@ -341,11 +340,7 @@ class LanguageGuidelines extends Model
     {
         switch ($type) {
             case UserGuidelinesController::CATEGORY_SETTINGS:
-                $disabledCategories = $teamLanguageGuidelines->disabled_categories;
-                if (in_array('orthography', $disabledCategories)) {
-                    unset($disabledCategories[array_search('orthography', $disabledCategories)]);
-                }
-                $this->disabled_categories = $disabledCategories;
+                $this->disabled_categories = $teamLanguageGuidelines->disabled_categories;
 
                 break;
             case UserGuidelinesController::LANGUAGE_SETTINGS:

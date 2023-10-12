@@ -28,8 +28,15 @@ return [
             'browser_login' => env('AADB2C_POLICY'),
             'browser_register' => env('AADB2C_POLICY_REGISTER'),
         ],
+        'default_algorithm' => env('AADB2C_DefaultAlgorithm', 'RS256'), // decoding algorithm JWK key such as 'RS256'
         'redirect_uri' => explode(',', env('AADB2C_BROWSER_REDIRECT_URIS')),
         'validate_redirect_uri_disabled' => env('AADB2C_VALIDATE_EXTENSION_REDIRECT_URI_DISABLED', false)
+    ],
+
+    'microsoft_office' => [
+        'tenant_id' => env('MICROSOFT_TENANT_ID'),
+        'client_id' => env('MICROSOFT_CLIENT_ID'),
+        'redirect_uri' => env('MICROSOFT_CLIENT_REDIRECT_URI'),
     ],
 
     'mailjet' => [

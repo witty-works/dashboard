@@ -22,7 +22,7 @@ class AnalyticsController extends Controller
     {
         $this->refresh = $request->get('refresh', false);
         $this->categories = SyncToHubspotCategoriesCommand::loadTableData('categories');
-        $this->subcategories = SyncToHubspotCategoriesCommand::loadTableData('diversity_dimension_drivers');
+        $this->subcategories = SyncToHubspotCategoriesCommand::loadTableData('diversity_dimension_drivers', true);
     }
 
     public function user(Request $request)
@@ -136,20 +136,19 @@ class AnalyticsController extends Controller
 
     protected function buildBreakdown($events, $properties, $filters, $breakdown, $interval, $from, $to, $math = 'total')
     {
-        if (empty($filters)) {
-            // filter out orthography by default
-            $properties[] = [
-                'key' => 'response__data__category',
-                'value' => 'orthography',
-                'operator' => 'is_not',
-                'type' => 'event',
-            ];
-        }
+        // filter out orthography
+        $properties[] = [
+            'key' => 'response__data__category',
+            'value' => 'orthography',
+            'operator' => 'is_not',
+            'type' => 'event',
+        ];
 
         $filter = $this->buildFilter($properties, $filters, $interval, $from, $to, $math);
 
         $filter['display'] = 'ActionsBarValue';
         $filter['breakdown'] = $breakdown;
+        $filter['breakdown_type'] = 'hogql';
 
         if (!empty($filters)) {
             $filter['properties'] = [
@@ -170,7 +169,9 @@ class AnalyticsController extends Controller
             $response = PosthogHelper::fetchData($filter, $this->refresh);
             if (isset($response['result'])) {
                 foreach ($response['result'] as $value) {
-                    $data['events'][$event][$value['breakdown_value']] = $value['aggregated_value'];
+                    if (!empty($value['breakdown_value'])) {
+                        $data['events'][$event][$value['breakdown_value']] = $value['aggregated_value'];
+                    }
                 }
                 $data['last_refresh'] = $response['last_refresh'];
             }
@@ -198,6 +199,7 @@ class AnalyticsController extends Controller
             'events' => 'nullable|array|in:check,check_result,popover_open,alternative,ignore,learning_bites',
             'categories' => 'nullable|array|in:' . implode(',', $this->categories->keys()->toArray()),
             'subcategories' => 'nullable|array|in:' . implode(',', $this->subcategories->keys()->toArray()),
+            'inclusive' => 'nullable|in:inclusive,non_inclusive,both',
         ];
 
         $validated = $request->validate($rules);
@@ -210,6 +212,7 @@ class AnalyticsController extends Controller
         $events = $validated['events'] ?? null;
         $categories = $validated['categories'] ?? [];
         $subcategories = $validated['subcategories'] ?? [];
+        $inclusive = $validated['inclusive'] ?? 'non_inclusive';
 
         // BC code
         if (is_numeric($from)) {
@@ -236,6 +239,31 @@ class AnalyticsController extends Controller
                 'operator' => 'exact',
                 'type' => 'event',
             ];
+        }
+
+        if ($inclusive !== 'both') {
+            $subcategoriesToRemove = [];
+            foreach ($this->subcategories as $subcategory => $subcategoryData) {
+                $proficiencyLevel = $subcategoryData['proficiency_level'] ?? 'corporate_rules';
+                if ($proficiencyLevel === 'inclusive') {
+                    if (empty($subcategories)) {
+                        $properties[] = [
+                            'key' => 'response__data__subcategory',
+                            'value' => $subcategory,
+                            'operator' => $inclusive === 'inclusive' ? 'exact' : 'is_not',
+                            'type' => 'event',
+                        ];
+                    } elseif ($inclusive === 'non_inclusive') {
+                        $subcategoriesToRemove[] = $subcategory;
+                    }
+                } elseif ($inclusive === 'inclusive') {
+                    $subcategoriesToRemove[] = $subcategory;
+                }
+            }
+
+            if (!empty($subcategories)) {
+                $subcategories = array_diff($subcategories, $subcategoriesToRemove);
+            }
         }
 
         if (!empty($subcategories)) {
@@ -404,7 +432,7 @@ class AnalyticsController extends Controller
                     $events,
                     $properties,
                     $filters,
-                    'response__data__subcategory',
+                    'properties.response__data__subcategory',
                     $interval,
                     $from,
                     $to,
@@ -438,7 +466,7 @@ class AnalyticsController extends Controller
                     $events,
                     $properties,
                     $filters,
-                    'response__data_text',
+                    'coalesce(properties.response__data__text, properties.response__data_text)',
                     $interval,
                     $from,
                     $to,

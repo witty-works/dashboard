@@ -2,24 +2,8 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-h1 {
-    font-size: 3em !important;
-    font-weight: bold !important;
-}
-
-h2 {
-    font-size: 2em !important;
-    font-weight: bold !important;
-}
-
 h3 {
-    font-size: 1.5em !important;
-    font-weight: bold !important;
-}
-
-h4 {
-    font-size: 1.25em !important;
-    font-weight: bold !important;
+    font-size: 1.2em !important;
 }
 
 ol,
@@ -45,7 +29,7 @@ a {
 }
 
 /* FONTS */
-.ibarra-sub-title-h1 {
+.ibarra-sub-title-h1, h1 {
     font-family: Ibarra Real Nova, 'Times New Roman', Times, serif;
     font-style: normal;
     font-weight: 400;
@@ -54,7 +38,7 @@ a {
     color: #000000;
 }
 
-.ibarra-sub-title-h2 {
+.ibarra-sub-title-h2, h2 {
     font-family: Ibarra Real Nova, 'Times New Roman', Times, serif;
     font-style: normal;
     font-weight: 400;
@@ -75,7 +59,7 @@ a {
 }
 
 
-.lato-small-paragraph-title-h4 {
+.lato-small-paragraph-title-h4, h4 {
     font-family: Lato, Arial, Helvetica, sans-serif;
     font-style: normal;
     font-weight: 600 !important;
@@ -387,6 +371,11 @@ a {
     margin-right: 1em;
 }
 
+input[type="checkbox"]:focus + .slider {
+    outline: 2px solid #4D90FE;
+    outline-offset: 2px;
+}
+
 .switch input {
     opacity: 0;
     width: 0;
@@ -656,7 +645,6 @@ input:checked+.slider:before {
 
 .wittyworks-navigation-sub-wrapper {
     margin-left: 2.7em;
-    margin-top: -1em;
     margin-bottom: 1em;
 }
 
@@ -1210,4 +1198,34 @@ label {
 
 .toggle-next {
     cursor: pointer;
+}
+
+.chart-footer {
+    font-family: Lato, Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    color: #000000;
+    margin-top: 0.5em;
+}
+
+.skip-link {
+    position: absolute;
+    left: -10000px;
+    top: auto;
+}
+
+/* Office login  */
+.office-login-wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+.office-login-image {
+    width: 70%;
+    height: 100vh;
+}
+
+.office-login-form {
+    width: 30%;
+    height: 100vh;
+    margin: 3em;
 }

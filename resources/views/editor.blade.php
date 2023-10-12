@@ -1,6 +1,6 @@
 <x-app-layout :pagetitle="__('content.witty_editor')">
     <div class="wittyworks-navigation-wrapper">@livewire('navigation-menu')</div>
-        <div class="wittyworks-page-wrapper">
+        <div class="wittyworks-page-wrapper" id="maincontent">
             <div class="wittyworks-page lg:ml-20">
                 @include('partials.banners')
                 <div class="ibarra-sub-title-h1 margin-top">
@@ -13,13 +13,13 @@
                 
                 <div>
                     <div class="py-10">
-                        <div class="w-full col-span-6 sm:col-span-4 margin-bottom flex">
+                        <h3 class="w-full col-span-6 sm:col-span-4 margin-bottom flex">
                             @if(request()->get('onboarding'))
                             {!! __('content.witty_editor_onboarding_description') !!}
                             @else
                             {!! __('content.witty_editor_description') !!}
                             @endif
-                        </div>
+                        </h3>
 
                         <link rel='stylesheet' type='text/css' href='https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css' />
                         <link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_style.min.css">

@@ -91,6 +91,11 @@ class User extends Authenticatable implements MustVerifyEmail
         'profile_photo_url',
     ];
 
+    public function setNameAttribute($name)
+    {
+        $this->attributes['name'] = strip_tags($name);
+    }
+
     /**
      * Get the URL to the user's profile photo.
      *
@@ -181,7 +186,7 @@ class User extends Authenticatable implements MustVerifyEmail
         }
     }
 
-    public function subscribed($name = 'teams', $price = null)
+    public function subscribed($name = 'witty', $price = null)
     {
         $team = $this->currentTeam;
         if (!$team) {
@@ -191,7 +196,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return $team->subscribed($name, $price);
     }
 
-    public function subscription($name = 'teams')
+    public function subscription($name = 'witty')
     {
         $team = $this->currentTeam;
         if (!$team) {

@@ -20,7 +20,9 @@ if ($user) {
 }
 @endphp
 
+@if ($user->currentConnectedAccount->provider !== \App\Http\Controllers\OAuthController::OFFICE_PROVIDER)
 @include('partials.extension-check')
+@endif
 
 @if($showInvitations)
 @include('partials.invitations', ['user' => $user])

@@ -12,6 +12,10 @@ trait GuidelinesTrait
 
     public function getTermReplacementsLimitReached()
     {
+        if ($this->getTermReplacementsCount() === LanguageGuidelines::UNLIMITED) {
+            return false;
+        }
+
         return $this->getTotalTermReplacementsCount() >= $this->getTermReplacementsCount();
     }
 
@@ -22,6 +26,10 @@ trait GuidelinesTrait
 
     public function getFalsePositivesLimitReached()
     {
+        if ($this->getFalsePositivesCount() === LanguageGuidelines::UNLIMITED) {
+            return false;
+        }
+
         return $this->getTotalFalsePositivesCount() >= $this->getFalsePositivesCount();
     }
 }

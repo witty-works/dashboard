@@ -2,7 +2,7 @@
 
 namespace App\View\Components;
 
-class GuestLayout extends AppLayout
+class PlainLayout extends AppLayout
 {
     /**
      * Get the view / contents that represents the component.
@@ -11,6 +11,6 @@ class GuestLayout extends AppLayout
      */
     public function render()
     {
-        return view('layouts.guest');
+        return view('layouts.plain');
     }
 }
