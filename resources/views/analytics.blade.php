@@ -800,39 +800,42 @@
                         labels: aggregatedCheckChatData[0],
                         datasets: [
                             {
-                                data: aggregatedPopoverOpenData,
+                                data: aggregatedCheckResultData,
                                 borderColor: colors[3],
                                 fill: false,
+                                label:  @json(__('content.check_result_label_line_chart')),
+                            },
+                            {
+                                data: aggregatedPopoverOpenData,
+                                borderColor: colors[6],
+                                fill: false,
                                 label: "{{ __('content.popover_label_line_chart') }}",
+                                hidden: true,
                             },
                             {
                                 data: aggregatedAlternativeData,
-                                borderColor: colors[6],
+                                borderColor: colors[9],
                                 fill: false,
                                 label: "{{ __('content.alternative_label_line_chart') }}",
+                                hidden: true,
                             },
                             {
                                 data: aggregatedIgnoreData,
-                                borderColor: colors[9],
+                                borderColor: colors[12],
                                 fill: false,
                                 label:  "{{ __('content.ignored_label_line_chart') }}",
+                                hidden: true,
                             },
                             {
                                 data: aggregatedLearningBitesData,
-                                borderColor: colors[12],
-                                fill: false,
-                                label:  @json(__('content.learning_bites_label_line_chart')),
-                            },
-                            {
-                                data: aggregatedCheckResultData,
                                 borderColor: colors[14],
                                 fill: false,
-                                label:  @json(__('content.check_result_label_line_chart')),
+                                label:  @json(__('content.learning_bites_label_line_chart')),
+                                hidden: true,
                             },
                         ]
                     },
                     options: {
-                        events: [],
                         maintainAspectRatio: false,
                         responsive: true,
                         title: {
@@ -1504,7 +1507,8 @@ document.addEventListener("DOMContentLoaded", function() {
             && !e.target.classList.contains('inner-wrap')
             && !e.target.classList.contains('checkbox-wrapper')
             && !e.target.classList.contains('ellipsis')
-            && checkboxes.style.display !== 'none'
+            && checkboxes.style.display !== 'none' 
+            && !e.target.classList.contains('wittyworks-analytics-chart-extra-large')
         ) {
             checkboxes.style.display = 'none';
             setParams();
