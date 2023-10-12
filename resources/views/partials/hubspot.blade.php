@@ -1,7 +1,9 @@
 @if (config('hubspot.js_enabled'))
 <script type="text/javascript">
     function onConversationsAPIReady() {
-        window.HubSpotConversations.widget.load();
+        if (window.PHSurveyClosed || window.PHSurveyClosed === undefined) {
+            window.HubSpotConversations.widget.load();
+        }
     }
 
     // Configure window.hsConversationsSettings if needed.

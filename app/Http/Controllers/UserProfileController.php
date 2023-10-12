@@ -6,7 +6,6 @@ use App\Jobs\SyncUserToNlpApi;
 use App\Mail\TeamInvitationRequest as MailTeamInvitationRequest;
 use App\Models\LanguageGuidelines;
 use App\Models\TeamInvitationRequest;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Laravel\Jetstream\Http\Controllers\Livewire\UserProfileController as BaseUserProfileController;
@@ -32,7 +31,7 @@ class UserProfileController extends BaseUserProfileController
                 'role' => 'required|in:executive,lead,employee',
                 'languages' => 'nullable',
                 'company_name' => 'nullable|max:100',
-                'how_did_you_find' => 'nullable|in:'.implode(',', array_keys(self::HOW_DID_YOU_FIND)),
+                'how_did_you_find' => 'nullable|in:' . implode(',', array_keys(self::HOW_DID_YOU_FIND)),
                 'request_invite' => 'boolean',
             ]);
 
@@ -103,6 +102,6 @@ class UserProfileController extends BaseUserProfileController
             }
         }
 
-        return redirect()->route('root');
+        return redirect(url()->previous());
     }
 }

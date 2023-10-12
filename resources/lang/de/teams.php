@@ -27,8 +27,9 @@ return [
     'plan_headline' => 'Abonnement',
     'profile' => 'Profil',
     'total_of_max_used_licenses' => ':total von :max_count Benutzerlizenzen wurden zugewiesen',
-    'total_of_max_used_dictionary' => ':total von :max_count möglichen Einträgen in das Team-Wörterbuch wurden gemacht',
-    'total_of_max_used_ignored' => ':total von :max_count möglichen Einträgen in die Liste ignorierter Wörter wurden gemacht ',
+    'total_of_max_used_dictionary' => '[0,998] :total von :max_count möglichen Einträgen in das Team-Wörterbuch wurden erstellt|[999,*] :total von unlimitiert möglichen Einträgen in das Team-Wörterbuch wurden erstellt
+',
+    'total_of_max_used_ignored' => '[0,998] :total von :max_count möglichen Einträgen in die Liste ignorierter Wörter wurden erstellt |[999,*]:total von unlimitierten möglichen Einträgen in die Liste ignorierter Wörter wurden erstellt ',
     'locked_by_team' => 'Diese Einstellung wurde von deinen Team-Administratoren gesperrt.',
     'license_count_error' => 'Beim Aktualisieren der Lizenzanzahl ist ein Fehler aufgetreten.',
     'license_count_too_small_error' => 'Bitte erhöhe die Anzahl der Lizenzen oder entferne Personen aus dem Team.',
@@ -37,4 +38,5 @@ return [
     'amount_per_year' => ':count-Lizenzen – :amount pro Jahr',
     'license_count_did_not_change' => 'Die Lizenzanzahl wurde nicht geändert.',
     'to_upgrade_contact_owner' => 'Um dein Abo anzupassen, wende dich bitte an deine*n Team-Eigentümer*in.',
+    'select_license_count_aria_label' => 'Wählen die Anzahl der Lizenzen aus',
 ];

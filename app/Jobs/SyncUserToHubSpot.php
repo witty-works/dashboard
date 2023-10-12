@@ -32,11 +32,6 @@ class SyncUserToHubSpot implements ShouldQueue
         $this->id = $user->id;
     }
 
-    public function retryUntil()
-    {
-        return now()->addHour(config('hubspot.rate.until'));
-    }
-
     public function middleware()
     {
         $rateLimitedMiddleware = new RateLimited(false);
@@ -64,6 +59,7 @@ class SyncUserToHubSpot implements ShouldQueue
 
         $this->hubspot = new Hubspot();
 
+        $changed = false;
         $contact = $this->hubspot->findContact($user);
         if ($contact) {
             $oldHubspotCompanyId = $user->hubspot_company_id;
@@ -91,7 +87,7 @@ class SyncUserToHubSpot implements ShouldQueue
                     dispatch(new SyncUserToHubSpot($otherUser));
                 }
             }
-        } else {
+        } elseif ($user->hubspot_id !== 0) {
             if (empty($user->hubspotutk)) {
                 $contact = $this->hubspot->createContact($user);
             } else {

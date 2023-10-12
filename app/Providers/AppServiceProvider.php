@@ -37,6 +37,7 @@ class AppServiceProvider extends ServiceProvider
         Cashier::useCustomerModel(Team::class);
         Cashier::calculateTaxes();
         Cashier::useSubscriptionModel(Subscription::class);
+        Cashier::keepPastDueSubscriptionsActive();
 
         if (config('posthog.enabled')) {
             PostHog::init(

@@ -1,3 +1,4 @@
+@if($user)
 <x-jet-dialog-modal wire:model="showingModal" >
     <x-slot name="title">
         {{ __('content.small_onboarding_survey') }}
@@ -83,8 +84,8 @@
 
                     <x-jet-input
                         name="company_name"
-                        type="textarea"
-                        class="mt-1 block w-full textarea-as-input"
+                        type="text"
+                        class="mt-1 block w-full"
                         value="{{ old('company_name') }}"
                     />
                     <x-jet-input-error for="company_name" class="mt-2" />
@@ -102,3 +103,4 @@
     <x-slot name="footer">
     </x-slot>
 </x-jet-dialog-modal>
+@endif

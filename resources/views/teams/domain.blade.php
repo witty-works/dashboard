@@ -1,5 +1,5 @@
 <div class="ibarra-sub-title-h1 margin-top">
-    {{ __('guidelines.privacy_settings_label') }}
+    {!! __('guidelines.privacy_settings_label') !!}
 </div>
 
 <div>

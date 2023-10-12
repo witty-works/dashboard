@@ -52,16 +52,17 @@ class Team extends JetstreamTeam
         'deleted' => TeamDeleted::class,
     ];
 
-    public function subscribed($name = 'teams', $price = null)
+    public function setNameAttribute($name)
     {
-        if ($name === 'teams' && $price === null) {
-            $price = config('stripe.plans.witty_teams.price_id');
-        }
+        $this->attributes['name'] = strip_tags($name);
+    }
 
+    public function subscribed($name = 'witty', $price = null)
+    {
         return $this->parentSubscribed($name, $price);
     }
 
-    public function subscription($name = 'teams')
+    public function subscription($name = 'witty')
     {
         return $this->parentSubscription($name);
     }
@@ -103,7 +104,8 @@ class Team extends JetstreamTeam
 
     public function posthogId()
     {
-        return 'dashboard-team:' . $this->id;
+        return config('posthog.dashboard_team_id_override')
+            ?? 'dashboard-team:' . $this->id;
     }
 
     public function getUserLicensesCount()

@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\LanguageGuidelines;
+
 return [
 
     'currency' => 'USD',
@@ -16,10 +18,10 @@ return [
                 'organization_guidelines' => [],
                 'basic_team_analytics' => [],
                 'invite_smaller_teams' => ['count' => 3],
-                'user_false_positives' => ['count' => 5],
-                'user_term_replacements' => ['count' => 10],
-                'organization_false_positives' => ['count' => 5],
-                'organization_term_replacements' => ['count' => 10],
+                'user_false_positives' => ['count' => 3],
+                'user_term_replacements' => ['count' => 3],
+                'organization_false_positives' => ['count' => 3],
+                'organization_term_replacements' => ['count' => 3],
                 'customer_success_helpcenter' => [],
             ],
         ],
@@ -34,9 +36,9 @@ return [
                 'permissions' => [],
                 'advanced_team_analytics' => [],
                 'control_data_sharing' => [],
-                'user_false_positives' => ['count' => 10],
+                'user_false_positives' => ['count' => 25],
                 'user_term_replacements' => ['count' => 50],
-                'organization_false_positives' => ['count' => 10],
+                'organization_false_positives' => ['count' => 25],
                 'organization_term_replacements' => ['count' => 50],
                 'inclusion_nps_store' => [],
                 'hr_add_on' => [],
@@ -55,10 +57,10 @@ return [
                 'advanced_organization_analytics' => [],
                 'saml' => [],
                 'private_cloud' => [],
-                'user_false_positives' => ['count' => 999],
-                'user_term_replacements' => ['count' => 999],
-                'organization_false_positives' => ['count' => 999],
-                'organization_term_replacements' => ['count' => 999],
+                'user_false_positives' => ['count' => LanguageGuidelines::UNLIMITED],
+                'user_term_replacements' => ['count' => LanguageGuidelines::UNLIMITED],
+                'organization_false_positives' => ['count' => LanguageGuidelines::UNLIMITED],
+                'organization_term_replacements' => ['count' => LanguageGuidelines::UNLIMITED],
                 'custom_onboarding_training' => [],
                 'customer_success_phone' => [],
             ],

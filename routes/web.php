@@ -70,6 +70,10 @@ Route::group(
     function () {
         Route::impersonate();
 
+        Route::get('/office-login', [OAuthController::class, 'handleOfficeSsoLogin'])->name('office_login');
+        Route::get('/office-register', [OAuthController::class, 'handleOfficeSsoRegister'])->name('office_register');
+        Route::post('/office-register', [OAuthController::class, 'handleOfficeSsoRegister'])->name('office_register_post');
+
         /*
         |------------------
         | JETSTREAM LIVEWIRE
@@ -119,13 +123,12 @@ Route::group(
 
                     Route::redirect('/user/language', '/user/language/customize-witty')->name('user.language-guidelines');
                     Route::get('/user/language/customize-witty', [UserGuidelinesController::class, 'categorySettings'])->name('user.category-settings');
-                    Route::get('/user/language/customize-witty/reset', [UserGuidelinesController::class, 'resetCategorySettings'])->name('user.category-settings-reset');
                     Route::get('/user/language/language-settings', [UserGuidelinesController::class, 'languageSettings'])->name('user.language-settings');
                     Route::get('/user/language/language-settings/reset', [UserGuidelinesController::class, 'resetLanguageSettings'])->name('user.language-settings-reset');
                     Route::get('/user/language/dictionary', [UserGuidelinesController::class, 'termReplacements'])->name('user.dictionary');
                     Route::get('/user/language/ignore-words', [UserGuidelinesController::class, 'falsePositives'])->name('user.ignored-words');
                     Route::get('/user/language/privacy-settings', [UserGuidelinesController::class, 'domains'])->name('user.privacy-settings');
-                    Route::get('/user/analytics', [AnalyticsController::class, 'user'])->name('user_analytics');
+                    Route::get('/user/analytics', [AnalyticsController::class, 'user'])->name('user.analytics');
 
                     Route::redirect('/team/language', '/team/language/customize-witty')->name('teams.language-guidelines');
                     Route::get('/team/language/customize-witty', [OrganizationGuidelinesController::class, 'categorySettings'])->name('teams.category-settings');
@@ -133,7 +136,7 @@ Route::group(
                     Route::get('/team/language/dictionary', [OrganizationGuidelinesController::class, 'termReplacements'])->name('teams.dictionary');
                     Route::get('/team/language/ignored-words', [OrganizationGuidelinesController::class, 'falsePositives'])->name('teams.ignored-words');
                     Route::get('/team/language/privacy-settings', [OrganizationGuidelinesController::class, 'domains'])->name('teams.privacy-settings');
-                    Route::get('/team/analytics', [AnalyticsController::class, 'organization'])->name('team_analytics');
+                    Route::get('/team/analytics', [AnalyticsController::class, 'organization'])->name('teams.analytics');
                 }
             });
         });
@@ -169,7 +172,7 @@ Route::group(
 */
 Route::group(['middleware' => config('socialstream.middleware', ['web'])], function () {
     Route::get('/', [WelcomeController::class, 'show'])->name('login');
-    Route::redirect('/register', '/')->name('register');
+    Route::redirect('/register', '/oauth/azureadb2c/register')->name('register');
     Route::get('/mock-login', [OAuthController::class, 'mockLogin'])->name('mock-login');
     Route::get('/logout/{provider}', [OAuthController::class, 'logout'])->name('logout');
     Route::get('/oauth/{provider}/{policy}', [OAuthController::class, 'redirectToProvider'])->name('oauth.redirect');
@@ -181,9 +184,24 @@ Route::group(['middleware' => config('socialstream.middleware', ['web'])], funct
         ->name('team-invitations.accept-signed');
 
     Route::get('/download', function () {
-        return redirect(config('app.download_url'));
+        return view('download');
     })->name('download');
 
+    Route::get('/word-addin', function () {
+        return view('word-addin');
+    })->name('word-addin');
+
+    Route::get('/.well-known/microsoft-identity-association.json', function () {
+        return response()->json(
+            [
+                'associatedApplications' => [
+                    [
+                        'applicationId' => config('app.microsoft_application_id')
+                    ]
+                ]
+            ]
+        );
+    })->name('microsoft-identity-association');
 });
 
 /*
@@ -191,6 +209,8 @@ Route::group(['middleware' => config('socialstream.middleware', ['web'])], funct
 | \SOCIALSTREAM
 |------------------
 */
+
+Route::get('/roadmap', [WelcomeController::class, 'roadmap'])->name('roadmap');
 
 Route::post(
     '/stripe/webhook',

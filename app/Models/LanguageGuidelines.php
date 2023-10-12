@@ -18,6 +18,8 @@ class LanguageGuidelines extends Model
     const BASIC_ENABLED = 1;
     const ADVANCED_ENABLED = 2;
 
+    const UNLIMITED = 999;
+
     use HasFactory;
     use GuidelinesUpdateTrait {
         fireCustomModelEvent as fireCustomModelEventParent;
@@ -38,13 +40,11 @@ class LanguageGuidelines extends Model
         'team_id',
         'preferred_variants',
         'disabled_categories',
-        'disabled_categories_force',
     ];
 
     protected $casts = [
         'preferred_variants' => 'json',
         'disabled_categories' => 'json',
-        'disabled_categories_force' => 'json',
         'german_rules_force' => 'boolean',
         'show_inspiration_alternatives_force' => 'boolean',
         'preferred_variants_force' => 'boolean',
@@ -64,34 +64,36 @@ class LanguageGuidelines extends Model
 
     public function __construct(array $attributes = [])
     {
+        $this->proficiencyLevels = SyncToHubspotCategoriesCommand::loadTableData('proficiency_levels');
+        $this->diversityDimensionDrivers = SyncToHubspotCategoriesCommand::loadTableData('diversity_dimension_drivers');
+
+        $disabled_categories = [];
+        foreach ($this->getDiversityDimensionDrivers(null, true, true) as $ddd => $config) {
+            $disabled_categories[] = $ddd;
+        }
+
         $attributes += [
             'preferred_variants' => ['de-DE', 'en-US'],
-            'disabled_categories' => [],
-            'disabled_categories_force' => [
-                'orthography',
-            ],
+            'disabled_categories' => $disabled_categories,
         ];
 
         parent::__construct($attributes);
-
-        $this->proficiencyLevels = SyncToHubspotCategoriesCommand::loadTableData('proficiency_levels');
-        $this->diversityDimensionDrivers = SyncToHubspotCategoriesCommand::loadTableData('diversity_dimension_drivers');
     }
 
     public static function getLanguageGuidelines($model)
     {
         $filter = [$model instanceof Team ? 'team_id' : 'user_id'  => $model->id];
         $languageGuideline = LanguageGuidelines::firstOrNew($filter);
-        $subscribed = $model->subscribed();
 
-        $disabled_categories = $languageGuideline->disabled_categories;
-        foreach ($languageGuideline->diversityDimensionDrivers as $ddd => $config) {
-            if (!$languageGuideline->isCategoryAvailable($ddd, $subscribed) && !in_array($ddd, $languageGuideline->disabled_categories)) {
-                $disabled_categories[] = $ddd;
+        if (!$model->subscribed()) {
+            $disabled_categories = $languageGuideline->disabled_categories;
+            foreach ($languageGuideline->getDiversityDimensionDrivers(null, true, true) as $ddd => $config) {
+                if (!in_array($ddd, $disabled_categories)) {
+                    $disabled_categories[] = $ddd;
+                }
             }
+            $languageGuideline->disabled_categories = $disabled_categories;
         }
-
-        $languageGuideline->disabled_categories = $disabled_categories;
 
         return $languageGuideline;
     }
@@ -119,6 +121,10 @@ class LanguageGuidelines extends Model
 
     public function getGenderedRolesFormat($genderedRolesFormat = null)
     {
+        if ($genderedRolesFormat === null) {
+            $genderedRolesFormat = $this->gendered_roles_format;
+        }
+
         $subscribed = $this->team_id ? $this->team->subscribed() : $this->user->subscribed();
         if (!$subscribed || !array_key_exists($genderedRolesFormat, GuidelinesInterface::GENDERED_ROLES_FORMAT)) {
             return key(GuidelinesInterface::GENDERED_ROLES_FORMAT);
@@ -127,29 +133,42 @@ class LanguageGuidelines extends Model
         return $genderedRolesFormat;
     }
 
-    /**
-     *
-     * @param mixed $diversityDimensionDriver
-     * @param mixed $subscribed
-     * @param str|null $enabled  DISABLED|BASIC_ENABLED|ADVANCED_ENABLED
-     * @return str|null          DISABLED|BASIC_ENABLED|ADVANCED_ENABLED
-     */
-    public function isCategoryAvailable($diversityDimensionDriver, $subscribed, $enabled = self::ADVANCED_ENABLED)
-    {
-        $proficiencyLevel = $this->diversityDimensionDrivers[$diversityDimensionDriver]['proficiency_level'] ?? null;
-        if ($proficiencyLevel === 'openly_discriminating') {
-            return self::BASIC_ENABLED;
+    public function getDiversityDimensionDrivers(
+        $category = null,
+        $includeAdvanced = false,
+        $advancedOnly = false
+    ) {
+
+        if ($category === null && $includeAdvanced === false) {
+            return $this->diversityDimensionDrivers;
         }
 
-        if (empty($enabled)) {
-            return self::DISABLED;
+        $diversityDimensionDrivers = [];
+        foreach ($this->diversityDimensionDrivers as $ddd => $dddConfig) {
+            if (
+                $category
+                && (empty($dddConfig['category'])
+                    || $category !== $dddConfig['category']
+                    || empty($dddConfig['translation'])
+                )
+            ) {
+                continue;
+            }
+
+            if (!$advancedOnly) {
+                $diversityDimensionDrivers[$ddd] = $dddConfig;
+            }
+
+            if (
+                $includeAdvanced
+                && !empty($dddConfig['proficiency_level'])
+                && $dddConfig['proficiency_level'] !== 'openly_discriminating'
+            ) {
+                $diversityDimensionDrivers['advanced_' . $ddd] = $dddConfig;
+            }
         }
 
-        if (!$subscribed) {
-            return self::BASIC_ENABLED;
-        }
-
-        return $enabled;
+        return $diversityDimensionDrivers;
     }
 
     public function inPlaceUpateArray($element, $column, $enabled)
@@ -214,20 +233,10 @@ class LanguageGuidelines extends Model
                     'force' => !$subscribed || $this->show_inspiration_alternatives_force,
                 ];
                 break;
-            case 'Orthography':
             case 'Category':
-                if (!$subscribed) {
-                    $disabled_categories_force = [];
-                    foreach ($this->disabled_categories_force as $key => $value) {
-                        $disabled_categories_force[] = $key;
-                    }
-                } else {
-                    $disabled_categories_force = $this->disabled_categories_force;
-                }
                 $properties = [
                     'language_type' => (new \ReflectionClass($this))->getShortName(),
                     'disabled_categories' => $this->disabled_categories,
-                    'force' => $disabled_categories_force,
                 ];
                 break;
             default:
@@ -263,12 +272,8 @@ class LanguageGuidelines extends Model
             return false;
         }
 
-        if ($category) {
-            return in_array($category, $teamGuidelines->disabled_categories_force) ? 'locked' : false;
-        }
-
-        if (in_array($section, GuidelinesInterface::DISABLED_CATEGORIES)) {
-            return in_array($section, $teamGuidelines->disabled_categories_force) ? 'locked' : false;
+        if ($category || in_array($section, GuidelinesInterface::DISABLED_CATEGORIES)) {
+            return false;
         }
 
         return $teamGuidelines->{$section . '_force'} ? 'locked' : false;
@@ -311,10 +316,13 @@ class LanguageGuidelines extends Model
                 $diversityDimensionDrivers = SyncToHubspotCategoriesCommand::loadTableData('diversity_dimension_drivers');
 
                 foreach ($diversityDimensionDrivers as $ddd => $config) {
+                    if (!empty($config['category']) && $config['category'] === 'orthography') {
+                        continue;
+                    }
                     if (in_array($ddd, $languageGuidelines->disabled_categories) !== in_array($ddd, $teamLanguageGuidelines->disabled_categories)) {
                         return true;
                     }
-                    if (in_array('advanced_' .$ddd, $languageGuidelines->disabled_categories) !== in_array('advanced_' .$ddd, $teamLanguageGuidelines->disabled_categories)) {
+                    if (in_array('advanced_' . $ddd, $languageGuidelines->disabled_categories) !== in_array('advanced_' . $ddd, $teamLanguageGuidelines->disabled_categories)) {
                         return true;
                     }
                 }
@@ -335,15 +343,7 @@ class LanguageGuidelines extends Model
     {
         switch ($type) {
             case UserGuidelinesController::CATEGORY_SETTINGS:
-                $diversityDimensionDrivers = SyncToHubspotCategoriesCommand::loadTableData('diversity_dimension_drivers');
-
-                foreach ($diversityDimensionDrivers as $ddd => $config) {
-                    $disabledCategories = $teamLanguageGuidelines->disabled_categories;
-                    if (in_array('orthography', $disabledCategories)) {
-                        unset($disabledCategories[array_search('orthography', $disabledCategories)]);
-                    }
-                    $this->disabled_categories = $disabledCategories;
-                }
+                $this->disabled_categories = $teamLanguageGuidelines->disabled_categories;
 
                 break;
             case UserGuidelinesController::LANGUAGE_SETTINGS:

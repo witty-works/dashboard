@@ -1,8 +1,9 @@
-<x-jet-form-section class="py-10" submit="updateLanguageGuidelinesCategory">
+<x-jet-form-section class="py-10" submit="updateLanguageGuidelinesCategory" aria-label="{{ $config['translation']['name'] }}">
+
     <x-slot name="title">
         <div class="headline-row">
             <img width="60" class="category_icon" src="{{ $config['icon']['src'] }}" alt="{{ $config['translation']['name'] }} Icon"/>
-            {{ $config['translation']['name'] }}
+            <span>{{ $config['translation']['name'] }}</span>
             @if(!empty($config['translation']['example_image']['src']))
             @include('partials.info_hover', ['category' => $category, 'name' => $config['translation']['name'], 'config' => $config])
             @endif
@@ -18,7 +19,7 @@
     <x-slot name="form" submit="updateLanguageGuidelinesCategory">
         <p>
             {!! $config['translation']['lead_title'] !!}
-            <a href="{{ $config['translation']['canonical_url']}}" target=”_blank” rel=”noopener”>{{ __('content.learn_more') }}</a>
+            <a href="{{ $config['translation']['canonical_url']}}" target="_blank" rel="noopener noreferrer">{{ __('content.learn_more') }}</a>
         </p>
         @foreach ($proficiencyLevels as $proficiencyLevel => $proficiencyLevelData)
         @php
@@ -44,14 +45,10 @@
             };
             usort($list, $callback);
 
-            if ($proficiencyLevel === 'openly_discriminating') {
-                $disabled = true;
-            } else {
-                $disabled = false;
-            }
+            $disabled = $proficiencyLevel === 'openly_discriminating';
         @endphp
-        <div class="guidelines-form-section lato-small-text-p guidelines-form-section-proficiency-level">
-            {{ $proficiencyLevelData['translation']['hs_name'] }}
+        <div class="guidelines-form-section lato-small-text-p guidelines-form-section-proficiency-level" aria-expanded="false">
+            <h3>{{ $proficiencyLevelData['translation']['hs_name'] }}</h3>
 
             @include('partials.toggle_label', ['disabled' => $disabled])
 
@@ -68,11 +65,7 @@
             @endif
         </div>
         <x-jet-input-error for="dimensions" class="mt-2" />
-        @if(!empty($proficiencyLevelData['translation']['lead_text']))
-        <div id="{{ $category }}-{{ $proficiencyLevel }}" style="display: none" class="proficiency-level-p">
-            {!! $proficiencyLevelData['translation']['lead_text'] !!}
-        </div>
-        @endif
+
         @foreach ($list as $ddd)
         @if(isset($diversityDimensionDrivers[$ddd]['translation']) && isset($dimensions[$ddd]))
         <div class="guidelines-form-section-ident lato-small-text-p">
@@ -113,16 +106,6 @@
     </x-slot>
 
     <x-slot name="actions">
-        <div class="guidelines-form-section--apply-for-all">
-            <x-jet-checkbox
-                id="dimensions_force"
-                value="1"
-                :label="__('guidelines.set_for_all')"
-                wire:model.defer="dimensions_force"
-                :disabled="!$model->subscribed()"
-            />
-        </div>
-
         @if (Auth::user()->hasTeamPermission($model, 'edit_guidelines'))
         @include('partials/save_cancel_action')
         @endif

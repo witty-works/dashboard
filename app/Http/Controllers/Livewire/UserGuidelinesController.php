@@ -15,23 +15,6 @@ class UserGuidelinesController extends Controller
     const FALSE_POSITIVES = 'false_positives';
     const DOMAINS = 'domains';
 
-    public function resetCategorySettings(Request $request)
-    {
-        $user = $request->user();
-
-        if ($user->currentTeam) {
-            $teamLanguageGuidelines = LanguageGuidelines::where('team_id', $user->currentTeam->id)->first();
-
-            if ($teamLanguageGuidelines) {
-                $languageGuidelines = LanguageGuidelines::firstOrNew(['user_id' => $user->id]);
-
-                $languageGuidelines->resetSettingsToTeam($teamLanguageGuidelines, self::CATEGORY_SETTINGS);
-            }
-        }
-
-        return redirect()->route('user.category-settings');
-    }
-
     public function resetLanguageSettings(Request $request)
     {
         $user = $request->user();

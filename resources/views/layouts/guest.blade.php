@@ -19,10 +19,10 @@
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 
         <!-- Scripts -->
-        @include('partials/sentry')        
+        @include('partials/sentry')
         <script src="{{ mix('js/app.js') }}" defer></script>
+        @include('partials/detect_browser')
         @include('partials/hubspot')
-        @include('partials/posthog')
     </head>
     <body class="font-sans antialiased">
         @include('partials/gtm-body')

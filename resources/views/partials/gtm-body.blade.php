@@ -7,8 +7,12 @@
 window.dataLayer = window.dataLayer || [];
 window._hsp = window._hsp || [];
 _hsp.push(['addPrivacyConsentListener', function(consent) {
-  if (consent.categories.analytics) {
-    dataLayer.push({'event': 'cookie_consent_update'});
-  }
+    if (consent.categories.analytics) {
+        dataLayer.push({'event': 'cookie_consent_update'});
+
+@if (config('posthog.js_enabled'))
+    @include('partials/posthog')
+@endif
+    }
 }]);
 </script>

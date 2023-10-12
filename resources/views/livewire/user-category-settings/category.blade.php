@@ -44,21 +44,11 @@
             };
             usort($list, $callback);
 
-            if ($proficiencyLevel === 'openly_discriminating') {
-                $disabled = true;
-            } else {
-                $force = \App\Models\LanguageGuidelines::isForcedOnTeam($model, 'disabled_categories', $category);
-
-                if ($force) {
-                    $disabled = 'locked';
-                } else {
-                    $disabled = false;
-                }
-            }
+            $disabled = $proficiencyLevel === 'openly_discriminating';
         @endphp
 
         <div class="guidelines-form-section lato-small-text-p guidelines-form-section-proficiency-level">
-            <b>{{ $proficiencyLevelData['translation']['hs_name'] }}</b>
+            <h3>{{ $proficiencyLevelData['translation']['hs_name'] }}</h3>
 
             @include('partials.toggle_label', ['disabled' => $disabled])
 
@@ -87,12 +77,11 @@
         if ($proficiencyLevel === 'openly_discriminating') {
             $disabled = true;
             $minValue = \App\Models\LanguageGuidelines::BASIC_ENABLED;
-        } else if ($force) {
-            $minValue = \App\Models\LanguageGuidelines::teamCategoryValue($model, $ddd);
         } else {
-            $minValue = \App\Models\LanguageGuidelines::DISABLED;
+            $minValue = \App\Models\LanguageGuidelines::teamCategoryValue($model, $ddd);
         }
         @endphp
+
         <div class="guidelines-form-section-ident lato-small-text-p">
             @php
                 $label = '<a href="'.$diversityDimensionDrivers[$ddd]['translation']['canonical_url'].'" />';
@@ -115,12 +104,12 @@
                 :value="$dimensions[$ddd]"
                 :label="$label"
                 wire:model.defer="dimensions.{{$ddd}}"
-                :disabled="$minValue === 2 && (bool)$disabled"
+                :disabled="$minValue === 2"
                 :minValue="$minValue"
             />
             @endif
 
-            @if(!empty($diversityDimensionDrivers[$ddd]['translation']['example_image']['src']))
+            @if($proficiencyLevel !== 'openly_discriminating' && !empty($diversityDimensionDrivers[$ddd]['translation']['example_image']['src']))
             @include('partials.info_hover', ['category' => $ddd, 'name' => $diversityDimensionDrivers[$ddd]['translation']['hs_name'], 'config' => $diversityDimensionDrivers[$ddd]])
             @endif
         </div>

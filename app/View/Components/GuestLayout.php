@@ -2,17 +2,8 @@
 
 namespace App\View\Components;
 
-use Illuminate\View\Component;
-
-class GuestLayout extends Component
+class GuestLayout extends AppLayout
 {
-    public $pagetitle;
-
-    public function __construct($pagetitle = null)
-    {
-        $this->pagetitle = $pagetitle;
-    }
-
     /**
      * Get the view / contents that represents the component.
      *

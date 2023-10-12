@@ -7,3 +7,8 @@
     type: upstream
     primary: true
     upstream: "dashboard:http"
+    tls:
+        strict_transport_security:
+            enabled: true
+            include_subdomains: true
+            preload: true

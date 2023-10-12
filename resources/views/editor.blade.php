@@ -1,6 +1,6 @@
 <x-app-layout :pagetitle="__('content.witty_editor')">
     <div class="wittyworks-navigation-wrapper">@livewire('navigation-menu')</div>
-        <div class="wittyworks-page-wrapper">
+        <div class="wittyworks-page-wrapper" id="maincontent">
             <div class="wittyworks-page lg:ml-20">
                 @include('partials.banners')
                 <div class="ibarra-sub-title-h1 margin-top">
@@ -13,13 +13,13 @@
                 
                 <div>
                     <div class="py-10">
-                        <div class="w-full col-span-6 sm:col-span-4 margin-bottom flex">
+                        <h3 class="w-full col-span-6 sm:col-span-4 margin-bottom flex">
                             @if(request()->get('onboarding'))
                             {!! __('content.witty_editor_onboarding_description') !!}
                             @else
                             {!! __('content.witty_editor_description') !!}
                             @endif
-                        </div>
+                        </h3>
 
                         <link rel='stylesheet' type='text/css' href='https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css' />
                         <link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_style.min.css">
@@ -35,25 +35,28 @@
                         </div>
 
                         <script type="text/javascript">
-                            FroalaEditor.DefineIcon('copy', {
-                                template: 'image',
-                                SRC: @json(URL::asset('copy.png')),
-                                ALT: @json(__('content.witty_editor_copy_button'))
-                            });
-                            FroalaEditor.RegisterCommand('copy', {
-                                title: @json(__('content.witty_editor_copy_button')),
-                                focus: false,
-                                undo: false,
-                                refreshAfterCallback: false,
-                                callback: function () {
-                                    let text = this.html.get();
-                                    text+= @json(__('content.witty_editor_viral_copy_text'), JSON_HEX_QUOT);
-                                    let type = "text/html";
-                                    let blob = new Blob([text], { type });
-                                    let data = [new ClipboardItem({ [type]: blob })];
-                                    navigator.clipboard.write(data);
-                                }
-                            });
+                            if (typeof ClipboardItem === 'function') {
+                                FroalaEditor.DefineIcon('copy', {
+                                    template: 'image',
+                                    SRC: @json(URL::asset('copy.png')),
+                                    ALT: @json(__('content.witty_editor_copy_button'))
+                                });
+
+                                FroalaEditor.RegisterCommand('copy', {
+                                    title: @json(__('content.witty_editor_copy_button')),
+                                    focus: false,
+                                    undo: false,
+                                    refreshAfterCallback: false,
+                                    callback: function () {
+                                        let text = this.html.get();
+                                        text+= @json(__('content.witty_editor_viral_copy_text'), JSON_HEX_QUOT);
+                                        let type = "text/html";
+                                        let blob = new Blob([text], { type });
+                                        let data = [new ClipboardItem({ [type]: blob })];
+                                        navigator.clipboard.write(data);
+                                    }
+                                });
+                            }
 
                             FroalaEditor.DefineIcon('example', {
                                 template: 'image',
@@ -87,6 +90,7 @@
                                 attribution: false,
                                 documentReady: true,
                                 spellcheck: false,
+                                heightMax: 800,
                                 enter: FroalaEditor.ENTER_BR,
                                 toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'fontSize', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'insertLink', 'clearFormatting', 'undo', 'redo', 'copy', 'example', 'help'],
                                 toolbarButtonsMD: ['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'fontSize', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'insertLink', 'clearFormatting', 'undo', 'redo', 'copy', 'example', 'help'],

@@ -61,16 +61,16 @@ class Form extends Component
 
     protected function getLanguageCodes()
     {
-        $language_codes = TermReplacement::LANGUAGE_CODES;
+        $languageCodes = TermReplacement::LANGUAGE_CODES;
         if ($this->matching_type === 'lemmatize') {
             $this->show_word_type = true;
-            unset($language_codes['']);
+            unset($languageCodes['']);
         } else {
             $this->show_word_type = false;
             $this->word_type = '';
         }
 
-        return $language_codes;
+        return $languageCodes;
     }
 
     protected function cleanValues($subscribed)
@@ -173,7 +173,10 @@ class Form extends Component
             }
         } else {
             if ($this->model->getTermReplacementsLimitReached()) {
-                $message = __('guidelines.term_replacement_limit_reached_error', ['max_count' => $this->model->getTermReplacementsCount()]);
+                $message = __(
+                    'guidelines.term_replacement_limit_reached_error',
+                    ['max_count' => $this->model->getTermReplacementsCount()]
+                );
                 throw ValidationException::withMessages(['term' => $message]);
             }
 
@@ -210,14 +213,13 @@ class Form extends Component
                 }
 
                 if (empty($this->language_code)) {
-                    $language_codes = $this->getLanguageCodes();
-                    $this->language_code = key($language_codes);
+                    $languageCodes = $this->getLanguageCodes();
+                    $this->language_code = key($languageCodes);
                 }
 
                 if (empty($this->word_type)) {
-                    $word_types = TermReplacement::WORD_TYPES;
-                    $language_codes = $this->getLanguageCodes();
-                    $this->word_type = key($word_types);
+                    $wordTypes = TermReplacement::WORD_TYPES;
+                    $this->word_type = key($wordTypes);
                 }
 
                 $result = $this->getLemma($this->term, $this->language_code);
@@ -243,7 +245,7 @@ class Form extends Component
         }
     }
 
-    protected function getLemma($text, $locale)
+    protected function getLemma($text, $lang)
     {
         $endpoint = config('app.nlp_api_endpoint');
         if (empty($endpoint['urls'])) {
@@ -254,7 +256,7 @@ class Form extends Component
 
         $data = [
             'text' => $text,
-            'locale' => $locale,
+            'lang' => $lang,
         ];
 
         try {

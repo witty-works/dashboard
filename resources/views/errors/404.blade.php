@@ -1,6 +1,6 @@
 <x-app-layout :pagetitle="__('errors.page_not_found')">
     <div class="wittyworks-navigation-wrapper">@livewire('navigation-menu')</div>
-    <div class="wittyworks-page-wrapper">
+    <div class="wittyworks-page-wrapper" id="maincontent">
         <div class="wittyworks-page lg:ml-20">
             <div class="pt-4 bg-gray-100">
                 <div class="min-h-screen flex flex-col items-center pt-6 sm:pt-0">

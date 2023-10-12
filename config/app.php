@@ -41,23 +41,23 @@ return [
     |
     */
 
-    'browser_version' => env('BROWSER_VERSION'),
     'browsers' => [
         'chrome' => [
             'image_src' => '/google-chrome-icon-transparent-4.webp',
             'store_href' => 'https://chrome.google.com/webstore/detail/meojhlodfiihbjkcnehkdcgncnhgagog',
+            'latest_version' => env('BROWSER_VERSION_CHROME'),
         ],
         'edge' => [
             'image_src' => '/Microsoft_Edge_logo_(2019).webp',
             'store_href' => 'https://microsoftedge.microsoft.com/addons/detail/icngefdfohhklfkjbohjgjnboenocbic',
+            'latest_version' => env('BROWSER_VERSION_EDGE'),
         ],
         'firefox' => [
             'image_src' => '/Firefox_logo,_2019.webp',
             'store_href' => 'https://addons.mozilla.org/en-US/firefox/addon/witty/',
+            'latest_version' => env('BROWSER_VERSION_FIREFOX'),
         ],
     ],
-    'try_out_url' => 'https://www.witty.works/try-out-witty',
-    'download_url' => 'https://www.witty.works/install-witty',
 
     /*
     |--------------------------------------------------------------------------
@@ -178,6 +178,17 @@ return [
     'key' => env('APP_KEY'),
 
     'cipher' => 'AES-256-CBC',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Microsoft Application ID
+    |--------------------------------------------------------------------------
+    |
+    | https://learn.microsoft.com/en-us/azure/active-directory/develop/mark-app-as-publisher-verified
+    |
+    */
+
+    'microsoft_application_id' => env('MICROSOFT_APPLICATION_ID'),
 
     /*
     |--------------------------------------------------------------------------

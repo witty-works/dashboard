@@ -1,4 +1,17 @@
-<div @if(empty($disabled)) title="{{ empty($minValue) || $minValue === \App\Models\LanguageGuidelines::DISABLED ? __('content.triple_toggle') : __('content.triple_toggle_no_disable') }}"@endif class="tripple-toggle {{ $value === 2 ? 'active' : ($value === 1 ? 'middle active' : '') }} {{ empty($disabled) ? '' : ' disabled' }}" id="tripple-toggle-{!! $attributes->get('name') !!}">
+@php
+    if (empty($minValue)) {
+        $minValue = \App\Models\LanguageGuidelines::DISABLED;
+    }
+    $value = max($value, $minValue);
+@endphp
+<div
+    @if(empty($disabled))
+        title="{{ (empty($minValue) || $minValue === \App\Models\LanguageGuidelines::DISABLED) ? __('content.triple_toggle') : __('content.triple_toggle_no_disable') }}"
+    @endif
+    class="tripple-toggle {{ $value === 2 ? 'active' : ($value === 1 ? 'middle active' : '') }}
+    {{ empty($disabled) ? '' : ' disabled' }}"
+    id="tripple-toggle-{!! $attributes->get('name') !!}"
+>
     @if($minValue === 1)
     <div class="tripple-toggle-lock">
         @include('partials.locked')
@@ -6,6 +19,7 @@
     @endif
 </div>
 <input type="hidden" id="{!! $attributes->get('name') !!}" {!! $attributes->merge() !!} />
+
 @if(empty($disabled))
 <script>
     document.querySelector('#tripple-toggle-{!! $attributes->get('name') !!}').addEventListener('click', function() {
@@ -41,6 +55,6 @@
 </script>
 @endif
 
-<div class="lato-small-text-p">{!! $label !!}</div>
-@include('partials.toggle_label', ['disabled' => $disabled ?? false])
+<div class="lato-small-text-p" aria-live="polite">{!! $label !!}</div>
 
+@include('partials.toggle_label', ['disabled' => $disabled ?? false])

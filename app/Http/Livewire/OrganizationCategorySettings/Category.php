@@ -19,11 +19,9 @@ class Category extends Component
     protected $listeners = ['saved'];
 
     public $dimensions;
-    public $dimensions_force;
 
     protected $rules = [
         'dimensions.*' => 'nullable|int|max:2',
-        'dimensions_force' => 'nullable|boolean',
     ];
 
     public $model;
@@ -58,33 +56,25 @@ class Category extends Component
     {
         $languageGuidelines = LanguageGuidelines::getLanguageGuidelines($this->model);
         $this->proficiencyLevels = $languageGuidelines->proficiencyLevels;
-        $this->diversityDimensionDrivers = $languageGuidelines->diversityDimensionDrivers;
+        $this->diversityDimensionDrivers = $languageGuidelines->getDiversityDimensionDrivers($this->category);
 
         $disabledCategories = (array) $languageGuidelines->disabled_categories;
-        foreach ($languageGuidelines->diversityDimensionDrivers as $ddd => $config) {
-            if ($ddd === 'gendered_denominations_ending' || empty($config['category']) || $config['category'] !== $this->category) {
-                continue;
-            }
-
-            if ($languageGuidelines->isCategoryAvailable($ddd, $this->model->subscribed())) {
-                if (!in_array('advanced_' . $ddd, $disabledCategories)) {
-                    $this->dimensions[$ddd] = LanguageGuidelines::ADVANCED_ENABLED;
-                } elseif (!in_array($ddd, $disabledCategories)) {
-                    $this->dimensions[$ddd] = LanguageGuidelines::BASIC_ENABLED;
-                } else {
-                    $this->dimensions[$ddd] = LanguageGuidelines::DISABLED;
-                }
-            }
-        }
-
-        $disabledCategoriesForce = (array) $languageGuidelines->disabled_categories_force;
-        if (!$this->model->subscribed()) {
-            $this->dimensions_force = true;
-        } else {
-            $this->dimensions_force = in_array($this->category, $disabledCategoriesForce);
-        }
+        $this->readDimensions($disabledCategories);
 
         $this->resetErrorBag();
+    }
+
+    protected function readDimensions($disabledCategories)
+    {
+        foreach ($this->diversityDimensionDrivers as $ddd => $config) {
+            if (!in_array('advanced_' . $ddd, $disabledCategories)) {
+                $this->dimensions[$ddd] = LanguageGuidelines::ADVANCED_ENABLED;
+            } elseif (!in_array($ddd, $disabledCategories)) {
+                $this->dimensions[$ddd] = LanguageGuidelines::BASIC_ENABLED;
+            } else {
+                $this->dimensions[$ddd] = LanguageGuidelines::DISABLED;
+            }
+        }
     }
 
     protected function processDimensions(LanguageGuidelines $languageGuidelines)
@@ -92,10 +82,16 @@ class Category extends Component
         $dimensions = [];
 
         foreach ($this->dimensions as $ddd => $enabled) {
-            $dimensions[$ddd] = $languageGuidelines->isCategoryAvailable($ddd, $this->model->subscribed(), $enabled);
-            $proficiencyLevel = $languageGuidelines->diversityDimensionDrivers[$ddd]['proficiency_level'] ?? null;
+            $proficiencyLevel = $this->diversityDimensionDrivers[$ddd]['proficiency_level'] ?? null;
+            if ($proficiencyLevel === 'openly_discriminating') {
+                $enabled = LanguageGuidelines::BASIC_ENABLED;
+            } elseif (empty($enabled)) {
+                $enabled = LanguageGuidelines::DISABLED;
+            } elseif (!$this->model->subscribed()) {
+                $enabled = LanguageGuidelines::BASIC_ENABLED;
+            }
 
-            switch ($dimensions[$ddd]) {
+            switch ($enabled) {
                 case LanguageGuidelines::ADVANCED_ENABLED:
                     $languageGuidelines->inPlaceUpateArray('advanced_' . $ddd, 'disabled_categories', true);
                     $languageGuidelines->inPlaceUpateArray($ddd, 'disabled_categories', true);
@@ -135,11 +131,6 @@ class Category extends Component
         $languageGuidelines->save();
 
         $this->dimensions = $this->processDimensions($languageGuidelines);
-
-        if (!$this->model->subscribed()) {
-            $this->dimensions_force = true;
-        }
-        $languageGuidelines->inPlaceUpateArray($this->category, 'disabled_categories_force', !$this->dimensions_force);
 
         $languageGuidelines->dispatchEventToPosthog((new \ReflectionClass($this))->getShortName());
 

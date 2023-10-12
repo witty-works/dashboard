@@ -5,7 +5,6 @@ namespace App\Console\Commands;
 use App\Helpers\Hubspot;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Config;
 
 class SyncToHubspotCategoriesCommand extends Command
 {
@@ -24,6 +23,63 @@ class SyncToHubspotCategoriesCommand extends Command
     protected $description = 'Sync category data from Hubspot HubDB';
 
     protected static $tableData = [];
+
+    protected $defaultData = [
+        'diversity_dimension_drivers' => [
+            "casing" => [
+                "category" => "orthography",
+                "emoji" => "❌",
+            ],
+            "compounding" => [
+                "category" => "orthography",
+                "emoji" => "⚠️",
+            ],
+            "confused_words" => [
+                "category" => "orthography",
+                "emoji" => "❌",
+            ],
+            "grammar" => [
+                "category" => "orthography",
+                "emoji" => "❌",
+            ],
+            "misc" => [
+                "category" => "orthography",
+                "emoji" => "🤔",
+            ],
+            "orthography" => [
+                "category" => "orthography",
+                "emoji" => "❌",
+            ],
+            "punctuation" => [
+                "category" => "orthography",
+                "emoji" => "❌",
+            ],
+            "repetitions" => [
+                "category" => "orthography",
+                "emoji" => "⚠️",
+            ],
+            "typography" => [
+                "category" => "orthography",
+                "emoji" => "❌",
+            ],
+            "typos" => [
+                "category" => "orthography",
+                "emoji" => "❌",
+            ],
+            "corporate_rules" => [
+                "category" => "corporate_rules",
+                "emoji" => "❗",
+                "translations" => [
+                    "en" => [
+                        "hs_name" => "Dictionary",
+                    ],
+                    "de" => [
+                        "hs_name" => "Wörterbuch",
+                    ],
+                ],
+            ],
+        ],
+    ];
 
     /**
      * Execute the console command.
@@ -255,6 +311,10 @@ class SyncToHubspotCategoriesCommand extends Command
                 ksort($finalData);
             }
 
+            if (!empty($this->defaultData[$alias])) {
+                $finalData += $this->defaultData[$alias];
+            }
+
             $json = json_encode($finalData, JSON_PRETTY_PRINT);
             $file = $path . "/$alias.json";
             file_put_contents($file, $json);
@@ -279,35 +339,48 @@ class SyncToHubspotCategoriesCommand extends Command
         return $row;
     }
 
-    public static function loadTableData($tableName)
+    public static function loadTableData($tableName, $skipOrthography = false)
     {
+        $tableNameFull = $tableName . ($skipOrthography ? '-no-orthograpbhy' : '-with-orthography');
+        if (array_key_exists($tableNameFull, self::$tableData)) {
+            return self::$tableData[$tableNameFull];
+        }
+
         if (!array_key_exists($tableName, self::$tableData)) {
             $file = storage_path("app/hubdb/$tableName.json");
-            $data = json_decode(file_get_contents($file), true);
+            self::$tableData[$tableName] = json_decode(file_get_contents($file), true);
+        }
 
-            Collection::macro('toLocale', function (string $locale) {
-                return $this->map(function ($value) use ($locale) {
-                    if (empty($value['translations'][$locale])) {
-                        return null;
-                    }
+        $data = self::$tableData[$tableName];
 
+        Collection::macro('toLocale', function (string $locale) {
+            return $this->map(function ($value) use ($locale) {
+                if (!empty($value['translations'][$locale])) {
                     $value['translation'] = $value['translations'][$locale];
                     unset($value['translations']);
 
                     if (isset($value['emoji'])) {
                         $value['translation']['emoji_name'] = $value['emoji'] . ' ' . $value['translation']['hs_name'];
                     }
+                } else {
+                    $value['translation'] = null;
+                }
 
-                    return $value;
-                });
+                return $value;
             });
+        });
 
+        $collection = collect($data);
 
-            $collection = collect($data);
-
-            self::$tableData[$tableName] = $collection->toLocale(Config::get('app.locale'));
+        if ($skipOrthography) {
+            $collection = $collection->reject(function ($metaData) {
+                return $metaData['category'] === 'orthography';
+            });
         }
 
-        return self::$tableData[$tableName];
+        $locale = request()->header('X-App-Locale', app()->getLocale());
+        self::$tableData[$tableNameFull] = $collection->toLocale($locale, $skipOrthography);
+
+        return self::$tableData[$tableNameFull];
     }
 }

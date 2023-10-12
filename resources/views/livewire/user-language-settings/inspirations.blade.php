@@ -7,7 +7,7 @@
     </x-slot>
 
     <x-slot name="form" submit="updateLanguageGuidelinesInspirations">
-        <div class="lato-paragraph-text-p">{!! __('guidelines.manage_organization_guidelines_description_inspiration') !!}</div>
+        <h3 class="lato-paragraph-text-p">{!! __('guidelines.manage_organization_guidelines_description_inspiration') !!}</h3>
         <div class="guidelines-form-section">
             <x-jet-checkbox
                 id="show_inspiration_alternatives"
