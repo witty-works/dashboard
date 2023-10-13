@@ -20,7 +20,6 @@ All words added to this list will become highlighted by Witty, and your custom r
     'list_false_positives_description' => 'Witty will no longer highlight any word in this list for you.',
     'list_term_replacements' => 'Personal dictionary',
     'list_term_replacements_description' => 'Witty suggests your alternative for each term in this list.',
-    'gendered_roles_format' => 'Choose what gender endings Witty should suggest.',
     'inclusive_gender' => 'Suggest the chosen gender ending',
     'both' => 'Suggest both the chosen gender ending and the female and male form',
     'none' => 'Suggest only gender-neutral alternatives',

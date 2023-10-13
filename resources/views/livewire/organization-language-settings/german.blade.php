@@ -8,24 +8,21 @@
     </x-slot>
 
     <x-slot name="form" submit="updateLanguageGuidelinesGerman">
-        <div class="margin-bottom">
-        {!! __('guidelines.gendered_roles_format') !!}
-        </div>
-
-        <h3 class="lato-small-text-p">{!! __('guidelines.manage_organization_guidelines_description_german_form_sub_title') !!}</h3>
+        <h3 class="lato-small-text-p mb-5">{!! __('guidelines.manage_organization_guidelines_description_german_form_sub_title') !!}</h3>
         <div class="container-column margin-bottom">
 
             @foreach (\App\Models\GuidelinesInterface::GENDERED_ROLES_FORMAT as $key => $value)
             <div class="margin-bottom">
                 <label class="guidelines-form-section-radio">
-                    <input 
-                        type="radio" 
-                        id="gendered_roles_format_{{ $key }}" 
-                        name="gendered_roles_format" 
-                        value="{{ $key }}" 
-                        onclick="handleDropdownVisibility()" 
-                        wire:model.defer="gendered_roles_format" 
-                        @if(!$model->subscribed()) disabled @endif>
+                    <input
+                        type="radio"
+                        id="gendered_roles_format_{{ $key }}"
+                        name="gendered_roles_format"
+                        value="{{ $key }}"
+                        onclick="handleDropdownVisibility()"
+                        wire:model.defer="gendered_roles_format"
+                        @if(!$model->subscribed()) disabled @endif
+                    >
                     {!! __($value) !!}
                 </label>
             </div>
