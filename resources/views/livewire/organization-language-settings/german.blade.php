@@ -9,6 +9,39 @@
 
     <x-slot name="form" submit="updateLanguageGuidelinesGerman">
         <div class="margin-bottom">
+        {!! __('guidelines.gendered_roles_format') !!}
+        </div>
+
+        <h3 class="lato-small-text-p">{!! __('guidelines.manage_organization_guidelines_description_german_form_sub_title') !!}</h3>
+        <div class="container-column margin-bottom">
+
+            @foreach (\App\Models\GuidelinesInterface::GENDERED_ROLES_FORMAT as $key => $value)
+            <div class="margin-bottom">
+                <label class="guidelines-form-section-radio">
+                    <input 
+                        type="radio" 
+                        id="gendered_roles_format_{{ $key }}" 
+                        name="gendered_roles_format" 
+                        value="{{ $key }}" 
+                        onclick="handleDropdownVisibility()" 
+                        wire:model.defer="gendered_roles_format" 
+                        @if(!$model->subscribed()) disabled @endif>
+                    {!! __($value) !!}
+                </label>
+            </div>
+            @endforeach
+
+            <x-jet-input-error for="gendered_roles_format" class="mt-2" />
+
+            @if(!$model->subscribed())
+            <div class="p-3">
+                @include('partials.witty-teams-only')
+            </div>
+            @endif
+        </div>
+
+    <div id="germanGenderDropdown" style="display: none;">
+    <div class="margin-bottom">
             {!! __('guidelines.german_gender_ending') !!}
         </div>
 
@@ -30,27 +63,7 @@
             @endif
         </div>
 
-        <div class="margin-bottom">
-            {!! __('guidelines.gendered_roles_format') !!}
-        </div>
-
-        <h3 class="lato-small-text-p">{!! __('guidelines.manage_organization_guidelines_description_german_form_sub_title') !!}</h3>
-        <div class="flex flex-row">
-            <x-select id="gendered_roles_format"
-                :options="\App\Models\GuidelinesInterface::GENDERED_ROLES_FORMAT"
-                class="guidelines-form-section-dropdown margin-bottom"
-                wire:model.defer="gendered_roles_format"
-                :disabled="!$model->subscribed()"
-            />
-
-            <x-jet-input-error for="gendered_roles_format" class="mt-2" />
-
-            @if(!$model->subscribed())
-              <div class="p-3">
-                @include('partials.witty-teams-only')
-              </div>
-            @endif
-        </div>
+    </div>
     </x-slot>
 
     @if($model->subscribed())
@@ -72,3 +85,19 @@
     @endif
 
 </x-jet-form-section>
+
+<script>
+    function handleDropdownVisibility() {
+        const firstRadio = document.getElementById('gendered_roles_format_inclusive_gender');
+        const secondRadio = document.getElementById('gendered_roles_format_both');
+        const dropdown = document.getElementById('germanGenderDropdown');
+        if (firstRadio.checked || secondRadio.checked) {
+            dropdown.style.display = 'block';
+        } else {
+            dropdown.style.display = 'none';
+        }
+    }
+    document.addEventListener("DOMContentLoaded", function() {
+        handleDropdownVisibility();
+    });
+</script>
