@@ -54,7 +54,8 @@ class Onboarding extends Component
                 $this->users = $user->getCompanyUsers();
                 $this->request_invite = false;
                 foreach ($this->users as $companyUser) {
-                    if ($companyUser->teamRole($companyUser->currentTeam)->key !== 'user') {
+                    $teamRole = $companyUser->teamRole($companyUser->currentTeam);
+                    if ($teamRole && $teamRole->key != 'user') {
                         $this->request_invite = true;
                         break;
                     }
