@@ -71,7 +71,8 @@ class UserProfileController extends BaseUserProfileController
                 $teams = [];
                 $users = $user->getCompanyUsers();
                 foreach ($users as $companyUser) {
-                    if ($companyUser->teamRole($companyUser->currentTeam)->key != 'user') {
+                    $teamRole = $companyUser->teamRole($companyUser->currentTeam);
+                    if ($teamRole && $teamRole->key != 'user') {
                         if (empty($teams[$companyUser->currentTeam->id])) {
                             $teams[$companyUser->currentTeam->id] = [
                                 'team' => $companyUser->currentTeam,
