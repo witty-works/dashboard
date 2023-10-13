@@ -317,7 +317,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return User::where('email', '!=', $this->email)
             ->where('id', '!=', $this->id)
-            ->where('current_team_id', '!=', $this->team_id)
+            ->where('current_team_id', '!=', $this->current_team_id)
             ->where('email', 'LIKE', '%@' . $this->getEmailDomain())
             ->get();
     }
