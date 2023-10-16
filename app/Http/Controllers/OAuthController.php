@@ -288,6 +288,10 @@ class OAuthController extends BaseOAuthController
         }
 
         $result = parse_url($url);
+        if (empty($result['host'])) {
+            return false;
+        }
+
         if ($strict) {
             return $result['host'] === 'dashboard.witty.works';
         }
