@@ -8,7 +8,37 @@
     </x-slot>
 
     <x-slot name="form" submit="updateLanguageGuidelinesGerman">
-        <div class="margin-bottom">
+        <h3 class="lato-small-text-p mb-5">{!! __('guidelines.manage_organization_guidelines_description_german_form_sub_title') !!}</h3>
+        <div class="container-column margin-bottom">
+
+            @foreach (\App\Models\GuidelinesInterface::GENDERED_ROLES_FORMAT as $key => $value)
+            <div class="margin-bottom">
+                <label class="guidelines-form-section-radio">
+                    <input
+                        type="radio"
+                        id="gendered_roles_format_{{ $key }}"
+                        name="gendered_roles_format"
+                        value="{{ $key }}"
+                        onclick="handleDropdownVisibility()"
+                        wire:model.defer="gendered_roles_format"
+                        @if(\App\Models\LanguageGuidelines::isForcedOnTeam($model, 'german_rules')) disabled @endif
+                    >
+                    {!! __($value) !!}
+                </label>
+            </div>
+            @endforeach
+
+            <x-jet-input-error for="gendered_roles_format" class="mt-2" />
+
+            @if(!$model->subscribed())
+            <div class="p-3">
+                @include('partials.witty-teams-only')
+            </div>
+            @endif
+        </div>
+
+    <div id="germanGenderDropdown" style="display: none;">
+    <div class="margin-bottom">
             {!! __('guidelines.german_gender_ending') !!}
         </div>
 
@@ -72,7 +102,6 @@
     @endif
 
 </x-jet-form-section>
-
 
 <script>
     function handleDropdownVisibility() {
