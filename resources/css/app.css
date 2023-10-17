@@ -1229,3 +1229,10 @@ label {
     height: 100vh;
     margin: 3em;
 }
+
+.guidelines-form-section-radio {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}

@@ -14,10 +14,9 @@
 
         <h3 class="lato-small-text-p">{!! __('guidelines.manage_organization_guidelines_description_german_form_sub_title') !!}</h3>
         <div class="container-column margin-bottom">
-
             @foreach (\App\Models\GuidelinesInterface::GENDERED_ROLES_FORMAT as $key => $value)
             <div class="margin-bottom">
-                <label class="guidelines-form-section-radio">
+                <label class="guidelines-form-section-radio" style="cursor: {{ $model->subscribed() ? 'pointer' : 'not-allowed' }};">
                     <input 
                         type="radio" 
                         id="gendered_roles_format_{{ $key }}" 
@@ -25,23 +24,23 @@
                         value="{{ $key }}" 
                         onclick="handleDropdownVisibility()" 
                         wire:model.defer="gendered_roles_format" 
+                        style="cursor: {{ $model->subscribed() ? 'pointer' : 'not-allowed' }};"
                         @if(!$model->subscribed()) disabled @endif>
-                    {!! __($value) !!}
+                        {!! __($value) !!}
+                        @if(!$model->subscribed())
+                            <span class="p-3">
+                                @include('partials.witty-teams-only')
+                            </span>
+                        @endif
                 </label>
             </div>
             @endforeach
 
             <x-jet-input-error for="gendered_roles_format" class="mt-2" />
-
-            @if(!$model->subscribed())
-            <div class="p-3">
-                @include('partials.witty-teams-only')
-            </div>
-            @endif
         </div>
 
     <div id="germanGenderDropdown" style="display: none;">
-    <div class="margin-bottom">
+        <div class="margin-bottom">
             {!! __('guidelines.german_gender_ending') !!}
         </div>
 
