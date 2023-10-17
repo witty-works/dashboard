@@ -455,4 +455,5 @@ Falls du Fragen hast, nimm Kontakt mit :name (:email) auf. 🙂
     'office_register_further_reading' => 'Weitere Details findest Du hier: <a href="https://www.witty.works/trust-and-security" target="_blank" rel="noopener">Vertrauen & Sicherheit</a> , <a href="https://www.witty.works/privacy" target="_blank" rel="noopener">Datenschutz</a> , <a href="https://www.witty.works/terms" target="_blank" rel="noopener">Allgemeine Geschäftsbedingungen</a> oder kontaktiere uns über <a href="mailto:support@witty.works" target="_blank" rel="noopener">support@witty.works</a>',
     'you_must_consent' => 'Du musst den Nutzungsbedingungen zustimmen.',
     'witty_word_addin_text_failed' => 'Es ist uns nicht gelungen, Dich bei Witty Word-Addin anzumelden.<br> Bitte schließe dieses Fenster und versuche es erneut oder kontaktiere <a href="mailto:support@witty.works">support@witty.works</a> .',
+    'premium_only' => 'Premium only DE',
 ];

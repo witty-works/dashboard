@@ -791,6 +791,7 @@
             const aggregatedIgnoreData = formatChartLabels(xValuesPopoverOpen, yValuesIgnore, interval)[1];
             const aggregatedLearningBitesData = formatChartLabels(xValuesPopoverOpen, yValuesLearningBites, interval)[1];
             const aggregatedCheckResultData = formatChartLabels(xValuesPopoverOpen, yValuesCheckResult, interval)[1];
+            const isPremiumUser = @json($is_premium_user);
 
             if (aggregatedLearningBitesData.every(Number.isInteger)) {
                 ctx = document.getElementById('eventsChart').getContext('2d');
@@ -803,39 +804,41 @@
                                 data: aggregatedCheckResultData,
                                 borderColor: colors[3],
                                 fill: false,
-                                label:  @json(__('content.check_result_label_line_chart')),
+                                label:  @json(__('content.check_result_label_line_chart')) + (!isPremiumUser ? ' ({{ __('content.premium_only') }})' : ''),
+                                hidden: !isPremiumUser, 
                             },
                             {
                                 data: aggregatedPopoverOpenData,
                                 borderColor: colors[6],
                                 fill: false,
                                 label: "{{ __('content.popover_label_line_chart') }}",
-                                hidden: true,
+                                hidden: isPremiumUser,
                             },
                             {
                                 data: aggregatedAlternativeData,
                                 borderColor: colors[9],
                                 fill: false,
                                 label: "{{ __('content.alternative_label_line_chart') }}",
-                                hidden: true,
+                                hidden: isPremiumUser,
                             },
                             {
                                 data: aggregatedIgnoreData,
                                 borderColor: colors[12],
                                 fill: false,
                                 label:  "{{ __('content.ignored_label_line_chart') }}",
-                                hidden: true,
+                                hidden: isPremiumUser,
                             },
                             {
                                 data: aggregatedLearningBitesData,
                                 borderColor: colors[14],
                                 fill: false,
                                 label:  @json(__('content.learning_bites_label_line_chart')),
-                                hidden: true,
+                                hidden: isPremiumUser,
                             },
                         ]
                     },
                     options: {
+                        events: isPremiumUser ? ['click'] : [],
                         maintainAspectRatio: false,
                         responsive: true,
                         title: {

@@ -450,4 +450,5 @@ If you have any questions, contact :name (:email). 🙂
     'popover_open' => 'Open',
     'alternative' => 'Alternative',
     'ignore' => 'Ignore',
+    'premium_only' => 'Premium only',
 ];
