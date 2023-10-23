@@ -196,7 +196,7 @@ class AnalyticsController extends Controller
             'from' => 'required',
             'to' => 'nullable',
             'lang' => 'nullable|in:en,de',
-            'events' => 'nullable|array|in:check,popover_open,alternative,ignore,learning_bites',
+            'events' => 'nullable|array|in:check,check_result,popover_open,alternative,ignore,learning_bites',
             'categories' => 'nullable|array|in:' . implode(',', $this->categories->keys()->toArray()),
             'subcategories' => 'nullable|array|in:' . implode(',', $this->subcategories->keys()->toArray()),
             'inclusive' => 'nullable|in:inclusive,non_inclusive,both',
@@ -277,10 +277,14 @@ class AnalyticsController extends Controller
 
         switch ($chart) {
             case 'dau':
-                if (!is_array($events)) {
+                if (empty($events)) {
                     $events = ['popover_open', 'alternative', 'ignore', 'learning_bites'];
+                    if ($request->user()->subscribed()) {
+                        array_unshift($events, 'check_result');
+                    }
                 }
 
+                $key = reset($events);
                 $data = $this->buildEventData(
                     $events,
                     $properties,
@@ -290,7 +294,8 @@ class AnalyticsController extends Controller
                     $to,
                     'dau'
                 );
-                if ($model instanceof Team && !empty($data['events']['popover_open'])) {
+
+                if ($model instanceof Team && !empty($data['events'][$key])) {
                     // handle "-30d" => 30 | "-3w" => 21 | "-5m" => 150
                     switch (substr($from, -1)) {
                         case 'm':
@@ -313,7 +318,7 @@ class AnalyticsController extends Controller
                         ->pluck('value', 'date')
                         ->toArray();
 
-                    foreach ($data['events']['popover_open'] as $day => $value) {
+                    foreach ($data['events'][$key] as $day => $value) {
                         $value = (int) $value;
                         // the check here is to handle the case when a team adds
                         // and removes users over the course of the week
@@ -330,11 +335,14 @@ class AnalyticsController extends Controller
 
                 break;
             case 'total':
-                if (!is_array($events)) {
-                    $events = ['check', 'popover_open', 'alternative', 'ignore', 'learning_bites'];
-                } else {
-                    array_unshift($events, 'check');
+                if (empty($events)) {
+                    $events = ['popover_open', 'alternative', 'ignore', 'learning_bites'];
+                    if ($request->user()->subscribed()) {
+                        array_unshift($events, 'check_result');
+                    }
                 }
+
+                array_unshift($events, 'check');
 
                 $data = $this->buildEventData(
                     $events,
@@ -414,10 +422,11 @@ class AnalyticsController extends Controller
                 $data['writing_streak'] = $writingStreak;
                 break;
             case 'topSubcategories':
-                if (!is_array($events)) {
-                    $events = ['popover_open', 'alternative', 'ignore'];
+                if (!$request->user()->subscribed()) {
+                    $events = ['popover_open'];
+                } elseif (empty($events)) {
+                    $events = ['check_result'];
                 }
-                $events = ['popover_open'];
 
                 $data = $this->buildBreakdown(
                     $events,
@@ -447,10 +456,11 @@ class AnalyticsController extends Controller
                 }
                 break;
             case 'topWords':
-                if (!is_array($events)) {
-                    $events = ['popover_open', 'alternative', 'ignore'];
+                if (!$request->user()->subscribed()) {
+                    $events = ['popover_open'];
+                } elseif (empty($events)) {
+                    $events = ['check_result'];
                 }
-                $events = ['popover_open'];
 
                 $data = $this->buildBreakdown(
                     $events,

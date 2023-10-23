@@ -232,6 +232,7 @@ Ask your team administrators <a href="mailto::email">:name</a> to upgrade to <a 
     'top_categories' => 'The inclusion topics your team explored',
     'top_words' => 'The top words your team explored',
     'learning_bites_label_line_chart' => 'Why clicks',
+    'check_result_label_line_chart' => 'Highlighted',
     'popover_label_line_chart' => 'Explored',
     'ignored_label_line_chart' => 'Dismissed',
     'alternative_label_line_chart' => 'Accepted',
@@ -445,4 +446,10 @@ If you have any questions, contact :name (:email). 🙂
     'triple_toggle_locked_third_pos' => 'Team admin set to advanced. No click possible.',
     'tripple_toggle_locked_second_pos' => 'Team admin set to on. Click to switch between \'advanced\' and \'on\'.',
     'tripple_toggle_unlocked' => 'Unlocked. Click to switch between \'advanced\', \'on\' and \'off\'.',
+    'event_type' => 'Event Type',
+    'check_result' => 'Check Result',
+    'popover_open' => 'Open',
+    'alternative' => 'Alternative',
+    'ignore' => 'Ignore',
+    'premium_only' => 'Premium only',
 ];

@@ -216,6 +216,10 @@
                     </div>
                </div>
                <div id="top-categories-content" style="visibility: hidden; width: 100%">
+                <div class="container-row wittyworks-margin-right">
+                    <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.event_type') }}</div>
+                    <div id="eventTypeDropdown"></div>
+                </div>
                   <div class="chart-container-row">
                      <canvas
                         id="topSubCategoriesChart"
@@ -271,6 +275,10 @@
                     </div>
                </div>
                <div id="top-words-content" style="visibility: hidden; width: 100%">
+                    <div class="container-row wittyworks-margin-right">
+                        <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.event_type') }}</div>
+                        <div id="eventTypeDropdown"></div>
+                    </div>
                     <div class="chart-container-row">
                         <canvas
                             id="topWordsChartCorporateRules"
@@ -381,6 +389,9 @@
         const yValuesLearningBites = [];
         const yValuesLearningBitesWeek = [];
 
+        const xValuesCheckResult = [];
+        const yValuesCheckResult = [];
+
         const yValuesDauUserCount = [];
 
         const xTopSubCategoriesWeek = [];
@@ -393,6 +404,8 @@
         const yValuesTopSubCategoriesOpened = [];
         const xValuesTopSubCategoriesAlternative = [];
         const yValuesTopSubCategoriesAlternative = [];
+        const xValuesTopSubCategoriesChecked = [];
+        const yValuesTopSubCategoriesChecked = [];
 
         const xValuesTopWordsIgnored = [];
         const yValuesTopWordsIgnored = [];
@@ -691,6 +704,11 @@
                     xValuesLearningBites.push(date);
                     yValuesLearningBites.push(count);
                 }
+            } else if (event === 'check_result') {
+                for (const [date, count] of Object.entries(value)) {
+                    xValuesCheckResult.push(date);
+                    yValuesCheckResult.push(count);
+                }
             }
             //CURRENT WEEK
             // const yValuesLearningBitesWeek = yValuesLearningBites.slice(-7);
@@ -772,6 +790,8 @@
             const aggregatedAlternativeData = formatChartLabels(xValuesPopoverOpen, yValuesAlternative, interval)[1];
             const aggregatedIgnoreData = formatChartLabels(xValuesPopoverOpen, yValuesIgnore, interval)[1];
             const aggregatedLearningBitesData = formatChartLabels(xValuesPopoverOpen, yValuesLearningBites, interval)[1];
+            const aggregatedCheckResultData = formatChartLabels(xValuesPopoverOpen, yValuesCheckResult, interval)[1];
+            const isPremiumUser = @json($is_premium_user);
 
             if (aggregatedLearningBitesData.every(Number.isInteger)) {
                 ctx = document.getElementById('eventsChart').getContext('2d');
@@ -781,33 +801,44 @@
                         labels: aggregatedCheckChatData[0],
                         datasets: [
                             {
-                                data: aggregatedPopoverOpenData,
+                                data: aggregatedCheckResultData,
                                 borderColor: colors[3],
                                 fill: false,
+                                label:  @json(__('content.check_result_label_line_chart')) + (!isPremiumUser ? ' ({{ __('content.premium_only') }})' : ''),
+                                hidden: !isPremiumUser, 
+                            },
+                            {
+                                data: aggregatedPopoverOpenData,
+                                borderColor: colors[6],
+                                fill: false,
                                 label: "{{ __('content.popover_label_line_chart') }}",
+                                hidden: isPremiumUser,
                             },
                             {
                                 data: aggregatedAlternativeData,
-                                borderColor: colors[6],
+                                borderColor: colors[9],
                                 fill: false,
                                 label: "{{ __('content.alternative_label_line_chart') }}",
+                                hidden: isPremiumUser,
                             },
                             {
                                 data: aggregatedIgnoreData,
-                                borderColor: colors[9],
+                                borderColor: colors[12],
                                 fill: false,
                                 label:  "{{ __('content.ignored_label_line_chart') }}",
+                                hidden: isPremiumUser,
                             },
                             {
                                 data: aggregatedLearningBitesData,
-                                borderColor: colors[12],
+                                borderColor: colors[14],
                                 fill: false,
                                 label:  @json(__('content.learning_bites_label_line_chart')),
+                                hidden: isPremiumUser,
                             },
                         ]
                     },
                     options: {
-                        events: [],
+                        events: isPremiumUser ? ['click'] : [],
                         maintainAspectRatio: false,
                         responsive: true,
                         title: {
@@ -1091,6 +1122,15 @@
             return;
         }
 
+        const eventTypeDropdown = document.getElementById("eventTypeDropdown").innerHTML = `
+            <select id="eventType" class="dropdown" onchange="setParams(1, this.value)">
+                <option value="check_result">{{ __('content.check_result') }}</option>
+                <option value="popover_open">{{ __('content.popover_open') }}</option>
+                <option value="alternative">{{ __('content.alternative') }}</option>
+                <option value="ignore">{{ __('content.ignore') }}</option>
+            </select>`;
+
+
         const subcategories = data.subcategories.popover_open || {};
         listOfLinks = ``;
 
@@ -1117,15 +1157,16 @@
 
         document.getElementById("categoryOverview").innerHTML = listOfLinks;
        
-        const opened = data.events.popover_open || {};
+        //TODO: change to use selected event type here 
+        const checked = data.events.check_result || {};
         // const ignored = data.events.ignore || {};
         // const alternative = data.events.alternative || {};
 
-        for (const [key, value] of Object.entries(opened)) {
-            xValuesTopSubCategoriesOpened.push(key);
-            yValuesTopSubCategoriesOpened.push(value);
+        for (const [key, value] of Object.entries(checked)) {
+            xValuesTopSubCategoriesChecked.push(key);
+            yValuesTopSubCategoriesChecked.push(value);
         }
-
+        
         // for (const [key, value] of Object.entries(ignored)) {
         //     xValuesTopSubCategoriesIgnored.push(key);
         //     yValuesTopSubCategoriesIgnored.push(value);
@@ -1136,8 +1177,8 @@
         //     yValuesTopSubCategoriesAlternative.push(value);
         // }
 
-        const xValuesTopSubCategoriesOpenedCut = xValuesTopSubCategoriesOpened.slice(0, 15);
-        const yValuesTopSubCategoriesOpenedCut = yValuesTopSubCategoriesOpened.slice(0, 15);
+        const xValuesTopSubCategoriesCheckedCut = xValuesTopSubCategoriesChecked.slice(0, 15);
+        const yValuesTopSubCategoriesCheckedCut = yValuesTopSubCategoriesChecked.slice(0, 15);
 
         // const xValuesTopSubCategoriesAlternativeCutDoughnut = xValuesTopSubCategoriesAlternative.slice(0, 5);
         // const yValuesTopSubCategoriesAlternativeCutDoughnut = yValuesTopSubCategoriesAlternative.slice(0, 5);
@@ -1147,8 +1188,8 @@
 
         createBarChart(
             "topSubCategoriesChart",
-            xValuesTopSubCategoriesOpenedCut,
-            yValuesTopSubCategoriesOpenedCut,
+            xValuesTopSubCategoriesCheckedCut,
+            yValuesTopSubCategoriesCheckedCut,
             "{{ __('content.title_categories_bar_chart_month') }}",
             true,
             false,
@@ -1392,7 +1433,8 @@
     });
 };
 
-function setParams(startOfWeek = 1) {
+function setParams(startOfWeek = 1, eventType = 'check_result') {
+    //TODO: deal with eventType here
     const activeTab = document.getElementsByClassName("analytics-tab-line")[0].id.replace('-line', '');
     document.getElementById("noCorporateRulesWrapper").style.display = "none";
     document.getElementById("corporateRulesButNoneOpened").style.display = "none";
@@ -1468,7 +1510,8 @@ document.addEventListener("DOMContentLoaded", function() {
             && !e.target.classList.contains('inner-wrap')
             && !e.target.classList.contains('checkbox-wrapper')
             && !e.target.classList.contains('ellipsis')
-            && checkboxes.style.display !== 'none'
+            && checkboxes.style.display !== 'none' 
+            && !e.target.classList.contains('wittyworks-analytics-chart-extra-large')
         ) {
             checkboxes.style.display = 'none';
             setParams();

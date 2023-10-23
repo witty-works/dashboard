@@ -737,8 +737,8 @@ input:checked+.slider:before {
 
 /* ANALYTICS */
 .wittyworks-analytics-chart-extra-large {
-    max-height: 500px;
-    min-height: 300px;
+    max-height: 600px;
+    min-height: 500px;
 }
 
 .wittyworks-analytics-chart-top-categories {
@@ -1235,4 +1235,11 @@ label {
 .office-login-form {
     width: 500px;
     margin: 3em;
+}
+
+.guidelines-form-section-radio {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
 }
