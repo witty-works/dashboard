@@ -8,20 +8,25 @@
     </x-slot>
 
     <x-slot name="form" submit="updateLanguageGuidelinesGerman">
+        @php
+            $disabled = !$model->subscribed();
+        @endphp
+
         <h3 class="lato-small-text-p mb-5">{!! __('guidelines.manage_organization_guidelines_description_german_form_sub_title') !!}</h3>
         <div class="container-column margin-bottom">
             @foreach (\App\Models\GuidelinesInterface::GENDERED_ROLES_FORMAT as $key => $value)
             <div class="margin-bottom">
-                <label class="guidelines-form-section-radio" style="cursor: {{ $model->subscribed() ? 'pointer' : 'not-allowed' }};">
-                    <input 
-                        type="radio" 
-                        id="gendered_roles_format_{{ $key }}" 
-                        name="gendered_roles_format" 
-                        value="{{ $key }}" 
-                        onclick="handleDropdownVisibility()" 
-                        wire:model.defer="gendered_roles_format" 
-                        style="cursor: {{ $model->subscribed() ? 'pointer' : 'not-allowed' }};"
-                        @if(!$model->subscribed()) disabled @endif>
+                <label class="guidelines-form-section-radio" style="cursor: {{ $disabled ? 'not-allowed' : 'pointer' }};">
+                    <input
+                        type="radio"
+                        id="gendered_roles_format_{{ $key }}"
+                        name="gendered_roles_format"
+                        value="{{ $key }}"
+                        onclick="handleDropdownVisibility()"
+                        wire:model.defer="gendered_roles_format"
+                        style="cursor: {{ $disabled ? 'not-allowed' : 'pointer' }};"
+                        @if(!$disabled) disabled @endif
+                    >
                         {!! __($value) !!}
                         @if(!$model->subscribed())
                             <span class="p-3">
@@ -35,30 +40,30 @@
             <x-jet-input-error for="gendered_roles_format" class="mt-2" />
         </div>
 
-    <div id="germanGenderDropdown" style="display: none;">
-        <div class="margin-bottom">
-            {!! __('guidelines.german_gender_ending') !!}
+        <div id="germanGenderDropdown" style="display: {{ in_array($gendered_roles_format, ['inclusive_gender', 'both']) ? 'block' : 'none' }};">
+            <div class="margin-bottom">
+                {!! __('guidelines.german_gender_ending') !!}
+            </div>
+
+            <h3 class="lato-small-text-p">{!! __('guidelines.manage_organization_guidelines_description_german_gender_ending_sub_title') !!}</h3>
+            <div class="margin-bottom flex flex-row mb-5">
+                <x-select id="german_gender_ending"
+                    :options="\App\Models\GuidelinesInterface::GERMAN_GENDER_ENDING"
+                    class="guidelines-form-section-dropdown"
+                    wire:model.defer="german_gender_ending"
+                    :disabled="$disabled"
+                />
+
+                <x-jet-input-error for="german_gender_ending" class="mt-2" />
+
+                @if(!$model->subscribed())
+                <div class="p-3">
+                    @include('partials.witty-teams-only')
+                </div>
+                @endif
+            </div>
+
         </div>
-
-        <h3 class="lato-small-text-p">{!! __('guidelines.manage_organization_guidelines_description_german_gender_ending_sub_title') !!}</h3>
-        <div class="margin-bottom flex flex-row mb-5">
-            <x-select id="german_gender_ending"
-                :options="\App\Models\GuidelinesInterface::GERMAN_GENDER_ENDING"
-                class="guidelines-form-section-dropdown"
-                wire:model.defer="german_gender_ending"
-                :disabled="!$model->subscribed()"
-            />
-
-            <x-jet-input-error for="german_gender_ending" class="mt-2" />
-
-            @if(!$model->subscribed())
-              <div class="p-3">
-                @include('partials.witty-teams-only')
-              </div>
-            @endif
-        </div>
-
-    </div>
     </x-slot>
 
     @if($model->subscribed())
@@ -69,7 +74,6 @@
                 value="1"
                 :label="__('guidelines.set_for_all')"
                 wire:model.defer="german_rules_force"
-                :disabled="!$model->subscribed()"
             />
         </div>
 
