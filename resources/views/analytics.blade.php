@@ -804,7 +804,7 @@
                                 data: aggregatedCheckResultData,
                                 borderColor: colors[3],
                                 fill: false,
-                                label:  @json(__('content.check_result_label_line_chart')) + (!isPremiumUser ? ' ({{ __('content.premium_only') }})' : ''),
+                                label:  @json(__('content.check_result_label_line_chart')) + (!isPremiumUser ? ' ({{ __('teams.witty_teams_only') }})' : ''),
                                 hidden: !isPremiumUser, 
                             },
                             {
@@ -1124,10 +1124,10 @@
 
         const eventTypeDropdown = document.getElementById("eventTypeDropdown").innerHTML = `
             <select id="eventType" class="dropdown" onchange="setParams(1, this.value)">
-                <option value="check_result">{{ __('content.check_result') }}</option>
-                <option value="popover_open">{{ __('content.popover_open') }}</option>
-                <option value="alternative">{{ __('content.alternative') }}</option>
-                <option value="ignore">{{ __('content.ignore') }}</option>
+                <option value="check_result">{{ __('content.check_result_label_line_chart') }}</option>
+                <option value="popover_open">{{ __('content.popover_label_line_chart') }}</option>
+                <option value="alternative">{{ __('content.alternative_label_line_chart') }}</option>
+                <option value="ignore">{{ __('content.ignored_label_line_chart') }}</option>
             </select>`;
 
 

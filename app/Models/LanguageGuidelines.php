@@ -40,13 +40,11 @@ class LanguageGuidelines extends Model
         'team_id',
         'preferred_variants',
         'disabled_categories',
-        'disabled_categories_force',
     ];
 
     protected $casts = [
         'preferred_variants' => 'json',
         'disabled_categories' => 'json',
-        'disabled_categories_force' => 'json',
         'german_rules_force' => 'boolean',
         'show_inspiration_alternatives_force' => 'boolean',
         'preferred_variants_force' => 'boolean',
@@ -77,7 +75,6 @@ class LanguageGuidelines extends Model
         $attributes += [
             'preferred_variants' => ['de-DE', 'en-US'],
             'disabled_categories' => $disabled_categories,
-            'disabled_categories_force' => [],
         ];
 
         parent::__construct($attributes);
@@ -237,18 +234,9 @@ class LanguageGuidelines extends Model
                 ];
                 break;
             case 'Category':
-                if (!$subscribed) {
-                    $disabled_categories_force = [];
-                    foreach ($this->disabled_categories_force as $key => $value) {
-                        $disabled_categories_force[] = $key;
-                    }
-                } else {
-                    $disabled_categories_force = $this->disabled_categories_force;
-                }
                 $properties = [
                     'language_type' => (new \ReflectionClass($this))->getShortName(),
                     'disabled_categories' => $this->disabled_categories,
-                    'force' => $disabled_categories_force,
                 ];
                 break;
             default:
@@ -284,15 +272,30 @@ class LanguageGuidelines extends Model
             return false;
         }
 
-        if ($category) {
-            return in_array($category, $teamGuidelines->disabled_categories_force) ? 'locked' : false;
-        }
-
-        if (in_array($section, GuidelinesInterface::DISABLED_CATEGORIES)) {
-            return in_array($section, $teamGuidelines->disabled_categories_force) ? 'locked' : false;
+        if ($category || in_array($section, GuidelinesInterface::DISABLED_CATEGORIES)) {
+            return false;
         }
 
         return $teamGuidelines->{$section . '_force'} ? 'locked' : false;
+    }
+
+    public static function teamCategoryValue(User $user, $category)
+    {
+        $teamGuidelines = self::getTeamGuidelines($user);
+
+        if (!$teamGuidelines) {
+            return false;
+        }
+
+        if (in_array('advanced_' . $category, $teamGuidelines->disabled_categories)) {
+            if (in_array($category, $teamGuidelines->disabled_categories)) {
+                return self::DISABLED;
+            }
+
+            return self::BASIC_ENABLED;
+        }
+
+        return self::ADVANCED_ENABLED;
     }
 
     public static function doUserTeamSettingsDiffer($user, $type)
