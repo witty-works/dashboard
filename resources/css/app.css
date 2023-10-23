@@ -1231,3 +1231,10 @@ label {
     width: 500px;
     margin: 3em;
 }
+
+.guidelines-form-section-radio {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
