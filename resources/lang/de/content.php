@@ -448,8 +448,8 @@ Falls du Fragen hast, nimm Kontakt mit :name (:email) auf. 🙂
     'you_must_consent' => 'Du musst den Nutzungsbedingungen zustimmen.',
     'witty_word_addin_text_failed' => 'Es ist uns nicht gelungen, Dich bei Witty Word-Addin anzumelden.<br> Bitte schließe dieses Fenster und versuche es erneut oder kontaktiere <a href="mailto:support@witty.works">support@witty.works</a> .',
     'check_result_label_line_chart' => 'Hervorgehoben',
-    'triple_toggle_locked_third_pos' => 'Team-Administrator*in "erweitert“ eingestellt.',
-    'tripple_toggle_locked_second_pos' => 'Team-Administrator*in hat „Grundlagen“ aktiviert. Klicke, um zwischen „Grundlagen“ und „Erweitert“ zu wechseln.',
-    'tripple_toggle_unlocked' => 'Klicke, um zwischen „Aus“, „Grundlagen“ und „Erweitert“ zu wechseln.',
+    'triple_toggle_locked_third_pos' => 'Dein*e Teamadministrator*in hat diese Diversitätsdimension auf „Erweitert“ eingestellt. Du kannst sie nicht anpassen.',
     'event_type' => 'Ereignistyp',
+    'triple_toggle_locked_second_pos' => 'Dein*e Team-Administrator*in hat diese Diversitätsdimension auf „Grundlagen“ eingestellt. Klicke, um zwischen „Grundlagen“ und „Erweitert“ zu wechseln.',
+    'triple_toggle_unlocked' => 'Klicke, um zwischen „Aus“, „Grundlagen“ und „Erweitert“ zu wechseln.',
 ];

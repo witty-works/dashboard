@@ -7,7 +7,7 @@
 <div
     title="{{ empty($disabled) 
         ? (empty($minValue) || $minValue === \App\Models\LanguageGuidelines::DISABLED) 
-        ? __('content.tripple_toggle_unlocked') : __('content.tripple_toggle_locked_second_pos') 
+        ? __('content.triple_toggle_unlocked') : __('content.triple_toggle_locked_second_pos') 
         : __('content.triple_toggle_locked_third_pos')
     }}"
     class="tripple-toggle {{ $value === 2 ? 'active' : ($value === 1 ? 'middle active' : '') }}
