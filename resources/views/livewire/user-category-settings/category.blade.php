@@ -97,6 +97,7 @@
                 :label="$label"
                 wire:model.defer="dimensions.{{$ddd}}"
                 :disabled="(bool)$disabled"
+                :title="__('content.customize_via_team_settings')"
             />
             @else
             <x-triple-toggle
