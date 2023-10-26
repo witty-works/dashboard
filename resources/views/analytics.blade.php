@@ -329,7 +329,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/locale/de.js" rossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
-    function load_charts(refresh, startOfWeek, chartType = 'overview', timerange = '1m', interval = 'week', language = [], categories = [], inclusive = 'non_inclusive', eventTypes = ['popover_open']) {
+    function load_charts(refresh, startOfWeek, chartType = 'overview', timerange = '1m', interval = 'week', language = [], categories = [], inclusive = 'non_inclusive', eventTypes = null) {
+        if (eventTypes === null) {
+            const isPremiumUser = @json($is_premium_user);
+            eventTypes = isPremiumUser ? ['check_result'] : ['popover_open']
+        }
+
         if (refresh) {
             document.getElementById('lastRefresh').style.visibility = 'hidden';
             document.getElementById("loading-icon-overview").style.display = "flex";
@@ -1162,7 +1167,7 @@
         const isPremiumUser = @json($is_premium_user);
 
         const checkResultOptionDisabledAttr = isPremiumUser ? '' : 'disabled';
-        const selectedDropdownValue = eventTypes[0] || 'popover_open';
+        const selectedDropdownValue = eventTypes[0] || (isPremiumUser ? 'check_result' : 'popover_open');
 
         const eventTypeDropdownTopWords = document.getElementById("eventTypeDropdownTopWords");
         eventTypeDropdownTopWords.innerHTML = `
@@ -1427,7 +1432,11 @@
     });
 };
 
-function setParams(startOfWeek = 1, eventTypes = ['popover_open']) {
+function setParams(startOfWeek = 1, eventTypes = null) {
+    if (eventTypes === null) {
+        const isPremiumUser = @json($is_premium_user);
+        eventTypes = isPremiumUser ? ['check_result'] : ['popover_open']
+    }
     const activeTab = document.getElementsByClassName("analytics-tab-line")[0].id.replace('-line', '');
     document.getElementById("noCorporateRulesWrapper").style.display = "none";
     document.getElementById("corporateRulesButNoneOpened").style.display = "none";
