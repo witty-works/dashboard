@@ -80,6 +80,7 @@
         } else {
             $minValue = \App\Models\LanguageGuidelines::teamCategoryValue($model, $ddd);
         }
+        $disabled = !$model->subscribed();
         @endphp
 
         <div class="guidelines-form-section-ident lato-small-text-p">
@@ -95,7 +96,7 @@
                 value="1"
                 :label="$label"
                 wire:model.defer="dimensions.{{$ddd}}"
-                :disabled="$minValue === 1 && (bool)$disabled"
+                :disabled="(bool)$disabled"
             />
             @else
             <x-triple-toggle
