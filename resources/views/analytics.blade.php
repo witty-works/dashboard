@@ -832,7 +832,46 @@
                         ]
                     },
                     options: {
-                        events: isPremiumUser ? ['click'] : [],
+                        tooltips: {
+                            mode: 'dataset',
+                        },
+                        legend: {
+                            onHover: function(e) {
+                                e.target.style.cursor = 'pointer';
+                            },
+                            onClick: function(e, legendItem) {
+                                const index = legendItem.datasetIndex;
+                                const ci = this.chart;
+                                const meta = ci.getDatasetMeta(index);
+                                meta.hidden = meta.hidden === null ? !ci.data.datasets[index].hidden : null;
+                                ci.update();
+                            },
+                            labels: {
+                                generateLabels: function(chart) {
+                                    return chart.data.datasets.map((dataset, i) => {
+                                        //workaround for charjs initial hidden state bug
+                                        let isCurrentlyHidden = chart.getDatasetMeta(i).hidden === false || chart.getDatasetMeta(i).hidden === true;
+                                        isCurrentlyHidden = i === 0 ? isCurrentlyHidden : !isCurrentlyHidden;
+                                        return {
+                                            datasetIndex: i,
+                                            text: dataset.label,
+                                            fillStyle: isCurrentlyHidden ? '#dddddd' : dataset.borderColor,
+                                        };
+                                    });
+                                },
+                                boxWidth: 12,
+                                fontSize: 12,
+                                usePointStyle: true,
+                            },
+                        },
+                        hover: {
+                            onHover: function(e) {
+                                var point = this.getElementAtEvent(e);
+                                if (point.length) e.target.style.cursor = 'pointer';
+                                else e.target.style.cursor = 'default';
+                            }
+                        },
+                        events: isPremiumUser ? ['click', 'mousemove', 'mouseout'] : [],
                         maintainAspectRatio: false,
                         responsive: true,
                         title: {
