@@ -218,7 +218,7 @@
                <div id="top-categories-content" style="visibility: hidden; width: 100%">
                 <div class="container-row wittyworks-margin-right">
                     <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.event_type') }}</div>
-                    <div id="eventTypeDropdown"></div>
+                    <div id="eventTypeDropdownTopCategories"></div>
                 </div>
                   <div class="chart-container-row">
                      <canvas
@@ -277,7 +277,7 @@
                <div id="top-words-content" style="visibility: hidden; width: 100%">
                     <div class="container-row wittyworks-margin-right">
                         <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.event_type') }}</div>
-                        <div id="eventTypeDropdown"></div>
+                        <div id="eventTypeDropdownTopWords"></div>
                     </div>
                     <div class="chart-container-row">
                         <canvas
@@ -329,7 +329,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/locale/de.js" rossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
-    function load_charts(refresh, startOfWeek, chartType = 'overview', timerange = '1m', interval = 'week', language = [], categories = [], inclusive = 'non_inclusive') {
+    function load_charts(refresh, startOfWeek, chartType = 'overview', timerange = '1m', interval = 'week', language = [], categories = [], inclusive = 'non_inclusive', eventTypes = null) {
+        if (eventTypes === null) {
+            const isPremiumUser = @json($is_premium_user);
+            eventTypes = isPremiumUser ? ['check_result'] : ['popover_open']
+        }
+
         if (refresh) {
             document.getElementById('lastRefresh').style.visibility = 'hidden';
             document.getElementById("loading-icon-overview").style.display = "flex";
@@ -398,23 +403,14 @@
         const yTopSubCategoriesWeek = [];
         const yTopSubCategoriesTwoWeeks = [];
 
-        const xValuesTopSubCategoriesIgnored = [];
-        const yValuesTopSubCategoriesIgnored = [];
-        const xValuesTopSubCategoriesOpened = [];
-        const yValuesTopSubCategoriesOpened = [];
-        const xValuesTopSubCategoriesAlternative = [];
-        const yValuesTopSubCategoriesAlternative = [];
-        const xValuesTopSubCategoriesChecked = [];
-        const yValuesTopSubCategoriesChecked = [];
+        const xValuesTopSubCategories = [];
+        const yValuesTopSubCategories = [];
 
-        const xValuesTopWordsIgnored = [];
-        const yValuesTopWordsIgnored = [];
-        const xValuesTopWordsOpened = [];
-        const yValuesTopWordsOpened = [];
-        const xValuesTopWordsAlternative = [];
-        const yValuesTopWordsAlternative = [];
-        const xValuesTopCorporateWordsOpened = [];
-        const yValuesTopCorporateWordsOpened = [];
+        const xValuesTopWords = [];
+        const yValuesTopWords = [];
+
+        const xValuesTopCorporateWords = [];
+        const yValuesTopCorporateWords = [];
 
         Chart.defaults.global.defaultFontColor = '#000000';
 
@@ -447,23 +443,27 @@
         }
     }
 
-    async function getChartData(chart, from = '1w', interval = 'day', language, categories, subcategories = [], to = null, inclusive) {
+    async function getChartData(chart, from = '1w', interval = 'day', language, categories, subcategories = [], to = null, inclusive, eventTypes = []) {
         let analyticsUrl = '/api/user/analytics?refresh=' + refresh + '&chart=';
         if (window.location.href.includes('team')) {
             analyticsUrl = '/api/team/analytics?refresh=' + refresh + '&chart=';
         }
 
         let formattedCategories = '';
-        if (categories && categories.length) {
+        if (categories && categories.length > 0) {
             formattedCategories = '&' + categories.map(category => 'categories[]=' + category).join('&');
         }
 
         let formattedSubcategories = '';
-        if (subcategories && subcategories.length) {
+        if (subcategories && subcategories.length > 0) {
             formattedSubcategories = '&' + subcategories.map(category => 'subcategories[]=' + subcategories).join('&');
         }
+        let formattedEventTypes = '';
+        if (eventTypes && eventTypes.length > 0) {
+            formattedEventTypes = '&' + eventTypes.map(event => 'events[]=' + event).join('&');
+        }
 
-        analyticsUrl += chart + '&from=' + from + '&interval=' + interval + '&lang=' + language + '&inclusive=' + inclusive + formattedCategories + formattedSubcategories;
+        analyticsUrl += chart + '&from=' + from + '&interval=' + interval + '&lang=' + language + '&inclusive=' + inclusive + formattedCategories + formattedSubcategories + formattedEventTypes;
 
         const response = await fetch(analyticsUrl, {
             method: 'GET',
@@ -502,8 +502,7 @@
 
 
         // Assuming today's date for the end of the current period
-           // Assuming today's date for the end of the current period
-           const currentDate = new Date();
+        const currentDate = new Date();
         const endDateCurrentPeriod = formatDate(currentDate);
 
         function formatDate(date) {
@@ -546,7 +545,7 @@
         const footerText = `{{ __('content.chart_period_comparison_from') }} ${startDateCurrentPeriod} - ${endDateCurrentPeriod}, {{ __('content.chart_period_comparison_to') }} ${startDateComparePeriod} - ${endDateComparePeriod}`;
         document.getElementById(`${chartId}Footer`).innerText = footerText;
 
-        getChartData(chart, newFrom, interval, language, categories, subcategories = [], to, inclusive).then(data => {
+        getChartData(chart, newFrom, interval, language, categories, subcategories = [], to, inclusive, eventTypes).then(data => {
             document.getElementById(chartId).style.display = 'flex';
             const ctx = document.getElementById(chartId).getContext('2d');
 
@@ -670,7 +669,7 @@
     //     });
     // }
 
-    chartType == 'overview' && getChartData('total', timerange, interval, language, categories, null,  null, inclusive).then(data => {
+    chartType == 'overview' && getChartData('total', timerange, interval, language, categories, null,  null, inclusive, ['check_result','popover_open','alternative','ignore','learning_bites']).then(data => { //TODO
         if (!data?.events?.popover_open
             || Object.entries(data.events.popover_open).filter(([key, value]) => value > 0).length == 0
         ) {
@@ -1065,7 +1064,7 @@
     });
 
     //ALWAYS ONLY past week
-    chartType == 'top-categories' && getChartData('topSubcategories', '1w', interval, language, categories, null, null, inclusive).then(data => {
+    chartType == 'top-categories' && getChartData('topSubcategories', '1w', interval, language, categories, null, null, inclusive, eventTypes).then(data => {
         if (!data || !data.events ) {
             return;
         }
@@ -1159,7 +1158,7 @@
     });
 
 
-    (chartType == 'overview' || chartType == 'top-categories') && getChartData('topSubcategories', timerange, interval, language, categories, null,  null, inclusive).then(data => {
+    (chartType == 'overview' || chartType == 'top-categories') && getChartData('topSubcategories', timerange, interval, language, categories, null,  null, inclusive, eventTypes).then(data => {
         if (!data || !data.events || !data.subcategories ) {
             handleNoData('loading-icon-top-categories', 'top-categories-no-data', 'topSubcategories');
             return;
@@ -1168,15 +1167,39 @@
         const isPremiumUser = @json($is_premium_user);
 
         const checkResultOptionDisabledAttr = isPremiumUser ? '' : 'disabled';
+        const selectedDropdownValue = eventTypes[0] || (isPremiumUser ? 'check_result' : 'popover_open');
 
-        const eventTypeDropdown = document.getElementById("eventTypeDropdown").innerHTML = `
-            <select id="eventType" class="dropdown" onchange="setParams(1, this.value)">
-                <option value="check_result" ${checkResultOptionDisabledAttr}>{{ __('content.check_result_label_line_chart') }}</option>
-                <option value="popover_open">{{ __('content.popover_label_line_chart') }}</option>
-                <option value="alternative">{{ __('content.alternative_label_line_chart') }}</option>
-                <option value="ignore">{{ __('content.ignored_label_line_chart') }}</option>
-            </select>`;
+        const eventTypeDropdownTopWords = document.getElementById("eventTypeDropdownTopWords");
+        eventTypeDropdownTopWords.innerHTML = `
+                <select id="eventTypeTopWords" class="dropdown" onchange="setParams(1, [this.value])">
+                    <option value="check_result" ${checkResultOptionDisabledAttr}>{{ __('content.check_result_label_line_chart') }}</option>
+                    <option value="popover_open">{{ __('content.popover_label_line_chart') }}</option>
+                    <option value="alternative">{{ __('content.alternative_label_line_chart') }}</option>
+                    <option value="ignore">{{ __('content.ignored_label_line_chart') }}</option>
+                </select>`;
+        
+        const eventTypeOptionsTopWords = document.getElementById("eventTypeTopWords").options;
+        for (let i = 0; i < eventTypeOptionsTopWords.length; i++) {
+            if (eventTypeOptionsTopWords[i].value == selectedDropdownValue) {
+                eventTypeOptionsTopWords[i].selected = true;
+            }
+        }
 
+        const eventTypeDropdownTopCategories = document.getElementById("eventTypeDropdownTopCategories");
+        eventTypeDropdownTopCategories.innerHTML = `
+                <select id="eventTypeTopCategories" class="dropdown" onchange="setParams(1, [this.value])">
+                    <option value="check_result" ${checkResultOptionDisabledAttr}>{{ __('content.check_result_label_line_chart') }}</option>
+                    <option value="popover_open">{{ __('content.popover_label_line_chart') }}</option>
+                    <option value="alternative">{{ __('content.alternative_label_line_chart') }}</option>
+                    <option value="ignore">{{ __('content.ignored_label_line_chart') }}</option>
+                </select>`;
+        
+        const eventTypeOptionsTopCategories = document.getElementById("eventTypeTopCategories").options;
+        for (let i = 0; i < eventTypeOptionsTopCategories.length; i++) {
+            if (eventTypeOptionsTopCategories[i].value == selectedDropdownValue) {
+                eventTypeOptionsTopCategories[i].selected = true;
+            }
+        }
 
         const subcategories = data.subcategories.popover_open || {};
         listOfLinks = ``;
@@ -1204,39 +1227,19 @@
 
         document.getElementById("categoryOverview").innerHTML = listOfLinks;
        
-        //TODO: change to use selected event type here 
-        const checked = data.events.check_result || {};
-        // const ignored = data.events.ignore || {};
-        // const alternative = data.events.alternative || {};
-
-        for (const [key, value] of Object.entries(checked)) {
-            xValuesTopSubCategoriesChecked.push(key);
-            yValuesTopSubCategoriesChecked.push(value);
+        const events = data.events[eventTypes[0]] || {};
+        for (const [key, value] of Object.entries(events)) {
+            xValuesTopSubCategories.push(key);
+            yValuesTopSubCategories.push(value);
         }
-        
-        // for (const [key, value] of Object.entries(ignored)) {
-        //     xValuesTopSubCategoriesIgnored.push(key);
-        //     yValuesTopSubCategoriesIgnored.push(value);
-        // }
 
-        // for (const [key, value] of Object.entries(alternative)) {
-        //     xValuesTopSubCategoriesAlternative.push(key);
-        //     yValuesTopSubCategoriesAlternative.push(value);
-        // }
-
-        const xValuesTopSubCategoriesCheckedCut = xValuesTopSubCategoriesChecked.slice(0, 15);
-        const yValuesTopSubCategoriesCheckedCut = yValuesTopSubCategoriesChecked.slice(0, 15);
-
-        // const xValuesTopSubCategoriesAlternativeCutDoughnut = xValuesTopSubCategoriesAlternative.slice(0, 5);
-        // const yValuesTopSubCategoriesAlternativeCutDoughnut = yValuesTopSubCategoriesAlternative.slice(0, 5);
-    
-        // const xValuesTopSubCategoriesIgnoredCutDoughnut = xValuesTopSubCategoriesIgnored.slice(0, 5);
-        // const yValuesTopSubCategoriesIgnoredCutDoughnut = yValuesTopSubCategoriesIgnored.slice(0, 5);
+        const xValuesTopSubCategoriesCut = xValuesTopSubCategories.slice(0, 15);
+        const yValuesTopSubCategoriesCut = yValuesTopSubCategories.slice(0, 15);
 
         createBarChart(
             "topSubCategoriesChart",
-            xValuesTopSubCategoriesCheckedCut,
-            yValuesTopSubCategoriesCheckedCut,
+            xValuesTopSubCategoriesCut,
+            yValuesTopSubCategoriesCut,
             "{{ __('content.title_categories_bar_chart_month') }}",
             true,
             false,
@@ -1246,21 +1249,6 @@
             language, 
             categories
         );
-
-        // createDoughnutChart(
-        //     "topSubCategoriesOpenedChartDoughnut",
-        //     xValuesTopSubCategoriesAlternativeCutDoughnut,
-        //     yValuesTopSubCategoriesAlternativeCutDoughnut,
-        //     "{{ __('content.title_categories_alternative_doughnut_chart_month') }}",
-
-        // );
-    
-        // createDoughnutChart(
-        //     "topSubCategoriesIgnoredChartDoughnut",
-        //     xValuesTopSubCategoriesIgnoredCutDoughnut,
-        //     yValuesTopSubCategoriesIgnoredCutDoughnut,
-        //     "{{ __('content.title_categories_ignored_doughnut_chart_month') }}",
-        // );
 
         document.getElementById("loading-icon-top-categories").style.display = "none";
         document.getElementById("top-categories-content").style.visibility = "visible";
@@ -1360,58 +1348,31 @@
     //     });
     // });
 
-    chartType == 'top-words' && getChartData('topWords', timerange, interval, language, categories, null, null, inclusive).then(data => {
+    chartType == 'top-words' && getChartData('topWords', timerange, interval, language, categories, null, null, inclusive, eventTypes).then(data => {
         if (!data || !data.events ) {
             handleNoData('loading-icon-top-words', 'top-words-no-data', 'topWords');
             return;
         }
 
-        const opened = data.events.popover_open || {};
-        // const ignored = data.events.ignore || {};
-        // const alternative = data.events.alternative || {};
-
-
-        for (const [key, value] of Object.entries(opened)) {
+        const events = data.events[eventTypes[0]] || {};
+        for (const [key, value] of Object.entries(events)) {
             if (!key || !value) continue;
-            xValuesTopWordsOpened.push(key);
-            yValuesTopWordsOpened.push(value);
+            xValuesTopWords.push(key);
+            yValuesTopWords.push(value);
         }
 
-        if (xValuesTopWordsOpened.length === 0) {
+        if (xValuesTopWords.length === 0) {
             handleNoData('loading-icon-top-words', 'top-words-no-data', 'topWords');
             return;
         }
 
-        // for (const [key, value] of Object.entries(ignored)) {
-        //     xValuesTopWordsIgnored.push(key);
-        //     yValuesTopWordsIgnored.push(value);
-        // }
-
-        // for (const [key, value] of Object.entries(alternative)) {
-        //     xValuesTopWordsAlternative.push(key);
-        //     yValuesTopWordsAlternative.push(value);
-        // }
-
-        const xValuesTopWordsOpenedCut = xValuesTopWordsOpened.slice(0, 15);
-        const yValuesTopWordsOpenedCut = yValuesTopWordsOpened.slice(0, 15);
-
-        // const xValuesTopWordsIgnoredCutDoughnut = xValuesTopWordsIgnored.slice(0, 5);
-        // const yValuesTopWordsIgnoredCutDoughnut = yValuesTopWordsIgnored.slice(0, 5);
-     
-        // const xValuesTopWordsAlternativeCutDoughnut = xValuesTopWordsAlternative.slice(0, 5);
-        // const yValuesTopWordsAlternativeCutDoughnut = yValuesTopWordsAlternative.slice(0, 5);
-
-        // createDoughnutChart(
-        //     "topWordsChartDoughnut",
-        //     xValuesTopWordsAlternativeCutDoughnut,
-        //     yValuesTopWordsAlternativeCutDoughnut,
-        //     "{{ __('content.title_words_alternative_doughnut_chart_month') }}",
-        // );
+        const xValuesTopWordsCut = xValuesTopWords.slice(0, 15);
+        const yValuesTopWordsCut = yValuesTopWords.slice(0, 15);
 
         createBarChart(
             "topWordsChart",
-            xValuesTopWordsOpenedCut,
-            yValuesTopWordsOpenedCut,
+            xValuesTopWordsCut,
+            yValuesTopWordsCut,
             "{{ __('content.title_words_bar_chart_month') }}",
             true,
             false,
@@ -1421,42 +1382,33 @@
             language, 
             categories, 
             ['corporate_rules']
-        );
-
-        // createDoughnutChart(
-        //     "topWordsChartDoughnutWeek",
-        //     xValuesTopWordsIgnoredCutDoughnut,
-        //     yValuesTopWordsIgnoredCutDoughnut,
-        //     "{{ __('content.title_words_ignored_doughnut_chart_month') }}",
-        // );
+        );  
     });
 
-    chartType == 'top-words' && getChartData('topWords', timerange, 'day', language, categories, ['corporate_rules'], null, inclusive).then(data => {
+    chartType == 'top-words' && getChartData('topWords', timerange, 'day', language, categories, ['corporate_rules'], null, inclusive, eventTypes).then(data => {
         if (!data || !data.events ) {
             handleNoData('loading-icon-top-words', 'top-words-no-data', 'topWords');
             return;
         }
-        if (data && data.events && data.events.popover_open) {
-            const openedCorporatewords = data.events.popover_open;
-            for (const [key, value] of Object.entries(openedCorporatewords)) {
+        if (data && data.events) {
+            const corporatewords = data.events[eventTypes[0]] || {};
+            for (const [key, value] of Object.entries(corporatewords)) {
                 if (!key || !value) continue;
-                xValuesTopCorporateWordsOpened.push(key);
-                yValuesTopCorporateWordsOpened.push(value);
+                xValuesTopCorporateWords.push(key);
+                yValuesTopCorporateWords.push(value);
             }
 
-            if (xValuesTopCorporateWordsOpened.length === 0) {
+            if (xValuesTopCorporateWords.length === 0) {
                 handleNoData('loading-icon-top-words', 'top-words-no-data', 'topWords');
                 return;
             }
 
-            const xValuesTopCorporateWordsOpenedCut = xValuesTopCorporateWordsOpened.slice(0, 15);
-            const yValuesTopCorporateWordsOpenedCut = yValuesTopCorporateWordsOpened.slice(0, 15);
-            
-
+            const xValuesTopCorporateWordsCut = xValuesTopCorporateWords.slice(0, 15);
+            const yValuesTopCorporateWordsCut = yValuesTopCorporateWords.slice(0, 15);
             createBarChart(
                 "topWordsChartCorporateRules",
-                xValuesTopCorporateWordsOpenedCut,
-                yValuesTopCorporateWordsOpenedCut,
+                xValuesTopCorporateWordsCut,
+                yValuesTopCorporateWordsCut,
                 "{{ __('content.title_words_bar_chart_month_corporate_rules') }}",
                 true,
                 false,
@@ -1480,8 +1432,11 @@
     });
 };
 
-function setParams(startOfWeek = 1, eventType = 'check_result') {
-    //TODO: deal with eventType here
+function setParams(startOfWeek = 1, eventTypes = null) {
+    if (eventTypes === null) {
+        const isPremiumUser = @json($is_premium_user);
+        eventTypes = isPremiumUser ? ['check_result'] : ['popover_open']
+    }
     const activeTab = document.getElementsByClassName("analytics-tab-line")[0].id.replace('-line', '');
     document.getElementById("noCorporateRulesWrapper").style.display = "none";
     document.getElementById("corporateRulesButNoneOpened").style.display = "none";
@@ -1508,7 +1463,7 @@ function setParams(startOfWeek = 1, eventType = 'check_result') {
     const selectedInclusiveOption = inclusiveDropdown.options[inclusiveDropdown.selectedIndex].value;
 
     const interval = selectedTimeRangeOption == '1y' ? 'month' : 'week';
-    load_charts(false, startOfWeek, activeTab, selectedTimeRangeOption, interval, selectedLanguageOption, categories, selectedInclusiveOption, selectedInclusiveOption);
+    load_charts(false, startOfWeek, activeTab, selectedTimeRangeOption, interval, selectedLanguageOption, categories, selectedInclusiveOption, eventTypes);
 }
 
 load_charts(false, 1);

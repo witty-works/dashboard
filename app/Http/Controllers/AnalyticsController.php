@@ -193,6 +193,28 @@ class AnalyticsController extends Controller
         return floor($differenceInWeeks);
     }
 
+    protected function filterEvents($events, $subscribed)
+    {
+        if (!is_array($events)) {
+            $events = [];
+        } else {
+            if (!$subscribed) {
+                $key = array_search('check_result', $events);
+                if ($key) {
+                    unset($events[$key]);
+                }
+            }
+            if (count($events) > 1) {
+                $events = [$events[0]];
+            }
+        }
+        if (empty($events)) {
+            $events = $subscribed ? ['check_result'] : ['popover_open'];
+        }
+
+        return $events;
+    }
+
     protected function buildJson(Request $request, $properties, $model)
     {
         $rules = [
@@ -201,7 +223,7 @@ class AnalyticsController extends Controller
             'from' => 'required',
             'to' => 'nullable',
             'lang' => 'nullable|in:en,de',
-            'events' => 'nullable|array|in:check,check_result,popover_open,alternative,ignore,learning_bites',
+            'events' => 'nullable|array|in:check_result,popover_open,alternative,ignore,learning_bites',
             'categories' => 'nullable|array|in:' . implode(',', $this->categories->keys()->toArray()),
             'subcategories' => 'nullable|array|in:' . implode(',', $this->subcategories->keys()->toArray()),
             'inclusive' => 'nullable|in:inclusive,non_inclusive,both',
@@ -282,11 +304,10 @@ class AnalyticsController extends Controller
 
         switch ($chart) {
             case 'dau':
-                if (empty($events)) {
+                if ($request->user()->subscribed()) {
                     $events = ['popover_open', 'alternative', 'ignore', 'learning_bites'];
-                    if ($request->user()->subscribed()) {
-                        array_unshift($events, 'check_result');
-                    }
+                } elseif (empty($events)) {
+                    $events = ['check_result'];
                 }
 
                 $key = reset($events);
@@ -427,11 +448,7 @@ class AnalyticsController extends Controller
                 $data['writing_streak'] = $writingStreak;
                 break;
             case 'topSubcategories':
-                if (!$request->user()->subscribed()) {
-                    $events = ['popover_open'];
-                } elseif (empty($events)) {
-                    $events = ['check_result'];
-                }
+                $events = $this->filterEvents($events, $request->user()->subscribed());
 
                 $data = $this->buildBreakdown(
                     $events,
@@ -461,11 +478,7 @@ class AnalyticsController extends Controller
                 }
                 break;
             case 'topWords':
-                if (!$request->user()->subscribed()) {
-                    $events = ['popover_open'];
-                } elseif (empty($events)) {
-                    $events = ['check_result'];
-                }
+                $events = $this->filterEvents($events, $request->user()->subscribed());
 
                 $data = $this->buildBreakdown(
                     $events,
