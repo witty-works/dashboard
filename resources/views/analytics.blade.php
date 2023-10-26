@@ -1122,9 +1122,13 @@
             return;
         }
 
+        const isPremiumUser = @json($is_premium_user);
+
+        const checkResultOptionDisabledAttr = isPremiumUser ? '' : 'disabled';
+
         const eventTypeDropdown = document.getElementById("eventTypeDropdown").innerHTML = `
             <select id="eventType" class="dropdown" onchange="setParams(1, this.value)">
-                <option value="check_result">{{ __('content.check_result_label_line_chart') }}</option>
+                <option value="check_result" ${checkResultOptionDisabledAttr}>{{ __('content.check_result_label_line_chart') }}</option>
                 <option value="popover_open">{{ __('content.popover_label_line_chart') }}</option>
                 <option value="alternative">{{ __('content.alternative_label_line_chart') }}</option>
                 <option value="ignore">{{ __('content.ignored_label_line_chart') }}</option>
