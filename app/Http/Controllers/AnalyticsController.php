@@ -11,6 +11,7 @@ use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
+use RuntimeException;
 
 class AnalyticsController extends Controller
 {
@@ -82,7 +83,11 @@ class AnalyticsController extends Controller
 
         $properties = PosthogHelper::getOrganizationFilter($user->currentTeam);
 
-        return $this->buildJson($request, $properties, $user->currentTeam);
+        try {
+            return $this->buildJson($request, $properties, $user->currentTeam);
+        } catch (RuntimeException $e){
+            abort(503);
+        }
     }
 
     protected function buildFilter($properties, $filters, $interval, $from, $to, $math)
