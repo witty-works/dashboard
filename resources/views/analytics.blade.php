@@ -857,7 +857,11 @@
                                     return chart.data.datasets.map((dataset, i) => {
                                         //workaround for charjs initial hidden state bug
                                         let isCurrentlyHidden = chart.getDatasetMeta(i).hidden === false || chart.getDatasetMeta(i).hidden === true;
-                                        isCurrentlyHidden = i === 0 ? isCurrentlyHidden : !isCurrentlyHidden;
+                                        if (isPremiumUser) {
+                                            isCurrentlyHidden = (i === 0 ? isCurrentlyHidden : !isCurrentlyHidden);
+                                        } else {
+                                            isCurrentlyHidden = (i === 0 ? true : false);
+                                        }
                                         return {
                                             datasetIndex: i,
                                             text: dataset.label,
