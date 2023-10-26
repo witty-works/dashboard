@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Mail;
 class Hubspot
 {
     protected $api;
+    protected $hubspotBaseContactUrl = 'https://app-eu1.hubspot.com/contacts/24904016/contact/';
 
     public function __construct()
     {
@@ -92,39 +93,66 @@ class Hubspot
         return true;
     }
 
-    public function updateUserFromContact(User $user, $contact, $updateHubspot = false)
+    protected function handleAdditionalEmails(User $user, $contact)
     {
-        if (!empty($contact['properties']['hs_additional_emails'])) {
-            $additionalEmails = explode(';', $contact['properties']['hs_additional_emails']);
-            $additionalEmails[] = $contact['properties']['email'];
-            $users = User::whereIn('email', $additionalEmails)->where('email', '!=', $user->email)->get();
+        if (empty($contact['id'])) {
+            return 0;
+        }
 
-            // this contact's emails are associated to multiple user accounts
-            if (count($users) > 0) {
-                // send notification
-                if ($user->hubspot_id !== 0) {
-                    Mail::send([], [], function (Message $message) use ($users, $contact) {
-                        $html = "<a href=\"https://app-eu1.hubspot.com/contacts/24904016/contact/{$contact['id']}\">Contact</a>";
-                        $html .= ' is associated with emails for different user accounts<br>';
-                        $html .= 'Problematic emails: ' . implode(', ', $users->pluck('email')->toArray());
+        if (empty($contact['properties']['hs_additional_emails'])) {
+            return $contact['id'];
+        }
 
-                        $message->to('support@witty.works')
-                            ->subject('Overlapping emails in HubSpot contacts')
-                            ->from('support@witty.works')
-                            ->html($html);
-                    });
+        $additionalEmails = explode(';', $contact['properties']['hs_additional_emails']);
+        $additionalEmails[] = $contact['properties']['email'];
+        $users = User::whereIn('email', $additionalEmails)->where('email', '!=', $user->email)->get();
+
+        // this contact's emails are associated to multiple user accounts
+        if (count($users) > 0) {
+            // null or 0 => do not change hubspot ID
+            if (empty($user->hubspot_id)) {
+                return $user->hubspot_id;
+            }
+
+            $sendNotification = false;
+            $additionalHubspotIds = [];
+            // check all related users if any have not yet been processed
+            foreach ($users as $relatedUser) {
+                if ($relatedUser->hubspot_id === null) {
+                    $relatedUser->hubspot_id = 0;
+                    $relatedUser->save();
+                    $sendNotification = true;
+                } elseif ($relatedUser->hubspot_id > 0) {
+                    $additionalHubspotIds[] = $relatedUser->hubspot_id;
+                    $sendNotification = true;
                 }
+            }
 
-                unset($contact['id']);
-                $updateHubspot = false;
+            if ($sendNotification) {
+                // a new user was added that overlaps => send notification
+                Mail::send([], [], function (Message $message) use ($users, $contact, $additionalHubspotIds) {
+                    $html = "<a href=\"{$this->hubspotBaseContactUrl}{$contact['id']}\">Contact</a>";
+                    $html .= ' is associated with emails for different user accounts<br>';
+                    $html .= 'Problematic emails: ' . implode(', ', $users->pluck('email')->toArray());
+
+                    foreach ($additionalHubspotIds as $hubspotId) {
+                        $html .= "<br><a href=\"{$this->hubspotBaseContactUrl}{$hubspotId}\">Other Contact</a>";
+                    }
+
+                    $message->to('support@witty.works')
+                        ->subject('Overlapping emails in HubSpot contacts')
+                        ->from('support@witty.works')
+                        ->html($html);
+                });
             }
         }
 
-        if (empty($contact['id'])) {
-            $user->hubspot_id = 0;
-        } else {
-            $user->hubspot_id = $contact['id'];
-        }
+        return $contact['id'];
+    }
+
+    public function updateUserFromContact(User $user, $contact, $updateHubspot = false)
+    {
+        $user->hubspot_id = $this->handleAdditionalEmails($user, $contact);
 
         if (empty($contact['properties']['hs_analytics_source'])) {
             $user->hubspot_source = null;
