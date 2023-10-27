@@ -124,4 +124,5 @@ Alle Wörter, die zu dieser Liste hinzufügst, werden von Witty hervorgehoben, u
     'form_reset_category_aria_label' => 'Diversitätsdimensionen Einstellungen zurücksetzen',
     'form_reset_language_aria_label' => 'Spracheinstellungen zurücksetzen',
     'advanced_toggle_advice' => 'So kannst du Witty genau auf deine Bedürfnisse und Prioritäten abstimmen.',
+    'discriminating_language_cannot_be_disabled' => 'Offen diskriminierende Diversitätsdimensionen können nicht ausgeschaltet werden.',
 ];

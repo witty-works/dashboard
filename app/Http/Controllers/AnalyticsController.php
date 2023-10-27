@@ -73,7 +73,11 @@ class AnalyticsController extends Controller
 
         $properties = PosthogHelper::getUserFilter($user);
 
-        return $this->buildJson($request, $properties, $user);
+        try {
+            return $this->buildJson($request, $properties, $user);
+        } catch (RuntimeException $e) {
+            return response()->json(['message' => 'Analytics data temporarily unavailable'], 503);
+        }
     }
 
     public function organizationApi(Request $request)
@@ -85,8 +89,8 @@ class AnalyticsController extends Controller
 
         try {
             return $this->buildJson($request, $properties, $user->currentTeam);
-        } catch (RuntimeException $e){
-            abort(503);
+        } catch (RuntimeException $e) {
+            return response()->json(['message' => 'Analytics data temporarily unavailable'], 503);
         }
     }
 

@@ -46,6 +46,7 @@
             usort($list, $callback);
 
             $disabled = $proficiencyLevel === 'openly_discriminating';
+            $title = $disabled ? __('guidelines.discriminating_language_cannot_be_disabled') : '';
         @endphp
         <div class="guidelines-form-section lato-small-text-p guidelines-form-section-proficiency-level" aria-expanded="false">
             <h3>{{ $proficiencyLevelData['translation']['hs_name'] }}</h3>
@@ -83,6 +84,7 @@
                 :label="$label"
                 wire:model.defer="dimensions.{{$ddd}}"
                 :disabled="(bool)$disabled"
+                :title="$title"
             />
             @else
             <x-triple-toggle
