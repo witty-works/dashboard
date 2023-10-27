@@ -74,13 +74,16 @@
         @if(isset($diversityDimensionDrivers[$ddd]['translation']) && isset($dimensions[$ddd]))
         @php
         $checkbox = $proficiencyLevel === 'openly_discriminating' || !$model->subscribed();
+        $disabled = !$model->subscribed();
         if ($proficiencyLevel === 'openly_discriminating') {
             $disabled = true;
             $minValue = \App\Models\LanguageGuidelines::BASIC_ENABLED;
+            $title = __('guidelines.discriminating_language_cannot_be_disabled');
         } else {
             $minValue = \App\Models\LanguageGuidelines::teamCategoryValue($model, $ddd);
+            $title = $disabled ? __('content.customize_via_team_settings') : '';
         }
-        $disabled = !$model->subscribed();
+
         @endphp
 
         <div class="guidelines-form-section-ident lato-small-text-p">
@@ -97,7 +100,7 @@
                 :label="$label"
                 wire:model.defer="dimensions.{{$ddd}}"
                 :disabled="(bool)$disabled"
-                :title="__('content.customize_via_team_settings')"
+                :title="$title"
             />
             @else
             <x-triple-toggle
