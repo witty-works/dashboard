@@ -55,21 +55,14 @@ class SyncOrganizationToNlpApi extends AbstractSyncToNlpApi
         foreach (GuidelinesInterface::DISABLED_CATEGORIES as $category) {
             $config['categories'][$category] = [
                 'value' => !in_array($category, $guidelines->disabled_categories),
-                'status' => (null === $guidelines->disabled_categories_force
-                    || in_array($category, $guidelines->disabled_categories_force)
-                    || !$team->subscribed()
-                ) ? 'force' : 'suggestion',
+                'status' => 'force',
             ];
         }
 
         foreach ($guidelines->getDiversityDimensionDrivers(null, true) as $ddd => $dddConfig) {
-            $category = $dddConfig['category'] ?? null;
             $config['categories'][$ddd] = [
                 'value' => !in_array($ddd, $guidelines->disabled_categories),
-                'status' => (null === $guidelines->disabled_categories_force
-                    || in_array($category, $guidelines->disabled_categories_force)
-                    || !$team->subscribed()
-                ) ? 'force' : 'suggestion',
+                'status' => 'force',
             ];
         }
 

@@ -1,4 +1,4 @@
-<label>
+<label title="{{ $title ?? ""}}">
     <div class="switch">
         <input type="checkbox" 
                {{ empty($disabled) ? '' : 'disabled' }} 
