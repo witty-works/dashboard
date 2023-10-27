@@ -258,6 +258,7 @@ Please use Witty more often and click on the highlighted terms.',
     'no_data_top_words' => 'At the moment we don\'t have enough data to display this graph.<br/>
 Please use Witty more often and click on the highlighted terms.',
     'no_data_image_text' => 'Use Witty to generate data for analysis',
+    'no_data_image_text_temp_unavailable' => 'Analytics data is temporarily unavailable. Please try again later.',
     'week' => 'Week',
     'title_line_chart_dau' => 'Weekly active users',
     'popover_label_line_chart_dau' => 'Explored',
