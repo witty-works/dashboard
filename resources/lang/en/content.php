@@ -447,4 +447,5 @@ If you have any questions, contact :name (:email). 🙂
     'triple_toggle_locked_second_pos' => 'Your team admin has set this diversity dimension to \'basic\'. Click to switch between \'basic\' and \'advanced\'.',
     'triple_toggle_unlocked' => 'Click to switch between \'off\', \'basic\' and \'advanced\'.',
     'event_type' => 'Event Type',
+    'customize_via_team_settings' => 'On the "Witty Free" plan one can customize only the team settings. Upgrade to be able to customize Witty in your personal settings.',
 ];
