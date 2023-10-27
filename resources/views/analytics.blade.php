@@ -121,8 +121,7 @@
 
       <!-- Overview content here -->
       <div id="overview" role="tabpanel" aria-labelledby="overview-tab">
-         <div class="ibarra-sub-title-h2 margin-top">{{ __('content.activity') }}</div>
-         <div class="wittyworks-form-section container border-radius">
+         <div class="wittyworks-form-section container border-radius mt-5">
             <div id="loading-icon-overview" class="loading-icon-wrapper" style="width: 100%">
                <div class="lds-grid">
                   <div></div>
@@ -193,8 +192,7 @@
       <!-- Top categories content here -->
       <div id="top-categories" role="tabpanel" style="display: none;" aria-labelledby="top-categories-tab">
          <div id="top-categories-wrapper" style="width: 100%">
-            <div class="ibarra-sub-title-h2 margin-top">{{ __('content.top_categories') }}</div>
-            <div class="wittyworks-form-section container border-radius">
+            <div class="wittyworks-form-section container border-radius mt-5">
                <div id="loading-icon-top-categories" class="loading-icon-wrapper"  style="width: 100%">
                   <div class="lds-grid">
                      <div></div>
@@ -252,8 +250,7 @@
       <!-- Top words content here -->
       <div id="top-words" role="tabpanel" style="display: none;" aria-labelledby="top-words-tab">
          <div id="top-words-wrapper" style="width: 100%">
-            <div class="ibarra-sub-title-h2 margin-top">{{ __('content.top_words') }}</div>
-            <div class="wittyworks-form-section container border-radius">
+            <div class="wittyworks-form-section container border-radius mt-5">
                <div id="loading-icon-top-words" class="loading-icon-wrapper" style="width: 100%">
                   <div class="lds-grid">
                      <div></div>
@@ -709,46 +706,6 @@
                     yValuesCheckResult.push(count);
                 }
             }
-            //CURRENT WEEK
-            // const yValuesLearningBitesWeek = yValuesLearningBites.slice(-7);
-            // const xValuesLearningBitesWeek = xValuesLearningBites.slice(-7);
-            // const yValuesPopoverOpenWeek = yValuesPopoverOpen.slice(-7);
-            // const yValuesIgnoreWeek = yValuesIgnore.slice(-7);
-            // const yValuesAlternativeWeek = yValuesAlternative.slice(-7);
-
-            //PREVIOUS WEEK
-            // const yValuesLearningBitesWeekPrevious = yValuesLearningBites.slice(-14, -7);
-            // const xValuesLearningBitesWeekPrevious = xValuesLearningBites.slice(-14, -7);
-            // const yValuesPopoverOpenWeekPrevious = yValuesPopoverOpen.slice(-14, -7);
-            // const yValuesIgnoreWeekPrevious = yValuesIgnore.slice(-14, -7);
-            // const yValuesAlternativeWeekPrevious = yValuesAlternative.slice(-14, -7);
-            
-            //TOTAL WEEK
-            // const totalWeeklyLearningBites = yValuesLearningBitesWeek.map(Number).reduce((a, b) => a + b, 0);
-            // const totalWeeklyPopoverOpen = yValuesPopoverOpenWeek.map(Number).reduce((a, b) => a + b, 0);
-            // const totalWeeklyIgnore = yValuesIgnoreWeek.map(Number).reduce((a, b) => a + b, 0);
-            // const totalWeeklyAlternative = yValuesAlternativeWeek.map(Number).reduce((a, b) => a + b, 0);
-            // const totalWeeklyPopoverClose = totalWeeklyPopoverOpen - totalWeeklyIgnore - totalWeeklyAlternative;
-            // const weeklyEvents = [totalWeeklyIgnore, totalWeeklyAlternative, totalWeeklyPopoverClose];
-            
-            //TOTAL WEEK PREVIOUS
-            // const totalWeeklyLearningBitesPrevious = yValuesLearningBitesWeekPrevious.map(Number).reduce((a, b) => a + b, 0);
-            // const totalWeeklyPopoverOpenPrevious = yValuesPopoverOpenWeekPrevious.map(Number).reduce((a, b) => a + b, 0);
-            // const totalWeeklyIgnorePrevious = yValuesIgnoreWeekPrevious.map(Number).reduce((a, b) => a + b, 0);
-            // const totalWeeklyAlternativePrevious = yValuesAlternativeWeekPrevious.map(Number).reduce((a, b) => a + b, 0);
-            // const weeklyEventsPrevious = [totalWeeklyLearningBitesPrevious, totalWeeklyPopoverOpenPrevious, totalWeeklyIgnorePrevious, totalWeeklyAlternativePrevious];
-
-            //WEEKLY CHANGE
-            // const changeInLearningBitesPercentage = (((totalWeeklyLearningBites - totalWeeklyLearningBitesPrevious) / (totalWeeklyLearningBitesPrevious == 0 ? 1 : totalWeeklyLearningBitesPrevious)) * 100).toFixed(0).replace('-', '');
-            // const changeInPopoverPercentage = (((totalWeeklyPopoverOpen - totalWeeklyPopoverOpenPrevious) / (totalWeeklyPopoverOpenPrevious == 0 ? 1 : totalWeeklyPopoverOpenPrevious)) * 100).toFixed(0).replace('-', '');
-            // const changeInIgnorePercentage = (((totalWeeklyIgnore - totalWeeklyIgnorePrevious) / (totalWeeklyIgnorePrevious == 0 ? 1 : totalWeeklyIgnorePrevious)) * 100).toFixed(0).replace('-', '');
-            // const changeInAlternativePercentage = (((totalWeeklyAlternative - totalWeeklyAlternativePrevious) / (totalWeeklyAlternativePrevious == 0 ? 1 : totalWeeklyAlternativePrevious)) * 100).toFixed(0).replace('-', '');
-            
-            // document.getElementById("checkDaysInRow").innerHTML =  '{{ __('content.writing_streak') }}' + '&nbsp; <span class="lato-small-paragraph-title-h4-purple">' +  writing_streak + '&nbsp</span>' + '{{ __('content.in_a_row') }}';
-            // document.getElementById("changeInLearningBitesPercentage").innerHTML =  '{{ __('content.you_clicked') }}' + '&nbsp; <span class="lato-small-paragraph-title-h4-purple">' + changeInLearningBitesPercentage + '%</span>&nbsp;' + (changeInLearningBitesPercentage >= 0 ? '{{ __('content.learning_bites_requests_week_positive') }}' : '{{ __('content.learning_bites_requests_week_negative') }}');
-            // document.getElementById("changeInPopoverPercentage").innerHTML =  '{{ __('content.you_explored') }}' + '&nbsp; <span class="lato-small-paragraph-title-h4-purple">' + changeInPopoverPercentage + '%</span>&nbsp;' + (changeInPopoverPercentage >= 0 ? '{{ __('content.popover_open_week_positive') }}' : '{{ __('content.popover_open_week_negative') }}');
-            // document.getElementById("changeInAlternativePercentage").innerHTML =  '{{ __('content.you_selected') }}' + '&nbsp; <span class="lato-small-paragraph-title-h4-purple">' + changeInAlternativePercentage + '%</span>&nbsp;' + (changeInAlternativePercentage >= 0 ? '{{ __('content.alternative_clicked_week_positive') }}' : '{{ __('content.alternative_clicked_week_negative') }}');
-            // document.getElementById("changeInIgnorePercentage").innerHTML =  '{{ __('content.you_ignored') }}' + '&nbsp; <span class="lato-small-paragraph-title-h4-purple">' + changeInIgnorePercentage + '%</span>&nbsp;' + (changeInIgnorePercentage >= 0 ? '{{ __('content.ignored_words_week_positive') }}' : '{{ __('content.ignored_words_week_negative') }}');
 
             //insert drowdown with two options to id startOfWeekDropdown
             const startOfWeekDropdown = document.getElementById("startOfWeekDropdown").innerHTML = `<select id="startOfWeek" class="dropdown" onchange="setParams(this.value)">
@@ -1240,7 +1197,7 @@
             "topSubCategoriesChart",
             xValuesTopSubCategoriesCut,
             yValuesTopSubCategoriesCut,
-            "{{ __('content.title_categories_bar_chart_month') }}",
+            "{{ __('content.top_categories') }}",
             true,
             false,
             'topSubcategories', 
