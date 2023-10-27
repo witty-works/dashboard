@@ -138,8 +138,8 @@
             <div id="overview-no-data" style="visibility: hidden; width: 100%">
                <div class="lato-small-text-p warning-message">{!! __('content.no_data_events') !!}</div>
                <div class="image-container">
-                  <img src="{{ url('svg/screenshots/activity.png') }}" alt="activity" class="image">
-                  <div class="centered-image-text">{{ __('content.no_data_image_text') }}</div>
+                  <img src="{{ url('svg/screenshots/overviewNoData.png') }}" alt="activity" class="image">
+                  <div id="overview-no-data-text" class="centered-image-text"></div>
                </div>
             </div>
             <div id="overview-wrapper" style="visibility: hidden; width: 100%">
@@ -209,8 +209,8 @@
                <div id="top-categories-no-data" style="visibility: hidden; width: 100%">
                     <div class="lato-small-text-p warning-message">{!! __('content.no_data_events') !!}</div>
                     <div class="image-container">
-                        <img src="{{ url('svg/screenshots/activity.png') }}" alt="activity" class="image">
-                        <div class="centered-image-text">{{ __('content.no_data_image_text') }}</div>
+                        <img src="{{ url('svg/screenshots/topCategoriesNoData.png') }}" alt="activity" class="image">
+                        <div id="top-categories-no-data-text" class="centered-image-text"></div>
                     </div>
                </div>
                <div id="top-categories-content" style="visibility: hidden; width: 100%">
@@ -267,8 +267,8 @@
                <div id="top-words-no-data" style="visibility: hidden; width: 100%">
                     <div class="lato-small-text-p warning-message">{!! __('content.no_data_events') !!}</div>
                     <div class="image-container">
-                        <img src="{{ url('svg/screenshots/activity.png') }}" alt="activity" class="image">
-                        <div class="centered-image-text">{{ __('content.no_data_image_text') }}</div>
+                        <img src="{{ url('svg/screenshots/topWordsNoData.png') }}" alt="activity" class="image">
+                        <div id="top-words-no-data-text" class="centered-image-text"></div>
                     </div>
                </div>
                <div id="top-words-content" style="visibility: hidden; width: 100%">
@@ -278,17 +278,17 @@
                     </div>
                     <div class="chart-container-row">
                         <canvas
-                            id="topWordsChartCorporateRules"
-                            class="wittyworks-analytics-chart-extra-large">
-                        </canvas>
-                        <div class="chart-footer" id="topWordsChartCorporateRulesFooter"></div>
-                    </div>
-                    <div class="chart-container-row wittyworks-margin-top">
-                        <canvas
                             id="topWordsChart"
                             class="wittyworks-analytics-chart-extra-large wittyworks-margin-top">
                         </canvas>
                         <div class="chart-footer" id="topWordsChartFooter"></div>
+                    </div>
+                    <div class="chart-container-row wittyworks-margin-top">
+                        <canvas
+                            id="topWordsChartCorporateRules"
+                            class="wittyworks-analytics-chart-extra-large">
+                        </canvas>
+                        <div class="chart-footer" id="topWordsChartCorporateRulesFooter"></div>
                     </div>
                   <div id="noCorporateRulesWrapper" class="container-row wittyworks-margin-top" style="display: none;">
                      <div class="lato-small-text-p">{!! empty($user) ? __('content.no_corporate_rules') : __('content.no_corporate_rules_user') !!}</div>
@@ -427,7 +427,7 @@
         return [formattedXValues, yValues];
     }
 
-    function handleNoData(loadingIconId, sectionIdNoData = null, chartId = null) {
+    function handleNoData(loadingIconId, sectionIdNoData = null, chartId = null, isApiError) {
         if (document.getElementById(loadingIconId)) {
             document.getElementById(loadingIconId).style.display = "none";
         }
@@ -437,6 +437,12 @@
             document.getElementById(sectionIdNoData).style.display = "block";
         } else if (chartId && document.getElementById(chartId)) {
             document.getElementById(chartId).style.display = "none";
+        }
+
+        if (isApiError) {
+            document.getElementById(sectionIdNoData + '-text').innerHTML = '{!! __('content.no_data_image_text_temp_unavailable') !!}';
+        } else {
+            document.getElementById(sectionIdNoData + '-text').innerHTML = '{!! __('content.no_data_image_text') !!}';
         }
     }
 
@@ -462,19 +468,19 @@
 
         analyticsUrl += chart + '&from=' + from + '&interval=' + interval + '&lang=' + language + '&inclusive=' + inclusive + formattedCategories + formattedSubcategories + formattedEventTypes;
 
-        const response = await fetch(analyticsUrl, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'X-App-Locale': '{{ app()->getLocale() }}',
-            },
-        });
          
         try {
+            const response = await fetch(analyticsUrl, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'X-App-Locale': '{{ app()->getLocale() }}',
+                },
+            });
             const data = await response.json();
             return data;
-        } catch (e) {
-            return null;
+        } catch (e) {            
+            return {data: null, errorStatus: e.status};
         }
     }
 
@@ -667,10 +673,13 @@
     // }
 
     chartType == 'overview' && getChartData('total', timerange, interval, language, categories, null,  null, inclusive, ['check_result','popover_open','alternative','ignore','learning_bites']).then(data => { //TODO
-        if (!data?.events?.popover_open
-            || Object.entries(data.events.popover_open).filter(([key, value]) => value > 0).length == 0
-        ) {
-            handleNoData('loading-icon-overview', 'overview-no-data');
+        if (data.errorStatus === 503) {
+            handleNoData('loading-icon-overview', 'overview-no-data', '', true);
+            return;
+        } 
+        if (!data.events?.popover_open
+            || Object.entries(data.events.popover_open).filter(([key, value]) => value > 0).length == 0) {
+            handleNoData('loading-icon-overview', 'overview-no-data', '', false);
             return;
         }
         const events = data.events || {};
@@ -1022,7 +1031,7 @@
 
     //ALWAYS ONLY past week
     chartType == 'top-categories' && getChartData('topSubcategories', '1w', interval, language, categories, null, null, inclusive, eventTypes).then(data => {
-        if (!data || !data.events ) {
+        if (!data.events ) {
             return;
         }
         const eventsPopoverOpenedWeekUnsorted = data.events.popover_open || {};
@@ -1116,8 +1125,12 @@
 
 
     (chartType == 'overview' || chartType == 'top-categories') && getChartData('topSubcategories', timerange, interval, language, categories, null,  null, inclusive, eventTypes).then(data => {
-        if (!data || !data.events || !data.subcategories ) {
-            handleNoData('loading-icon-top-categories', 'top-categories-no-data', 'topSubcategories');
+        if (data.errorStatus === 503) {
+            handleNoData('loading-icon-top-categories', 'top-categories-no-data', 'topSubcategories', true);
+            return;
+        }
+        if (!data.events || !data.subcategories ) {
+            handleNoData('loading-icon-top-categories', 'top-categories-no-data', 'topSubcategories', false);
             return;
         }
 
@@ -1158,7 +1171,7 @@
             }
         }
 
-        const subcategories = data.subcategories.popover_open || {};
+        const subcategories = data.subcategories[selectedDropdownValue] || [];
         listOfLinks = ``;
 
         let locale = window.location.href.includes("/de/") ? "de" : "en"
@@ -1306,16 +1319,23 @@
     // });
 
     chartType == 'top-words' && getChartData('topWords', timerange, interval, language, categories, null, null, inclusive, eventTypes).then(data => {
-        if (!data || !data.events ) {
-            handleNoData('loading-icon-top-words', 'top-words-no-data', 'topWords');
+        if (data.errorStatus === 503) {
+            handleNoData('loading-icon-top-words', 'top-words-no-data', 'topWords', true);
+            return;
+        }
+
+        if (!data.events ) {
+            handleNoData('loading-icon-top-words', 'top-words-no-data', 'topWords', false);
             return;
         }
 
         const events = data.events[eventTypes[0]] || {};
         for (const [key, value] of Object.entries(events)) {
             if (!key || !value) continue;
-            xValuesTopWords.push(key);
-            yValuesTopWords.push(value);
+            if (isNaN(key)) {
+                xValuesTopWords.push(key);
+                yValuesTopWords.push(value);
+            }
         }
 
         if (xValuesTopWords.length === 0) {
@@ -1343,8 +1363,13 @@
     });
 
     chartType == 'top-words' && getChartData('topWords', timerange, 'day', language, categories, ['corporate_rules'], null, inclusive, eventTypes).then(data => {
-        if (!data || !data.events ) {
-            handleNoData('loading-icon-top-words', 'top-words-no-data', 'topWords');
+        if (data.errorStatus === 503) {
+            handleNoData('loading-icon-top-words', 'top-words-no-data', 'topWords', true);
+            return;
+        }
+
+        if (!data.events ) {
+            handleNoData('loading-icon-top-words', 'top-words-no-data', 'topWords', false);
             return;
         }
         if (data && data.events) {

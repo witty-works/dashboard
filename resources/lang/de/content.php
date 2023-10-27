@@ -246,6 +246,7 @@ Bitte verwende Witty öfter und klicke auf die hervorgehobenen Begriffe.',
     'no_data_top_words' => 'Im Moment haben wir nicht genug Daten, um diese Grafik anzuzeigen. <br/>
 Bitte verwende Witty öfter und klicke auf die hervorgehobenen Begriffe.',
     'no_data_image_text' => 'Nutze Witty, um genügend Daten für die Analyse zu generieren.',
+    'no_data_image_text_temp_unavailable' => 'Temp unvailable DE',
     'week' => 'Woche',
     'in_a_row' => 'Wochen hintereinander benutzt',
     'learning_bites_requests_week_negative' => 'weniger auf "Warum?" geklickt als letzte Woche',
