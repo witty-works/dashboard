@@ -467,7 +467,6 @@
         }
 
         analyticsUrl += chart + '&from=' + from + '&interval=' + interval + '&lang=' + language + '&inclusive=' + inclusive + formattedCategories + formattedSubcategories + formattedEventTypes;
-
          
         try {
             const response = await fetch(analyticsUrl, {
@@ -477,9 +476,12 @@
                     'X-App-Locale': '{{ app()->getLocale() }}',
                 },
             });
+            if (response.status >= 500) {
+                return {data: null, errorStatus: response.status};
+            }
             const data = await response.json();
             return data;
-        } catch (e) {            
+        } catch (e) {
             return {data: null, errorStatus: e.status};
         }
     }
@@ -488,7 +490,7 @@
         if (yValues.every((val, i, arr) => val === 0)) {
             document.getElementById(chartId).style.display = "none";
             return;
-        }        
+        }
 
         const newFrom = from.slice(0, 1) * 2 + from.slice(1, 2);
         const to = from; 
@@ -676,7 +678,7 @@
         if (data.errorStatus === 503) {
             handleNoData('loading-icon-overview', 'overview-no-data', '', true);
             return;
-        } 
+        }
         if (!data.events?.popover_open
             || Object.entries(data.events.popover_open).filter(([key, value]) => value > 0).length == 0) {
             handleNoData('loading-icon-overview', 'overview-no-data', '', false);

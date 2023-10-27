@@ -246,7 +246,6 @@ Bitte verwende Witty öfter und klicke auf die hervorgehobenen Begriffe.',
     'no_data_top_words' => 'Im Moment haben wir nicht genug Daten, um diese Grafik anzuzeigen. <br/>
 Bitte verwende Witty öfter und klicke auf die hervorgehobenen Begriffe.',
     'no_data_image_text' => 'Nutze Witty, um genügend Daten für die Analyse zu generieren.',
-    'no_data_image_text_temp_unavailable' => 'Temp unvailable DE',
     'week' => 'Woche',
     'in_a_row' => 'Wochen hintereinander benutzt',
     'learning_bites_requests_week_negative' => 'weniger auf "Warum?" geklickt als letzte Woche',
@@ -443,4 +442,5 @@ Falls du Fragen hast, nimm Kontakt mit :name (:email) auf. 🙂
     'triple_toggle_locked_second_pos' => 'Dein*e Team-Administrator*in hat diese Diversitätsdimension auf „Grundlagen“ eingestellt. Klicke, um zwischen „Grundlagen“ und „Erweitert“ zu wechseln.',
     'triple_toggle_unlocked' => 'Klicke, um zwischen „Aus“, „Grundlagen“ und „Erweitert“ zu wechseln.',
     'customize_via_team_settings' => 'Im „Witty Free“-Plan kann man nur die Teameinstellungen anpassen. Führe ein Upgrade durch, um Witty in Deinen persönlichen Einstellungen anpassen zu können.',
+    'no_data_image_text_temp_unavailable' => 'Analytics-Daten sind vorübergehend nicht verfügbar. Bitte versuche es später noch einmal.',
 ];
