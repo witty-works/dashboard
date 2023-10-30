@@ -25,7 +25,7 @@
                         onclick="handleDropdownVisibility()"
                         wire:model.defer="gendered_roles_format"
                         style="cursor: {{ $disabled ? 'not-allowed' : 'pointer' }};"
-                        @if(!$model->subscribed()) disabled @endif
+                        @if($disabled) disabled @endif
                     >
                         {!! __($value) !!}
                         @if(!$model->subscribed())
