@@ -38,4 +38,5 @@ return [
     'license_count_did_not_change' => 'The license count was not changed.',
     'to_upgrade_contact_owner' => 'To upgrade, please contact your team owner.',
     'select_license_count_aria_label' => 'select license count',
+    'invitation_removed' => 'Unfortunately the invitation has been removed.',
 ];

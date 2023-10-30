@@ -7,6 +7,11 @@
                     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                         {{ __('errors.page_not_found') }}
                     </h2>
+                    @if (!empty($message))
+                    <p>
+                        {{ $message }}
+                    </p>
+                    @endif
                     <a href="/" class="m-5 btn btn-primary">{{ __('errors.back_button') }}</a>
                 </div>
             </div>
