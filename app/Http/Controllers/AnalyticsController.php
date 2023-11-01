@@ -388,7 +388,6 @@ class AnalyticsController extends Controller
                 if (!empty($data['events']['check'])) {
                     foreach ($data['events']['check'] as $day => $value) {
                         // skip everything that isn't start of the week
-                        // @TODO honor the users start of the week
                         if ($interval === 'day' && (int)date('w', strtotime($day)) !== 0) {
                             continue;
                         }
