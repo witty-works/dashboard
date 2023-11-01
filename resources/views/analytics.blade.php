@@ -1,4 +1,4 @@
-<?php 
+<?php
     $filter = isset($team) ? ['team_id' => $team->id] : ['user_id' => $user->id];
     $has_term_replacements = \App\Models\TermReplacement::where($filter)->exists();
     $dictionaryItems = isset($team)
@@ -153,7 +153,7 @@
             </div>
          </div>
       </div>
-    
+
       <!-- Top categories content here -->
       <div id="top-categories" role="tabpanel" style="display: none;" aria-labelledby="top-categories-tab">
          <div id="top-categories-wrapper" style="width: 100%">
@@ -195,7 +195,7 @@
             </div>
          </div>
       </div>
-     
+
       <!-- Top words content here -->
       <div id="top-words" role="tabpanel" style="display: none;" aria-labelledby="top-words-tab">
          <div id="top-words-wrapper" style="width: 100%">
@@ -337,7 +337,7 @@
 
     function formatChartLabels(xValues, yValues, interval) {
         const formattedXValues = [];
-        
+
         if (interval == 'week') {
             for (var i = 0; i < xValues.length; i++) {
                 formattedXValues[i] = '{{ __('content.week') }} ' + moment(xValues[i]).startOf('week').isoWeekday(startOfWeek).week() + ' ' + moment(xValues[i]).startOf('week').isoWeekday(startOfWeek).year();
@@ -391,7 +391,7 @@
         }
 
         analyticsUrl += chart + '&from=' + from + '&interval=' + interval + '&lang=' + language + '&inclusive=' + inclusive + formattedCategories + formattedSubcategories + formattedEventTypes;
-         
+
         try {
             const response = await fetch(analyticsUrl, {
                 method: 'GET',
@@ -417,7 +417,7 @@
         }
 
         const newFrom = from.slice(0, 1) * 2 + from.slice(1, 2);
-        const to = from; 
+        const to = from;
 
         // Assuming today's date for the end of the current period
         const currentDate = new Date();
@@ -468,7 +468,7 @@
             if (chartElement) {
                 chartElement.style.display = 'flex';
                 const ctx = chartElement.getContext('2d');
-  
+
                 new Chart(ctx, {
                     type: "bar",
                     data: {
@@ -499,8 +499,8 @@
                             yAxes: [{
                                 ticks: {
                                     beginAtZero: true,
-                                    min: 0,  
-                                    max: Math.max(...yValues) + Math.max(...yValues) * 0.15,            
+                                    min: 0,
+                                    max: Math.max(...yValues) + Math.max(...yValues) * 0.15,
                                     callback: function(value, index, values) {
                                         if (Math.floor(value) === value) {
                                             return value;
@@ -518,7 +518,7 @@
                                     const index = yValues.indexOf(currentValue);
                                     const currentLabel = xValues[index];
                                     const previousPeriodPopoverOpened = data.events.popover_open || {};
-                                    if (previousPeriodPopoverOpened[currentLabel]) {                           
+                                    if (previousPeriodPopoverOpened[currentLabel]) {
                                         const diff = currentValue - previousPeriodPopoverOpened[currentLabel];
                                         const percentage = (diff / previousPeriodPopoverOpened[currentLabel] * 100).toFixed(0);
                                         if (percentage == 0) return '+ 100 %';
@@ -537,7 +537,7 @@
                         },
                         tooltips: {
                             label: false
-                            
+
                         }
                     }
                 });
@@ -643,7 +643,7 @@
                                 borderColor: colors[3],
                                 fill: false,
                                 label:  @json(__('content.check_result_label_line_chart')) + (!isPremiumUser ? ' ({{ __('teams.witty_teams_only') }})' : ''),
-                                hidden: !isPremiumUser, 
+                                hidden: !isPremiumUser,
                             },
                             {
                                 data: aggregatedPopoverOpenData,
@@ -795,7 +795,7 @@
                     <option value="alternative">{{ __('content.alternative_label_line_chart') }}</option>
                     <option value="ignore">{{ __('content.ignored_label_line_chart') }}</option>
                 </select>`;
-        
+
         const eventTypeOptionsTopWords = document.getElementById("eventTypeTopWords").options;
         for (let i = 0; i < eventTypeOptionsTopWords.length; i++) {
             if (eventTypeOptionsTopWords[i].value == selectedDropdownValue) {
@@ -811,7 +811,7 @@
                     <option value="alternative">{{ __('content.alternative_label_line_chart') }}</option>
                     <option value="ignore">{{ __('content.ignored_label_line_chart') }}</option>
                 </select>`;
-        
+
         const eventTypeOptionsTopCategories = document.getElementById("eventTypeTopCategories").options;
         for (let i = 0; i < eventTypeOptionsTopCategories.length; i++) {
             if (eventTypeOptionsTopCategories[i].value == selectedDropdownValue) {
@@ -844,7 +844,7 @@
         }
 
         document.getElementById("categoryOverview").innerHTML = listOfLinks;
-       
+
         const events = data.events[eventTypes[0]] || {};
         for (const [key, value] of Object.entries(events)) {
             xValuesTopSubCategories.push(key);
@@ -861,10 +861,10 @@
             "{{ __('content.top_categories') }}",
             true,
             false,
-            'topSubcategories', 
-            timerange, 
-            interval, 
-            language, 
+            'topSubcategories',
+            timerange,
+            interval,
+            language,
             categories
         );
 
@@ -908,13 +908,13 @@
             "{{ __('content.title_words_bar_chart_month') }}",
             true,
             false,
-            'topWords', 
-            timerange, 
-            interval, 
-            language, 
-            categories, 
+            'topWords',
+            timerange,
+            interval,
+            language,
+            categories,
             ['corporate_rules']
-        );  
+        );
     });
 
     chartType == 'top-words' && getChartData('topWords', timerange, 'day', language, categories, ['corporate_rules'], null, inclusive, eventTypes).then(data => {
@@ -949,11 +949,11 @@
                 "{{ __('content.title_words_bar_chart_month_corporate_rules') }}",
                 true,
                 false,
-                'topWords', 
-                timerange, 
+                'topWords',
+                timerange,
                 'day',
-                language, 
-                categories, 
+                language,
+                categories,
                 ['corporate_rules']
             );
             setElementStyle('loading-icon-top-words', 'display', 'none');
@@ -1050,7 +1050,7 @@ document.addEventListener("DOMContentLoaded", function() {
             && !e.target.classList.contains('inner-wrap')
             && !e.target.classList.contains('checkbox-wrapper')
             && !e.target.classList.contains('ellipsis')
-            && checkboxes.style.display !== 'none' 
+            && checkboxes.style.display !== 'none'
             && !e.target.classList.contains('wittyworks-analytics-chart-extra-large')
         ) {
             checkboxes.style.display = 'none';
@@ -1062,7 +1062,7 @@ document.addEventListener("DOMContentLoaded", function() {
         toggleNext[i].addEventListener('click', function(e) {
             if (checkboxes.style.display === 'none' || !checkboxes.style.display) {
                 checkboxes.style.display = 'block';
-            } 
+            }
         });
     }
 
