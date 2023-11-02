@@ -1,4 +1,4 @@
-<?php 
+<?php
     $filter = isset($team) ? ['team_id' => $team->id] : ['user_id' => $user->id];
     $has_term_replacements = \App\Models\TermReplacement::where($filter)->exists();
     $dictionaryItems = isset($team)
@@ -143,52 +143,13 @@
                </div>
             </div>
             <div id="overview-wrapper" style="visibility: hidden; width: 100%">
-               <!-- <div class="wittyworks-margin-top">
-                  <div class="container-column" style="margin-left: 2em;">
-                     <div class="container-row" style="align-items: center">
-                        <div id="checkDaysInRow" class="lato-small-text-p"></div>
-                     </div>
-                     <div class="container-row" >
-                        <div id="changeInPopoverPercentage" class="lato-small-text-p"></div>
-                     </div>
-                     <div class="container-row" >
-                        <div id="changeInAlternativePercentage" class="lato-small-text-p"></div>
-                     </div>
-                     <div class="container-row">
-                        <div id="changeInIgnorePercentage" class="lato-small-text-p"></div>
-                     </div>
-                     <div class="container-row" >
-                        <div id="changeInLearningBitesPercentage" class="lato-small-text-p"></div>
-                     </div>
-                  </div>
-               </div> -->
-               <div class="container-row wittyworks-margin-right">
-                  <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.start_of_week') }}</div>
-                  <div id="startOfWeekDropdown"></div>
-               </div>
                <div class="container-row wittyworks-margin-top">
                   <canvas id="eventsChart" class="wittyworks-analytics-chart-extra-large"></canvas>
                </div>
-               <!-- @if(isset($team) && !empty($team_edit))
-               <div class="container-row wittyworks-margin-top">
-                  <canvas id="dauChart" class="wittyworks-analytics-chart-extra-large"></canvas>
-               </div>
-               @endif -->
-               <!-- <div class="container-row wittyworks-margin-top">
-                  <canvas id="requestRatiosChartDoughnut" class="wittyworks-analytics-chart-small"></canvas>
-                  @php
-                  $eventsCharts = ["eventsPopoverChart", "eventsAlternativeChart", "eventsIgnoreChart", "eventsLearningBitesChart"];
-                  for ($i = 0; $i < count($eventsCharts); $i++) {
-                  echo '
-                  <canvas id="' . $eventsCharts[$i] . '" class="wittyworks-analytics-chart-small wittyworks-margin-right"></canvas>
-                  ';
-                  }
-                  @endphp
-               </div> -->
             </div>
          </div>
       </div>
-    
+
       <!-- Top categories content here -->
       <div id="top-categories" role="tabpanel" style="display: none;" aria-labelledby="top-categories-tab">
          <div id="top-categories-wrapper" style="width: 100%">
@@ -226,27 +187,11 @@
                      <div id="categoryOverview" class="wittyworks-margin-left"></div>
                      <div class="chart-footer" id="topSubCategoriesChartFooter"></div>
                   </div>
-                  <!-- <div class="chart-container-row wittyworks-margin-top">
-                     <canvas
-                        id="categoriesRadar"
-                        class="wittyworks-analytics-chart-medium-radar">
-                     </canvas>
-                     <div id="topSubcategoriesDoughnutWrapper" class="container-column">
-                        <canvas
-                           id="topSubCategoriesOpenedChartDoughnut"
-                           class="wittyworks-analytics-chart-medium">
-                        </canvas>
-                        <canvas
-                           id="topSubCategoriesIgnoredChartDoughnut"
-                           class="wittyworks-analytics-chart-medium">
-                        </canvas>
-                     </div>
-                  </div> -->
                </div>
             </div>
          </div>
       </div>
-     
+
       <!-- Top words content here -->
       <div id="top-words" role="tabpanel" style="display: none;" aria-labelledby="top-words-tab">
          <div id="top-words-wrapper" style="width: 100%">
@@ -296,22 +241,6 @@
                   <div id="corporateRulesButNoneOpened" class="container-row wittyworks-margin-top" style="display: none;">
                      <div class="lato-small-text-p">{!! empty($user) ? __('content.corporate_rules_none_opened') : __('content.corporate_rules_none_opened_user') !!}</div>
                   </div>
-                  <!-- <div class="chart-container-row wittyworks-margin-top">
-                     <canvas
-                        id="wordsRadar"
-                        class="wittyworks-analytics-chart-medium-radar">
-                     </canvas>
-                     <div id="topWordsDoughnutWrapper" class="container-column">
-                        <canvas
-                           id="topWordsChartDoughnut"
-                           class="wittyworks-analytics-chart-medium">
-                        </canvas>
-                        <canvas
-                           id="topWordsChartDoughnutWeek"
-                           class="wittyworks-analytics-chart-medium">
-                        </canvas>
-                     </div>
-                  </div> -->
                </div>
             </div>
          </div>
@@ -326,23 +255,31 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/locale/de.js" rossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
-    function load_charts(refresh, startOfWeek, chartType = 'overview', timerange = '1m', interval = 'week', language = [], categories = [], inclusive = 'non_inclusive', eventTypes = null) {
+    const setElementStyle = (elementId, property, value) => {
+        const element = document.getElementById(elementId);
+        if (element) {
+            element.style[property] = value;
+        }
+    };
+
+    function load_charts(refresh, chartType = 'overview', timerange = '1m', interval = 'week', language = [], categories = [], inclusive = 'non_inclusive', eventTypes = null) {
         if (eventTypes === null) {
             const isPremiumUser = @json($is_premium_user);
             eventTypes = isPremiumUser ? ['check_result'] : ['popover_open']
         }
 
         if (refresh) {
-            document.getElementById('lastRefresh').style.visibility = 'hidden';
-            document.getElementById("loading-icon-overview").style.display = "flex";
-            document.getElementById("overview-wrapper").style.visibility = "hidden";
+            setElementStyle('lastRefresh', 'visibility', 'hidden');
+            setElementStyle('loading-icon-overview', 'display', 'flex');
+            setElementStyle('overview-wrapper', 'visibility', 'hidden');
 
-            document.getElementById("loading-icon-top-words").style.display = "flex";
-            document.getElementById("top-words-wrapper").style.visibility = "hidden";
+            setElementStyle('loading-icon-top-words', 'display', 'flex');
+            setElementStyle('top-words-wrapper', 'visibility', 'hidden');
 
-            document.getElementById("loading-icon-top-catagories").style.display = "flex";
-            document.getElementById("top-categories-wrapper").style.visibility = "hidden";
+            setElementStyle('loading-icon-top-catagories', 'display', 'flex');
+            setElementStyle('top-categories-wrapper', 'visibility', 'hidden');
         }
+
 
         const colors = [
             "#241c5b",
@@ -362,43 +299,26 @@
             "#dfdcf4",
         ];
 
-        const xIntervallDauWeek = [];
-        const yValuesDauCheck = [];
-        const yValuesDauIgnore = [];
-        const yValuesDauAlternative = [];
-        const yValuesDauPopoverOpen = [];
-        const yValuesDauLearningBites = [];
-
         const xValuesCheck = [];
-        const xValuesPopoverOpenIntervallWeek = [];
         const yValuesCheck = [];
-        const yValuesCheckWeek = [];
 
         const xValuesPopoverOpen = [];
         const yValuesPopoverOpen = [];
-        const yValuesPopoverOpenWeek = [];
 
         const xValuesIgnore = [];
-        const xValuesIgnoreIntervallWeek = [];
         const yValuesIgnore = [];
-        const yValuesIgnoreWeek = [];
 
         const xValuesAlternative = [];
         const yValuesAlternative = [];
-        const yValuesAlternativeWeek = [];
 
         const xValuesLearningBites = [];
         const yValuesLearningBites = [];
-        const yValuesLearningBitesWeek = [];
 
         const xValuesCheckResult = [];
         const yValuesCheckResult = [];
 
-        const yValuesDauUserCount = [];
-
         const xTopSubCategoriesWeek = [];
         const yTopSubCategoriesWeek = [];
-        const yTopSubCategoriesTwoWeeks = [];
 
         const xValuesTopSubCategories = [];
         const yValuesTopSubCategories = [];
@@ -413,10 +333,10 @@
 
     function formatChartLabels(xValues, yValues, interval) {
         const formattedXValues = [];
-        
+
         if (interval == 'week') {
             for (var i = 0; i < xValues.length; i++) {
-                formattedXValues[i] = '{{ __('content.week') }} ' + moment(xValues[i]).startOf('week').isoWeekday(startOfWeek).week() + ' ' + moment(xValues[i]).startOf('week').isoWeekday(startOfWeek).year();
+                formattedXValues[i] = '{{ __('content.week') }} ' + moment(xValues[i]).startOf('week').isoWeekday(1).week() + ' ' + moment(xValues[i]).startOf('week').isoWeekday(1).year();
             }
         } else if (interval == 'month') {
             for (var i = 0; i < xValues.length; i++) {
@@ -428,23 +348,23 @@
     }
 
     function handleNoData(loadingIconId, sectionIdNoData = null, chartId = null, isApiError) {
-        if (document.getElementById(loadingIconId)) {
-            document.getElementById(loadingIconId).style.display = "none";
-        }
-       
+        setElementStyle(loadingIconId, 'display', 'none');
         if (sectionIdNoData) {
-            document.getElementById(sectionIdNoData).style.visibility = "visible";
-            document.getElementById(sectionIdNoData).style.display = "block";
-        } else if (chartId && document.getElementById(chartId)) {
-            document.getElementById(chartId).style.display = "none";
+            setElementStyle(sectionIdNoData, 'visibility', 'visible');
+            setElementStyle(sectionIdNoData, 'display', 'block');
+        } else if (chartId) {
+            setElementStyle(chartId, 'display', 'none');
         }
-
-        if (isApiError) {
-            document.getElementById(sectionIdNoData + '-text').innerHTML = '{!! __('content.no_data_image_text_temp_unavailable') !!}';
-        } else {
-            document.getElementById(sectionIdNoData + '-text').innerHTML = '{!! __('content.no_data_image_text') !!}';
+        const textElement = getElement(sectionIdNoData + '-text');
+        if (textElement) {
+            if (isApiError) {
+                textElement.innerHTML = '{!! __('content.no_data_image_text_temp_unavailable') !!}';
+            } else {
+                textElement.innerHTML = '{!! __('content.no_data_image_text') !!}';
+            }
         }
     }
+
 
     async function getChartData(chart, from = '1w', interval = 'day', language, categories, subcategories = [], to = null, inclusive, eventTypes = []) {
         let analyticsUrl = '/api/user/analytics?refresh=' + refresh + '&chart=';
@@ -467,7 +387,7 @@
         }
 
         analyticsUrl += chart + '&from=' + from + '&interval=' + interval + '&lang=' + language + '&inclusive=' + inclusive + formattedCategories + formattedSubcategories + formattedEventTypes;
-         
+
         try {
             const response = await fetch(analyticsUrl, {
                 method: 'GET',
@@ -487,24 +407,13 @@
     }
 
     function createBarChart(chartId, xValues, yValues, text, display, singeColor, chart, from, interval, language, categories, subcategories = []) {
-        if (yValues.every((val, i, arr) => val === 0)) {
-            document.getElementById(chartId).style.display = "none";
+        if (yValues.every((val) => val === 0)) {
+            setElementStyle(document.getElementById(chartId), 'display', 'none');
             return;
         }
 
         const newFrom = from.slice(0, 1) * 2 + from.slice(1, 2);
-        const to = from; 
-
-        // //endDateCurrentPeriod - from 
-        // const startDateCurrentPeriod = 
-        // //end date is now 
-        // const endDateCurrentPeriod =  
-
-        // //startDateCurrentPeriod - from
-        // const startDateComparePeriod = 
-        // //startDateCurrentPeriod
-        // const endDateComparePeriod =
-
+        const to = from;
 
         // Assuming today's date for the end of the current period
         const currentDate = new Date();
@@ -551,128 +460,86 @@
         document.getElementById(`${chartId}Footer`).innerText = footerText;
 
         getChartData(chart, newFrom, interval, language, categories, subcategories = [], to, inclusive, eventTypes).then(data => {
-            document.getElementById(chartId).style.display = 'flex';
-            const ctx = document.getElementById(chartId).getContext('2d');
+            const chartElement = document.getElementById(chartId);
+            if (chartElement) {
+                chartElement.style.display = 'flex';
+                const ctx = chartElement.getContext('2d');
 
-            new Chart(ctx, {
-                type: "bar",
-                data: {
-                    labels: xValues,
-                    datasets: [{
-                        data: yValues,
-                        backgroundColor: singeColor ? colors[10] : colors,
-                        fill: false,
-                    }]
-                },
-                options: {
-                    events: [],
-                    maintainAspectRatio: false,
-                    responsive: true,
-                    title: {
-                    display: true,
-                    text: text,
-                    fontSize: 16,
-                    fontStyle: 'normal',
-                    font: {
-                        family: "Lato",
+                new Chart(ctx, {
+                    type: "bar",
+                    data: {
+                        labels: xValues,
+                        datasets: [{
+                            data: yValues,
+                            backgroundColor: singeColor ? colors[10] : colors,
+                            fill: false,
+                        }]
                     },
-                    },
-                    scales:{
-                        xAxes: [{
-                            display: display,
-                        }],
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero: true,
-                                min: 0,  
-                                max: Math.max(...yValues) + Math.max(...yValues) * 0.15,            
-                                callback: function(value, index, values) {
-                                    if (Math.floor(value) === value) {
-                                        return value;
+                    options: {
+                        events: [],
+                        maintainAspectRatio: false,
+                        responsive: true,
+                        title: {
+                        display: true,
+                        text: text,
+                        fontSize: 16,
+                        fontStyle: 'normal',
+                        font: {
+                            family: "Lato",
+                        },
+                        },
+                        scales:{
+                            xAxes: [{
+                                display: display,
+                            }],
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true,
+                                    min: 0,
+                                    max: Math.max(...yValues) + Math.max(...yValues) * 0.15,
+                                    callback: function(value, index, values) {
+                                        if (Math.floor(value) === value) {
+                                            return value;
+                                        }
                                     }
                                 }
+                            }],
+                        },
+                        plugins: {
+                            datalabels: {
+                                anchor: 'end',
+                                align: 'top',
+                                rotation: 315,
+                                formatter: (currentValue) => {
+                                    const index = yValues.indexOf(currentValue);
+                                    const currentLabel = xValues[index];
+                                    const previousPeriodPopoverOpened = data.events.popover_open || {};
+                                    if (previousPeriodPopoverOpened[currentLabel]) {
+                                        const diff = currentValue - previousPeriodPopoverOpened[currentLabel];
+                                        const percentage = (diff / previousPeriodPopoverOpened[currentLabel] * 100).toFixed(0);
+                                        if (percentage == 0) return '+ 100 %';
+                                        return percentage >= 0 ? '+' + percentage + '%' : percentage + '%';
+                                    } else {
+                                        return '+ 100 %';
+                                    }
+                                },
                             }
-                        }],
-                    },
-                    plugins: {
-                        datalabels: {
-                            anchor: 'end',
-                            align: 'top',
-                            rotation: 315,
-                            formatter: (currentValue) => {
-                                const index = yValues.indexOf(currentValue);
-                                const currentLabel = xValues[index];
-                                const previousPeriodPopoverOpened = data.events.popover_open || {};
-                                if (previousPeriodPopoverOpened[currentLabel]) {                           
-                                    const diff = currentValue - previousPeriodPopoverOpened[currentLabel];
-                                    const percentage = (diff / previousPeriodPopoverOpened[currentLabel] * 100).toFixed(0);
-                                    if (percentage == 0) return '+ 100 %';
-                                    return percentage >= 0 ? '+' + percentage + '%' : percentage + '%';
-                                } else {
-                                    return '+ 100 %';
-                                }
-                            },
+                        },
+                        legend: {
+                            display: display,
+                        },
+                        legend: {
+                            display: false
+                        },
+                        tooltips: {
+                            label: false
+
                         }
-                    },
-                    legend: {
-                        display: display,
-                    },
-                    legend: {
-                        display: false
-                    },
-                    tooltips: {
-                        label: false
-                        
                     }
-                }
-            });
+                });
+            }
         });
     }
-
-    // function createDoughnutChart(chartId, xValues, yValues, text) {
-    //     if (yValues.every((val, i, arr) => val === 0)) {
-    //         document.getElementById(chartId).style.display = "none";
-    //         return;
-    //     }
-
-    //     document.getElementById(chartId).style.display = 'flex';
-    //     const ctx = document.getElementById(chartId).getContext('2d');
-    //     new Chart(ctx, {
-    //             type: "doughnut",
-    //             data: {
-    //                 labels: xValues,
-    //                 datasets: [{
-    //                 backgroundColor: [colors[6], colors[8], colors[10],colors[12], colors[14]],
-    //                 data: yValues
-    //                 }]
-    //             },
-    //             options: {
-    //                 legend: {display: false},
-    //                 maintainAspectRatio: false,
-    //                 responsive: true,
-    //                 tooltips: {
-    //                     yAlign: 'bottom',
-    //                     callbacks: {
-    //                         labelColor: function(tooltipItem, chart) {
-    //                             return {
-    //                                 backgroundColor: chart.data.datasets[tooltipItem.datasetIndex].backgroundColor[tooltipItem.index],
-    //                                 fontColor: "red",
-
-    //                             }
-    //                         },
-    //                     },
-    //                     backgroundColor: '#ffffff',
-    //                     bodyFontColor: '#000000',
-    //                 },
-    //                 title: {
-    //                     display: true,
-    //                     text: text,
-    //                     fontSize: 16,
-    //                     fontStyle: 'normal',
-    //                 }
-    //             }
-    //     });
-    // }
 
     chartType == 'overview' && getChartData('total', timerange, interval, language, categories, null,  null, inclusive, ['check_result','popover_open','alternative','ignore','learning_bites']).then(data => { //TODO
         if (data.errorStatus === 503) {
@@ -693,7 +560,6 @@
             if (event === 'popover_open') {
                for (const [date, count] of Object.entries(value)) {
                     xValuesPopoverOpen.push(date);
-                    // xValuesPopoverOpenIntervallWeek.push(moment(date).startOf('week').isoWeekday(startOfWeek).week());
                     yValuesPopoverOpen.push(count);
                 }
             } else if (event === 'ignore') {
@@ -718,21 +584,6 @@
                 }
             }
 
-            //insert drowdown with two options to id startOfWeekDropdown
-            const startOfWeekDropdown = document.getElementById("startOfWeekDropdown").innerHTML = `<select id="startOfWeek" class="dropdown" onchange="setParams(this.value)">
-                <option value="1">{{ __('content.monday') }}</option>
-                <option value="6">{{ __('content.saturday') }}</option>
-                <option value="7">{{ __('content.sunday') }}</option>
-            </select>`;
-
-            const weekdayOptions = document.getElementById("startOfWeek").options;
-            //go through weekdayOptions and see if value is equal to startOfWeek
-            for (let i = 0; i < weekdayOptions.length; i++) {
-                if (weekdayOptions[i].value == startOfWeek) {
-                    weekdayOptions[i].selected = true;
-                }
-            }
-
             //updateSection function
             function updateSection() {
                 const lastRefreshDateFormatted = new Date(lastRefresh);
@@ -740,7 +591,7 @@
                 lastRefreshFormatted = moment(lastRefresh).fromNow();
 
                 if (lastRefreshMinutes >= 3) {
-                    return document.getElementById("lastRefresh").innerHTML = '{{ __('content.last_refreshed') }} &nbsp;' + lastRefreshFormatted + '&nbsp; &nbsp; <a class="button primary-button-red" onclick="load_charts(true, startOfWeek)">{{ __('content.refresh_data') }}</a>';
+                    return document.getElementById("lastRefresh").innerHTML = '{{ __('content.last_refreshed') }} &nbsp;' + lastRefreshFormatted + '&nbsp; &nbsp; <a class="button primary-button-red" onclick="load_charts(true)">{{ __('content.refresh_data') }}</a>';
                 }
 
                 return document.getElementById("lastRefresh").innerHTML = '{{ __('content.last_refreshed') }} &nbsp;' + lastRefreshFormatted;
@@ -750,7 +601,8 @@
             setInterval(function() {
                 updateSection()
             }, 30000);
-            document.getElementById('lastRefresh').style.visibility = 'visible';
+
+            setElementStyle('llastRefresh', 'visibility', 'visible');
 
             const aggregatedCheckChatData =  formatChartLabels(xValuesPopoverOpen, yValuesCheck, interval);
             const aggregatedPopoverOpenData = formatChartLabels(xValuesPopoverOpen, yValuesPopoverOpen, interval)[1];
@@ -772,7 +624,7 @@
                                 borderColor: colors[3],
                                 fill: false,
                                 label:  @json(__('content.check_result_label_line_chart')) + (!isPremiumUser ? ' ({{ __('teams.witty_teams_only') }})' : ''),
-                                hidden: !isPremiumUser, 
+                                hidden: !isPremiumUser,
                             },
                             {
                                 data: aggregatedPopoverOpenData,
@@ -877,157 +729,9 @@
                     }
                 });
             }
-
-            // createBarChart(
-            //     "eventsLearningBitesChart",
-            //     xValuesLearningBitesWeek,
-            //     yValuesLearningBitesWeek,
-            //     @json(__('content.title_bar_chart_learning_bites')),
-            //     false,
-            //     true
-            // );
-
-            // createBarChart(
-            //     "eventsPopoverChart",
-            //     xValuesLearningBitesWeek,
-            //     yValuesPopoverOpenWeek,
-            //     "{{ __('content.title_bar_chart_popover') }}",
-            //     false,
-            //     true
-            // );
-
-            // createBarChart(
-            //     "eventsIgnoreChart",
-            //     xValuesLearningBitesWeek,
-            //     yValuesIgnoreWeek,
-            //     "{{ __('content.title_bar_chart_ignored') }}",
-            //     false,
-            //     true
-            // );
-
-            // createBarChart(
-            //     "eventsAlternativeChart",
-            //     xValuesLearningBitesWeek,
-            //     yValuesAlternativeWeek,
-            //     "{{ __('content.title_bar_chart_alternative') }}",
-            //     false,
-            //     true
-            // );
-
-                // createDoughnutChart(
-                // "requestRatiosChartDoughnut",
-                // [
-                // "{{ __('content.ignored_doughnut_chart_event_ratio') }}",
-                // "{{ __('content.alternative_doughnut_chart_event_ratio') }}",
-                // "{{ __('content.popover_closed_doughnut_chart_event_ratio') }}"
-                // ],
-                // weeklyEvents,
-                // "{{ __('content.title_doughnut_chart_event_ratio') }}",
-            // );
-           
-        // getChartData('dau', timerange, 'week', language, categories).then(data => {
-        // if (!data?.events?.popover_open
-        //     || Object.entries(data.events.popover_open).filter(([key, value]) => value > 0).length == 0
-        // ) {
-        //     return;
-        // }
-        // const events = data.events || {};
-
-        // for (const [event, value] of Object.entries(events)) {
-        //     if (event === 'popover_open') {
-        //         for (const [date, count] of Object.entries(value)) {
-        //             xIntervallDauWeek.push(date);
-        //             yValuesDauPopoverOpen.push(count);
-        //         }
-        //     } else if (event === 'ignore') {
-        //         for (const [date, count] of Object.entries(value)) {
-        //             yValuesDauIgnore.push(count);
-        //         }
-        //     } else if (event === 'alternative') {
-        //         for (const [date, count] of Object.entries(value)) {
-        //             yValuesDauAlternative.push(count);
-        //         }
-        //     } else if (event === 'learning_bites') {
-        //         for (const [date, count] of Object.entries(value)) {
-        //             yValuesDauLearningBites.push(count);
-        //         }
-        //     } else if (event === 'user_count') {
-        //         for (const [date, count] of Object.entries(value)) {
-        //             yValuesDauUserCount.push(count);
-        //         }
-        //     }
-        // }
-        // if(document.getElementById('dauChart')) {
-        //     ctx = document.getElementById('dauChart').getContext('2d');
-        //     new Chart(ctx, {
-        //         type: "line",
-        //         data: {
-        //             labels: aggregatedCheckChatData[0],  //until posthog offers select start of week
-        //             datasets: [
-        //                 {
-        //                     data: yValuesDauUserCount,
-        //                     borderColor: colors[2],
-        //                     fill: false,
-        //                     label: "{{ __('content.user_count_label_line_chart_dau') }}",
-        //                 },
-        //                 {
-        //                     data: yValuesDauPopoverOpen,
-        //                     borderColor: colors[6],
-        //                     fill: false,
-        //                     label: "{{ __('content.popover_label_line_chart_dau') }}",
-        //                 },
-        //                 {
-        //                     data: yValuesDauAlternative,
-        //                     borderColor: colors[8],
-        //                     fill: false,
-        //                     label: "{{ __('content.alternative_label_line_chart_dau') }}",
-        //                 },
-        //                 {
-        //                     data: yValuesDauIgnore,
-        //                     borderColor: colors[10],
-        //                     fill: false,
-        //                     label:  "{{ __('content.ignored_label_line_chart_dau') }}",
-        //                 },
-        //                 {
-        //                     data: yValuesDauLearningBites,
-        //                     borderColor: colors[12],
-        //                     fill: false,
-        //                     label: @json(__('content.learning_bites_label_line_chart_dau')),
-        //                 },
-        //             ]
-        //         },
-        //         options: {
-        //             events: [],
-        //             maintainAspectRatio: false,
-        //             responsive: true,
-        //             animation: {
-        //                 duration: 0
-        //             },
-        //             title: {
-        //             display: true,
-        //             text: "{{ __('content.title_line_chart_dau') }}",
-        //             fontSize: 16,
-        //             fontStyle: 'normal'
-        //             },
-        //             scales:{
-        //                 yAxes: [{
-        //                     ticks: {
-        //                         min: 0,
-        //                         callback: function(value, index, values) {
-        //                             if (Math.floor(value) === value) {
-        //                                 return value;
-        //                             }
-        //                         }
-        //                     }
-        //                 }],
-        //             }
-        //         }
-        //     });
-        // }
-            document.getElementById("loading-icon-overview").style.display = "none";
-            document.getElementById("overview-no-data").style.display = "none";
-            document.getElementById("overview-wrapper").style.visibility = "visible";
-        // });
+        setElementStyle('loading-icon-overview', 'display', 'none');
+        setElementStyle('overview-no-data', 'display', 'none');
+        setElementStyle('overview-wrapper', 'visibility', 'visible');
         }
     });
 
@@ -1044,85 +748,8 @@
                 yTopSubCategoriesWeek.push(value);
             }
         }
-
-        // getChartData('topSubcategories', '2w', interval, language, categories).then(data => {
-        // if (!data || !data.events ) {
-        //     return;
-        // }
-        // const openedTwoWeeks = data.events.popover_open || {};
-        // for (const [key, value] of Object.entries(openedTwoWeeks)) {
-        //     if (!xTopSubCategoriesWeek.includes(key)) {
-        //         delete openedTwoWeeks[key];
-        //     }
-        // }
-
-        // for (const [key, value] of openedWeek) {
-        //     if (key && value && openedTwoWeeks[key]) {
-        //         yTopSubCategoriesTwoWeeks.push(openedTwoWeeks[key] - value);
-        //     } else {
-        //         yTopSubCategoriesTwoWeeks.push(0);
-        //     }
-        // }
-
-        // if (yTopSubCategoriesTwoWeeks.every((val, i, arr) => val === arr[0])
-        //     || yTopSubCategoriesWeek.every((val, i, arr) => val === arr[0])
-        // ) {
-        //     document.getElementById("categoriesRadar").style.display = "none";
-        //     document.getElementById("topSubcategoriesDoughnutWrapper").classList.remove("container-column");
-        //     document.getElementById("topSubcategoriesDoughnutWrapper").classList.add("container-row");
-        //     document.getElementById("topSubcategoriesDoughnutWrapper").style.width = "100%";
-        //     document.getElementById("topSubcategoriesDoughnutWrapper").style.justifyContent = "space-around";
-        //     return;
-        // }
-
-        // const dataCategories = {
-        //         labels: xTopSubCategoriesWeek,
-        //         datasets: [{
-        //             label: "{{ __('content.title_categories_radar_chart_last_week') }}",
-        //             data: yTopSubCategoriesTwoWeeks,
-        //             fill: true,
-        //             backgroundColor: 'hsla(247, 52.8%, 75.9%, 0.5)',
-        //             borderColor: 'hsla(248, 53.2%, 60.6%, 0.5)'
-        //         }, {
-        //             label: "{{ __('content.title_categories_radar_chart_current_week') }}",
-        //             data: yTopSubCategoriesWeek,
-        //             fill: true,
-        //             backgroundColor: 'hsla(247, 54.1%, 88.0%, 0.5)',
-        //             borderColor: 'hsla(247, 52.8%, 75.9%, 0.5)'
-        //         }]
-        //         };
-  
-        //     ctx = document.getElementById('categoriesRadar').getContext('2d');
-        //     new Chart(ctx, {
-        //         type: 'radar',
-        //             data: dataCategories,
-        //             options: {
-        //                 maintainAspectRatio: false,
-        //                 responsive: true,
-        //                 events: [],
-        //                 elements: {
-        //                 line: {
-        //                     borderWidth: 1
-        //                 },
-        //                 opacity: 0.5,
-        //                 scales:{
-        //                     yAxes: [{
-        //                         ticks: {
-        //                             min: 0,
-        //                             callback: function(value, index, values) {
-        //                                 if (Math.floor(value) === value) {
-        //                                     return value;
-        //                                 }
-        //                             }
-        //                         }
-        //                     }],
-        //                 }
-        //             }
-        //         },
-        //     });
-        // });
-        document.getElementById("loading-icon-top-categories").style.display = "none";
-        document.getElementById("top-categories-content").style.visibility = "visible";
+        setElementStyle('loading-icon-top-categories', 'display', 'none');
+        setElementStyle('top-categories-content', 'visibility', 'visible');
     });
 
 
@@ -1149,7 +776,7 @@
                     <option value="alternative">{{ __('content.alternative_label_line_chart') }}</option>
                     <option value="ignore">{{ __('content.ignored_label_line_chart') }}</option>
                 </select>`;
-        
+
         const eventTypeOptionsTopWords = document.getElementById("eventTypeTopWords").options;
         for (let i = 0; i < eventTypeOptionsTopWords.length; i++) {
             if (eventTypeOptionsTopWords[i].value == selectedDropdownValue) {
@@ -1165,7 +792,7 @@
                     <option value="alternative">{{ __('content.alternative_label_line_chart') }}</option>
                     <option value="ignore">{{ __('content.ignored_label_line_chart') }}</option>
                 </select>`;
-        
+
         const eventTypeOptionsTopCategories = document.getElementById("eventTypeTopCategories").options;
         for (let i = 0; i < eventTypeOptionsTopCategories.length; i++) {
             if (eventTypeOptionsTopCategories[i].value == selectedDropdownValue) {
@@ -1198,7 +825,7 @@
         }
 
         document.getElementById("categoryOverview").innerHTML = listOfLinks;
-       
+
         const events = data.events[eventTypes[0]] || {};
         for (const [key, value] of Object.entries(events)) {
             xValuesTopSubCategories.push(key);
@@ -1215,110 +842,17 @@
             "{{ __('content.top_categories') }}",
             true,
             false,
-            'topSubcategories', 
-            timerange, 
-            interval, 
-            language, 
+            'topSubcategories',
+            timerange,
+            interval,
+            language,
             categories
         );
 
-        document.getElementById("loading-icon-top-categories").style.display = "none";
-        document.getElementById("top-categories-content").style.visibility = "visible";
-        document.getElementById("top-categories-content").style.display = "block";
+        setElementStyle('loading-icon-top-categories', 'display', 'none');
+        setElementStyle('top-categories-content', 'visibility', 'visible');
+        setElementStyle('top-categories-content', 'display', 'block');
     });
-
-    // chartType == 'top-words' && getChartData('topWords', '1w', interval, language, categories, ['corporate_rules']).then(data => {
-    //     if (!data || !data.events ) {
-    //         return;
-    //     }
-    //     const xTopWordsWeek = [];
-    //     const yTopWordsWeek = [];
-    //     const yTopWordsTwoWeeks = [];
-    //     const popoverOpenedWeekUnsorted = data.events.popover_open || {};
-    //     const openedWeek = Object.entries(popoverOpenedWeekUnsorted).sort((a, b) => b[1] - a[1]).slice(0, 8);
-    //     for (const [key, value] of openedWeek) {
-    //         if (key && value) {
-    //             xTopWordsWeek.push(key);
-    //             yTopWordsWeek.push(value);
-    //         }
-    //     }
-
-    //     getChartData('topWords', '2w', interval, language, categories, ['corporate_rules']).then(data => {
-    //     if (!data || !data.events ) {
-    //         return;
-    //     }
-    //     const openedTwoWeeks = data.events.popover_open || {};
-    //     for (const [key, value] of Object.entries(openedTwoWeeks)) {
-    //         if (!xTopWordsWeek.includes(key)) {
-    //             delete openedTwoWeeks[key];
-    //         }
-    //     }
-    //     for (const [key, value] of openedWeek) {
-    //         if (key && value && openedTwoWeeks[key]) {
-    //             yTopWordsTwoWeeks.push(openedTwoWeeks[key] - value);
-    //         } else if (key && value) {
-    //             yTopWordsTwoWeeks.push(0);
-    //         }
-    //     }
-
-    //     if (yTopWordsTwoWeeks.every((val, i, arr) => val === arr[0]) || yTopWordsWeek.every((val, i, arr) => val === arr[0])) {
-    //         document.getElementById("wordsRadar").style.display = "none";
-    //         document.getElementById("topWordsDoughnutWrapper").classList.remove("container-column");
-    //         document.getElementById("topWordsDoughnutWrapper").classList.add("container-row");
-    //         document.getElementById("topWordsDoughnutWrapper").style.width = "100%";
-    //         document.getElementById("topWordsDoughnutWrapper").style.justifyContent = "space-around";
-    //         return;
-    //     }
-
-    //     const dataCategories = {
-    //         labels:
-    //         xTopWordsWeek,
-    //         datasets: [{
-    //             label: "{{ __('content.title_words_radar_chart_last_week') }}",
-    //             data: yTopWordsTwoWeeks,
-    //             fill: true,
-    //             backgroundColor: 'hsla(247, 52.8%, 75.9%, 0.5)',
-    //                 borderColor: 'hsla(248, 53.2%, 60.6%, 0.5)'
-    //         }, {
-    //             label: "{{ __('content.title_words_radar_chart_current_week') }}",
-    //             data: yTopWordsWeek,
-    //             fill: true,
-    //             backgroundColor: 'hsla(247, 54.1%, 88.0%, 0.5)',
-    //                 borderColor: 'hsla(247, 52.8%, 75.9%, 0.5)'
-    
-    //         }]
-    //     };
-
-    //     ctx = document.getElementById('wordsRadar').getContext('2d');
-    //     new Chart(ctx, {
-    //         type: 'radar',
-    //         data: dataCategories,
-    //         options: {
-    //             events: [],
-    //             maintainAspectRatio: false,
-    //             responsive: true,
-    //             elements: {
-    //                 line: {
-    //                     borderWidth: 1
-    //                     }
-    //                 }
-    //             },
-    //             scales:{
-    //                 yAxes: [{
-    //                     ticks: {
-    //                         min: 0,
-    //                         callback: function(value, index, values) {
-    //                             if (Math.floor(value) === value) {
-    //                                 return value;
-    //                             }
-    //                         }
-    //                     }
-    //                 }],
-    //             }
-    //         });
-           
-    //     });
-    // });
 
     chartType == 'top-words' && getChartData('topWords', timerange, interval, language, categories, null, null, inclusive, eventTypes).then(data => {
         if (data.errorStatus === 503) {
@@ -1355,13 +889,13 @@
             "{{ __('content.title_words_bar_chart_month') }}",
             true,
             false,
-            'topWords', 
-            timerange, 
-            interval, 
-            language, 
-            categories, 
+            'topWords',
+            timerange,
+            interval,
+            language,
+            categories,
             ['corporate_rules']
-        );  
+        );
     });
 
     chartType == 'top-words' && getChartData('topWords', timerange, 'day', language, categories, ['corporate_rules'], null, inclusive, eventTypes).then(data => {
@@ -1396,44 +930,44 @@
                 "{{ __('content.title_words_bar_chart_month_corporate_rules') }}",
                 true,
                 false,
-                'topWords', 
-                timerange, 
+                'topWords',
+                timerange,
                 'day',
-                language, 
-                categories, 
+                language,
+                categories,
                 ['corporate_rules']
             );
-            document.getElementById("loading-icon-top-words").style.display = "none";
-            document.getElementById("top-words-content").style.visibility = "visible";
-            document.getElementById("top-words-content").style.display = "block";
+            setElementStyle('loading-icon-top-words', 'display', 'none');
+            setElementStyle('top-words-content', 'visibility', 'visible');
+            setElementStyle('top-words-content', 'display', 'block');
         } else {
             if ({{ $dictionaryItems}}) {
-                document.getElementById("corporateRulesButNoneOpened").style.display = "flex";
+                setElementStyle('corporateRulesButNoneOpened', 'display', 'flex');
             } else {
-                document.getElementById("noCorporateRulesWrapper").style.display = "flex";
+                setElementStyle('noCorporateRulesWrapper', 'display', 'flex');
             }
         }
     });
 };
 
-function setParams(startOfWeek = 1, eventTypes = null) {
+function setParams(eventTypes = null) {
     if (eventTypes === null) {
         const isPremiumUser = @json($is_premium_user);
         eventTypes = isPremiumUser ? ['check_result'] : ['popover_open']
     }
     const activeTab = document.getElementsByClassName("analytics-tab-line")[0].id.replace('-line', '');
-    document.getElementById("noCorporateRulesWrapper").style.display = "none";
-    document.getElementById("corporateRulesButNoneOpened").style.display = "none";
+    setElementStyle('noCorporateRulesWrapper', 'display', 'none');
+    setElementStyle('corporateRulesButNoneOpened', 'display', 'none');
 
     if (activeTab) {
-        document.getElementById('loading-icon-' + activeTab).style.display = 'flex';
-        document.getElementById('loading-icon-' + activeTab).style.visibility = 'visible';
-        document.getElementById(activeTab + '-no-data').style.display = 'none';
+        setElementStyle('loading-icon-' + activeTab, 'display', 'flex');
+        setElementStyle('loading-icon-' + activeTab, 'visibility', 'visible');
+        setElementStyle(activeTab + '-no-data', 'display', 'none');
 
         if (activeTab === 'overview' && document.getElementById(activeTab + '-wrapper')){
-            document.getElementById(activeTab + '-wrapper').style.visibility = "hidden";
+            setElementStyle(activeTab + '-wrapper', 'visibility', 'hidden');
         } else if (document.getElementById(activeTab + '-content')) {
-            document.getElementById(activeTab + '-content').style.visibility = "hidden";
+            setElementStyle(activeTab + '-content', 'visibility', 'hidden');
         }
     }
 
@@ -1447,31 +981,31 @@ function setParams(startOfWeek = 1, eventTypes = null) {
     const selectedInclusiveOption = inclusiveDropdown.options[inclusiveDropdown.selectedIndex].value;
 
     const interval = selectedTimeRangeOption == '1y' ? 'month' : 'week';
-    load_charts(false, startOfWeek, activeTab, selectedTimeRangeOption, interval, selectedLanguageOption, categories, selectedInclusiveOption, eventTypes);
+    load_charts(false, activeTab, selectedTimeRangeOption, interval, selectedLanguageOption, categories, selectedInclusiveOption, eventTypes);
 }
 
-load_charts(false, 1);
+load_charts(false);
 
 function handleTabClick(clickedTabId) {
     const allTabs = ['overview', 'top-categories', 'top-words'];
     allTabs.forEach(tab => {
         if (tab !== clickedTabId) {
-            document.getElementById(tab + '-tab').style.color = '#808080';
+            setElementStyle(tab + '-tab', 'color', '#808080');
             document.getElementById(tab + '-line').classList.remove('analytics-tab-line');
-            document.getElementById(tab).style.display = 'none';
+            setElementStyle(tab, 'display', 'none');
             if (tab !== 'overview') {
-                document.getElementById(tab + '-content').style.visibility = "hidden";
+                setElementStyle(tab + '-content', 'visibility', 'hidden');
             } else {
-                document.getElementById(tab + '-wrapper').style.visibility = "hidden";
+                setElementStyle(tab + '-wrapper', 'visibility', 'hidden');
             }
         } else {
-            document.getElementById(tab + '-tab').style.color = '#9489DB';
+            setElementStyle(tab + '-tab', 'color', '#9489DB');
             document.getElementById(tab + '-line').classList.add('analytics-tab-line');
-            document.getElementById(tab + '-no-data').style.display = 'none';
-            document.getElementById('loading-icon-' + tab).style.display = 'flex';
-            document.getElementById('loading-icon-' + tab).style.visibility = 'visible';
+            setElementStyle(tab + '-no-data', 'display', 'none');
+            setElementStyle('loading-icon-' + tab, 'display', 'flex');
+            setElementStyle('loading-icon-' + tab, 'visibility', 'visible');
             setParams();
-            document.getElementById(tab).style.display = 'block';
+            setElementStyle(tab, 'display', 'block');
         }
     });
 }
@@ -1480,6 +1014,7 @@ function handleTabClick(clickedTabId) {
 document.addEventListener("DOMContentLoaded", function() {
     setCheckboxSelectLabels();
     const checkboxes = document.querySelector('.checkboxes');
+    if (!checkboxes) return;
     let toggleNext = document.querySelectorAll('.toggle-next');
 
     document.addEventListener('keydown', function(event) {
@@ -1496,7 +1031,7 @@ document.addEventListener("DOMContentLoaded", function() {
             && !e.target.classList.contains('inner-wrap')
             && !e.target.classList.contains('checkbox-wrapper')
             && !e.target.classList.contains('ellipsis')
-            && checkboxes.style.display !== 'none' 
+            && checkboxes.style.display !== 'none'
             && !e.target.classList.contains('wittyworks-analytics-chart-extra-large')
         ) {
             checkboxes.style.display = 'none';
@@ -1508,7 +1043,7 @@ document.addEventListener("DOMContentLoaded", function() {
         toggleNext[i].addEventListener('click', function(e) {
             if (checkboxes.style.display === 'none' || !checkboxes.style.display) {
                 checkboxes.style.display = 'block';
-            } 
+            }
         });
     }
 
