@@ -143,10 +143,6 @@
                </div>
             </div>
             <div id="overview-wrapper" style="visibility: hidden; width: 100%">
-               <div class="container-row wittyworks-margin-right">
-                  <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.start_of_week') }}</div>
-                  <div id="startOfWeekDropdown"></div>
-               </div>
                <div class="container-row wittyworks-margin-top">
                   <canvas id="eventsChart" class="wittyworks-analytics-chart-extra-large"></canvas>
                </div>
@@ -266,7 +262,7 @@
         }
     };
 
-    function load_charts(refresh, startOfWeek, chartType = 'overview', timerange = '1m', interval = 'week', language = [], categories = [], inclusive = 'non_inclusive', eventTypes = null) {
+    function load_charts(refresh, chartType = 'overview', timerange = '1m', interval = 'week', language = [], categories = [], inclusive = 'non_inclusive', eventTypes = null) {
         if (eventTypes === null) {
             const isPremiumUser = @json($is_premium_user);
             eventTypes = isPremiumUser ? ['check_result'] : ['popover_open']
@@ -340,7 +336,7 @@
 
         if (interval == 'week') {
             for (var i = 0; i < xValues.length; i++) {
-                formattedXValues[i] = '{{ __('content.week') }} ' + moment(xValues[i]).startOf('week').isoWeekday(startOfWeek).week() + ' ' + moment(xValues[i]).startOf('week').isoWeekday(startOfWeek).year();
+                formattedXValues[i] = '{{ __('content.week') }} ' + moment(xValues[i]).startOf('week').isoWeekday(1).week() + ' ' + moment(xValues[i]).startOf('week').isoWeekday(1).year();
             }
         } else if (interval == 'month') {
             for (var i = 0; i < xValues.length; i++) {
@@ -588,21 +584,6 @@
                 }
             }
 
-            //insert drowdown with two options to id startOfWeekDropdown
-            const startOfWeekDropdown = document.getElementById("startOfWeekDropdown").innerHTML = `<select id="startOfWeek" class="dropdown" onchange="setParams(this.value)">
-                <option value="1">{{ __('content.monday') }}</option>
-                <option value="6">{{ __('content.saturday') }}</option>
-                <option value="7">{{ __('content.sunday') }}</option>
-            </select>`;
-
-            const weekdayOptions = document.getElementById("startOfWeek").options;
-            //go through weekdayOptions and see if value is equal to startOfWeek
-            for (let i = 0; i < weekdayOptions.length; i++) {
-                if (weekdayOptions[i].value == startOfWeek) {
-                    weekdayOptions[i].selected = true;
-                }
-            }
-
             //updateSection function
             function updateSection() {
                 const lastRefreshDateFormatted = new Date(lastRefresh);
@@ -610,7 +591,7 @@
                 lastRefreshFormatted = moment(lastRefresh).fromNow();
 
                 if (lastRefreshMinutes >= 3) {
-                    return document.getElementById("lastRefresh").innerHTML = '{{ __('content.last_refreshed') }} &nbsp;' + lastRefreshFormatted + '&nbsp; &nbsp; <a class="button primary-button-red" onclick="load_charts(true, startOfWeek)">{{ __('content.refresh_data') }}</a>';
+                    return document.getElementById("lastRefresh").innerHTML = '{{ __('content.last_refreshed') }} &nbsp;' + lastRefreshFormatted + '&nbsp; &nbsp; <a class="button primary-button-red" onclick="load_charts(true)">{{ __('content.refresh_data') }}</a>';
                 }
 
                 return document.getElementById("lastRefresh").innerHTML = '{{ __('content.last_refreshed') }} &nbsp;' + lastRefreshFormatted;
@@ -969,7 +950,7 @@
     });
 };
 
-function setParams(startOfWeek = 1, eventTypes = null) {
+function setParams(eventTypes = null) {
     if (eventTypes === null) {
         const isPremiumUser = @json($is_premium_user);
         eventTypes = isPremiumUser ? ['check_result'] : ['popover_open']
@@ -1000,10 +981,10 @@ function setParams(startOfWeek = 1, eventTypes = null) {
     const selectedInclusiveOption = inclusiveDropdown.options[inclusiveDropdown.selectedIndex].value;
 
     const interval = selectedTimeRangeOption == '1y' ? 'month' : 'week';
-    load_charts(false, startOfWeek, activeTab, selectedTimeRangeOption, interval, selectedLanguageOption, categories, selectedInclusiveOption, eventTypes);
+    load_charts(false, activeTab, selectedTimeRangeOption, interval, selectedLanguageOption, categories, selectedInclusiveOption, eventTypes);
 }
 
-load_charts(false, 1);
+load_charts(false);
 
 function handleTabClick(clickedTabId) {
     const allTabs = ['overview', 'top-categories', 'top-words'];
