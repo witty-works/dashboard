@@ -770,7 +770,7 @@
 
         const eventTypeDropdownTopWords = document.getElementById("eventTypeDropdownTopWords");
         eventTypeDropdownTopWords.innerHTML = `
-                <select id="eventTypeTopWords" class="dropdown" onchange="setParams(1, [this.value])">
+                <select id="eventTypeTopWords" class="dropdown" onchange="setParams([this.value])">
                     <option value="check_result" ${checkResultOptionDisabledAttr}>{{ __('content.check_result_label_line_chart') }}</option>
                     <option value="popover_open">{{ __('content.popover_label_line_chart') }}</option>
                     <option value="alternative">{{ __('content.alternative_label_line_chart') }}</option>
@@ -786,7 +786,7 @@
 
         const eventTypeDropdownTopCategories = document.getElementById("eventTypeDropdownTopCategories");
         eventTypeDropdownTopCategories.innerHTML = `
-                <select id="eventTypeTopCategories" class="dropdown" onchange="setParams(1, [this.value])">
+                <select id="eventTypeTopCategories" class="dropdown" onchange="setParams([this.value])">
                     <option value="check_result" ${checkResultOptionDisabledAttr}>{{ __('content.check_result_label_line_chart') }}</option>
                     <option value="popover_open">{{ __('content.popover_label_line_chart') }}</option>
                     <option value="alternative">{{ __('content.alternative_label_line_chart') }}</option>
@@ -896,18 +896,14 @@
             categories,
             ['corporate_rules']
         );
+
+        setElementStyle('loading-icon-top-words', 'display', 'none');
+        setElementStyle('top-words-content', 'visibility', 'visible');
+        setElementStyle('top-words-content', 'display', 'block');
     });
 
     chartType == 'top-words' && getChartData('topWords', timerange, 'day', language, categories, ['corporate_rules'], null, inclusive, eventTypes).then(data => {
-        if (data.errorStatus === 503) {
-            handleNoData('loading-icon-top-words', 'top-words-no-data', 'topWords', true);
-            return;
-        }
 
-        if (!data.events ) {
-            handleNoData('loading-icon-top-words', 'top-words-no-data', 'topWords', false);
-            return;
-        }
         if (data && data.events) {
             const corporatewords = data.events[eventTypes[0]] || {};
             for (const [key, value] of Object.entries(corporatewords)) {
@@ -917,7 +913,6 @@
             }
 
             if (xValuesTopCorporateWords.length === 0) {
-                handleNoData('loading-icon-top-words', 'top-words-no-data', 'topWords');
                 return;
             }
 
