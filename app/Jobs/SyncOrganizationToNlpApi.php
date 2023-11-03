@@ -52,13 +52,6 @@ class SyncOrganizationToNlpApi extends AbstractSyncToNlpApi
         $config = self::getConfig($guidelines, !$team->subscribed());
 
         $config['categories'] = [];
-        foreach (GuidelinesInterface::DISABLED_CATEGORIES as $category) {
-            $config['categories'][$category] = [
-                'value' => !in_array($category, $guidelines->disabled_categories),
-                'status' => 'force',
-            ];
-        }
-
         foreach ($guidelines->getDiversityDimensionDrivers(null, true) as $ddd => $dddConfig) {
             $config['categories'][$ddd] = [
                 'value' => !in_array($ddd, $guidelines->disabled_categories),
