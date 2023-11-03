@@ -145,13 +145,11 @@ class LanguageGuidelines extends Model
 
         $diversityDimensionDrivers = [];
         foreach ($this->diversityDimensionDrivers as $ddd => $dddConfig) {
-            if (
-                $category
-                && (empty($dddConfig['category'])
-                    || $category !== $dddConfig['category']
-                    || empty($dddConfig['translation'])
-                )
-            ) {
+            if (empty($dddConfig['category']) || $dddConfig['category'] === 'orthography') {
+                continue;
+            }
+
+            if ($category && ($category !== $dddConfig['category'] || empty($dddConfig['translation']))) {
                 continue;
             }
 
@@ -272,7 +270,7 @@ class LanguageGuidelines extends Model
             return false;
         }
 
-        if ($category || in_array($section, GuidelinesInterface::DISABLED_CATEGORIES)) {
+        if ($category) {
             return false;
         }
 
