@@ -546,8 +546,8 @@
             handleNoData('loading-icon-overview', 'overview-no-data', '', true);
             return;
         }
-        if (!data.events?.popover_open
-            || Object.entries(data.events.popover_open).filter(([key, value]) => value > 0).length == 0) {
+        if (!data.events?.check_result
+            || Object.entries(data.events.check_result).filter(([key, value]) => value > 0).length == 0) {
             handleNoData('loading-icon-overview', 'overview-no-data', '', false);
             return;
         }
