@@ -355,7 +355,8 @@
         } else if (chartId) {
             setElementStyle(chartId, 'display', 'none');
         }
-        const textElement = getElement(sectionIdNoData + '-text');
+        const textElementId = sectionIdNoData ? sectionIdNoData + '-text' : null;
+        const textElement = textElementId ? document.getElementById(textElementId) : null;
         if (textElement) {
             if (isApiError) {
                 textElement.innerHTML = '{!! __('content.no_data_image_text_temp_unavailable') !!}';
