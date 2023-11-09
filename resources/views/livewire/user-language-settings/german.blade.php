@@ -79,6 +79,7 @@
         const firstRadio = document.getElementById('gendered_roles_format_inclusive_gender');
         const secondRadio = document.getElementById('gendered_roles_format_both');
         const dropdown = document.getElementById('germanGenderDropdown');
+        if (!dropdown) return;
         if (firstRadio?.checked || secondRadio?.checked) {
             dropdown.style.display = 'block';
         } else {
