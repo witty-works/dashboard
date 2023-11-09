@@ -546,8 +546,12 @@
             handleNoData('loading-icon-overview', 'overview-no-data', '', true);
             return;
         }
-        if (!data.events?.popover_open
-            || Object.entries(data.events.popover_open).filter(([key, value]) => value > 0).length == 0) {
+        const isPremiumUser = @json($is_premium_user);
+
+        if ((isPremiumUser && !data.events?.check_result) || 
+            (isPremiumUser && Object.entries(data.events.check_result).filter(([key, value]) => value > 0).length == 0) ||
+            (!isPremiumUser && !data.events?.popover_open) ||
+            (!isPremiumUser && Object.entries(data.events.popover_open).filter(([key, value]) => value > 0).length == 0)) {
             handleNoData('loading-icon-overview', 'overview-no-data', '', false);
             return;
         }
@@ -610,7 +614,6 @@
             const aggregatedIgnoreData = formatChartLabels(xValuesPopoverOpen, yValuesIgnore, interval)[1];
             const aggregatedLearningBitesData = formatChartLabels(xValuesPopoverOpen, yValuesLearningBites, interval)[1];
             const aggregatedCheckResultData = formatChartLabels(xValuesPopoverOpen, yValuesCheckResult, interval)[1];
-            const isPremiumUser = @json($is_premium_user);
 
             if (aggregatedLearningBitesData.every(Number.isInteger)) {
                 ctx = document.getElementById('eventsChart').getContext('2d');
