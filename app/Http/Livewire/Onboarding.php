@@ -51,15 +51,9 @@ class Onboarding extends Component
                     $user->currentTeam->save();
                 }
 
-                $this->users = $user->getCompanyUsers();
-                $this->request_invite = false;
-                foreach ($this->users as $companyUser) {
-                    $teamRole = $companyUser->teamRole($companyUser->currentTeam);
-                    if ($teamRole && $teamRole->key != 'user') {
-                        $this->request_invite = true;
-                        break;
-                    }
-                }
+                $this->users = $user->getOrganizationUsers();
+                // check for organization users that own teams
+                $this->request_invite = (bool)$user->getOrganizationUsers(true)->count();
             }
         }
     }

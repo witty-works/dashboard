@@ -69,21 +69,23 @@ class UserProfileController extends BaseUserProfileController
 
             if (!empty($validated['request_invite'])) {
                 $teams = [];
-                $users = $user->getCompanyUsers();
-                foreach ($users as $companyUser) {
-                    $teamRole = $companyUser->teamRole($companyUser->currentTeam);
-                    if ($teamRole && $teamRole->key != 'user') {
-                        if (empty($teams[$companyUser->currentTeam->id])) {
-                            $teams[$companyUser->currentTeam->id] = [
-                                'team' => $companyUser->currentTeam,
-                                'admins' => [$companyUser],
-                                'language' => $companyUser->language ?? 'en',
-                            ];
-                        } else {
-                            $teams[$companyUser->currentTeam->id]['admins'][] = $companyUser;
-                            if ($companyUser->language === 'en') {
-                                $teams[$companyUser->currentTeam->id]['language'] = $companyUser->language;
-                            }
+                // check for organization users that own teams and are subscribed
+                $users = $user->getOrganizationUsers(true, true);
+                if ($users->count() == 0) {
+                    // check for organization users that own teams
+                    $users = $user->getOrganizationUsers(true);
+                }
+                foreach ($users as $organizationUser) {
+                    if (empty($teams[$organizationUser->currentTeam->id])) {
+                        $teams[$organizationUser->currentTeam->id] = [
+                            'team' => $organizationUser->currentTeam,
+                            'admins' => [$organizationUser],
+                            'language' => $organizationUser->language ?? 'en',
+                        ];
+                    } else {
+                        $teams[$organizationUser->currentTeam->id]['admins'][] = $organizationUser;
+                        if ($organizationUser->language === 'en') {
+                            $teams[$organizationUser->currentTeam->id]['language'] = $organizationUser->language;
                         }
                     }
                 }
