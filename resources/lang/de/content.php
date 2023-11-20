@@ -403,7 +403,11 @@ Falls du Fragen hast, nimm Kontakt mit :name (:email) auf. 🙂
     'all_categories' => 'Alle Kategorien',
     'none_selected' => 'Nichts ausgewählt',
     'witty_word_addin' => 'Willkommen!',
-    'witty_word_addin_text' => 'Du hast dich erfolgreich beim Witty Word-Addin angemeldet.<br>Du kannst dieses Fenster nun schließen.',
+    'witty_word_addin_text' => 'Du hast dich erfolgreich beim Witty Word-Addin angemeldet.
+<br>
+Du kannst dieses Fenster nun schließen.
+<br><br>
+Bitte gehe dann erneut auf „Registrieren“, um die Registrierung im "Witty for Word" Add-in abzuschließen.',
     'update_witty_version_title' => 'Du hast nicht die neueste Version von Witty installiert',
     'update_witty_version_text' => 'Bitte aktualisiere Witty auf die neueste Version, um die volle Funktionalität von Witty nutzen zu können.',
     'update_witty_version_button' => 'Aktualisiere Witty',
