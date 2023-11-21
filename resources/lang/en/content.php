@@ -405,7 +405,12 @@ If you have any questions, contact :name (:email). 🙂
     'chart_period_comparison_from' => 'Comparing the period: ',
     'chart_period_comparison_to' => 'to the period: ',
     'witty_word_addin' => 'Welcome!',
-    'witty_word_addin_text' => 'You have successfully logged in to the Witty Word-Addin.<br>You can now close this window.',
+    'witty_word_addin_text' => 'You have successfully logged in to the Witty Word-Addin.
+<br>
+You can now close this window.
+<br>
+<br>
+Please then go to "Register" again to finalize the registration into the "Witty for Word" Add-in.',
     'witty_word_addin_text_failed' => 'We have failed logged to log you into Witty Word-Addin.<br>Please close this window and try again or contact <a href="mailto:support@witty.works">support@witty.works</a>.',
     'inclusive_filter' => 'Inclusion',
     'inclusive_filter_non_inclusive' => 'Non-inclusive',

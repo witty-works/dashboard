@@ -11,9 +11,6 @@
     </x-slot>
 
     <x-slot name="description">
-        @if(!empty($config['translation']['example_image']['src']))
-        <img id="{{ $category }}-image" style="display: none;" src="{{ $config['translation']['example_image']['src'] }}" alt="{{ $config['translation']['example_image']['alt'] }}">
-        @endif
     </x-slot>
 
     <x-slot name="form" submit="updateLanguageGuidelinesCategory">

@@ -28,8 +28,8 @@
             @php
                 $ranges = [
                     '1m' => __('content.chart_time_range_month'),
-                    '3m' => __('content.chart_time_range_quarter'),
-                    '1y' => __('content.chart_time_range_year'),
+                    '3m' => __('content.chart_time_range_quarter').($is_premium_user ? '' : ' ('.__('teams.witty_teams_only').')'),
+                    '1y' => __('content.chart_time_range_year').($is_premium_user ? '' : ' ('.__('teams.witty_teams_only').')'),
                 ];
                 if ($is_premium_user) {
                     $disabled = false;
@@ -775,7 +775,7 @@
         const eventTypeDropdownTopWords = document.getElementById("eventTypeDropdownTopWords");
         eventTypeDropdownTopWords.innerHTML = `
                 <select id="eventTypeTopWords" class="dropdown" onchange="setParams([this.value])">
-                    <option value="check_result" ${checkResultOptionDisabledAttr}>{{ __('content.check_result_label_line_chart') }}</option>
+                    <option value="check_result" ${checkResultOptionDisabledAttr}>{{ __('content.check_result_label_line_chart').($is_premium_user ? '' : ' ('.__('teams.witty_teams_only').')') }}</option>
                     <option value="popover_open">{{ __('content.popover_label_line_chart') }}</option>
                     <option value="alternative">{{ __('content.alternative_label_line_chart') }}</option>
                     <option value="ignore">{{ __('content.ignored_label_line_chart') }}</option>
@@ -791,7 +791,7 @@
         const eventTypeDropdownTopCategories = document.getElementById("eventTypeDropdownTopCategories");
         eventTypeDropdownTopCategories.innerHTML = `
                 <select id="eventTypeTopCategories" class="dropdown" onchange="setParams([this.value])">
-                    <option value="check_result" ${checkResultOptionDisabledAttr}>{{ __('content.check_result_label_line_chart') }}</option>
+                    <option value="check_result" ${checkResultOptionDisabledAttr}>{{ __('content.check_result_label_line_chart').($is_premium_user ? '' : ' ('.__('teams.witty_teams_only').')') }}</option>
                     <option value="popover_open">{{ __('content.popover_label_line_chart') }}</option>
                     <option value="alternative">{{ __('content.alternative_label_line_chart') }}</option>
                     <option value="ignore">{{ __('content.ignored_label_line_chart') }}</option>

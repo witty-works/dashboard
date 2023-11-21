@@ -79,7 +79,7 @@ hooks:
 crons:
     generate-statistics:
         # once per day at 00:55
-        spec: "55 0 * * *"
+        spec: "55 0 1 * *"
         cmd: |
             if [ "$PLATFORM_BRANCH" = main ]; then
                 php artisan statistics
