@@ -27,6 +27,19 @@
     @if(!empty($text))
     <div class="information-text">{!! $text !!}</div>
     @else
-    <img src="{{ $config['translation']['example_image']['src'] }}" alt="{{ $config['translation']['example_image']['alt'] }}" width="400" />
+    <div class="information-text">
+        @if(!empty($config['translation']['example_image_advanced']['src']))
+        {{ __('guidelines.proficiency_level_basic') }}
+        @endif
+        <img src="{{ $config['translation']['example_image']['src'] }}" alt="{{ $config['translation']['example_image']['alt'] }}" width="400" />
+    </div>
+      @if(!empty($config['translation']['example_image_advanced']['src']))
+    <div class="information-text">
+        @if(!empty($config['translation']['example_image']['src']))
+        {{ __('guidelines.proficiency_level_advanced') }}
+        @endif
+        <img src="{{ $config['translation']['example_image_advanced']['src'] }}" alt="{{ $config['translation']['example_image_advanced']['alt'] }}" width="400" />
+    </div>
+      @endif
     @endif
 </div>
