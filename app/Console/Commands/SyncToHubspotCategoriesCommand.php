@@ -176,7 +176,7 @@ class SyncToHubspotCategoriesCommand extends Command
                     unset($row['diversity_dimension_driver']);
                 }
 
-                foreach (['lead_image', 'example_image', 'icon'] as $imageKey) {
+                foreach (['lead_image', 'example_image', 'example_image_advanced', 'icon'] as $imageKey) {
                     if (array_key_exists($imageKey, $row)) {
                         $image = [];
                         if (!empty($row[$imageKey])) {
