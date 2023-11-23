@@ -70,13 +70,14 @@ class StatisticsEmailCommand extends Command
         foreach (['paid' => 1, 'free' => 0] as $label => $is_paid) {
             $html .= "<h2>Team $label subscription created by month of year</h2>";
             $html .= "<ul>";
-            $team_subscriptions_created_by_week = DB::select("SELECT DATE_FORMAT(subscriptions.created_at, '%Y-%m') AS year_month_num, teams.id, teams.name, quantity FROM subscriptions INNER JOIN teams ON teams.id = subscriptions.team_id WHERE personal_team = 1 AND is_paid = $is_paid ORDER BY quantity");
+            $team_subscriptions_created_by_week = DB::select("SELECT subscriptions.created_at, COALESCE(subscriptions.ends_at, 'not canceled') as ends_at, subscriptions.stripe_id, teams.id, teams.name, quantity FROM subscriptions INNER JOIN teams ON teams.id = subscriptions.team_id WHERE personal_team = 1 AND is_paid = $is_paid ORDER BY quantity");
             foreach ($team_subscriptions_created_by_week as $result) {
                 $team = Team::find($result->id);
                 $owner = $team->owner;
                 $impersonateUrl = config('app.url') . '/impersonate/take/' . $owner->id;
                 $licenses_used = $team_users[$result->id] ?? 0;
-                $html .= "<li>{$result->name} (team id: {$result->id}, <a href=\"{$impersonateUrl}\">{$owner->email}</a>) - {$result->year_month_num}: {$result->quantity} licenses ({$licenses_used} invited/used)</li>";
+                $payment_method = str_contains($result->stripe_id, 'invoice') ? 'invoice' : 'credit card';
+                $html .= "<li>{$result->name} (team id: {$result->id}, <a href=\"{$impersonateUrl}\">{$owner->email}</a>) {$result->created_at} - {$result->ends_at}: {$result->quantity} licenses ({$licenses_used} invited/used, {$payment_method})</li>";
             }
             $html .= "</ul>";
         }
