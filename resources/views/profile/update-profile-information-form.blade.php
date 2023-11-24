@@ -10,8 +10,8 @@
         <div class="lato-small-text-p margin-bottom">
             <div>{{ __('content.name') }}:</div>
             <div>{{ $state['name'] }}</div>
-            
-            @if (Auth::user()->currentConnectedAccount->provider !== \App\Http\Controllers\OAuthController::OFFICE_PROVIDER)
+
+            @if (Session::get('login_source') !== \App\Http\Controllers\OAuthController::OFFICE_PROVIDER)
             <a href="{{ route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'profile']) }}">
                 {!! __('content.update_your_account_profile', ['profile_url' => '']) !!}
             </a>
