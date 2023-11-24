@@ -444,4 +444,7 @@ Bitte gehe dann erneut auf „Registrieren“, um die Registrierung im "Witty fo
     'triple_toggle_unlocked' => 'Klicke, um zwischen „Aus“, „Grundlagen“ und „Erweitert“ zu wechseln.',
     'customize_via_team_settings' => 'Im „Witty Free“-Plan kann man nur die Teameinstellungen anpassen. Führe ein Upgrade durch, um Witty in Deinen persönlichen Einstellungen anpassen zu können.',
     'no_data_image_text_temp_unavailable' => 'Analytics-Daten sind vorübergehend nicht verfügbar. Bitte versuche es später noch einmal.',
+    'toggle_lines' => 'Toggle Lines',
+    'title_categories_line_chart' => 'Top categories',
+
 ];

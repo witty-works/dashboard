@@ -180,12 +180,9 @@
                     <div id="eventTypeDropdownTopCategories"></div>
                 </div>
                   <div class="chart-container-row">
-                     <canvas
-                        id="topSubCategoriesChart"
-                        class="wittyworks-analytics-chart-top-categories">
+                     <canvas id="topSubCategoriesChart" class="wittyworks-analytics-chart-extra-large">
                      </canvas>
-                     <div id="categoryOverview" class="wittyworks-margin-left"></div>
-                     <div class="chart-footer" id="topSubCategoriesChartFooter"></div>
+                     <button id="toggleLines" class="button primary-button-red">{{ __('content.toggle_lines') }}</button>
                   </div>
                </div>
             </div>
@@ -281,23 +278,10 @@
         }
 
 
-        const colors = [
-            "#241c5b",
-            "#33277f",
-            "#3a2c91",
-            "#4132a4",
-            "#4837b6",
-            "#5240c5",
-            "#6352ca",
-            "#7365d0",
-            "#8477d5",
-            "#9489DB",
-            "#a9a1e2",
-            "#bfb8e9",
-            "#cac4ed",
-            "#d4d0f1",
-            "#dfdcf4",
-        ];
+        const colors = ['#f06567', '#f06773', '#f16980', '#f16b8c', '#f16d99', '#f16fa5', '#f172b1', '#f274be', '#f276ca', '#ed78d1',
+ '#e57ad2', '#dc7bd3', '#d37dd4', '#cb7fd5', '#c280d6', '#b982d7', '#b184d8', '#a885d9', '#9f87da', '#9789db',
+ '#8c8fdc', '#8197dd', '#76a0de', '#6ba9df', '#60b1e1', '#55bae2', '#4ac2e3', '#3fcbe4', '#38d1e4', '#3cd1de',
+ '#41d0d9', '#45d0d4', '#49d0ce', '#4dd0c9', '#52cfc4', '#56cfbe', '#5acfb9'];
 
         const xValuesCheck = [];
         const yValuesCheck = [];
@@ -625,35 +609,35 @@
                         datasets: [
                             {
                                 data: aggregatedCheckResultData,
-                                borderColor: colors[3],
+                                borderColor: colors[0],
                                 fill: false,
                                 label:  @json(__('content.check_result_label_line_chart')) + (!isPremiumUser ? ' ({{ __('teams.witty_teams_only') }})' : ''),
                                 hidden: !isPremiumUser,
                             },
                             {
                                 data: aggregatedPopoverOpenData,
-                                borderColor: colors[6],
+                                borderColor: colors[8],
                                 fill: false,
                                 label: "{{ __('content.popover_label_line_chart') }}",
                                 hidden: isPremiumUser,
                             },
                             {
                                 data: aggregatedAlternativeData,
-                                borderColor: colors[9],
+                                borderColor: colors[16],
                                 fill: false,
                                 label: "{{ __('content.alternative_label_line_chart') }}",
                                 hidden: isPremiumUser,
                             },
                             {
                                 data: aggregatedIgnoreData,
-                                borderColor: colors[12],
+                                borderColor: colors[24],
                                 fill: false,
                                 label:  "{{ __('content.ignored_label_line_chart') }}",
                                 hidden: isPremiumUser,
                             },
                             {
                                 data: aggregatedLearningBitesData,
-                                borderColor: colors[14],
+                                borderColor: colors[32],
                                 fill: false,
                                 label:  @json(__('content.learning_bites_label_line_chart')),
                                 hidden: isPremiumUser,
@@ -739,25 +723,7 @@
         }
     });
 
-    //ALWAYS ONLY past week
-    chartType == 'top-categories' && getChartData('topSubcategories', '1w', interval, language, categories, null, null, inclusive, eventTypes).then(data => {
-        if (!data.events ) {
-            return;
-        }
-        const eventsPopoverOpenedWeekUnsorted = data.events.popover_open || {};
-        const openedWeek = Object.entries(eventsPopoverOpenedWeekUnsorted).sort((a, b) => b[1] - a[1]).slice(0, 8);
-        for (const [key, value] of openedWeek) {
-            if (key && value) {
-                xTopSubCategoriesWeek.push(key);
-                yTopSubCategoriesWeek.push(value);
-            }
-        }
-        setElementStyle('loading-icon-top-categories', 'display', 'none');
-        setElementStyle('top-categories-content', 'visibility', 'visible');
-    });
-
-
-    (chartType == 'overview' || chartType == 'top-categories') && getChartData('topSubcategories', timerange, interval, language, categories, null,  null, inclusive, eventTypes).then(data => {
+    (chartType == 'top-categories') && getChartData('topSubcategories', timerange, interval, language, categories, null,  null, inclusive, eventTypes).then(data => {
         if (data.errorStatus === 503) {
             handleNoData('loading-icon-top-categories', 'top-categories-no-data', 'topSubcategories', true);
             return;
@@ -804,54 +770,124 @@
             }
         }
 
-        const subcategories = data.subcategories[selectedDropdownValue] || [];
-        listOfLinks = ``;
 
-        let locale = window.location.href.includes("/de/") ? "de" : "en"
-        moment.locale(locale)
+        let categories = Object.keys(data.events.check_result);
+        let topCategoriesWithTimestamps = {};
 
-        let i = 0;
-        for (const [key, value] of Object.entries(subcategories).slice(0, 15)) {
-            let url = subcategories[key]['translation']['canonical_url'];
-            let label = subcategories[key]['translation']['hs_name'];
+        categories.forEach((category) => {
+            topCategoriesWithTimestamps[category] = { //TODO: use real data when implemented
+                date: ['2021-01-01', '2021-01-02', '2021-01-03', '2021-01-04', '2021-01-05', '2021-01-06', '2021-01-07'],
+                value: new Array(7).fill(data.events.check_result[category]),
+                link: 'www.google.com', 
+            };
+        });
 
-            listOfLinks += `<div class="link-box" style="background-color:${colors[i]}"></div>`;
+        let datasets = [];
+        const numDatasets = Object.keys(topCategoriesWithTimestamps).length;
+        const stepSize = (colors.length - 1) / (numDatasets - 1);
 
-            if (url) {
-                listOfLinks += `<a href="${url}" class="wittyworks-team-name lato-link-list" target="_blank">${label}</a>`;
-            } else {
-                listOfLinks += `<span class="lato-link-list">${label}</span>`;
-            }
+        for (const [key, value] of Object.entries(topCategoriesWithTimestamps)) {
+            const index = Object.keys(topCategoriesWithTimestamps).indexOf(key);
+            const colorIndex = Math.round(index * stepSize);
+            const borderColor = colors[colorIndex];
 
-            listOfLinks += `</br>`;
-
-            i++;
+            datasets.push({
+                data: value.value,
+                borderColor: borderColor,
+                fill: false,
+                label: key,
+                hidden: false
+            });
         }
+        console.log('topCategoriesWithTimestamps',topCategoriesWithTimestamps)
 
-        document.getElementById("categoryOverview").innerHTML = listOfLinks;
+        ctx = document.getElementById('topSubCategoriesChart').getContext('2d');
+        const topSubChart = new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: ['2021-01-01', '2021-01-02', '2021-01-03', '2021-01-04', '2021-01-05', '2021-01-06', '2021-01-07'], //TODO
+                    datasets: datasets,
+                },
+                options: {
+                    onClick: function(e) {
+                    const line = this.getElementAtEvent(e)[0];
+                    if(!line) return;
+                    console.log(line._index, line._datasetIndex)
+                    const index = line._index;
+                    const datasetIndex = line._datasetIndex;
+                    const label = this.data.datasets[datasetIndex].label;
+                    window.open(topCategoriesWithTimestamps[label].link, '_blank');
+                },
+                    legend: {
+                        position: 'right',
+                        onHover: function(e) {
+                            e.target.style.cursor = 'pointer';
+                        },
+                        onClick: function(e, legendItem) {
+                                const index = legendItem.datasetIndex;
+                                const ci = this.chart;
+                                const meta = ci.getDatasetMeta(index);
+                                meta.hidden = !meta.hidden;
+                                ci.data.datasets[index].hidden = meta.hidden;
+                                ci.update();                        
+                        },
+                        labels: {
+                            generateLabels: function(chart) {
+                                return chart.data.datasets.map((dataset, i) => {
+                                    let isHidden = dataset.hidden;
+                                    return {
+                                        datasetIndex: i,
+                                        text: dataset.label,
+                                        fillStyle: isHidden ? '#dddddd' : dataset.borderColor,
+                                    };
+                                });
+                            },
+                        },
+                    },
+                    hover: {
+                        onHover: function(e) {
+                            var point = this.getElementAtEvent(e);
+                            if (point.length) e.target.style.cursor = 'pointer';
+                            else e.target.style.cursor = 'default';
+                        }
+                    },
+                    events: ['click', 'mousemove', 'mouseout'],
+                    maintainAspectRatio: false,
+                    responsive: true,
+                    title: {
+                        display: true,
+                        text:  @json(__('content.title_categories_line_chart')),
+                        fontSize: 16,
+                        fontStyle: 'normal'
+                    },
+                    scales:{
+                        yAxes: [{
+                            ticks: {
+                                min: 0,
+                                callback: function(value, index, values) {
+                                    if (Math.floor(value) === value) {
+                                        return value;
+                                    }
+                                }
+                            }
+                        }],
+                    },
+                    plugins: {
+                        datalabels: {
+                            display: false,
+                        }
+                    },
+                }
+            });
 
-        const events = data.events[eventTypes[0]] || {};
-        for (const [key, value] of Object.entries(events)) {
-            xValuesTopSubCategories.push(key);
-            yValuesTopSubCategories.push(value);
-        }
-
-        const xValuesTopSubCategoriesCut = xValuesTopSubCategories.slice(0, 15);
-        const yValuesTopSubCategoriesCut = yValuesTopSubCategories.slice(0, 15);
-
-        createBarChart(
-            "topSubCategoriesChart",
-            xValuesTopSubCategoriesCut,
-            yValuesTopSubCategoriesCut,
-            "{{ __('content.top_categories') }}",
-            true,
-            false,
-            'topSubcategories',
-            timerange,
-            interval,
-            language,
-            categories
-        );
+        document.getElementById('toggleLines').addEventListener('click', function() {
+            const chart = topSubChart;
+            let allHidden = chart.data.datasets.every(dataset => dataset.hidden);
+            chart.data.datasets.forEach(function(dataset) {
+                dataset.hidden = !allHidden;
+            });
+            chart.update();
+        });
 
         setElementStyle('loading-icon-top-categories', 'display', 'none');
         setElementStyle('top-categories-content', 'visibility', 'visible');
