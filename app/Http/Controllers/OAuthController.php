@@ -64,7 +64,7 @@ class OAuthController extends BaseOAuthController
 
         $user = $request->user();
         if ($user) {
-            $account = $user->getConnectedAccountFor('azureadb2c');
+            $account = $user->getTokenFor('azureadb2c');
             if ($account && $account->token) {
                 $data = [
                     'email' => strtolower($user->email),
