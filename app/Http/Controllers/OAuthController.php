@@ -64,8 +64,11 @@ class OAuthController extends BaseOAuthController
 
         $user = $request->user();
         if ($user) {
-            $account = $user->currentConnectedAccount;
-            if ($account && $account->token) {
+            $account = $user->connectedAccounts
+                ->where('provider', 'azureadb2c')
+                ->first();
+
+                if ($account && $account->token) {
                 $data = [
                     'email' => strtolower($user->email),
                     'access_token' => $account->token,
@@ -203,6 +206,8 @@ class OAuthController extends BaseOAuthController
             return $this->handleOfficeSsoRegister($request);
         }
 
+        $request->session()->put('login_source', self::OFFICE_PROVIDER);
+
         return parent::login($user);
     }
 
@@ -238,6 +243,10 @@ class OAuthController extends BaseOAuthController
         }
 
         $user = $this->handleProviderAccount($request, $providerAccount, $provider);
+
+        if (!self::isBrowserLogin()) {
+            $request->session()->put('login_source', self::AZURE_AD_B2C_PROVIDER);
+        }
 
         return $this->login($user);
     }

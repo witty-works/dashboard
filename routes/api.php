@@ -16,17 +16,26 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/refresh-token', [OAuthController::class, 'accessTokenFromRefreshToken'])->name('browser.refresh_token');
+Route::group([
+    'excluded_middleware' => ['ensureStateful'],
+], function () {
+    Route::post('/refresh-token', [OAuthController::class, 'accessTokenFromRefreshToken'])
+        ->name('browser.refresh_token');
+});
 
 Route::group([
     'prefix' => '/user/language',
     'excluded_middleware' => ['ensureStateful'],
 ], function () {
-    Route::delete('/domains', [UserGuidelinesApiController::class, 'deleteDomain'])->name('user.domains.delete');
-    Route::put('/domains', [UserGuidelinesApiController::class, 'putDomain'])->name('user.domains.put');
+    Route::delete('/domains', [UserGuidelinesApiController::class, 'deleteDomain'])
+        ->name('user.domains.delete');
+    Route::put('/domains', [UserGuidelinesApiController::class, 'putDomain'])
+        ->name('user.domains.put');
 });
 
 Route::middleware(['auth:sanctum'])->group(function () {
-    Route::get('/user/analytics', [AnalyticsController::class, 'userApi'])->name('api_user_analytics');
-    Route::get('/team/analytics', [AnalyticsController::class, 'organizationApi'])->name('api_team_analytics');
+    Route::get('/user/analytics', [AnalyticsController::class, 'userApi'])
+        ->name('api_user_analytics');
+    Route::get('/team/analytics', [AnalyticsController::class, 'organizationApi'])
+        ->name('api_team_analytics');
 });
