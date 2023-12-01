@@ -143,7 +143,7 @@ class AnalyticsController extends Controller
         return $data;
     }
 
-    protected function buildBreakdown($events, $properties, $filters, $breakdown, $interval, $from, $to, $math = 'total')
+    protected function buildBreakdown($events, $properties, $filters, $breakdown, $interval, $from, $to, $display = null)
     {
         // filter out orthography
         $properties[] = [
@@ -153,9 +153,8 @@ class AnalyticsController extends Controller
             'type' => 'event',
         ];
 
-        $filter = $this->buildFilter($properties, $filters, $interval, $from, $to, $math);
+        $filter = $this->buildFilter($properties, $filters, $interval, $from, $to, 'total');
 
-        $filter['display'] = 'ActionsBarValue';
         $filter['breakdown'] = $breakdown;
         $filter['breakdown_type'] = 'hogql';
 
@@ -172,17 +171,36 @@ class AnalyticsController extends Controller
         }
 
         $data = [];
-        foreach ($events as $event) {
-            $filter['events'][0]['id'] = $event;
 
-            $response = PosthogHelper::fetchData($filter, $this->refresh);
-            if (isset($response['result'])) {
-                foreach ($response['result'] as $value) {
-                    if (!empty($value['breakdown_value'])) {
-                        $data['events'][$event][$value['breakdown_value']] = $value['aggregated_value'];
+        if ($display) {
+            $filter['display'] = 'ActionsBarValue';
+
+            foreach ($events as $event) {
+                $filter['events'][0]['id'] = $event;
+
+                $response = PosthogHelper::fetchData($filter, $this->refresh);
+                if (isset($response['result'])) {
+                    foreach ($response['result'] as $value) {
+                        if (!empty($value['breakdown_value'])) {
+                            $data['events'][$event][$value['breakdown_value']] = $value['aggregated_value'];
+                        }
                     }
+                    $data['last_refresh'] = $response['last_refresh'];
                 }
-                $data['last_refresh'] = $response['last_refresh'];
+            }
+        } else {
+            foreach ($events as $event) {
+                $filter['events'][0]['id'] = $event;
+
+                $response = PosthogHelper::fetchData($filter, $this->refresh);
+                if (isset($response['result'])) {
+                    foreach ($response['result'] as $value) {
+                        if (!empty($value['breakdown_value'])) {
+                            $data['events'][$event][$value['breakdown_value']] = array_combine($value['days'], $value['data']);
+                        }
+                    }
+                    $data['last_refresh'] = $response['last_refresh'];
+                }
             }
         }
 
@@ -230,6 +248,7 @@ class AnalyticsController extends Controller
             'events' => 'nullable|array|in:check_result,popover_open,alternative,ignore,learning_bites',
             'categories' => 'nullable|array|in:' . implode(',', $this->categories->keys()->toArray()),
             'subcategories' => 'nullable|array|in:' . implode(',', $this->subcategories->keys()->toArray()),
+            'group_subcategories' => 'nullable:bool',
             'inclusive' => 'nullable|in:inclusive,non_inclusive,both',
         ];
 
@@ -243,6 +262,8 @@ class AnalyticsController extends Controller
         $events = $validated['events'] ?? null;
         $categories = $validated['categories'] ?? [];
         $subcategories = $validated['subcategories'] ?? [];
+        // @TODO make it possible to choose if to group or not
+        $group_subcategories = $validated['group_subcategories'] ?? true;
         $inclusive = $validated['inclusive'] ?? 'non_inclusive';
 
         // BC code
@@ -465,18 +486,40 @@ class AnalyticsController extends Controller
 
                 foreach ($events as $event) {
                     if (!empty($data['events'][$event])) {
-                        $subcategories = [];
-                        foreach ($data['events'][$event] as $subcategory => $count) {
-                            if (empty($this->subcategories[$subcategory]['translation']['hs_name'])) {
+                        foreach ($data['events'][$event] as $subcategory => $counts) {
+                            $key = str_replace(['advanced_', '_advanced'], ['', ''], $subcategory);
+                            if (empty($this->subcategories[$key])) {
                                 continue;
                             }
 
-                            $category = $this->subcategories[$subcategory];
-                            $subcategories[$category['translation']['hs_name']] = $count;
+                            if ($group_subcategories && !empty($data['events'][$event][$key]['counts'])) {
+                                foreach ($counts as $day => $count) {
+                                    if (empty($data['events'][$event][$key]['counts'][$day])) {
+                                        $data['events'][$event][$key]['counts'][$day] = 0;
+                                    }
+                                    $data['events'][$event][$key]['counts'][$day] += $count;
+                                }
+                            } else {
+                                $category = $this->subcategories[$key];
+                                if (empty($category['translation'])) {
+                                    $category['translation'] = reset($category['translations']);
+                                }
 
-                            $data['subcategories'][$event][$subcategory] = $category;
+                                if ($key == 'corporate_rules') {
+                                    $category['translation']['canonical_url'] = route($model instanceof Team ? 'teams.dictionary' : 'user.dictionary');
+                                }
+
+                                $data['events'][$event][($group_subcategories ? $key : $subcategory)] = [
+                                    'counts' => $counts,
+                                    'name' => $category['translation']['hs_name'],
+                                    'url' => $category['translation']['canonical_url'] ?? null,
+                                ];
+                            }
+
+                            if ($group_subcategories && $key != $subcategory) {
+                                unset($data['events'][$event][$subcategory]);
+                            }
                         }
-                        $data['events'][$event] = $subcategories;
                     }
                 }
                 break;
@@ -491,6 +534,7 @@ class AnalyticsController extends Controller
                     $interval,
                     $from,
                     $to,
+                    'ActionsBarValue',
                 );
                 break;
             default:
