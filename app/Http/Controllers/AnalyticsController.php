@@ -534,6 +534,7 @@ class AnalyticsController extends Controller
                     $interval,
                     $from,
                     $to,
+                    'ActionsBarValue',
                 );
                 break;
             default:
