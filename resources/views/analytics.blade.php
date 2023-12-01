@@ -728,7 +728,7 @@
             handleNoData('loading-icon-top-categories', 'top-categories-no-data', 'topSubcategories', true);
             return;
         }
-        if (!data.events || !data.subcategories ) {
+        if (!data.events) {
             handleNoData('loading-icon-top-categories', 'top-categories-no-data', 'topSubcategories', false);
             return;
         }
@@ -772,40 +772,29 @@
 
 
         let categories = Object.keys(data.events.check_result);
-        let topCategoriesWithTimestamps = {};
-
-        categories.forEach((category) => {
-            topCategoriesWithTimestamps[category] = { //TODO: use real data when implemented
-                date: ['2021-01-01', '2021-01-02', '2021-01-03', '2021-01-04', '2021-01-05', '2021-01-06', '2021-01-07'],
-                value: new Array(7).fill(data.events.check_result[category]),
-                link: 'www.google.com', 
-            };
-        });
 
         let datasets = [];
-        const numDatasets = Object.keys(topCategoriesWithTimestamps).length;
-        const stepSize = (colors.length - 1) / (numDatasets - 1);
+        const stepSize = (colors.length - 1) / (Object.keys(data.events.check_result).length - 1);
 
-        for (const [key, value] of Object.entries(topCategoriesWithTimestamps)) {
-            const index = Object.keys(topCategoriesWithTimestamps).indexOf(key);
+        for (const [key, value] of Object.entries(data.events.check_result)) {
+            const index = Object.keys(data.events.check_result).indexOf(key);
             const colorIndex = Math.round(index * stepSize);
             const borderColor = colors[colorIndex];
 
             datasets.push({
-                data: value.value,
+                data: Object.values(value.counts),
                 borderColor: borderColor,
                 fill: false,
-                label: key,
-                hidden: false
+                label: value.name,
+                hidden: false,
+                url: value.url
             });
         }
-        console.log('topCategoriesWithTimestamps',topCategoriesWithTimestamps)
-
         ctx = document.getElementById('topSubCategoriesChart').getContext('2d');
         const topSubChart = new Chart(ctx, {
             type: "line",
             data: {
-                labels: ['2021-01-01', '2021-01-02', '2021-01-03', '2021-01-04', '2021-01-05', '2021-01-06', '2021-01-07'], //TODO
+                labels: Object.keys(data.events.check_result[Object.keys(data.events.check_result)[0]].counts),
                     datasets: datasets,
                 },
                 options: {
@@ -815,8 +804,8 @@
                     console.log(line._index, line._datasetIndex)
                     const index = line._index;
                     const datasetIndex = line._datasetIndex;
-                    const label = this.data.datasets[datasetIndex].label;
-                    window.open(topCategoriesWithTimestamps[label].link, '_blank');
+                    const url = this.data.datasets[datasetIndex].url;
+                    window.open(this.data.datasets[datasetIndex].url, '_blank');
                 },
                     legend: {
                         position: 'right',
