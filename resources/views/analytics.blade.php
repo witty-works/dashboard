@@ -106,15 +106,15 @@
 
       <div class="analytics-tab-container">
          <div class="analytics-tab" id="overview-tab" onclick="handleTabClick('overview')" style="color: #9489DB;">
-            {{ __('content.analytic_overview_tab_title') }}
+            {{ __('content.analytic_overview') }}
             <div class="analytics-tab-line" id="overview-line"></div>
         </div>
          <div class="analytics-tab" id="top-categories-tab" onclick="handleTabClick('top-categories')">
-            {{ __('content.analytic_top_categories_tab_title') }}
+            {{ __('content.analytic_top_categories') }}
             <div id="top-categories-line"></div>
         </div>
          <div class="analytics-tab" id="top-words-tab" onclick="handleTabClick('top-words')">
-            {{ __('content.analytic_top_words_tab_title') }}
+            {{ __('content.analytic_top_words') }}
             <div id="top-words-line"></div>
         </div>
       </div>
@@ -154,18 +154,22 @@
       <div id="top-categories" role="tabpanel" style="display: none;" aria-labelledby="top-categories-tab">
          <div id="top-categories-wrapper" style="width: 100%">
             <div class="wittyworks-form-section container border-radius mt-5">
-               <div id="loading-icon-top-categories" class="loading-icon-wrapper"  style="width: 100%">
-                  <div class="lds-grid">
-                     <div></div>
-                     <div></div>
-                     <div></div>
-                     <div></div>
-                     <div></div>
-                     <div></div>
-                     <div></div>
-                     <div></div>
-                     <div></div>
-                  </div>
+                <div class="container-row wittyworks-margin-right">
+                    <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.event_type') }}</div>
+                    <div id="eventTypeDropdownTopCategories"></div>
+                </div> 
+                <div id="loading-icon-top-categories" class="loading-icon-wrapper"  style="width: 100%">
+                    <div class="lds-grid">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
                </div>
                <div id="top-categories-no-data" style="visibility: hidden; width: 100%">
                     <div class="lato-small-text-p warning-message">{!! __('content.no_data_events') !!}</div>
@@ -175,17 +179,10 @@
                     </div>
                </div>
                <div id="top-categories-content" style="visibility: hidden; width: 100%">
-                <div class="container-row wittyworks-margin-right">
-                    <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.event_type') }}</div>
-                    <div id="eventTypeDropdownTopCategories"></div>
-                </div>
                   <div class="chart-container-row">
-                     <canvas
-                        id="topSubCategoriesChart"
-                        class="wittyworks-analytics-chart-top-categories">
+                     <canvas id="topSubCategoriesChart" class="wittyworks-analytics-chart-extra-large">
                      </canvas>
-                     <div id="categoryOverview" class="wittyworks-margin-left"></div>
-                     <div class="chart-footer" id="topSubCategoriesChartFooter"></div>
+                     <button id="toggleLines" class="button primary-button-red">{{ __('content.toggle_lines') }}</button>
                   </div>
                </div>
             </div>
@@ -196,19 +193,23 @@
       <div id="top-words" role="tabpanel" style="display: none;" aria-labelledby="top-words-tab">
          <div id="top-words-wrapper" style="width: 100%">
             <div class="wittyworks-form-section container border-radius mt-5">
-               <div id="loading-icon-top-words" class="loading-icon-wrapper" style="width: 100%">
-                  <div class="lds-grid">
-                     <div></div>
-                     <div></div>
-                     <div></div>
-                     <div></div>
-                     <div></div>
-                     <div></div>
-                     <div></div>
-                     <div></div>
-                     <div></div>
-                  </div>
-               </div>
+                <div class="container-row wittyworks-margin-right">
+                    <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.event_type') }}</div>
+                    <div id="eventTypeDropdownTopWords"></div>
+                </div> 
+                <div id="loading-icon-top-words" class="loading-icon-wrapper" style="width: 100%">
+                    <div class="lds-grid">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                </div>
                <div id="top-words-no-data" style="visibility: hidden; width: 100%">
                     <div class="lato-small-text-p warning-message">{!! __('content.no_data_events') !!}</div>
                     <div class="image-container">
@@ -217,10 +218,6 @@
                     </div>
                </div>
                <div id="top-words-content" style="visibility: hidden; width: 100%">
-                    <div class="container-row wittyworks-margin-right">
-                        <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.event_type') }}</div>
-                        <div id="eventTypeDropdownTopWords"></div>
-                    </div>
                     <div class="chart-container-row">
                         <canvas
                             id="topWordsChart"
@@ -255,6 +252,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/locale/de.js" rossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
+    let topSubChart;
     const setElementStyle = (elementId, property, value) => {
         const element = document.getElementById(elementId);
         if (element) {
@@ -281,23 +279,10 @@
         }
 
 
-        const colors = [
-            "#241c5b",
-            "#33277f",
-            "#3a2c91",
-            "#4132a4",
-            "#4837b6",
-            "#5240c5",
-            "#6352ca",
-            "#7365d0",
-            "#8477d5",
-            "#9489DB",
-            "#a9a1e2",
-            "#bfb8e9",
-            "#cac4ed",
-            "#d4d0f1",
-            "#dfdcf4",
-        ];
+        const colors = ['#f06567', '#f06773', '#f16980', '#f16b8c', '#f16d99', '#f16fa5', '#f172b1', '#f274be', '#f276ca', '#ed78d1',
+ '#e57ad2', '#dc7bd3', '#d37dd4', '#cb7fd5', '#c280d6', '#b982d7', '#b184d8', '#a885d9', '#9f87da', '#9789db',
+ '#8c8fdc', '#8197dd', '#76a0de', '#6ba9df', '#60b1e1', '#55bae2', '#4ac2e3', '#3fcbe4', '#38d1e4', '#3cd1de',
+ '#41d0d9', '#45d0d4', '#49d0ce', '#4dd0c9', '#52cfc4', '#56cfbe', '#5acfb9'];
 
         const xValuesCheck = [];
         const yValuesCheck = [];
@@ -625,35 +610,35 @@
                         datasets: [
                             {
                                 data: aggregatedCheckResultData,
-                                borderColor: colors[3],
+                                borderColor: colors[0],
                                 fill: false,
                                 label:  @json(__('content.check_result_label_line_chart')) + (!isPremiumUser ? ' ({{ __('teams.witty_teams_only') }})' : ''),
                                 hidden: !isPremiumUser,
                             },
                             {
                                 data: aggregatedPopoverOpenData,
-                                borderColor: colors[6],
+                                borderColor: colors[8],
                                 fill: false,
                                 label: "{{ __('content.popover_label_line_chart') }}",
                                 hidden: isPremiumUser,
                             },
                             {
                                 data: aggregatedAlternativeData,
-                                borderColor: colors[9],
+                                borderColor: colors[16],
                                 fill: false,
                                 label: "{{ __('content.alternative_label_line_chart') }}",
                                 hidden: isPremiumUser,
                             },
                             {
                                 data: aggregatedIgnoreData,
-                                borderColor: colors[12],
+                                borderColor: colors[24],
                                 fill: false,
                                 label:  "{{ __('content.ignored_label_line_chart') }}",
                                 hidden: isPremiumUser,
                             },
                             {
                                 data: aggregatedLearningBitesData,
-                                borderColor: colors[14],
+                                borderColor: colors[32],
                                 fill: false,
                                 label:  @json(__('content.learning_bites_label_line_chart')),
                                 hidden: isPremiumUser,
@@ -709,7 +694,7 @@
                         responsive: true,
                         title: {
                         display: true,
-                        text:  @json(__('content.title_line_chart')),
+                        text:  @json(__('content.analytic_overview')),
                         fontSize: 16,
                         fontStyle: 'normal'
                         },
@@ -739,119 +724,153 @@
         }
     });
 
-    //ALWAYS ONLY past week
-    chartType == 'top-categories' && getChartData('topSubcategories', '1w', interval, language, categories, null, null, inclusive, eventTypes).then(data => {
-        if (!data.events ) {
-            return;
-        }
-        const eventsPopoverOpenedWeekUnsorted = data.events.popover_open || {};
-        const openedWeek = Object.entries(eventsPopoverOpenedWeekUnsorted).sort((a, b) => b[1] - a[1]).slice(0, 8);
-        for (const [key, value] of openedWeek) {
-            if (key && value) {
-                xTopSubCategoriesWeek.push(key);
-                yTopSubCategoriesWeek.push(value);
-            }
-        }
-        setElementStyle('loading-icon-top-categories', 'display', 'none');
-        setElementStyle('top-categories-content', 'visibility', 'visible');
-    });
+    (chartType == 'top-categories') && getChartData('topSubcategories', timerange, interval, language, categories, null,  null, inclusive, eventTypes).then(data => {
+        const isPremiumUser = @json($is_premium_user);
+        const checkResultOptionDisabledAttr = isPremiumUser ? '' : 'disabled';
+        const selectedDropdownValue = eventTypes[0] || (isPremiumUser ? 'check_result' : 'popover_open');
 
+        const eventTypeDropdownTopCategories = document.getElementById("eventTypeDropdownTopCategories");
+        eventTypeDropdownTopCategories.innerHTML = `
+            <select id="eventTypeTopCategories" class="dropdown" onchange="setParams([this.value])">
+                <option value="check_result" ${checkResultOptionDisabledAttr}>{{ __('content.check_result_label_line_chart').($is_premium_user ? '' : ' ('.__('teams.witty_teams_only').')') }}</option>
+                <option value="popover_open">{{ __('content.popover_label_line_chart') }}</option>
+                <option value="alternative">{{ __('content.alternative_label_line_chart') }}</option>
+                <option value="ignore">{{ __('content.ignored_label_line_chart') }}</option>
+            </select>`;
 
-    (chartType == 'overview' || chartType == 'top-categories') && getChartData('topSubcategories', timerange, interval, language, categories, null,  null, inclusive, eventTypes).then(data => {
+        updateDropdown("eventTypeTopCategories", selectedDropdownValue);
+
+        const eventTypeDropdownTopWords = document.getElementById("eventTypeDropdownTopWords");
+        eventTypeDropdownTopWords.innerHTML = `
+            <select id="eventTypeTopWords" class="dropdown" onchange="setParams([this.value])">
+                <option value="check_result" ${checkResultOptionDisabledAttr}>{{ __('content.check_result_label_line_chart').($is_premium_user ? '' : ' ('.__('teams.witty_teams_only').')') }}</option>
+                <option value="popover_open">{{ __('content.popover_label_line_chart') }}</option>
+                <option value="alternative">{{ __('content.alternative_label_line_chart') }}</option>
+                <option value="ignore">{{ __('content.ignored_label_line_chart') }}</option>
+            </select>`;
+
+        updateDropdown("eventTypeTopWords", selectedDropdownValue);
+
         if (data.errorStatus === 503) {
             handleNoData('loading-icon-top-categories', 'top-categories-no-data', 'topSubcategories', true);
             return;
         }
-        if (!data.events || !data.subcategories ) {
+        if (!data.events) {
             handleNoData('loading-icon-top-categories', 'top-categories-no-data', 'topSubcategories', false);
             return;
         }
 
-        const isPremiumUser = @json($is_premium_user);
+        let categories = Object?.keys(data.events[eventTypes[0]]);
+        let datasets = [];
+        const stepSize = (colors.length - 1) / (Object?.keys(data.events[eventTypes[0]]).length - 1);
 
-        const checkResultOptionDisabledAttr = isPremiumUser ? '' : 'disabled';
-        const selectedDropdownValue = eventTypes[0] || (isPremiumUser ? 'check_result' : 'popover_open');
+        for (const [key, value] of Object.entries(data.events[eventTypes[0]])) {
+            const index = Object?.keys(data.events[eventTypes[0]]).indexOf(key);
+            const colorIndex = Math.round(index * stepSize);
+            const borderColor = colors[colorIndex];
 
-        const eventTypeDropdownTopWords = document.getElementById("eventTypeDropdownTopWords");
-        eventTypeDropdownTopWords.innerHTML = `
-                <select id="eventTypeTopWords" class="dropdown" onchange="setParams([this.value])">
-                    <option value="check_result" ${checkResultOptionDisabledAttr}>{{ __('content.check_result_label_line_chart').($is_premium_user ? '' : ' ('.__('teams.witty_teams_only').')') }}</option>
-                    <option value="popover_open">{{ __('content.popover_label_line_chart') }}</option>
-                    <option value="alternative">{{ __('content.alternative_label_line_chart') }}</option>
-                    <option value="ignore">{{ __('content.ignored_label_line_chart') }}</option>
-                </select>`;
-
-        const eventTypeOptionsTopWords = document.getElementById("eventTypeTopWords").options;
-        for (let i = 0; i < eventTypeOptionsTopWords.length; i++) {
-            if (eventTypeOptionsTopWords[i].value == selectedDropdownValue) {
-                eventTypeOptionsTopWords[i].selected = true;
-            }
+            if (!value.counts) continue;
+            datasets.push({
+                data: Object.values(value.counts),
+                borderColor: borderColor,
+                fill: false,
+                label: value.name,
+                hidden: false,
+                url: value.url,
+                pointHitRadius: 20,
+            });
         }
+        ctx = document.getElementById('topSubCategoriesChart').getContext('2d');
+        topSubChart = new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: Object?.keys(data.events[eventTypes[0]][Object?.keys(data.events[eventTypes[0]])[0]].counts),
+                    datasets: datasets,
+                },
+                options: {
+                    onClick: function(e) {
+                        const line = this.getElementAtEvent(e)[0];
+                        if(!line) return;
+                        const index = line._index;
+                        const datasetIndex = line._datasetIndex;
+                        const url = this.data.datasets[datasetIndex].url;
+                        window.open(this.data.datasets[datasetIndex].url, '_blank');
+                    },
+                    legend: {
+                        position: 'right',
+                        onHover: function(e) {
+                            e.target.style.cursor = 'pointer';
+                        },
+                        onClick: function(e, legendItem) {
+                            const index = legendItem.datasetIndex;
+                            topSubChart.data.datasets[index].hidden = !topSubChart.data.datasets[index].hidden;
+                            topSubChart.update();                        
+                        },
+                        labels: {
+                            usePointStyle: true,
+                            padding: 15,
+                            fontSize: 14,
+                            generateLabels: function(chart) {
+                                return chart.data.datasets.map((dataset, i) => {
+                                    let isHidden = dataset.hidden;
+                                    return {
+                                        datasetIndex: i,
+                                        text: dataset.label,
+                                        fillStyle: isHidden ? '#dddddd' : dataset.borderColor,
+                                    };
+                                });
+                            },
+                        },
+                    },
+                    hover: {
+                        onHover: function(e) {
+                            var point = this.getElementAtEvent(e);
+                            if (point.length) e.target.style.cursor = 'pointer';
+                            else e.target.style.cursor = 'default';
+                        }
+                    },
+                    events: ['click', 'mousemove', 'mouseout'],
+                    maintainAspectRatio: false,
+                    responsive: true,
+                    title: {
+                        display: true,
+                        text:  @json(__('content.top_categories')),
+                        fontSize: 16,
+                        fontStyle: 'normal'
+                    },
+                    scales:{
+                        xAxes: [{
+                            ticks: {
+                                autoSkip: true,
+                                minRotation: 30
+                            }
+                        }],
+                        yAxes: [{
+                            ticks: {
+                                min: 0,
+                                callback: function(value, index, values) {
+                                    if (Math.floor(value) === value) {
+                                        return value;
+                                    }
+                                }
+                            }
+                        }],
+                    },
+                    plugins: {
+                        datalabels: {
+                            display: false,
+                        }
+                    },
+                }
+            });
 
-        const eventTypeDropdownTopCategories = document.getElementById("eventTypeDropdownTopCategories");
-        eventTypeDropdownTopCategories.innerHTML = `
-                <select id="eventTypeTopCategories" class="dropdown" onchange="setParams([this.value])">
-                    <option value="check_result" ${checkResultOptionDisabledAttr}>{{ __('content.check_result_label_line_chart').($is_premium_user ? '' : ' ('.__('teams.witty_teams_only').')') }}</option>
-                    <option value="popover_open">{{ __('content.popover_label_line_chart') }}</option>
-                    <option value="alternative">{{ __('content.alternative_label_line_chart') }}</option>
-                    <option value="ignore">{{ __('content.ignored_label_line_chart') }}</option>
-                </select>`;
-
-        const eventTypeOptionsTopCategories = document.getElementById("eventTypeTopCategories").options;
-        for (let i = 0; i < eventTypeOptionsTopCategories.length; i++) {
-            if (eventTypeOptionsTopCategories[i].value == selectedDropdownValue) {
-                eventTypeOptionsTopCategories[i].selected = true;
-            }
-        }
-
-        const subcategories = data.subcategories[selectedDropdownValue] || [];
-        listOfLinks = ``;
-
-        let locale = window.location.href.includes("/de/") ? "de" : "en"
-        moment.locale(locale)
-
-        let i = 0;
-        for (const [key, value] of Object.entries(subcategories).slice(0, 15)) {
-            let url = subcategories[key]['translation']['canonical_url'];
-            let label = subcategories[key]['translation']['hs_name'];
-
-            listOfLinks += `<div class="link-box" style="background-color:${colors[i]}"></div>`;
-
-            if (url) {
-                listOfLinks += `<a href="${url}" class="wittyworks-team-name lato-link-list" target="_blank">${label}</a>`;
-            } else {
-                listOfLinks += `<span class="lato-link-list">${label}</span>`;
-            }
-
-            listOfLinks += `</br>`;
-
-            i++;
-        }
-
-        document.getElementById("categoryOverview").innerHTML = listOfLinks;
-
-        const events = data.events[eventTypes[0]] || {};
-        for (const [key, value] of Object.entries(events)) {
-            xValuesTopSubCategories.push(key);
-            yValuesTopSubCategories.push(value);
-        }
-
-        const xValuesTopSubCategoriesCut = xValuesTopSubCategories.slice(0, 15);
-        const yValuesTopSubCategoriesCut = yValuesTopSubCategories.slice(0, 15);
-
-        createBarChart(
-            "topSubCategoriesChart",
-            xValuesTopSubCategoriesCut,
-            yValuesTopSubCategoriesCut,
-            "{{ __('content.top_categories') }}",
-            true,
-            false,
-            'topSubcategories',
-            timerange,
-            interval,
-            language,
-            categories
-        );
+        document.getElementById('toggleLines').addEventListener('click', function() {
+            let allVisible = topSubChart.data.datasets.every(dataset => !dataset.hidden);
+            topSubChart.data.datasets.forEach(function(dataset) {
+                dataset.hidden = allVisible;
+            });
+            topSubChart.update();
+        });
 
         setElementStyle('loading-icon-top-categories', 'display', 'none');
         setElementStyle('top-categories-content', 'visibility', 'visible');
@@ -890,7 +909,7 @@
             "topWordsChart",
             xValuesTopWordsCut,
             yValuesTopWordsCut,
-            "{{ __('content.title_words_bar_chart_month') }}",
+            "{{ __('content.analytic_top_words') }}",
             true,
             false,
             'topWords',
@@ -926,7 +945,7 @@
                 "topWordsChartCorporateRules",
                 xValuesTopCorporateWordsCut,
                 yValuesTopCorporateWordsCut,
-                "{{ __('content.title_words_bar_chart_month_corporate_rules') }}",
+                "{{ __('content.analytic_top_words_corporate_rules') }}",
                 true,
                 false,
                 'topWords',
@@ -949,10 +968,28 @@
     });
 };
 
+function updateDropdown(dropdownId, dropdownValue) {
+    const dropdown = document.getElementById(dropdownId);
+    if (!dropdown) return;
+    const dropdownOptions = dropdown.options;
+    for (let i = 0; i < dropdownOptions.length; i++) {
+        if (dropdownOptions[i].value == dropdownValue) {
+            dropdownOptions[i].selected = true;
+        }
+    }
+}
+
 function setParams(eventTypes = null) {
+    if (topSubChart) {
+        topSubChart.destroy();
+    }
     if (eventTypes === null) {
         const isPremiumUser = @json($is_premium_user);
         eventTypes = isPremiumUser ? ['check_result'] : ['popover_open']
+
+        const selectedDropdownValue = eventTypes[0] || (isPremiumUser ? 'check_result' : 'popover_open');
+        updateDropdown("eventTypeTopCategories", selectedDropdownValue);
+        updateDropdown("eventTypeTopWords", selectedDropdownValue);
     }
     const activeTab = document.getElementsByClassName("analytics-tab-line")[0].id.replace('-line', '');
     setElementStyle('noCorporateRulesWrapper', 'display', 'none');
