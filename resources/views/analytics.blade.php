@@ -798,13 +798,13 @@
                 },
                 options: {
                     onClick: function(e) {
-                    const line = this.getElementAtEvent(e)[0];
-                    if(!line) return;
-                    const index = line._index;
-                    const datasetIndex = line._datasetIndex;
-                    const url = this.data.datasets[datasetIndex].url;
-                    window.open(this.data.datasets[datasetIndex].url, '_blank');
-                },
+                        const line = this.getElementAtEvent(e)[0];
+                        if(!line) return;
+                        const index = line._index;
+                        const datasetIndex = line._datasetIndex;
+                        const url = this.data.datasets[datasetIndex].url;
+                        window.open(this.data.datasets[datasetIndex].url, '_blank');
+                    },
                     legend: {
                         position: 'right',
                         onHover: function(e) {
@@ -848,6 +848,12 @@
                         fontStyle: 'normal'
                     },
                     scales:{
+                        xAxes: [{
+                            ticks: {
+                                autoSkip: true,
+                                minRotation: 30
+                            }
+                        }],
                         yAxes: [{
                             ticks: {
                                 min: 0,
