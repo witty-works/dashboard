@@ -106,15 +106,15 @@
 
       <div class="analytics-tab-container">
          <div class="analytics-tab" id="overview-tab" onclick="handleTabClick('overview')" style="color: #9489DB;">
-            {{ __('content.analytic_overview_tab_title') }}
+            {{ __('content.analytic_overview') }}
             <div class="analytics-tab-line" id="overview-line"></div>
         </div>
          <div class="analytics-tab" id="top-categories-tab" onclick="handleTabClick('top-categories')">
-            {{ __('content.analytic_top_categories_tab_title') }}
+            {{ __('content.analytic_top_categories') }}
             <div id="top-categories-line"></div>
         </div>
          <div class="analytics-tab" id="top-words-tab" onclick="handleTabClick('top-words')">
-            {{ __('content.analytic_top_words_tab_title') }}
+            {{ __('content.analytic_top_words') }}
             <div id="top-words-line"></div>
         </div>
       </div>
@@ -252,6 +252,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/locale/de.js" rossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
+    let topSubChart;
     const setElementStyle = (elementId, property, value) => {
         const element = document.getElementById(elementId);
         if (element) {
@@ -693,7 +694,7 @@
                         responsive: true,
                         title: {
                         display: true,
-                        text:  @json(__('content.title_line_chart')),
+                        text:  @json(__('content.analytic_overview')),
                         fontSize: 16,
                         fontStyle: 'normal'
                         },
@@ -770,14 +771,13 @@
             }
         }
 
-
-        let categories = Object.keys(data.events.check_result);
+        let categories = Object?.keys(data.events[eventTypes[0]]);
 
         let datasets = [];
-        const stepSize = (colors.length - 1) / (Object.keys(data.events.check_result).length - 1);
+        const stepSize = (colors.length - 1) / (Object?.keys(data.events[eventTypes[0]]).length - 1);
 
-        for (const [key, value] of Object.entries(data.events.check_result)) {
-            const index = Object.keys(data.events.check_result).indexOf(key);
+        for (const [key, value] of Object.entries(data.events[eventTypes[0]])) {
+            const index = Object?.keys(data.events[eventTypes[0]]).indexOf(key);
             const colorIndex = Math.round(index * stepSize);
             const borderColor = colors[colorIndex];
 
@@ -787,21 +787,21 @@
                 fill: false,
                 label: value.name,
                 hidden: false,
-                url: value.url
+                url: value.url,
+                pointHitRadius: 20,
             });
         }
         ctx = document.getElementById('topSubCategoriesChart').getContext('2d');
-        const topSubChart = new Chart(ctx, {
+        topSubChart = new Chart(ctx, {
             type: "line",
             data: {
-                labels: Object.keys(data.events.check_result[Object.keys(data.events.check_result)[0]].counts),
+                labels: Object?.keys(data.events[eventTypes[0]][Object?.keys(data.events[eventTypes[0]])[0]].counts),
                     datasets: datasets,
                 },
                 options: {
                     onClick: function(e) {
                     const line = this.getElementAtEvent(e)[0];
                     if(!line) return;
-                    console.log(line._index, line._datasetIndex)
                     const index = line._index;
                     const datasetIndex = line._datasetIndex;
                     const url = this.data.datasets[datasetIndex].url;
@@ -813,14 +813,14 @@
                             e.target.style.cursor = 'pointer';
                         },
                         onClick: function(e, legendItem) {
-                                const index = legendItem.datasetIndex;
-                                const ci = this.chart;
-                                const meta = ci.getDatasetMeta(index);
-                                meta.hidden = !meta.hidden;
-                                ci.data.datasets[index].hidden = meta.hidden;
-                                ci.update();                        
+                            const index = legendItem.datasetIndex;
+                            topSubChart.data.datasets[index].hidden = !topSubChart.data.datasets[index].hidden;
+                            topSubChart.update();                        
                         },
                         labels: {
+                            usePointStyle: true,
+                            padding: 15,
+                            fontSize: 14,
                             generateLabels: function(chart) {
                                 return chart.data.datasets.map((dataset, i) => {
                                     let isHidden = dataset.hidden;
@@ -845,7 +845,7 @@
                     responsive: true,
                     title: {
                         display: true,
-                        text:  @json(__('content.title_categories_line_chart')),
+                        text:  @json(__('content.top_categories')),
                         fontSize: 16,
                         fontStyle: 'normal'
                     },
@@ -870,12 +870,11 @@
             });
 
         document.getElementById('toggleLines').addEventListener('click', function() {
-            const chart = topSubChart;
-            let allHidden = chart.data.datasets.every(dataset => dataset.hidden);
-            chart.data.datasets.forEach(function(dataset) {
-                dataset.hidden = !allHidden;
+            let allVisible = topSubChart.data.datasets.every(dataset => !dataset.hidden);
+            topSubChart.data.datasets.forEach(function(dataset) {
+                dataset.hidden = allVisible;
             });
-            chart.update();
+            topSubChart.update();
         });
 
         setElementStyle('loading-icon-top-categories', 'display', 'none');
@@ -915,7 +914,7 @@
             "topWordsChart",
             xValuesTopWordsCut,
             yValuesTopWordsCut,
-            "{{ __('content.title_words_bar_chart_month') }}",
+            "{{ __('content.analytic_top_words') }}",
             true,
             false,
             'topWords',
@@ -951,7 +950,7 @@
                 "topWordsChartCorporateRules",
                 xValuesTopCorporateWordsCut,
                 yValuesTopCorporateWordsCut,
-                "{{ __('content.title_words_bar_chart_month_corporate_rules') }}",
+                "{{ __('content.analytic_top_words_corporate_rules') }}",
                 true,
                 false,
                 'topWords',
@@ -975,6 +974,9 @@
 };
 
 function setParams(eventTypes = null) {
+    if(topSubChart) {
+        topSubChart.destroy();
+    }
     if (eventTypes === null) {
         const isPremiumUser = @json($is_premium_user);
         eventTypes = isPremiumUser ? ['check_result'] : ['popover_open']
