@@ -154,18 +154,22 @@
       <div id="top-categories" role="tabpanel" style="display: none;" aria-labelledby="top-categories-tab">
          <div id="top-categories-wrapper" style="width: 100%">
             <div class="wittyworks-form-section container border-radius mt-5">
-               <div id="loading-icon-top-categories" class="loading-icon-wrapper"  style="width: 100%">
-                  <div class="lds-grid">
-                     <div></div>
-                     <div></div>
-                     <div></div>
-                     <div></div>
-                     <div></div>
-                     <div></div>
-                     <div></div>
-                     <div></div>
-                     <div></div>
-                  </div>
+                <div class="container-row wittyworks-margin-right">
+                    <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.event_type') }}</div>
+                    <div id="eventTypeDropdownTopCategories"></div>
+                </div> 
+                <div id="loading-icon-top-categories" class="loading-icon-wrapper"  style="width: 100%">
+                    <div class="lds-grid">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
                </div>
                <div id="top-categories-no-data" style="visibility: hidden; width: 100%">
                     <div class="lato-small-text-p warning-message">{!! __('content.no_data_events') !!}</div>
@@ -175,10 +179,6 @@
                     </div>
                </div>
                <div id="top-categories-content" style="visibility: hidden; width: 100%">
-                <div class="container-row wittyworks-margin-right">
-                    <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.event_type') }}</div>
-                    <div id="eventTypeDropdownTopCategories"></div>
-                </div>
                   <div class="chart-container-row">
                      <canvas id="topSubCategoriesChart" class="wittyworks-analytics-chart-extra-large">
                      </canvas>
@@ -193,19 +193,23 @@
       <div id="top-words" role="tabpanel" style="display: none;" aria-labelledby="top-words-tab">
          <div id="top-words-wrapper" style="width: 100%">
             <div class="wittyworks-form-section container border-radius mt-5">
-               <div id="loading-icon-top-words" class="loading-icon-wrapper" style="width: 100%">
-                  <div class="lds-grid">
-                     <div></div>
-                     <div></div>
-                     <div></div>
-                     <div></div>
-                     <div></div>
-                     <div></div>
-                     <div></div>
-                     <div></div>
-                     <div></div>
-                  </div>
-               </div>
+                <div class="container-row wittyworks-margin-right">
+                    <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.event_type') }}</div>
+                    <div id="eventTypeDropdownTopWords"></div>
+                </div> 
+                <div id="loading-icon-top-words" class="loading-icon-wrapper" style="width: 100%">
+                    <div class="lds-grid">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                </div>
                <div id="top-words-no-data" style="visibility: hidden; width: 100%">
                     <div class="lato-small-text-p warning-message">{!! __('content.no_data_events') !!}</div>
                     <div class="image-container">
@@ -214,10 +218,6 @@
                     </div>
                </div>
                <div id="top-words-content" style="visibility: hidden; width: 100%">
-                    <div class="container-row wittyworks-margin-right">
-                        <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.event_type') }}</div>
-                        <div id="eventTypeDropdownTopWords"></div>
-                    </div>
                     <div class="chart-container-row">
                         <canvas
                             id="topWordsChart"
@@ -725,6 +725,41 @@
     });
 
     (chartType == 'top-categories') && getChartData('topSubcategories', timerange, interval, language, categories, null,  null, inclusive, eventTypes).then(data => {
+        const isPremiumUser = @json($is_premium_user);
+        const checkResultOptionDisabledAttr = isPremiumUser ? '' : 'disabled';
+        const selectedDropdownValue = eventTypes[0] || (isPremiumUser ? 'check_result' : 'popover_open');
+
+        const eventTypeDropdownTopCategories = document.getElementById("eventTypeDropdownTopCategories");
+        eventTypeDropdownTopCategories.innerHTML = `
+            <select id="eventTypeTopCategories" class="dropdown" onchange="setParams([this.value])">
+                <option value="check_result" ${checkResultOptionDisabledAttr}>{{ __('content.check_result_label_line_chart').($is_premium_user ? '' : ' ('.__('teams.witty_teams_only').')') }}</option>
+                <option value="popover_open">{{ __('content.popover_label_line_chart') }}</option>
+                <option value="alternative">{{ __('content.alternative_label_line_chart') }}</option>
+                <option value="ignore">{{ __('content.ignored_label_line_chart') }}</option>
+            </select>`;
+
+        const eventTypeOptionsTopCategories = document.getElementById("eventTypeTopCategories").options;
+        for (let i = 0; i < eventTypeOptionsTopCategories.length; i++) {
+            if (eventTypeOptionsTopCategories[i].value == selectedDropdownValue) {
+                eventTypeOptionsTopCategories[i].selected = true;
+            }
+        }
+
+        const eventTypeDropdownTopWords = document.getElementById("eventTypeDropdownTopWords");
+        eventTypeDropdownTopWords.innerHTML = `
+            <select id="eventTypeTopWords" class="dropdown" onchange="setParams([this.value])">
+                <option value="check_result" ${checkResultOptionDisabledAttr}>{{ __('content.check_result_label_line_chart').($is_premium_user ? '' : ' ('.__('teams.witty_teams_only').')') }}</option>
+                <option value="popover_open">{{ __('content.popover_label_line_chart') }}</option>
+                <option value="alternative">{{ __('content.alternative_label_line_chart') }}</option>
+                <option value="ignore">{{ __('content.ignored_label_line_chart') }}</option>
+            </select>`;
+        const eventTypeOptionsTopWords = document.getElementById("eventTypeTopWords").options;
+        for (let i = 0; i < eventTypeOptionsTopWords.length; i++) {
+            if (eventTypeOptionsTopWords[i].value == selectedDropdownValue) {
+                eventTypeOptionsTopWords[i].selected = true;
+            }
+        }
+
         if (data.errorStatus === 503) {
             handleNoData('loading-icon-top-categories', 'top-categories-no-data', 'topSubcategories', true);
             return;
@@ -734,45 +769,7 @@
             return;
         }
 
-        const isPremiumUser = @json($is_premium_user);
-
-        const checkResultOptionDisabledAttr = isPremiumUser ? '' : 'disabled';
-        const selectedDropdownValue = eventTypes[0] || (isPremiumUser ? 'check_result' : 'popover_open');
-
-        const eventTypeDropdownTopWords = document.getElementById("eventTypeDropdownTopWords");
-        eventTypeDropdownTopWords.innerHTML = `
-                <select id="eventTypeTopWords" class="dropdown" onchange="setParams([this.value])">
-                    <option value="check_result" ${checkResultOptionDisabledAttr}>{{ __('content.check_result_label_line_chart').($is_premium_user ? '' : ' ('.__('teams.witty_teams_only').')') }}</option>
-                    <option value="popover_open">{{ __('content.popover_label_line_chart') }}</option>
-                    <option value="alternative">{{ __('content.alternative_label_line_chart') }}</option>
-                    <option value="ignore">{{ __('content.ignored_label_line_chart') }}</option>
-                </select>`;
-
-        const eventTypeOptionsTopWords = document.getElementById("eventTypeTopWords").options;
-        for (let i = 0; i < eventTypeOptionsTopWords.length; i++) {
-            if (eventTypeOptionsTopWords[i].value == selectedDropdownValue) {
-                eventTypeOptionsTopWords[i].selected = true;
-            }
-        }
-
-        const eventTypeDropdownTopCategories = document.getElementById("eventTypeDropdownTopCategories");
-        eventTypeDropdownTopCategories.innerHTML = `
-                <select id="eventTypeTopCategories" class="dropdown" onchange="setParams([this.value])">
-                    <option value="check_result" ${checkResultOptionDisabledAttr}>{{ __('content.check_result_label_line_chart').($is_premium_user ? '' : ' ('.__('teams.witty_teams_only').')') }}</option>
-                    <option value="popover_open">{{ __('content.popover_label_line_chart') }}</option>
-                    <option value="alternative">{{ __('content.alternative_label_line_chart') }}</option>
-                    <option value="ignore">{{ __('content.ignored_label_line_chart') }}</option>
-                </select>`;
-
-        const eventTypeOptionsTopCategories = document.getElementById("eventTypeTopCategories").options;
-        for (let i = 0; i < eventTypeOptionsTopCategories.length; i++) {
-            if (eventTypeOptionsTopCategories[i].value == selectedDropdownValue) {
-                eventTypeOptionsTopCategories[i].selected = true;
-            }
-        }
-
         let categories = Object?.keys(data.events[eventTypes[0]]);
-
         let datasets = [];
         const stepSize = (colors.length - 1) / (Object?.keys(data.events[eventTypes[0]]).length - 1);
 
@@ -781,6 +778,7 @@
             const colorIndex = Math.round(index * stepSize);
             const borderColor = colors[colorIndex];
 
+            if (!value.counts) continue;
             datasets.push({
                 data: Object.values(value.counts),
                 borderColor: borderColor,
