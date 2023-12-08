@@ -770,8 +770,6 @@
         }
 
         let categories = Object?.keys(data.events[eventTypes[0]]);
-        console.log('eventTypes', eventTypes);
-        console.log('Object', Object.entries(data.events[eventTypes[0]]));
         let datasets = [];
         const stepSize = (colors.length - 1) / (Object?.keys(data.events[eventTypes[0]]).length - 1);
 
