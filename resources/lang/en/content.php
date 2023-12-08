@@ -396,7 +396,7 @@ If you have any questions, contact :name (:email). 🙂
     'recommended' => 'Recommdended by friend or colleague',
     'search_engine' => 'Search engine',
     'analytic_overview' => 'Overview',
-    'analytic_top_categories' => 'Diversity Dimensions',
+    'analytic_top_categories' => 'Top diversity dimensions',
     'analytic_top_words' => 'Top Words',
     'roadmap' => 'Roadmap',
     'none_selected' => 'None Selected',
