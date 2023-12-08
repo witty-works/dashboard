@@ -738,12 +738,7 @@
                 <option value="ignore">{{ __('content.ignored_label_line_chart') }}</option>
             </select>`;
 
-        const eventTypeOptionsTopCategories = document.getElementById("eventTypeTopCategories").options;
-        for (let i = 0; i < eventTypeOptionsTopCategories.length; i++) {
-            if (eventTypeOptionsTopCategories[i].value == selectedDropdownValue) {
-                eventTypeOptionsTopCategories[i].selected = true;
-            }
-        }
+        updateDropdown("eventTypeTopCategories", selectedDropdownValue);
 
         const eventTypeDropdownTopWords = document.getElementById("eventTypeDropdownTopWords");
         eventTypeDropdownTopWords.innerHTML = `
@@ -753,12 +748,8 @@
                 <option value="alternative">{{ __('content.alternative_label_line_chart') }}</option>
                 <option value="ignore">{{ __('content.ignored_label_line_chart') }}</option>
             </select>`;
-        const eventTypeOptionsTopWords = document.getElementById("eventTypeTopWords").options;
-        for (let i = 0; i < eventTypeOptionsTopWords.length; i++) {
-            if (eventTypeOptionsTopWords[i].value == selectedDropdownValue) {
-                eventTypeOptionsTopWords[i].selected = true;
-            }
-        }
+
+        updateDropdown("eventTypeTopWords", selectedDropdownValue);
 
         if (data.errorStatus === 503) {
             handleNoData('loading-icon-top-categories', 'top-categories-no-data', 'topSubcategories', true);
@@ -977,13 +968,28 @@
     });
 };
 
+function updateDropdown(dropdownId, dropdownValue) {
+    const dropdown = document.getElementById(dropdownId);
+    if (!dropdown) return;
+    const dropdownOptions = dropdown.options;
+    for (let i = 0; i < dropdownOptions.length; i++) {
+        if (dropdownOptions[i].value == dropdownValue) {
+            dropdownOptions[i].selected = true;
+        }
+    }
+}
+
 function setParams(eventTypes = null) {
-    if(topSubChart) {
+    if (topSubChart) {
         topSubChart.destroy();
     }
     if (eventTypes === null) {
         const isPremiumUser = @json($is_premium_user);
         eventTypes = isPremiumUser ? ['check_result'] : ['popover_open']
+
+        const selectedDropdownValue = eventTypes[0] || (isPremiumUser ? 'check_result' : 'popover_open');
+        updateDropdown("eventTypeTopCategories", selectedDropdownValue);
+        updateDropdown("eventTypeTopWords", selectedDropdownValue);
     }
     const activeTab = document.getElementsByClassName("analytics-tab-line")[0].id.replace('-line', '');
     setElementStyle('noCorporateRulesWrapper', 'display', 'none');
