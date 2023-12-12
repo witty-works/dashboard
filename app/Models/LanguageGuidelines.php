@@ -108,6 +108,11 @@ class LanguageGuidelines extends Model
         return $this->belongsTo(User::class);
     }
 
+    public static function isBasicOnly($proficiencyLevel)
+    {
+        return in_array($proficiencyLevel, ['openly_discriminating', 'inclusive']);
+    }
+
     public static function getTeamGuidelines(User $user)
     {
         $team = $user->currentTeam;
@@ -160,7 +165,7 @@ class LanguageGuidelines extends Model
             if (
                 $includeAdvanced
                 && !empty($dddConfig['proficiency_level'])
-                && $dddConfig['proficiency_level'] !== 'openly_discriminating'
+                && !self::isBasicOnly($dddConfig['proficiency_level'])
             ) {
                 $diversityDimensionDrivers['advanced_' . $ddd] = $dddConfig;
             }
