@@ -39,7 +39,7 @@
         @if($show_word_type)
         <div class="w-full col-span-6 sm:col-span-4 mt-5">
             <x-jet-label id="word_type_label" for="word_type" value="{{ __('guidelines.word_type_label') }}" />
-            <x-select id="word_type" :options="\App\Models\TermReplacement::WORD_TYPES" class="mt-1 block w-full" wire:model.defer="word_type_label" />
+            <x-select id="word_type" :options="\App\Models\TermReplacement::WORD_TYPES" class="mt-1 block w-full" wire:model.defer="word_type" />
         </div>
         @endif
 
