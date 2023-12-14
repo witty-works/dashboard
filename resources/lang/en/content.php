@@ -225,6 +225,7 @@ Ask your team administrators <a href="mailto::email">:name</a> to upgrade to <a 
     'ignored_words_week_negative' => 'less inclusive suggestions',
     'ignored_words_week_positive' => 'more inclusive suggestions',
     'top_categories' => 'Top diversity dimensions',
+    'top_categories_over_time' => 'Top diversity dimensions over time',
     'learning_bites_label_line_chart' => 'Why clicks',
     'check_result_label_line_chart' => 'Highlighted',
     'popover_label_line_chart' => 'Explored',

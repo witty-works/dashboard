@@ -216,6 +216,7 @@ Bitte dein*e Team-Administrator*in <a href="mailto::email">:name</a>, auf <a hre
     'analytics' => 'Statistik',
     'writing_streak' => 'Du hast Witty',
     'top_categories' => 'Top Diversitätsdimensionen',
+    'top_categories_over_time' => 'Top diversity dimensions over time DE',
     'learning_bites_label_line_chart' => 'Klicks auf "Warum?"',
     'popover_label_line_chart' => 'Angeschaut',
     'ignored_label_line_chart' => 'Verworfen',
