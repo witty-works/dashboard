@@ -85,6 +85,8 @@ class Category extends Component
             $proficiencyLevel = $this->diversityDimensionDrivers[$ddd]['proficiency_level'] ?? null;
             if ($proficiencyLevel === 'openly_discriminating') {
                 $enabled = LanguageGuidelines::BASIC_ENABLED;
+            } elseif ($proficiencyLevel === 'inclusive' && $enabled === LanguageGuidelines::ADVANCED_ENABLED) {
+                $enabled = LanguageGuidelines::BASIC_ENABLED;
             } elseif (empty($enabled)) {
                 $enabled = LanguageGuidelines::DISABLED;
             } elseif (!$this->model->subscribed()) {
@@ -97,14 +99,14 @@ class Category extends Component
                     $languageGuidelines->inPlaceUpateArray($ddd, 'disabled_categories', true);
                     break;
                 case LanguageGuidelines::BASIC_ENABLED:
-                    if ($proficiencyLevel !== 'openly_discriminating') {
+                    if (!LanguageGuidelines::isBasicOnly($proficiencyLevel)) {
                         $languageGuidelines->inPlaceUpateArray('advanced_' . $ddd, 'disabled_categories', false);
                     }
                     $languageGuidelines->inPlaceUpateArray($ddd, 'disabled_categories', true);
                     break;
                 case LanguageGuidelines::DISABLED:
                 default:
-                    if ($proficiencyLevel !== 'openly_discriminating') {
+                    if (!LanguageGuidelines::isBasicOnly($proficiencyLevel)) {
                         $languageGuidelines->inPlaceUpateArray('advanced_' . $ddd, 'disabled_categories', false);
                     }
                     $languageGuidelines->inPlaceUpateArray($ddd, 'disabled_categories', false);

@@ -74,10 +74,11 @@
                 $label.= ' - '.$diversityDimensionDrivers[$ddd]['translation']['name'];
             @endphp
 
-            @if($proficiencyLevel === 'openly_discriminating' || !$model->subscribed())
+            @if(\App\Models\LanguageGuidelines::isBasicOnly($proficiencyLevel) || !$model->subscribed())
             <x-jet-checkbox
                 id="dimensions['{{$ddd}}']"
-                value="{{ $dimensions[$ddd] }}"
+                name="dimensions_{{$ddd}}"
+                value="1"
                 :label="$label"
                 wire:model.defer="dimensions.{{$ddd}}"
                 :disabled="(bool)$disabled"
@@ -94,7 +95,7 @@
             />
             @endif
             
-            @if(!empty($diversityDimensionDrivers[$ddd]['translation']['example_image']['src']))
+            @if($proficiencyLevel !== 'openly_discriminating' && !empty($diversityDimensionDrivers[$ddd]['translation']['example_image']['src']))
             @include('partials.info_hover', ['category' => $ddd, 'name' => $diversityDimensionDrivers[$ddd]['translation']['hs_name'], 'config' => $diversityDimensionDrivers[$ddd]])
             @endif
         </div>

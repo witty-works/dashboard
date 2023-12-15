@@ -70,7 +70,7 @@
         @foreach ($list as $ddd)
         @if(isset($diversityDimensionDrivers[$ddd]['translation']) && isset($dimensions[$ddd]))
         @php
-        $checkbox = $proficiencyLevel === 'openly_discriminating' || !$model->subscribed();
+        $checkbox = \App\Models\LanguageGuidelines::isBasicOnly($proficiencyLevel) || !$model->subscribed();
         $disabled = !$model->subscribed();
         if ($proficiencyLevel === 'openly_discriminating') {
             $disabled = true;
@@ -93,10 +93,11 @@
             @if($checkbox)
             <x-jet-checkbox
                 id="dimensions['{{$ddd}}']"
+                name="dimensions_{{$ddd}}"
                 value="1"
                 :label="$label"
                 wire:model.defer="dimensions.{{$ddd}}"
-                :disabled="(bool)$disabled"
+                :disabled="(bool)$disabled || $minValue === 1"
                 :title="$title"
             />
             @else
