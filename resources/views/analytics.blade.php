@@ -896,14 +896,9 @@
                     },
                 }
             });
-
-        document.getElementById('toggleLines').addEventListener('click', function() {
-            let allVisible = topSubChart.data.datasets.every(dataset => !dataset.hidden);
-            topSubChart.data.datasets.forEach(function(dataset) {
-                dataset.hidden = allVisible;
-            });
-            topSubChart.update();
-        });
+        const toggleLinesButton = document.getElementById('toggleLines');
+        toggleLinesButton.removeEventListener('click', toggleLines);
+        toggleLinesButton.addEventListener('click', toggleLines);
 
         setElementStyle('loading-icon-top-categories', 'display', 'none');
         setElementStyle('top-categories-content', 'visibility', 'visible');
@@ -1000,6 +995,15 @@
         }
     });
 };
+
+function toggleLines() {
+    let allVisible = topSubChart.data.datasets.every(dataset => !dataset.hidden);
+    topSubChart.data.datasets.forEach(function(dataset) {
+        dataset.hidden = allVisible;
+    });
+
+    topSubChart.update();
+}
 
 function updateDropdown(dropdownId, dropdownValue) {
     const dropdown = document.getElementById(dropdownId);
