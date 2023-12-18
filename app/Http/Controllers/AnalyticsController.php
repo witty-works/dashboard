@@ -298,14 +298,7 @@ class AnalyticsController extends Controller
             foreach ($this->subcategories as $subcategory => $subcategoryData) {
                 $proficiencyLevel = $subcategoryData['proficiency_level'] ?? 'corporate_rules';
                 if ($proficiencyLevel === 'inclusive') {
-                    if (empty($subcategories)) {
-                        $properties[] = [
-                            'key' => 'response__data__subcategory',
-                            'value' => $subcategory,
-                            'operator' => $inclusive === 'inclusive' ? 'exact' : 'is_not',
-                            'type' => 'event',
-                        ];
-                    } elseif ($inclusive === 'non_inclusive') {
+                    if ($inclusive === 'non_inclusive') {
                         $subcategoriesToRemove[] = $subcategory;
                     }
                 } elseif ($inclusive === 'inclusive') {
@@ -313,9 +306,12 @@ class AnalyticsController extends Controller
                 }
             }
 
-            if (!empty($subcategories)) {
-                $subcategories = array_diff($subcategories, $subcategoriesToRemove);
+            if (empty($subcategories)) {
+                $subcategories = $this->subcategories->keys()->toArray();
             }
+
+            $subcategories = array_diff($subcategories, $subcategoriesToRemove);
+            $subcategories = array_values($subcategories);
         }
 
         if (!empty($subcategories)) {
