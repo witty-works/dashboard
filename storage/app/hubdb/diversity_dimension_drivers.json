@@ -39,15 +39,15 @@
                 "lead_video": "",
                 "lead_image": [],
                 "example_image": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Abbreviation-1.png",
-                    "width": "608",
-                    "height": "475",
-                    "alt": "An illustration of Witty showing the phrase 'For our organization, most important KPI [Key Performance Indicator] is ROI (Return On Investment]'. The words in brackets are shown as alternatives."
+                    "src": "https:\/\/www.witty.works\/hubfs\/Abbreviation-2.png",
+                    "width": "605",
+                    "height": "497",
+                    "alt": ""
                 },
                 "example_image_advanced": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Abbreviation_advanced.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Abbreviation%20Advanced.png",
                     "width": "608",
-                    "height": "459",
+                    "height": "475",
                     "alt": ""
                 },
                 "soft_explanation": "<p><span>Have you ever felt uncomfortable asking about an unfamiliar abbreviation or an acronym? It happens to all of us. Every day.&nbsp;<\/span><span>Spelling abbreviations and acronyms out, may feel tedious at times but it helps keep people engaged and everyone on the same page.&nbsp;<\/span><span>Letter salads are especially disorienting and awkward for:<\/span><\/p>\n<ul>\n<li><span>People new to the company who have yet to familiarize themselves with the company style guide and business jargon in your field. <\/span><\/li>\n<li><span>People with another education trajectory. They might feel they can't keep up or assume you're showing off and actively excluding them.<\/span><\/li>\n<\/ul>",
@@ -80,15 +80,15 @@
                 "lead_video": "",
                 "lead_image": [],
                 "example_image": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Abk%C3%BCrzungen.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Abk%C3%BCrzungen-1.png",
                     "width": "605",
                     "height": "443",
-                    "alt": "Eine Illustration von Witty des Satzes 'Untersch\u00e4tzen Sie niemals den Einfluss von [SMM] auf WOM.'. Als Alternative f\u00fcr den Begriff in Klammern wird 'Social-Media Marketing' vorgeschlagen."
+                    "alt": ""
                 },
                 "example_image_advanced": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Abk%C3%BCrzungen%20Advanced.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Abk%C3%BCrzungen%20Advanced-1.png",
                     "width": "605",
-                    "height": "445",
+                    "height": "443",
                     "alt": ""
                 },
                 "soft_explanation": "",
@@ -324,7 +324,12 @@
                     "height": "425",
                     "alt": ""
                 },
-                "example_image_advanced": [],
+                "example_image_advanced": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Age%20information%20Advanced.png",
+                    "width": "605",
+                    "height": "425",
+                    "alt": ""
+                },
                 "soft_explanation": "Age-based prejudice remains one of the most socially accepted and institutionalized forms of discrimination. In the workplace, both the youngest and oldest are most likely to be treated unfairly in multigenerational teams, whether it\u2019s patronizing older employees or underestimating the abilities of younger colleagues. To engage people of all ages, focus on required skills and strengths, and mention - or ask about - age only when it\u2019s essential to your message.",
                 "hard_facts": "",
                 "hero_figure": "",
@@ -361,9 +366,9 @@
                     "alt": ""
                 },
                 "example_image_advanced": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Altersangabe%20%20Advanced%20(1).png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Altersangabe%20%20Advanced%20(1)-1.png",
                     "width": "605",
-                    "height": "446",
+                    "height": "387",
                     "alt": ""
                 },
                 "soft_explanation": "<p>Altersbedingte Vorurteile sind eine der gesellschaftlich am meisten akzeptierten und institutionalisierten Formen der Diskriminierung. Am Arbeitsplatz werden sowohl die J\u00fcngsten als auch die \u00c4ltesten Mehr-Generationen-Teams am ehesten ungerecht behandelt oder untersch\u00e4tzt. Um Menschen aller Altersgruppen anzusprechen, konzentriere dich auf ben\u00f6tigte F\u00e4higkeiten und St\u00e4rken und erw\u00e4hne das Alter nur, wenn es f\u00fcr deine Botschaft unabdingbar ist.<\/p>",
@@ -456,9 +461,9 @@
                     "alt": "Eine Illustration von Witty des Satzes 'F\u00fcr unser neues Start-up-Unternehmen brauchen wir [Digital Natives].' Als Alternative wird 'Menschen, die sich in der digitalen Welt zuhause f\u00fchlen' vorgeschlagen.\u00a0"
                 },
                 "example_image_advanced": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/25%20Jahre%20und%20%C3%A4lter%20Advanced.png",
-                    "width": "671",
-                    "height": "467",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Altersangabe%20%20Advanced.png",
+                    "width": "605",
+                    "height": "413",
                     "alt": ""
                 },
                 "soft_explanation": "Von digitaler Altersdiskriminierung - der Annahme, sie seien nicht in der Lage, Technologie effektiv zu nutzen - bis hin zu Vorbehalten hinsichtlich ihrer Offenheit f\u00fcr Ver\u00e4nderungen - Menschen \u00fcber 50 sind am Arbeitsplatz mit einer F\u00fclle von altersbedingten Vorurteilen konfrontiert. Und obwohl mehr Menschen \u00fcber das traditionelle Rentenalter hinaus weiterarbeiten als je zuvor, stehen viele Unternehmen in den kommenden Jahren vor einem gro\u00dfen Verlust an institutionellem Wissen. Um einen integrativen Arbeitsplatz zu schaffen, an dem sich alle unabh\u00e4ngig von ihrem Alter wertgesch\u00e4tzt und eingebunden f\u00fchlen, konzentriere dich auf erforderliche F\u00e4higkeiten und Kenntnisse und vermeide altersbedingte Stereotypen.",
@@ -504,12 +509,17 @@
                 "lead_video": "",
                 "lead_image": [],
                 "example_image": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/25%20years%20and%20younger.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/25%20years%20and%20younger-1.png",
+                    "width": "605",
+                    "height": "402",
+                    "alt": ""
+                },
+                "example_image_advanced": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/25%20years%20and%20younger%20Advanced.png",
                     "width": "605",
                     "height": "401",
-                    "alt": " An illustration of Witty showing the phrase 'Isn't she too young for the project?'.  'Shall we give her this opportunity to grow?' is proposed as an alternative."
+                    "alt": ""
                 },
-                "example_image_advanced": [],
                 "soft_explanation": "We generally associate ageism with discrimination against older age groups. But ageism cuts both ways. Younger people, too, experience age-based discrimination, especially in a c<span style=\"color: #444444; background-color: white;\">orporate culture that equates years on the job with skill<\/span> and the ability to take on responsibility. Negative stereotypes about Millenials and Gen Z, from a \u201cneed to be coddled\u201d to a lack of interest in \u201cputting in the work,\u201d <span style=\"color: #444444; background-color: white;\">negatively impact their career trajectories and access to mentorship and promotions. Avoid age-based clich\u00e9s to show you value people for their abilities and capabilities no matter their chronological age.<\/span>",
                 "hard_facts": "",
                 "hero_figure": "",
@@ -604,12 +614,17 @@
                     "alt": "Illustration: A man in a suit with his arms akimbo The image title says Agentic language."
                 },
                 "example_image": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Agentic%20language-1.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Agentic%20language-2.png",
                     "width": "605",
                     "height": "433",
-                    "alt": "Eine Illustration von Witty des Satzes 'In this new project manager role, [assertiveness] and [determination] are crucial.'. Als Alternative f\u00fcr den Begriff in Klammern wird \u2018focus\u2019 vorgeschlagen."
+                    "alt": ""
                 },
-                "example_image_advanced": [],
+                "example_image_advanced": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Agentic%20language%20Advanced.png",
+                    "width": "605",
+                    "height": "433",
+                    "alt": ""
+                },
                 "soft_explanation": "<p style=\"\"><span style=\"color: #000000;\">As we grow up, we learn to associate words like <\/span><em><span style=\"color: #000000;\">take charge<\/span><\/em><span style=\"color: #000000;\">, <\/span><em><span style=\"color: #000000;\">determined<\/span><\/em><span style=\"color: #000000;\">, or <\/span><em><span style=\"color: #000000;\">outperforming <\/span><\/em><span style=\"color: #000000;\">with men, power, and the pursuit of personal success. These words are called <\/span><em><span style=\"color: #000000;\">agentic<\/span><\/em><span style=\"color: #000000;\">. They put self-advancement over collaboration. But women and Generation Z are socialized to value collaboration. By avoiding agentic words, you help build an environment where all genders and ages feel they can thrive.<\/span><\/p>",
                 "hard_facts": "<p>In companies that favor agentic words, men are more likely to be considered leadership material. If agentic language is associated with leadership, can\u2019t women simply adopt agentic language to show their capacity to lead and succeed? Unfortunately, it\u2019s not that easy.<\/p>\n<p>Studies show that women who \u201cspeak agentic\u201d are judged more harshly and considered less likable than their male counterparts. In 3 out of 4 performance reviews, women are criticized for assertiveness in tone and language. This assertiveness double-bind is the <em>Goldilocks Dilemma<\/em>. Not catering to expectations of how women should speak adversely affects their access to promotions or career opportunities. And not speaking like leaders does, too.&nbsp;<\/p>\n<p>The opposite of agentic words are <a href=\"https:\/\/www.witty.works\/en\/subcategories\/communal-language\" rel=\"noopener\" target=\"_blank\">communal words<\/a>. By replacing agentic with communal concepts, organizations show they value team-minded thinking and mutual support. Which, in turn, raises their workplace appeal among people who identify as female and those who prefer working in teams.<\/p>",
                 "hero_figure": "https:\/\/www.witty.works\/hubfs\/Swithun%20Mason%20-%20MaonBreese%20-%20Quote%202%20-%20En%20(1).png,1536,864",
@@ -645,9 +660,9 @@
                     "alt": "Illustration: Ein Mann im Anzug mit verschr\u00e4nkten Armen. Der Titel des Bildes lautet \"Agentische Sprache\"."
                 },
                 "example_image": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Agentische%20Sprache-1.png",
-                    "width": "806",
-                    "height": "488",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Agentische%20Sprache-2.png",
+                    "width": "605",
+                    "height": "395",
                     "alt": ""
                 },
                 "example_image_advanced": {
@@ -918,12 +933,17 @@
                 "lead_video": "",
                 "lead_image": [],
                 "example_image": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Behavior.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Behavior-1.png",
                     "width": "605",
                     "height": "398",
-                    "alt": " An illustration of Witty shows the phrase 'He's a loner [person in need of personal time to refocus] and not much for socializing.\u2019 The words in brackets are shown as alternatives."
+                    "alt": ""
                 },
-                "example_image_advanced": [],
+                "example_image_advanced": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Behavior%20Advanced.png",
+                    "width": "605",
+                    "height": "398",
+                    "alt": ""
+                },
                 "soft_explanation": "",
                 "hard_facts": "",
                 "hero_figure": "",
@@ -954,13 +974,13 @@
                 "lead_video": "",
                 "lead_image": [],
                 "example_image": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Verhalten%20Advanced.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Verhalten%20(2).png",
                     "width": "605",
                     "height": "413",
                     "alt": ""
                 },
                 "example_image_advanced": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Verhalten-1.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Verhalten%20Advanced.png",
                     "width": "605",
                     "height": "413",
                     "alt": ""
@@ -1154,10 +1174,10 @@
                     "alt": "Illustration: Eine Person sagt: \"Er? Sie?\" Eine andere Person sagt: \"Wir. Alle. Du.\" Eine dritte Person antwortet mit einem Herz in Regenbogenfarben."
                 },
                 "example_image": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Bin%C3%A4re%20Pronomen.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Bin%C3%A4re%20Pronomen-1.png",
                     "width": "605",
                     "height": "412",
-                    "alt": "Eine Illustration von Witty des Satzes 'Wenn jemand Hilfe braucht, kann [er oder sie] mich jederzeit ansprechen.'. Als Alternative f\u00fcr den Begriff in Klammern wird 'bin ich jederzeit f\u00fcr alle ansprechbar' vorgeschlagen."
+                    "alt": ""
                 },
                 "example_image_advanced": {
                     "src": "https:\/\/www.witty.works\/hubfs\/Bin%C3%A4re%20Pronomen%20Advanced.png",
@@ -1344,13 +1364,13 @@
                 "lead_video": "",
                 "lead_image": [],
                 "example_image": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Denkf%C3%A4higkeit.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Denkf%C3%A4higkeit-1.png",
                     "width": "605",
                     "height": "413",
-                    "alt": "Eine Illustration des Satzes 'Das war wirklich dumm [gedankenlos] von ihm.'. Die von Witty vorgeschlagene Alternative ist in Klammern."
+                    "alt": ""
                 },
                 "example_image_advanced": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Denkf%C3%A4higkeit%20Advanced.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Denkf%C3%A4higkeit%20Advanced-1.png",
                     "width": "605",
                     "height": "413",
                     "alt": ""
@@ -1403,7 +1423,12 @@
                     "height": "426",
                     "alt": " An illustration of Witty shows the phrase 'We can't have a lunatic [person with poor impulse control] deliver our keynote speech.\u2019 The words in brackets are shown as alternatives."
                 },
-                "example_image_advanced": [],
+                "example_image_advanced": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Cognitive%20perception%20Advanced.png",
+                    "width": "605",
+                    "height": "405",
+                    "alt": ""
+                },
                 "soft_explanation": "",
                 "hard_facts": "",
                 "hero_figure": "",
@@ -1434,12 +1459,17 @@
                 "lead_video": "",
                 "lead_image": [],
                 "example_image": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Wahrnehmung%20(1).png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Wahrnehmung-1.png",
                     "width": "605",
                     "height": "435",
                     "alt": ""
                 },
-                "example_image_advanced": [],
+                "example_image_advanced": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Wahrnehmung%20Advanced.png",
+                    "width": "605",
+                    "height": "435",
+                    "alt": ""
+                },
                 "soft_explanation": "",
                 "hard_facts": "",
                 "hero_figure": "",
@@ -1494,9 +1524,9 @@
                     "alt": ""
                 },
                 "example_image_advanced": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Color%20Advanced.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Color%20Advanced-1.png",
                     "width": "605",
-                    "height": "410",
+                    "height": "373",
                     "alt": ""
                 },
                 "soft_explanation": "<p><span>We use colors every day to describe the world around us. This works great for things and their actual colors. It\u2019s when we use colors to refer to ideas attached to colors, where using color words can become hurtful. Using color words for skin is one of the tools of the discrimination based on skin color, or skin tone in colorism and shadism. Color words as a way to describe ideas can be highly offensive to the people around you who live with racialized identities.<\/span><\/p>",
@@ -1535,7 +1565,7 @@
                     "alt": ""
                 },
                 "example_image_advanced": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Farbw%C3%B6rter%20Advanced.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Farbw%C3%B6rter%20Advanced-1.png",
                     "width": "605",
                     "height": "404",
                     "alt": ""
@@ -1689,10 +1719,10 @@
                     "alt": ""
                 },
                 "example_image_advanced": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/culture_advanced-1.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/cultural_stereotype_advanced.png",
                     "width": "605",
-                    "height": "402",
-                    "alt": "Her sassy  (inclusive alternative: stylish) outfit caught everyone's attention."
+                    "height": "431",
+                    "alt": ""
                 },
                 "soft_explanation": "Punctual Germans, polite Japanese, argumentative Italians: Generalizations can be well-intentioned. But they fuel prejudice and discrimination, because they reduce people to arbitrarily ascribed characteristics. Cultural stereotypes can also be an expression of ethnocentrism - a way of seeing the world solely from the perspective of one's own culture, customs and values. This can isolate and alienate people - and adversely affect the working relationship.",
                 "hard_facts": "",
@@ -1730,7 +1760,7 @@
                     "alt": ""
                 },
                 "example_image_advanced": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Kultur%20Advanced.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Kultur%20Advanced-1.png",
                     "width": "605",
                     "height": "422",
                     "alt": ""
@@ -1968,12 +1998,17 @@
                     "alt": "Illustration showing a person in pants who says, great, awesome, excellent, fantastic! All in upper case. A person in a skirt stands listening"
                 },
                 "example_image": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Exaggeration.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Exaggeration-2.png",
+                    "width": "605",
+                    "height": "428",
+                    "alt": ""
+                },
+                "example_image_advanced": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Exaggeration%20Advanced%20(1).png",
                     "width": "605",
                     "height": "407",
-                    "alt": "An illustration of Witty showing the phrase ' Trust us with your brand. We\u2019re the\u00a0best [We build trust]\u00a0in the business.' The words in brackets are shown as alternatives."
+                    "alt": ""
                 },
-                "example_image_advanced": [],
                 "soft_explanation": "The best! The greatest! Loud messages are everywhere. We\u2019re led to believe that joining the loud crowd will let us reach and convince readers. True, exaggeration grabs attention. It\u2019s also likely to damage our credibility. Social-media savvy Generation Z is especially quick to see through over-the-top claims. Keeping our messaging honest and straightforward helps&nbsp; people build trust and identify us as a reliable source.",
                 "hard_facts": "<p>Dramatizing, embellishing, overstating, and hyperbole aim to draw attention, impress, and influence. But audiences know: If something sounds too good to be true, it probably is. Exaggerations give statements an untrue ring, and they expose an underlying intention - manipulation. And this can negatively affect first impressions. Research shows audiences can read intentions behind over-exaggerations without falling for them.<br>In a bid to attract talent, companies are tempted to use hyperbolic missives about their achievements. This <em>bragging <\/em>can deter people from applying. Because they doubt the company\u2019s credibility \u2013 or feel they can\u2019t measure up. Another drawback of exaggerations: They challenge people to prove us wrong.&nbsp;<br>When we want to make a point or communicate an idea that we feel is important, we look for ways to amplify our message. When used judiciously, one well-placed exaggeration can help make our argument more memorable. Hyperbole has its place in making a story or statement entertaining. But if you want to connect and build relationships and trust in a business environment, understatement, verifiable arguments, and specific language are the way to go.<\/p>",
                 "hero_figure": "https:\/\/www.witty.works\/hubfs\/76%25%20see%20advertising%20as%20exaggerated%20EN.png,1024,576",
@@ -2014,7 +2049,12 @@
                     "height": "435",
                     "alt": ""
                 },
-                "example_image_advanced": [],
+                "example_image_advanced": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/%C3%9Cbertreibung_advanced-1.png",
+                    "width": "605",
+                    "height": "412",
+                    "alt": ""
+                },
                 "soft_explanation": "<p><span>Der Beste! Das Gr\u00f6\u00dfte! Laute Botschaften finden sich \u00fcberall. Wir meinen, dass wir mit lauten Botschaften Leserinnen und Leser besser erreichen und \u00fcberzeugen k\u00f6nnen. Es stimmt, \u00dcbertreibung bringt Aufmerksamkeit. Aber gleichzeitig schadet sie unserer Glaubw\u00fcrdigkeit. Die Social-Media-affine Generation Z durchschaut \u00fcbertriebene Behauptungen besonders schnell. Wenn wir ehrlich und geradlinig sind, bauen Menschen leichter Vertrauen auf und nehmen uns als ernstzunehmende*n Ansprechpartner*in wahr.<\/span><\/p>",
                 "hard_facts": "<p><span>Dramatisiert, ausgeschm\u00fcckt, aufgebauscht und \u00fcberspitzt: \u00dcbertreibungen sollen Aufmerksamkeit erregen und beeindrucken. Aber das Publikum wei\u00df: Wenn\u2019s zu sch\u00f6n klingt, um wahr zu sein, ist es das wohl auch. Studien zeigen, Leute k\u00f6nnen die Absicht hinter \u00dcbertreibungen erkennen, ohne auf sie hereinzufallen. \u00dcbertreibung verr\u00e4t immer auch die dahinter liegende Absicht - Manipulation. Und das kann den ersten Eindruck tr\u00fcben.<\/span><\/p>\n<p><span>Im Bestreben, Talente f\u00fcr sich zu begeistern, sind Unternehmen geneigt, mit ihrem Status und ihren Leistungen zu prahlen. Diese Aufschneiderei kann Bewerbende abschrecken. Sei es, weil sie an der Ernsthaftigkeit des Unternehmens zweifeln oder glauben, in einer lauten Kultur nicht mithalten zu k\u00f6nnen. Ein weiterer Nachteil von \u00dcbertreibung: Sie macht Leuten Lust, uns das Gegenteil zu beweisen. <\/span><\/p>\n<p><span>Wenn wir einen Standpunkt vertreten oder eine Idee r\u00fcberbringen wollen, die uns wichtig ist, suchen wir nach Stilmitteln, die unserer Botschaft Gewicht geben. Mit Bedacht eingesetzt, macht eine gut platzierte \u00dcbertreibung Argumente anschaulicher oder einpr\u00e4gsamer. \u00dcberspitzungen machen Geschichten oder Pointen unterhaltsamer. Aber wenn du im gesch\u00e4ftlichen Umfeld Beziehungen und Vertrauen aufbauen willst, sind konkrete Zahlen, \u00fcberpr\u00fcfbare Argumente und sachliche Sprache ein guter Weg.<\/span><\/p>",
                 "hero_figure": "https:\/\/www.witty.works\/hubfs\/76%25%20der%20Befragten%20%20halten%20Werbung%20f%C3%BCr%20%C3%9Cbertreibung%20DE.png,1024,576",
@@ -2104,7 +2144,12 @@
                     "height": "389",
                     "alt": "Eine Illustration des Satzes 'Aktuell haben wir in der Agentur zwei Lehrt\u00f6chter [Auszubildende].\u2019. Die von Witty vorgeschlagene Alternative ist in Klammern."
                 },
-                "example_image_advanced": [],
+                "example_image_advanced": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Frauenklischee%20Advanced.png",
+                    "width": "605",
+                    "height": "389",
+                    "alt": ""
+                },
                 "soft_explanation": "",
                 "hard_facts": "",
                 "hero_figure": "",
@@ -2202,12 +2247,17 @@
                     "alt": "Illustration einer vielf\u00e4ltigen Gruppe von l\u00e4chelnden Menschen, die einer Person zuh\u00f6ren. Ihre Sprechblase ist eine Mischung aus W\u00f6rtern und Wolken."
                 },
                 "example_image": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/F%C3%BCllw%C3%B6rter.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/F%C3%BCllw%C3%B6rter-1.png",
                     "width": "605",
                     "height": "435",
-                    "alt": "Eine Illustration von Witty des Satzes \u2018[Wohlgemerkt], wir haben unser Umsatzziel [zweifelsfrei] erreicht.'. Witty schl\u00e4gt vor, die Begriffe in Klammern wegzulassen."
+                    "alt": ""
                 },
-                "example_image_advanced": [],
+                "example_image_advanced": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/F%C3%BCllw%C3%B6rter%20Advanced.png",
+                    "width": "605",
+                    "height": "435",
+                    "alt": ""
+                },
                 "soft_explanation": "<em>\u00c4hm<\/em>, <em>irgendwie<\/em>, <em>du wei\u00dft schon<\/em>: F\u00fcllw\u00f6rter sind in unseren S\u00e4tzen und Gespr\u00e4chen allgegenw\u00e4rtig. Aber F\u00fcllw\u00f6rter k\u00f6nnen H\u00fcrden sein. Sie lenken von der Botschaft ab, die wir r\u00fcberbringen wollen - und machen sie f\u00fcr viele unverst\u00e4ndlicher. F\u00fcllw\u00f6rter sind eine der gr\u00f6\u00dften Herausforderungen f\u00fcr die Zusammenarbeit von Menschen mit unterschiedlichem Sprachhintergrund: Sie f\u00fchren zu Missverst\u00e4ndnissen in der t\u00e4glichen Kommunikation.",
                 "hard_facts": "Wenn du F\u00fcllw\u00f6rter in Teambesprechungen sparsam und gezielt einsetzt, kannst du damit zeigen, dass du einen kooperativen Ansatz bevorzugst. Wenn du aber mit Menschen mit unterschiedlichen sprachlichen Hintergr\u00fcnden und einer anderen Art der Sprachverarbeitung zusammenarbeitest, solltest du F\u00fcllw\u00f6rter vermeiden, damit dich auch wirklich alle verstehen.<br><br>F\u00fcllw\u00f6rter k\u00f6nnen einen Hinweis auf die Machtdynamik in einer Gespr\u00e4chssituation geben. Wenn du viele F\u00fcllw\u00f6rter verwendest, k\u00f6nnte das darauf hindeuten, dass du die Machtdynamik einer Gruppe nicht herausfordern willst. Du hast ein Teammitglied, das \u00fcberm\u00e4\u00dfig viele Ausschlussklauseln und z\u00f6gerliche F\u00fcllw\u00f6rter verwendet? Zeig Interesse und biete dich f\u00fcr ein Gespr\u00e4ch an.",
                 "hero_figure": "https:\/\/www.witty.works\/hubfs\/Sprachbarrieren%20sind%20die%20m%C3%B6gliche%20Ursache%20f%C3%BCr%2025%20Prozent%20aller%20Unf%C3%A4lle%20am%20Arbeitsplatz.png,1024,576",
@@ -2251,12 +2301,17 @@
                 "lead_video": "",
                 "lead_image": [],
                 "example_image": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Formality.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Formality-1.png",
                     "width": "605",
                     "height": "426",
-                    "alt": " An illustration of Witty shows the phrase 'We look forward to your reply. Sincerely yours, [Let us know if you need anything,]\u2019 The words in brackets are shown as alternatives."
+                    "alt": ""
                 },
-                "example_image_advanced": [],
+                "example_image_advanced": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Formality%20Advanced.png",
+                    "width": "605",
+                    "height": "426",
+                    "alt": ""
+                },
                 "soft_explanation": "",
                 "hard_facts": "",
                 "hero_figure": "",
@@ -2352,10 +2407,10 @@
                     "alt": "Illustration: A man in a suit with his arms akimbo stands in the spotlight surrounded by a diverse crowd in the shadows"
                 },
                 "example_image": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Generic%20masculine.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Generic%20masculine-1.png",
                     "width": "605",
-                    "height": "457",
-                    "alt": "An illustration of Witty showing the phrase ' when\u00a0a doctor [doctors]\u00a0is on non-resident call,\u00a0he [they]\u00a0is required to provide patient treatment.' The words in brackets are shown as alternatives."
+                    "height": "400",
+                    "alt": ""
                 },
                 "example_image_advanced": [],
                 "soft_explanation": "<p><span>A superhero, a surgeon, and a priest walk into a bar*. If you\u2019re picturing three men, your brain has tripped over gender stereotypes. These stereotypes are triggered by the traditional gender images around us. It takes our brain some backtracking, or a nudge, to realize these three could be women, non-binary, or a mixed group. You have several options to nudge brains into including all genders (see below). <\/span><\/p>\n<p><span>The punchline? Is \u201cOuch.\u201d \ud83e\udd71<\/span><\/p>",
@@ -2393,15 +2448,15 @@
                     "alt": "Illustration: Ein Mann im Anzug mit verschr\u00e4nkten Armen steht im Scheinwerferlicht, umgeben von einer vielf\u00e4ltigen Menschenmenge im Schatten"
                 },
                 "example_image": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Generisches%20Maskulinum-1.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Generisches%20Maskulinum-2.png",
                     "width": "605",
                     "height": "399",
                     "alt": ""
                 },
                 "example_image_advanced": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Generisches%20Maskulinum%20Advanced.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Generisches%20Maskulinum%20Advanced-1.png",
                     "width": "605",
-                    "height": "395",
+                    "height": "399",
                     "alt": ""
                 },
                 "soft_explanation": "<p><span>Treffen sich ein Superheld, ein Chirurg und ein Priester in einer Bar. Wenn vor deinem geistigen Auge gerade drei M\u00e4nner am Tresen standen, ist dein Gehirn \u00fcber Geschlechterklischees gestolpert. Sie entstehen durch die traditionellen Rollenbilder, mit denen wir aufwachsen. Unser Gehirn braucht einen kleinen Schubs, um zu erkennen, dass die drei trans, nicht-bin\u00e4r, Frauen oder eine gemischte Gruppe sein k\u00f6nnten. Es gibt mehrere M\u00f6glichkeiten, wie du Lesende inspirieren kannst, alle Geschlechterm\u00f6glichkeiten zu sehen (siehe unten).<\/span><\/p>",
@@ -2463,7 +2518,7 @@
                     "alt": ""
                 },
                 "example_image_advanced": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Gender%20binary%20Advanced.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Gender%20binary%20Advanced-1.png",
                     "width": "605",
                     "height": "395",
                     "alt": ""
@@ -2557,12 +2612,17 @@
                 "lead_video": "",
                 "lead_image": [],
                 "example_image": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Gender-specific-abbreviation.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Gender-specific-abbreviation-1.png",
                     "width": "605",
                     "height": "424",
                     "alt": ""
                 },
-                "example_image_advanced": [],
+                "example_image_advanced": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Gender-specific-abbreviation%20Advanced%20(1).png",
+                    "width": "605",
+                    "height": "424",
+                    "alt": ""
+                },
                 "soft_explanation": "",
                 "hard_facts": "",
                 "hero_figure": "",
@@ -2593,12 +2653,17 @@
                 "lead_video": "",
                 "lead_image": [],
                 "example_image": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Geschlechter-Spezifische%20Abk%C3%BCrzung-1.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Geschlechter-Spezifische%20Abk%C3%BCrzung-2.png",
                     "width": "605",
                     "height": "407",
-                    "alt": "Eine Illustration des Satzes 'F\u00fcr unsere Partner im Gro\u00dfraum Frankfurt sowie andere St\u00e4dte suchen wir ab sofort motivierte und engagierte Erzieher, Kinderpfleger und Sozialp\u00e4dagogen (m\/w) [(d\/w\/m)].\u2019 Die von Witty vorgeschlagene Alternative ist in eckigen Klammern."
+                    "alt": ""
                 },
-                "example_image_advanced": [],
+                "example_image_advanced": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Geschlechter-Spezifische%20Abk%C3%BCrzung%20Advanced.png",
+                    "width": "605",
+                    "height": "407",
+                    "alt": ""
+                },
                 "soft_explanation": "",
                 "hard_facts": "",
                 "hero_figure": "",
@@ -2697,7 +2762,7 @@
                     "alt": "An illustration of Witty showing the phrase 'They used to turn a deaf ear to [ignore] such requests'. The words in brackets are shown as alternatives."
                 },
                 "example_image_advanced": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Hearing_advanced.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Hearing_advanced-1.png",
                     "width": "605",
                     "height": "373",
                     "alt": ""
@@ -2732,10 +2797,10 @@
                 "lead_video": "",
                 "lead_image": [],
                 "example_image": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/H%C3%B6rf%C3%A4higkeit-1.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/H%C3%B6rf%C3%A4higkeit-2.png",
                     "width": "605",
                     "height": "404",
-                    "alt": "Eine Illustration des Satzes \u2018Die Kundin ist auf taube Ohren sto\u00dfen [wurde ignoriert]. Die von Witty vorgeschlagene Alternative ist in Klammern."
+                    "alt": ""
                 },
                 "example_image_advanced": {
                     "src": "https:\/\/www.witty.works\/hubfs\/H%C3%B6rf%C3%A4higkeit%20Advanced.png",
@@ -2801,7 +2866,12 @@
                     "height": "404",
                     "alt": "An illustration of Witty showing the phrase 'How many man-hours [person-hours] will this project take?'. The words in brackets are shown as alternatives."
                 },
-                "example_image_advanced": [],
+                "example_image_advanced": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/gender_cues_advanced.png",
+                    "width": "605",
+                    "height": "421",
+                    "alt": ""
+                },
                 "soft_explanation": "Someone glares at a <em>user manual <\/em>at the office. Shuttles whizz around a<em> man-made mothership<\/em> in our latest ebook read, and a <em>foreman<\/em> talks to his errant employee <em>man-to-man<\/em>. All of these scenes, we are taught, are free of gender cues. But in the movies inside our heads, we cast a single gender. And because most gender cues are male, we cast men. Other genders stay invisible. By using gender-neutral language, you signal that everyone deserves to be seen.",
                 "hard_facts": "Gender bias and stereotypes are deeply ingrained in how we think and speak. That\u2019s why gender cues hide in expressions and imagery we use every day. While female gender cues do exist, such as <em>mother lode<\/em> or <em>sister ship<\/em>, most are male. Male gender cues become even more effective when they frame a historically male-dominated workplace as a male space or refer to traits traditionally seen as male.<br>Masculine generic nouns and the male generic pronoun <em>he<\/em> in their wake are essential building blocks for gender cues. On their own, masculine generics are easy to replace with more inclusive alternatives. Neutralizing masculine generics hiding in compound nouns, common expressions, and cultural references can be tricker. In some cases, it takes getting comfortable with <em>going where no one has gone before<\/em>. Linguistically speaking, of course.",
                 "hero_figure": "https:\/\/www.witty.works\/hubfs\/giphy-what%20am%20i%20invisible.gif,480,480",
@@ -2940,15 +3010,15 @@
                     "alt": "Illustration: Eine Person sagt, \"...den Druck rausnehmen und um die Ecke denken.\" Die andere Person sagt \"Klar!\", aber denkt \"Welche Ecke?\"  "
                 },
                 "example_image": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Worth%C3%BClsen-1.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Worth%C3%BClsen-2.png",
                     "width": "605",
-                    "height": "425",
+                    "height": "386",
                     "alt": ""
                 },
                 "example_image_advanced": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Worth%C3%BClsen%20Advanced.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Worth%C3%BClsen%20Advanced-1.png",
                     "width": "605",
-                    "height": "386",
+                    "height": "425",
                     "alt": ""
                 },
                 "soft_explanation": "Worth\u00fclsen gibt es \u00fcberall. Sie versprechen <em>ein attraktives Gehalt<\/em>, locken mit <em>flachen Hierarchien <\/em>oder bieten <em>personalisierte Kundenerlebnisse<\/em>. Diese Begriffe und Phrasen sind so schwammig und \u00fcberstrapaziert, sie sind bedeutungslos geworden. Worth\u00fclsen langweilen, ver\u00e4rgern, und sie verunsichern. Denn das Schwammige kann sich kalkuliert anf\u00fchlen - wie Augenwischerei, weil jemand nicht konkret sein kann oder will. Du willst Menschen helfen, sich auf deine Worte einzulassen? Sei authentisch. Sei konkret. Verwende Zahlen und greifbare Beispiele.",
@@ -3096,7 +3166,7 @@
                     "alt": ""
                 },
                 "example_image_advanced": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Traditional%20leadership%20Advanced.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Traditional%20leadership%20Advanced-1.png",
                     "width": "605",
                     "height": "394",
                     "alt": ""
@@ -3136,15 +3206,15 @@
                     "alt": "Illustration einer vielf\u00e4ltigen Gruppe mit 5 Personen unterschiedlichen Alters, K\u00f6rperbaus und ethnischer Herkunft"
                 },
                 "example_image": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/F%C3%BChrungsbild%20(1).png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/F%C3%BChrungsbild-2.png",
                     "width": "605",
-                    "height": "458",
+                    "height": "389",
                     "alt": ""
                 },
                 "example_image_advanced": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/F%C3%BChrungsbild%20Advanced%20(2).png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/F%C3%BChrungsbild%20Advanced-2.png",
                     "width": "605",
-                    "height": "389",
+                    "height": "416",
                     "alt": ""
                 },
                 "soft_explanation": "Im Laufe unserer Geschichte deckten sich die Vorstellungen von einer effektiven F\u00fchrungspers\u00f6nlichkeit mit m\u00e4nnlichen Eigenschaften - zielstrebig, wettbewerbsorientiert und autorit\u00e4r. Traditionell weibliche Eigenschaften wurden nicht als F\u00fchrungsqualit\u00e4ten wahrgenommen. Heute haben wir andere Vorstellungen davon, was wir heute von F\u00fchrungskr\u00e4ften erwarten. Die Vermeidung von m\u00e4nnlichen F\u00fchrungsstereotypen hilft dabei, einen Raum zu schaffen, in dem Menschen mit der F\u00e4higkeit, uns zu unterst\u00fctzen, zu ermutigen und zu inspirieren, f\u00fcr eine gemeinsame Sache zu arbeiten, unabh\u00e4ngig von ihrer Geschlechtsidentit\u00e4t F\u00fchrungsaufgaben \u00fcbernehmen k\u00f6nnen.",
@@ -3190,7 +3260,7 @@
                 "lead_video": "",
                 "lead_image": [],
                 "example_image": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Learning.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Learning-1.png",
                     "width": "605",
                     "height": "403",
                     "alt": ""
@@ -3286,7 +3356,7 @@
                     "alt": ""
                 },
                 "example_image_advanced": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Male%20stereotype%20Advanced.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Male%20stereotype%20Advanced-1.png",
                     "width": "605",
                     "height": "395",
                     "alt": ""
@@ -3326,12 +3396,7 @@
                     "height": "429",
                     "alt": ""
                 },
-                "example_image_advanced": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/M%C3%A4nnerklischee%20%20Advanced.png",
-                    "width": "663",
-                    "height": "429",
-                    "alt": ""
-                },
+                "example_image_advanced": [],
                 "soft_explanation": "",
                 "hard_facts": "",
                 "hero_figure": "",
@@ -3375,9 +3440,9 @@
                 "lead_video": "",
                 "lead_image": [],
                 "example_image": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Medical%20state-1.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Medical%20state-2.png",
                     "width": "605",
-                    "height": "426",
+                    "height": "381",
                     "alt": ""
                 },
                 "example_image_advanced": {
@@ -3416,12 +3481,17 @@
                 "lead_video": "",
                 "lead_image": [],
                 "example_image": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Gesundheitsbild-1.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Gesundheitsbild-3.png",
                     "width": "605",
-                    "height": "413",
-                    "alt": "Eine Illustration des Satzes 'Seit dem Unfall ist sie ein Pflegefall [jemand mit Assistenzbedarf].\u2019. Die von Witty vorgeschlagene Alternative ist in Klammern."
+                    "height": "366",
+                    "alt": ""
                 },
-                "example_image_advanced": [],
+                "example_image_advanced": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Gesundheitsbild%20Advanced.png",
+                    "width": "605",
+                    "height": "366",
+                    "alt": ""
+                },
                 "soft_explanation": "",
                 "hard_facts": "",
                 "hero_figure": "",
@@ -3468,12 +3538,12 @@
                     "src": "https:\/\/www.witty.works\/hubfs\/Mental%20wellbeing-1.png",
                     "width": "605",
                     "height": "386",
-                    "alt": "An illustration of Witty showing the phrase 'Mason is so OCD [perfectionist] when it comes to filing.' The words in brackets are shown as alternatives."
+                    "alt": ""
                 },
                 "example_image_advanced": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Mental%20wellbeing%20advanced.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Mental%20wellbeing%20advanced-1.png",
                     "width": "605",
-                    "height": "386",
+                    "height": "391",
                     "alt": ""
                 },
                 "soft_explanation": "",
@@ -3512,7 +3582,7 @@
                     "alt": " Eine Illustration von Witty des Satzes 'Mason ist so [zwanghaft], wenn es um die Ablage geht.'. Als Alternative f\u00fcr den Begriff in Klammern wird \u2018perfektionistisch\u2019 vorgeschlagen."
                 },
                 "example_image_advanced": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Mentales%20Wohlbefinden%20Advanced.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Mentales%20Wohlbefinden%20Advanced-1.png",
                     "width": "605",
                     "height": "372",
                     "alt": ""
@@ -3566,7 +3636,7 @@
                     "alt": "The city has seen an increase in illegal immigrants (Inclusive Altnernative: undocumented persons))."
                 },
                 "example_image_advanced": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Migration%20background%20(Advanced).png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Migration%20background%20(Advanced)-1.png",
                     "width": "605",
                     "height": "405",
                     "alt": ""
@@ -3655,12 +3725,17 @@
                 "lead_video": "",
                 "lead_image": [],
                 "example_image": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Military-inspired%20lingo.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Military-inspired%20lingo%20advanced.png",
+                    "width": "605",
+                    "height": "381",
+                    "alt": ""
+                },
+                "example_image_advanced": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Military-inspired%20lingo-1.png",
                     "width": "605",
                     "height": "404",
-                    "alt": "An illustration of Witty showing the phrase 'Putting this pitch together in time will be [an uphill battle]'.'Difficult' is proposed as an alternative for the words in bracket. "
+                    "alt": ""
                 },
-                "example_image_advanced": [],
                 "soft_explanation": "",
                 "hard_facts": "",
                 "hero_figure": "",
@@ -3697,7 +3772,7 @@
                     "alt": "Eine Illustration von Witty des Satzes 'In der Nachbesprechung wurde vom auftraggebenden Unternehmen [schweres Gesch\u00fctz aufgefahren].  Als Alternative f\u00fcr den Begriff in Klammern wird 'heftige Kritik ge\u00e4u\u00dfert' vorgeschlagen. "
                 },
                 "example_image_advanced": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Milit%C3%A4risch-inspirierter%20Jargon%20Advanced.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Milit%C3%A4risch-inspirierter%20Jargon%20Advanced-1.png",
                     "width": "671",
                     "height": "467",
                     "alt": ""
@@ -3751,7 +3826,7 @@
                     "alt": ""
                 },
                 "example_image_advanced": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Mobility%20Advanced.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Mobility%20Advanced-1.png",
                     "width": "605",
                     "height": "404",
                     "alt": ""
@@ -3786,17 +3861,12 @@
                 "lead_video": "",
                 "lead_image": [],
                 "example_image": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/F%C3%A4higkeiten.png",
-                    "width": "671",
-                    "height": "483",
-                    "alt": "Eine Illustration von Witty des Satzes 'Eine unserer ersten Ma\u00dfnahmen war die Einrichtung von [behindertengerechten] Toiletten.'. Als Alternative f\u00fcr den Begriff in Klammern wird 'barrierefreien' vorgeschlagen. "
-                },
-                "example_image_advanced": {
                     "src": "https:\/\/www.witty.works\/hubfs\/mobility%20Advanced.png",
                     "width": "671",
                     "height": "435",
                     "alt": ""
                 },
+                "example_image_advanced": [],
                 "soft_explanation": "<p>Ob bewundernd, staunend oder mitleidig, wenn \u00fcber Menschen gesprochen wird, die mit Mobilit\u00e4tseinschr\u00e4nkungen leben, kommen oft Begriffe zum Einsatz, die Menschen auf das reduzieren, was sie nicht gut oder gar nicht k\u00f6nnen. Ihre Bef\u00e4higung wird in Frage gestellt. Andere nehmen die Behinderung zum Anlass, \u00fcber das Leben oder der Person zu fabulieren, die mit dieser Behinderung lebt. Auf Begriffe aus dem Kontext k\u00f6rperlicher Behinderungen greifen wir auch zur\u00fcck, um Dinge, Systeme oder Technik als wertlos oder funktionsunf\u00e4hig zu beschreiben.<\/p>",
                 "hard_facts": "",
                 "hero_figure": "",
@@ -3887,9 +3957,9 @@
                     "alt": ""
                 },
                 "example_image_advanced": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Sprache%20des%20Nazis%20(advanced).png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Sprache%20des%20Nazis%20(advanced)-1.png",
                     "width": "605",
-                    "height": "425",
+                    "height": "423",
                     "alt": ""
                 },
                 "soft_explanation": "Das NS-Regime bediente sich einer neutralen, sachlichen und technischen Sprache, um die menschenverachtenden Konzepte und die von der B\u00fcrokratie unterst\u00fctzte Maschinerie der Verfolgung und des Massenmords euphemistisch zu kaschieren. Wissenschaftliche Begriffe wurden umgedeutet und instrumentalisiert, um der Ideologie und dem Vorgehen des Regimes den Anschein einer wissenschaftlichen Grundlage zu geben. Von der NS-Propagandamaschine millionenfach wiederholt, waren sie so allgegenw\u00e4rtig, dass viele heute noch W\u00f6rter wie \"Sonderbehandlung\" oder Ausdr\u00fccke wie \"Jedem das Seine\" verwenden, ohne sich deren Nazi-Geschichte bewusst zu sein. F\u00fcr die, die um deren Vergangenheit wissen, kann diese Sprache zutiefst beleidigend sein, schmerzhafte Erfahrungen wachrufen oder Fragen \u00fcber die Geisteshaltung der Person aufwerfen, die sie benutzt.",
@@ -4066,12 +4136,17 @@
                 "lead_video": "",
                 "lead_image": [],
                 "example_image": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/K%C3%B6rperlichkeit.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/K%C3%B6rperlichkeit-1.png",
                     "width": "605",
                     "height": "412",
-                    "alt": "Eine Illustration des Satzes 'Die [hochgewachsene] Kollegin in Blau, die neben ihm steht, arbeitet im Marketing.\u2019. Witty schl\u00e4gt vor, das Wort in Klammern wegzulassen."
+                    "alt": ""
                 },
-                "example_image_advanced": [],
+                "example_image_advanced": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/K%C3%B6rperlichkeit%20Advanced.png",
+                    "width": "605",
+                    "height": "412",
+                    "alt": ""
+                },
                 "soft_explanation": "",
                 "hard_facts": "",
                 "hero_figure": "",
@@ -4124,12 +4199,17 @@
                     "alt": "Illustration of a man and a woman with speech bubbles. One speech bubble shows a tangle of lines. The other speech bubble show a neatly roled up line "
                 },
                 "example_image": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Plain%20English.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Plain%20English-2.png",
                     "width": "605",
-                    "height": "455",
-                    "alt": "An illustration of Witty showing the phrase 'In the light of the upcoming launch of our new series of aircraft engines.' \u2018We're launching our new series of aircraft engines soon.\u00a0\u2019 is shown as alternatives."
+                    "height": "420",
+                    "alt": ""
                 },
-                "example_image_advanced": [],
+                "example_image_advanced": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Plain%20English%20Advanced.png",
+                    "width": "605",
+                    "height": "393",
+                    "alt": ""
+                },
                 "soft_explanation": "Every day, we have to read and understand large amounts of information: emails, reports, presentations, and manuals. We share complex subject matter in teams where many speak English as a second language. And more often than not, we're in a hurry. We don't have time to read text twice to make sure we understand all the information it contains. But misunderstandings can be frustrating - and expensive. With clear and straightforward language, you help everyone collaborate effectively, keep engaged and stay productive.",
                 "hard_facts": "<p><span style=\"\">Plain English is a style of writing that keeps the needs of listeners and readers in mind. The goal is to avoid misunderstandings and make sure everyone understands text the first time they hear or read it. You want people to grasp information quickly and take informed action? Plain and straightforward language is a great way to achieve that and manage language diversity at the same time.<\/span><\/p>\n<p><strong><span style=\"\">Plain English is an important for smooth collaboration in environments where\u2026<\/span><\/strong><\/p>\n<ul>\n<li><span style=\"\">People who use English as a second language work together.<\/span><\/li>\n<li><span style=\"\">People with and without language and linguistic barriers exchange information.<\/span><\/li>\n<li><span style=\"\">People must read and act on information quickly.<\/span><\/li>\n<li><span style=\"\">People read in stressful or distracting situations.<\/span><\/li>\n<li><span style=\"\">People are in a hurry.<\/span><\/li>\n<\/ul>\n<p><strong><span style=\"\">What you can do<\/span><\/strong><\/p>\n<ul>\n<li><span>Use everyday words and expressions. <\/span><\/li>\n<li><span>Keep language clear and easy to understand.<\/span><\/li>\n<li><span>Keep sentences short: Use up to 15\u201320 words.<\/span><\/li>\n<li><span>Avoid jargon.<\/span><\/li>\n<li><span>Write out acronyms and abbreviations. <\/span><\/li>\n<li><span>Use \"you\" and the active voice. <\/span><\/li>\n<li><span>Give instructions in clear calls to action.<\/span><\/li>\n<\/ul>",
                 "hero_figure": "https:\/\/www.witty.works\/hubfs\/Making%20a%20bigger%20impact%20for%20inclusion%20together..png,1024,576",
@@ -4160,12 +4240,17 @@
                 "lead_video": "",
                 "lead_image": [],
                 "example_image": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/leichte%20sprache.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Learning-1.png",
+                    "width": "605",
+                    "height": "403",
+                    "alt": ""
+                },
+                "example_image_advanced": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Leichte%20Sprache%20advanced.png",
                     "width": "671",
                     "height": "467",
-                    "alt": "Eine Illustration von Witty des Satzes 'Die [Vierwaldst\u00e4tterseeschifffahrt] war wundersch\u00f6n.'. Als Alternative f\u00fcr\u00a0den Begriff in Klammern wird 'Schifffahrt auf dem Vierwaldst\u00e4ttersee' vorgeschlagen.\u00a0"
+                    "alt": ""
                 },
-                "example_image_advanced": [],
                 "soft_explanation": "",
                 "hard_facts": "",
                 "hero_figure": "",
@@ -4335,17 +4420,12 @@
                 "lead_video": "",
                 "lead_image": [],
                 "example_image": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Abstammung-2.png",
-                    "width": "605",
-                    "height": "399",
-                    "alt": ""
-                },
-                "example_image_advanced": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Abstammung%20(Advanced).png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Abstammung-3.png",
                     "width": "605",
                     "height": "414",
                     "alt": ""
                 },
+                "example_image_advanced": [],
                 "soft_explanation": "Viele W\u00f6rter und Ausdr\u00fccke im allt\u00e4glichen Sprachgebrauch haben rassistische Urspr\u00fcnge, Untert\u00f6ne und Konnotationen. Einige sind offensichtlich, wie \"Schwarzfahren\", \"Zigeuner\" oder \"Black Magic\". Andere sind weniger offensichtlich, wie der \"Schmelztiegel\" - ein Konzept, das Abstammung auf eine Weise darstellt, die wei\u00dfe Privilegien, die vorherrschende Machtdynamik und Ungleichheiten ausblendet. Und dann gibt es noch rassistische Mikroaggressionen, wie die Frage, wo jemand \"wirklich her ist\", oder das Lob, dass dein Gegen\u00fcber sich in deiner Sprache gut ausdr\u00fccken kann. Alternativ k\u00f6nnen wir fragen, wo unser Gegen\u00fcber schon gelebt hat und anschlie\u00dfend f\u00fcr ein tolles Gespr\u00e4ch danken.",
                 "hard_facts": "",
                 "hero_figure": "",
@@ -4559,7 +4639,7 @@
                 "lead_video": "",
                 "lead_image": [],
                 "example_image": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Speech%20ability-1.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Speech%20ability-2.png",
                     "width": "605",
                     "height": "361",
                     "alt": ""
@@ -4600,13 +4680,13 @@
                 "lead_video": "",
                 "lead_image": [],
                 "example_image": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Sprech-F%C3%A4higkeit-1.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Sprech-F%C3%A4higkeit-2.png",
                     "width": "605",
                     "height": "372",
                     "alt": ""
                 },
                 "example_image_advanced": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Sprech-F%C3%A4higkeit%20Advanced.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Sprech-F%C3%A4higkeit%20Advanced-1.png",
                     "width": "605",
                     "height": "372",
                     "alt": ""
@@ -4654,12 +4734,17 @@
                 "lead_video": "",
                 "lead_image": [],
                 "example_image": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Sports%20terms.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Sports%20terms-1.png",
                     "width": "605",
                     "height": "427",
-                    "alt": "An illustration of Witty showing the phrase 'Purchasing is throwing us a curveball [demanding greater concessions than we can make].' The words in brackets are shown as alternatives."
+                    "alt": ""
                 },
-                "example_image_advanced": [],
+                "example_image_advanced": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Sports%20terms%20advanced.png",
+                    "width": "605",
+                    "height": "427",
+                    "alt": ""
+                },
                 "soft_explanation": "",
                 "hard_facts": "",
                 "hero_figure": "",
@@ -4690,12 +4775,17 @@
                 "lead_video": "",
                 "lead_image": [],
                 "example_image": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Sport%20Jargon.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Sport%20Jargon-1.png",
                     "width": "605",
                     "height": "435",
-                    "alt": "Eine Illustration von Witty des Satzes 'Der Einkauf k\u00e4mpft mit harten Bandagen. Wir sind an einem Punkt in den Verhandlungen angekommen, wo der [Chef in den Ring steigen] muss.'. Als Alternative f\u00fcr den Begriff in Klammern wird 'die Gesch\u00e4ftsleitung \u00fcbernehmen' vorgeschlagen."
+                    "alt": ""
                 },
-                "example_image_advanced": [],
+                "example_image_advanced": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Sport%20Jargon%20Advanced.png",
+                    "width": "605",
+                    "height": "435",
+                    "alt": ""
+                },
                 "soft_explanation": "",
                 "hard_facts": "",
                 "hero_figure": "",
@@ -4744,12 +4834,17 @@
                     "alt": "Illustration of a man and a woman with speech bubbles. One speech bubble shows a tangle of lines. The other speech bubble show a neatly roled up line "
                 },
                 "example_image": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Clarity.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Clarity-1.png",
                     "width": "605",
-                    "height": "433",
-                    "alt": "An illustration of Witty shows the phrase 'What we want to do is to [Our goal: to] boost engagement with a new customer loyalty program.' The words in brackets are shown as alternatives."
+                    "height": "403",
+                    "alt": ""
                 },
-                "example_image_advanced": [],
+                "example_image_advanced": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Clarity%20Advanced%20(1).png",
+                    "width": "605",
+                    "height": "403",
+                    "alt": ""
+                },
                 "soft_explanation": "",
                 "hard_facts": "",
                 "hero_figure": "",
@@ -4844,12 +4939,17 @@
                     "alt": "Illustration of pairs of men and women as astronauts, artists, care workers, professors, construction workers"
                 },
                 "example_image": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Jobs-1.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Jobs-3.png",
                     "width": "605",
                     "height": "404",
                     "alt": ""
                 },
-                "example_image_advanced": [],
+                "example_image_advanced": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Jobs%20Advanced.png",
+                    "width": "605",
+                    "height": "404",
+                    "alt": ""
+                },
                 "soft_explanation": "We use job titles to understand if we\u2019re a good fit for the position a company is looking to fill. And that includes our gender. As many as 79% of jobs ads imply, if unintentionally, the gender of the person expected to do that job. Childhood role models, too, influence who we see when we think of a job. These biases limit candidate pools, pipelines - and the career options and prospects of people of all genders and backgrounds. For an inclusive approach, explore more gender-neutral ways of describing areas of responsibility.",
                 "hard_facts": "<p>Research suggests that we develop gender stereotypes about occupations at a very early age. Evidence of this bias appears in the speech of children as young as 3 years old. It influences whether we can picture our grown-up self in a particular job and thus our career choices. And it affects how we read job titles, not as reference to an advertised role but as an expression of the level of inclusiveness of a company\u2019s culture. How job titles are phrased subtly influences our perception of anticipated career prospects as well as our sense of belonging. They can signal how open a company is to gender-inclusive promotion practices, how much prestige it attaches to a position, and whether it values diverse perspectives and workplace flexibility. Findings suggest that stereotypically male job titles may lead women to assume the company employs more men than women and that women would not be a good fit for that position. In short, they make a job look less appealing to them.<br>Replacing gender-coded titles with more gender-neutral options across the organization can be a powerful signal. It communicates to staff and potential candidates that a company is serious about promoting diversity, equality, inclusion, and belonging. And it shows awareness of and the willingness to address the organization-level mechanisms that reinforce and maintain existing inequalities at work.<\/p>",
                 "hero_figure": "https:\/\/www.witty.works\/hubfs\/witty%20works%20learning%20bite%20job%20titles%20UK%20licensed%20doctors.png,1024,576",
@@ -4885,15 +4985,15 @@
                     "alt": "Illustration von Astronautin und Astronaut, K\u00fcnstlerin und K\u00fcnstler, Pflegerin und Pfleger, Professorin und Professor, Bauarbeiterin und Bauarbeiter "
                 },
                 "example_image": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Berufe.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Berufe-1.png",
                     "width": "605",
                     "height": "395",
-                    "alt": "Eine Illustration von Witty des Satzes \u2018[Hat ein Arzt] au\u00dferhalb des Krankenhauses Bereitschaftsdienst, ...'. Als Alternative f\u00fcr den Begriff in Klammern wird 'Haben \u00c4rzt*innen' vorgeschlagen."
+                    "alt": ""
                 },
                 "example_image_advanced": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Berufe%20Advanced.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Berufe%20Advanced-1.png",
                     "width": "605",
-                    "height": "395",
+                    "height": "444",
                     "alt": ""
                 },
                 "soft_explanation": "Wir verwenden Berufsbezeichnungen, um zu verstehen, ob wir f\u00fcr die Stelle, die ein Unternehmen besetzen m\u00f6chte, geeignet sind. Und dazu geh\u00f6rt auch unser Geschlecht. 79 % aller Stellenanzeigen geben, wenn auch unabsichtlich, das Geschlecht der Person vor, die die Stelle aus\u00fcben soll. Auch die Vorbilder aus der Kindheit beeinflussen, ob wir Frauen oder M\u00e4nner visualisieren, wenn wir an einen Job denken. Diese Vorurteile schr\u00e4nken die Pools und Pipelines ein - und die Karriereoptionen und -aussichten von Menschen aller Geschlechter und Hintergr\u00fcnde. Um einen inklusiven Stil zu verfolgen, solltest du geschlechtsneutrale Beschreibungen f\u00fcr &nbsp;Aufgabenbereiche entwickeln.",
@@ -5068,10 +5168,10 @@
                     "src": "https:\/\/www.witty.works\/hubfs\/Seh-F%C3%A4higkeit.png",
                     "width": "605",
                     "height": "413",
-                    "alt": "Eine Illustration des Satzes 'Den Vertrag w\u00fcrde ich blind [ungelesen] unterschreiben.'. Die von Witty vorgeschlagene Alternative ist in Klammern."
+                    "alt": ""
                 },
                 "example_image_advanced": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Seh-F%C3%A4higkeit%20Advanced.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Seh-F%C3%A4higkeit%20Advanced-1.png",
                     "width": "605",
                     "height": "413",
                     "alt": ""
