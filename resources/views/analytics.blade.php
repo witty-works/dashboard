@@ -110,7 +110,7 @@
             <div class="analytics-tab-line" id="overview-line"></div>
         </div>
          <div class="analytics-tab" id="top-categories-tab" onclick="handleTabClick('top-categories')">
-            {{ __('content.analytic_top_categories') }}
+            {{ __('content.top_categories') }}
             <div id="top-categories-line"></div>
         </div>
          <div class="analytics-tab" id="top-words-tab" onclick="handleTabClick('top-words')">
@@ -819,7 +819,30 @@
                 },
                 options: {
                     tooltips: {
-                        enabled: false,
+                        enabled: true,
+                        mode: 'nearest',
+                        intersect: true,
+                        backgroundColor: '#f5f5f5',
+                        titleFontColor: 'black',
+                        bodyFontColor: 'black',
+                        callbacks: {
+                            title: function(tooltipItems, data) {
+                                return '';
+                            },
+                            label: function(tooltipItem, data) {
+                                return data.datasets[tooltipItem.datasetIndex].label;
+                            },
+                            labelColor: function(tooltipItem, chart) {
+                                return {
+                                    borderColor: 'rgba(0,0,0,0)',
+                                    backgroundColor: 'rgba(0,0,0,0)'
+                                };
+                            },
+                            afterLabel: function(tooltipItem, data) {
+                                return '';
+                            }
+                        },
+                        displayColors: false
                     },
                     onClick: function(e) {
                         const line = this.getElementAtEvent(e)[0];
@@ -841,7 +864,6 @@
                         },
                         labels: {
                             usePointStyle: true,
-                            padding: 15,
                             fontSize: 14,
                             generateLabels: function(chart) {
                                 return chart.data.datasets.map((dataset, i) => {
