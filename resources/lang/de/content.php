@@ -216,7 +216,6 @@ Bitte dein*e Team-Administrator*in <a href="mailto::email">:name</a>, auf <a hre
     'analytics' => 'Statistik',
     'writing_streak' => 'Du hast Witty',
     'top_categories' => 'Top Diversitätsdimensionen',
-    'top_categories_over_time' => 'Top 15 diversity dimensions over time DE',
     'learning_bites_label_line_chart' => 'Klicks auf "Warum?"',
     'popover_label_line_chart' => 'Angeschaut',
     'ignored_label_line_chart' => 'Verworfen',
@@ -442,6 +441,7 @@ Bitte gehe dann erneut auf „Registrieren“, um die Registrierung im "Witty fo
     'toggle_lines' => 'Alle Linien umschalten',
     'analytic_top_words_corporate_rules' => 'Top Wörterbuch-Wörter',
     'analytic_overview' => 'Überblick',
-    'analytic_top_categories' => 'Top 15 Diversitätsdimensionen',
+    'analytic_top_categories' => '15 wichtigsten Diversitätsdimensionen',
     'analytic_top_words' => 'Top Wörter',
+    'top_categories_over_time' => '15 wichtigsten Diversitätsdimensionen auf dem Zeitstrahl',
 ];
