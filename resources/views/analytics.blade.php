@@ -543,11 +543,15 @@
             return;
         }
         const isPremiumUser = @json($is_premium_user);
-
-        if ((isPremiumUser && !data.events?.check_result) || 
-            (isPremiumUser && Object.entries(data.events.check_result).filter(([key, value]) => value > 0).length == 0) ||
+        const showCheckResult = isPremiumUser && 
+            data.events?.check_result &&  
+            Object.entries(data.events.check_result).filter(([key, value]) => value > 0).length > 0 //could adjust this to a min amount of check results
+        
+        if (
             (!isPremiumUser && !data.events?.popover_open) ||
-            (!isPremiumUser && Object.entries(data.events.popover_open).filter(([key, value]) => value > 0).length == 0)) {
+            (!showCheckResult && !data.events?.popover_open) ||            
+            (!isPremiumUser && Object.entries(data.events.popover_open).filter(([key, value]) => value > 0).length == 0) ||
+            (!showCheckResult && Object.entries(data.events.popover_open).filter(([key, value]) => value > 0).length == 0)) {
             handleNoData('loading-icon-overview', 'overview-no-data', '', false);
             return;
         }
@@ -622,36 +626,41 @@
                                 data: aggregatedCheckResultData,
                                 borderColor: colors[0],
                                 fill: false,
-                                label:  @json(__('content.check_result_label_line_chart')) + (!isPremiumUser ? ' ({{ __('teams.witty_teams_only') }})' : ''),
-                                hidden: !isPremiumUser,
+                                label: @json(__('content.check_result_label_line_chart')) + 
+                                    (!isPremiumUser 
+                                    ? ' ({{ __('teams.witty_teams_only') }})' 
+                                    : !showCheckResult 
+                                    ? ' ({{ __('teams.not_enough_data_to_display') }})' 
+                                    : ''),
+                                hidden: !showCheckResult,
                             },
                             {
                                 data: aggregatedPopoverOpenData,
                                 borderColor: colors[8],
                                 fill: false,
                                 label: "{{ __('content.popover_label_line_chart') }}",
-                                hidden: isPremiumUser,
+                                hidden: showCheckResult,
                             },
                             {
                                 data: aggregatedAlternativeData,
                                 borderColor: colors[16],
                                 fill: false,
                                 label: "{{ __('content.alternative_label_line_chart') }}",
-                                hidden: isPremiumUser,
+                                hidden: showCheckResult,
                             },
                             {
                                 data: aggregatedIgnoreData,
                                 borderColor: colors[24],
                                 fill: false,
                                 label:  "{{ __('content.ignored_label_line_chart') }}",
-                                hidden: isPremiumUser,
+                                hidden: showCheckResult,
                             },
                             {
                                 data: aggregatedLearningBitesData,
                                 borderColor: colors[32],
                                 fill: false,
                                 label:  @json(__('content.learning_bites_label_line_chart')),
-                                hidden: isPremiumUser,
+                                hidden: showCheckResult,
                             },
                         ]
                     },
@@ -675,7 +684,7 @@
                                     return chart.data.datasets.map((dataset, i) => {
                                         //workaround for charjs initial hidden state bug
                                         let isCurrentlyHidden = chart.getDatasetMeta(i).hidden === false || chart.getDatasetMeta(i).hidden === true;
-                                        if (isPremiumUser) {
+                                        if (showCheckResult) {
                                             isCurrentlyHidden = (i === 0 ? isCurrentlyHidden : !isCurrentlyHidden);
                                         } else {
                                             isCurrentlyHidden = (i === 0 ? true : false);

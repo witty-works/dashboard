@@ -29,6 +29,7 @@ return [
     'ask_owner_to_buy_or_leave_to_create_own_team' => 'Please ask the team owner :name (:email) to buy Witty licenses or leave your current team to create own team.',
     'accepted_invitation' => 'Great! You have accepted the invitation to join the ":team" team.',
     'witty_teams_only' => 'Upgrade',
+    'not_enough_data_to_display' => 'Not enough data',
     'locked_by_team' => 'This setting has been locked by your team administrators.',
     'license_count_error' => 'There was an error updating the license count.',
     'license_count_too_small_error' => 'Please increase the license count or remove licensed seats.',
