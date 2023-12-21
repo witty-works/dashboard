@@ -61,8 +61,16 @@
                 <img id="arrow-up-icon-{{ $category}}-{{ $proficiencyLevel }}" src="{{ asset('arrow-up-sign-to-navigate_small.svg') }}" alt="{{ __('content.close') }}" style="display: none;" />
             </a>
             @endif
+
         </div>
+
         <x-jet-input-error for="dimensions" class="mt-2" />
+
+        @if(!empty($proficiencyLevelData['translation']['lead_text']))
+        <div id="{{ $category }}-{{ $proficiencyLevel }}" style="display: none" class="proficiency-level-p">
+            {!! $proficiencyLevelData['translation']['lead_text'] !!}
+        </div>
+        @endif
 
         @foreach ($list as $ddd)
         @if(isset($diversityDimensionDrivers[$ddd]['translation']) && isset($dimensions[$ddd]))

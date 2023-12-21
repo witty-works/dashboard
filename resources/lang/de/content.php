@@ -441,6 +441,7 @@ Bitte gehe dann erneut auf „Registrieren“, um die Registrierung im "Witty fo
     'toggle_lines' => 'Alle Linien umschalten',
     'analytic_top_words_corporate_rules' => 'Top Wörterbuch-Wörter',
     'analytic_overview' => 'Überblick',
-    'analytic_top_categories' => 'Top Diversitätsdimensionen',
+    'analytic_top_categories' => '15 wichtigsten Diversitätsdimensionen',
     'analytic_top_words' => 'Top Wörter',
+    'top_categories_over_time' => '15 wichtigsten Diversitätsdimensionen auf dem Zeitstrahl',
 ];

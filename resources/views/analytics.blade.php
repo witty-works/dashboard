@@ -110,7 +110,7 @@
             <div class="analytics-tab-line" id="overview-line"></div>
         </div>
          <div class="analytics-tab" id="top-categories-tab" onclick="handleTabClick('top-categories')">
-            {{ __('content.analytic_top_categories') }}
+            {{ __('content.top_categories') }}
             <div id="top-categories-line"></div>
         </div>
          <div class="analytics-tab" id="top-words-tab" onclick="handleTabClick('top-words')">
@@ -179,10 +179,12 @@
                     </div>
                </div>
                <div id="top-categories-content" style="visibility: hidden; width: 100%">
-                  <div class="chart-container-row">
-                     <canvas id="topSubCategoriesChart" class="wittyworks-analytics-chart-extra-large">
-                     </canvas>
-                     <button id="toggleLines" class="button primary-button-red">{{ __('content.toggle_lines') }}</button>
+                    <div class="chart-container-row">
+                        <canvas id="topSubCategoriesBarChart" class="wittyworks-analytics-chart-extra-large"></canvas>
+                    </div>
+                    <div class="chart-container-row">
+                        <canvas id="topSubCategoriesChart" class="wittyworks-analytics-chart-extra-large"></canvas>
+                        <button id="toggleLines" class="button primary-button-red">{{ __('content.toggle_lines') }}</button>
                   </div>
                </div>
             </div>
@@ -391,62 +393,8 @@
             return {data: null, errorStatus: e.status};
         }
     }
-
-    function createBarChart(chartId, xValues, yValues, text, display, singeColor, chart, from, interval, language, categories, subcategories = []) {
-        if (yValues.every((val) => val === 0)) {
-            setElementStyle(document.getElementById(chartId), 'display', 'none');
-            return;
-        }
-
-        const newFrom = from.slice(0, 1) * 2 + from.slice(1, 2);
-        const to = from;
-
-        // Assuming today's date for the end of the current period
-        const currentDate = new Date();
-        const endDateCurrentPeriod = formatDate(currentDate);
-
-        function formatDate(date) {
-            const day = String(date.getDate()).padStart(2, '0');
-            const month = String(date.getMonth() + 1).padStart(2, '0'); // +1 because months are 0-based in JavaScript
-            const year = date.getFullYear();
-            return `${day}.${month}.${year}`;
-        }
-
-        let startDateCurrentPeriod;
-        switch(from) {
-            case '1m':
-                currentDate.setMonth(currentDate.getMonth() - 1);
-                break;
-            case '3m':
-                currentDate.setMonth(currentDate.getMonth() - 3);
-                break;
-            case '1y':
-                currentDate.setFullYear(currentDate.getFullYear() - 1);
-                break;
-        }
-        startDateCurrentPeriod = formatDate(currentDate);
-
-        // For comparison periods, assuming you want to compare with the previous interval of the same length
-        const endDateComparePeriod = startDateCurrentPeriod;
-
-        switch(from) {
-            case '1m':
-                currentDate.setMonth(currentDate.getMonth() - 1);
-                break;
-            case '3m':
-                currentDate.setMonth(currentDate.getMonth() - 3);
-                break;
-            case '1y':
-                currentDate.setFullYear(currentDate.getFullYear() - 1);
-                break;
-        }
-        const startDateComparePeriod = formatDate(currentDate);
-
-        const footerText = `{{ __('content.chart_period_comparison_from') }} ${startDateCurrentPeriod} - ${endDateCurrentPeriod}, {{ __('content.chart_period_comparison_to') }} ${startDateComparePeriod} - ${endDateComparePeriod}`;
-        document.getElementById(`${chartId}Footer`).innerText = footerText;
-
-        getChartData(chart, newFrom, interval, language, categories, subcategories = [], to, inclusive, eventTypes).then(data => {
-            const chartElement = document.getElementById(chartId);
+    function generateBarChart(chartId, xValues, yValues, text, display, singeColor, data, calledDirectly = false) {
+        const chartElement = document.getElementById(chartId);
             if (chartElement) {
                 chartElement.style.display = 'flex';
                 const ctx = chartElement.getContext('2d');
@@ -497,9 +445,10 @@
                                 align: 'top',
                                 rotation: 315,
                                 formatter: (currentValue) => {
+                                    if (calledDirectly) return '';
                                     const index = yValues.indexOf(currentValue);
                                     const currentLabel = xValues[index];
-                                    const previousPeriodPopoverOpened = data.events.popover_open || {};
+                                    const previousPeriodPopoverOpened = data.events?.popover_open || {};
                                     if (previousPeriodPopoverOpened[currentLabel]) {
                                         const diff = currentValue - previousPeriodPopoverOpened[currentLabel];
                                         const percentage = (diff / previousPeriodPopoverOpened[currentLabel] * 100).toFixed(0);
@@ -519,13 +468,74 @@
                         },
                         tooltips: {
                             label: false
-
                         }
                     }
                 });
             }
+    }
+
+    function createComparisonBarChart(chartId, xValues, yValues, text, display, singeColor, chart, from, interval, language, categories, subcategories = []) {
+        if (yValues.every((val) => val === 0)) {
+            setElementStyle(document.getElementById(chartId), 'display', 'none');
+            return;
+        }
+
+        const newFrom = from.slice(0, 1) * 2 + from.slice(1, 2);
+        const to = from;
+
+        // Assuming today's date for the end of the current period
+        const currentDate = new Date();
+        const endDateCurrentPeriod = formatDate(currentDate);
+
+        function formatDate(date) {
+            const day = String(date.getDate()).padStart(2, '0');
+            const month = String(date.getMonth() + 1).padStart(2, '0'); // +1 because months are 0-based in JavaScript
+            const year = date.getFullYear();
+            return `${day}.${month}.${year}`;
+        }
+
+        let startDateCurrentPeriod;
+        switch(from) {
+            case '1m':
+                currentDate.setMonth(currentDate.getMonth() - 1);
+                break;
+            case '3m':
+                currentDate.setMonth(currentDate.getMonth() - 3);
+                break;
+            case '1y':
+                currentDate.setFullYear(currentDate.getFullYear() - 1);
+                break;
+        }
+        startDateCurrentPeriod = formatDate(currentDate);
+
+        // For comparison periods, assuming you want to compare with the previous interval of the same length
+        const endDateComparePeriod = startDateCurrentPeriod;
+
+        switch(from) {
+            case '1m':
+                currentDate.setMonth(currentDate.getMonth() - 1);
+                break;
+            case '3m':
+                currentDate.setMonth(currentDate.getMonth() - 3);
+                break;
+            case '1y':
+                currentDate.setFullYear(currentDate.getFullYear() - 1);
+                break;
+        }
+        const startDateComparePeriod = formatDate(currentDate);
+
+        const footerText = `{{ __('content.chart_period_comparison_from') }} ${startDateCurrentPeriod} - ${endDateCurrentPeriod}, {{ __('content.chart_period_comparison_to') }} ${startDateComparePeriod} - ${endDateComparePeriod}`;
+        const footerElement = document.getElementById(`${chartId}Footer`);
+        if (footerElement) {
+            footerElement.innerText = footerText;
+        }
+
+        getChartData(chart, newFrom, interval, language, categories, subcategories = [], to, inclusive, eventTypes).then(data => {
+            generateBarChart(chartId, xValues, yValues, text, display, singeColor, data);
         });
     }
+
+
 
     chartType == 'overview' && getChartData('total', timerange, interval, language, categories, null,  null, inclusive, ['check_result','popover_open','alternative','ignore','learning_bites']).then(data => { //TODO
         if (data.errorStatus === 503) {
@@ -533,11 +543,15 @@
             return;
         }
         const isPremiumUser = @json($is_premium_user);
-
-        if ((isPremiumUser && !data.events?.check_result) || 
-            (isPremiumUser && Object.entries(data.events.check_result).filter(([key, value]) => value > 0).length == 0) ||
+        const showCheckResult = isPremiumUser && 
+            data.events?.check_result &&  
+            Object.entries(data.events.check_result).filter(([key, value]) => value > 0).length > 0 //could adjust this to a min amount of check results
+        
+        if (
             (!isPremiumUser && !data.events?.popover_open) ||
-            (!isPremiumUser && Object.entries(data.events.popover_open).filter(([key, value]) => value > 0).length == 0)) {
+            (!showCheckResult && !data.events?.popover_open) ||            
+            (!isPremiumUser && Object.entries(data.events.popover_open).filter(([key, value]) => value > 0).length == 0) ||
+            (!showCheckResult && Object.entries(data.events.popover_open).filter(([key, value]) => value > 0).length == 0)) {
             handleNoData('loading-icon-overview', 'overview-no-data', '', false);
             return;
         }
@@ -612,36 +626,41 @@
                                 data: aggregatedCheckResultData,
                                 borderColor: colors[0],
                                 fill: false,
-                                label:  @json(__('content.check_result_label_line_chart')) + (!isPremiumUser ? ' ({{ __('teams.witty_teams_only') }})' : ''),
-                                hidden: !isPremiumUser,
+                                label: @json(__('content.check_result_label_line_chart')) + 
+                                    (!isPremiumUser 
+                                    ? ' ({{ __('teams.witty_teams_only') }})' 
+                                    : !showCheckResult 
+                                    ? ' ({{ __('teams.not_enough_data_to_display') }})' 
+                                    : ''),
+                                hidden: !showCheckResult,
                             },
                             {
                                 data: aggregatedPopoverOpenData,
                                 borderColor: colors[8],
                                 fill: false,
                                 label: "{{ __('content.popover_label_line_chart') }}",
-                                hidden: isPremiumUser,
+                                hidden: showCheckResult,
                             },
                             {
                                 data: aggregatedAlternativeData,
                                 borderColor: colors[16],
                                 fill: false,
                                 label: "{{ __('content.alternative_label_line_chart') }}",
-                                hidden: isPremiumUser,
+                                hidden: showCheckResult,
                             },
                             {
                                 data: aggregatedIgnoreData,
                                 borderColor: colors[24],
                                 fill: false,
                                 label:  "{{ __('content.ignored_label_line_chart') }}",
-                                hidden: isPremiumUser,
+                                hidden: showCheckResult,
                             },
                             {
                                 data: aggregatedLearningBitesData,
                                 borderColor: colors[32],
                                 fill: false,
                                 label:  @json(__('content.learning_bites_label_line_chart')),
-                                hidden: isPremiumUser,
+                                hidden: showCheckResult,
                             },
                         ]
                     },
@@ -665,7 +684,7 @@
                                     return chart.data.datasets.map((dataset, i) => {
                                         //workaround for charjs initial hidden state bug
                                         let isCurrentlyHidden = chart.getDatasetMeta(i).hidden === false || chart.getDatasetMeta(i).hidden === true;
-                                        if (isPremiumUser) {
+                                        if (showCheckResult) {
                                             isCurrentlyHidden = (i === 0 ? isCurrentlyHidden : !isCurrentlyHidden);
                                         } else {
                                             isCurrentlyHidden = (i === 0 ? true : false);
@@ -760,17 +779,19 @@
             return;
         }
 
-        let categories = Object?.keys(data.events[eventTypes[0]]);
-        let datasets = [];
+        let categories = [];
+        let datasetsLineChart = [];
         const stepSize = (colors.length - 1) / (Object?.keys(data.events[eventTypes[0]]).length - 1);
 
         for (const [key, value] of Object.entries(data.events[eventTypes[0]])) {
+            if (Object?.keys(data.events[eventTypes[0]]).indexOf(key) === 15) break;
+            if (!value.counts) continue;
             const index = Object?.keys(data.events[eventTypes[0]]).indexOf(key);
             const colorIndex = Math.round(index * stepSize);
             const borderColor = colors[colorIndex];
+            categories.push(value.name);
 
-            if (!value.counts) continue;
-            datasets.push({
+            datasetsLineChart.push({
                 data: Object.values(value.counts),
                 borderColor: borderColor,
                 fill: false,
@@ -780,14 +801,58 @@
                 pointHitRadius: 20,
             });
         }
+
+        generateBarChart(
+            "topSubCategoriesBarChart",
+            datasetsLineChart.map(dataset => dataset.label),
+            datasetsLineChart.map(dataset => dataset.data.reduce((a, b) => a + b, 0)),
+            "{{ __('content.analytic_top_categories') }}",
+            true,
+            false,
+            'topSubcategories',
+            timerange,
+            interval,
+            language,
+            categories,
+            eventTypes,
+            true
+        );
+
+
         ctx = document.getElementById('topSubCategoriesChart').getContext('2d');
         topSubChart = new Chart(ctx, {
-            type: "line",
+            type: 'line',
             data: {
                 labels: Object?.keys(data.events[eventTypes[0]][Object?.keys(data.events[eventTypes[0]])[0]].counts),
-                    datasets: datasets,
+                datasets: datasetsLineChart,
                 },
                 options: {
+                    tooltips: {
+                        enabled: true,
+                        mode: 'nearest',
+                        intersect: true,
+                        backgroundColor: '#f5f5f5',
+                        titleFontColor: 'black',
+                        bodyFontColor: 'black',
+                        callbacks: {
+                            title: function(tooltipItems, data) {
+                                return '';
+                            },
+                            label: function(tooltipItem, data) {
+                                return data.datasets[tooltipItem.datasetIndex].label;
+                            },
+                            labelColor: function(tooltipItem, chart) {
+                                return {
+                                    borderColor: 'rgba(0,0,0,0)',
+                                    backgroundColor: 'rgba(0,0,0,0)'
+                                };
+                            },
+                            afterLabel: function(tooltipItem, data) {
+                                return '';
+                            }
+                        },
+                        displayColors: false
+                    },
                     onClick: function(e) {
                         const line = this.getElementAtEvent(e)[0];
                         if(!line) return;
@@ -808,7 +873,6 @@
                         },
                         labels: {
                             usePointStyle: true,
-                            padding: 15,
                             fontSize: 14,
                             generateLabels: function(chart) {
                                 return chart.data.datasets.map((dataset, i) => {
@@ -834,7 +898,7 @@
                     responsive: true,
                     title: {
                         display: true,
-                        text:  @json(__('content.top_categories')),
+                        text:  @json(__('content.top_categories_over_time')),
                         fontSize: 16,
                         fontStyle: 'normal'
                     },
@@ -863,14 +927,9 @@
                     },
                 }
             });
-
-        document.getElementById('toggleLines').addEventListener('click', function() {
-            let allVisible = topSubChart.data.datasets.every(dataset => !dataset.hidden);
-            topSubChart.data.datasets.forEach(function(dataset) {
-                dataset.hidden = allVisible;
-            });
-            topSubChart.update();
-        });
+        const toggleLinesButton = document.getElementById('toggleLines');
+        toggleLinesButton.removeEventListener('click', toggleLines);
+        toggleLinesButton.addEventListener('click', toggleLines);
 
         setElementStyle('loading-icon-top-categories', 'display', 'none');
         setElementStyle('top-categories-content', 'visibility', 'visible');
@@ -905,7 +964,7 @@
         const xValuesTopWordsCut = xValuesTopWords.slice(0, 15);
         const yValuesTopWordsCut = yValuesTopWords.slice(0, 15);
 
-        createBarChart(
+        createComparisonBarChart(
             "topWordsChart",
             xValuesTopWordsCut,
             yValuesTopWordsCut,
@@ -941,7 +1000,7 @@
 
             const xValuesTopCorporateWordsCut = xValuesTopCorporateWords.slice(0, 15);
             const yValuesTopCorporateWordsCut = yValuesTopCorporateWords.slice(0, 15);
-            createBarChart(
+            createComparisonBarChart(
                 "topWordsChartCorporateRules",
                 xValuesTopCorporateWordsCut,
                 yValuesTopCorporateWordsCut,
@@ -967,6 +1026,15 @@
         }
     });
 };
+
+function toggleLines() {
+    let allVisible = topSubChart.data.datasets.every(dataset => !dataset.hidden);
+    topSubChart.data.datasets.forEach(function(dataset) {
+        dataset.hidden = allVisible;
+    });
+
+    topSubChart.update();
+}
 
 function updateDropdown(dropdownId, dropdownValue) {
     const dropdown = document.getElementById(dropdownId);
