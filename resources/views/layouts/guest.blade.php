@@ -18,6 +18,8 @@
         <link rel="icon" type="image/webp" href="{{ URL::asset('/witty-icon-color-inverted@2x-1.webp') }}"/>
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 
+        @livewireStyles
+
         <!-- Scripts -->
         @include('partials/sentry')
         <script src="{{ mix('js/app.js') }}" defer></script>
@@ -33,5 +35,6 @@
                 @include('partials.footer')
             </div>
         @include('partials/helphero')
+        @livewireScripts
     </body>
 </html>

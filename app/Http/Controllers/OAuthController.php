@@ -5,22 +5,21 @@ namespace App\Http\Controllers;
 use App\Helpers\OfficeSsoHelper;
 use App\Models\ConnectedAccount as ModelsConnectedAccount;
 use App\Models\User;
-use Laravel\Socialite\AbstractUser;
 use Laravel\Socialite\Two\InvalidStateException;
 use Laravel\Jetstream\Jetstream;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use InvalidArgumentException;
-use JoelButcher\Socialstream\ConnectedAccount;
 use JoelButcher\Socialstream\Contracts\GeneratesProviderRedirect;
 use JoelButcher\Socialstream\Contracts\ResolvesSocialiteUsers;
 use JoelButcher\Socialstream\Http\Controllers\OAuthController as BaseOAuthController;
-use JoelButcher\Socialstream\Socialstream;
 use SocialiteProviders\Manager\Contracts\OAuth2\ProviderInterface;
-use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Socialite;
 use Illuminate\Support\Facades\Session;
+use Laravel\Fortify\Contracts\LoginResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse as SymfonyRedirectResponse;
 
 use Exception;
 
@@ -28,6 +27,8 @@ class OAuthController extends BaseOAuthController
 {
     public const AZURE_AD_B2C_PROVIDER = 'azureadb2c';
     public const OFFICE_PROVIDER = 'microsoft_office';
+    public const MOCK_LOGIN = 'mock';
+    public const LOGIN_SOURCE = 'login_source';
 
     public function logout(string $provider)
     {
@@ -40,15 +41,16 @@ class OAuthController extends BaseOAuthController
         return redirect($provider->logout(route('login')));
     }
 
-    public function redirectToProvider(string $provider, GeneratesProviderRedirect $generator, $policy = 'login')
+
+    public function redirectToProvider(string $provider, GeneratesProviderRedirect $generator, $policy = 'login'): SymfonyRedirectResponse
     {
         $redirectUri = null;
-        if ($this->isWittyWorksUrl(back()->getTargetUrl(), true)) {
+        if (self::isWittyWorksUrl(back()->getTargetUrl(), true)) {
             $redirectUri = back()->getTargetUrl();
         }
 
         $redirectUri = request()->get('redirect_uri', $redirectUri);
-        if ($this->isWittyWorksUrl($redirectUri)) {
+        if (self::isWittyWorksUrl($redirectUri)) {
             session()->put('socialstream.previous_url', $redirectUri);
         } else {
             session()->remove('socialstream.previous_url');
@@ -81,7 +83,7 @@ class OAuthController extends BaseOAuthController
 
         $policy = $register ? 'browser_register' : 'browser_login';
         $response = $generator->generate(self::AZURE_AD_B2C_PROVIDER, $policy);
-        if ($redirectUri && $this->validateRedirectUri($redirectUri)) {
+        if ($redirectUri && self::validateRedirectUri($redirectUri)) {
             $targetUrl = $response->getTargetUrl();
             $url = parse_url($targetUrl);
             if (!empty($url['query'])) {
@@ -206,17 +208,17 @@ class OAuthController extends BaseOAuthController
             return $this->handleOfficeSsoRegister($request);
         }
 
-        $request->session()->put('login_source', self::OFFICE_PROVIDER);
+        $request->session()->put(self::LOGIN_SOURCE, self::OFFICE_PROVIDER);
 
         return parent::login($user);
     }
 
-    public function handleProviderCallback(Request $request, string $provider, ResolvesSocialiteUsers $resolver, $policy = 'login')
+    public function handleProviderCallback(Request $request, string $provider, ResolvesSocialiteUsers $resolver, $policy = 'login'): Response|RedirectResponse|LoginResponse
     {
-        if ($request->has('error')) {
-            return Auth::check()
-                ? redirect(config('fortify.home'))->dangerBanner($request->error_description)
-                : redirect()->route('register')->withErrors($request->error_description);
+        $redirect = $this->errorHandler->handle($request);
+
+        if ($redirect instanceof RedirectResponse) {
+            return $redirect;
         }
 
         try {
@@ -226,71 +228,10 @@ class OAuthController extends BaseOAuthController
             $this->invalidStateHandler->handle($e);
         }
 
-        $tokens = self::getAccessTokenResponse(self::getProvider($provider, $policy));
-        if (!empty($tokens['access_token'])) {
-            $providerAccount->setToken($tokens['access_token']);
-        }
-        if (!empty($tokens['refresh_token'])) {
-            $providerAccount->setRefreshToken($tokens['refresh_token']);
-        }
-
-        // Authenticated...
-        $user = Auth::user();
-        if ($user !== null) {
-            $account = Socialstream::findConnectedAccountForProviderAndId($provider, $providerAccount->getId());
-
-            return $this->alreadyAuthenticated($user, $account, $provider, $providerAccount);
-        }
-
-        $user = $this->handleProviderAccount($request, $providerAccount, $provider);
-
-        if (!self::isBrowserLogin()) {
-            $request->session()->put('login_source', self::AZURE_AD_B2C_PROVIDER);
-        }
-
-        return $this->login($user);
+        return $this->authenticator->authenticate($provider, $providerAccount, $policy);
     }
 
-    protected function handleProviderAccount(Request $request, $providerAccount, string $provider)
-    {
-        $userData = [];
-
-        if (!empty($providerAccount->attributes['has_consented_to_terms_of_service'])) {
-            $userData['has_consented_to_terms_of_service'] = $providerAccount->attributes['has_consented_to_terms_of_service'];
-        }
-
-        $account = Socialstream::findConnectedAccountForProviderAndId($provider, $providerAccount->getId());
-
-        if (!$account) {
-            $user = Jetstream::newUserModel()->where('email', $providerAccount->getEmail())->first();
-            if ($user) {
-                $user->switchConnectedAccount(
-                    $this->createsConnectedAccounts->create($user, $provider, $providerAccount)
-                );
-            } else {
-                $user = $this->createsUser->create($provider, $providerAccount);
-                $userData['hubspotutk'] = $request->cookie('hubspotutk');
-            }
-
-            if (!empty($providerAccount->attributes['has_consented_to_mailing'])) {
-                $userData['has_consented_to_mailing'] = $providerAccount->attributes['has_consented_to_mailing'];
-            }
-        } else {
-            $user = $account->user;
-
-            $this->updatesConnectedAccounts->update($user, $account, $provider, $providerAccount);
-
-            $userData['current_connected_account_id'] = $account->id;
-        }
-
-        if (!empty($userData)) {
-            $user->forceFill($userData)->save();
-        }
-
-        return $user;
-    }
-
-    protected function isWittyWorksUrl($url, $strict = false)
+    public static function isWittyWorksUrl($url, $strict = false)
     {
         if (empty($url)) {
             return false;
@@ -315,7 +256,7 @@ class OAuthController extends BaseOAuthController
         return false;
     }
 
-    protected function checkAllowedRedirectUri($redirectUri)
+    protected static function checkAllowedRedirectUri($redirectUri)
     {
         $allowedRedirectUris = config('services.azureadb2c.redirect_uri');
         if (is_array($allowedRedirectUris)) {
@@ -329,15 +270,15 @@ class OAuthController extends BaseOAuthController
         return false;
     }
 
-    protected function validateRedirectUri($redirectUri)
+    public static function validateRedirectUri($redirectUri)
     {
         return config('services.azureadb2c.validate_redirect_uri_disabled')
             || strpos($redirectUri, 'moz-extension://') === 0
-            || $this->isWittyWorksUrl($redirectUri)
-            || $this->checkAllowedRedirectUri($redirectUri);
+            || self::isWittyWorksUrl($redirectUri)
+            || self::checkAllowedRedirectUri($redirectUri);
     }
 
-    protected static function getAccessTokenResponse(ProviderInterface $provider, $updateAccount = false)
+    public static function getAccessTokenResponse(ProviderInterface $provider, $updateAccount = false)
     {
         $socialiteUser = $provider->user();
 
@@ -359,52 +300,19 @@ class OAuthController extends BaseOAuthController
         return $tokens;
     }
 
-    protected function returnAccessTokenResponse($data, $redirectUri = null)
+    public static function returnAccessTokenResponse($data, $redirectUri = null)
     {
         if (empty($redirectUri)) {
             $redirectUri = request()->get('state');
         }
 
-        if ($redirectUri && $this->validateRedirectUri($redirectUri)) {
+        if ($redirectUri && self::validateRedirectUri($redirectUri)) {
             $redirectUri .= '?' . http_build_query($data);
 
             return redirect($redirectUri);
         }
 
         return view('browser-login', $data);
-    }
-
-    /**
-     *
-     * @param User $user
-     * @param ConnectedAccount $account
-     * @param string $provider
-     * @param AbstractUser $providerAccount
-     * @return mixed
-     * @throws BindingResolutionException
-     * @throws RouteNotFoundException
-     */
-    protected function alreadyAuthenticated($user, $account, $provider, $providerAccount)
-    {
-        $policy = self::isBrowserLogin();
-        if ($policy) {
-            $provider = self::getProvider(self::AZURE_AD_B2C_PROVIDER, $policy);
-            return $this->returnAccessTokenResponse(self::getAccessTokenResponse($provider, true));
-        }
-
-        if (!$account) {
-            $this->createsConnectedAccounts->create($user, $provider, $providerAccount);
-        } elseif ($account->user_id === $user->id) {
-            $user->updateName($providerAccount);
-            $user->saveQuietly();
-        }
-
-        $redirectUri = session()->get('socialstream.previous_url');
-        if ($redirectUri && $this->validateRedirectUri($redirectUri)) {
-            return redirect($redirectUri);
-        }
-
-        return redirect(config('fortify.home'));
     }
 
     /**
@@ -422,7 +330,7 @@ class OAuthController extends BaseOAuthController
             $provider = self::getProvider(self::AZURE_AD_B2C_PROVIDER, $policy);
             $tokens = self::getAccessTokenResponse($provider, true);
 
-            return $this->returnAccessTokenResponse($tokens);
+            return self::returnAccessTokenResponse($tokens);
         }
 
         if ($user->wasRecentlyCreated) {
@@ -478,6 +386,9 @@ class OAuthController extends BaseOAuthController
         }
 
         $user = User::where('email', $request->get('email'))->firstOrFail();
+
+        $request->session()->put(self::LOGIN_SOURCE, self::MOCK_LOGIN);
+
 
         return $this->login($user);
     }

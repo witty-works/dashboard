@@ -1,4 +1,7 @@
 @php
+
+use App\Http\Controllers\OAuthController;
+
 $team = false;
 $showInviteCheck = false;
 $showInvitations = false;
@@ -20,7 +23,7 @@ if ($user) {
 }
 @endphp
 
-@if ($user->currentConnectedAccount->provider !== \App\Http\Controllers\OAuthController::OFFICE_PROVIDER)
+@if (Session::get(OAuthController::LOGIN_SOURCE) === OAuthController::AZURE_AD_B2C_PROVIDER)
 @include('partials.extension-check')
 @endif
 

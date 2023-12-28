@@ -1,4 +1,4 @@
-<x-jet-form-section class="py-10" submit="updateLanguageGuidelinesCategory" aria-label="{{ $config['translation']['name'] }}">
+<x-form-section class="py-10" submit="updateLanguageGuidelinesCategory" aria-label="{{ $config['translation']['name'] }}">
 
     <x-slot name="title">
         <div class="headline-row">
@@ -64,7 +64,7 @@
 
         </div>
 
-        <x-jet-input-error for="dimensions" class="mt-2" />
+        <x-input-error for="dimensions" class="mt-2" />
 
         @if(!empty($proficiencyLevelData['translation']['lead_text']))
         <div id="{{ $category }}-{{ $proficiencyLevel }}" style="display: none" class="proficiency-level-p">
@@ -83,12 +83,12 @@
             @endphp
 
             @if(\App\Models\LanguageGuidelines::isBasicOnly($proficiencyLevel) || !$model->subscribed())
-            <x-jet-checkbox
+            <x-checkbox
                 id="dimensions['{{$ddd}}']"
                 name="dimensions_{{$ddd}}"
                 value="1"
                 :label="$label"
-                wire:model.defer="dimensions.{{$ddd}}"
+                wire:model="dimensions.{{$ddd}}"
                 :disabled="(bool)$disabled"
                 :title="$title"
             />
@@ -98,7 +98,7 @@
                 name="dimensions_{{$ddd}}"
                 :value="$dimensions[$ddd]"
                 :label="$label"
-                wire:model.defer="dimensions.{{$ddd}}"
+                wire:model="dimensions.{{$ddd}}"
                 :disabled="(bool)$disabled"
             />
             @endif
@@ -107,7 +107,7 @@
             @include('partials.info_hover', ['category' => $ddd, 'name' => $diversityDimensionDrivers[$ddd]['translation']['hs_name'], 'config' => $diversityDimensionDrivers[$ddd]])
             @endif
         </div>
-        <x-jet-input-error for="dimensions" class="mt-2" />
+        <x-input-error for="dimensions" class="mt-2" />
         @endif
         @endforeach
         @endforeach
@@ -119,4 +119,4 @@
         @endif
     </x-slot>
 
-</x-jet-form-section>
+</x-form-section>

@@ -1,0 +1,85 @@
+<?php
+
+namespace App\Livewire\UserDomain;
+
+use App\Models\Domain;
+use Illuminate\Validation\ValidationException;
+use App\Livewire\OrganizationDomain\Form as OrganizationForm;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Auth;
+
+class Form extends OrganizationForm
+{
+    use AuthorizesRequests;
+
+    protected $listeners = ['edit'];
+
+    /**
+     * The user instance.
+     *
+     * @var mixed
+     */
+    public $model;
+
+    /**
+     * Mount the component.
+     *
+     * @param  mixed  $model
+     * @return void
+     */
+    public function mount($model)
+    {
+        $this->model = $model;
+
+        $this->resetForm();
+    }
+
+    public function render()
+    {
+        return view('livewire.user-domain.form');
+    }
+
+    public function storeDomain()
+    {
+        $this->validate();
+
+        if (Auth::user()->id !== $this->model->id) {
+            abort(403);
+        }
+
+        $this->domain = Domain::validateDomain($this->domain);
+
+        $query = Domain::query()
+            ->where('user_id', $this->model->id)
+            ->where('domain', $this->domain);
+
+        if ($this->domain_id) {
+            $query->whereNot('id', $this->domain_id);
+            $domain = Domain::find($this->domain_id);
+        }
+
+        if (!empty($domain)) {
+            if ($this->model->id !== $domain->user_id) {
+                $message = __('guidelines.domain_error');
+                throw ValidationException::withMessages(['domain' => $message]);
+            }
+        } else {
+            $domain = new Domain();
+        }
+
+        $count = $query->count();
+        if ($count) {
+            $message = __('guidelines.domain_already_exists');
+            throw ValidationException::withMessages(['domain' => $message]);
+        }
+
+        $domain->domain = $this->domain;
+        $domain->user_id = $this->model->id;
+
+        $domain->save();
+        $domain->dispatchEventToPosthog();
+
+        $this->dispatch('saved');
+        $this->resetForm();
+    }
+}

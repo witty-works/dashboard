@@ -1,4 +1,4 @@
-<x-jet-form-section submit="updateTeamsStoreContext">
+<x-form-section submit="updateTeamsStoreContext">
     <x-slot name="title">
         {{ __('guidelines.data_collection') }}
     </x-slot>
@@ -9,16 +9,16 @@
 
     <x-slot name="form">
         <div class="guidelines-form-section">
-            <x-jet-checkbox
+            <x-checkbox
                 id="store_context"
                 value="1"
-                wire:model.defer="store_context"
+                wire:model="store_context"
                 :label="__('teams.store_context')"
                 :disabled="!$model->subscribed() ? 'upgrade' : (Auth::user()->hasTeamPermission($model, 'update') ? false : 'locked')"
                 aria-label="{{ __('teams.store_context') }}"
             />
 
-            <x-jet-input-error for="store_context" class="mt-2" aria-describedby="store_context" />
+            <x-input-error for="store_context" class="mt-2" aria-describedby="store_context" />
         </div>
     </x-slot>
 
@@ -27,4 +27,4 @@
         @include('partials/save_cancel_action')
     </x-slot>
     @endif
-</x-jet-form-section>
+</x-form-section>

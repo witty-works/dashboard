@@ -7,13 +7,13 @@ use Laravel\Cashier\Subscription as CashierSubscription;
 
 class Subscription extends CashierSubscription
 {
-    protected $dates = [
-        'created_at',
-        'renews_at',
-        'starts_at',
-        'ends_at',
-        'trial_ends_at',
-        'updated_at',
+    protected $casts = [
+        'created_at' => 'datetime',
+        'renews_at' => 'datetime',
+        'starts_at' => 'datetime',
+        'ends_at' => 'datetime',
+        'trial_ends_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
     public function syncStartRenewalAt()

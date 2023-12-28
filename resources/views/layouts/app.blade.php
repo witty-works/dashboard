@@ -35,7 +35,7 @@
         @include('partials/gtm-body')
         @livewire('onboarding', ['user' => $user])
 
-        <x-jet-banner />
+        <x-banner />
 
         <div>
             <!-- Page Heading -->

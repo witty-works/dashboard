@@ -6,11 +6,13 @@ use App\Events\UserCreated;
 use App\Events\UserDeleted;
 use App\Events\UserUpdated;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use JoelButcher\Socialstream\HasConnectedAccounts;
 use JoelButcher\Socialstream\SetsProfilePhotoFromUrl;
+use JoelButcher\Socialstream\Socialstream;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Spatie\Permission\Traits\HasRoles;
@@ -20,12 +22,13 @@ use Laravel\Jetstream\Jetstream;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Jetstream\Role;
 
+
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens;
     use HasFactory;
     use HasProfilePhoto {
-        getProfilePhotoUrlAttribute as getPhotoUrl;
+        HasProfilePhoto::profilePhotoUrl as getPhotoUrl;
     }
     use HasRoles;
     use Impersonate;
@@ -98,16 +101,12 @@ class User extends Authenticatable implements MustVerifyEmail
 
     /**
      * Get the URL to the user's profile photo.
-     *
-     * @return string
      */
-    public function getProfilePhotoUrlAttribute()
+    public function profilePhotoUrl(): Attribute
     {
-        if (filter_var($this->profile_photo_path, FILTER_VALIDATE_URL)) {
-            return $this->profile_photo_path;
-        }
-
-        return $this->getPhotoUrl();
+        return filter_var($this->profile_photo_path, FILTER_VALIDATE_URL)
+            ? Attribute::get(fn () => $this->profile_photo_path)
+            : $this->getPhotoUrl();
     }
 
     /**

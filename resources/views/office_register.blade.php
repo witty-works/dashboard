@@ -30,7 +30,7 @@
                     <span class="slider round"></span>
                 </label>
 
-                <x-jet-label for="has_consented_to_terms_of_service" value="{!! __('content.has_consented_to_terms_of_service') !!}" />
+                <x-label for="has_consented_to_terms_of_service" value="{!! __('content.has_consented_to_terms_of_service') !!}" />
 
                 @if($errors->hasBag('default') && $errors->getBag('default')->getMessages())
                 <p class="mt-2 text-sm text-red-600">{{ __('content.you_must_consent') }}</p>
@@ -56,15 +56,15 @@
                     <span class="slider round"></span>
                 </label>
 
-                <x-jet-label for="has_consented_to_mailing" value="{!! __('content.has_consented_to_mailing') !!}" />
+                <x-label for="has_consented_to_mailing" value="{!! __('content.has_consented_to_mailing') !!}" />
 
-                <x-jet-input-error for="has_consented_to_mailing" class="mt-2" />
+                <x-input-error for="has_consented_to_mailing" class="mt-2" />
             </div>
 
             <div>
-                <x-jet-button>
+                <x-button>
                     {{ __('content.register') }}
-                </x-jet-button>
+                </x-button>
             </div>
 
             <div style="margin-top: 2em">

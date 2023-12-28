@@ -2,6 +2,7 @@
 
 namespace App\Actions\Socialstream;
 
+use Illuminate\Http\Response;
 use JoelButcher\Socialstream\Contracts\HandlesInvalidState;
 use Laravel\Socialite\Two\InvalidStateException;
 
@@ -14,12 +15,8 @@ class HandleInvalidState implements HandlesInvalidState
      * @param  callable  $callback
      * @return mixed
      */
-    public function handle(InvalidStateException $exception, callable $callback = null)
+    public function handle(InvalidStateException $exception): Response
     {
-        if ($callback) {
-            return $callback($exception);
-        }
-
         throw $exception;
     }
 }

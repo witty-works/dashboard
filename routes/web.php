@@ -18,6 +18,7 @@ use App\Http\Controllers\Livewire\TeamController;
 use App\Http\Controllers\Livewire\UserGuidelinesController;
 use App\Http\Controllers\UserProfileController;
 use Laravel\Jetstream\Jetstream;
+use Livewire\Livewire;
 /*
 |------------------
 | \JETSTREAM LIVEWIRE
@@ -69,6 +70,10 @@ Route::group(
     ],
     function () {
         Route::impersonate();
+
+        Livewire::setUpdateRoute(function ($handle) {
+            return Route::post('/livewire/update', $handle);
+        });
 
         Route::get('/office-login', [OAuthController::class, 'handleOfficeSsoLogin'])->name('office_login');
         Route::get('/office-register', [OAuthController::class, 'handleOfficeSsoRegister'])->name('office_register');

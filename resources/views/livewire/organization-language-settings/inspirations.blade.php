@@ -1,4 +1,4 @@
-<x-jet-form-section class="py-10" submit="updateLanguageGuidelinesInspirations" aria-label="{{ __('guidelines.manage_organization_guidelines_inspiration') }}">
+<x-form-section class="py-10" submit="updateLanguageGuidelinesInspirations" aria-label="{{ __('guidelines.manage_organization_guidelines_inspiration') }}">
 
     <x-slot name="title">
         {{ __('guidelines.manage_organization_guidelines_inspiration') }}
@@ -14,11 +14,11 @@
         </h3>
 
         <div class="guidelines-form-section">
-            <x-jet-checkbox
+            <x-checkbox
                 id="show_inspiration_alternatives"
                 value="1"
                 :label="__('guidelines.enable_show_inspiration_alternatives')"
-                wire:model.defer="show_inspiration_alternatives"
+                wire:model="show_inspiration_alternatives"
                 :disabled="!$model->subscribed()"
             />
 
@@ -32,11 +32,11 @@
 
     <x-slot name="actions">
         <div class="guidelines-form-section--apply-for-all">
-            <x-jet-checkbox
+            <x-checkbox
                 id="show_inspiration_alternatives_force"
                 value="1"
                 :label="__('guidelines.set_for_all')"
-                wire:model.defer="show_inspiration_alternatives_force"
+                wire:model="show_inspiration_alternatives_force"
                 :disabled="!$model->subscribed()"
             />
 
@@ -50,4 +50,4 @@
         @include('partials/save_cancel_action')
     </x-slot>
 
-</x-jet-form-section>
+</x-form-section>

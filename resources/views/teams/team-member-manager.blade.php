@@ -7,7 +7,7 @@
         @livewire('teams.update-team-name-form-cancel', ['team' => $team])
 
         <div class="pt-10">
-        <x-jet-form-section submit="addTeamMember">
+        <x-form-section submit="addTeamMember">
             <x-slot name="title">{{ __('content.add_team_member') }}</x-slot>
 
             <x-slot name="description">
@@ -38,16 +38,16 @@
 
                 <!-- Member Email -->
                 <div class="w-full margin-bottom">
-                    <x-jet-label id="email-label" class="lato-small-text-p" for="email" value="{{ __('content.email') }}" />
-                    <x-jet-input id="email" type="email" class=" mt-1 block w-full" wire:model.defer="addTeamMemberForm.email" disabled="{{ !Gate::check('addTeamMember', $team) }}" aria-describedby="email-label" />
-                    <x-jet-input-error id="emailError" for="email"></x-jet-input-error>
+                    <x-label id="email-label" class="lato-small-text-p" for="email" value="{{ __('content.email') }}" />
+                    <x-input id="email" type="email" class=" mt-1 block w-full" wire:model="addTeamMemberForm.email" disabled="{{ !Gate::check('addTeamMember', $team) }}" aria-describedby="email-label" />
+                    <x-input-error id="emailError" for="email"></x-input-error>
                 </div>
 
                 <!-- Role -->
                 @if (count($this->roles) > 0)
                     <div role="group" class="col-span-6 lg:col-span-4">
-                        <x-jet-label class="lato-small-text-p" for="role" value="{{ __('content.role') }}" />
-                        <x-jet-input-error for="role" class="mt-2" />
+                        <x-label class="lato-small-text-p" for="role" value="{{ __('content.role') }}" />
+                        <x-input-error for="role" class="mt-2" />
                         <div role="listbox" class="relative z-0 mt-1 border border-gray-200 rounded-lg">
                             @foreach ($this->roles as $index => $role)
                                 <button role="option" aria-selected="{{ $addTeamMemberForm['role'] === $role->key }}" type="button" class="relative px-4 py-3 inline-flex w-full rounded-lg"
@@ -76,15 +76,15 @@
 
             <x-slot name="actions">
                 <div role="group" class="flex flex-row align-middle items-center">
-                    <x-jet-button>
+                    <x-button>
                         {{ __('content.add') }}
-                    </x-jet-button>
+                    </x-button>
 
                     <a role="button" wire:click="cancel()" class="button secondary-button-red ">{{ __('content.cancel') }}</a>
-                    <x-jet-action-message role="status" class="m-3" on="saved">{{ __('content.added') }}</x-jet-action-message>
+                    <x-action-message role="status" class="m-3" on="saved">{{ __('content.added') }}</x-action-message>
                 </div>
             </x-slot>
-        </x-jet-form-section>
+        </x-form-section>
         </div>
     </section>
 @endif
@@ -92,7 +92,7 @@
 @if ($team->teamInvitations->isNotEmpty() && Gate::check('viewUserCreateForm', $team))
     <!-- Team Member Invitations -->
     <div class="py-5">
-        <x-jet-action-section>
+        <x-action-section>
             <x-slot name="title">
                 {{ trans_choice('content.pending_team_invitations', $team->teamInvitations->count(), ['count' => $team->teamInvitations->count()]) }}
             </x-slot>
@@ -120,14 +120,14 @@
                     @endforeach
                 </div>
             </x-slot>
-        </x-jet-action-section>
+        </x-action-section>
     </div>
 @endif
 
 @if ($team->invitationRequests->isNotEmpty() && Gate::check('viewUserCreateForm', $team))
     <!-- Team Member Invitations -->
     <div class="py-5" id="requests" role="tablist" aria-label="Team member invitations">
-        <x-jet-action-section>
+        <x-action-section>
             <x-slot name="title">
                 {{ trans_choice('content.pending_team_invitation_requests', $team->invitationRequests->count(), ['count' => $team->invitationRequests->count()]) }}
             </x-slot>
@@ -172,14 +172,14 @@
                     @endforeach
                 </div>
             </x-slot>
-        </x-jet-action-section>
+        </x-action-section>
     </div>
 @endif
 
 @if ($team->users->isNotEmpty())
     <!-- Manage Team Members -->
     <div class="py-5">
-        <x-jet-action-section>
+        <x-action-section>
             <x-slot name="title">
                 {{ trans_choice('content.team_members', $team->users->count(), ['count' => $team->users->count()]) }}
             </x-slot>
@@ -227,12 +227,12 @@
                     @endforeach
                 </div>
             </x-slot>
-        </x-jet-action-section>
+        </x-action-section>
     </div>
 @endif
 
     <!-- Role Management Modal -->
-    <x-jet-dialog-modal wire:model="currentlyManagingRole">
+    <x-dialog-modal wire:model.live="currentlyManagingRole">
         <x-slot name="title">
             {{ __('content.manage_role') }}
         </x-slot>
@@ -241,7 +241,7 @@
             <div class="relative z-0 mt-1 border border-gray-200 rounded-lg cursor-pointer">
                 @foreach ($this->roles as $index => $role)
                     <button type="button" class="relative px-4 py-3 inline-flex w-full rounded-lg focus:z-10 focus:outline-none focus:border-blue-300 focus:ring focus:ring-blue-200 {{ $index > 0 ? 'border-t border-gray-200 rounded-t-none' : '' }} {{ ! $loop->last ? 'rounded-b-none' : '' }}"
-                                    wire:click="$set('currentRole', '{{ $role->key }}')">
+                                wire:click="$set('currentRole', '{{ $role->key }}')">
                         <div class="{{ $currentRole !== $role->key ? 'opacity-50' : '' }}">
                             <!-- Role Name -->
                             <div class="flex items-center">
@@ -265,18 +265,18 @@
         </x-slot>
 
         <x-slot name="footer">
-            <x-jet-secondary-button wire:click="stopManagingRole" wire:loading.attr="disabled">
+            <x-secondary-button wire:click="stopManagingRole" wire:loading.attr="disabled">
                 {{ __('content.cancel') }}
-            </x-jet-secondary-button>
+            </x-secondary-button>
 
-            <x-jet-button class="ml-3" wire:click="updateRole" wire:loading.attr="disabled">
+            <x-button class="ml-3" wire:click="updateRole" wire:loading.attr="disabled">
                 {{ __('content.save') }}
-            </x-jet-button>
+            </x-button>
         </x-slot>
-    </x-jet-dialog-modal>
+    </x-dialog-modal>
 
     <!-- Leave Team Confirmation Modal -->
-    <x-jet-confirmation-modal wire:model="confirmingLeavingTeam">
+    <x-confirmation-modal wire:model.live="confirmingLeavingTeam">
         <x-slot name="title">
             {{ __('content.leave_team') }}
         </x-slot>
@@ -286,18 +286,18 @@
         </x-slot>
 
         <x-slot name="footer">
-            <x-jet-secondary-button wire:click="$toggle('confirmingLeavingTeam')" wire:loading.attr="disabled">
+            <x-secondary-button wire:click="$toggle('confirmingLeavingTeam')" wire:loading.attr="disabled">
                 {{ __('content.cancel') }}
-            </x-jet-secondary-button>
+            </x-secondary-button>
 
-            <x-jet-danger-button class="ml-3" wire:click="leaveTeam" wire:loading.attr="disabled">
+            <x-danger-button class="ml-3" wire:click="leaveTeam" wire:loading.attr="disabled">
                 {{ __('content.leave') }}
-            </x-jet-danger-button>
+            </x-danger-button>
         </x-slot>
-    </x-jet-confirmation-modal>
+    </x-confirmation-modal>
 
     <!-- Remove Team Member Confirmation Modal -->
-    <x-jet-confirmation-modal wire:model="confirmingTeamMemberRemoval">
+    <x-confirmation-modal wire:model.live="confirmingTeamMemberRemoval">
         <x-slot name="title">
             {{ __('content.remove_team_member') }}
         </x-slot>
@@ -307,14 +307,14 @@
         </x-slot>
 
         <x-slot name="footer">
-            <x-jet-secondary-button wire:click="$toggle('confirmingTeamMemberRemoval')" wire:loading.attr="disabled">
+            <x-secondary-button wire:click="$toggle('confirmingTeamMemberRemoval')" wire:loading.attr="disabled">
                 {{ __('content.cancel') }}
-            </x-jet-secondary-button>
+            </x-secondary-button>
 
-            <x-jet-danger-button class="ml-3" wire:click="removeTeamMember" wire:loading.attr="disabled">
+            <x-danger-button class="ml-3" wire:click="removeTeamMember" wire:loading.attr="disabled">
                 {{ __('content.remove') }}
-            </x-jet-danger-button>
+            </x-danger-button>
         </x-slot>
-    </x-jet-confirmation-modal>
+    </x-confirmation-modal>
 
 </div>

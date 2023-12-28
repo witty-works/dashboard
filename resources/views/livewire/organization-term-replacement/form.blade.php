@@ -1,4 +1,4 @@
-<x-jet-form-section submit="storeTermReplacement">
+<x-form-section submit="storeTermReplacement">
 
     <x-slot name="title">
         <h2 id="organization_term_replacements">{{ __('guidelines.create_term_replacement') }}</h2>
@@ -16,94 +16,94 @@
 
     <x-slot name="form">
         <div class="w-full col-span-6 sm:col-span-4">
-            <x-jet-label for="term" value="{!! __('guidelines.term_label') !!}" />
-            <x-jet-input id="term_replacement_id"
+            <x-label for="term" value="{!! __('guidelines.term_label') !!}" />
+            <x-input id="term_replacement_id"
                          type="hidden"
-                         wire:model.defer="term_replacement_id"
+                         wire:model="term_replacement_id"
                          autocomplete="term_replacement_id" />
-            <x-jet-input id="term"
+            <x-input id="term"
                          type="textarea"
                          class="mt-1 block w-full"
-                         wire:model.defer="term"
+                         wire:model="term"
                          autocomplete="term" />
-            <x-jet-input-error for="term" class="mt-2" />
+            <x-input-error for="term" class="mt-2" />
         </div>
 
         <div class="w-full col-span-6 sm:col-span-4 mt-5">
-            <x-jet-label id="replacement_label" for="replacement" value="{!! __('guidelines.replacement_label') !!}" />
-            <x-jet-input id="replacement"
+            <x-label id="replacement_label" for="replacement" value="{!! __('guidelines.replacement_label') !!}" />
+            <x-input id="replacement"
                          type="textarea"
                          class="mt-1 block w-full textarea-as-input"
-                         wire:model.defer="replacement"
+                         wire:model="replacement"
                          autocomplete="replacement" />
-            <x-jet-input-error for="replacement" class="mt-2" />
+            <x-input-error for="replacement" class="mt-2" />
         </div>
 
         <div class="w-full col-span-6 sm:col-span-4 mt-5">
-            <x-jet-label for="language_code" value="{!! __('guidelines.language_code_label') !!}" />
+            <x-label for="language_code" value="{!! __('guidelines.language_code_label') !!}" />
             <x-select id="language_code"
                       :options="$language_codes"
                       class="mt-1 block w-full"
-                      wire:model.defer="language_code" />
-            <x-jet-input-error for="language_code" class="mt-2" />
+                      wire:model="language_code" />
+            <x-input-error for="language_code" class="mt-2" />
         </div>
 
         <div class="w-full col-span-6 sm:col-span-4 mt-5">
-            <x-jet-label for="matching_type" value="{{ __('guidelines.matching_type_label') }}" />
+            <x-label for="matching_type" value="{{ __('guidelines.matching_type_label') }}" />
             <x-select id="matching_type"
                       :options="\App\Models\TermReplacement::MATCHING_TYPES"
                       class="mt-1 block w-full"
-                      wire:model.defer="matching_type"
+                      wire:model="matching_type"
                       wire:change="showHideWordType"
                       :disabled="!$model->subscribed()" />
-            <x-jet-input-error for="matching_type" class="mt-2" />
-            <x-jet-input-error for="word_type" class="mt-2" />
+            <x-input-error for="matching_type" class="mt-2" />
+            <x-input-error for="word_type" class="mt-2" />
         </div>
 
         <!-- Word Type Section -->
         @if($show_word_type)
             <div class="w-full col-span-6 sm:col-span-4 mt-5">
-                <x-jet-label for="word_type" value="{!! __('guidelines.word_type_label') !!}" />
+                <x-label for="word_type" value="{!! __('guidelines.word_type_label') !!}" />
                 <x-select id="word_type"
                           :options="\App\Models\TermReplacement::WORD_TYPES"
                           class="mt-1 block w-full"
-                          wire:model.defer="word_type"
+                          wire:model="word_type"
                           :disabled="!$model->subscribed()" />
             </div>
         @endif
 
         <div class="w-full col-span-6 sm:col-span-4 mt-5">
-            <x-jet-label for="explanation" value="{!! __('guidelines.explanation_label') !!}" />
-            <x-jet-input id="explanation"
+            <x-label for="explanation" value="{!! __('guidelines.explanation_label') !!}" />
+            <x-input id="explanation"
                          type="textarea"
                          class="mt-1 block w-full"
-                         wire:model.defer="explanation"
+                         wire:model="explanation"
                          autocomplete="explanation" />
-            <x-jet-input-error for="explanation" class="mt-2" />
+            <x-input-error for="explanation" class="mt-2" />
         </div>
 
         <div class="w-full col-span-6 sm:col-span-4 mt-5">
-            <x-jet-label for="url" value="{!! __('guidelines.url_label') !!}" />
-            <x-jet-input id="url"
+            <x-label for="url" value="{!! __('guidelines.url_label') !!}" />
+            <x-input id="url"
                          type="text"
                          class="mt-1 block w-full"
-                         wire:model.defer="url"
+                         wire:model="url"
                          autocomplete="url" />
-            <x-jet-input-error for="url" class="mt-2" />
+            <x-input-error for="url" class="mt-2" />
         </div>
 
         <div class="w-full col-span-6 sm:col-span-4 mt-5">
-            <x-jet-label for="emoji" value="{!! __('guidelines.emoji_label') !!}" />
-            <x-jet-input id="emoji"
+            <x-label for="emoji" value="{!! __('guidelines.emoji_label') !!}" />
+            <x-input id="emoji"
                          type="text"
                          class="mt-1 block w-full"
-                         wire:model.defer="emoji"
+                         wire:model="emoji"
                          autocomplete="emoji" />
-                         <x-jet-input-error for="emoji" class="mt-2" />
+                         <x-input-error for="emoji" class="mt-2" />
         </div>
     </x-slot>
 
     <x-slot name="actions">
         @include('partials/save_cancel_action')
     </x-slot>
-</x-jet-form-section>
+</x-form-section>
