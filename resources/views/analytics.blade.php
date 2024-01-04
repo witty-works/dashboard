@@ -550,8 +550,8 @@
         if (
             (!isPremiumUser && !data.events?.popover_open) ||
             (!showCheckResult && !data.events?.popover_open) ||            
-            (!isPremiumUser && Object.entries(data.events.popover_open).filter(([key, value]) => value > 0).length == 0) ||
-            (!showCheckResult && Object.entries(data.events.popover_open).filter(([key, value]) => value > 0).length == 0)) {
+            (!isPremiumUser && Object.entries(data.events?.popover_open).filter(([key, value]) => value > 0).length == 0) ||
+            (!showCheckResult && Object.entries(data.events?.popover_open).filter(([key, value]) => value > 0).length == 0)) {
             handleNoData('loading-icon-overview', 'overview-no-data', '', false);
             return;
         }
