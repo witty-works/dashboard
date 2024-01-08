@@ -181,7 +181,7 @@ class AnalyticsController extends Controller
                 $response = PosthogHelper::fetchData($filter, $this->refresh);
                 if (isset($response['result'])) {
                     foreach ($response['result'] as $value) {
-                        if (!empty($value['breakdown_value'])) {
+                        if (!empty($value['breakdown_value']) && strpos($value['breakdown_value'], '$$_posthog_') === false) {
                             $data['events'][$event][$value['breakdown_value']] = $value['aggregated_value'];
                         }
                     }
@@ -195,7 +195,7 @@ class AnalyticsController extends Controller
                 $response = PosthogHelper::fetchData($filter, $this->refresh);
                 if (isset($response['result'])) {
                     foreach ($response['result'] as $value) {
-                        if (!empty($value['breakdown_value'])) {
+                        if (!empty($value['breakdown_value']) && strpos($value['breakdown_value'], '$$_posthog_') === false) {
                             $data['events'][$event][$value['breakdown_value']] = array_combine($value['days'], $value['data']);
                         }
                     }
