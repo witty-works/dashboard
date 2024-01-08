@@ -81,37 +81,8 @@ class Category extends Component
     {
         $dimensions = [];
 
-        foreach ($this->dimensions as $ddd => $enabled) {
-            $proficiencyLevel = $this->diversityDimensionDrivers[$ddd]['proficiency_level'] ?? null;
-            if ($proficiencyLevel === 'openly_discriminating') {
-                $enabled = LanguageGuidelines::BASIC_ENABLED;
-            } elseif ($proficiencyLevel === 'inclusive' && $enabled === LanguageGuidelines::ADVANCED_ENABLED) {
-                $enabled = LanguageGuidelines::BASIC_ENABLED;
-            } elseif (empty($enabled)) {
-                $enabled = LanguageGuidelines::DISABLED;
-            } elseif (!$this->model->subscribed()) {
-                $enabled = LanguageGuidelines::BASIC_ENABLED;
-            }
-
-            switch ($enabled) {
-                case LanguageGuidelines::ADVANCED_ENABLED:
-                    $languageGuidelines->inPlaceUpateArray('advanced_' . $ddd, 'disabled_categories', true);
-                    $languageGuidelines->inPlaceUpateArray($ddd, 'disabled_categories', true);
-                    break;
-                case LanguageGuidelines::BASIC_ENABLED:
-                    if (!LanguageGuidelines::isBasicOnly($proficiencyLevel)) {
-                        $languageGuidelines->inPlaceUpateArray('advanced_' . $ddd, 'disabled_categories', false);
-                    }
-                    $languageGuidelines->inPlaceUpateArray($ddd, 'disabled_categories', true);
-                    break;
-                case LanguageGuidelines::DISABLED:
-                default:
-                    if (!LanguageGuidelines::isBasicOnly($proficiencyLevel)) {
-                        $languageGuidelines->inPlaceUpateArray('advanced_' . $ddd, 'disabled_categories', false);
-                    }
-                    $languageGuidelines->inPlaceUpateArray($ddd, 'disabled_categories', false);
-                    break;
-            }
+        foreach ($this->dimensions as $ddd => $level) {
+            $languageGuidelines->adjustLevel($ddd, $level);
         }
 
         return $dimensions;

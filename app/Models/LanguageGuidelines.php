@@ -80,6 +80,19 @@ class LanguageGuidelines extends Model
         parent::__construct($attributes);
     }
 
+    public function getModelAttribute()
+    {
+        if ($this->team_id) {
+            return $this->team;
+        }
+
+        if ($this->user_id) {
+            return $this->user;
+        }
+
+        return null;
+    }
+
     public static function getLanguageGuidelines($model)
     {
         $filter = [$model instanceof Team ? 'team_id' : 'user_id'  => $model->id];
@@ -174,7 +187,43 @@ class LanguageGuidelines extends Model
         return $diversityDimensionDrivers;
     }
 
-    public function inPlaceUpateArray($element, $column, $enabled)
+    public function adjustLevel($ddd, $level)
+    {
+        $diversityDimensionDrivers = $this->getDiversityDimensionDrivers($this->category);
+        $proficiencyLevel = $diversityDimensionDrivers[$ddd]['proficiency_level'] ?? null;
+
+        if ($proficiencyLevel === 'openly_discriminating') {
+            $level = LanguageGuidelines::BASIC_ENABLED;
+        } elseif ($proficiencyLevel === 'inclusive' && $level === LanguageGuidelines::ADVANCED_ENABLED) {
+            $level = LanguageGuidelines::BASIC_ENABLED;
+        } elseif (empty($level)) {
+            $level = LanguageGuidelines::DISABLED;
+        } elseif (!$this->model->subscribed()) {
+            $level = LanguageGuidelines::BASIC_ENABLED;
+        }
+
+        switch ($level) {
+            case LanguageGuidelines::ADVANCED_ENABLED:
+                $this->inPlaceUpateArray('advanced_' . $ddd, 'disabled_categories', true);
+                $this->inPlaceUpateArray($ddd, 'disabled_categories', true);
+                break;
+            case LanguageGuidelines::BASIC_ENABLED:
+                if (!LanguageGuidelines::isBasicOnly($proficiencyLevel)) {
+                    $this->inPlaceUpateArray('advanced_' . $ddd, 'disabled_categories', false);
+                }
+                $this->inPlaceUpateArray($ddd, 'disabled_categories', true);
+                break;
+            case LanguageGuidelines::DISABLED:
+            default:
+                if (!LanguageGuidelines::isBasicOnly($proficiencyLevel)) {
+                    $this->inPlaceUpateArray('advanced_' . $ddd, 'disabled_categories', false);
+                }
+                $this->inPlaceUpateArray($ddd, 'disabled_categories', false);
+                break;
+        }
+    }
+
+    protected function inPlaceUpateArray($element, $column, $enabled)
     {
         $params = [':id' => $this->id, ':element' => $element, ':element_json' => "\"$element\""];
 
