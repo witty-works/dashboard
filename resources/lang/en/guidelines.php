@@ -125,4 +125,6 @@ All words added to this list will become highlighted by Witty, and your custom r
     'form_reset_category_aria_label' => 'reset diversity dimension settings',
     'form_reset_language_aria_label' => 'reset language settings',
     'discriminating_language_cannot_be_disabled' => 'Openly discriminating diversity dimensions cannot be turned to \'off\'.',
+    'german_only' => 'German only',
+    'english_only' => 'English only',
 ];
