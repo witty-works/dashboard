@@ -174,33 +174,26 @@ class AnalyticsController extends Controller
 
         if ($display) {
             $filter['display'] = 'ActionsBarValue';
-
-            foreach ($events as $event) {
-                $filter['events'][0]['id'] = $event;
-
-                $response = PosthogHelper::fetchData($filter, $this->refresh);
-                if (isset($response['result'])) {
-                    foreach ($response['result'] as $value) {
-                        if (!empty($value['breakdown_value'])) {
-                            $data['events'][$event][$value['breakdown_value']] = $value['aggregated_value'];
-                        }
-                    }
-                    $data['last_refresh'] = $response['last_refresh'];
-                }
-            }
+            $callback = function($value) {
+                return $value['aggregated_value'];
+            };
         } else {
-            foreach ($events as $event) {
-                $filter['events'][0]['id'] = $event;
+            $callback = function($value) {
+                return array_combine($value['days'], $value['data']);
+            };
+        }
 
-                $response = PosthogHelper::fetchData($filter, $this->refresh);
-                if (isset($response['result'])) {
-                    foreach ($response['result'] as $value) {
-                        if (!empty($value['breakdown_value'])) {
-                            $data['events'][$event][$value['breakdown_value']] = array_combine($value['days'], $value['data']);
-                        }
+        foreach ($events as $event) {
+            $filter['events'][0]['id'] = $event;
+
+            $response = PosthogHelper::fetchData($filter, $this->refresh);
+            if (isset($response['result'])) {
+                foreach ($response['result'] as $value) {
+                    if (!empty($value['breakdown_value']) && strpos($value['breakdown_value'], '$$_posthog_') === false) {
+                        $data['events'][$event][$value['breakdown_value']] = $callback($value);
                     }
-                    $data['last_refresh'] = $response['last_refresh'];
                 }
+                $data['last_refresh'] = $response['last_refresh'];
             }
         }
 

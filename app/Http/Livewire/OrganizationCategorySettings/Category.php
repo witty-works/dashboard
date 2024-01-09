@@ -66,7 +66,19 @@ class Category extends Component
 
     protected function readDimensions($disabledCategories)
     {
+        $languageGuidelines = LanguageGuidelines::getLanguageGuidelines($this->model);
+        $languages = [];
+        foreach ($languageGuidelines->preferred_variants as $variant) {
+            $languages[] = substr($variant, 0, 2);
+        }
+
         foreach ($this->diversityDimensionDrivers as $ddd => $config) {
+            if ((!$config['has_en_rules'] && !in_array('de', $languages))
+                || (!$config['has_de_rules'] && !in_array('en', $languages))
+            ) {
+                continue;
+            }
+
             if (!in_array('advanced_' . $ddd, $disabledCategories)) {
                 $this->dimensions[$ddd] = LanguageGuidelines::ADVANCED_ENABLED;
             } elseif (!in_array($ddd, $disabledCategories)) {

@@ -92,6 +92,11 @@
                 $label.= $diversityDimensionDrivers[$ddd]['translation']['hs_name'];
                 $label.= '</a>';
                 $label.= ' - '.$diversityDimensionDrivers[$ddd]['translation']['name'];
+                if (!$diversityDimensionDrivers[$ddd]['has_en_rules'] && app()->getLocale() !== 'de') {
+                    $label.= ' ('.__('guidelines.german_only').')';
+                } elseif (!$diversityDimensionDrivers[$ddd]['has_de_rules'] && app()->getLocale() !== 'en') {
+                    $label.= ' ('.__('guidelines.english_only').')';
+                }
             @endphp
             @if($checkbox)
             <x-jet-checkbox

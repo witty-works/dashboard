@@ -158,6 +158,13 @@ class SyncToHubspotCategoriesCommand extends Command
                     $row['inclusive'] = json_decode($row['inclusive']);
                 }
 
+                if (!empty($row['has_en_rules'])) {
+                    $row['has_en_rules'] = $row['has_en_rules'] === 'true';
+                }
+                if (!empty($row['has_de_rules'])) {
+                    $row['has_de_rules'] = $row['has_de_rules'] === 'true';
+                }
+
                 if (isset($row['canonical_url']) && !str_ends_with($row['canonical_url'], '/' . $row['hs_path'])) {
                     $this->warn("Canonical URL '{$row['canonical_url']}' does not end with '/{$row['hs_path']}' for '{$row['name']}'");
                 }
