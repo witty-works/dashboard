@@ -24,13 +24,21 @@ Route::group([
 });
 
 Route::group([
-    'prefix' => '/user/language',
+    'prefix' => '/user',
     'excluded_middleware' => ['ensureStateful'],
 ], function () {
-    Route::delete('/domains', [UserGuidelinesApiController::class, 'deleteDomain'])
+    Route::delete('/language/domains', [UserGuidelinesApiController::class, 'deleteDomain'])
         ->name('user.domains.delete');
-    Route::put('/domains', [UserGuidelinesApiController::class, 'putDomain'])
+    Route::put('/language/domains', [UserGuidelinesApiController::class, 'putDomain'])
         ->name('user.domains.put');
+
+    Route::delete('/language/ignore-words', [UserGuidelinesApiController::class, 'deleteFalsePositive'])
+        ->name('user.ignored-words.delete');
+    Route::put('/language/ignore-words', [UserGuidelinesApiController::class, 'putFalsePositive'])
+        ->name('user.ignored-words.put');
+
+    Route::put('/language/customize-witty', [UserGuidelinesApiController::class, 'adjustDDDLevel'])
+        ->name('user.adjust_ddd_level.put');
 });
 
 Route::middleware(['auth:sanctum'])->group(function () {
