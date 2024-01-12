@@ -745,12 +745,17 @@
                 "lead_video": "",
                 "lead_image": [],
                 "example_image": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Anglizismen-1.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Anglizismen-2.png",
                     "width": "663",
                     "height": "429",
-                    "alt": "Eine Illustration des Satzes 'Wir m\u00fcssen on-time und on-budget [im Zeit- und Budgetrahmen] sein.\u2019 Die von Witty vorgeschlagene Alternative ist in Klammern."
+                    "alt": ""
                 },
-                "example_image_advanced": [],
+                "example_image_advanced": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Anglizismen%20Advanced-1.png",
+                    "width": "663",
+                    "height": "429",
+                    "alt": ""
+                },
                 "soft_explanation": "",
                 "hard_facts": "",
                 "hero_figure": "",
@@ -2595,7 +2600,7 @@
                     "alt": ""
                 },
                 "example_image_advanced": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Bin%C3%A4res%20Geschlecht%20Advanced.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Bin%C3%A4res%20Geschlecht%20Advanced%20(1).png",
                     "width": "605",
                     "height": "412",
                     "alt": ""
@@ -3458,7 +3463,12 @@
                     "height": "429",
                     "alt": ""
                 },
-                "example_image_advanced": [],
+                "example_image_advanced": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/M%C3%A4nnerklischee%20%20Advanced-1.png",
+                    "width": "663",
+                    "height": "429",
+                    "alt": ""
+                },
                 "soft_explanation": "",
                 "hard_facts": "",
                 "hero_figure": "",
@@ -4619,9 +4629,14 @@
                     "src": "https:\/\/www.witty.works\/hubfs\/wives.png",
                     "width": "605",
                     "height": "404",
-                    "alt": "An illustration of Witty showing the phrase 'Your wives [partners] are highly welcome to Board\u2019s Christmas party.' The words in brackets shown as alternatives."
+                    "alt": ""
                 },
-                "example_image_advanced": [],
+                "example_image_advanced": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Sexual%20orientation%20advanced.png",
+                    "width": "605",
+                    "height": "404",
+                    "alt": ""
+                },
                 "soft_explanation": "",
                 "hard_facts": "",
                 "hero_figure": "",
@@ -4652,12 +4667,17 @@
                 "lead_video": "",
                 "lead_image": [],
                 "example_image": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Sexuelle%20Orientierung.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Bin%C3%A4res%20Geschlecht-2.png",
                     "width": "605",
                     "height": "412",
-                    "alt": "Eine Illustration von Witty des Satzes 'Eure [Ehefrauen] sind herzlich zur Weihnachtsfeier des Vorstands eingeladen.'. Als Alternative f\u00fcr den Begriff in Klammern wird 'Partner*innen' vorgeschlagen."
+                    "alt": ""
                 },
-                "example_image_advanced": [],
+                "example_image_advanced": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Bin%C3%A4res%20Geschlecht%20Advanced-1.png",
+                    "width": "605",
+                    "height": "412",
+                    "alt": ""
+                },
                 "soft_explanation": "",
                 "hard_facts": "",
                 "hero_figure": "",
@@ -5302,7 +5322,12 @@
                     "height": "399",
                     "alt": ""
                 },
-                "example_image_advanced": [],
+                "example_image_advanced": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Negative%20Verwendung%20jiddischer%20Worte%20Advanced.png",
+                    "width": "605",
+                    "height": "414",
+                    "alt": ""
+                },
                 "soft_explanation": "",
                 "hard_facts": "",
                 "hero_figure": "",
