@@ -759,17 +759,6 @@
 
         updateDropdown("eventTypeTopCategories", selectedDropdownValue);
 
-        const eventTypeDropdownTopWords = document.getElementById("eventTypeDropdownTopWords");
-        eventTypeDropdownTopWords.innerHTML = `
-            <select id="eventTypeTopWords" class="dropdown" onchange="setParams([this.value])">
-                <option value="check_result" ${checkResultOptionDisabledAttr}>{{ __('content.check_result_label_line_chart').($is_premium_user ? '' : ' ('.__('teams.witty_teams_only').')') }}</option>
-                <option value="popover_open">{{ __('content.popover_label_line_chart') }}</option>
-                <option value="alternative">{{ __('content.alternative_label_line_chart') }}</option>
-                <option value="ignore">{{ __('content.ignored_label_line_chart') }}</option>
-            </select>`;
-
-        updateDropdown("eventTypeTopWords", selectedDropdownValue);
-
         if (data.errorStatus === 503) {
             handleNoData('loading-icon-top-categories', 'top-categories-no-data', 'topSubcategories', true);
             return;
@@ -946,6 +935,21 @@
             handleNoData('loading-icon-top-words', 'top-words-no-data', 'topWords', false);
             return;
         }
+
+        const isPremiumUser = @json($is_premium_user);
+        const checkResultOptionDisabledAttr = isPremiumUser ? '' : 'disabled';
+        const selectedDropdownValue = eventTypes[0] || (isPremiumUser ? 'check_result' : 'popover_open');
+
+        const eventTypeDropdownTopWords = document.getElementById("eventTypeDropdownTopWords");
+        eventTypeDropdownTopWords.innerHTML = `
+            <select id="eventTypeTopWords" class="dropdown" onchange="setParams([this.value])">
+                <option value="check_result" ${checkResultOptionDisabledAttr}>{{ __('content.check_result_label_line_chart').($is_premium_user ? '' : ' ('.__('teams.witty_teams_only').')') }}</option>
+                <option value="popover_open">{{ __('content.popover_label_line_chart') }}</option>
+                <option value="alternative">{{ __('content.alternative_label_line_chart') }}</option>
+                <option value="ignore">{{ __('content.ignored_label_line_chart') }}</option>
+            </select>`;
+
+        updateDropdown("eventTypeTopWords", selectedDropdownValue);
 
         const events = data.events[eventTypes[0]] || {};
         for (const [key, value] of Object.entries(events)) {
