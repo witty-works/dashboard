@@ -883,6 +883,7 @@
                         labels: {
                             usePointStyle: true,
                             fontSize: 14,
+                            padding: 18,
                             generateLabels: function(chart) {
                                 return chart.data.datasets.map((dataset, i) => {
                                     let isHidden = dataset.hidden;
