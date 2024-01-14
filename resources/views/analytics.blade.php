@@ -425,6 +425,15 @@
                         scales:{
                             xAxes: [{
                                 display: display,
+                                ticks: {
+                                    //avoid very long labels
+                                    callback: function(value, index, values) {
+                                        if (value.length > 20) {
+                                            return value.substring(0, 20) + '...';
+                                        }
+                                        return value;
+                                    }
+                                }
                             }],
                             yAxes: [{
                                 ticks: {
@@ -874,6 +883,7 @@
                         labels: {
                             usePointStyle: true,
                             fontSize: 14,
+                            padding: 18,
                             generateLabels: function(chart) {
                                 return chart.data.datasets.map((dataset, i) => {
                                     let isHidden = dataset.hidden;
