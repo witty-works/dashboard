@@ -18,12 +18,15 @@ class AnalyticsController extends Controller
     protected $refresh;
     protected $categories;
     protected $subcategories;
+    protected $defaultEvent;
 
     public function __construct(Request $request)
     {
         $this->refresh = $request->get('refresh', false);
         $this->categories = SyncToHubspotCategoriesCommand::loadTableData('categories');
         $this->subcategories = SyncToHubspotCategoriesCommand::loadTableData('diversity_dimension_drivers', true);
+
+        $this->defaultEvent = env('CHECK_HIGHLIGHTS_ENABLED', false) ? 'check_highlights' : 'popover_open';
     }
 
     public function user(Request $request)
@@ -36,6 +39,7 @@ class AnalyticsController extends Controller
         return view('analytics', [
             'user' => $user,
             'categories' => $this->categories,
+            'default_event' => $this->defaultEvent,
         ]);
     }
 
@@ -61,6 +65,7 @@ class AnalyticsController extends Controller
             'team' => $user->currentTeam,
             'team_edit' => $user->hasTeamPermission($user->currentTeam, 'edit_guidelines'),
             'categories' => $this->categories,
+            'default_event' => $this->defaultEvent,
         ]);
     }
 
@@ -174,11 +179,11 @@ class AnalyticsController extends Controller
 
         if ($display) {
             $filter['display'] = 'ActionsBarValue';
-            $callback = function($value) {
+            $callback = function ($value) {
                 return $value['aggregated_value'];
             };
         } else {
-            $callback = function($value) {
+            $callback = function ($value) {
                 return array_combine($value['days'], $value['data']);
             };
         }
@@ -214,7 +219,7 @@ class AnalyticsController extends Controller
             $events = [];
         } else {
             if (!$subscribed) {
-                $key = array_search('check_result', $events);
+                $key = array_search($this->defaultEvent, $events);
                 if ($key) {
                     unset($events[$key]);
                 }
@@ -224,7 +229,7 @@ class AnalyticsController extends Controller
             }
         }
         if (empty($events)) {
-            $events = $subscribed ? ['check_result'] : ['popover_open'];
+            $events = $subscribed ? [$this->defaultEvent] : ['popover_open'];
         }
 
         return $events;
@@ -238,7 +243,7 @@ class AnalyticsController extends Controller
             'from' => 'required',
             'to' => 'nullable',
             'lang' => 'nullable|in:en,de',
-            'events' => 'nullable|array|in:check_result,popover_open,alternative,ignore,learning_bites',
+            'events' => 'nullable|array|in:check_highlights,popover_open,alternative,ignore,learning_bites',
             'categories' => 'nullable|array|in:' . implode(',', $this->categories->keys()->toArray()),
             'subcategories' => 'nullable|array|in:' . implode(',', $this->subcategories->keys()->toArray()),
             'group_subcategories' => 'nullable:bool',
@@ -321,7 +326,7 @@ class AnalyticsController extends Controller
                 if ($request->user()->subscribed()) {
                     $events = ['popover_open', 'alternative', 'ignore', 'learning_bites'];
                 } elseif (empty($events)) {
-                    $events = ['check_result'];
+                    $events = [$this->defaultEvent];
                 }
 
                 $key = reset($events);
@@ -378,7 +383,7 @@ class AnalyticsController extends Controller
                 if (empty($events)) {
                     $events = ['popover_open', 'alternative', 'ignore', 'learning_bites'];
                     if ($request->user()->subscribed()) {
-                        array_unshift($events, 'check_result');
+                        array_unshift($events, $this->defaultEvent);
                     }
                 }
 

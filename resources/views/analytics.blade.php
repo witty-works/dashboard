@@ -265,7 +265,7 @@
     function load_charts(refresh, chartType = 'overview', timerange = '1m', interval = 'week', language = [], categories = [], inclusive = 'non_inclusive', eventTypes = null) {
         if (eventTypes === null) {
             const isPremiumUser = @json($is_premium_user);
-            eventTypes = isPremiumUser ? ['check_result'] : ['popover_open']
+            eventTypes = isPremiumUser ? [@json($default_event)] : ['popover_open']
         }
 
         if (refresh) {
@@ -546,21 +546,22 @@
 
 
 
-    chartType == 'overview' && getChartData('total', timerange, interval, language, categories, null,  null, inclusive, ['check_result','popover_open','alternative','ignore','learning_bites']).then(data => { //TODO
+    chartType == 'overview' && getChartData('total', timerange, interval, language, categories, null,  null, inclusive, ['check_highlights','popover_open','alternative','ignore','learning_bites']).then(data => { //TODO
         if (data.errorStatus === 503) {
             handleNoData('loading-icon-overview', 'overview-no-data', '', true);
             return;
         }
         const isPremiumUser = @json($is_premium_user);
-        const showCheckResult = isPremiumUser && 
-            data.events?.check_result &&  
-            Object.entries(data.events.check_result).filter(([key, value]) => value > 0).length > 0 //could adjust this to a min amount of check results
+        const showCheckHighlights= isPremiumUser && 
+            @json($default_event) !== 'popover_open' &&
+            data.events?.check_highlights &&  
+            Object.entries(data.events.check_highlights).filter(([key, value]) => value > 0).length > 0 //could adjust this to a min amount of check highlights
         
         if (
             (!isPremiumUser && !data.events?.popover_open) ||
-            (!showCheckResult && !data.events?.popover_open) ||            
+            (!showCheckHighlights&& !data.events?.popover_open) ||            
             (!isPremiumUser && Object.entries(data.events?.popover_open).filter(([key, value]) => value > 0).length == 0) ||
-            (!showCheckResult && Object.entries(data.events?.popover_open).filter(([key, value]) => value > 0).length == 0)) {
+            (!showCheckHighlights&& Object.entries(data.events?.popover_open).filter(([key, value]) => value > 0).length == 0)) {
             handleNoData('loading-icon-overview', 'overview-no-data', '', false);
             return;
         }
@@ -590,7 +591,7 @@
                     xValuesLearningBites.push(date);
                     yValuesLearningBites.push(count);
                 }
-            } else if (event === 'check_result') {
+            } else if (event === 'check_highlights') {
                 for (const [date, count] of Object.entries(value)) {
                     xValuesCheckResult.push(date);
                     yValuesCheckResult.push(count);
@@ -625,53 +626,61 @@
             const aggregatedCheckResultData = formatChartLabels(xValuesPopoverOpen, yValuesCheckResult, interval)[1];
 
             if (aggregatedLearningBitesData.every(Number.isInteger)) {
+                var datasetsOverview = [
+                    {
+                        data: aggregatedPopoverOpenData,
+                        borderColor: colors[8],
+                        fill: false,
+                        label: "{{ __('content.popover_label_line_chart') }}",
+                        hidden: showCheckHighlights,
+                    },
+                    {
+                        data: aggregatedAlternativeData,
+                        borderColor: colors[16],
+                        fill: false,
+                        label: "{{ __('content.alternative_label_line_chart') }}",
+                        hidden: showCheckHighlights,
+                    },
+                    {
+                        data: aggregatedIgnoreData,
+                        borderColor: colors[24],
+                        fill: false,
+                        label:  "{{ __('content.ignored_label_line_chart') }}",
+                        hidden: showCheckHighlights,
+                    },
+                    {
+                        data: aggregatedLearningBitesData,
+                        borderColor: colors[32],
+                        fill: false,
+                        label:  @json(__('content.learning_bites_label_line_chart')),
+                        hidden: showCheckHighlights,
+                    },
+                ];
+
+                if (@json($default_event) !== 'popover_open') {
+                    datasetsOverview.unshift(
+                        {
+                            data: aggregatedCheckResultData,
+                            borderColor: colors[0],
+                            fill: false,
+                            label: @json(__('content.check_highlights_label_line_chart')) + 
+                                (!isPremiumUser 
+                                ? ' ({{ __('teams.witty_teams_only') }})' 
+                                : !showCheckHighlights
+                                ? ' ({{ __('teams.not_enough_data_to_display') }})' 
+                                : ''),
+                            hidden: !showCheckHighlights,
+                        }
+                    );
+                }
+
+
                 ctx = document.getElementById('eventsChart').getContext('2d');
                 new Chart(ctx, {
                     type: "line",
                     data: {
                         labels: aggregatedCheckChatData[0],
-                        datasets: [
-                            {
-                                data: aggregatedCheckResultData,
-                                borderColor: colors[0],
-                                fill: false,
-                                label: @json(__('content.check_result_label_line_chart')) + 
-                                    (!isPremiumUser 
-                                    ? ' ({{ __('teams.witty_teams_only') }})' 
-                                    : !showCheckResult 
-                                    ? ' ({{ __('teams.not_enough_data_to_display') }})' 
-                                    : ''),
-                                hidden: !showCheckResult,
-                            },
-                            {
-                                data: aggregatedPopoverOpenData,
-                                borderColor: colors[8],
-                                fill: false,
-                                label: "{{ __('content.popover_label_line_chart') }}",
-                                hidden: showCheckResult,
-                            },
-                            {
-                                data: aggregatedAlternativeData,
-                                borderColor: colors[16],
-                                fill: false,
-                                label: "{{ __('content.alternative_label_line_chart') }}",
-                                hidden: showCheckResult,
-                            },
-                            {
-                                data: aggregatedIgnoreData,
-                                borderColor: colors[24],
-                                fill: false,
-                                label:  "{{ __('content.ignored_label_line_chart') }}",
-                                hidden: showCheckResult,
-                            },
-                            {
-                                data: aggregatedLearningBitesData,
-                                borderColor: colors[32],
-                                fill: false,
-                                label:  @json(__('content.learning_bites_label_line_chart')),
-                                hidden: showCheckResult,
-                            },
-                        ]
+                        datasets: datasetsOverview,
                     },
                     options: {
                         tooltips: {
@@ -693,10 +702,13 @@
                                     return chart.data.datasets.map((dataset, i) => {
                                         //workaround for charjs initial hidden state bug
                                         let isCurrentlyHidden = chart.getDatasetMeta(i).hidden === false || chart.getDatasetMeta(i).hidden === true;
-                                        if (showCheckResult) {
-                                            isCurrentlyHidden = (i === 0 ? isCurrentlyHidden : !isCurrentlyHidden);
-                                        } else {
-                                            isCurrentlyHidden = (i === 0 ? true : false);
+
+                                        if (@json($default_event) !== 'popover_open') {
+                                            if (showCheckHighlights) {
+                                                isCurrentlyHidden = (i === 0 ? isCurrentlyHidden : !isCurrentlyHidden);
+                                            } else {
+                                                isCurrentlyHidden = (i === 0 ? true : false);
+                                            }
                                         }
                                         return {
                                             datasetIndex: i,
@@ -754,19 +766,25 @@
 
     (chartType == 'top-categories') && getChartData('topSubcategories', timerange, interval, language, categories, null,  null, inclusive, eventTypes).then(data => {
         const isPremiumUser = @json($is_premium_user);
-        const checkResultOptionDisabledAttr = isPremiumUser ? '' : 'disabled';
-        const selectedDropdownValue = eventTypes[0] || (isPremiumUser ? 'check_result' : 'popover_open');
+        const selectedDropdownValue = eventTypes[0] || (isPremiumUser ? @json($default_event) : 'popover_open');
+
+        optionsHtml = getOptionsHtml(isPremiumUser)
 
         const eventTypeDropdownTopCategories = document.getElementById("eventTypeDropdownTopCategories");
         eventTypeDropdownTopCategories.innerHTML = `
             <select id="eventTypeTopCategories" class="dropdown" onchange="setParams([this.value])">
-                <option value="check_result" ${checkResultOptionDisabledAttr}>{{ __('content.check_result_label_line_chart').($is_premium_user ? '' : ' ('.__('teams.witty_teams_only').')') }}</option>
-                <option value="popover_open">{{ __('content.popover_label_line_chart') }}</option>
-                <option value="alternative">{{ __('content.alternative_label_line_chart') }}</option>
-                <option value="ignore">{{ __('content.ignored_label_line_chart') }}</option>
+                ${optionsHtml}
             </select>`;
 
         updateDropdown("eventTypeTopCategories", selectedDropdownValue);
+
+        const eventTypeDropdownTopWords = document.getElementById("eventTypeDropdownTopWords");
+        eventTypeDropdownTopWords.innerHTML = `
+            <select id="eventTypeTopWords" class="dropdown" onchange="setParams([this.value])">
+                ${optionsHtml}
+            </select>`;
+
+        updateDropdown("eventTypeTopWords", selectedDropdownValue);
 
         if (data.errorStatus === 503) {
             handleNoData('loading-icon-top-categories', 'top-categories-no-data', 'topSubcategories', true);
@@ -947,19 +965,18 @@
         }
 
         const isPremiumUser = @json($is_premium_user);
-        const checkResultOptionDisabledAttr = isPremiumUser ? '' : 'disabled';
-        const selectedDropdownValue = eventTypes[0] || (isPremiumUser ? 'check_result' : 'popover_open');
+        const selectedDropdownValue = eventTypes[0] || (isPremiumUser ? @json($default_event) : 'popover_open');
 
-        const eventTypeDropdownTopWords = document.getElementById("eventTypeDropdownTopWords");
-        eventTypeDropdownTopWords.innerHTML = `
-            <select id="eventTypeTopWords" class="dropdown" onchange="setParams([this.value])">
-                <option value="check_result" ${checkResultOptionDisabledAttr}>{{ __('content.check_result_label_line_chart').($is_premium_user ? '' : ' ('.__('teams.witty_teams_only').')') }}</option>
-                <option value="popover_open">{{ __('content.popover_label_line_chart') }}</option>
-                <option value="alternative">{{ __('content.alternative_label_line_chart') }}</option>
-                <option value="ignore">{{ __('content.ignored_label_line_chart') }}</option>
+        optionsHtml = getOptionsHtml(isPremiumUser)
+
+        const eventTypeDropdownTopCategories = document.getElementById("eventTypeDropdownTopCategories");
+        eventTypeDropdownTopCategories.innerHTML = `
+            <select id="eventTypeTopCategories" class="dropdown" onchange="setParams([this.value])">
+                ${optionsHtml}
             </select>`;
 
         updateDropdown("eventTypeTopWords", selectedDropdownValue);
+
 
         const events = data.events[eventTypes[0]] || {};
         for (const [key, value] of Object.entries(events)) {
@@ -1067,9 +1084,9 @@ function setParams(eventTypes = null) {
     }
     if (eventTypes === null) {
         const isPremiumUser = @json($is_premium_user);
-        eventTypes = isPremiumUser ? ['check_result'] : ['popover_open']
+        eventTypes = isPremiumUser ? [@json($default_event)] : ['popover_open']
 
-        const selectedDropdownValue = eventTypes[0] || (isPremiumUser ? 'check_result' : 'popover_open');
+        const selectedDropdownValue = eventTypes[0] || (isPremiumUser ? @json($default_event) : 'popover_open');
         updateDropdown("eventTypeTopCategories", selectedDropdownValue);
         updateDropdown("eventTypeTopWords", selectedDropdownValue);
     }
@@ -1103,6 +1120,28 @@ function setParams(eventTypes = null) {
 }
 
 load_charts(false);
+
+function getOptionsHtml(isPremiumUser) {
+    var options = new Object();
+    var optionsDisabled = new Object();
+    if (@json($default_event) !== 'popover_open') {
+        options['check_highlights'] = @json(__('content.check_highlights_label_line_chart').($is_premium_user ? '' : ' ('.__('teams.witty_teams_only').')'));
+        optionsDisabled['check_highlights'] = isPremiumUser ? '' : 'disabled';
+    }
+    options['popover_open'] = @json(__('content.popover_label_line_chart'));
+    optionsDisabled['popover_open'] = '';
+    options['alternative'] = @json(__('content.alternative_label_line_chart'));
+    optionsDisabled['alternative'] = '';
+    options['ignore'] = @json(__('content.ignored_label_line_chart'));
+    optionsDisabled['ignore'] = '';
+
+    optionsHtml = '';
+    for (var key in options) {
+        optionsHtml+= '<option value="'+key+'" '+optionsDisabled[key]+'>'+options[key]+'</option>';
+    }
+
+    return optionsHtml;
+}
 
 function handleTabClick(clickedTabId) {
     const allTabs = ['overview', 'top-categories', 'top-words'];
