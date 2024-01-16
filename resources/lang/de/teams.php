@@ -24,7 +24,6 @@ return [
     'accepted_invitation' => 'Toll! Du hast die Einladung angenommen, dem Team ":team" beizutreten.',
     'subscription' => 'Team-Abonnement',
     'witty_teams_only' => 'Upgrade',
-    'not_enough_data_to_display' => 'Not enough data DE',
     'plan_headline' => 'Abonnement',
     'profile' => 'Profil',
     'total_of_max_used_licenses' => ':total von :max_count Benutzerlizenzen wurden zugewiesen',
@@ -41,4 +40,5 @@ return [
     'to_upgrade_contact_owner' => 'Um dein Abo anzupassen, wende dich bitte an deine*n Team-Eigentümer*in.',
     'select_license_count_aria_label' => 'Wählen die Anzahl der Lizenzen aus',
     'invitation_removed' => 'Leider wurde die Einladung entfernt.',
+    'not_enough_data_to_display' => 'Nicht genügend Daten, um ein Diagramm anzuzeigen',
 ];

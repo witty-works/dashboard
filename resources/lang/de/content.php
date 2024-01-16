@@ -431,7 +431,6 @@ Bitte gehe dann erneut auf „Registrieren“, um die Registrierung im "Witty fo
     'office_register_further_reading' => 'Weitere Details findest Du hier: <a href="https://www.witty.works/trust-and-security" target="_blank" rel="noopener">Vertrauen & Sicherheit</a> , <a href="https://www.witty.works/privacy" target="_blank" rel="noopener">Datenschutz</a> , <a href="https://www.witty.works/terms" target="_blank" rel="noopener">Allgemeine Geschäftsbedingungen</a> oder kontaktiere uns über <a href="mailto:support@witty.works" target="_blank" rel="noopener">support@witty.works</a>',
     'you_must_consent' => 'Du musst den Nutzungsbedingungen zustimmen.',
     'witty_word_addin_text_failed' => 'Es ist uns nicht gelungen, Dich bei Witty Word-Addin anzumelden.<br> Bitte schließe dieses Fenster und versuche es erneut oder kontaktiere <a href="mailto:support@witty.works">support@witty.works</a> .',
-    'check_result_label_line_chart' => 'Hervorgehoben',
     'triple_toggle_locked_third_pos' => 'Dein*e Teamadministrator*in hat diese Diversitätsdimension auf „Erweitert“ eingestellt. Du kannst sie nicht anpassen.',
     'event_type' => 'Ereignistyp',
     'triple_toggle_locked_second_pos' => 'Dein*e Team-Administrator*in hat diese Diversitätsdimension auf „Grundlagen“ eingestellt. Klicke, um zwischen „Grundlagen“ und „Erweitert“ zu wechseln.',
@@ -444,4 +443,5 @@ Bitte gehe dann erneut auf „Registrieren“, um die Registrierung im "Witty fo
     'analytic_top_categories' => '15 wichtigsten Diversitätsdimensionen',
     'analytic_top_words' => 'Top Wörter',
     'top_categories_over_time' => '15 wichtigsten Diversitätsdimensionen auf dem Zeitstrahl',
+    'check_highlights_label_line_chart' => 'Hervorgehoben',
 ];
