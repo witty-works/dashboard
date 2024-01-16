@@ -240,7 +240,7 @@ class Form extends Component
                 break;
             case 'case_insensitive':
             default:
-                $this->word_type = '-';
+                $this->word_type = '~';
                 break;
         }
     }

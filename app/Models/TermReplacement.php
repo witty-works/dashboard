@@ -51,7 +51,7 @@ class TermReplacement extends Model
     public function getMatchingTypeAttribute()
     {
         switch ($this->word_type) {
-            case '-':
+            case '~':
                 return 'case_insensitive';
             case '=':
                 return 'case_sensitive';
