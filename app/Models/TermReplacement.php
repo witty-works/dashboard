@@ -24,7 +24,7 @@ class TermReplacement extends Model
     const WORD_TYPES = [
         'a' => 'guidelines.adjective_long',
         'v' => 'guidelines.verb_long',
-        's' => 'guidelines.substantive_long'
+        'n' => 'guidelines.noun_long'
     ];
 
     public function getExistsOnTeamAttribute()
@@ -38,7 +38,7 @@ class TermReplacement extends Model
         $query = self::where('team_id', $team->id)
             ->where('term', $this->term);
 
-            if ($this->language_code) {
+        if ($this->language_code) {
             $query->where(function ($q) {
                 $q->where('language_code', '')
                     ->orWhere('language_code', $this->language_code);
