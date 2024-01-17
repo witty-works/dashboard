@@ -73,9 +73,7 @@ class Category extends Component
         }
 
         foreach ($this->diversityDimensionDrivers as $ddd => $config) {
-            if ((!$config['has_en_rules'] && !in_array('de', $languages))
-                || (!$config['has_de_rules'] && !in_array('en', $languages))
-            ) {
+            if (empty($config['has_rules'])) {
                 continue;
             }
 
