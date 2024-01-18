@@ -643,6 +643,39 @@ input:checked+.slider:before {
     margin-top: 2em;
 }
 
+.wittyworks-navigation-container {
+    max-height: 80vh;
+    overflow-y: auto; 
+    overflow-x: hidden;
+    margin-right: -0.5em;
+
+    /* firefox scrollbar styling */
+    scrollbar-width: thin; 
+    scrollbar-color: #FFFFFF #FFFFFF;
+}
+
+/* chrome scrollbar styling */
+.wittyworks-navigation-container::-webkit-scrollbar {
+    width: 10px;
+}
+
+.wittyworks-navigation-container::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0);
+}
+
+.wittyworks-navigation-container::-webkit-scrollbar-thumb:hover {
+    background: #b3b3b3;
+}
+
+.wittyworks-navigation-container::-webkit-scrollbar-thumb {
+    background: transparent; 
+}
+
+.wittyworks-navigation-container:hover::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 5px;
+}
+
 .wittyworks-navigation-sub-wrapper {
     margin-left: 2.7em;
     margin-bottom: 1em;

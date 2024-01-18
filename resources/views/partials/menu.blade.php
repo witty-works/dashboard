@@ -50,7 +50,7 @@
 
 @auth
 <nav aria-label="{{ __('content.main_navigation_aria_label') }}">
-    <div class="wittyworks-navigation-top-half">
+    <div class="wittyworks-navigation-container">
         @if ($team_edit)
             <div class="wittyworks-navigation-account-toggle-wrapper">
                 <x-jet-nav-link id="personal_account" class="wittyworks-navigation-item lato-small-paragraph-title-h4" href="{{ route($personalRoute) }}" :active="$open_tab === 'user'">
@@ -138,52 +138,48 @@
                 </div>
             </div>
         @endif
-    </div>
-</nav>
-
-    @if(config('lumki.show_lumki') || app('impersonate')->isImpersonating())
-    @lumki
-    @endif
-
-    <div class="wittyworks-navigation-bottom-half">
         <x-jet-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('editor') }}">
             <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/editor.svg') }}" alt="" />
             {{ __('content.witty_editor') }}
         </x-jet-nav-link>
         <x-jet-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('academy') }}" :active="request()->routeIs('academy')">
-                <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/bulb.svg') }}" alt="" />
-                {{ __('content.academy') }}
-            </x-jet-nav-link>
-            <x-jet-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('logout', ['provider' => 'azureadb2c']) }}">
-                <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/logout.svg') }}" alt="" />
-                {{ __('content.log_out') }}
-            </x-jet-nav-link>
-            <div class="wittyworks-navigation-username lato-small-text-p">
-                {{ $user->name }}
-            </div>
+            <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/bulb.svg') }}" alt="" />
+            {{ __('content.academy') }}
+        </x-jet-nav-link>
+        <x-jet-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('logout', ['provider' => 'azureadb2c']) }}">
+            <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/logout.svg') }}" alt="" />
+            {{ __('content.log_out') }}
+        </x-jet-nav-link>
+        <div class="wittyworks-navigation-username lato-small-text-p">
+            {{ $user->name }}
         </div>
-        @else
-        <!-- LOGGED OUT -->
-        <div class="wittyworks-navigation-top-half">
-            <x-jet-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('editor') }}">
-                <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/editor.svg') }}" alt="" />
-                {{ __('content.witty_editor') }}
-            </x-jet-nav-link>
-        </div>
-        <div class="wittyworks-navigation-bottom-half">
-            <x-jet-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="https://www.witty.works/pricing" target="_blank" rel="noopener">
-                <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/star.svg') }}" alt="" />
-                {{ __('teams.pricing') }}
-            </x-jet-nav-link>
+    </div>
+</nav>
 
-            <x-jet-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'login']) }}">
-                <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/login.svg') }}" alt="" />
-                    {{ __('content.log_in') }}
-            </x-jet-nav-link>
+    @if(config('lumki.show_lumki') || app('impersonate')->isImpersonating())
+        @lumki
+    @endif
 
-            <x-jet-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'register']) }}">
-                <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/register.svg') }}" alt="" />
-                    {{ __('content.register') }}
-            </x-jet-nav-link>
-        </div>
-        @endauth
+@else
+    <!-- LOGGED OUT -->
+    <div class="wittyworks-navigation-top-half">
+        <x-jet-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('editor') }}">
+            <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/editor.svg') }}" alt="" />
+            {{ __('content.witty_editor') }}
+        </x-jet-nav-link>
+    </div>
+    <div class="wittyworks-navigation-bottom-half">
+        <x-jet-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="https://www.witty.works/pricing" target="_blank" rel="noopener">
+            <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/star.svg') }}" alt="" />
+            {{ __('teams.pricing') }}
+        </x-jet-nav-link>
+        <x-jet-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'login']) }}">
+            <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/login.svg') }}" alt="" />
+            {{ __('content.log_in') }}
+        </x-jet-nav-link>
+        <x-jet-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'register']) }}">
+            <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/register.svg') }}" alt="" />
+            {{ __('content.register') }}
+        </x-jet-nav-link>
+    </div>
+@endauth
