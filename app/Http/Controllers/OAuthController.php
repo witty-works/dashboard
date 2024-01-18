@@ -21,6 +21,7 @@ use SocialiteProviders\Manager\Contracts\OAuth2\ProviderInterface;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Socialite;
 use Illuminate\Support\Facades\Session;
+use Mail;
 
 use Exception;
 
@@ -130,9 +131,23 @@ class OAuthController extends BaseOAuthController
         $token = $request->get('token');
         $officeSsoHelper = new OfficeSsoHelper();
 
+        $ssoDebugEmail = env('OFFICE_SSO_DEBUG_EMAIL', false);
+
         try {
             $claims = $officeSsoHelper->validateIdToken($token);
+
+            if ($ssoDebugEmail) {
+                Mail::raw('token: ' . $token . "\n\n" . var_export($claims, true), function ($m) use ($ssoDebugEmail) {
+                    $m->to($ssoDebugEmail)->subject('SSO Login Success');
+                });
+            }
         } catch (Exception $e) {
+            if ($ssoDebugEmail) {
+                Mail::raw('token: ' . $token . "\n\n" . $e->getMessage(), function ($m) use ($ssoDebugEmail) {
+                    $m->to($ssoDebugEmail)->subject('SSO Login Failed');
+                });
+            }
+
             return redirect(config('services.microsoft_office.redirect_uri') . '?status=failed');
         }
 

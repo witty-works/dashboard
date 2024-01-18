@@ -158,11 +158,16 @@ class SyncToHubspotCategoriesCommand extends Command
                     $row['inclusive'] = json_decode($row['inclusive']);
                 }
 
-                if (!empty($row['has_en_rules'])) {
-                    $row['has_en_rules'] = $row['has_en_rules'] === 'true';
-                }
-                if (!empty($row['has_de_rules'])) {
-                    $row['has_de_rules'] = $row['has_de_rules'] === 'true';
+                if (array_key_exists('has_en_rules', $row)) {
+                    $row['has_rules'] = [];
+                    if (!empty($row['has_en_rules']) && $row['has_en_rules'] === 'true') {
+                        $row['has_rules'][] = 'en';
+                    }
+                    if (!empty($row['has_de_rules']) && $row['has_de_rules'] === 'true') {
+                        $row['has_rules'][] = 'de';
+                    }
+                    unset($row['has_en_rules']);
+                    unset($row['has_de_rules']);
                 }
 
                 if (isset($row['canonical_url']) && !str_ends_with($row['canonical_url'], '/' . $row['hs_path'])) {
@@ -364,6 +369,19 @@ class SyncToHubspotCategoriesCommand extends Command
             return $this->map(function ($value) use ($locale) {
                 if (!empty($value['translations'][$locale])) {
                     $value['translation'] = $value['translations'][$locale];
+
+                    if (
+                        empty($value['translation']['example_image']['src'])
+                        && !empty($value['has_rules'])
+                        && !in_array($locale, $value['has_rules'])
+                    ) {
+                        $otherLocale = reset($value['has_rules']);
+                        if ($otherLocale && !empty($value['translations'][$otherLocale]['example_image']['src'])) {
+                            $value['translation']['example_image'] = $value['translations'][$otherLocale]['example_image'];
+                            $value['translation']['example_image_advanced'] = $value['translations'][$otherLocale]['example_image_advanced'];
+                        }
+                    }
+
                     unset($value['translations']);
 
                     if (isset($value['emoji'])) {

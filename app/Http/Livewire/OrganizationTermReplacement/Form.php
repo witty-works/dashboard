@@ -36,7 +36,7 @@ class Form extends Component
         'emoji' => 'nullable',
         'language_code' => 'nullable|string|in:en,de,',
         'matching_type' => 'nullable|string|in:case_insensitive,case_sensitive,lemmatize',
-        'word_type' => 'nullable|string|in:a,v,s',
+        'word_type' => 'nullable|string|in:a,v,n',
     ];
 
     /**
