@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Console\Commands\SyncToHubspotCategoriesCommand;
 use App\Jobs\SyncUserToNlpApi;
 use App\Models\ConnectedAccount;
 use App\Models\Domain;
@@ -58,7 +59,10 @@ class UserGuidelinesApiController extends Controller
     public function deleteFalsePositive(Request $request)
     {
         $user = $this->getUser($request);
-        $false_positive = $request->get('false_positive');
+        $false_positive = $request->get('false_positive', '');
+        if (empty($false_positive)) {
+            return response()->json(['message' => "'false_positive' query parameter is empty"], 400);
+        }
 
         $result = FalsePositive::where('false_positive', $false_positive)
             ->where('user_id', $user->id)->delete();
@@ -73,7 +77,10 @@ class UserGuidelinesApiController extends Controller
     public function putFalsePositive(Request $request)
     {
         $user = $this->getUser($request);
-        $false_positive = $request->get('false_positive');
+        $false_positive = $request->get('false_positive', '');
+        if (empty($false_positive)) {
+            return response()->json(['message' => "'false_positive' query parameter is empty"], 400);
+        }
 
         $result = FalsePositive::upsert(
             [
@@ -100,7 +107,9 @@ class UserGuidelinesApiController extends Controller
     {
         $user = $this->getUser($request);
         $diversity_dimension = $request->get('diversity_dimension');
-        $direction = $request->get('direction', 'down');
+        if (empty($diversity_dimension)) {
+            return response()->json(['error' => "'diversity_dimension' query parameter is empty"], 400);
+        }
 
         // NLP API has '_advanced' as a suffix and not 'advanced_' as a prefix
         if (str_ends_with($diversity_dimension, '_advanced')) {
@@ -108,6 +117,17 @@ class UserGuidelinesApiController extends Controller
             $is_advanced = true;
         } else {
             $is_advanced = false;
+        }
+
+        $diversityDimensionDrivers = SyncToHubspotCategoriesCommand::loadTableData('diversity_dimension_drivers');
+        $ddds = $diversityDimensionDrivers->toArray();
+        if (!array_key_exists($diversity_dimension, $ddds)) {
+            return response()->json(['error' => "Invalid parameter for 'diversity_dimension': '$diversity_dimension'"], 400);
+        }
+
+        $direction = $request->get('direction', 'down');
+        if ($direction !== 'down' && $is_advanced && LanguageGuidelines::isBasicOnly($ddds[$diversity_dimension]['proficiency_level'])) {
+            return response()->json(['error' => "'$diversity_dimension' is basic only"], 400);
         }
 
         $languageGuidelines = LanguageGuidelines::getLanguageGuidelines($user);
@@ -131,7 +151,7 @@ class UserGuidelinesApiController extends Controller
                 ? LanguageGuidelines::DISABLED
                 : LanguageGuidelines::BASIC_ENABLED;
         }
-    
+
         if ($direction === 'down') {
             $targetLevel = $is_advanced
                 ? LanguageGuidelines::BASIC_ENABLED
