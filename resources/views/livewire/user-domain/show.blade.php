@@ -23,7 +23,7 @@
                 <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $domain->domain }}</td>
                 <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $domain->exists_on_team ? __('guidelines.yes') : __('guidelines.no') }} </td>
                 <td class="border px-4 py-2 text-center container-row">
-                    <button onclick="document.getElementById('domains').scrollIntoView({behavior: 'smooth'});" wire:click="editDomain({{ $domain->id }})" class="button primary-button-red ">
+                    <button onclick="document.getElementById('domains')?.scrollIntoView({behavior: 'smooth'});" wire:click="editDomain({{ $domain->id }})" class="button primary-button-red ">
                         {{ __('content.edit') }}
                     </button>
                     <button wire:click="deleteDomain({{ $domain->id }})" class="button secondary-button-red ">
