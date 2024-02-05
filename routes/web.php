@@ -190,18 +190,6 @@ Route::group(['middleware' => config('socialstream.middleware', ['web'])], funct
     Route::get('/word-addin', function () {
         return view('word-addin');
     })->name('word-addin');
-
-    Route::get('/.well-known/microsoft-identity-association.json', function () {
-        return response()->json(
-            [
-                'associatedApplications' => [
-                    [
-                        'applicationId' => config('app.microsoft_application_id')
-                    ]
-                ]
-            ]
-        );
-    })->name('microsoft-identity-association');
 });
 
 /*
