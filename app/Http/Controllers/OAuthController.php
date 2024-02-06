@@ -7,11 +7,12 @@ use App\Models\ConnectedAccount as ModelsConnectedAccount;
 use App\Models\User;
 use Laravel\Socialite\AbstractUser;
 use Laravel\Socialite\Two\InvalidStateException;
-use Laravel\Jetstream\Jetstream;
+use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\Request;
-use InvalidArgumentException;
 use JoelButcher\Socialstream\ConnectedAccount;
 use JoelButcher\Socialstream\Contracts\GeneratesProviderRedirect;
 use JoelButcher\Socialstream\Contracts\ResolvesSocialiteUsers;
@@ -20,15 +21,33 @@ use JoelButcher\Socialstream\Socialstream;
 use SocialiteProviders\Manager\Contracts\OAuth2\ProviderInterface;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Socialite;
-use Illuminate\Support\Facades\Session;
 use Mail;
-
+use InvalidArgumentException;
 use Exception;
+use JoelButcher\Socialstream\Contracts\CreatesConnectedAccounts;
+use JoelButcher\Socialstream\Contracts\CreatesUserFromProvider;
+use JoelButcher\Socialstream\Contracts\OAuthLoginResponse;
+use JoelButcher\Socialstream\Contracts\SocialstreamResponse;
+use JoelButcher\Socialstream\Contracts\UpdatesConnectedAccounts;
 
 class OAuthController extends BaseOAuthController
 {
     public const AZURE_AD_B2C_PROVIDER = 'azureadb2c';
     public const OFFICE_PROVIDER = 'microsoft_office';
+    public const MOCK_LOGIN = 'mock';
+    public const LOGIN_SOURCE = 'login_source';
+
+    /**
+     * Create a new controller instance.
+     */
+    public function __construct(
+        protected Guard $guard,
+        protected CreatesUserFromProvider $createsUser,
+        protected CreatesConnectedAccounts $createsConnectedAccounts,
+        protected UpdatesConnectedAccounts $updatesConnectedAccounts
+    ) {
+        //
+    }
 
     public function logout(string $provider)
     {
@@ -162,7 +181,7 @@ class OAuthController extends BaseOAuthController
             return redirect(config('services.microsoft_office.redirect_uri') . '?status=success');
         }
 
-        $user = Jetstream::newUserModel()->where('email', $email)->first();
+        $user = Socialstream::newUserModel()->where('email', $email)->first();
 
         // no account for email that has consented to the terms => show the form
         if ($request->getMethod() === 'POST') {
@@ -214,16 +233,14 @@ class OAuthController extends BaseOAuthController
             Auth::logout();
         }
 
-        $user = Jetstream::newUserModel()->where('email', $email)->first();
+        $user = Socialstream::newUserModel()->where('email', $email)->first();
 
         // no account for email that has consented to the terms => show the form
         if ($user === null || !$user->has_consented_to_terms_of_service) {
             return $this->handleOfficeSsoRegister($request);
         }
 
-        $request->session()->put('login_source', self::OFFICE_PROVIDER);
-
-        return parent::login($user);
+        return $this->loginUser($user, self::OFFICE_PROVIDER);
     }
 
     public function handleProviderCallback(Request $request, string $provider, ResolvesSocialiteUsers $resolver, $policy = 'login')
@@ -259,10 +276,6 @@ class OAuthController extends BaseOAuthController
 
         $user = $this->handleProviderAccount($request, $providerAccount, $provider);
 
-        if (!self::isBrowserLogin()) {
-            $request->session()->put('login_source', self::AZURE_AD_B2C_PROVIDER);
-        }
-
         return $this->login($user);
     }
 
@@ -277,11 +290,9 @@ class OAuthController extends BaseOAuthController
         $account = Socialstream::findConnectedAccountForProviderAndId($provider, $providerAccount->getId());
 
         if (!$account) {
-            $user = Jetstream::newUserModel()->where('email', $providerAccount->getEmail())->first();
+            $user = Socialstream::newUserModel()->where('email', $providerAccount->getEmail())->first();
             if ($user) {
-                $user->switchConnectedAccount(
-                    $this->createsConnectedAccounts->create($user, $provider, $providerAccount)
-                );
+                $this->createsConnectedAccounts->create($user, $provider, $providerAccount);
             } else {
                 $user = $this->createsUser->create($provider, $providerAccount);
                 $userData['hubspotutk'] = $request->cookie('hubspotutk');
@@ -408,7 +419,7 @@ class OAuthController extends BaseOAuthController
         }
 
         if (!$account) {
-            $this->createsConnectedAccounts->create($user, $provider, $providerAccount);
+            //$this->createsConnectedAccounts->create($user, $provider, $providerAccount);
         } elseif ($account->user_id === $user->id) {
             $user->updateName($providerAccount);
             $user->saveQuietly();
@@ -422,6 +433,14 @@ class OAuthController extends BaseOAuthController
         return redirect(config('fortify.home'));
     }
 
+    protected function loginUser(Authenticatable $user, string $source): SocialstreamResponse
+    {
+        $this->guard->login($user, Socialstream::hasRememberSessionFeatures());
+        request()->session()->put('login_source', $source);
+
+        return app(OAuthLoginResponse::class);
+    }
+
     /**
      * Authenticate the given user and return a login response.
      *
@@ -430,9 +449,10 @@ class OAuthController extends BaseOAuthController
      */
     protected function login($user)
     {
-        $loginResponse = parent::login($user);
-
         $policy = self::isBrowserLogin();
+
+        $loginResponse = $this->loginUser($user, self::AZURE_AD_B2C_PROVIDER);
+
         if ($policy) {
             $provider = self::getProvider(self::AZURE_AD_B2C_PROVIDER, $policy);
             $tokens = self::getAccessTokenResponse($provider, true);

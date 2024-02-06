@@ -1,4 +1,4 @@
-<x-jet-form-section class="py-10" submit="updateLanguageGuidelinesCategory">
+<x-form-section class="py-10" submit="updateLanguageGuidelinesCategory">
     <x-slot name="title">
         <div class="headline-row">
             <img width="60" class="category_icon" src="{{ $config['icon']['src'] }}" alt="{{ $config['translation']['name'] }} Icon"/>
@@ -62,7 +62,7 @@
             @endif
         </div>
 
-        <x-jet-input-error for="dimensions" class="mt-2" />
+        <x-input-error for="dimensions" class="mt-2" />
 
         @if(!empty($proficiencyLevelData['translation']['lead_text']))
         <div id="{{ $category }}-{{ $proficiencyLevel }}" style="display: none" class="proficiency-level-p">
@@ -97,12 +97,13 @@
                 }
             @endphp
             @if($checkbox)
-            <x-jet-checkbox
+            <x-checkbox
                 id="dimensions['{{$ddd}}']"
                 name="dimensions_{{$ddd}}"
                 value="1"
                 :label="$label"
-                wire:model.defer="dimensions.{{$ddd}}"
+                wire:model="dimensions.{{$ddd}}"
+                :enabled="$dimensions[$ddd]"
                 :disabled="(bool)$disabled || $minValue === 1"
                 :title="$title"
             />
@@ -112,7 +113,7 @@
                 name="dimensions_{{$ddd}}"
                 :value="$dimensions[$ddd]"
                 :label="$label"
-                wire:model.defer="dimensions.{{$ddd}}"
+                wire:model="dimensions.{{$ddd}}"
                 :disabled="$minValue === 2"
                 :minValue="$minValue"
             />
@@ -122,7 +123,7 @@
             @include('partials.info_hover', ['category' => $ddd, 'name' => $diversityDimensionDrivers[$ddd]['translation']['hs_name'], 'config' => $diversityDimensionDrivers[$ddd]])
             @endif
         </div>
-        <x-jet-input-error for="dimensions" class="mt-2" />
+        <x-input-error for="dimensions" class="mt-2" />
         @endif
         @endforeach
         @endforeach
@@ -132,4 +133,4 @@
         @include('partials/save_cancel_action')
     </x-slot>
 
-</x-jet-form-section>
+</x-form-section>

@@ -59,7 +59,7 @@ class TeamInvitationRequestAccepted extends Mailable
             'email' => $this->admin->email,
         ];
 
-        return $this->markdown('mail.team-invitation-request-accepted', $param)
+        return $this->markdown('emails.team-invitation-request-accepted', $param)
             ->subject(__('content.team_invitation_request_accepted_subject', $param));
     }
 }

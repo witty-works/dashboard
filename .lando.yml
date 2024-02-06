@@ -11,7 +11,7 @@ services:
   database:
     portforward: 3307
   node:
-    type: node:14
+    type: node:18
   mailhog:
     type: mailhog
     portforward: true
@@ -26,7 +26,7 @@ tooling:
 
 config:
   via: nginx
-  php: '8.0'
+  php: '8.2'
   composer_version: 2-latest
   xdebug: false
   webroot: public

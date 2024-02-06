@@ -46,7 +46,7 @@ class TeamInvitation extends Mailable
             'acceptUrl' => URL::signedRoute('team-invitations.accept-signed', ['invitation' => $this->invitation, 'onboarding' => '1'])
         ];
 
-        return $this->markdown('jetstream::mail.team-invitation', $param)
+        return $this->markdown('emails.team-invitation', $param)
             ->subject(__('content.team_invitation_subject', $param));
     }
 }

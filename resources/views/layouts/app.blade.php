@@ -14,34 +14,37 @@
         @googlefonts('ibarra')
         @googlefonts('roboto')
 
+        <!-- Scripts -->
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+
         <!-- Styles -->
         <link rel="icon" type="image/webp" href="{{ URL::asset('/witty-icon-color-inverted@2x-1.webp') }}"/>
-        <link rel="stylesheet" href="{{ mix('css/app.css') }}">
-
         @livewireStyles
-
-        <x-embed-styles />
 
         <!-- Scripts -->
         @include('partials/sentry')
-        <script src="{{ mix('js/app.js') }}" defer></script>
         @include('partials/detect_browser')
         @php
             $user = Auth::user();
         @endphp
         @include('partials/hubspot', ['user' => $user])
     </head>
+
+
+
     <body class="font-sans antialiased">
-        @include('partials/gtm-body')
-        @livewire('onboarding', ['user' => $user])
+        <x-banner />
 
-        <x-jet-banner />
+        <div class="min-h-screen bg-gray-100">
+            @include('partials/gtm-body')
+            @livewire('onboarding', ['user' => $user])
 
-        <div>
             <!-- Page Heading -->
             @if (isset($header))
-                <header>
-                    {{ $header }}
+                <header class="bg-white shadow">
+                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                        {{ $header }}
+                    </div>
                 </header>
             @endif
 

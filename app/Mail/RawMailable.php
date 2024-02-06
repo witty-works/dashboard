@@ -35,7 +35,7 @@ class RawMailable extends Mailable
      */
     public function build()
     {
-        $this->text('mail.raw', ['content' => $this->content]);
+        $this->text('emails.raw', ['content' => $this->content]);
 
         $this->subject($this->mailSubject)
             ->to($this->mailTo);

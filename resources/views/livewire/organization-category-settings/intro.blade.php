@@ -1,6 +1,7 @@
+<div>
 @if($model->subscribed())
 <div class="pt-10" aria-labelledby="advancedToggleTitle">
-    <x-jet-section-title>
+    <x-section-title>
         <x-slot name="title" class="ibarra-sub-title-h2">
             <span id="advancedToggleTitle">{{ __('guidelines.advanced_toggle_title') }}</span>
         </x-slot>
@@ -30,6 +31,7 @@
                 </div>
             </div>
         </x-slot>
-    </x-jet-section-title>
+    </x-section-title>
 </div>
 @endif
+</div>
