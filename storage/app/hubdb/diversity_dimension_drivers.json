@@ -519,9 +519,9 @@
                 "lead_video": "",
                 "lead_image": [],
                 "example_image": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/25%20years%20and%20younger-1.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/25%20years%20and%20younger-2.png",
                     "width": "605",
-                    "height": "402",
+                    "height": "425",
                     "alt": ""
                 },
                 "example_image_advanced": {
@@ -632,7 +632,7 @@
                     "alt": ""
                 },
                 "example_image_advanced": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Agentic%20language%20Advanced.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Agentic%20language%20Advanced-1.png",
                     "width": "605",
                     "height": "433",
                     "alt": ""
@@ -1295,9 +1295,9 @@
                     "alt": ""
                 },
                 "example_image_advanced": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/classism_advanced.png",
-                    "width": "652",
-                    "height": "413",
+                    "src": "https:\/\/www.witty.works\/hubfs\/classism_advanced-1.png",
+                    "width": "605",
+                    "height": "411",
                     "alt": ""
                 },
                 "soft_explanation": "",
@@ -2075,9 +2075,9 @@
                     "alt": "Illustration showing a person in pants who says, great, awesome, excellent, fantastic! All in upper case. A person in a skirt stands listening"
                 },
                 "example_image": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Exaggeration-2.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Exaggeration-3.png",
                     "width": "605",
-                    "height": "428",
+                    "height": "468",
                     "alt": ""
                 },
                 "example_image_advanced": {
@@ -2379,7 +2379,7 @@
                 "canonical_url": "https:\/\/www.witty.works\/en\/categories\/acquired-diversity\/formality",
                 "is_active": "1",
                 "name": "A less formal tone makes you sound more accessible",
-                "short_explanation": "Weniger F\u00f6rmlichkeit schafft mehr emotionale N\u00e4he",
+                "short_explanation": "A less formal tone makes you sound more accessible",
                 "sub_head": "",
                 "lead_video": "",
                 "lead_image": [],
@@ -2420,7 +2420,7 @@
                 "canonical_url": "https:\/\/www.witty.works\/de\/kategorien\/erworbene-diversit\u00e4t\/f\u00f6rmlichkeit",
                 "is_active": "1",
                 "name": "Weniger F\u00f6rmlichkeit schafft mehr emotionale N\u00e4he",
-                "short_explanation": "A less formal tone makes you sound more accessible",
+                "short_explanation": "Weniger F\u00f6rmlichkeit schafft mehr emotionale N\u00e4he",
                 "sub_head": "",
                 "lead_video": "",
                 "lead_image": [],
@@ -2797,8 +2797,18 @@
                 "sub_head": "",
                 "lead_video": "",
                 "lead_image": [],
-                "example_image": [],
-                "example_image_advanced": [],
+                "example_image": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Inklusive%20Endung-1.png",
+                    "width": "605",
+                    "height": "381",
+                    "alt": ""
+                },
+                "example_image_advanced": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Inklusive%20Endung%20Advanced.png",
+                    "width": "605",
+                    "height": "381",
+                    "alt": ""
+                },
                 "soft_explanation": "",
                 "hard_facts": "",
                 "hero_figure": "",
@@ -2834,7 +2844,12 @@
                     "height": "381",
                     "alt": "Eine Illustration des Satzes \u2018Liebe Kund*innen und PartnerInnen [Partner*innen]\u2019. Die von Witty vorgeschlagene Alternative ist in Klammern."
                 },
-                "example_image_advanced": [],
+                "example_image_advanced": {
+                    "src": "https:\/\/www.witty.works\/hubfs\/Inklusive%20Endung%20Advanced.png",
+                    "width": "605",
+                    "height": "381",
+                    "alt": ""
+                },
                 "soft_explanation": "",
                 "hard_facts": "",
                 "hero_figure": "",
@@ -4720,7 +4735,7 @@
                 "lead_video": "",
                 "lead_image": [],
                 "example_image": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/wives.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Sexual%20orientation.png",
                     "width": "605",
                     "height": "404",
                     "alt": ""
@@ -5210,7 +5225,7 @@
                 "lead_video": "",
                 "lead_image": [],
                 "example_image": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Vision-1.png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Vision-2.png",
                     "width": "605",
                     "height": "403",
                     "alt": ""
