@@ -75,7 +75,7 @@ Alle Wörter, die zu dieser Liste hinzufügst, werden von Witty hervorgehoben, u
     'list_team_allow_domains_description' => 'Witty ist für alle URLs in dieser Liste für dein ganzes Team aktiviert.',
     'list_team_deny_domains_description' => 'Witty ist für alle URLs in dieser Liste für dein ganzes Team deaktiviert.',
     'dictionary_label' => 'Wörterbuch',
-    'language_settings_label' => 'Spracheinstellungen',
+    'language_settings_label' => 'Sprach&shy;einstellungen',
     'privacy_settings_label' => 'Datenschutz&shy;einstellungen',
     'personal_account' => 'Persönlich',
     'team_account' => 'Team',
