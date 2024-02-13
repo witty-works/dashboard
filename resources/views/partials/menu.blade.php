@@ -71,21 +71,21 @@
                 </x-jet-nav-link>
     
                 @if(!$team_edit && $team && $team->user_access_to_team_analytics)
-                <x-jet-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('user.analytics') }}">
-                    <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/analytics.svg') }}" alt="" />
-                    {{ __('content.analytics') }}
-                </x-jet-nav-link>
+                    <div class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" style="cursor: default">
+                        <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/analytics.svg') }}" alt="" />
+                        {{ __('content.analytics') }}
+                    </div>
 
-                <div class="wittyworks-navigation-sub-wrapper">
-                    <x-jet-nav-link class="wittyworks-navigation-sub-link lato-small-text-p" href="{{ route('user.analytics') }}" :active="request()->routeIs('user.analytics')">{{ __('guidelines.personal_account') }}</x-jet-nav-link>
-                    <br />
-                    <x-jet-nav-link class="wittyworks-navigation-sub-link lato-small-text-p" href="{{ route('teams.analytics') }}" :active="request()->routeIs('teams.analytics')">{{ __('guidelines.team_account') }}</x-jet-nav-link>
-                </div>
+                    <div class="wittyworks-navigation-sub-wrapper">
+                        <x-jet-nav-link class="wittyworks-navigation-sub-link lato-small-text-p" href="{{ route('user.analytics') }}" :active="request()->routeIs('user.analytics')">{{ __('guidelines.personal_account') }}</x-jet-nav-link>
+                        <br />
+                        <x-jet-nav-link class="wittyworks-navigation-sub-link lato-small-text-p" href="{{ route('teams.analytics') }}" :active="request()->routeIs('teams.analytics')">{{ __('guidelines.team_account') }}</x-jet-nav-link>
+                    </div>
                 @else
-                <x-jet-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('user.analytics') }}" :active="request()->routeIs('user.analytics')">
-                    <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/analytics.svg') }}" alt="" />
-                    {{ __('content.analytics') }}
-                </x-jet-nav-link>
+                    <x-jet-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('user.analytics') }}" :active="request()->routeIs('user.analytics')">
+                        <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/analytics.svg') }}" alt="" />
+                        {{ __('content.analytics') }}
+                    </x-jet-nav-link>
                 @endif
 
                 @foreach($links as $route => $label)

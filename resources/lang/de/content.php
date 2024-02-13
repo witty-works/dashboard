@@ -127,7 +127,6 @@ return [
 :name hat dich zum Team ":team" eingeladen!
 ',
     'if_you_did_not_expect' => 'Du möchtest lieber nicht im Team zusammenarbeiten?
-
 Dann kannst du diese Mail einfach ignorieren. 🙂',
     'woops' => 'hoppla',
     'documentation' => 'Dokumentation',
@@ -145,7 +144,7 @@ Dann kannst du diese Mail einfach ignorieren. 🙂',
     'onboarding_signup_to_witty' => 'Meldung für ein Witty-Konto',
     'invitation_email_welcome' => 'Was bringt ein Team?
 
-Gemeinsam könnt ihr euch effektiver für Inklusion starkmachen. Das Team-Wörterbuch verhilft dir zu einer konsistenteren Markenstimme und kannst dir die Team-Statistiken anschauen, um dich gezielt zu verbessern.',
+Gemeinsam könnt ihr euch effektiver für Inklusion starkmachen. Das Team-Wörterbuch verhilft dir zu einer konsistenteren Markenstimme und du kannst dir die Team-Statistiken anschauen, um dich gezielt zu verbessern.',
     'onboarding_install_witty' => 'Installiere unsere Witty-Browsererweiterung',
     'accept_invitiation' => 'Annehmen',
     'reject_invitiation' => 'Ablehnen',
