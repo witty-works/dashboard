@@ -9,6 +9,7 @@ use Firebase\JWT\JWK;
 use Firebase\JWT\JWT;
 use GuzzleHttp\Client;
 use SocialiteProviders\Manager\OAuth2\User;
+use Symfony\Component\Uid\Uuid;
 
 // some code taken from https://github.com/SocialiteProviders/AzureADB2C
 // license: MIT
@@ -53,8 +54,12 @@ class OfficeSsoHelper
             $payloadJson = json_decode(base64_decode(str_pad(strtr($payload[1], '-_', '+/'), strlen($payload[1]) % 4, '=')), true);
             $openIdConfiguration = $this->getOpenIdConfiguration();
 
-            // iss validation
-            if (strcmp($payloadJson['iss'], $openIdConfiguration->issuer)) {
+            // iss validation - https://learn.microsoft.com/en-us/entra/identity-platform/access-tokens#multi-tenant-applications
+            if (!isset($payloadJson['tid']) || !Uuid::isValid($payloadJson['tid'])) {
+                throw new InvalidStateException('tid is missing or invalid in access token');
+            }
+            $issuer = str_replace('{tenantid}', $payloadJson['tid'], $openIdConfiguration->issuer);
+            if (strcmp($payloadJson['iss'], $issuer) !== 0) {
                 throw new InvalidStateException('iss on id_token does not match issuer value on the OpenID configuration');
             }
             // aud validation
@@ -118,8 +123,7 @@ class OfficeSsoHelper
      */
     private function getOpenIdConfiguration()
     {
-        $tenantId = config('services.microsoft_office.tenant_id');
-        $url = "https://login.microsoftonline.com/{$tenantId}/v2.0/.well-known/openid-configuration";
+        $url = "https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration";
 
         try {
             $response = $this->getHttpClient()->get($url);
