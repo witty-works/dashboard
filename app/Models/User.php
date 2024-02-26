@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Events\UserCreated;
 use App\Events\UserDeleted;
 use App\Events\UserUpdated;
+use App\Http\Controllers\OAuthController;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -337,6 +338,20 @@ class User extends Authenticatable implements MustVerifyEmail
         return self::where('hubspot_company_id', $this->hubspot_company_id)->count();
     }
 
+    protected function getUserClients()
+    {
+        $clients = [];
+        foreach ($this->connectedAccounts as $connectedAccount) {
+            if ($connectedAccount->provider == OAuthController::AZURE_AD_B2C_PROVIDER) {
+                $clients[] = 'browser';
+            } elseif ($connectedAccount->provider == OAuthController::OFFICE_PROVIDER) {
+                $clients[] = 'word';
+            }
+        }
+
+        return array_unique($clients);
+    }
+
     public function getHubspotData($booleanAsStrings = false)
     {
         $true = $booleanAsStrings ? 'Yes' : true;
@@ -365,6 +380,7 @@ class User extends Authenticatable implements MustVerifyEmail
             'team_ignore_count' => 0,
             'hubspot_company_user_count' => $this->hubspot_company_id ? $this->getHubspotCompanyUserCount() : null,
             'writing_streak' => $this->getWritingStreakPast30Days(),
+            'clients' => implode(';', $this->getUserClients()),
         ];
 
         if (!empty($this->company_name)) {
