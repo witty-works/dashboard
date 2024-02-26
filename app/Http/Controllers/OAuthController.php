@@ -305,8 +305,6 @@ class OAuthController extends BaseOAuthController
             $user = $account->user;
 
             $this->updatesConnectedAccounts->update($user, $account, $provider, $providerAccount);
-
-            $userData['current_connected_account_id'] = $account->id;
         }
 
         if (!empty($userData)) {
