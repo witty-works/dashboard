@@ -1,3 +1,4 @@
+<div>
 @if($user)
 <x-dialog-modal wire:model.live="showingModal" >
     <x-slot name="title">
@@ -104,3 +105,4 @@
     </x-slot>
 </x-dialog-modal>
 @endif
+</div>

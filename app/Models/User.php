@@ -136,7 +136,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return null;
     }
 
-    static public function getEmailFromProvider($userData)
+    public static function getEmailFromProvider($userData)
     {
         return $userData['otherMails'][0]
             ?? $userData['emails'][0]
@@ -158,24 +158,24 @@ class User extends Authenticatable implements MustVerifyEmail
         }
     }
 
-    public function subscribed($name = 'witty', $price = null)
+    public function subscribed($type = 'witty', $price = null)
     {
         $team = $this->currentTeam;
         if (!$team) {
             return false;
         }
 
-        return $team->subscribed($name, $price);
+        return $team->subscribed($type, $price);
     }
 
-    public function subscription($name = 'witty')
+    public function subscription($type = 'witty')
     {
         $team = $this->currentTeam;
         if (!$team) {
             return null;
         }
 
-        return $team->subscription($name);
+        return $team->subscription($type);
     }
 
     public function getTermReplacementsCount()
