@@ -6,6 +6,7 @@ use App\Events\InvitedTeamMember;
 use App\Events\SubscriptionCancelled;
 use App\Events\SubscriptionCreated;
 use App\Events\SubscriptionUpdated;
+use App\Events\UserCompanyUpdated;
 use App\Events\UserCreated;
 use App\Events\UserDeleted;
 use App\Events\UserUpdated;
@@ -23,6 +24,7 @@ use App\Listeners\UpdateOrganizationGuidelines;
 use App\Listeners\UpdateUserGuidelines;
 use App\Listeners\UserAddedSlackAlert;
 use Illuminate\Auth\Events\Logout;
+use App\Listeners\UserCompanyUpdatedSlackAlert;
 use Laravel\Jetstream\Events\TeamCreated;
 use Laravel\Jetstream\Events\TeamUpdated;
 use Laravel\Jetstream\Events\TeamDeleted;
@@ -54,6 +56,9 @@ class EventServiceProvider extends ServiceProvider
             UpdateUserGuidelines::class,
             HubspotUpdateUser::class,
             PostHogUpdateUser::class,
+        ],
+        UserCompanyUpdated::class => [
+            UserCompanyUpdatedSlackAlert::class,
         ],
         InvitedTeamMember::class => [
             HubspotUpdateUser::class,
