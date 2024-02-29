@@ -254,6 +254,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/locale/de.js" rossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
+    const isPremiumUser = @json($is_premium_user);
     let topSubChart;
     const setElementStyle = (elementId, property, value) => {
         const element = document.getElementById(elementId);
@@ -264,7 +265,6 @@
 
     function load_charts(refresh, chartType = 'overview', timerange = '1m', interval = 'week', language = [], categories = [], inclusive = 'non_inclusive', eventTypes = null) {
         if (eventTypes === null) {
-            const isPremiumUser = @json($is_premium_user);
             eventTypes = isPremiumUser ? [@json($default_event)] : ['popover_open']
         }
 
@@ -551,7 +551,6 @@
             handleNoData('loading-icon-overview', 'overview-no-data', '', true);
             return;
         }
-        const isPremiumUser = @json($is_premium_user);
         const showCheckHighlights= isPremiumUser && 
             @json($default_event) !== 'popover_open' &&
             data.events?.check_highlights &&  
@@ -765,26 +764,14 @@
     });
 
     (chartType == 'top-categories') && getChartData('topSubcategories', timerange, interval, language, categories, null,  null, inclusive, eventTypes).then(data => {
-        const isPremiumUser = @json($is_premium_user);
         const selectedDropdownValue = eventTypes[0] || (isPremiumUser ? @json($default_event) : 'popover_open');
-
-        optionsHtml = getOptionsHtml(isPremiumUser)
-
         const eventTypeDropdownTopCategories = document.getElementById("eventTypeDropdownTopCategories");
         eventTypeDropdownTopCategories.innerHTML = `
             <select id="eventTypeTopCategories" class="dropdown" onchange="setParams([this.value])">
-                ${optionsHtml}
+                ${getOptionsHtml(isPremiumUser)}
             </select>`;
 
         updateDropdown("eventTypeTopCategories", selectedDropdownValue);
-
-        const eventTypeDropdownTopWords = document.getElementById("eventTypeDropdownTopWords");
-        eventTypeDropdownTopWords.innerHTML = `
-            <select id="eventTypeTopWords" class="dropdown" onchange="setParams([this.value])">
-                ${optionsHtml}
-            </select>`;
-
-        updateDropdown("eventTypeTopWords", selectedDropdownValue);
 
         if (data.errorStatus === 503) {
             handleNoData('loading-icon-top-categories', 'top-categories-no-data', 'topSubcategories', true);
@@ -954,6 +941,14 @@
     });
 
     chartType == 'top-words' && getChartData('topWords', timerange, interval, language, categories, null, null, inclusive, eventTypes).then(data => {
+        const selectedDropdownValue = eventTypes[0] || (isPremiumUser ? @json($default_event) : 'popover_open');
+        const eventTypeDropdownTopWords = document.getElementById("eventTypeDropdownTopWords");
+        eventTypeDropdownTopWords.innerHTML = `
+            <select id="eventTypeTopWords" class="dropdown" onchange="setParams([this.value])">
+                ${getOptionsHtml(isPremiumUser)}
+            </select>`;
+        updateDropdown("eventTypeTopWords", selectedDropdownValue);
+
         if (data.errorStatus === 503) {
             handleNoData('loading-icon-top-words', 'top-words-no-data', 'topWords', true);
             return;
@@ -964,18 +959,6 @@
             return;
         }
 
-        const isPremiumUser = @json($is_premium_user);
-        const selectedDropdownValue = eventTypes[0] || (isPremiumUser ? @json($default_event) : 'popover_open');
-
-        optionsHtml = getOptionsHtml(isPremiumUser)
-
-        const eventTypeDropdownTopCategories = document.getElementById("eventTypeDropdownTopCategories");
-        eventTypeDropdownTopCategories.innerHTML = `
-            <select id="eventTypeTopCategories" class="dropdown" onchange="setParams([this.value])">
-                ${optionsHtml}
-            </select>`;
-
-        updateDropdown("eventTypeTopWords", selectedDropdownValue);
 
 
         const events = data.events[eventTypes[0]] || {};
@@ -1083,7 +1066,6 @@ function setParams(eventTypes = null) {
         topSubChart.destroy();
     }
     if (eventTypes === null) {
-        const isPremiumUser = @json($is_premium_user);
         eventTypes = isPremiumUser ? [@json($default_event)] : ['popover_open']
 
         const selectedDropdownValue = eventTypes[0] || (isPremiumUser ? @json($default_event) : 'popover_open');
