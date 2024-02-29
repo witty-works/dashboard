@@ -158,7 +158,7 @@ mounts:
 # The configuration of app when it is exposed to the web.
 web:
     commands:
-        start: php artisan clear-compiled && php artisan config:cache && /usr/sbin/php-fpm8.0-zts
+        start: php artisan clear-compiled && php artisan config:cache && /usr/sbin/php-fpm8.2
     locations:
         "/":
             root: "public"
