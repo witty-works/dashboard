@@ -158,7 +158,11 @@ mounts:
 # The configuration of app when it is exposed to the web.
 web:
     commands:
-        start: php artisan clear-compiled && php artisan config:cache && /usr/sbin/php-fpm8.2
+        start: |
+            rm -rf bootstrap/cache/*
+            php artisan clear-compiled
+            php artisan config:cache
+            /usr/sbin/php-fpm8.2
     locations:
         "/":
             root: "public"
@@ -182,6 +186,9 @@ workers:
         size: "S"
         commands:
             start: |
+                rm -rf bootstrap/cache/*
+                php artisan clear-compiled
+                php artisan config:cache
                 php artisan queue:work --tries=100 --queue=high,medium,low,default
         disk: 256
         relationships:
