@@ -1,5 +1,6 @@
+<div>
 @if($user)
-<x-jet-dialog-modal wire:model="showingModal" >
+<x-dialog-modal wire:model.live="showingModal" >
     <x-slot name="title">
         {{ __('content.small_onboarding_survey') }}
     </x-slot>
@@ -10,7 +11,7 @@
 
             <div class="container border-radius-top">
                 <div class="w-full col-span-6 sm:col-span-4 margin-bottom">
-                    <x-jet-label for="languages" value="{!! __('content.languages') !!}" />
+                    <x-label for="languages" value="{!! __('content.languages') !!}" />
 
                     <x-select
                         name="languages"
@@ -19,11 +20,11 @@
                         selected="{{ old('languages') }}"
                     />
 
-                    <x-jet-input-error for="languages" class="mt-2" />
+                    <x-input-error for="languages" class="mt-2" />
                 </div>
 
                 <div class="w-full col-span-6 sm:col-span-4 margin-bottom">
-                    <x-jet-label for="role" value="{!! __('content.role') !!}" />
+                    <x-label for="role" value="{!! __('content.role') !!}" />
 
                     <x-select
                         name="role"
@@ -32,11 +33,11 @@
                         selected="{{ old('role') }}"
                     />
                     
-                    <x-jet-input-error for="role" class="mt-2" />
+                    <x-input-error for="role" class="mt-2" />
                 </div>
 
                 <div class="w-full col-span-6 sm:col-span-4 margin-bottom">
-                    <x-jet-label for="how_did_you_find" value="{!! __('content.how_did_you_find') !!}" />
+                    <x-label for="how_did_you_find" value="{!! __('content.how_did_you_find') !!}" />
 
                     <x-select
                         name="how_did_you_find"
@@ -45,7 +46,7 @@
                         selected="{{ old('how_did_you_find') }}"
                     />
 
-                    <x-jet-input-error for="found" class="mt-2" />
+                    <x-input-error for="found" class="mt-2" />
                 </div>
     
                 @if($request_invite)
@@ -73,34 +74,35 @@
                             <span class="slider round"></span>
                         </label>
 
-                        <x-jet-label for="request_invite" value="{!! __('content.request_invite') !!}" />
+                        <x-label for="request_invite" value="{!! __('content.request_invite') !!}" />
 
-                        <x-jet-input-error for="request_invite" class="mt-2" />
+                        <x-input-error for="request_invite" class="mt-2" />
                     </div>
                 </div>
                 @elseif($request_invite === null && $user && $user->isSharedEmailAccount())
                 <div class="w-full col-span-6 sm:col-span-4 margin-bottom">
-                    <x-jet-label for="company_name" value="{!! __('content.company_name') !!}" />
+                    <x-label for="company_name" value="{!! __('content.company_name') !!}" />
 
-                    <x-jet-input
+                    <x-input
                         name="company_name"
                         type="text"
                         class="mt-1 block w-full"
                         value="{{ old('company_name') }}"
                     />
-                    <x-jet-input-error for="company_name" class="mt-2" />
+                    <x-input-error for="company_name" class="mt-2" />
                 </div>
                 @endif
             </div>
             <div class="container light-grey-background border-radius-bottom">
-                <x-jet-button>
+                <x-button>
                     {{ __('content.save') }}
-                </x-jet-button>
+                </x-button>
             </div>
         </form>
     </x-slot>
 
     <x-slot name="footer">
     </x-slot>
-</x-jet-dialog-modal>
+</x-dialog-modal>
 @endif
+</div>

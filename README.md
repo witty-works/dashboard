@@ -82,7 +82,7 @@ Follow https://www.notion.so/witty-works/Manual-subscriptions-afbefd554e3245e0b8
 # Using Stripe in development
 
 - Install Stripe CLI https://stripe.com/docs/stripe-cli
-- Run stripe_listen.sh
+- Run `./stripe_listen.sh`
 
 # Translations
 

@@ -20,9 +20,9 @@ $contactLinks = [
         <h4 id="more-resources-title" class="lato-small-paragraph-title-h4 margin-bottom">{{ __('content.more_resouces') }}</h4>
         <nav>
             @foreach($resourceLinks as $label => $url)
-            <x-jet-nav-link class="footer-links" href="{{ $url }}" target="_blank" rel="noopener" aria-label="{{ $label }}">
+            <x-nav-link class="footer-links" href="{{ $url }}" target="_blank" rel="noopener" aria-label="{{ $label }}">
                 {{ $label }}
-            </x-jet-nav-link>
+            </x-nav-link>
             @endforeach
         </nav>
     </section>
@@ -31,9 +31,9 @@ $contactLinks = [
         <h4 id="get-in-touch-title" class="lato-small-paragraph-title-h4 margin-bottom">{{ __('content.get_in_touch') }}</h4>
         <nav>
             @foreach($contactLinks as $label => $url)
-            <x-jet-nav-link class="footer-links" href="{{ $url }}" target="_blank" rel="noopener" aria-label="{{ $label }}">
+            <x-nav-link class="footer-links" href="{{ $url }}" target="_blank" rel="noopener" aria-label="{{ $label }}">
                 {{ $label }}
-            </x-jet-nav-link>
+            </x-nav-link>
             @endforeach
         </nav>
     </section>

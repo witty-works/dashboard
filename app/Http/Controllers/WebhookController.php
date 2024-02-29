@@ -13,7 +13,7 @@ use Stripe\Subscription;
 
 class WebhookController extends CashierController
 {
-    protected function newSubscriptionName(array $payload)
+    protected function newSubscriptionType(array $payload)
     {
         return 'witty';
     }
@@ -26,7 +26,7 @@ class WebhookController extends CashierController
             $team->update(['stripe_id' => $data['customer']]);
 
             $team->subscriptions()->create([
-                'name' => $this->newSubscriptionName($payload),
+                'type' => $this->newSubscriptionType($payload),
                 'stripe_id' => $data['subscription'],
                 'stripe_status' => 'active'
             ]);

@@ -1,4 +1,4 @@
-<x-jet-form-section submit="updateTeamsAnalytics">
+<x-form-section submit="updateTeamsAnalytics">
     <x-slot name="title">
         {{ __('guidelines.team_analytics') }}
     </x-slot>
@@ -9,16 +9,16 @@
 
     <x-slot name="form">
         <div class="guidelines-form-section">
-            <x-jet-checkbox
+            <x-checkbox
                 id="team_analytics"
                 value="1"
-                wire:model.defer="team_analytics"
+                wire:model="team_analytics"
                 :label="__('guidelines.team_analytics_participate')"
                 :disabled="!$model->subscribed() ? 'upgrade' : false"
                 aria-label="{{ __('guidelines.team_analytics_participate') }}"
             />
 
-            <x-jet-input-error for="team_analytics" class="mt-2" aria-describedby="team_analytics" />
+            <x-input-error for="team_analytics" class="mt-2" aria-describedby="team_analytics" />
         </div>
     </x-slot>
 
@@ -27,4 +27,4 @@
         @include('partials/save_cancel_action')
     </x-slot>
     @endif
-</x-jet-form-section>
+</x-form-section>

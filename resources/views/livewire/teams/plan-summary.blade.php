@@ -1,4 +1,4 @@
-<x-jet-form-section submit="updateLicenses">
+<x-form-section submit="updateLicenses">
 
     <x-slot name="title">
         <h2 id="plan-summary-title">{{ __('teams.plan_summary') }}</h2>
@@ -8,9 +8,9 @@
 
     <x-slot name="form">
 
-        <x-jet-label class="lato-small-paragraph-title-h4" for="name">
+        <x-label class="lato-small-paragraph-title-h4" for="name">
             {{ __('teams.plan_name') }}
-        </x-jet-label>
+        </x-label>
         <p class="lato-small-text-p margin-bottom">
             {{ $team->subscribed() ? $team->subscription()->planName() : __('stripe.witty_free') }}
         </p>
@@ -29,9 +29,9 @@
         @endif
 
         <!-- Team Owner -->
-        <x-jet-label class="lato-small-paragraph-title-h4 mt-4" for="owner">
+        <x-label class="lato-small-paragraph-title-h4 mt-4" for="owner">
             {{ __('teams.team_owner') }}
-        </x-jet-label>
+        </x-label>
         <p class="lato-small-text-p margin-bottom">
             {{ $team->owner->name }} 
             (<a href="mailto:{{ $team->owner->email }}" aria-label="Email {{ $team->owner->name }}">
@@ -82,12 +82,12 @@
                 <label for="license_count" aria-label="{{ __('teams.select_license_count_aria_label') }}">
                     <x-select id="license_count"
                         :options="$licenseOptions"
-                        wire:model.defer="licenseCount"
+                        wire:model="licenseCount"
                         class="wittyworks-margin-right"
                     />
                 </label>
 
-                <x-jet-input-error for="license_count" class="ml-2" />
+                <x-input-error for="license_count" class="ml-2" />
             </div>
         @endif
     </x-slot>
@@ -97,4 +97,4 @@
             @include('partials/save_cancel_action')
         </x-slot>
     @endif
-</x-jet-form-section>
+</x-form-section>
