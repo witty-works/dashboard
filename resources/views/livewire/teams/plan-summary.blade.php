@@ -59,25 +59,25 @@
             </li>
         </ul>
 
-        <h3 class="lato-small-paragraph-title-h4 mt-4">
-            {{ __('teams.license_count_label') }}
-        </h3>
+        @if($team->subscribed() && Auth::user()->ownsTeam($team))
+            <h3 class="lato-small-paragraph-title-h4 mt-4">
+                {{ __('teams.get_cancel_invoices_update_payment') }}
+            </h3>
 
-        @if(!Auth::user()->ownsTeam($team))  
-            <p class="lato-small-text-p margin-bottom red">
-                {{ __('teams.to_upgrade_contact_owner') }}
+            <p class="lato-small-text-p margin-bottom">
+                <a class="button primary-button-purple" href="{{ route('stripe.portal') }}" role="button">
+                    {{ $team->subscription()->isPaidByInvoice() ? __('stripe.contact_sales') : __('stripe.billing') }}
+                </a>
             </p>
         @endif
 
-        @if(Auth::user()->ownsTeam($team))
-            @if($team->subscribed())
-                <p class="lato-small-text-p margin-bottom">
-                    <a class="button primary-button-purple" href="{{ route('stripe.portal') }}" role="button">
-                        {{ $team->subscription()->isPaidByInvoice() ? __('stripe.contact_sales') : __('stripe.billing') }}
-                    </a>
-                </p>
-            @endif
+        @if($team->subscribed())
+            <h3 class="lato-small-paragraph-title-h4 mt-4">
+                {{ __('teams.license_count_label') }}
+            </h3>
+        @endif
 
+        @if(Auth::user()->ownsTeam($team))
             <div class="wittyworks-license-dropdown-container margin-bottom">
                 <label for="license_count" aria-label="{{ __('teams.select_license_count_aria_label') }}">
                     <x-select id="license_count"
@@ -89,6 +89,10 @@
 
                 <x-input-error for="license_count" class="ml-2" />
             </div>
+        @else
+            <p class="lato-small-text-p margin-bottom red">
+                {{ __('teams.to_upgrade_contact_owner') }}
+            </p>
         @endif
     </x-slot>
 

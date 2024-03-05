@@ -22,6 +22,12 @@ class StripeController extends Controller
     {
         $team = $this->getCurrentTeam($request);
 
+        $wait = $request->get('wait', false);
+        if ($wait) {
+            sleep(3);
+        }
+
+
         if (!$request->user()->hasTeamPermission($team, 'edit_guidelines')) {
             return redirect(route('profile.show'));
         }
@@ -84,7 +90,7 @@ class StripeController extends Controller
             }
 
             return $team->redirectToBillingPortal(
-                route('teams.subscription'),
+                route('teams.subscription', ['wait' => true]),
                 ['locale' => app()->getLocale()]
             );
         }

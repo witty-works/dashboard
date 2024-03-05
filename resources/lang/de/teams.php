@@ -41,4 +41,5 @@ return [
     'select_license_count_aria_label' => 'Wählen die Anzahl der Lizenzen aus',
     'invitation_removed' => 'Leider wurde die Einladung entfernt.',
     'not_enough_data_to_display' => 'Nicht genügend Daten, um ein Diagramm anzuzeigen',
+    'get_cancel_invoices_update_payment' => 'get cancel invoices update payment',
 ];
