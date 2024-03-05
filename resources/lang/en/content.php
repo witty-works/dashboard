@@ -46,7 +46,6 @@ return [
     'manage_account' => 'My Account',
     'analytics' => 'Analytics',
     'connected_accounts' => 'Connected Accounts',
-    'use_avatar_as_profile_photo' => 'Use Avatar as Profile Photo',
     'remove' => 'Remove',
     'connect' => 'Connect',
     'remove_connected_account' => 'Remove Connected Account',
@@ -66,9 +65,6 @@ return [
     'current_password' => 'Current Password',
     'profile_information' => 'Profile Information',
     'subscription' => 'Subscription',
-    'photo' => 'Photo',
-    'select_a_new_photo' => 'Select A New Photo',
-    'remove_photo' => 'Remove Photo',
     'team_details' => 'Team Details',
     'team_owner' => 'Team Owner',
     'team_name' => 'Team Name',
@@ -440,4 +436,5 @@ Please then go to "Register" again to finalize the registration into the "Witty 
     'event_type' => 'Event Type',
     'customize_via_team_settings' => 'On the "Witty Free" plan one can customize only the team settings. Upgrade to be able to customize Witty in your personal settings.',
     'toggle_lines' => 'Toggle All Lines',
+    'subscribe' => 'Subscribe',
 ];

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UserCompanyUpdated;
 use App\Jobs\SyncUserToNlpApi;
 use App\Mail\TeamInvitationRequest as MailTeamInvitationRequest;
 use App\Models\LanguageGuidelines;
@@ -38,6 +39,7 @@ class UserProfileController extends BaseUserProfileController
             $user->role = $validated['role'];
             if (!empty($validated['company_name'])) {
                 $user->company_name = $validated['company_name'];
+                event(new UserCompanyUpdated($user));
             }
             if (!empty($validated['how_did_you_find'])) {
                 $user->how_did_you_find = $validated['how_did_you_find'];

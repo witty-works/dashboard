@@ -5,14 +5,13 @@ namespace App\Models;
 use App\Events\UserCreated;
 use App\Events\UserDeleted;
 use App\Events\UserUpdated;
+use App\Http\Controllers\OAuthController;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use JoelButcher\Socialstream\HasConnectedAccounts;
-use JoelButcher\Socialstream\SetsProfilePhotoFromUrl;
 use Laravel\Fortify\TwoFactorAuthenticatable;
-use Laravel\Jetstream\HasProfilePhoto;
 use Spatie\Permission\Traits\HasRoles;
 use Lab404\Impersonate\Models\Impersonate;
 use Laravel\Jetstream\HasTeams;
@@ -24,15 +23,11 @@ class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens;
     use HasFactory;
-    use HasProfilePhoto {
-        getProfilePhotoUrlAttribute as getPhotoUrl;
-    }
     use HasRoles;
     use Impersonate;
     use HasTeams;
     use HasConnectedAccounts;
     use Notifiable;
-    use SetsProfilePhotoFromUrl;
     use TwoFactorAuthenticatable;
     use GuidelinesTrait;
 
@@ -82,32 +77,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'team_analytics' => 'boolean',
     ];
 
-    /**
-     * The accessors to append to the model's array form.
-     *
-     * @var array
-     */
-    protected $appends = [
-        'profile_photo_url',
-    ];
-
     public function setNameAttribute($name)
     {
         $this->attributes['name'] = strip_tags($name);
-    }
-
-    /**
-     * Get the URL to the user's profile photo.
-     *
-     * @return string
-     */
-    public function getProfilePhotoUrlAttribute()
-    {
-        if (filter_var($this->profile_photo_path, FILTER_VALIDATE_URL)) {
-            return $this->profile_photo_path;
-        }
-
-        return $this->getPhotoUrl();
     }
 
     /**
@@ -164,7 +136,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return null;
     }
 
-    static public function getEmailFromProvider($userData)
+    public static function getEmailFromProvider($userData)
     {
         return $userData['otherMails'][0]
             ?? $userData['emails'][0]
@@ -186,24 +158,24 @@ class User extends Authenticatable implements MustVerifyEmail
         }
     }
 
-    public function subscribed($name = 'witty', $price = null)
+    public function subscribed($type = 'witty', $price = null)
     {
         $team = $this->currentTeam;
         if (!$team) {
             return false;
         }
 
-        return $team->subscribed($name, $price);
+        return $team->subscribed($type, $price);
     }
 
-    public function subscription($name = 'witty')
+    public function subscription($type = 'witty')
     {
         $team = $this->currentTeam;
         if (!$team) {
             return null;
         }
 
-        return $team->subscription($name);
+        return $team->subscription($type);
     }
 
     public function getTermReplacementsCount()
@@ -337,6 +309,20 @@ class User extends Authenticatable implements MustVerifyEmail
         return self::where('hubspot_company_id', $this->hubspot_company_id)->count();
     }
 
+    protected function getUserClients()
+    {
+        $clients = [];
+        foreach ($this->connectedAccounts as $connectedAccount) {
+            if ($connectedAccount->provider == OAuthController::AZURE_AD_B2C_PROVIDER) {
+                $clients[] = 'browser';
+            } elseif ($connectedAccount->provider == OAuthController::OFFICE_PROVIDER) {
+                $clients[] = 'word';
+            }
+        }
+
+        return array_unique($clients);
+    }
+
     public function getHubspotData($booleanAsStrings = false)
     {
         $true = $booleanAsStrings ? 'Yes' : true;
@@ -365,6 +351,7 @@ class User extends Authenticatable implements MustVerifyEmail
             'team_ignore_count' => 0,
             'hubspot_company_user_count' => $this->hubspot_company_id ? $this->getHubspotCompanyUserCount() : null,
             'writing_streak' => $this->getWritingStreakPast30Days(),
+            'clients' => implode(';', $this->getUserClients()),
         ];
 
         if (!empty($this->company_name)) {

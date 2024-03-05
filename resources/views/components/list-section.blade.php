@@ -1,13 +1,13 @@
 <div>
     @if(isset($title) || isset($description) || isset($list))
-    <x-jet-section-title>
+    <x-section-title>
         @if(isset($title))
         <x-slot name="title">{{ $title }}</x-slot>
         @endif
         @if(isset($description))
         <x-slot name="description">{{ $description }}</x-slot>
         @endif
-    </x-jet-section-title>
+    </x-section-title>
 
     @if(isset($list))
     <div class="mt-5 md:mt-0 md:col-span-2">

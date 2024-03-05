@@ -1,4 +1,4 @@
-<x-jet-form-section class="py-10" submit="updateLanguageGuidelinesGerman" enabled="{{ (int)$enabled }}">
+<x-form-section class="py-10" submit="updateLanguageGuidelinesGerman" enabled="{{ (int)$enabled }}">
     <x-slot name="title">
         {{ __('guidelines.manage_organization_guidelines_german') }}
     </x-slot>
@@ -23,7 +23,7 @@
                         name="gendered_roles_format"
                         value="{{ $key }}"
                         onclick="handleDropdownVisibility()"
-                        wire:model.defer="gendered_roles_format"
+                        wire:model="gendered_roles_format"
                         style="cursor: {{ $disabled ? 'not-allowed' : 'pointer' }};"
                         @if($disabled) disabled @endif
                     >
@@ -37,7 +37,7 @@
             </div>
             @endforeach
 
-            <x-jet-input-error for="gendered_roles_format" class="mt-2" />
+            <x-input-error for="gendered_roles_format" class="mt-2" />
         </div>
 
         <div id="germanGenderDropdown" style="display: {{ in_array($gendered_roles_format, ['inclusive_gender', 'both']) ? 'block' : 'none' }};">
@@ -50,11 +50,11 @@
                 <x-select id="german_gender_ending"
                     :options="\App\Models\GuidelinesInterface::GERMAN_GENDER_ENDING"
                     class="guidelines-form-section-dropdown"
-                    wire:model.defer="german_gender_ending"
+                    wire:model="german_gender_ending"
                     :disabled="$disabled"
                 />
 
-                <x-jet-input-error for="german_gender_ending" class="mt-2" />
+                <x-input-error for="german_gender_ending" class="mt-2" />
 
                 @if(!$model->subscribed())
                 <div class="p-3">
@@ -72,7 +72,7 @@
     </x-slot>
     @endif
 
-</x-jet-form-section>
+</x-form-section>
 
 <script>
     function handleDropdownVisibility() {

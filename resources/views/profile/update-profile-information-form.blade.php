@@ -1,4 +1,4 @@
-<x-jet-form-section submit="updateProfileInformation">
+<x-form-section submit="updateProfileInformation">
     <x-slot name="title">
         {{ __('teams.profile') }}
     </x-slot>
@@ -13,7 +13,7 @@
 
             @if (Session::get('login_source') !== \App\Http\Controllers\OAuthController::OFFICE_PROVIDER)
             <a href="{{ route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'profile']) }}">
-                {!! __('content.update_your_account_profile', ['profile_url' => '']) !!}
+                {!! __('content.update_your_account_profile', ['profile_url' => route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'profile'])]) !!}
             </a>
             @endif
         </div>
@@ -25,7 +25,7 @@
             
             @if(!Auth::user()->has_consented_to_mailing)
                 <!-- Mailing Consent -->
-                <x-jet-label id="mailingConsentLabel" for="mailing">{{ __('content.mailing_consent_title') }}</x-jet-label>
+                <x-label id="mailingConsentLabel" for="mailing">{{ __('content.mailing_consent_title') }}</x-label>
                 <div class="container-row lato-small-text-p" aria-labelledby="mailingConsentLabel">
                     {{ __('content.mailing_consent_text') }}
                 </div>
@@ -37,4 +37,4 @@
             @endif
         </div>
     </x-slot>
-</x-jet-form-section>
+</x-form-section>

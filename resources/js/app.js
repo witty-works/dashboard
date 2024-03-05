@@ -1,4 +1,4 @@
-require('./bootstrap');
+import './bootstrap';
 
 import * as Sentry from "@sentry/browser";
 import { Integrations } from "@sentry/tracing";
@@ -14,9 +14,3 @@ if (window.sentry_dsn) {
         }
     });
 }
-
-import Alpine from 'alpinejs';
-
-window.Alpine = Alpine;
-
-Alpine.start();

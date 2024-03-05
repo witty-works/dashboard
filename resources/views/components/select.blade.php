@@ -6,14 +6,14 @@
             $isKeyInteger = is_int($key);
             $optionValue = $isKeyInteger ? $label : $key;
             $optionText = $isKeyInteger ? $label : __($label);
-            $isDisabled = $disabled === true || !empty($disabled[$key]);
+            $isDisabled = $disabled || !empty($disabled[$key]);
             $isSelected = $selected === $key;
         @endphp
 
-        <option 
-            @if($isDisabled) disabled @endif 
-            value="{{ $optionValue }}" 
-            wire:key="{{ $optionValue }}" 
+        <option
+            @if($isDisabled) disabled @endif
+            value="{{ $optionValue }}"
+            wire:key="{{ $optionValue }}"
             @if($isSelected) selected @endif
         >
             {{ $optionText }}

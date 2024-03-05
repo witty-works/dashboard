@@ -46,7 +46,7 @@ class TeamInvitationRequest extends Mailable
             'language' => $this->language,
         ];
 
-        return $this->markdown('mail.team-invitation-request', $param)
+        return $this->markdown('emails.team-invitation-request', $param)
             ->subject(__('content.team_invitation_request_subject', $param, $this->language));
     }
 }

@@ -23,6 +23,8 @@
         <script src="{{ mix('js/app.js') }}" defer></script>
         @include('partials/detect_browser')
         @include('partials/hubspot')
+        <!-- Styles -->
+        @livewireStyles
     </head>
     <body class="font-sans antialiased">
         @include('partials/gtm-body')
@@ -33,5 +35,6 @@
                 @include('partials.footer')
             </div>
         @include('partials/helphero')
+        @livewireScripts
     </body>
 </html>

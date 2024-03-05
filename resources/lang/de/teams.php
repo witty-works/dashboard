@@ -14,7 +14,7 @@ return [
     'term_replacements' => 'Team-Wörterbuch',
     'false_positives' => 'Ignorierte Wörter deines Teams',
     'more_licenses' => 'Wenn du weitere Lizenzen erwerben möchtest, <a href=":url">wende</a> dich bitte an Witty Works.',
-    'what_is_included' => 'Abo-Benutzung',
+    'what_is_included' => 'Aboausnutzung',
     'user_limit_reached_error' => 'Möchtest du mehr als :max_count Teammitglieder einladen? Dann passe dein Abo an.',
     'pricing' => 'Preise',
     'end_date' => 'Dein Abo endet am ',
@@ -33,7 +33,7 @@ return [
     'locked_by_team' => 'Diese Einstellung wurde von deinen Team-Administratoren gesperrt.',
     'license_count_error' => 'Beim Aktualisieren der Lizenzanzahl ist ein Fehler aufgetreten.',
     'license_count_too_small_error' => 'Bitte erhöhe die Anzahl der Lizenzen oder entferne Personen aus dem Team.',
-    'license_count_label' => 'Abo anpassen',
+    'license_count_label' => 'Lizenzanzahl anpassen',
     'add_licenses' => 'Füge weitere Lizenzen hinzu',
     'amount_per_year' => ':count-Lizenzen – :amount pro Jahr',
     'license_count_did_not_change' => 'Die Lizenzanzahl wurde nicht geändert.',
@@ -41,4 +41,5 @@ return [
     'select_license_count_aria_label' => 'Wählen die Anzahl der Lizenzen aus',
     'invitation_removed' => 'Leider wurde die Einladung entfernt.',
     'not_enough_data_to_display' => 'Nicht genügend Daten, um ein Diagramm anzuzeigen',
+    'get_cancel_invoices_update_payment' => 'Rechnungen herunterladen, Kreditkarte aktualisieren oder stornieren',
 ];

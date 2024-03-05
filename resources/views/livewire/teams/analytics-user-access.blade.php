@@ -1,5 +1,5 @@
 <div class="mt-10 sm:mt-0">
-    <x-jet-form-section submit="updateUserAccessToTeamAnalytics">
+    <x-form-section submit="updateUserAccessToTeamAnalytics">
         <x-slot name="title">
             {{ __('guidelines.user_access_to_team_analytics') }}
         </x-slot>
@@ -10,15 +10,15 @@
 
         <x-slot name="form">
             <div class="guidelines-form-section">
-                <x-jet-checkbox
+                <x-checkbox
                     id="user_access_to_team_analytics"
                     value="1"
-                    wire:model.defer="user_access_to_team_analytics"
+                    wire:model="user_access_to_team_analytics"
                     :label="__('guidelines.allow_team_analytics')"
                     :disabled="!$model->subscribed() ? 'upgrade' : (Auth::user()->hasTeamPermission($model, 'update') ? false : 'locked')"
                 />
 
-                <x-jet-input-error for="user_access_to_team_analytics" class="mt-2" />
+                <x-input-error for="user_access_to_team_analytics" class="mt-2" />
             </div>
         </x-slot>
 
@@ -27,5 +27,5 @@
             @include('partials/save_cancel_action')
         </x-slot>
         @endif
-    </x-jet-form-section>
+    </x-form-section>
 </div>

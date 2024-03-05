@@ -43,7 +43,6 @@ return [
     'switch_teams' => 'Team wechseln',
     'manage_account' => 'Mein Konto',
     'connected_accounts' => 'Verbundene Konten',
-    'use_avatar_as_profile_photo' => 'Avatar als Profilfoto verwenden',
     'remove' => 'Entfernen',
     'connect' => 'Verbinden',
     'remove_connected_account' => 'Verbundenes Konto entfernen',
@@ -62,9 +61,6 @@ return [
     'update_password' => 'Passwort aktualisieren',
     'current_password' => 'Aktuelles Passwort',
     'profile_information' => 'Profilinformation',
-    'photo' => 'Profilfoto',
-    'select_a_new_photo' => 'Wähle ein neues Profilfoto',
-    'remove_photo' => 'Profilfoto entfernen',
     'team_details' => 'Teamdetails',
     'team_owner' => 'Team-Eigentümer*in',
     'team_name' => 'Team Name',
@@ -443,4 +439,5 @@ Bitte gehe dann erneut auf „Registrieren“, um die Registrierung im "Witty fo
     'analytic_top_words' => 'Top Wörter',
     'top_categories_over_time' => '15 wichtigsten Diversitätsdimensionen auf dem Zeitstrahl',
     'check_highlights_label_line_chart' => 'Hervorgehoben',
+    'subscribe' => 'Abonnieren',
 ];

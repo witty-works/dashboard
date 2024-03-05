@@ -5,23 +5,23 @@
 name: dashboard
 
 # The type of the application to build.
-type: php:8.0
+type: php:8.2
 
 build:
     flavor: none
 
 dependencies:
     nodejs:
-        npm: ^6
+        npm: ^10
     php:
         composer/composer: ^2
 
 variables:
     env:
         # https://github.com/nvm-sh/nvm/releases
-        NVM_VERSION: v0.39.5
-        # https://nodejs.org/ro/download/releases
-        NODE_VERSION: v14.21.3
+        NVM_VERSION: v0.39.7
+        # https://nodejs.org/en/about/previous-releases
+        NODE_VERSION: v18.19.1
 
 # The hooks that will be performed when the package is deployed.
 hooks:
@@ -66,7 +66,7 @@ hooks:
 
         # npm cache clean --force
         npm ci
-        npm run production
+        npm run build
     deploy: |
         set -e
         php artisan clear-compiled
@@ -158,7 +158,11 @@ mounts:
 # The configuration of app when it is exposed to the web.
 web:
     commands:
-        start: php artisan clear-compiled && php artisan config:cache && /usr/sbin/php-fpm8.0-zts
+        start: |
+            rm -rf bootstrap/cache/*
+            php artisan clear-compiled
+            php artisan config:cache
+            /usr/sbin/php-fpm8.2
     locations:
         "/":
             root: "public"
@@ -182,6 +186,9 @@ workers:
         size: "S"
         commands:
             start: |
+                rm -rf bootstrap/cache/*
+                php artisan clear-compiled
+                php artisan config:cache
                 php artisan queue:work --tries=100 --queue=high,medium,low,default
         disk: 256
         relationships:

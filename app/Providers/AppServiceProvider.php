@@ -23,8 +23,6 @@ class AppServiceProvider extends ServiceProvider
         }
 
         JWT::$leeway = 10;
-
-        Cashier::ignoreMigrations();
     }
 
     /**

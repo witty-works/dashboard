@@ -57,14 +57,14 @@ class Team extends JetstreamTeam
         $this->attributes['name'] = strip_tags($name);
     }
 
-    public function subscribed($name = 'witty', $price = null)
+    public function subscribed($type = 'witty', $price = null)
     {
-        return $this->parentSubscribed($name, $price);
+        return $this->parentSubscribed($type, $price);
     }
 
-    public function subscription($name = 'witty')
+    public function subscription($type = 'witty')
     {
-        return $this->parentSubscription($name);
+        return $this->parentSubscription($type);
     }
 
     public function stripeEmail()
