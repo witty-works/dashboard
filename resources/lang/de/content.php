@@ -439,4 +439,5 @@ Bitte gehe dann erneut auf „Registrieren“, um die Registrierung im "Witty fo
     'analytic_top_words' => 'Top Wörter',
     'top_categories_over_time' => '15 wichtigsten Diversitätsdimensionen auf dem Zeitstrahl',
     'check_highlights_label_line_chart' => 'Hervorgehoben',
+    'subscribe' => 'Abonnieren',
 ];

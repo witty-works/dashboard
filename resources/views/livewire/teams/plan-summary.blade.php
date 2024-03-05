@@ -94,7 +94,15 @@
 
     @if(Auth::user()->ownsTeam($team))
         <x-slot name="actions">
+            @if($team->subscribed())
             @include('partials/save_cancel_action')
+            @else
+            <div class="flex flex-row align-middle items-center" role="toolbar" aria-label="Action buttons">
+                <x-button>
+                    {{ __('content.subscribe') }}
+                </x-button>
+            </div>
+            @endif
         </x-slot>
     @endif
 </x-form-section>
