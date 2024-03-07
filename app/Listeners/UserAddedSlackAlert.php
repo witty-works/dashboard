@@ -2,14 +2,14 @@
 
 namespace App\Listeners;
 
+use App\Events\UserEvent;
 use Spatie\SlackAlerts\Facades\SlackAlert;
 
 class UserAddedSlackAlert
 {
-    public function handle($event)
+    public function handle(UserEvent $event)
     {
-        $source = request()->session()->get('login_source');
-        $message = " - A new user was added {$event->user->email} via {$source}";
+        $message = " - A new user was added {$event->user->email} via {$event->source}";
 
         SlackAlert::message(getenv('PLATFORM_ENVIRONMENT') . $message);
     }
