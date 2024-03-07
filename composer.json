@@ -29,6 +29,7 @@
         "spatie/laravel-google-fonts": "^1.2",
         "spatie/laravel-rate-limited-job-middleware": "^2.2",
         "spatie/laravel-slack-alerts": "^1.1",
+        "symfony/http-client": "^7.0",
         "themsaid/laravel-langman": "dev-master"
     },
     "require-dev": {
