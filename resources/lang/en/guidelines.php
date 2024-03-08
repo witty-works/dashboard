@@ -127,4 +127,7 @@ All words added to this list will become highlighted by Witty, and your custom r
     'discriminating_language_cannot_be_disabled' => 'Openly discriminating diversity dimensions cannot be turned to \'off\'.',
     'german_only' => 'German only',
     'english_only' => 'English only',
+    'manage_organization_guidelines_orthography' => 'Spelling & Grammar',
+    'manage_organization_guidelines_description_orthography' => 'Choose if Witty should check for spelling & grammar mistakes',
+    'enable_orthography' => 'Enable spelling & grammar',
 ];

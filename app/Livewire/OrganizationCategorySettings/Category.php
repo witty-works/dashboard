@@ -19,6 +19,7 @@ class Category extends Component
     protected $listeners = ['saved'];
 
     public $dimensions;
+    public $dimensions_force;
 
     protected $rules = [
         'dimensions.*' => 'nullable|int|max:2',
@@ -61,17 +62,18 @@ class Category extends Component
         $disabledCategories = (array) $languageGuidelines->disabled_categories;
         $this->readDimensions($disabledCategories);
 
+        $disabledCategoriesForce = (array) $languageGuidelines->disabled_categories_force;
+        if (!$this->model->subscribed()) {
+            $this->dimensions_force = true;
+        } else {
+            $this->dimensions_force = in_array($this->category, $disabledCategoriesForce);
+        }
+
         $this->resetErrorBag();
     }
 
     protected function readDimensions($disabledCategories)
     {
-        $languageGuidelines = LanguageGuidelines::getLanguageGuidelines($this->model);
-        $languages = [];
-        foreach ($languageGuidelines->preferred_variants as $variant) {
-            $languages[] = substr($variant, 0, 2);
-        }
-
         foreach ($this->diversityDimensionDrivers as $ddd => $config) {
             if (empty($config['has_rules'])) {
                 continue;
@@ -114,6 +116,11 @@ class Category extends Component
         $languageGuidelines->save();
 
         $this->dimensions = $this->processDimensions($languageGuidelines);
+
+        if (!$this->model->subscribed()) {
+            $this->dimensions_force = true;
+        }
+        $languageGuidelines->inPlaceUpateArray($this->category, 'disabled_categories_force', !$this->dimensions_force);
 
         $languageGuidelines->dispatchEventToPosthog((new \ReflectionClass($this))->getShortName());
 
