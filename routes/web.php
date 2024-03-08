@@ -13,6 +13,7 @@ use App\Http\Controllers\WebhookController;
 |------------------
 */
 use App\Http\Controllers\TeamInvitationController;
+use Laravel\Jetstream\Http\Controllers\CurrentTeamController;
 use Laravel\Jetstream\Http\Controllers\Livewire\ApiTokenController;
 use App\Http\Controllers\Livewire\TeamController;
 use App\Http\Controllers\Livewire\UserGuidelinesController;
@@ -111,6 +112,7 @@ Route::group(
                 // Teams...
                 if (Jetstream::hasTeamFeatures()) {
                     Route::get('/team/show', [TeamController::class, 'show'])->name('teams.show');
+                    Route::put('/current-team', [CurrentTeamController::class, 'update'])->name('current-team.update');
                     Route::get('/team/subscription', [StripeController::class, 'show'])->name('teams.subscription');
 
                     Route::get('/team-invitations/{invitation}/accept', [TeamInvitationController::class, 'accept'])

@@ -103,7 +103,7 @@
                 @endforeach
                 </div>
             </div>
-            @endif        
+            @endif
 
         @if ($open_tab === 'team')
         <div id='team_account_content' aria-label="{{ __('content.team_account_content_aria_label') }}">
@@ -111,6 +111,14 @@
                     <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/team.svg') }}" alt="" />
                     {{ __('content.manage_members') }}
                 </x-nav-link>
+
+                @if (Auth::user()->allTeams()->count() > 1)
+                    <div class="wittyworks-navigation-sub-wrapper">
+                        @foreach (Auth::user()->allTeams() as $team)
+                            <x-switchable-team :team="$team" />
+                        @endforeach
+                    </div>
+                @endif
 
                 <x-nav-link class="wittyworks-navigation-link-wrapper" href="{{ route('teams.subscription') }}" :active="request()->routeIs('teams.subscription')">
                     <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/dollar.svg') }}" alt="" />
