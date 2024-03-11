@@ -60,6 +60,7 @@ class SyncUserToNlpApi extends AbstractSyncToNlpApi
             'id' => $user->posthogId(),
             'email' => $user->email,
             'name' => $user->name,
+            'plan' => $user->planId(),
             'organization_id' => $user->posthogTeamId(),
             'false_positives' => $falsePositives,
             'term_replacements' => $termReplacements,

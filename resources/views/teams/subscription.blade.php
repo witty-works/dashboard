@@ -8,7 +8,13 @@
                     {{ __('teams.plan_headline') }}
                 </div>
 
-                @livewire('teams.plan-summary', ['team' => $team])
+                <div>
+                    @livewire('teams.plan-summary', ['team' => $team])
+                </div>
+
+                <div class="mt-10">
+                    @livewire('teams.license-management', ['team' => $team])
+                </div>
             </div>
         </div>
     </div>

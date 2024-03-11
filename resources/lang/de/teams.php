@@ -42,4 +42,10 @@ return [
     'invitation_removed' => 'Leider wurde die Einladung entfernt.',
     'not_enough_data_to_display' => 'Nicht genügend Daten, um ein Diagramm anzuzeigen',
     'get_cancel_invoices_update_payment' => 'Rechnungen herunterladen, Kreditkarte aktualisieren oder stornieren',
+    'license_limit_reached_error' => 'Nur :license_count Lizenzen verfügbar. Bitte reduziere die :assigned_count zugewiesenen Lizenzen entsprechend.',
+    'list_licenses' => 'Lizenzen zuweisen (:assigned_count/:license_count)',
+    'list_licenses_description' => 'Nur Teammitglieder mit einer zugewiesenen Lizenz können Witty verwenden. Derzeit sind :license_count Lizenzen zuweisbar.',
+    'active_license' => 'mit Lizenz',
+    'no_active_license' => 'ohne Lizenz',
+    'active_license_on_team' => 'mit Lizenz in :team_name',
 ];

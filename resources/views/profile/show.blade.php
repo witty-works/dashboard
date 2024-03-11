@@ -13,9 +13,9 @@
                 @livewire('profile.update-profile-information-form')
             @endif
 
-            @cannot('update', Auth::user()->currentTeam)
+            @cannot('update', $user->currentTeam)
             <div class="py-10">
-                @livewire('teams.plan-summary', ['team' => Auth::user()->currentTeam])
+                @livewire('teams.plan-summary', ['team' => $user->currentTeam])
                 @livewire('teams.team-member-manager-help-hero', ['team' => Auth::user()->currentTeam])
             </div>
             @endcannot

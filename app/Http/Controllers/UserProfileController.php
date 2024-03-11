@@ -23,7 +23,6 @@ class UserProfileController extends BaseUserProfileController
         'other' => 'content.other'
     ];
 
-
     public function storeOnboarding(Request $request)
     {
         $user = $request->user();

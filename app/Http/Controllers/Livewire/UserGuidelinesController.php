@@ -60,6 +60,9 @@ class UserGuidelinesController extends Controller
     protected function settings(Request $request, $tab = null)
     {
         $user = $request->user();
+        if (!$user->isUserLicensedToTeam()) {
+            return redirect()->route('profile.show');
+        }
 
         $tabs = [
             self::CATEGORY_SETTINGS => 'user.category-settings',

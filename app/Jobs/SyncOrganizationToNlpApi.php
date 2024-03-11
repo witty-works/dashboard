@@ -45,8 +45,6 @@ class SyncOrganizationToNlpApi extends AbstractSyncToNlpApi
 
         $domains = $this->getDomains($team->domains, $team->getDomainListType());
 
-        $plan = $team->planId();
-
         $guidelines = LanguageGuidelines::getLanguageGuidelines($team);
         $config = self::getConfig($guidelines, !$team->subscribed());
 
@@ -65,7 +63,7 @@ class SyncOrganizationToNlpApi extends AbstractSyncToNlpApi
         $data = [
             'id' => $team->posthogId(),
             'name' => $team->name,
-            'plan' => $plan,
+            'plan' => $team->planId(),
             'false_positives' => $falsePositives,
             'term_replacements' => $termReplacements,
             'domains' => $domains,

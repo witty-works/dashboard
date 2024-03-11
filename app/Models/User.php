@@ -91,6 +91,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Jetstream::teamInvitationModel(), 'email', 'email');
     }
+
     /**
      * Get the current team of the user's context.
      *
@@ -104,6 +105,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function allSwitchableTeams()
     {
         $teams = $this->allTeams();
+
         if ($teams->count() === 1) {
             return [];
         }
@@ -146,8 +148,8 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function posthogTeamId()
     {
-        if ($this->currentTeam) {
-            return $this->currentTeam->posthogId();
+        if ($this->licenseTeam) {
+            return $this->licenseTeam->posthogId();
         }
 
         return null;
@@ -175,6 +177,19 @@ class User extends Authenticatable implements MustVerifyEmail
         }
     }
 
+    public function licenseTeam()
+    {
+        return $this->belongsTo(Jetstream::teamModel(), 'license_team_id');
+    }
+
+    public function isUserLicensedToTeam($team = null)
+    {
+        if ($team === null) {
+            $team = $this->currentTeam;
+        }
+        return $this->license_team_id === $team->id;
+    }
+
     public function subscribed($type = 'witty', $price = null)
     {
         $team = $this->currentTeam;
@@ -199,7 +214,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         $key = '.features.user_term_replacements.count';
         if ($this->subscribed() && $this->term_replacements === null) {
-            return config('stripe.plans.' . $this->planId() . $key);
+            return config('stripe.plans.' . $this->currentTeam->planId() . $key);
         }
 
         return $this->term_replacements ?? config('stripe.plans.witty_free' . $key);
@@ -209,7 +224,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         $key = '.features.user_false_positives.count';
         if ($this->subscribed() && $this->false_positives === null) {
-            return config('stripe.plans.' . $this->planId() . $key);
+            return config('stripe.plans.' . $this->currentTeam->planId() . $key);
         }
 
         return $this->false_positives ?? config('stripe.plans.witty_free' . $key);
@@ -217,12 +232,12 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function planId()
     {
-        $team = $this->currentTeam;
+        $team = $this->licenseTeam;
         if ($team) {
             return $team->planId();
         }
 
-        return 'witty_free';
+        return null;
     }
 
     public function getNotificationCount()
@@ -352,7 +367,7 @@ class User extends Authenticatable implements MustVerifyEmail
             'has_witty_account' => $true,
             'has_consented_to_mailing' => $this->has_consented_to_mailing ? $true : $false,
             'has_accessed_stripe' => $this->has_accessed_stripe ? $true : $false,
-            'witty_plan' => $this->planId(),
+            'witty_plan' => $this->planId() ?? 'unlicensed',
             'hs_language' => $this->language,
             'dashboard_id' => $this->posthogId(),
             'team_dashboard_id' => $this->posthogTeamId(),
@@ -375,14 +390,17 @@ class User extends Authenticatable implements MustVerifyEmail
             $data['company'] = $this->company_name;
         }
 
-        if ($this->currentTeam && $this->ownsTeam($this->currentTeam)) {
-            $data['has_team_language_rules'] = $this->currentTeam->hasLanguageRules() ? $true : $false;
-            $data['has_team_privacy_set'] = $this->currentTeam->hasConfiguredPrivacy() ? $true : $false;
-            $data['team_dictionary_count'] = $this->currentTeam->termReplacements->count();
-            $data['team_ignore_count'] = $this->currentTeam->falsePositives->count();
-            $data['invited_team_member_count'] = $this->currentTeam->teamInvitations()->count();
-            $data['team_member_count'] = $this->currentTeam->getTotalUserCount();
-            $data['team_writing_streak'] = $this->currentTeam->getWritingStreakPast30Days();
+        // Users may own multiple teams, this code here does not handle this
+        // so in that case it will simply sync the data of the team they most recently used
+        $personalTeam = $this->personalTeam();
+        if ($personalTeam) {
+            $data['has_team_language_rules'] = $personalTeam->hasLanguageRules() ? $true : $false;
+            $data['has_team_privacy_set'] = $personalTeam->hasConfiguredPrivacy() ? $true : $false;
+            $data['team_dictionary_count'] = $personalTeam->termReplacements->count();
+            $data['team_ignore_count'] = $personalTeam->falsePositives->count();
+            $data['invited_team_member_count'] = $personalTeam->teamInvitations()->count();
+            $data['team_member_count'] = $personalTeam->getTotalUserCount();
+            $data['team_writing_streak'] = $personalTeam->getWritingStreakPast30Days();
         }
 
         return $data;
