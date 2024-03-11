@@ -93,10 +93,7 @@ class TeamMemberManagerHelpHero extends TeamMemberManagerBase
             return;
         }
 
-        if (
-            $invitationRequest->team->getUserLicensesLimitReached()
-            || $this->team->id != $invitationRequest->team->id
-        ) {
+        if ($this->team->id != $invitationRequest->team->id) {
             return;
         }
 
