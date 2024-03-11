@@ -58,40 +58,12 @@ class TeamInvitationController extends BaseTeamInvitationController
             abort(403, 'Unauthorized action.');
         }
 
-        $currentTeam = $user->currentTeam;
-        if ($currentTeam) {
-            if ($user->ownsTeam($currentTeam)) {
-                if (
-                    $currentTeam->subscribed()
-                    && !$currentTeam->subscription()->canceled()
-                ) {
-                    $currentTeam->subscription()->cancel();
-                }
-            } else {
-                $currentTeam->removeUser($user);
-            }
-        }
-
         parent::accept($request, $invitation);
 
         $user->switchTeam($invitation->team);
 
         // update notification count
         dispatch(new SyncUserToNlpApi($invitation->team->owner, 'high'));
-
-        foreach ($user->invitations as $otherInvitation) {
-            if ($invitation->id !== $otherInvitation->id) {
-                continue;
-            }
-
-            $otherInvitation->delete();
-
-            dispatch(new SyncUserToHubSpot($otherInvitation->team->owner));
-            dispatch(new SyncToPosthog($otherInvitation->team->owner));
-
-            // update notification count
-            dispatch(new SyncUserToNlpApi($otherInvitation->team->owner, 'high'));
-        }
 
         return redirect(config('fortify.home'))
             ->banner(__('teams.accepted_invitation', ['team' => $invitation->team->name]));

@@ -16,6 +16,19 @@
                 @if (session()->has('teams_invitation_request_message'))
                 <p role="alert" class="lato-small-text-p margin-bottom limit-reached">{{ session('teams_invitation_request_message') }}</p>
                 @endif
+
+                <!-- Limit reached -->
+                @if($team->getUserLicensesLimitReached())
+                <p role="alert" class="lato-small-text-p margin-bottom limit-reached">
+                    {!! __('teams.user_limit_reached_error', ['subscription_url' => route('teams.subscription')]) !!}
+
+                    @if(Auth::user()->ownsTeam($team))
+                    <a role="button" class="button primary-button-red" href="{{ route('teams.subscription') }}">
+                        {{ __('teams.add_licenses') }}
+                    </a>
+                    @endif
+                </p>
+                @endif
             </x-slot>
 
             <x-slot name="form">
@@ -120,7 +133,18 @@
             </x-slot>
 
             <x-slot name="description">
+                @if($team->getUserLicensesLimitReached())
+                <p class="lato-small-text-p margin-bottom limit-reached">
+                    {!! __('teams.user_limit_reached_error', ['subscription_url' => route('teams.subscription')]) !!}
+                    @if(Auth::user()->ownsTeam($team))
+                        <a class="button primary-button-red" href="{{ route('teams.subscription') }}">
+                            {{ __('teams.add_licenses') }}
+                        </a>
+                    @endif
+                </p>
+                @else
                 {{ __('content.these_people_have_requested_an_invite') }}
+                @endif
             </x-slot>
 
             <x-slot name="content">
@@ -168,33 +192,44 @@
                     @foreach ($team->users->sortBy('name') as $user)
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
-                                <div class="ml-4">{{ $user->name }} - {{ $user->email }}</div>
+                                <div class="ml-4">
+                                    <a href="mailto:{{ $user->email }}">{{ $user->name }}</a>
+                                    @if ($user->licenseTeam)
+                                        @if ($user->isUserLicensedToTeam($team))
+                                            ({{ __('teams.active_license') }})
+                                        @else
+                                        ({{ __('teams.active_license_on_team', ['team_name' => $user->licenseTeam->name]) }})
+                                        @endif
+                                    @else
+                                        ({{ __('teams.no_active_license') }})
+                                    @endif
+                                </div>
                             </div>
 
                             <div class="flex items-center">
                                 <!-- Manage Team Member Role -->
                                 @if (Gate::check('update', $team) && $team->subscribed() && Laravel\Jetstream\Jetstream::hasRoles())
-                                        <button class="ml-2 text-sm text-gray-400 underline" wire:click="manageRole('{{ $user->id }}')">
-                                            {{ Laravel\Jetstream\Jetstream::findRole($user->membership->role)->name }}
-                                        </button>
-                                    @elseif (Laravel\Jetstream\Jetstream::hasRoles())
-                                        <div class="ml-2 text-sm text-gray-400">
-                                            {{ Laravel\Jetstream\Jetstream::findRole($user->membership->role)->name }}
-                                        </div>
-                                    @endif
+                                    <button class="ml-2 text-sm text-gray-400 underline" wire:click="manageRole('{{ $user->id }}')">
+                                        {{ Laravel\Jetstream\Jetstream::findRole($user->membership->role)->name }}
+                                    </button>
+                                @elseif (Laravel\Jetstream\Jetstream::hasRoles())
+                                    <div class="ml-2 text-sm text-gray-400">
+                                        {{ Laravel\Jetstream\Jetstream::findRole($user->membership->role)->name }}
+                                    </div>
+                                @endif
 
-                                    <!-- Leave Team -->
-                                    @if ($this->user->id === $user->id)
-                                        <button class="cursor-pointer ml-6 text-sm text-red-500" wire:click="$toggle('confirmingLeavingTeam')">
-                                            {{ __('content.leave') }}
-                                        </button>
+                                <!-- Leave Team -->
+                                @if ($this->user->id === $user->id)
+                                    <button class="cursor-pointer ml-6 text-sm text-red-500" wire:click="$toggle('confirmingLeavingTeam')">
+                                        {{ __('content.leave') }}
+                                    </button>
 
-                                    <!-- Remove Team Member -->
-                                    @elseif (Gate::check('removeTeamMember', $team))
-                                        <button class="cursor-pointer ml-6 text-sm text-red-500" wire:click="confirmTeamMemberRemoval('{{ $user->id }}')">
-                                            {{ __('content.remove') }}
-                                        </button>
-                                    @endif
+                                <!-- Remove Team Member -->
+                                @elseif (Gate::check('removeTeamMember', $team))
+                                    <button class="cursor-pointer ml-6 text-sm text-red-500" wire:click="confirmTeamMemberRemoval('{{ $user->id }}')">
+                                        {{ __('content.remove') }}
+                                    </button>
+                                @endif
                             </div>
                         </div>
                     @endforeach
