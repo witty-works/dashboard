@@ -37,7 +37,9 @@
 
         <div class="min-h-screen bg-gray-100">
             @include('partials/gtm-body')
+            @if (empty($user->role))
             @livewire('onboarding', ['user' => $user])
+            @endif
 
             <!-- Page Heading -->
             @if (isset($header))

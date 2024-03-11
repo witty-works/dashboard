@@ -4,7 +4,7 @@
         {{ __('content.save') }}
     </x-button>
 
-    <button wire:click="cancel()" class="button secondary-button-red">
+    <button wire:click.prevent="cancel()" class="button secondary-button-red">
         {{ __('content.cancel') }}
     </button>
 
