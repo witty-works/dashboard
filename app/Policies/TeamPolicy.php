@@ -77,10 +77,6 @@ class TeamPolicy
      */
     public function addTeamMember(User $user, Team $team)
     {
-        if ($team->getUserLicensesLimitReached()) {
-            return false;
-        }
-
         return $this->update($user, $team);
     }
 
