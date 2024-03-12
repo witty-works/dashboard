@@ -2,15 +2,24 @@
 
 namespace App\Listeners;
 
+use App\Events\InvitedTeamMember;
 use Spatie\SlackAlerts\Facades\SlackAlert;
 
 class TeamMemberInvitedSlackAlert
 {
-    public function handle($event)
+    use SourceTrait;
+
+    public function handle(InvitedTeamMember $event)
     {
         $subscription = $event->team->subscription();
         if (!$subscription) {
-            $message = " - A new team member '{$event->email}' was invited to '{$event->team->name}' ('{$event->team->owner->email}'), total invited users at {$event->team->teamInvitations()->count()} via {$event->source}";
+            $message = sprintf(
+                " - A new team member '%s' was invited to '%s' (%s), total invited users at %d",
+                $event->email,
+                $event->team->name,
+                $event->team->owner->email,
+                $event->team->teamInvitations()->count(),
+            );
 
             SlackAlert::message(getenv('PLATFORM_ENVIRONMENT') . $message);
         }
