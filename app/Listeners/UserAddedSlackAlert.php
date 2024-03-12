@@ -7,9 +7,15 @@ use Spatie\SlackAlerts\Facades\SlackAlert;
 
 class UserAddedSlackAlert
 {
+    use SourceTrait;
+
     public function handle(UserEvent $event)
     {
-        $message = " - A new user was added {$event->user->email} via {$event->source}";
+        $message = sprintf(
+            " - A new user was added %s via %s",
+            $event->user->email,
+            $this->getSource($event->user),
+        );
 
         SlackAlert::message(getenv('PLATFORM_ENVIRONMENT') . $message);
     }
