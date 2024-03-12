@@ -8,7 +8,7 @@ use Illuminate\Queue\SerializesModels;
 
 class UserEvent
 {
-    use Dispatchable, SerializesModels;
+    use Dispatchable, SerializesModels, SourceTrait;
 
     public $user;
     public $source;
@@ -16,6 +16,6 @@ class UserEvent
     public function __construct(User $user)
     {
         $this->user = $user;
-        $this->source = request()->session()->get('login_source');
+        $this->source = $this->getSource($user);
     }
 }
