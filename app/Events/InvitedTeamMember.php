@@ -6,6 +6,8 @@ use Laravel\Jetstream\Events\InvitingTeamMember;
 
 class InvitedTeamMember extends InvitingTeamMember
 {
+    use SourceTrait;
+
     public $source;
 
     /**
@@ -19,6 +21,6 @@ class InvitedTeamMember extends InvitingTeamMember
     {
         parent::__construct($team, $email, $role);
 
-        $this->source = request()->session()->get('login_source');
+        $this->source = $this->getSource($team->owner);
     }
 }
