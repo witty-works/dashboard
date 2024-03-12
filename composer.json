@@ -22,7 +22,7 @@
         "mews/purifier": "^3.3",
         "p3k/emoji-detector": "^1.0.0",
         "platformsh/laravel-bridge": "^2.2",
-        "posthog/posthog-php": "^2.1",
+        "posthog/posthog-php": "^3.0",
         "sentry/sentry-laravel": "^4.0",
         "socialiteproviders/azureadb2c": "dev-multiple-policies-2",
         "spatie/laravel-failed-job-monitor": "^4.1",
