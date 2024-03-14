@@ -60,7 +60,7 @@ class SyncOrganizationToNlpApi extends AbstractSyncToNlpApi
                 'status' => 'force',
             ];
         }
-        $config['disabled_categories_force'] = $guidelines->disabled_categories_force;
+        $config['force_categories'] = $guidelines->disabled_categories_force;
 
         $data = [
             'id' => $team->posthogId(),
