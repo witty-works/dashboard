@@ -50,8 +50,9 @@ class SyncOrganizationToNlpApi extends AbstractSyncToNlpApi
         $guidelines = LanguageGuidelines::getLanguageGuidelines($team);
         $config = self::getConfig($guidelines, !$team->subscribed());
 
-        $config['categories'] = [
-            'orthography' => !in_array('orthography', $guidelines->disabled_categories)
+        $config['categories']['orthography'] = [
+            'value' => !in_array('orthography', $guidelines->disabled_categories),
+            'status' => 'force',
         ];
         foreach ($guidelines->getDiversityDimensionDrivers(null, true) as $ddd => $dddConfig) {
             $config['categories'][$ddd] = [
