@@ -8,7 +8,7 @@ trait SourceTrait
 {
     protected function getSource(User $user)
     {
-        foreach ($user->connectedAccounts() as $connectedAccount) {
+        foreach ($user->connectedAccounts as $connectedAccount) {
             return $connectedAccount->provider;
         }
 
