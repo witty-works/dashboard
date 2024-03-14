@@ -101,6 +101,23 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsTo(Jetstream::teamModel(), 'current_team_id');
     }
 
+    public function allSwitchableTeams()
+    {
+        $teams = $this->allTeams();
+        if ($teams->count() === 1) {
+            return [];
+        }
+
+        $switchableTeams = [];
+        foreach ($teams as $team) {
+            if ($team->getTotalUserWithInvitationsCount() > 1 || $team->id === $this->license_team_id) {
+                $switchableTeams[] = $team;
+            }
+        }
+
+        return $switchableTeams;
+    }
+
     public function languageGuidelines()
     {
         return $this->hasOne(LanguageGuidelines::class, 'user_id');
