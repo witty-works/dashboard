@@ -463,10 +463,10 @@
                 "lead_video": "",
                 "lead_image": [],
                 "example_image": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/25%20Jahre%20und%20%C3%A4lter.png",
-                    "width": "671",
-                    "height": "469",
-                    "alt": "Eine Illustration von Witty des Satzes 'F\u00fcr unser neues Start-up-Unternehmen brauchen wir [Digital Natives].' Als Alternative wird 'Menschen, die sich in der digitalen Welt zuhause f\u00fchlen' vorgeschlagen.\u00a0"
+                    "src": "https:\/\/www.witty.works\/hubfs\/50%20Jahre%20und%20%C3%A4lter.png",
+                    "width": "663",
+                    "height": "458",
+                    "alt": ""
                 },
                 "example_image_advanced": {
                     "src": "https:\/\/www.witty.works\/hubfs\/Altersangabe%20%20Advanced.png",
@@ -754,7 +754,7 @@
                 "canonical_url": "https:\/\/www.witty.works\/de\/kategorien\/kulturelle-diversit\u00e4t\/anglizismen",
                 "is_active": "1",
                 "name": "Werden alle diesen Anglizismus verstehen?",
-                "short_explanation": "Sicher, dass das alle Lesenden dieses Anglizismus verstehen?",
+                "short_explanation": "Sicher, dass das alle Lesenden diesen Anglizismus verstehen?",
                 "sub_head": "",
                 "lead_video": "",
                 "lead_image": [],
@@ -4528,7 +4528,7 @@
                 "lead_video": "",
                 "lead_image": [],
                 "example_image": {
-                    "src": "https:\/\/www.witty.works\/hubfs\/Abstammung%20(1).png",
+                    "src": "https:\/\/www.witty.works\/hubfs\/Abstammung-4.png",
                     "width": "605",
                     "height": "373",
                     "alt": ""
