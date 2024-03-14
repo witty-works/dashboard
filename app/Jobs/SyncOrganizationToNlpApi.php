@@ -2,7 +2,6 @@
 
 namespace App\Jobs;
 
-use App\Models\GuidelinesInterface;
 use App\Models\LanguageGuidelines;
 use App\Models\Team;
 use InvalidArgumentException;
@@ -51,13 +50,16 @@ class SyncOrganizationToNlpApi extends AbstractSyncToNlpApi
         $guidelines = LanguageGuidelines::getLanguageGuidelines($team);
         $config = self::getConfig($guidelines, !$team->subscribed());
 
-        $config['categories'] = [];
+        $config['categories'] = [
+            'orthography' => !in_array('orthography', $guidelines->disabled_categories)
+        ];
         foreach ($guidelines->getDiversityDimensionDrivers(null, true) as $ddd => $dddConfig) {
             $config['categories'][$ddd] = [
                 'value' => !in_array($ddd, $guidelines->disabled_categories),
                 'status' => 'force',
             ];
         }
+        $config['disabled_categories_force'] = $guidelines->disabled_categories_force;
 
         $data = [
             'id' => $team->posthogId(),

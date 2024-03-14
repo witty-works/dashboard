@@ -41,7 +41,16 @@
             };
             usort($list, $callback);
 
-            $disabled = $proficiencyLevel === 'openly_discriminating';
+            if ($proficiencyLevel === 'openly_discriminating') {
+                $disabled = true;
+            } else {
+                $force = \App\Models\LanguageGuidelines::isForcedOnTeam($model, 'disabled_categories', $category);
+                if ($force) {
+                    $disabled = 'locked';
+                } else {
+                    $disabled = !$model->subscribed();
+                }
+            }
         @endphp
 
         <div class="guidelines-form-section lato-small-text-p guidelines-form-section-proficiency-level">
@@ -74,9 +83,7 @@
         @if(isset($diversityDimensionDrivers[$ddd]['translation']) && isset($dimensions[$ddd]))
         @php
         $checkbox = \App\Models\LanguageGuidelines::isBasicOnly($proficiencyLevel) || !$model->subscribed();
-        $disabled = !$model->subscribed();
         if ($proficiencyLevel === 'openly_discriminating') {
-            $disabled = true;
             $minValue = \App\Models\LanguageGuidelines::BASIC_ENABLED;
             $title = __('guidelines.discriminating_language_cannot_be_disabled');
         } else {
@@ -114,7 +121,7 @@
                 :value="$dimensions[$ddd]"
                 :label="$label"
                 wire:model="dimensions.{{$ddd}}"
-                :disabled="$minValue === 2"
+                :disabled="(bool)$disabled || $minValue === 2"
                 :minValue="$minValue"
             />
             @endif

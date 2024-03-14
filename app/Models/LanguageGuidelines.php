@@ -32,7 +32,6 @@ class LanguageGuidelines extends Model
         'german_rules_force' => true,
         'show_inspiration_alternatives_force' => true,
         'preferred_variants_force' => true,
-
     ];
 
     protected $fillable = [
@@ -45,6 +44,7 @@ class LanguageGuidelines extends Model
     protected $casts = [
         'preferred_variants' => 'json',
         'disabled_categories' => 'json',
+        'disabled_categories_force' => 'json',
         'german_rules_force' => 'boolean',
         'show_inspiration_alternatives_force' => 'boolean',
         'preferred_variants_force' => 'boolean',
@@ -75,6 +75,7 @@ class LanguageGuidelines extends Model
         $attributes += [
             'preferred_variants' => ['de-DE', 'en-US'],
             'disabled_categories' => $disabled_categories,
+            'disabled_categories_force' => [],
         ];
 
         parent::__construct($attributes);
@@ -223,7 +224,7 @@ class LanguageGuidelines extends Model
         }
     }
 
-    protected function inPlaceUpateArray($element, $column, $enabled)
+    public function inPlaceUpateArray($element, $column, $enabled)
     {
         $params = [':id' => $this->id, ':element' => $element, ':element_json' => "\"$element\""];
 
@@ -286,9 +287,18 @@ class LanguageGuidelines extends Model
                 ];
                 break;
             case 'Category':
+                if (!$subscribed) {
+                    $disabled_categories_force = [];
+                    foreach ($this->disabled_categories_force as $key => $value) {
+                        $disabled_categories_force[] = $key;
+                    }
+                } else {
+                    $disabled_categories_force = $this->disabled_categories_force;
+                }
                 $properties = [
                     'language_type' => (new \ReflectionClass($this))->getShortName(),
                     'disabled_categories' => $this->disabled_categories,
+                    'force' => $disabled_categories_force,
                 ];
                 break;
             default:
@@ -325,7 +335,7 @@ class LanguageGuidelines extends Model
         }
 
         if ($category) {
-            return false;
+            return in_array($category, $teamGuidelines->disabled_categories_force) ? 'locked' : false;
         }
 
         return $teamGuidelines->{$section . '_force'} ? 'locked' : false;

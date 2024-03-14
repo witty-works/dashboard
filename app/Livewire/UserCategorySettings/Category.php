@@ -42,6 +42,12 @@ class Category extends OrganizationCategorySettingsCategory
 
     public function updateLanguageGuidelinesCategory()
     {
+        if (LanguageGuidelines::isForcedOnTeam($this->model, 'disabled_categories', $this->category)) {
+            $this->mount($this->model);
+
+            return;
+        }
+
         foreach ($this->dimensions as $ddd => $enabled) {
             $minValue = LanguageGuidelines::teamCategoryValue($this->model, $ddd);
             $this->dimensions[$ddd] = max($minValue, (int)$enabled);

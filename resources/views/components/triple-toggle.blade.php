@@ -27,30 +27,31 @@
     document.querySelector('#tripple-toggle-{!! $attributes->get('name') !!}').addEventListener('click', function() {
         toggle = document.querySelector('#tripple-toggle-{!! $attributes->get('name') !!}');
         hiddenInput = document.querySelector('#{!! $attributes->get('name') !!}');
-        @if(empty($minValue) || $minValue === \App\Models\LanguageGuidelines::DISABLED)
-        if (toggle.classList.contains('active')) {
+        disabled = {{ (empty($minValue) || $minValue === \App\Models\LanguageGuidelines::DISABLED) ? 'true' : 'false' }};
+        if (disabled) {
+            if (toggle.classList.contains('active')) {
+                if (toggle.classList.contains('middle')) {
+                    toggle.classList.remove('middle');
+                    hiddenInput.setAttribute('value', '2');
+                } else {
+                    toggle.classList.remove('active');
+                    hiddenInput.setAttribute('value', '0');
+                }
+            } else {
+                toggle.classList.add('active');
+                toggle.classList.add('middle');
+                hiddenInput.setAttribute('value', '1');
+            }
+        } else {
             if (toggle.classList.contains('middle')) {
                 toggle.classList.remove('middle');
                 hiddenInput.setAttribute('value', '2');
             } else {
-                toggle.classList.remove('active');
-                hiddenInput.setAttribute('value', '0');
+                toggle.classList.add('active');
+                toggle.classList.add('middle');
+                hiddenInput.setAttribute('value', '1');
             }
-        } else {
-            toggle.classList.add('active');
-            toggle.classList.add('middle');
-            hiddenInput.setAttribute('value', '1');
         }
-        @else
-        if (toggle.classList.contains('middle')) {
-            toggle.classList.remove('middle');
-            hiddenInput.setAttribute('value', '2');
-        } else {
-            toggle.classList.add('active');
-            toggle.classList.add('middle');
-            hiddenInput.setAttribute('value', '1');
-        }
-        @endif
 
         hiddenInput.dispatchEvent(new Event('input'));
     });
