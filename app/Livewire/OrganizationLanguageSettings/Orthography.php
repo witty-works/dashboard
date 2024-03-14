@@ -29,7 +29,7 @@ class Orthography extends Component
 
         $languageGuidelines = LanguageGuidelines::getLanguageGuidelines($this->model);
 
-        $this->orthography = in_array('orthography', $languageGuidelines->disabled_categories);
+        $this->orthography = !in_array('orthography', $languageGuidelines->disabled_categories);
         $this->orthography_force = in_array('orthography', $languageGuidelines->disabled_categories_force);
     }
 
@@ -44,7 +44,7 @@ class Orthography extends Component
         if ($this->model->subscribed()) {
             $languageGuidelines = LanguageGuidelines::getLanguageGuidelines($this->model);
 
-            $languageGuidelines->inPlaceUpateArray('orthography', 'disabled_categories', !$this->orthography);
+            $languageGuidelines->inPlaceUpateArray('orthography', 'disabled_categories', $this->orthography);
             $languageGuidelines->inPlaceUpateArray('orthography', 'disabled_categories_force', !$this->orthography_force);
 
             $languageGuidelines->save();

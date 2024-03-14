@@ -30,7 +30,7 @@ class Orthography extends Component
 
         $this->resetErrorBag();
 
-        $this->orthography = in_array('orthography', $languageGuidelines->disabled_categories);
+        $this->orthography = !in_array('orthography', $languageGuidelines->disabled_categories);
     }
 
     public function updateLanguageGuidelinesOrthography()
@@ -49,7 +49,7 @@ class Orthography extends Component
 
         if ($this->model->subscribed()) {
             $languageGuidelines = LanguageGuidelines::getLanguageGuidelines($this->model);
-            $languageGuidelines->inPlaceUpateArray('orthography', 'disabled_categories', !$this->orthography);
+            $languageGuidelines->inPlaceUpateArray('orthography', 'disabled_categories', $this->orthography);
 
             $languageGuidelines->save();
             $languageGuidelines->dispatchEventToPosthog((new \ReflectionClass($this))->getShortName());
