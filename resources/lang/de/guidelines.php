@@ -127,4 +127,7 @@ Alle Wörter, die zu dieser Liste hinzufügst, werden von Witty hervorgehoben, u
     'n' => 'Substantiv',
     'german_only' => 'Nur in Deutsch',
     'english_only' => 'Nur in Englisch',
+    'manage_organization_guidelines_orthography' => 'Rechtschreibung und Grammatik',
+    'manage_organization_guidelines_description_orthography' => 'Wähle, ob Witty nach Rechtschreib- und Grammatikfehlern suchen soll',
+    'enable_orthography' => 'Aktiviere Rechtschreibung und Grammatik',
 ];

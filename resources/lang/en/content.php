@@ -437,4 +437,5 @@ Please then go to "Register" again to finalize the registration into the "Witty 
     'customize_via_team_settings' => 'On the "Witty Free" plan one can customize only the team settings. Upgrade to be able to customize Witty in your personal settings.',
     'toggle_lines' => 'Toggle All Lines',
     'subscribe' => 'Subscribe',
+    'choose_team' => 'Choose team',
 ];

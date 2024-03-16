@@ -15,7 +15,7 @@ class TeamMemberAddedSlackAlert
         $subscription = $event->team->subscription();
         if (!$subscription) {
             $message = sprintf(
-                " - A new team member '%s' was added to '%s' (%s), total count is now at {%s} via %s",
+                " - A new team member '%s' was added to '%s' (%s), total count is now at %s via %s",
                 $event->user->email,
                 $event->team->name,
                 $event->team->owner->email,
