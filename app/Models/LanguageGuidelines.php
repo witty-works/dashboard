@@ -289,8 +289,10 @@ class LanguageGuidelines extends Model
             case 'Category':
                 if (!$subscribed) {
                     $disabled_categories_force = [];
-                    foreach ($this->disabled_categories_force as $key => $value) {
-                        $disabled_categories_force[] = $key;
+                    if (is_array($this->disabled_categories_force)) {
+                        foreach ($this->disabled_categories_force as $key => $value) {
+                            $disabled_categories_force[] = $key;
+                        }
                     }
                 } else {
                     $disabled_categories_force = $this->disabled_categories_force;
