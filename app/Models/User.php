@@ -340,6 +340,15 @@ class User extends Authenticatable implements MustVerifyEmail
         return array_unique($clients);
     }
 
+    public function getSignupSource()
+    {
+        $this->refresh();
+
+        $connectedAccount = $this->connectedAccounts->first();
+
+        return $connectedAccount ? $connectedAccount->provider : 'unknown';
+    }
+
     public function getHubspotData($booleanAsStrings = false)
     {
         $true = $booleanAsStrings ? 'Yes' : true;

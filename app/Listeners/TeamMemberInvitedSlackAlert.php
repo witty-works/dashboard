@@ -7,8 +7,6 @@ use Spatie\SlackAlerts\Facades\SlackAlert;
 
 class TeamMemberInvitedSlackAlert
 {
-    use SourceTrait;
-
     public function handle(InvitedTeamMember $event)
     {
         $subscription = $event->team->subscription();
