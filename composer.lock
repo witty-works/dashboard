@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4452d0d969e2b66a932ab5906ee2846e",
+    "content-hash": "257d0d5b1ac0b2ccf42dd30c843e2475",
     "packages": [
         {
             "name": "artisansdk/ratelimiter",
@@ -2022,16 +2022,16 @@
         },
         {
             "name": "kineticamobile/lumki",
-            "version": "v0.1.12",
+            "version": "dev-remove-jet-widget-prefix",
             "source": {
                 "type": "git",
-                "url": "https://github.com/kineticamobile/lumki.git",
-                "reference": "2e8f4fd1187e2f04fd4738711ab80d9403592829"
+                "url": "https://github.com/witty-works/lumki.git",
+                "reference": "397b9522993130ea99998eba77fb01f5a940d783"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kineticamobile/lumki/zipball/2e8f4fd1187e2f04fd4738711ab80d9403592829",
-                "reference": "2e8f4fd1187e2f04fd4738711ab80d9403592829",
+                "url": "https://api.github.com/repos/witty-works/lumki/zipball/397b9522993130ea99998eba77fb01f5a940d783",
+                "reference": "397b9522993130ea99998eba77fb01f5a940d783",
                 "shasum": ""
             },
             "require": {
@@ -2061,7 +2061,16 @@
                     "Kineticamobile\\Lumki\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "Kineticamobile\\Lumki\\Tests\\": "tests"
+                }
+            },
+            "scripts": {
+                "test": [
+                    "phpunit --testdox"
+                ]
+            },
             "license": [
                 "MIT"
             ],
@@ -2085,16 +2094,15 @@
             "description": "Laravel User Management for Laravel 9 with Jetstream",
             "homepage": "https://github.com/kineticamobile/lumki",
             "keywords": [
+                "Laravel",
+                "Laravel 9",
                 "Lumki",
-                "laravel",
-                "laravel 9",
-                "users management"
+                "Users Management"
             ],
             "support": {
-                "issues": "https://github.com/kineticamobile/lumki/issues",
-                "source": "https://github.com/kineticamobile/lumki/tree/v0.1.12"
+                "source": "https://github.com/witty-works/lumki/tree/remove-jet-widget-prefix"
             },
-            "time": "2023-02-16T07:32:47+00:00"
+            "time": "2024-03-18T13:45:39+00:00"
         },
         {
             "name": "lab404/laravel-impersonate",
@@ -12498,6 +12506,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "kineticamobile/lumki": 20,
         "socialiteproviders/azureadb2c": 20,
         "themsaid/laravel-langman": 20,
         "tio/laravel": 20

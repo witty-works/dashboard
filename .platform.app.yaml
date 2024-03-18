@@ -71,9 +71,9 @@ hooks:
         set -e
         php artisan clear-compiled
         php artisan config:cache
+        php artisan migrate --force
         php artisan route:trans:cache
         php artisan view:cache
-        php artisan migrate --force
         php artisan google-fonts:fetch
 
 crons:
