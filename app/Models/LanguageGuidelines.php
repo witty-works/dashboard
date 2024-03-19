@@ -108,6 +108,7 @@ class LanguageGuidelines extends Model
             }
             $languageGuideline->disabled_categories = $disabled_categories;
         }
+        $languageGuideline->disabled_categories_force = [];
 
         return $languageGuideline;
     }
@@ -295,7 +296,7 @@ class LanguageGuidelines extends Model
                         }
                     }
                 } else {
-                    $disabled_categories_force = $this->disabled_categories_force;
+                    $disabled_categories_force = (array) $this->disabled_categories_force;
                 }
                 $properties = [
                     'language_type' => (new \ReflectionClass($this))->getShortName(),
