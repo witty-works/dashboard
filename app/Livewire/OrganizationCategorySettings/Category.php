@@ -79,7 +79,9 @@ class Category extends Component
                 continue;
             }
 
-            if (!in_array('advanced_' . $ddd, $disabledCategories)) {
+            $proficiencyLevel = $config['proficiency_level'] ?? null;
+
+            if (!LanguageGuidelines::isBasicOnly($proficiencyLevel) && !in_array('advanced_' . $ddd, $disabledCategories)) {
                 $this->dimensions[$ddd] = LanguageGuidelines::ADVANCED_ENABLED;
             } elseif (!in_array($ddd, $disabledCategories)) {
                 $this->dimensions[$ddd] = LanguageGuidelines::BASIC_ENABLED;
