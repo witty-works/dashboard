@@ -8,7 +8,7 @@ return [
      */
     'fonts' => [
         'lato' => 'https://fonts.googleapis.com/css?family=Lato:400,700&display=swap',
-        'ibarra' => 'https://fonts.googleapis.com/css?family=Ibarra Real Nova:400, 600&display=swap',
+        'ibarra' => 'https://fonts.googleapis.com/css?family=Ibarra Real Nova:400,600&display=swap',
         'roboto' => 'https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap',
     ],
 
