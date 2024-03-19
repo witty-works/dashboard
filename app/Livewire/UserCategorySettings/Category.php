@@ -62,7 +62,7 @@ class Category extends OrganizationCategorySettingsCategory
         $languageGuidelines = LanguageGuidelines::getLanguageGuidelines($this->model);
         $languageGuidelines->save();
 
-        $this->dimensions = $this->processDimensions($languageGuidelines);
+        $this->processDimensions($languageGuidelines, $this->dimensions);
 
         $languageGuidelines->dispatchEventToPosthog((new \ReflectionClass($this))->getShortName());
 

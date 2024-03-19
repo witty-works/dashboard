@@ -89,15 +89,11 @@ class Category extends Component
         }
     }
 
-    protected function processDimensions(LanguageGuidelines $languageGuidelines)
+    protected function processDimensions(LanguageGuidelines $languageGuidelines, $dimensions)
     {
-        $dimensions = [];
-
         foreach ($this->dimensions as $ddd => $level) {
             $languageGuidelines->adjustLevel($ddd, $level);
         }
-
-        return $dimensions;
     }
 
     public function updateLanguageGuidelinesCategory()
@@ -115,7 +111,7 @@ class Category extends Component
         $languageGuidelines = LanguageGuidelines::getLanguageGuidelines($this->model);
         $languageGuidelines->save();
 
-        $this->dimensions = $this->processDimensions($languageGuidelines);
+        $this->processDimensions($languageGuidelines, $this->dimensions);
 
         if (!$this->model->subscribed()) {
             $this->dimensions_force = true;
