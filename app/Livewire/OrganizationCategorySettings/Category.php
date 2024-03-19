@@ -79,7 +79,9 @@ class Category extends Component
                 continue;
             }
 
-            if (!in_array('advanced_' . $ddd, $disabledCategories)) {
+            $proficiencyLevel = $config['proficiency_level'] ?? null;
+
+            if (!LanguageGuidelines::isBasicOnly($proficiencyLevel) && !in_array('advanced_' . $ddd, $disabledCategories)) {
                 $this->dimensions[$ddd] = LanguageGuidelines::ADVANCED_ENABLED;
             } elseif (!in_array($ddd, $disabledCategories)) {
                 $this->dimensions[$ddd] = LanguageGuidelines::BASIC_ENABLED;
@@ -89,15 +91,11 @@ class Category extends Component
         }
     }
 
-    protected function processDimensions(LanguageGuidelines $languageGuidelines)
+    protected function processDimensions(LanguageGuidelines $languageGuidelines, $dimensions)
     {
-        $dimensions = [];
-
         foreach ($this->dimensions as $ddd => $level) {
             $languageGuidelines->adjustLevel($ddd, $level);
         }
-
-        return $dimensions;
     }
 
     public function updateLanguageGuidelinesCategory()
@@ -115,7 +113,7 @@ class Category extends Component
         $languageGuidelines = LanguageGuidelines::getLanguageGuidelines($this->model);
         $languageGuidelines->save();
 
-        $this->dimensions = $this->processDimensions($languageGuidelines);
+        $this->processDimensions($languageGuidelines, $this->dimensions);
 
         if (!$this->model->subscribed()) {
             $this->dimensions_force = true;

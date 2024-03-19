@@ -108,6 +108,7 @@ class LanguageGuidelines extends Model
             }
             $languageGuideline->disabled_categories = $disabled_categories;
         }
+        $languageGuideline->disabled_categories_force = [];
 
         return $languageGuideline;
     }
@@ -289,11 +290,13 @@ class LanguageGuidelines extends Model
             case 'Category':
                 if (!$subscribed) {
                     $disabled_categories_force = [];
-                    foreach ($this->disabled_categories_force as $key => $value) {
-                        $disabled_categories_force[] = $key;
+                    if (is_array($this->disabled_categories_force)) {
+                        foreach ($this->disabled_categories_force as $key => $value) {
+                            $disabled_categories_force[] = $key;
+                        }
                     }
                 } else {
-                    $disabled_categories_force = $this->disabled_categories_force;
+                    $disabled_categories_force = (array) $this->disabled_categories_force;
                 }
                 $properties = [
                     'language_type' => (new \ReflectionClass($this))->getShortName(),

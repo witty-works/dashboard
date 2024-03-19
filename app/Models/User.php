@@ -270,19 +270,6 @@ class User extends Authenticatable implements MustVerifyEmail
         return in_array($provider, $this->emailProviders);
     }
 
-    public function hasCompletedOnboarding()
-    {
-        if (
-            $this->role !== null
-            || !$this->currentTeam
-            || (config('app.no_onboarding_for_impersonation') && app('impersonate')->isImpersonating())
-        ) {
-            return true;
-        }
-
-        return !$this->ownsTeam($this->currentTeam);
-    }
-
     public function getTeamRoleName()
     {
         if (!$this->currentTeam) {
@@ -338,6 +325,15 @@ class User extends Authenticatable implements MustVerifyEmail
         }
 
         return array_unique($clients);
+    }
+
+    public function getSignupSource()
+    {
+        $this->refresh();
+
+        $connectedAccount = $this->connectedAccounts->first();
+
+        return $connectedAccount ? $connectedAccount->provider : 'unknown';
     }
 
     public function getHubspotData($booleanAsStrings = false)

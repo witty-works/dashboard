@@ -2,14 +2,11 @@
 
 namespace App\Listeners;
 
-use App\Listeners\SourceTrait;
 use Laravel\Jetstream\Events\TeamMemberAdded;
 use Spatie\SlackAlerts\Facades\SlackAlert;
 
 class TeamMemberAddedSlackAlert
 {
-    use SourceTrait;
-
     public function handle(TeamMemberAdded $event)
     {
         $subscription = $event->team->subscription();
@@ -20,7 +17,7 @@ class TeamMemberAddedSlackAlert
                 $event->team->name,
                 $event->team->owner->email,
                 $event->team->getTotalUserCount(),
-                $this->getSource($event->user),
+                $event->user->getSignupSource(),
             );
 
             SlackAlert::message(getenv('PLATFORM_ENVIRONMENT') . $message);
