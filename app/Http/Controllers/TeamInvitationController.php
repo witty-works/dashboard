@@ -36,7 +36,7 @@ class TeamInvitationController extends BaseTeamInvitationController
         $invitation->accepted = true;
         $invitation->save();
 
-        return redirect(config('fortify.home'));
+        return redirect()->route('register');
     }
 
     /**
