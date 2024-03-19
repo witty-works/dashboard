@@ -24,10 +24,11 @@ class WelcomeController extends Controller
         }
 
         if ($user->subscribed()) {
-            return redirect()->route('user.language-guidelines');
+            return redirect()->route('editor');
         }
 
-        return redirect()->route('teams.language-guidelines');
+        $route = $user->getTeamRoleName() === 'admin' ? 'teams' : 'user';
+        return redirect()->route("$route.language-guidelines");
     }
 
     public function mailingConsent(Request $request)
