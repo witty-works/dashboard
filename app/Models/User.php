@@ -237,7 +237,7 @@ class User extends Authenticatable implements MustVerifyEmail
             return $team->planId();
         }
 
-        return null;
+        return "none";
     }
 
     public function getNotificationCount()
