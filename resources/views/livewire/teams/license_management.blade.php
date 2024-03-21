@@ -17,7 +17,7 @@
         <div class="py-5 space-y-6">
             @foreach ($team->allUsers() as $user)
             <div class="flex items-center justify-between">
-                <div class="flex items-center">
+                <div class="flex items-center wittyworks-margin-right">
                     <a href="mailto:{{ $user->email }}">{{ $user->name }}</a>
                 </div>
 
