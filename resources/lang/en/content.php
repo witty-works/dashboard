@@ -428,4 +428,5 @@ Please then go to "Register" again to finalize the registration into the "Witty 
     'choose_team' => 'Choose team',
     'license' => 'License?',
     'no' => 'no',
+    'role' => 'role',
 ];
