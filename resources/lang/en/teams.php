@@ -44,7 +44,8 @@ return [
     'get_cancel_invoices_update_payment' => 'Download invoices, update payment or cancel',
     'list_licenses' => 'Assign licenses (:assigned_count/:license_count)',
     'list_licenses_description' => 'Only users with a license assigned can use Witty. There are currently :license_count licenses that can be assigned.',
-    'active_license' => 'licensed',
-    'no_active_license' => 'unlicensed',
-    'active_license_on_team' => 'licensed on: :team_name',
+    'active_license' => 'Licensed',
+    'no_active_license' => 'Unlicensed',
+    'active_license_on_team' => 'Licensed on team ":team_name"',
+    'no_more_licenses_available' => 'All licenses have already been assigned',
 ];

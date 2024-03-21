@@ -355,7 +355,7 @@ Falls du Fragen hast, nimm Kontakt mit :name (:email) auf. 🙂
     'learn_more' => 'Warum das so ist',
     'example' => 'Beispiel',
     'open' => 'Öffnen',
-    'witty_editor_onboarding_description' => '<b>Klicke in das Feld unten</b><img src="https://www.witty.works/hubfs/arrow-1.png" style="transform: scaleX(-1);" width="70" alt="" /> und dann auf ein unterstrichenes Wort, um Alternativen angezeigt zu bekommen..',
+    'witty_editor_onboarding_description' => '<b>Klicke in das Feld unten</b><img src="https://www.witty.works/hubfs/arrow-1.png" style="transform: scaleX(-1);" width="70" alt="" /> und dann auf ein unterstrichenes Wort, um Alternativen angezeigt zu bekommen.',
     'witty_editor_try_out' => 'Probiere Witty aus',
     'other' => 'Anders',
     'blog' => 'Blog oder Artikel',
@@ -431,4 +431,5 @@ Bitte gehe dann erneut auf „Registrieren“, um die Registrierung im "Witty fo
     'accept_invitation_description' => 'Möchtest die Einladung für das Team ":invite_team_name" von <a href="mailto:invite_user_email" target="_blank" rel="noopener">:invite_user_email</a> annehmen?',
     'license' => 'Lizenziert?',
     'no' => 'nein',
+    'role' => 'Rolle',
 ];

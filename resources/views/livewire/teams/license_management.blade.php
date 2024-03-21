@@ -16,23 +16,43 @@
         @endif
         <div class="py-5 space-y-6">
             @foreach ($team->allUsers() as $user)
-            <div class="flex items-center justify-between">
-                <div class="flex items-center">
-                    <a href="mailto:{{ $user->email }}">{{ $user->name }}</a>
-                </div>
-
-                <div class="flex items-center">
-                    @if ($user->licenseTeam && !$user->isUserLicensedToTeam($team))
-                        {{ __('teams.active_license_on_team', ['team_name' => $user->licenseTeam->name]) }}
+            <div class="flex items-center">
+                <div class="wittyworks-margin-right">
+                    @php
+                        $title = "";
+                        $disabled = false;
+                        $licenseOnOtherTeam = false;
+                        if ($user->licenseTeam) {
+                            $disabled = $licenseOnOtherTeam = !$user->isUserLicensedToTeam($team);
+                            $title = __('teams.active_license_on_team', ['team_name' => $user->licenseTeam->name]);
+                        } else {
+                            $disabled = $assignedCount >= $team->getUserLicensesCount();
+                            $title = __('teams.no_more_licenses_available');
+                        }
+                    @endphp
+                    @if($licenseOnOtherTeam)
+                    <x-checkbox
+                        label=""
+                        :title="$title"
+                        :enabled="true"
+                        :disabled="$disabled"
+                    />
                     @else
                     <x-checkbox
                         id="licenses[{{ $user->id }}]"
                         value="1"
                         label=""
+                        :title="$title"
                         wire:model="licenses.{{ $user->id }}"
                         wire:click="updateAssignedCount()"
-                        :disabled="empty($licenses[$user->id]) && $assignedCount >= $team->getUserLicensesCount()"
+                        :disabled="$disabled"
                     />
+                    @endif
+                </div>
+                <div class="wittyworks-margin-right">
+                    <a href="mailto:{{ $user->email }}">{{ $user->name }}</a>
+                    @if ($user->licenseTeam && !$user->isUserLicensedToTeam($team))
+                        ({{ __('teams.active_license_on_team', ['team_name' => $user->licenseTeam->name]) }})
                     @endif
                 </div>
             </div>

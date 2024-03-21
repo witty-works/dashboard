@@ -48,4 +48,5 @@ return [
     'active_license' => 'mit Lizenz',
     'no_active_license' => 'ohne Lizenz',
     'active_license_on_team' => 'mit Lizenz in :team_name',
+    'no_more_licenses_available' => 'Alle Lizenzen sind bereits vergeben',
 ];
