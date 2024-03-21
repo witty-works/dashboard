@@ -17,11 +17,7 @@
         <div class="py-5 space-y-6">
             @foreach ($team->allUsers() as $user)
             <div class="flex items-center justify-between">
-                <div class="flex items-center wittyworks-margin-right">
-                    <a href="mailto:{{ $user->email }}">{{ $user->name }}</a>
-                </div>
-
-                <div class="flex items-center">
+                <div class="flex items-center  wittyworks-margin-right">
                     @if ($user->licenseTeam && !$user->isUserLicensedToTeam($team))
                         {{ __('teams.active_license_on_team', ['team_name' => $user->licenseTeam->name]) }}
                     @else
@@ -34,6 +30,9 @@
                         :disabled="empty($licenses[$user->id]) && $assignedCount >= $team->getUserLicensesCount()"
                     />
                     @endif
+                </div>
+                <div class="flex items-center">
+                    <a href="mailto:{{ $user->email }}">{{ $user->name }}</a>
                 </div>
             </div>
         @endforeach
