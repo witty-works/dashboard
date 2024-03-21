@@ -108,7 +108,9 @@ class LanguageGuidelines extends Model
             }
             $languageGuideline->disabled_categories = $disabled_categories;
         }
-        $languageGuideline->disabled_categories_force = [];
+        if ($languageGuideline->disabled_categories_force === null) {
+            $languageGuideline->disabled_categories_force = [];
+        }
 
         return $languageGuideline;
     }
