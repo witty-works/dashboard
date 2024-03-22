@@ -10,6 +10,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 use JoelButcher\Socialstream\HasConnectedAccounts;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Spatie\Permission\Traits\HasRoles;
@@ -344,11 +345,8 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function getSignupSource()
     {
-        $this->refresh();
-
-        $connectedAccount = $this->connectedAccounts->first();
-
-        return $connectedAccount ? $connectedAccount->provider : 'unknown';
+        $provider = DB::select("SELECT provider FROM connected_accounts where email = ? ORDER BY id ASC", [$this->email]);
+        return empty($provider[0]->provider) ? 'unknown' : $provider[0]->provider;
     }
 
     public function getHubspotData($booleanAsStrings = false)
