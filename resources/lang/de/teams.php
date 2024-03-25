@@ -15,7 +15,7 @@ return [
     'false_positives' => 'Ignorierte Wörter deines Teams',
     'more_licenses' => 'Wenn du weitere Lizenzen erwerben möchtest, <a href=":url">wende</a> dich bitte an Witty Works.',
     'what_is_included' => 'Aboausnutzung',
-    'user_limit_reached_error' => 'Alle Lizenzen wurden vergeben. Bitte füge dem Abonnement <a href=":subscription_url">weitere Lizenzen hinzu</a> , damit neuen Benutzern automatisch eine Lizenz zugewiesen wird.',
+    'user_limit_reached_error' => 'Alle Lizenzen wurden vergeben. Neue Teammitgliedern können keine Lizenz automatisch zugewiesen wiesen werden.',
     'pricing' => 'Preise',
     'end_date' => 'Dein Abo endet am ',
     'team_owner' => 'Team-Eigentümer*in',
@@ -49,4 +49,5 @@ return [
     'no_active_license' => 'ohne Lizenz',
     'active_license_on_team' => 'mit Lizenz in :team_name',
     'no_more_licenses_available' => 'Alle Lizenzen sind bereits vergeben',
+    'pending_user_limit_reached_error' => 'Zu viele bereits zugewiesene Lizenzen und ausstehende Einladungen, um weiteren Teammitgliedern automatisch eine Lizenz zuzuweisen.',
 ];

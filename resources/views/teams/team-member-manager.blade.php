@@ -18,9 +18,13 @@
                 @endif
 
                 <!-- Limit reached -->
-                @if($team->getUserLicensesLimitReached())
+                @if($team->getUserLicensesLimitReached(true))
                 <p role="alert" class="lato-small-text-p margin-bottom limit-reached">
-                    {!! __('teams.user_limit_reached_error', ['subscription_url' => route('teams.subscription')]) !!}
+                    @if($team->getUserLicensesLimitReached())
+                    {!! __('teams.user_limit_reached_error') !!}
+                    @else
+                    {!! __('teams.pending_user_limit_reached_error') !!}
+                    @endif
 
                     @if(Auth::user()->ownsTeam($team))
                     <a role="button" class="button primary-button-red" href="{{ route('teams.subscription') }}">
@@ -133,17 +137,22 @@
             </x-slot>
 
             <x-slot name="description">
-                @if($team->getUserLicensesLimitReached())
-                <p class="lato-small-text-p margin-bottom limit-reached">
-                    {!! __('teams.user_limit_reached_error', ['subscription_url' => route('teams.subscription')]) !!}
+                {{ __('content.these_people_have_requested_an_invite') }}
+
+                @if($team->getUserLicensesLimitReached(true))
+                <p role="alert" class="lato-small-text-p margin-bottom limit-reached">
+                    @if($team->getUserLicensesLimitReached())
+                    {!! __('teams.user_limit_reached_error') !!}
+                    @else
+                    {!! __('teams.pending_user_limit_reached_error') !!}
+                    @endif
+
                     @if(Auth::user()->ownsTeam($team))
-                        <a class="button primary-button-red" href="{{ route('teams.subscription') }}">
-                            {{ __('teams.add_licenses') }}
-                        </a>
+                    <a role="button" class="button primary-button-red" href="{{ route('teams.subscription') }}">
+                        {{ __('teams.add_licenses') }}
+                    </a>
                     @endif
                 </p>
-                @else
-                {{ __('content.these_people_have_requested_an_invite') }}
                 @endif
             </x-slot>
 
