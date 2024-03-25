@@ -185,10 +185,15 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function isUserLicensedToTeam($team = null)
     {
+        if ($this->licenseTeam === null) {
+            return false;
+        }
+
         if ($team === null) {
             $team = $this->currentTeam;
         }
-        return $this->license_team_id === $team->id;
+
+        return $this->licenseTeam->id === $team->id;
     }
 
     public function subscribed($type = 'witty', $price = null)

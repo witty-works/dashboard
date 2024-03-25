@@ -51,7 +51,7 @@
                 </div>
                 <div class="wittyworks-margin-right">
                     <a href="mailto:{{ $user->email }}">{{ $user->name }}</a>
-                    @if ($user->licenseTeam && !$user->isUserLicensedToTeam($team))
+                    @if ($licenseOnOtherTeam)
                         ({{ __('teams.active_license_on_team', ['team_name' => $user->licenseTeam->name]) }})
                     @endif
                 </div>
