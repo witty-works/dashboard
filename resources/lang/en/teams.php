@@ -22,7 +22,7 @@ return [
     'total_of_max_used_ignored' => '[0,998] :total of :max_count possible ignored words are used|[999,*]:total of unlimited possible ignored words are used',
     'more_licenses' => 'If you like to purchase more licenses, please <a href=":url">contact</a> Witty Works.',
     'what_is_included' => 'Usage',
-    'user_limit_reached_error' => 'All licenses have been assigned. In order for new users to be assigned a license, <a href=":subscription_url">add more licenses</a> on your subscription.',
+    'user_limit_reached_error' => 'All licenses have been assigned. Please <a href=":subscription_url">add more licenses</a> on your subscription so that new users are automatically assigned a license.',
     'license_limit_reached_error' => 'Only :license_count licenses available. Please reduce the :assigned_count assigned licenses accordingly.',
     'end_date' => 'Your plan end on ',
     'team_owner' => 'Team owner',
