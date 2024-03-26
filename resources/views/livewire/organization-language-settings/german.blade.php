@@ -97,7 +97,4 @@
             dropdown.style.display = 'none';
         }
     }
-    document.addEventListener("DOMContentLoaded", function() {
-        handleDropdownVisibility();
-    });
 </script>
