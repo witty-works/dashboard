@@ -17,48 +17,17 @@ class SwitchToTeam
         $user = $request->user();
 
         if ($user instanceof User) {
-            $invitation = $this->ensureUserHasCurrentTeam($request, $user);
+            $this->checkTeam($user);
+            $user->applyAcceptedInvitiations();
         } elseif (
             !Route::is('mock-login')
             && config('app.mock_login')
             && (new Config())->branch !== 'dev'
         ) {
             return redirect()->route('mock-login', ['email' => config('app.mock_login')]);
-        } else {
-            $invitation = null;
         }
 
-        $response = $next($request);
-
-        if ($invitation instanceof TeamInvitation) {
-            return redirect()->route(
-                'team-invitations.accept',
-                ['invitation' => $invitation, 'onboarding' => '1']
-            );
-        }
-
-        $this->checkTeam($user);
-
-        return $response;
-    }
-
-    protected function ensureUserHasCurrentTeam(Request $request, User $user)
-    {
-        if ($request->get('onboarding') || 'download' === Route::currentRouteName()) {
-            return;
-        }
-
-        # are there any remaining invitations that were previously accept?
-        $invitation = TeamInvitation::where('email', $user->email)
-            ->where('accepted', true)
-            ->orderBy('updated_at', 'desc')
-            ->first();
-
-        if ($invitation instanceof TeamInvitation) {
-            return $invitation;
-        }
-
-        $this->checkTeam($user);
+        return $next($request);
     }
 
     protected function checkTeam($user)

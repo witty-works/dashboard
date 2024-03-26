@@ -6,6 +6,7 @@ use App\Events\UserCreated;
 use App\Events\UserDeleted;
 use App\Events\UserUpdated;
 use App\Http\Controllers\OAuthController;
+use App\Jobs\SyncUserToNlpApi;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -15,6 +16,7 @@ use JoelButcher\Socialstream\HasConnectedAccounts;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Spatie\Permission\Traits\HasRoles;
 use Lab404\Impersonate\Models\Impersonate;
+use Laravel\Jetstream\Contracts\AddsTeamMembers;
 use Laravel\Jetstream\HasTeams;
 use Laravel\Jetstream\Jetstream;
 use Laravel\Sanctum\HasApiTokens;
@@ -244,6 +246,35 @@ class User extends Authenticatable implements MustVerifyEmail
         }
 
         return "none";
+    }
+
+    public function applyAcceptedInvitiations()
+    {
+        # are there any remaining invitations that were previously accept?
+        $invitations = TeamInvitation::where('email', $this->email)
+            ->where('accepted', true)
+            ->orderBy('updated_at', 'asc')
+            ->get();
+
+        if ($invitations->count() === 0) {
+            return;
+        }
+
+        foreach ($invitations as $invitation) {
+            app(AddsTeamMembers::class)->add(
+                $invitation->team->owner,
+                $invitation->team,
+                $invitation->email,
+                $invitation->role
+            );
+
+            $invitation->delete();
+
+            $this->switchTeam($invitation->team);
+
+            // update notification count
+            dispatch(new SyncUserToNlpApi($invitation->team->owner, 'high'));
+        }
     }
 
     public function getNotificationCount()

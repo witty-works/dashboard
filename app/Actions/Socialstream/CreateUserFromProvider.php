@@ -47,6 +47,8 @@ class CreateUserFromProvider implements CreatesUserFromProvider
                 $this->createsConnectedAccounts->create($user, $provider, $providerUser);
 
                 SwitchToTeam::ensureTeam($user);
+
+                $user->applyAcceptedInvitiations();
             });
         });
     }
