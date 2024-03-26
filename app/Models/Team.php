@@ -136,9 +136,19 @@ class Team extends JetstreamTeam
         return $this->getTotalUserCount() + $this->teamInvitations()->count();
     }
 
-    public function getUserLicensesLimitReached()
+    public function userLicenses()
     {
-        return $this->getTotalUserWithInvitationsCount() >= $this->getUserLicensesCount();
+        return $this->allUsers()->where('license_team_id', $this->id);
+    }
+
+    public function getUserLicensesLimitReached($invitations = false)
+    {
+        $count = $this->userLicenses()->count();
+        if ($invitations) {
+            $count += $this->teamInvitations()->count();
+        }
+
+        return $count >= $this->getUserLicensesCount();
     }
 
     public function getTermReplacementsCount()

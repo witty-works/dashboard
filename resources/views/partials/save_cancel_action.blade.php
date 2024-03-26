@@ -1,5 +1,4 @@
 <div class="flex flex-row align-middle items-center" role="toolbar" aria-label="Action buttons">
-
     <x-button>
         {{ __('content.save') }}
     </x-button>

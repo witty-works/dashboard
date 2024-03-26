@@ -3,6 +3,18 @@
 use JoelButcher\Socialstream\Features;
 
 return [
+    'prompt' => 'Or Login Via',
+
+    'home' => '/',
+
+    'redirects' => [
+        'login' => '/',
+        'register' => '/',
+        'login-failed' => '/login',
+        'registration-failed' => '/register',
+        'provider-linked' => '/user/profile',
+        'provider-link-failed' => '/user/profile',
+    ],
 
     /*
     |--------------------------------------------------------------------------

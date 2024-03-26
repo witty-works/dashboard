@@ -38,7 +38,7 @@ class PlanSummary extends Component
         $subscription = $this->team->subscription();
         $licenseCount = $subscription
             ? $subscription->quantity
-            : $this->team->getTotalUserWithInvitationsCount();
+            : $this->team->userLicenses()->count();
 
         $this->licenseCount = $this->convertLicenseCountToString($licenseCount);
     }
@@ -49,7 +49,7 @@ class PlanSummary extends Component
             abort(403);
         }
 
-        $requiredLicenses = $this->team->getTotalUserWithInvitationsCount();
+        $requiredLicenses = $this->team->userLicenses()->count();
         $licenseOptions = $this->getLicenseOptions($requiredLicenses);
         if (!isset($licenseOptions[$this->licenseCount])) {
             $message = __('teams.license_count_error');
@@ -86,7 +86,7 @@ class PlanSummary extends Component
      */
     public function render()
     {
-        return view('livewire.teams.plan-summary', ['licenseOptions' => $this->getLicenseOptions($this->team->getTotalUserWithInvitationsCount())]);
+        return view('livewire.teams.plan-summary', ['licenseOptions' => $this->getLicenseOptions($this->team->userLicenses()->count())]);
     }
 
     public function cancel()

@@ -81,7 +81,7 @@
                     <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/user.svg') }}" alt="" />
                     {{ __('content.manage_account') }}
                 </x-nav-link>
-    
+
                 @if(!$team_edit && $team && $team->user_access_to_team_analytics)
                     <div class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" style="cursor: default">
                         <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/analytics.svg') }}" alt="" />
@@ -100,6 +100,7 @@
                     </x-nav-link>
                 @endif
 
+                @if($user->isUserLicensedToTeam($team))
                 @foreach($links as $route => $label)
                 @if($loop->first)
                 <div class="wittyworks-navigation-label-wrapper lato-paragraph-text-p">
@@ -114,6 +115,7 @@
                 @endif
                 @endforeach
                 </div>
+                @endif
             </div>
             @endif
 

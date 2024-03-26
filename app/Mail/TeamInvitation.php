@@ -43,7 +43,7 @@ class TeamInvitation extends Mailable
             'name' => $invitor->name,
             'email' => $invitor->email,
             'team' => $invitor->currentTeam->name,
-            'acceptUrl' => URL::signedRoute('team-invitations.accept-signed', ['invitation' => $this->invitation, 'onboarding' => '1'])
+            'acceptUrl' => URL::signedRoute('team-invitations.accept-signed', ['invitation' => $this->invitation])
         ];
 
         return $this->markdown('emails.team-invitation', $param)
