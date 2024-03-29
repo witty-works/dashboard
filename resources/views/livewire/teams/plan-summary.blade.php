@@ -71,11 +71,10 @@
             </p>
         @endif
 
-        @if($team->subscribed())
+        @if($team->subscribed() && !$team->subscription()->isPaidByInvoice())
             <h3 class="lato-small-paragraph-title-h4 mt-4">
                 {{ __('teams.license_count_label') }}
             </h3>
-        @endif
 
         @if(Auth::user()->ownsTeam($team))
             <div class="wittyworks-license-dropdown-container margin-bottom">
@@ -94,9 +93,10 @@
                 {{ __('teams.to_upgrade_contact_owner') }}
             </p>
         @endif
+        @endif
     </x-slot>
 
-    @if(Auth::user()->ownsTeam($team))
+    @if(Auth::user()->ownsTeam($team) && (!$team->subscription() || !$team->subscription()->isPaidByInvoice()))
         <x-slot name="actions">
             @if($team->subscribed())
             @include('partials/save_cancel_action')
