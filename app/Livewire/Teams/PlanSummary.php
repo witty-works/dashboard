@@ -49,6 +49,11 @@ class PlanSummary extends Component
             abort(403);
         }
 
+        $subscription = $this->team->subscription();
+        if ($subscription && $subscription->isPaidByInvoice()) {
+            abort(403);
+        }
+
         $requiredLicenses = $this->team->userLicenses()->count();
         $licenseOptions = $this->getLicenseOptions($requiredLicenses);
         if (!isset($licenseOptions[$this->licenseCount])) {
@@ -67,7 +72,6 @@ class PlanSummary extends Component
             return $checkOut;
         }
 
-        $subscription = $this->team->subscription();
         if ($subscription->quantity != $licenseCount) {
             $subscription->alwaysInvoice()->updateQuantity($licenseCount);
             $subscription->syncStartRenewalAt();
