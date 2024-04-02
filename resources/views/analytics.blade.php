@@ -767,7 +767,7 @@
         const selectedDropdownValue = eventTypes[0] || (isPremiumUser ? @json($default_event) : 'popover_open');
         const eventTypeDropdownTopCategories = document.getElementById("eventTypeDropdownTopCategories");
         eventTypeDropdownTopCategories.innerHTML = `
-            <select id="eventTypeTopCategories" class="dropdown" onchange="setParams([this.value])">
+            <select id="eventTypeTopCategories" class="dropdown" onchange="setParams([this?.value])">
                 ${getOptionsHtml(isPremiumUser)}
             </select>`;
 
@@ -944,7 +944,7 @@
         const selectedDropdownValue = eventTypes[0] || (isPremiumUser ? @json($default_event) : 'popover_open');
         const eventTypeDropdownTopWords = document.getElementById("eventTypeDropdownTopWords");
         eventTypeDropdownTopWords.innerHTML = `
-            <select id="eventTypeTopWords" class="dropdown" onchange="setParams([this.value])">
+            <select id="eventTypeTopWords" class="dropdown" onchange="setParams([this?.value])">
                 ${getOptionsHtml(isPremiumUser)}
             </select>`;
         updateDropdown("eventTypeTopWords", selectedDropdownValue);
@@ -1189,7 +1189,7 @@ document.addEventListener("DOMContentLoaded", function() {
     let ckkBoxes = document.querySelectorAll('.ckkBox');
     for (let j = 0; j < ckkBoxes.length; j++) {
         ckkBoxes[j].addEventListener('change', function() {
-            if (this.value === 'all_categories') {
+            if (this?.value === 'all_categories') {
                 const checkboxes = this.parentElement.parentElement.querySelectorAll('.ckkBox');
                 for (let m = 0; m < checkboxes.length; m++) {
                     checkboxes[m].checked = this.checked;
