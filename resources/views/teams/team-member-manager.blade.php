@@ -203,14 +203,26 @@
                             <div class="flex items-center">
                                 <div class="ml-4">
                                     <a href="mailto:{{ $user->email }}">{{ $user->name }}</a>
-                                    @if ($user->licenseTeam)
-                                        @if ($user->isUserLicensedToTeam($team))
-                                            ({{ __('teams.active_license') }})
-                                        @else
-                                        ({{ __('teams.active_license_on_team', ['team_name' => $user->licenseTeam->name]) }})
-                                        @endif
+
+                                    @php
+                                        if ($user->licenseTeam) {
+                                            if ($user->isUserLicensedToTeam($team)) {
+                                                $label = __('teams.active_license');
+                                            } else {
+                                                $label = __('teams.active_license_on_team', ['team_name' => $user->licenseTeam->name]);
+                                            }
+                                        } else {
+                                            $label =  __('teams.no_active_license');
+                                        }
+                                    @endphp
+                                    @if (Gate::check('update', $team))
+                                    <a href="{{ route('teams.subscription') }}#license" class="ml-2 text-sm text-gray-400 underline">
+                                        {{ $label }}
+                                    </a>
                                     @else
-                                        ({{ __('teams.no_active_license') }})
+                                    <span class="ml-2 text-sm text-gray-400">
+                                        {{ $label }}
+                                    </span>
                                     @endif
                                 </div>
                             </div>
