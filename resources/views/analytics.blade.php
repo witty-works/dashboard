@@ -461,7 +461,7 @@
                                     if (previousPeriodPopoverOpened[currentLabel]) {
                                         const diff = currentValue - previousPeriodPopoverOpened[currentLabel];
                                         const percentage = (diff / previousPeriodPopoverOpened[currentLabel] * 100).toFixed(0);
-                                        if (percentage == 0) return '+ 100 %';
+                                        if (percentage == 0)  return '+ 0 %';
                                         return percentage >= 0 ? '+' + percentage + '%' : percentage + '%';
                                     } else {
                                         return '+ 100 %';
