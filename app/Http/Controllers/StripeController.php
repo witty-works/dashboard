@@ -95,4 +95,10 @@ class StripeController extends Controller
 
         return $team->redirectToCheckout();
     }
+
+
+    public function subscriptions()
+    {
+        return view('subscriptions');
+    }
 }
