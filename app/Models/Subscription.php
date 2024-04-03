@@ -18,6 +18,10 @@ class Subscription extends CashierSubscription
 
     public function syncStartRenewalAt()
     {
+        if ($this->isPaidByInvoice()) {
+            return;
+        }
+
         $stripeSubscription = $this->asStripeSubscription();
 
         if ($stripeSubscription) {
@@ -60,6 +64,6 @@ class Subscription extends CashierSubscription
 
     public function isPaidByInvoice()
     {
-        return strpos($this->stripe_id, 'invoice') === 0;
+        return strpos($this->stripe_id, 'sub_') !== 0;
     }
 }
