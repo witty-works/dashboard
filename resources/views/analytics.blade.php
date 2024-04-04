@@ -767,7 +767,7 @@
         const selectedDropdownValue = eventTypes[0] || (isPremiumUser ? @json($default_event) : 'popover_open');
         const eventTypeDropdownTopCategories = document.getElementById("eventTypeDropdownTopCategories");
         eventTypeDropdownTopCategories.innerHTML = `
-            <select id="eventTypeTopCategories" class="dropdown" onchange="setParams([this.value])">
+            <select id="eventTypeTopCategories" class="dropdown" onchange="setParams([this?.value])">
                 ${getOptionsHtml(isPremiumUser)}
             </select>`;
 
@@ -944,7 +944,7 @@
         const selectedDropdownValue = eventTypes[0] || (isPremiumUser ? @json($default_event) : 'popover_open');
         const eventTypeDropdownTopWords = document.getElementById("eventTypeDropdownTopWords");
         eventTypeDropdownTopWords.innerHTML = `
-            <select id="eventTypeTopWords" class="dropdown" onchange="setParams([this.value])">
+            <select id="eventTypeTopWords" class="dropdown" onchange="setParams([this?.value])">
                 ${getOptionsHtml(isPremiumUser)}
             </select>`;
         updateDropdown("eventTypeTopWords", selectedDropdownValue);
@@ -1055,7 +1055,7 @@ function updateDropdown(dropdownId, dropdownValue) {
     if (!dropdown) return;
     const dropdownOptions = dropdown.options;
     for (let i = 0; i < dropdownOptions.length; i++) {
-        if (dropdownOptions[i].value == dropdownValue) {
+        if (dropdownOptions[i]?.value == dropdownValue) {
             dropdownOptions[i].selected = true;
         }
     }
@@ -1093,9 +1093,9 @@ function setParams(eventTypes = null) {
     const languageDropdown = document.getElementById("languageDropdown");
     const inclusiveDropdown = document.getElementById("inclusiveDropdown");
 
-    const selectedTimeRangeOption = timeRangeDropdown.options[timeRangeDropdown.selectedIndex].value;
-    const selectedLanguageOption = languageDropdown.options[languageDropdown.selectedIndex].value;
-    const selectedInclusiveOption = inclusiveDropdown.options[inclusiveDropdown.selectedIndex].value;
+    const selectedTimeRangeOption = timeRangeDropdown.options[timeRangeDropdown.selectedIndex]?.value;
+    const selectedLanguageOption = languageDropdown.options[languageDropdown.selectedIndex]?.value;
+    const selectedInclusiveOption = inclusiveDropdown.options[inclusiveDropdown.selectedIndex]?.value;
 
     const interval = selectedTimeRangeOption == '1y' ? 'month' : 'week';
     load_charts(false, activeTab, selectedTimeRangeOption, interval, selectedLanguageOption, categories, selectedInclusiveOption, eventTypes);
@@ -1189,7 +1189,7 @@ document.addEventListener("DOMContentLoaded", function() {
     let ckkBoxes = document.querySelectorAll('.ckkBox');
     for (let j = 0; j < ckkBoxes.length; j++) {
         ckkBoxes[j].addEventListener('change', function() {
-            if (this.value === 'all_categories') {
+            if (this?.value === 'all_categories') {
                 const checkboxes = this.parentElement.parentElement.querySelectorAll('.ckkBox');
                 for (let m = 0; m < checkboxes.length; m++) {
                     checkboxes[m].checked = this.checked;
@@ -1205,7 +1205,7 @@ function getSelectedCategories () {
     const selectedCategories = [];
     for (let i = 0; i < checkboxes.length; i++) {
         if (checkboxes[i].checked) {
-            selectedCategories.push(checkboxes[i].value);
+            selectedCategories.push(checkboxes[i]?.value);
         }
     }
     return selectedCategories;
