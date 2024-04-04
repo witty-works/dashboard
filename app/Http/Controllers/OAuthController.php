@@ -240,7 +240,7 @@ class OAuthController extends BaseOAuthController
             return $this->handleOfficeSsoRegister($request);
         }
 
-        return $this->loginUser($user, self::OFFICE_PROVIDER);
+        return $this->loginUser($user);
     }
 
     public function handleProviderCallback(Request $request, string $provider, ResolvesSocialiteUsers $resolver, $policy = 'login')
@@ -295,6 +295,7 @@ class OAuthController extends BaseOAuthController
                 $this->createsConnectedAccounts->create($user, $provider, $providerAccount);
             } else {
                 $user = $this->createsUser->create($provider, $providerAccount);
+                $userData['source'] = $provider;
                 $userData['hubspotutk'] = $request->cookie('hubspotutk');
             }
 
@@ -431,10 +432,10 @@ class OAuthController extends BaseOAuthController
         return redirect(config('fortify.home'));
     }
 
-    protected function loginUser(Authenticatable $user, string $source): SocialstreamResponse
+    protected function loginUser(Authenticatable $user): SocialstreamResponse
     {
         $this->guard->login($user, Socialstream::hasRememberSessionFeatures());
-        request()->session()->put('login_source', $source);
+        request()->session()->put('login_source', $user->source);
 
         return app(OAuthLoginResponse::class);
     }

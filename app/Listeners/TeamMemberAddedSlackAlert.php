@@ -17,7 +17,7 @@ class TeamMemberAddedSlackAlert
                 $event->team->name,
                 $event->team->owner->email,
                 $event->team->getTotalUserCount(),
-                $event->user->getSignupSource(),
+                $event->user->source,
             );
 
             SlackAlert::message(getenv('PLATFORM_ENVIRONMENT') . $message);

@@ -139,6 +139,13 @@ Route::group(
                     Route::get('/team/language/ignored-words', [OrganizationGuidelinesController::class, 'falsePositives'])->name('teams.ignored-words');
                     Route::get('/team/language/privacy-settings', [OrganizationGuidelinesController::class, 'domains'])->name('teams.privacy-settings');
                     Route::get('/team/analytics', [AnalyticsController::class, 'organization'])->name('teams.analytics');
+
+                    $prefix = config('lumki.prefix') ?? "lumki";
+                    $lumkiPermission = config('lumki.lumkiPermission') ?? "manage users";
+                    $middleware = config('lumki.middleware') ?? ["auth:sanctum","web","can:$lumkiPermission"];
+                    Route::prefix($prefix)->middleware($middleware)->group(function () {
+                        Route::get('/subscriptions', [StripeController::class, 'subscriptions'])->name('subscriptions');
+                    });
                 }
             });
         });

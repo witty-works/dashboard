@@ -1,9 +1,11 @@
 <x-form-section submit="updateLicenses">
     <x-slot name="title">
+        <span id="license">
         {{ __('teams.list_licenses', [
             'license_count' => $team->getUserLicensesCount(),
             'assigned_count' => $assignedCount
         ]) }}
+        </span>
     </x-slot>
 
     <x-slot name="description">

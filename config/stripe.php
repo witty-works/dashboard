@@ -3,7 +3,7 @@
 use App\Models\LanguageGuidelines;
 
 return [
-
+    'subscription_url' => env('STRIPE_SUBSCRIPTION_URL', 'https://dashboard.stripe.com/subscriptions'),
     'currency' => 'USD',
     'plans' => [
         'witty_free' => [

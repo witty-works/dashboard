@@ -18,6 +18,10 @@ class Subscription extends CashierSubscription
 
     public function syncStartRenewalAt()
     {
+        if ($this->isPaidByInvoice()) {
+            return;
+        }
+
         $stripeSubscription = $this->asStripeSubscription();
 
         if ($stripeSubscription) {
@@ -33,7 +37,7 @@ class Subscription extends CashierSubscription
 
     public function planId()
     {
-        if (!$this->stripe_price) {
+        if (!$this->stripe_price || !$this->valid()) {
             return 'witty_free';
         }
 
@@ -51,6 +55,8 @@ class Subscription extends CashierSubscription
                 return $planName;
             }
         }
+
+        return 'witty_' . $this->stripe_price;
     }
 
     public function planName()
@@ -60,6 +66,6 @@ class Subscription extends CashierSubscription
 
     public function isPaidByInvoice()
     {
-        return strpos($this->stripe_id, 'invoice') === 0;
+        return strpos($this->stripe_id, 'sub_') !== 0;
     }
 }
