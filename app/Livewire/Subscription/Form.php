@@ -29,7 +29,6 @@ class Form extends Component
         '',
         'teams',
         'enterprise',
-        'price_1Kl7JnCKySiDI8CQEbY6vN2H',
     ];
 
     public $subscription_id;

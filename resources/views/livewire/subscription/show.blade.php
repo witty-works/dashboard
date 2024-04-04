@@ -27,7 +27,7 @@
             @foreach ($list as $subscription)
             <tr @if($loop->even)class="bg-grey"@endif>
                 <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $subscription->owner->name }}</td>
-                <td class="border px-4 py-2 text-left lato-paragraph-text-p"><a href="{{ route('impersonate', $subscription->owner->owner->id) }}">{{ $subscription->owner->owner->name }}</a></td>
+                <td class="border px-4 py-2 text-left lato-paragraph-text-p"><a href="{{ route('impersonate', $subscription->owner->owner->id) }}">{{ $subscription->owner->owner->email }}</a></td>
                 <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $subscription->quantity }}</td>
                 <td class="border px-4 py-2 text-left lato-paragraph-text-p">
                     @if (empty($stripe_prices[$subscription->stripe_price]))

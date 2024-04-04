@@ -16,7 +16,7 @@
                     type="hidden"
                     wire:model="subscription_id" />
 
-            <x-label for="team_id" value="Team ID" />
+            <x-label for="team_id" value="Team ID *" />
             <x-input id="team_id"
                 type="text"
                 class="mt-1 block w-full"
@@ -27,7 +27,7 @@
         </div>
 
         <div class="w-full col-span-6 sm:col-span-4 mt-5">
-            <x-label for="stripe_price" value="Plan" />
+            <x-label for="stripe_price" value="Plan *" />
             <x-select id="stripe_price"
                 :options="$prices"
                 class="mt-1 block w-full"
@@ -37,7 +37,7 @@
         </div>
 
         <div class="w-full col-span-6 sm:col-span-4 mt-5">
-            <x-label for="stripe_status" value="Status" />
+            <x-label for="stripe_status" value="Status *" />
             <x-select id="stripe_status"
                       :options="$status"
                       class="mt-1 block w-full"
@@ -46,7 +46,7 @@
         </div>
 
         <div class="w-full col-span-6 sm:col-span-4 mt-5">
-            <x-label id="quantity_label" for="quantity" value="Quantity" />
+            <x-label id="quantity_label" for="quantity" value="Quantity *" />
             <x-input id="quantity"
                 type="text"
                 class="mt-1 block w-full textarea-as-input"
@@ -55,7 +55,7 @@
         </div>
 
         <div class="w-full col-span-6 sm:col-span-4 mt-5">
-            <x-label for="starts_at" value="Starts at" />
+            <x-label for="starts_at" value="Starts at *" />
             <x-input id="starts_at"
                 type="date"
                 class="mt-1 block w-full"
