@@ -73,7 +73,7 @@
         </div>
 
         <div class="w-full col-span-6 sm:col-span-4 mt-5">
-            <x-label for="trial_ends_at" value="Trail ends at" />
+            <x-label for="trial_ends_at" value="Trial ends at" />
             <x-input id="trial_ends_at"
                 type="date"
                 class="mt-1 block w-full"
