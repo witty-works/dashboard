@@ -615,9 +615,7 @@
                 updateSection()
             }, 30000);
 
-            setElementStyle('llastRefresh', 'visibility', 'visible');
-
-            const aggregatedCheckChatData =  formatChartLabels(xValuesPopoverOpen, yValuesCheck, interval);
+            setElementStyle('lastRefresh', 'visibility', 'visible');
             const aggregatedPopoverOpenData = formatChartLabels(xValuesPopoverOpen, yValuesPopoverOpen, interval)[1];
             const aggregatedAlternativeData = formatChartLabels(xValuesPopoverOpen, yValuesAlternative, interval)[1];
             const aggregatedIgnoreData = formatChartLabels(xValuesPopoverOpen, yValuesIgnore, interval)[1];
@@ -675,10 +673,10 @@
 
 
                 ctx = document.getElementById('eventsChart').getContext('2d');
-                new Chart(ctx, {
+                const overviewChart = new Chart(ctx, {
                     type: "line",
                     data: {
-                        labels: aggregatedCheckChatData[0],
+                        labels: formatChartLabels(xValuesPopoverOpen, null, interval)[0],
                         datasets: datasetsOverview,
                     },
                     options: {
@@ -732,10 +730,10 @@
                         maintainAspectRatio: false,
                         responsive: true,
                         title: {
-                        display: true,
-                        text:  @json(__('content.analytic_overview')),
-                        fontSize: 16,
-                        fontStyle: 'normal'
+                            display: true,
+                            text:  @json(__('content.analytic_overview')),
+                            fontSize: 16,
+                            fontStyle: 'normal'
                         },
                         scales:{
                             yAxes: [{
@@ -755,6 +753,9 @@
                             }
                         },
                     }
+                });
+                window.addEventListener('resize', function() {
+                    overviewChart.data.labels = formatChartLabels(xValuesPopoverOpen, null, interval)[0];
                 });
             }
         setElementStyle('loading-icon-overview', 'display', 'none');
