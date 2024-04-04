@@ -55,6 +55,8 @@ class Subscription extends CashierSubscription
                 return $planName;
             }
         }
+
+        return 'witty_' . $this->stripe_price;
     }
 
     public function planName()
