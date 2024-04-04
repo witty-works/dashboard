@@ -1055,7 +1055,7 @@ function updateDropdown(dropdownId, dropdownValue) {
     if (!dropdown) return;
     const dropdownOptions = dropdown.options;
     for (let i = 0; i < dropdownOptions.length; i++) {
-        if (dropdownOptions[i].value == dropdownValue) {
+        if (dropdownOptions[i]?.value == dropdownValue) {
             dropdownOptions[i].selected = true;
         }
     }
@@ -1093,9 +1093,9 @@ function setParams(eventTypes = null) {
     const languageDropdown = document.getElementById("languageDropdown");
     const inclusiveDropdown = document.getElementById("inclusiveDropdown");
 
-    const selectedTimeRangeOption = timeRangeDropdown.options[timeRangeDropdown.selectedIndex].value;
-    const selectedLanguageOption = languageDropdown.options[languageDropdown.selectedIndex].value;
-    const selectedInclusiveOption = inclusiveDropdown.options[inclusiveDropdown.selectedIndex].value;
+    const selectedTimeRangeOption = timeRangeDropdown.options[timeRangeDropdown.selectedIndex]?.value;
+    const selectedLanguageOption = languageDropdown.options[languageDropdown.selectedIndex]?.value;
+    const selectedInclusiveOption = inclusiveDropdown.options[inclusiveDropdown.selectedIndex]?.value;
 
     const interval = selectedTimeRangeOption == '1y' ? 'month' : 'week';
     load_charts(false, activeTab, selectedTimeRangeOption, interval, selectedLanguageOption, categories, selectedInclusiveOption, eventTypes);
@@ -1205,7 +1205,7 @@ function getSelectedCategories () {
     const selectedCategories = [];
     for (let i = 0; i < checkboxes.length; i++) {
         if (checkboxes[i].checked) {
-            selectedCategories.push(checkboxes[i].value);
+            selectedCategories.push(checkboxes[i]?.value);
         }
     }
     return selectedCategories;
