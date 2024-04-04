@@ -1,7 +1,7 @@
 <x-list-section>
     @if($list->count())
     <x-slot name="title">
-        Subcriptions
+        Subscriptions
     </x-slot>
 
     <x-slot name="description">
@@ -19,7 +19,7 @@
                     <th class="py-2 lato-paragraph-text-p">Status</th>
                     <th class="py-2 lato-paragraph-text-p">Starts at</th>
                     <th class="py-2 lato-paragraph-text-p">Ends at</th>
-                    <th class="py-2 lato-paragraph-text-p">Trail ends at</th>
+                    <th class="py-2 lato-paragraph-text-p">Trial ends at</th>
                     <th class="py-2 lato-paragraph-text-p">Actions</th>
                 </tr>
             </thead>
