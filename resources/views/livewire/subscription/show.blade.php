@@ -37,9 +37,9 @@
                     @endif
                 </td>
                 <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $subscription->stripe_status }}</td>
-                <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $subscription->starts_at->format('Y-m-d') }}</td>
-                <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $subscription->ends_at ? $subscription->ends_at->format('Y-m-d'): 'none' }}</td>
-                <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $subscription->trial_ends_at ? $subscription->trial_ends_at->format('Y-m-d'): 'none' }}</td>
+                <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $subscription->starts_at ? $subscription->starts_at->format('Y-m-d') : 'none' }}</td>
+                <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $subscription->ends_at ? $subscription->ends_at->format('Y-m-d') : 'none' }}</td>
+                <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $subscription->trial_ends_at ? $subscription->trial_ends_at->format('Y-m-d') : 'none' }}</td>
                 <td class="border px-4 py-2 text-center container-row">
                     @if (empty($stripe_prices[$subscription->stripe_price]))
                     <button onclick="document.getElementById('organization_subscriptions')?.scrollIntoView({behavior: 'smooth'});" wire:click="editSubscription({{ $subscription->id }})" class="button primary-button-red ">
