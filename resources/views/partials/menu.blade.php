@@ -160,10 +160,13 @@
             <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/bulb.svg') }}" alt="" />
             {{ __('content.academy') }}
         </x-nav-link>
+
+        @if (Session::get('login_source') !== \App\Http\Controllers\OAuthController::OFFICE_PROVIDER)
         <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('logout', ['provider' => 'azureadb2c']) }}">
             <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/logout.svg') }}" alt="" />
             {{ __('content.log_out') }}
         </x-nav-link>
+        @endif
         <div class="wittyworks-navigation-username lato-small-text-p">
             {{ $user->name }}
         </div>
