@@ -254,6 +254,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/locale/de.js" rossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
+    moment.locale(@json(app()->getLocale()))
     const isPremiumUser = @json($is_premium_user);
     let topSubChart;
     const setElementStyle = (elementId, property, value) => {
