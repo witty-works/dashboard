@@ -24,6 +24,16 @@ if ($user) {
 @include('partials.extension-check')
 @endif
 
+@if(!Route::is('teams.subscription'))
+    @if($team->hasExpiredGenericTrial())
+        @include('partials.trial-ended', ['user' => $user])
+    @elseif($team->onGenericTrial())
+        @include('partials.on-trial', ['user' => $user])
+    @elseif($team->subscribed() && $team->subscription()->ended())
+        @include('partials.subscription-ended', ['user' => $user])
+    @endif
+@endif
+
 @if($showInvitations)
 @include('partials.invitations', ['user' => $user])
 @elseif($showInvitationRequests && !Route::is('teams.show'))

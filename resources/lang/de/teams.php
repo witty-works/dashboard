@@ -13,7 +13,7 @@ return [
     'user_licenses' => 'Benutzer*innen',
     'term_replacements' => 'Team-Wörterbuch',
     'false_positives' => 'Ignorierte Wörter deines Teams',
-    'more_licenses' => 'Wenn du weitere Lizenzen erwerben möchtest, <a href=":url">wende</a> dich bitte an Witty Works.',
+    'more_licenses' => 'Wenn du weitere Lizenzen erwerben möchtest, <a href="mailto:support@witty.works">wende</a> dich bitte an Witty Works.',
     'what_is_included' => 'Aboausnutzung',
     'user_limit_reached_error' => 'Alle Lizenzen wurden vergeben. Neue Teammitgliedern können keine Lizenz automatisch zugewiesen wiesen werden.',
     'pricing' => 'Preise',
@@ -50,4 +50,7 @@ return [
     'active_license_on_team' => 'mit Lizenz in :team_name',
     'no_more_licenses_available' => 'Alle Lizenzen sind bereits vergeben',
     'pending_user_limit_reached_error' => 'Du hast bereits für alle Lizenzen Einladungen verschickt. Wenn du zusätzliche Personen ins Team einlädst, erhalten diese keine Lizenz.',
+    'trial_has_ended' => 'Deine Testphase endete am ',
+    'trail_end_date' => 'Deine Testphase endet am ',
+    'subscription_has_ended' => 'Dein Abonnement endete am ',
 ];

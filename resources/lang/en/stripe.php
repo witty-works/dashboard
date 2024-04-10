@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'witty_free' => 'Witty Free',
+    'witty_free' => 'Witty Free Trial',
     'witty_teams' => 'Witty Teams',
     'witty_enterprise' => 'Witty Enterprise',
     'billing' => 'Go to billing portal',

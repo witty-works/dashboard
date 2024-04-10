@@ -25,7 +25,7 @@ return [
     'user_limit_reached_error' => 'All licenses have been assigned. New team members will not get a license assigned automatically.',
     'pending_user_limit_reached_error' => 'You have already sent out invitations for all licenses. If you invite additional people to the team, they will not receive a license automatically.',
     'license_limit_reached_error' => 'Only :license_count licenses available. Please reduce the :assigned_count assigned licenses accordingly.',
-    'end_date' => 'Your plan end on ',
+    'end_date' => 'Your plan ends on ',
     'team_owner' => 'Team owner',
     'upgrade_to_witty_teams' => 'Please upgrade to a Witty Teams subscription',
     'ask_owner_to_buy_or_leave_to_create_own_team' => 'Please ask the team owner :name (:email) to buy Witty licenses or leave your current team to create own team.',
@@ -49,4 +49,7 @@ return [
     'no_active_license' => 'Unlicensed',
     'active_license_on_team' => 'Licensed on team ":team_name"',
     'no_more_licenses_available' => 'All licenses have already been assigned',
+    'trial_has_ended' => 'Your trial has ended on ',
+    'trail_end_date' => 'Your trail will end at ',
+    'subscription_has_ended' => 'Your subscription has ended on ',
 ];

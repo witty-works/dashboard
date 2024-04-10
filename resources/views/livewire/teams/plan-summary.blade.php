@@ -12,12 +12,24 @@
             {{ __('teams.plan_name') }}
         </x-label>
         <p class="lato-small-text-p margin-bottom">
-            {{ $team->subscribed() ? $team->subscription()->planName() : __('stripe.witty_free') }}
+            {{ __('stripe.'.$team->planId()) }}
         </p>
 
         <!-- Subscription Details -->
-        @if($team->subscribed())
-            @if($team->subscription()->ends_at)
+        @if($team->hasExpiredGenericTrial())
+            <p class="lato-small-text-p margin-bottom">
+                {{ __('teams.trial_has_ended') }} {{ $team->trial_ends_at->toFormattedDateString() }}.
+            </p>
+        @elseif($team->onGenericTrial())
+            <p class="lato-small-text-p margin-bottom">
+                {{ __('teams.trail_end_date') }} {{ $team->trial_ends_at->toFormattedDateString() }}.
+            </p>
+        @elseif($team->subscribed())
+            @if($team->subscription()->ended())
+                <p class="lato-small-text-p margin-bottom">
+                    {{ __('teams.subscription_has_ended') }} {{ $team->ends_at->toFormattedDateString() }}.
+                </p>
+            @elseif($team->subscription()->ends_at)
                 <p class="lato-small-text-p margin-bottom">
                     {{ __('teams.end_date') }} {{ $team->subscription()->ends_at->toFormattedDateString() }}.
                 </p>
@@ -33,7 +45,7 @@
             {{ __('teams.team_owner') }}
         </x-label>
         <p class="lato-small-text-p margin-bottom">
-            {{ $team->owner->name }} 
+            {{ $team->owner->name }}
             (<a href="mailto:{{ $team->owner->email }}" aria-label="Email {{ $team->owner->name }}">
                 {{ $team->owner->email }}
             </a>)
@@ -105,8 +117,10 @@
                 <x-button>
                     {{ __('content.subscribe') }}
                 </x-button>
+
+                {!! __('content.pricing') !!}
             </div>
-            @endif
+        @endif
         </x-slot>
     @endif
 </x-form-section>

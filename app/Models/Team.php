@@ -13,10 +13,7 @@ use Laravel\Cashier\Billable;
 class Team extends JetstreamTeam
 {
     use HasFactory;
-    use Billable {
-        subscribed as protected parentSubscribed;
-        subscription as protected parentSubscription;
-    }
+    use Billable;
     use GuidelinesTrait;
 
     /**
@@ -55,16 +52,6 @@ class Team extends JetstreamTeam
     public function setNameAttribute($name)
     {
         $this->attributes['name'] = strip_tags($name);
-    }
-
-    public function subscribed($type = 'witty', $price = null)
-    {
-        return $this->parentSubscribed($type, $price);
-    }
-
-    public function subscription($type = 'witty')
-    {
-        return $this->parentSubscription($type);
     }
 
     public function stripeEmail()
@@ -114,7 +101,7 @@ class Team extends JetstreamTeam
             return $this->subscription()->quantity;
         }
 
-        return $this->user_licenses ?? config('stripe.plans.witty_free.features.invite_smaller_teams.count');
+        return config('stripe.plans.' . $this->planId(true) . '.features.invite_smaller_teams.count');
     }
 
     public function allUsers()
@@ -154,27 +141,24 @@ class Team extends JetstreamTeam
     public function getTermReplacementsCount()
     {
         $key = '.features.organization_term_replacements.count';
-        if ($this->subscribed() && $this->term_replacements === null) {
-            return config('stripe.plans.' . $this->planId() . $key);
-        }
-
-        return $this->term_replacements ?? config('stripe.plans.witty_free' . $key);
+        return config('stripe.plans.' . $this->planId(true) . $key);
     }
 
     public function getFalsePositivesCount()
     {
         $key = '.features.organization_false_positives.count';
-        if ($this->subscribed() && $this->false_positives === null) {
-            return config('stripe.plans.' . $this->planId() . $key);
-        }
-
-        return $this->false_positives ?? config('stripe.plans.witty_free' . $key);
+        return config('stripe.plans.' . $this->planId(true) . $key);
     }
 
-    public function planId()
+    public function planId($featurePlan = false)
     {
+        if ($this->onGenericTrial()) {
+            // Teams on the trial get "Witty Teams" features
+            return $featurePlan ? 'witty_teams' : 'witty_free';
+        }
+
         if (!$this->subscribed()) {
-            return 'witty_free';
+            return null;
         }
 
         return $this->subscription()->planId();

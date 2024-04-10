@@ -36,6 +36,7 @@ return [
                 'permissions' => [],
                 'advanced_team_analytics' => [],
                 'control_data_sharing' => [],
+                'invite_smaller_teams' => ['count' => 10],
                 'user_false_positives' => ['count' => 25],
                 'user_term_replacements' => ['count' => 50],
                 'organization_false_positives' => ['count' => 25],
