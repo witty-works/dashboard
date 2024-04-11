@@ -15,8 +15,10 @@
                                 <thead>
                                   <tr>
                                     <th>Name</th>
-                                    <th>Plan</th>
+                                    <th>User License</th>
+                                    <th>Team Plan</th>
                                     <th>Licenses</th>
+                                    <th>Trial Ends At</th>
                                     <th>Roles</th>
                                     <th>Actions</th>
                                   </tr>
@@ -26,6 +28,9 @@
                                 <tr>
                                     <td class="p-2">
                                         <a href="mailto:{{ $user->email }}">{{ $user->name }}</a>
+                                    </td>
+                                    <td class="p-2">
+                                        {{ $user->subscribed() ? 'yes' : 'no' }}
                                     </td>
                                     <td class="p-2">
                                         @if($user->currentTeam && $user->currentteam->subscribed())
@@ -41,6 +46,11 @@
                                             {{ ($user->currentTeam->owner->id === $user->id ? 'Owner, ' : '') }}
                                             {{ __('teams.total_of_max_used_licenses', ['total' => $user->currentTeam->getTotalUserWithInvitationsCount(), 'max_count' => $user->currentTeam->getUserLicensesCount()]) }}
                                             )
+                                        @endif
+                                    </td>
+                                    <td class="p-2">
+                                        @if($user->currentTeam)
+                                            {{  $user->currentTeam->trial_ends_at ? $user->currentTeam->trial_ends_at->format('Y-m-d') : '' }}
                                         @endif
                                     </td>
                                     <td class="p-2">
