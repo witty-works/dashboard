@@ -7,7 +7,7 @@
 
         @include('partials/gtm-header')
 
-        <title>{{ $pagetitle ?? config('app.name') }}</title>
+        <title>{{ $pagetitle ? str_replace('&shy;', '', $pagetitle) : config('app.name') }}</title>
 
         <!-- Fonts -->
         @googlefonts('lato')
