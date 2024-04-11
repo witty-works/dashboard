@@ -3,7 +3,6 @@
 namespace App\Http\Middleware;
 
 use App\Models\Team;
-use App\Models\TeamInvitation;
 use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;

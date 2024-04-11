@@ -9,6 +9,8 @@ class UserAddedSlackAlert
 {
     public function handle(UserEvent $event)
     {
+        $event->user->refresh();
+
         $message = sprintf(
             " - A new user was added %s via %s",
             $event->user->email,
