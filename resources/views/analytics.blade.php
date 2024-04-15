@@ -157,7 +157,7 @@
                 <div class="container-row wittyworks-margin-right">
                     <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.event_type') }}</div>
                     <div id="eventTypeDropdownTopCategories"></div>
-                </div> 
+                </div>
                 <div id="loading-icon-top-categories" class="loading-icon-wrapper"  style="width: 100%">
                     <div class="lds-grid">
                         <div></div>
@@ -198,7 +198,7 @@
                 <div class="container-row wittyworks-margin-right">
                     <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.event_type') }}</div>
                     <div id="eventTypeDropdownTopWords"></div>
-                </div> 
+                </div>
                 <div id="loading-icon-top-words" class="loading-icon-wrapper" style="width: 100%">
                     <div class="lds-grid">
                         <div></div>
@@ -552,14 +552,14 @@
             handleNoData('loading-icon-overview', 'overview-no-data', '', true);
             return;
         }
-        const showCheckHighlights= isPremiumUser && 
+        const showCheckHighlights= isPremiumUser &&
             @json($default_event) !== 'popover_open' &&
-            data.events?.check_highlights &&  
+            data.events?.check_highlights &&
             Object.entries(data.events.check_highlights).filter(([key, value]) => value > 0).length > 0 //could adjust this to a min amount of check highlights
         
         if (
             (!isPremiumUser && !data.events?.popover_open) ||
-            (!showCheckHighlights&& !data.events?.popover_open) ||            
+            (!showCheckHighlights&& !data.events?.popover_open) ||
             (!isPremiumUser && Object.entries(data.events?.popover_open).filter(([key, value]) => value > 0).length == 0) ||
             (!showCheckHighlights&& Object.entries(data.events?.popover_open).filter(([key, value]) => value > 0).length == 0)) {
             handleNoData('loading-icon-overview', 'overview-no-data', '', false);
@@ -661,11 +661,11 @@
                             data: aggregatedCheckResultData,
                             borderColor: colors[0],
                             fill: false,
-                            label: @json(__('content.check_highlights_label_line_chart')) + 
-                                (!isPremiumUser 
-                                ? ' ({{ __('teams.witty_teams_only') }})' 
+                            label: @json(__('content.check_highlights_label_line_chart')) +
+                                (!isPremiumUser
+                                ? ' ({{ __('teams.witty_teams_only') }})'
                                 : !showCheckHighlights
-                                ? ' ({{ __('teams.not_enough_data_to_display') }})' 
+                                ? ' ({{ __('teams.not_enough_data_to_display') }})'
                                 : ''),
                             hidden: !showCheckHighlights,
                         }
@@ -874,7 +874,7 @@
                         onClick: function(e, legendItem) {
                             const index = legendItem.datasetIndex;
                             topSubChart.data.datasets[index].hidden = !topSubChart.data.datasets[index].hidden;
-                            topSubChart.update();                        
+                            topSubChart.update();
                         },
                         labels: {
                             usePointStyle: true,
@@ -960,8 +960,6 @@
             handleNoData('loading-icon-top-words', 'top-words-no-data', 'topWords', false);
             return;
         }
-
-
 
         const events = data.events[eventTypes[0]] || {};
         for (const [key, value] of Object.entries(events)) {
