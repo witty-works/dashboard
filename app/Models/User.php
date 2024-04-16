@@ -220,21 +220,13 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getTermReplacementsCount()
     {
         $key = '.features.user_term_replacements.count';
-        if ($this->subscribed() && $this->term_replacements === null) {
-            return config('stripe.plans.' . $this->currentTeam->planId() . $key);
-        }
-
-        return $this->term_replacements ?? config('stripe.plans.witty_free' . $key);
+        return config('stripe.plans.' . $this->currentTeam->planId(true) . $key);
     }
 
     public function getFalsePositivesCount()
     {
         $key = '.features.user_false_positives.count';
-        if ($this->subscribed() && $this->false_positives === null) {
-            return config('stripe.plans.' . $this->currentTeam->planId() . $key);
-        }
-
-        return $this->false_positives ?? config('stripe.plans.witty_free' . $key);
+        return config('stripe.plans.' . $this->currentTeam->planId(true) . $key);
     }
 
     public function planId()

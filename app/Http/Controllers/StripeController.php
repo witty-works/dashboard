@@ -25,6 +25,10 @@ class StripeController extends Controller
             sleep(3);
         }
 
+        if (app('impersonate')->isImpersonating() && $request->get('trial_ends_at')) {
+            $team->trial_ends_at = $request->get('trial_ends_at');
+            $team->save();
+        }
 
         if (!$request->user()->hasTeamPermission($team, 'edit_guidelines')) {
             return redirect(route('profile.show'));

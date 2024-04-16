@@ -1,0 +1,15 @@
+<div class="wittyworks-upgrade-banner" id="wittyworks-upgrade-banner">
+    <div>
+        <div class="wittyworks-upgrade-banner-title">
+            {!! __('content.subscription-ended_title') !!}
+        </div>
+        <div class="wittyworks-upgrade-banner-text">
+            {!! __('content.subscription-ended_text') !!}
+        </div>
+    </div>
+    <div class="wittyworks-upgrade-banner-button-container">
+        <a class="button primary-button-purple" href="{{ route('teams.subscription') }}">
+            {{ __('content.subscribe') }}
+        </a>
+    </div>
+</div>
