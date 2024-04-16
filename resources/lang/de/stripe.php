@@ -5,5 +5,6 @@ return [
     'witty_enterprise' => 'Witty Enterprise',
     'billing' => 'Zum Abrechnungsportal gehen',
     'contact_sales' => 'Wenden dich an den Vertrieb',
-    'witty_free' => 'Witty Free Trial',
+    'witty_free' => 'Witty Free',
+    'witty_trial' => 'Witty Free Trial',
 ];

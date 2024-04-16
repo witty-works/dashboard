@@ -12,7 +12,7 @@
             {{ __('teams.plan_name') }}
         </x-label>
         <p class="lato-small-text-p margin-bottom">
-            {{ __('stripe.'.$team->planId()) }}
+            {{ $team->onGenericTrial() ? __('stripe.witty_trial') : __('stripe.'.$team->planId()) }}
         </p>
 
         <!-- Subscription Details -->
