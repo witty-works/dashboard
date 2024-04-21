@@ -18,15 +18,21 @@ class AnalyticsController extends Controller
     protected $refresh;
     protected $categories;
     protected $subcategories;
-    protected $defaultEvent;
 
     public function __construct(Request $request)
     {
         $this->refresh = $request->get('refresh', false);
         $this->categories = SyncToHubspotCategoriesCommand::loadTableData('categories');
         $this->subcategories = SyncToHubspotCategoriesCommand::loadTableData('diversity_dimension_drivers', true);
+    }
 
-        $this->defaultEvent = env('CHECK_HIGHLIGHTS_ENABLED', false) ? 'check_highlights' : 'popover_open';
+    protected function getDefaultEvent()
+    {
+        if (app('impersonate')->isImpersonating()) {
+            return 'check_highlights';
+        }
+
+        return env('CHECK_HIGHLIGHTS_ENABLED', false) ? 'check_highlights' : 'popover_open';
     }
 
     public function user(Request $request)
@@ -39,7 +45,7 @@ class AnalyticsController extends Controller
         return view('analytics', [
             'user' => $user,
             'categories' => $this->categories,
-            'default_event' => $this->defaultEvent,
+            'default_event' => $this->getDefaultEvent(),
         ]);
     }
 
@@ -59,13 +65,14 @@ class AnalyticsController extends Controller
     public function organization(Request $request)
     {
         $user = $request->user();
+
         $this->teamAnalyticsAllowed($user);
 
         return view('analytics', [
             'team' => $user->currentTeam,
             'team_edit' => $user->hasTeamPermission($user->currentTeam, 'edit_guidelines'),
             'categories' => $this->categories,
-            'default_event' => $this->defaultEvent,
+            'default_event' => $this->getDefaultEvent(),
         ]);
     }
 
@@ -219,7 +226,7 @@ class AnalyticsController extends Controller
             $events = [];
         } else {
             if (!$subscribed) {
-                $key = array_search($this->defaultEvent, $events);
+                $key = array_search($this->getDefaultEvent(), $events);
                 if ($key) {
                     unset($events[$key]);
                 }
@@ -229,7 +236,7 @@ class AnalyticsController extends Controller
             }
         }
         if (empty($events)) {
-            $events = $subscribed ? [$this->defaultEvent] : ['popover_open'];
+            $events = $subscribed ? [$this->getDefaultEvent()] : ['popover_open'];
         }
 
         return $events;
@@ -326,7 +333,7 @@ class AnalyticsController extends Controller
                 if ($request->user()->subscribed()) {
                     $events = ['popover_open', 'alternative', 'ignore', 'learning_bites'];
                 } elseif (empty($events)) {
-                    $events = [$this->defaultEvent];
+                    $events = [$this->getDefaultEvent()];
                 }
 
                 $key = reset($events);
@@ -383,7 +390,7 @@ class AnalyticsController extends Controller
                 if (empty($events)) {
                     $events = ['popover_open', 'alternative', 'ignore', 'learning_bites'];
                     if ($request->user()->subscribed()) {
-                        array_unshift($events, $this->defaultEvent);
+                        array_unshift($events, $this->getDefaultEvent());
                     }
                 }
 
