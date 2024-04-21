@@ -31,15 +31,17 @@ class SyncUserToNlpApi extends AbstractSyncToNlpApi
 
     public function getData(User $user)
     {
+        $subscribed = $user->licenseTeam && $user->licenseTeam->subscribed();
+
         $termReplacements = $this->getTermReplacements(
             $user->termReplacements,
-            $user->subscribed(),
+            $subscribed,
             $user->getTermReplacementsCount()
         );
 
         $falsePositives = $this->getFalsePositives(
             $user->falsePositives,
-            $user->subscribed(),
+            $subscribed,
             $user->getFalsePositivesCount()
         );
 
@@ -68,7 +70,7 @@ class SyncUserToNlpApi extends AbstractSyncToNlpApi
             'config' => $config,
             'notifications' => $user->getNotificationCount(),
             'has_consented_to_mailing' => (bool) $user->has_consented_to_mailing,
-            'team_analytics' => $user->subscribed() ? $user->team_analytics !== false : true,
+            'team_analytics' => $subscribed ? $user->team_analytics !== false : true,
         ];
 
         $data['config_hash'] = md5(serialize($data));
