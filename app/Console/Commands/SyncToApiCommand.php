@@ -32,6 +32,8 @@ class SyncToApiCommand extends AbstractSyncCommand
     {
         $this->info('Syncing to NLP API ...');
 
+        $this->delay = config('app.nlp_api_endpoint.delay_per_count');
+
         $this->handleTeams();
         $this->handleUsers();
     }
