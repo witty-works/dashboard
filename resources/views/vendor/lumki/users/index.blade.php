@@ -35,6 +35,8 @@
                                     <td class="p-2">
                                         @if($user->currentTeam && $user->currentteam->subscribed())
                                             {{ $user->currentteam->subscription()->planName() }}
+                                        @elseif($user->currentTeam && ($user->currentTeam->onGenericTrial() || $user->currentTeam->hasExpiredGenericTrial()))
+                                            {{ __('stripe.witty_trial') }}
                                         @else
                                             {{ __('stripe.witty_free')}}
                                         @endif
@@ -50,7 +52,9 @@
                                     </td>
                                     <td class="p-2">
                                         @if($user->currentTeam)
-                                            {{  $user->currentTeam->trial_ends_at ? $user->currentTeam->trial_ends_at->format('Y-m-d') : '' }}
+                                            <span style="{{ $user->currentTeam->hasExpiredGenericTrial() ? 'color: red' : '' }}">
+                                            {{ $user->currentTeam->trial_ends_at ? $user->currentTeam->trial_ends_at->format('Y-m-d') : '' }}
+                                            </span>
                                         @endif
                                     </td>
                                     <td class="p-2">
