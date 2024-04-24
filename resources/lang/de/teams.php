@@ -39,7 +39,7 @@ return [
     'license_count_did_not_change' => 'Die Lizenzanzahl wurde nicht geändert.',
     'to_upgrade_contact_owner' => 'Um dein Abo anzupassen, wende dich bitte an deine*n Team-Eigentümer*in.',
     'select_license_count_aria_label' => 'Wählen die Anzahl der Lizenzen aus',
-    'invitation_removed' => 'Leider wurde die Einladung entfernt.',
+    'invitation_removed' => 'Du hast die Einladung wahrscheinlich bereits angenommen. (Oder deine Einladung wurde entfernt).',
     'not_enough_data_to_display' => 'Nicht genügend Daten, um ein Diagramm anzuzeigen',
     'get_cancel_invoices_update_payment' => 'Rechnungen herunterladen, Kreditkarte aktualisieren oder stornieren',
     'license_limit_reached_error' => 'Nur :license_count Lizenzen verfügbar. Bitte reduziere die :assigned_count zugewiesenen Lizenzen entsprechend.',

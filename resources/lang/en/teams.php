@@ -41,7 +41,7 @@ return [
     'license_count_did_not_change' => 'The license count was not changed.',
     'to_upgrade_contact_owner' => 'To upgrade, please contact your team owner.',
     'select_license_count_aria_label' => 'select license count',
-    'invitation_removed' => 'Unfortunately the invitation has been removed.',
+    'invitation_removed' => 'You probably have already accepted the invitation. (Or your invitation has been removed).',
     'get_cancel_invoices_update_payment' => 'Download invoices, update payment or cancel',
     'list_licenses' => 'Assign licenses (:assigned_count/:license_count)',
     'list_licenses_description' => 'Only users with a license assigned can use Witty. Currently, you can assign :license_count licenses.',
