@@ -18,6 +18,8 @@ class PlanSummary extends Component
     public $team;
     public $licenseCount;
 
+    protected $listeners = ['saved'];
+
     /**
      * Mount the component.
      *
