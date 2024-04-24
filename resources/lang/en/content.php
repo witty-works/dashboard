@@ -110,7 +110,6 @@ return [
     '2fa_is_now_enabled' => 'Two factor authentication is now enabled. Scan the following QR code using your phone\'s authenticator application.',
     'store_recovery_codes' => 'Store these recovery codes in a secure password manager. They can be used to recover access to your account if your  device is lost.',
     'update_your_account_profile' => '<a href=":profile_url"><strong>update</strong></a>',
-    'pricing' => '<a href="https://www.witty.works/pricing" target="_new">Pricing</a>',
     'permanently_delete_team' => 'Permanently delete this team.',
     'once_a_team_is_deleted' => 'Once a team is deleted, all of its resources and data will be permanently deleted.',
     'are_you_sure_want_to_delete_team' => 'Are you sure you want to delete this team? Once a team is deleted, all of its resources and data will be permanently deleted.',
