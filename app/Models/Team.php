@@ -152,12 +152,12 @@ class Team extends JetstreamTeam
 
     public function planId($featurePlan = false)
     {
-        if ($this->onGenericTrial()) {
-            // Teams on the trial get "Witty Teams" features
-            return $featurePlan ? 'witty_teams' : 'witty_free';
-        }
-
         if (!$this->subscribed()) {
+            if ($this->onGenericTrial()) {
+                // Teams on the trial get "Witty Teams" features
+                return $featurePlan ? 'witty_teams' : 'witty_free';
+            }
+
             return null;
         }
 

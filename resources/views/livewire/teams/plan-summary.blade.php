@@ -12,19 +12,11 @@
             {{ __('teams.plan_name') }}
         </x-label>
         <p class="lato-small-text-p margin-bottom">
-            {{ $team->onGenericTrial() ? __('stripe.witty_trial') : __('stripe.'.$team->planId()) }}
+            {{ !$team->subscribed() && $team->onGenericTrial() ? __('stripe.witty_trial') : __('stripe.'.$team->planId()) }}
         </p>
 
         <!-- Subscription Details -->
-        @if($team->hasExpiredGenericTrial())
-            <p class="lato-small-text-p margin-bottom">
-                {{ __('teams.trial_has_ended') }} {{ $team->trial_ends_at->toFormattedDateString() }}.
-            </p>
-        @elseif($team->onGenericTrial())
-            <p class="lato-small-text-p margin-bottom">
-                {{ __('teams.trail_end_date') }} {{ $team->trial_ends_at->toFormattedDateString() }}.
-            </p>
-        @elseif($team->subscribed())
+        @if($team->subscribed())
             @if($team->subscription()->ended())
                 <p class="lato-small-text-p margin-bottom">
                     {{ __('teams.subscription_has_ended') }} {{ $team->ends_at->toFormattedDateString() }}.
@@ -38,6 +30,14 @@
                     {{ __('teams.renewal_date') }} {{ $team->subscription()->renews_at->toFormattedDateString() }}.
                 </p>
             @endif
+        @elseif($team->hasExpiredGenericTrial())
+            <p class="lato-small-text-p margin-bottom">
+                {{ __('teams.trial_has_ended') }} {{ $team->trial_ends_at->toFormattedDateString() }}.
+            </p>
+        @elseif($team->onGenericTrial())
+            <p class="lato-small-text-p margin-bottom">
+                {{ __('teams.trail_end_date') }} {{ $team->trial_ends_at->toFormattedDateString() }}.
+            </p>
         @endif
 
         <!-- Team Owner -->
