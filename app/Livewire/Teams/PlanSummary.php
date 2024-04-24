@@ -40,6 +40,8 @@ class PlanSummary extends Component
             ? $subscription->quantity
             : $this->team->userLicenses()->count();
 
+        $licenseCount = max(1, $licenseCount);
+
         $this->licenseCount = $this->convertLicenseCountToString($licenseCount);
     }
 
