@@ -34,7 +34,12 @@ class AddTeamMember implements AddsTeamMembers
         );
         $team->load('users');
 
-        if ($newTeamMember->licenseTeam === null && !$team->getUserLicensesLimitReached()) {
+        if (
+            !$team->getUserLicensesLimitReached()
+            && (!$newTeamMember->licenseTeam
+                || ($team->subscribed() && !$newTeamMember->licenseTeam->subscribed())
+            )
+        ) {
             $newTeamMember->license_team_id = $team->id;
             $newTeamMember->save();
         }
