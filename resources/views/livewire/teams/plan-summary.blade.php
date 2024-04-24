@@ -31,7 +31,7 @@
                 </p>
             @endif
         @elseif($team->hasExpiredGenericTrial())
-            <p class="lato-small-text-p margin-bottom">
+            <p class="lato-small-text-p margin-bottom text-red-500">
                 {{ __('teams.trial_has_ended') }} {{ $team->trial_ends_at->toFormattedDateString() }}.
             </p>
         @elseif($team->onGenericTrial())
