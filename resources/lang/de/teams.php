@@ -33,7 +33,7 @@ return [
     'locked_by_team' => 'Diese Einstellung wurde von deinen Team-Administratoren gesperrt.',
     'license_count_error' => 'Beim Aktualisieren der Lizenzanzahl ist ein Fehler aufgetreten.',
     'license_count_too_small_error' => 'Bitte erhöhe die Anzahl der Lizenzen oder entferne Personen aus dem Team.',
-    'license_count_label' => 'Lizenzanzahl anpassen',
+    'license_count_label' => 'Lizenzanzahl',
     'add_licenses' => 'Füge weitere Lizenzen hinzu',
     'amount_per_year' => ':count-Lizenzen – :amount pro Jahr',
     'license_count_did_not_change' => 'Die Lizenzanzahl wurde nicht geändert.',

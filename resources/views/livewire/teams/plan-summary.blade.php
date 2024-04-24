@@ -83,7 +83,7 @@
             </p>
         @endif
 
-        @if($team->subscribed() && !$team->subscription()->isPaidByInvoice())
+        @if(!$team->subscription() || !$team->subscription()->isPaidByInvoice())
             <h3 class="lato-small-paragraph-title-h4 mt-4">
                 {{ __('teams.license_count_label') }}
             </h3>
@@ -117,8 +117,6 @@
                 <x-button>
                     {{ __('content.subscribe') }}
                 </x-button>
-
-                {!! __('content.pricing') !!}
             </div>
         @endif
         </x-slot>

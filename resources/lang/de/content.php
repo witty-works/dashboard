@@ -178,7 +178,6 @@ return [
     'witty_editor' => 'Witty Editor',
     'manage_members' => 'Team verwalten',
     'subscription' => 'Abonnement',
-    'pricing' => '<a href="https://www.witty.works/de/pricing" target="_new">Preispläne</a>',
     'more_resouces' => 'Weitere Infos',
     'get_in_touch' => 'Kontaktiere uns',
     'academy' => 'Akademie',
