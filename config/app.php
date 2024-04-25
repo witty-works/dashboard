@@ -196,6 +196,7 @@ return [
         'user' => env('APP_NLP_API_SYNC_USER'),
         'password' => env('APP_NLP_API_SYNC_PASSWORD'),
         'sync_rules' => env('APP_NLP_API_SYNC_CONFIGS', true),
+        'delay_per_count' => env('APP_NLP_API_SYNC_DELAY_PER_COUNT', 0.1),
     ],
 
     /*

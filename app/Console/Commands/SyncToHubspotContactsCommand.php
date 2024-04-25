@@ -34,6 +34,8 @@ class SyncToHubspotContactsCommand extends AbstractSyncCommand
             return;
         }
 
+        $this->delay = config('hubspot.delay_per_count');
+
         $this->info('Queuing syncing to Hubspot ...');
 
         $query = null;

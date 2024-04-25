@@ -8,6 +8,9 @@ use Illuminate\Console\Command;
 
 abstract class AbstractSyncCommand extends Command
 {
+    protected $delay = 0;
+    protected $count = 0;
+
     /**
      * Execute the console command.
      *
@@ -37,7 +40,8 @@ abstract class AbstractSyncCommand extends Command
                 $this->info("Executed job, got: " . json_encode($result));
             }
         } else {
-            dispatch($job);
+            dispatch($job)->delay(now()->addSeconds(floor($this->delay * $this->count)));
+            $this->count++;
         }
     }
 
