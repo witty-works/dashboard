@@ -50,6 +50,6 @@ return [
     'active_license_on_team' => 'Licensed on team ":team_name"',
     'no_more_licenses_available' => 'All licenses have already been assigned',
     'trial_has_ended' => 'Your trial has ended on ',
-    'trail_end_date' => 'Your trail will end at ',
+    'trail_end_date' => 'Your trial will end at ',
     'subscription_has_ended' => 'Your subscription has ended on ',
 ];

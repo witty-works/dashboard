@@ -42,6 +42,6 @@ if ($user) {
 @include('partials.invite-check')
 @elseif($showMailing && !Route::is('profile.show'))
 @include('partials.mailing-consent', ['user' => $user])
-@elseif($team && !$team->subscribed() && !Route::is('teams.subscription'))
+@elseif($team && !$team->subscribed() && !$team->onGenericTrial() && !$team->hasExpiredGenericTrial() && !Route::is('teams.subscription'))
 @include('partials.subscribe-banner', ['user' => $user])
 @endif
