@@ -24,6 +24,16 @@ if ($user) {
 @include('partials.extension-check')
 @endif
 
+@if(!Route::is('teams.subscription'))
+    @if($team->hasExpiredGenericTrial())
+        @include('partials.trial-ended', ['user' => $user])
+    @elseif($team->onGenericTrial())
+        @include('partials.on-trial', ['user' => $user])
+    @elseif($team->subscribed() && $team->subscription()->ended())
+        @include('partials.subscription-ended', ['user' => $user])
+    @endif
+@endif
+
 @if($showInvitations)
 @include('partials.invitations', ['user' => $user])
 @elseif($showInvitationRequests && !Route::is('teams.show'))
@@ -32,6 +42,6 @@ if ($user) {
 @include('partials.invite-check')
 @elseif($showMailing && !Route::is('profile.show'))
 @include('partials.mailing-consent', ['user' => $user])
-@elseif($team && !$team->subscribed() && !Route::is('teams.subscription'))
+@elseif($team && !$team->subscribed() && !$team->onGenericTrial() && !$team->hasExpiredGenericTrial() && !Route::is('teams.subscription'))
 @include('partials.subscribe-banner', ['user' => $user])
 @endif

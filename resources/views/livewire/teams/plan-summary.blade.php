@@ -12,12 +12,16 @@
             {{ __('teams.plan_name') }}
         </x-label>
         <p class="lato-small-text-p margin-bottom">
-            {{ $team->subscribed() ? $team->subscription()->planName() : __('stripe.witty_free') }}
+            {{ !$team->subscribed() && ($team->onGenericTrial() || $team->hasExpiredGenericTrial()) ? __('stripe.witty_trial') : __('stripe.'.$team->planId()) }}
         </p>
 
         <!-- Subscription Details -->
         @if($team->subscribed())
-            @if($team->subscription()->ends_at)
+            @if($team->subscription()->ended())
+                <p class="lato-small-text-p margin-bottom">
+                    {{ __('teams.subscription_has_ended') }} {{ $team->ends_at->toFormattedDateString() }}.
+                </p>
+            @elseif($team->subscription()->ends_at)
                 <p class="lato-small-text-p margin-bottom">
                     {{ __('teams.end_date') }} {{ $team->subscription()->ends_at->toFormattedDateString() }}.
                 </p>
@@ -26,6 +30,14 @@
                     {{ __('teams.renewal_date') }} {{ $team->subscription()->renews_at->toFormattedDateString() }}.
                 </p>
             @endif
+        @elseif($team->hasExpiredGenericTrial())
+            <p class="lato-small-text-p margin-bottom text-red-500">
+                {{ __('teams.trial_has_ended') }} {{ $team->trial_ends_at->toFormattedDateString() }}.
+            </p>
+        @elseif($team->onGenericTrial())
+            <p class="lato-small-text-p margin-bottom">
+                {{ __('teams.trail_end_date') }} {{ $team->trial_ends_at->toFormattedDateString() }}.
+            </p>
         @endif
 
         <!-- Team Owner -->
@@ -33,7 +45,7 @@
             {{ __('teams.team_owner') }}
         </x-label>
         <p class="lato-small-text-p margin-bottom">
-            {{ $team->owner->name }} 
+            {{ $team->owner->name }}
             (<a href="mailto:{{ $team->owner->email }}" aria-label="Email {{ $team->owner->name }}">
                 {{ $team->owner->email }}
             </a>)
@@ -71,7 +83,7 @@
             </p>
         @endif
 
-        @if($team->subscribed() && !$team->subscription()->isPaidByInvoice())
+        @if(!$team->subscription() || !$team->subscription()->isPaidByInvoice())
             <h3 class="lato-small-paragraph-title-h4 mt-4">
                 {{ __('teams.license_count_label') }}
             </h3>
@@ -106,7 +118,7 @@
                     {{ __('content.subscribe') }}
                 </x-button>
             </div>
-            @endif
+        @endif
         </x-slot>
     @endif
 </x-form-section>

@@ -197,7 +197,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->licenseTeam->id === $team->id;
     }
 
-    public function subscribed($type = 'witty', $price = null)
+    public function subscribed($type = 'default', $price = null)
     {
         $team = $this->currentTeam;
         if (!$team) {
@@ -207,7 +207,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return $team->subscribed($type, $price);
     }
 
-    public function subscription($type = 'witty')
+    public function subscription($type = 'default')
     {
         $team = $this->currentTeam;
         if (!$team) {
@@ -220,21 +220,15 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getTermReplacementsCount()
     {
         $key = '.features.user_term_replacements.count';
-        if ($this->subscribed() && $this->term_replacements === null) {
-            return config('stripe.plans.' . $this->currentTeam->planId() . $key);
-        }
-
-        return $this->term_replacements ?? config('stripe.plans.witty_free' . $key);
+        $planId = $this->currentTeam ? $this->currentTeam->planId(true) : 'witty_free';
+        return config('stripe.plans.' . $planId . $key);
     }
 
     public function getFalsePositivesCount()
     {
         $key = '.features.user_false_positives.count';
-        if ($this->subscribed() && $this->false_positives === null) {
-            return config('stripe.plans.' . $this->currentTeam->planId() . $key);
-        }
-
-        return $this->false_positives ?? config('stripe.plans.witty_free' . $key);
+        $planId = $this->currentTeam ? $this->currentTeam->planId(true) : 'witty_free';
+        return config('stripe.plans.' . $planId . $key);
     }
 
     public function planId()
@@ -417,6 +411,7 @@ class User extends Authenticatable implements MustVerifyEmail
         // so in that case it will simply sync the data of the team they most recently used
         $personalTeam = $this->personalTeam();
         if ($personalTeam) {
+            $data['witty_trial_ends_at'] = $personalTeam->trial_ends_at ? $personalTeam->trial_ends_at->format('Y-m-d') : null;
             $data['has_team_language_rules'] = $personalTeam->hasLanguageRules() ? $true : $false;
             $data['has_team_privacy_set'] = $personalTeam->hasConfiguredPrivacy() ? $true : $false;
             $data['team_dictionary_count'] = $personalTeam->termReplacements->count();

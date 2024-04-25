@@ -56,6 +56,12 @@ class SwitchToTeam
         }
 
         // fallback to the personal owned team
-        $user->switchTeam($ownedTeams->first());
+        $team = $ownedTeams->first();
+        $user->switchTeam($team);
+
+        if ($user->licenseTeam === null && !$team->getUserLicensesLimitReached()) {
+            $user->license_team_id = $team->id;
+            $user->save();
+        }
     }
 }

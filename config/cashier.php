@@ -2,6 +2,8 @@
 
 return [
 
+    'trail_days' => env('CASHIER_TRAIL_DAYS', 14),
+
     /*
     |--------------------------------------------------------------------------
     | Stripe Keys
@@ -117,5 +119,4 @@ return [
     */
 
     'logger' => env('CASHIER_LOGGER'),
-
 ];

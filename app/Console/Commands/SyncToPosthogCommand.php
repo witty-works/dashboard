@@ -35,6 +35,8 @@ class SyncToPosthogCommand extends AbstractSyncCommand
             return;
         }
 
+        $this->delay = config('posthog.delay_per_count');
+
         $this->info('Queuing syncing to Posthog ...');
 
         $this->handleTeams();

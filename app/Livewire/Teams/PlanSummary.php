@@ -18,6 +18,8 @@ class PlanSummary extends Component
     public $team;
     public $licenseCount;
 
+    protected $listeners = ['saved'];
+
     /**
      * Mount the component.
      *
@@ -39,6 +41,8 @@ class PlanSummary extends Component
         $licenseCount = $subscription
             ? $subscription->quantity
             : $this->team->userLicenses()->count();
+
+        $licenseCount = max(1, $licenseCount);
 
         $this->licenseCount = $this->convertLicenseCountToString($licenseCount);
     }
