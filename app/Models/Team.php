@@ -158,7 +158,7 @@ class Team extends JetstreamTeam
                 return $featurePlan ? 'witty_teams' : 'witty_free';
             }
 
-            return $featurePlan ? 'witty_free' : null;
+            return ($this->trial_ends_at === null || $featurePlan) ? 'witty_free' : null;
         }
 
         return $this->subscription()->planId();
