@@ -37,8 +37,12 @@ class Subscription extends CashierSubscription
 
     public function planId()
     {
-        if (!$this->stripe_price || !$this->valid()) {
+        if (!$this->stripe_price) {
             return 'witty_free';
+        }
+
+        if (!$this->valid()) {
+            return null;
         }
 
         if ('enterprise' === $this->stripe_price) {
