@@ -154,7 +154,7 @@ class Team extends JetstreamTeam
     {
         $subscription = $this->subscription();
         if ($subscription) {
-            $this->subscription()->planId();
+            return $this->subscription()->planId();
         }
 
         if ($this->onGenericTrial()) {
