@@ -154,12 +154,6 @@ class OAuthController extends BaseOAuthController
 
         try {
             $claims = $officeSsoHelper->validateIdToken($token);
-
-            if ($ssoDebugEmail) {
-                Mail::raw('token: ' . $token . "\n\n" . var_export($claims, true), function ($m) use ($ssoDebugEmail) {
-                    $m->to($ssoDebugEmail)->subject('SSO Login Success');
-                });
-            }
         } catch (Exception $e) {
             if ($ssoDebugEmail) {
                 Mail::raw('token: ' . $token . "\n\n" . $e->getMessage(), function ($m) use ($ssoDebugEmail) {
@@ -295,7 +289,6 @@ class OAuthController extends BaseOAuthController
                 $this->createsConnectedAccounts->create($user, $provider, $providerAccount);
             } else {
                 $user = $this->createsUser->create($provider, $providerAccount);
-                $userData['source'] = $provider;
                 $userData['hubspotutk'] = $request->cookie('hubspotutk');
             }
 
@@ -306,6 +299,10 @@ class OAuthController extends BaseOAuthController
             $user = $account->user;
 
             $this->updatesConnectedAccounts->update($user, $account, $provider, $providerAccount);
+        }
+
+        if ($user->source === null) {
+            $userData['source'] = $provider;
         }
 
         if (!empty($userData)) {
