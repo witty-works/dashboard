@@ -13,7 +13,7 @@ return [
     'upgrade' => 'Upgrade to Witty Teams',
     'pricing' => 'Pricing',
     'default_plan_name' => 'Witty Free',
-    'renewal_date' => 'Your plan will be automatically renewed on ',
+    'renewal_date' => 'Your plan will be automatically renew on ',
     'user_licenses' => 'User licenses',
     'term_replacements' => 'Team dictionary',
     'false_positives' => 'Ignored words of your team',
