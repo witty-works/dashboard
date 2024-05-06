@@ -135,7 +135,7 @@ class Form extends Component
 
             $subscription = new Subscription();
             $subscription->team_id = $this->team_id;
-            $subscription->type = 'witty';
+            $subscription->type = 'default';
             $subscription->stripe_id = 'invoice_' . Carbon::now();
         } elseif (!$subscription->isPaidByInvoice()) {
             $message = 'Subscription is not paid by invoice, edit on Stripe';
