@@ -2,7 +2,7 @@
     <x-slot name="title">
         <span id="license">
         {{ __('teams.list_licenses', [
-            'license_count' => $team->getUserLicensesCount(),
+            'license_count' => $team->getUserLicensesCount(true),
             'assigned_count' => $assignedCount
         ]) }}
         </span>

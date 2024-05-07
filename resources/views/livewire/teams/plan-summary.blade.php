@@ -12,21 +12,25 @@
             {{ __('teams.plan_name') }}
         </x-label>
         <p class="lato-small-text-p margin-bottom">
+            @if($team->subscription() && !$team->subscription()->valid())
+                {{ __('stripe.'.$team->subscription()->planId(true)) }}
+            @else
             {{ !$team->subscribed() && ($team->onGenericTrial() || $team->hasExpiredGenericTrial()) ? __('stripe.witty_trial') : __('stripe.'.$team->planId()) }}
+            @endif
         </p>
 
         <!-- Subscription Details -->
-        @if($team->subscribed())
+        @if($team->subscription())
             @if($team->subscription()->ended())
-                <p class="lato-small-text-p margin-bottom">
-                    {{ __('teams.subscription_has_ended') }} {{ $team->ends_at->toFormattedDateString() }}.
+                <p class="lato-small-text-p margin-bottom text-red-500">
+                    {{ __('teams.subscription_has_ended') }} {{ $team->subscription()->ends_at->toFormattedDateString() }}.
                 </p>
             @elseif($team->subscription()->ends_at)
-                <p class="lato-small-text-p margin-bottom">
+                <p class="lato-small-text-p margin-bottom text-red-500">
                     {{ __('teams.end_date') }} {{ $team->subscription()->ends_at->toFormattedDateString() }}.
                 </p>
             @elseif($team->subscription()->renews_at)
-                <p class="lato-small-text-p margin-bottom red">
+                <p class="lato-small-text-p margin-bottom text-red-500">
                     {{ __('teams.renewal_date') }} {{ $team->subscription()->renews_at->toFormattedDateString() }}.
                 </p>
             @endif
@@ -56,8 +60,8 @@
         </h3>
         <ul aria-labelledby="what-is-included">
             <li>
-                {{ __('teams.total_of_max_used_licenses', ['total' => $team->userLicenses()->count(), 'max_count' => $team->getUserLicensesCount()]) }}
-                @if($team->subscribed() && $team->subscription()->isPaidByInvoice())
+                {{ __('teams.total_of_max_used_licenses', ['total' => $team->userLicenses()->count(), 'max_count' => $team->getUserLicensesCount(true)]) }}
+                @if($team->subscription() && $team->subscription()->isPaidByInvoice())
                     <div>
                         {!! __('teams.more_licenses') !!}
                     </div>

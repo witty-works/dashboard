@@ -15,7 +15,7 @@ class WebhookController extends CashierController
 {
     protected function newSubscriptionType(array $payload)
     {
-        return 'witty';
+        return 'default';
     }
 
     public function handleCheckoutSessionCompleted(array $payload)
