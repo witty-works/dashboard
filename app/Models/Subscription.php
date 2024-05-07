@@ -35,13 +35,13 @@ class Subscription extends CashierSubscription
         }
     }
 
-    public function planId()
+    public function planId($ignoreInvalid = false)
     {
         if (!$this->stripe_price) {
             return 'witty_free';
         }
 
-        if (!$this->valid()) {
+        if (!$this->valid() && !$ignoreInvalid) {
             return null;
         }
 

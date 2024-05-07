@@ -12,9 +12,11 @@
                     @livewire('teams.plan-summary', ['team' => $team])
                 </div>
 
+                @if($team->subscribed() || $team->onGenericTrial())
                 <div class="mt-10">
                     @livewire('teams.license-management', ['team' => $team])
                 </div>
+                @endif
             </div>
         </div>
     </div>

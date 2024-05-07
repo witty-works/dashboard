@@ -95,9 +95,9 @@ class Team extends JetstreamTeam
             ?? 'dashboard-team:' . $this->id;
     }
 
-    public function getUserLicensesCount()
+    public function getUserLicensesCount($ignoreInvalid = false)
     {
-        if ($this->subscribed()) {
+        if ($this->subscribed() || ($ignoreInvalid && $this->subscription())) {
             return $this->subscription()->quantity;
         }
 
@@ -154,7 +154,7 @@ class Team extends JetstreamTeam
     {
         $subscription = $this->subscription();
         if ($subscription) {
-            return $this->subscription()->planId();
+            return $this->subscription()->planId($featurePlan);
         }
 
         if ($this->onGenericTrial()) {
