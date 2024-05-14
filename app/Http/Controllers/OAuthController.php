@@ -302,7 +302,7 @@ class OAuthController extends BaseOAuthController
         }
 
         if ($user->source === null) {
-            $userData['source'] = $provider;
+            $user->source = $userData['source'] = $provider;
         }
 
         if (!empty($userData)) {
