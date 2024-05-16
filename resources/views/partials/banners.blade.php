@@ -25,12 +25,14 @@ if ($user) {
 @endif
 
 @if(!Route::is('teams.subscription'))
-    @if($team->hasExpiredGenericTrial())
+    @if($team->subscribed())
+        @if($team->subscription()->ended())
+            @include('partials.subscription-ended', ['user' => $user])
+        @endif
+    @elseif($team->hasExpiredGenericTrial())
         @include('partials.trial-ended', ['user' => $user])
     @elseif($team->onGenericTrial())
         @include('partials.on-trial', ['user' => $user])
-    @elseif($team->subscribed() && $team->subscription()->ended())
-        @include('partials.subscription-ended', ['user' => $user])
     @endif
 @endif
 
