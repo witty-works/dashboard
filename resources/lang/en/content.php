@@ -140,6 +140,7 @@ return [
     'delete_permanently' => 'Delete',
     'de' => 'German',
     'en' => 'English',
+    'fr' => 'French',
     'welcome_text' => 'The dashboard helps you set up Witty and customize it to your needs.',
     'onboarding_install_witty' => 'Install our Witty browser extension',
     'onboarding_quickLinks' => 'Quick Links',
