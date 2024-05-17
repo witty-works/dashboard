@@ -1,5 +1,5 @@
 <div>
-@if($model->subscribed())
+@if($model->isPremium())
 <div class="pt-10" aria-labelledby="advancedToggleTitle">
     <x-section-title>
         <x-slot name="title" class="ibarra-sub-title-h2">

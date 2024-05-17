@@ -23,7 +23,7 @@ class Form extends OrganizationForm
 
     public function render()
     {
-        $this->cleanValues($this->model->subscribed());
+        $this->cleanValues($this->model->isPremium());
 
         $params = ['language_codes' => $this->getLanguageCodes()];
         return view('livewire.user-term-replacement.form', $params);
@@ -37,7 +37,7 @@ class Form extends OrganizationForm
             abort(403);
         }
 
-        $this->cleanValues($this->model->subscribed());
+        $this->cleanValues($this->model->isPremium());
 
         $query = TermReplacement::query()
             ->where('user_id', $this->model->id)

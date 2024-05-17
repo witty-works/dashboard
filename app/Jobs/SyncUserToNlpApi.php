@@ -31,7 +31,7 @@ class SyncUserToNlpApi extends AbstractSyncToNlpApi
 
     public function getData(User $user)
     {
-        $subscribed = $user->licenseTeam && $user->licenseTeam->subscribed();
+        $subscribed = $user->licenseTeam && $user->licenseTeam->isPremium();
 
         $termReplacements = $this->getTermReplacements(
             $user->termReplacements,

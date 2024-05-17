@@ -78,7 +78,7 @@ class Language extends Component
 
         $languageGuidelines->preferred_variants = $this->preferred_variants;
 
-        if ($this->model->subscribed()) {
+        if ($this->model->isPremium()) {
             $languageGuidelines->preferred_variants_force = (bool) $this->preferred_variants_force;
         }
 

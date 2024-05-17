@@ -33,20 +33,20 @@ class SyncOrganizationToNlpApi extends AbstractSyncToNlpApi
     {
         $termReplacements = $this->getTermReplacements(
             $team->termReplacements,
-            $team->subscribed(),
+            $team->isPremium(),
             $team->getTermReplacementsCount()
         );
 
         $falsePositives = $this->getFalsePositives(
             $team->falsePositives,
-            $team->subscribed(),
+            $team->isPremium(),
             $team->getFalsePositivesCount()
         );
 
         $domains = $this->getDomains($team->domains, $team->getDomainListType());
 
         $guidelines = LanguageGuidelines::getLanguageGuidelines($team);
-        $config = self::getConfig($guidelines, !$team->subscribed());
+        $config = self::getConfig($guidelines, !$team->isPremium());
 
         $config['categories']['orthography'] = [
             'value' => !in_array('orthography', $guidelines->disabled_categories),
@@ -70,7 +70,7 @@ class SyncOrganizationToNlpApi extends AbstractSyncToNlpApi
             'domains' => $domains,
             'config' => $config,
             'store_context' => [
-                'value' => $team->subscribed() ? (bool) $team->store_context : true,
+                'value' => $team->isPremium() ? (bool) $team->store_context : true,
                 'status' => 'force',
             ]
         ];

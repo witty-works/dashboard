@@ -31,10 +31,10 @@
                                         <a href="mailto:{{ $user->email }}">{{ $user->name }}</a>
                                     </td>
                                     <td class="p-2">
-                                        {{ $user->subscribed() ? 'yes' : 'no' }}
+                                        {{ $user->isPremium() ? 'yes' : 'no' }}
                                     </td>
                                     <td class="p-2">
-                                        @if($user->currentTeam && $user->currentteam->subscribed())
+                                        @if($user->isPremium())
                                             {{ $user->currentteam->subscription()->planName() }}
                                         @elseif($user->currentTeam && ($user->currentTeam->onGenericTrial() || $user->currentTeam->hasExpiredGenericTrial()))
                                             {{ __('stripe.witty_trial') }}

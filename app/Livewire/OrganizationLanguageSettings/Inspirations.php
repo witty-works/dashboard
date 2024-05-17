@@ -41,7 +41,7 @@ class Inspirations extends Component
             abort(403);
         }
 
-        if ($this->model->subscribed()) {
+        if ($this->model->isPremium()) {
             $languageGuidelines = LanguageGuidelines::getLanguageGuidelines($this->model);
 
             $languageGuidelines->show_inspiration_alternatives = (bool) $this->show_inspiration_alternatives;

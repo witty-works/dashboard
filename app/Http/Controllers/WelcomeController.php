@@ -23,7 +23,7 @@ class WelcomeController extends Controller
             return redirect()->route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'login']);
         }
 
-        if ($user->subscribed()) {
+        if ($user->isPremium()) {
             return redirect()->route('editor');
         }
 

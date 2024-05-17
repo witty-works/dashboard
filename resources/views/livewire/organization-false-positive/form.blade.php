@@ -5,7 +5,7 @@
 
     <x-slot name="description">
         <p aria-describedby="organization_false_positives">
-            @if($model->getFalsePositivesLimitReached() && Auth::user()->ownsTeam($model) && !$model->subscribed())
+            @if($model->getFalsePositivesLimitReached() && Auth::user()->ownsTeam($model) && !$model->isPremium())
                 {!! __('guidelines.false_positive_limit_reached', ['max_count' => $model->getFalsePositivesCount(), 'url' => route('teams.subscription')]) !!}
             @else
                 {!! Str::markdown(__('guidelines.create_new_false_positive_description')) !!}

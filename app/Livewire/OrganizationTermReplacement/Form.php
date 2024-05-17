@@ -84,7 +84,7 @@ class Form extends Component
 
     public function render()
     {
-        $this->cleanValues($this->model->subscribed());
+        $this->cleanValues($this->model->isPremium());
 
         $params = ['language_codes' => $this->getLanguageCodes()];
         return view('livewire.organization-term-replacement.form', $params);
@@ -135,7 +135,7 @@ class Form extends Component
     public function storeTermReplacement()
     {
         $this->validate();
-        $this->cleanValues($this->model->subscribed());
+        $this->cleanValues($this->model->isPremium());
 
         if (!Auth::user()->hasTeamPermission($this->model, 'edit_guidelines')) {
             abort(403);

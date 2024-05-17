@@ -3,7 +3,7 @@
         {!! __('guidelines.language_settings_label') !!}
     </div>
 
-    @if($user->subscribed())
+    @if($user->isPremium())
     @livewire('user-language-settings.intro', ['model' => $user])
     @endif
 
