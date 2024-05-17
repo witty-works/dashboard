@@ -63,8 +63,8 @@ class SyncOrganizationToNlpApi extends AbstractSyncToNlpApi
         $data = [
             'id' => $team->posthogId(),
             'name' => $team->name,
-            'plan' => $team->planId(),
-            'trial_ends_at' => $team->trial_ends_at,
+            'plan' => $team->planId(true),
+            'trial_ends_at' => $team->subscribed() ? null : $team->trial_ends_at,
             'false_positives' => $falsePositives,
             'term_replacements' => $termReplacements,
             'domains' => $domains,

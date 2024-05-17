@@ -231,11 +231,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return config('stripe.plans.' . $planId . $key);
     }
 
-    public function planId()
+    public function planId($featurePlan = false)
     {
         $team = $this->licenseTeam;
         if ($team) {
-            return $team->planId();
+            return $team->planId($featurePlan);
         }
 
         return "none";
