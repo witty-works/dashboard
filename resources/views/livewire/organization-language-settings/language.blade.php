@@ -34,6 +34,18 @@
             wire:model="preferred_variants_de"
         />
         <x-input-error for="preferred_variants_de" class="mt-2" role="alert" />
+
+        @if(config('app.french_support'))
+        <label class="lato-small-text-p" for="preferred_variants_fr">
+            {{ __('guidelines.team_preferred_variants_dialect') }}
+        </label>
+        <x-select id="preferred_variants_fr"
+            :options="App\Models\GuidelinesInterface::PREFERRED_VARIANTS_FR"
+            class="guidelines-form-section-dropdown"
+            wire:model="preferred_variants_fr"
+        />
+        <x-input-error for="preferred_variants_fr" class="mt-2" role="alert" />
+        @endif
     </x-slot>
 
     <x-slot name="actions">

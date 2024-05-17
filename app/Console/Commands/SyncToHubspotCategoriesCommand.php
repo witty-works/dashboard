@@ -367,6 +367,10 @@ class SyncToHubspotCategoriesCommand extends Command
 
         Collection::macro('toLocale', function (string $locale) {
             return $this->map(function ($value) use ($locale) {
+                if ($locale === 'fr') {
+                    $locale = 'en';
+                }
+    
                 if (!empty($value['translations'][$locale])) {
                     $value['translation'] = $value['translations'][$locale];
 

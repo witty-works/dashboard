@@ -19,11 +19,13 @@ class Language extends Component
     public $preferred_variants_force;
     public $preferred_variants_de;
     public $preferred_variants_en;
+    public $preferred_variants_fr;
 
     protected $rules = [
         'preferred_variants_force' => 'nullable|boolean',
         'preferred_variants_de' => 'nullable|string|in:de-DE,de-AT,de-CH',
         'preferred_variants_en' => 'nullable|string|in:en-US,en-GB',
+        'preferred_variants_fr' => 'nullable|string|in:fr-FR,fr-CH',
     ];
 
     public $model;
