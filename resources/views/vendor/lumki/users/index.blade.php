@@ -34,7 +34,7 @@
                                         {{ $user->isPremium() ? 'yes' : 'no' }}
                                     </td>
                                     <td class="p-2">
-                                        @if($user->isPremium())
+                                        @if($user->subscribed())
                                             {{ $user->currentteam->subscription()->planName() }}
                                         @elseif($user->currentTeam && ($user->currentTeam->onGenericTrial() || $user->currentTeam->hasExpiredGenericTrial()))
                                             {{ __('stripe.witty_trial') }}
