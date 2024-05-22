@@ -150,6 +150,11 @@ class Team extends JetstreamTeam
         return config('stripe.plans.' . $this->planId(true) . $key);
     }
 
+    public function isPremium()
+    {
+        return $this->subscribed() || $this->onGenericTrial();
+    }
+
     public function planId($featurePlan = false)
     {
         $subscription = $this->subscription();

@@ -37,7 +37,7 @@ class TeamAnalytics extends Component
         $this->resetErrorBag();
 
         $this->team_analytics = (bool) $this->model->team_analytics;
-        if (!$this->model->subscribed()) {
+        if (!$this->model->isPremium()) {
             $this->team_analytics = true;
         }
     }
@@ -50,7 +50,7 @@ class TeamAnalytics extends Component
             abort(403);
         }
 
-        if (!$this->model->subscribed()) {
+        if (!$this->model->isPremium()) {
             $this->team_analytics = true;
         }
 

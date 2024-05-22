@@ -14,7 +14,7 @@
                 value="1"
                 wire:model="store_context"
                 :label="__('teams.store_context')"
-                :disabled="!$model->subscribed() ? 'upgrade' : (Auth::user()->hasTeamPermission($model, 'update') ? false : 'locked')"
+                :disabled="!$model->isPremium() ? 'upgrade' : (Auth::user()->hasTeamPermission($model, 'update') ? false : 'locked')"
                 aria-label="{{ __('teams.store_context') }}"
             />
 
@@ -22,7 +22,7 @@
         </div>
     </x-slot>
 
-    @if (Auth::user()->hasTeamPermission($model, 'update') && $model->subscribed())
+    @if (Auth::user()->hasTeamPermission($model, 'update') && $model->isPremium())
     <x-slot name="actions">
         @include('partials/save_cancel_action')
     </x-slot>

@@ -9,7 +9,7 @@
 
     <x-slot name="form" submit="updateLanguageGuidelinesGerman">
         @php
-            $disabled = !$model->subscribed() || \App\Models\LanguageGuidelines::isForcedOnTeam($model, 'german_rules');
+            $disabled = !$model->isPremium() || \App\Models\LanguageGuidelines::isForcedOnTeam($model, 'german_rules');
         @endphp
 
         <h3 class="lato-small-text-p mb-5">{!! __('guidelines.manage_organization_guidelines_description_german_form_sub_title') !!}</h3>
@@ -28,7 +28,7 @@
                         @if($disabled) disabled @endif
                     >
                         {!! __($value) !!}
-                        @if(!$model->subscribed())
+                        @if(!$model->isPremium())
                             <span class="p-3">
                                 @include('partials.witty-teams-only')
                             </span>
@@ -56,7 +56,7 @@
 
                 <x-input-error for="german_gender_ending" class="mt-2" />
 
-                @if(!$model->subscribed())
+                @if(!$model->isPremium())
                 <div class="p-3">
                     @include('partials.witty-teams-only')
                 </div>

@@ -15,8 +15,9 @@
                                 <thead>
                                   <tr>
                                     <th>Name</th>
-                                    <th>User License</th>
+                                    <th>Subscribed</th>
                                     <th>Team Plan</th>
+                                    <th>Team License</th>
                                     <th>Licenses</th>
                                     <th>Trial Ends At</th>
                                     <th>Roles</th>
@@ -30,10 +31,10 @@
                                         <a href="mailto:{{ $user->email }}">{{ $user->name }}</a>
                                     </td>
                                     <td class="p-2">
-                                        {{ $user->subscribed() ? 'yes' : 'no' }}
+                                        {{ $user->isPremium() ? 'yes' : 'no' }}
                                     </td>
                                     <td class="p-2">
-                                        @if($user->currentTeam && $user->currentteam->subscribed())
+                                        @if($user->isPremium())
                                             {{ $user->currentteam->subscription()->planName() }}
                                         @elseif($user->currentTeam && ($user->currentTeam->onGenericTrial() || $user->currentTeam->hasExpiredGenericTrial()))
                                             {{ __('stripe.witty_trial') }}
@@ -42,11 +43,14 @@
                                         @endif
                                     </td>
                                     <td class="p-2">
+                                        {{ $user->licenseTeam ? $user->licenseTeam->name : '-' }}
+                                    </td>
+                                    <td class="p-2">
                                         @if($user->currentTeam)
                                             {{ $user->currentTeam->name }}
                                             (
                                             {{ ($user->currentTeam->owner->id === $user->id ? 'Owner, ' : '') }}
-                                            {{ __('teams.total_of_max_used_licenses', ['total' => $user->currentTeam->getTotalUserWithInvitationsCount(), 'max_count' => $user->currentTeam->getUserLicensesCount()]) }}
+                                            {{ $user->currentTeam->getTotalUserWithInvitationsCount() }} / {{ $user->currentTeam->getUserLicensesCount() }}
                                             )
                                         @endif
                                     </td>

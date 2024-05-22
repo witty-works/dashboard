@@ -63,7 +63,7 @@ class Category extends Component
         $this->readDimensions($disabledCategories);
 
         $disabledCategoriesForce = (array) $languageGuidelines->disabled_categories_force;
-        if (!$this->model->subscribed()) {
+        if (!$this->model->isPremium()) {
             $this->dimensions_force = true;
         } else {
             $this->dimensions_force = in_array($this->category, $disabledCategoriesForce);
@@ -115,7 +115,7 @@ class Category extends Component
 
         $this->processDimensions($languageGuidelines, $this->dimensions);
 
-        if (!$this->model->subscribed()) {
+        if (!$this->model->isPremium()) {
             $this->dimensions_force = true;
         }
         $languageGuidelines->inPlaceUpateArray($this->category, 'disabled_categories_force', !$this->dimensions_force);

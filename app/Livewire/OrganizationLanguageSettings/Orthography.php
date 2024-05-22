@@ -41,7 +41,7 @@ class Orthography extends Component
             abort(403);
         }
 
-        if ($this->model->subscribed()) {
+        if ($this->model->isPremium()) {
             $languageGuidelines = LanguageGuidelines::getLanguageGuidelines($this->model);
 
             $languageGuidelines->inPlaceUpateArray('orthography', 'disabled_categories', $this->orthography);
