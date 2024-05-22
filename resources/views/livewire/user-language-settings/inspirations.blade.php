@@ -19,7 +19,7 @@
         </div>
     </x-slot>
 
-    @if($model->subscribed() && !\App\Models\LanguageGuidelines::isForcedOnTeam($model, 'show_inspiration_alternatives'))
+    @if($model->isPremium() && !\App\Models\LanguageGuidelines::isForcedOnTeam($model, 'show_inspiration_alternatives'))
     <x-slot name="actions">
         @include('partials/save_cancel_action')
     </x-slot>

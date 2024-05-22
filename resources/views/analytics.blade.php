@@ -5,7 +5,6 @@
         ? $team->getTotalTermReplacementsCount()
         : $user->getTotalTermReplacementsCount() + $user->currentTeam->getTotalTermReplacementsCount()
     ;
-    $is_premium_user = isset($team) ? $team->subscribed() : $user->subscribed();
 ?>
 <x-app-layout :pagetitle="__('content.analytics')">
 <div class="wittyworks-navigation-wrapper">@livewire('navigation-menu')</div>

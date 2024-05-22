@@ -15,14 +15,14 @@
                     value="1"
                     wire:model="user_access_to_team_analytics"
                     :label="__('guidelines.allow_team_analytics')"
-                    :disabled="!$model->subscribed() ? 'upgrade' : (Auth::user()->hasTeamPermission($model, 'update') ? false : 'locked')"
+                    :disabled="!$model->isPremium() ? 'upgrade' : (Auth::user()->hasTeamPermission($model, 'update') ? false : 'locked')"
                 />
 
                 <x-input-error for="user_access_to_team_analytics" class="mt-2" />
             </div>
         </x-slot>
 
-        @if ($model->subscribed())
+        @if ($model->isPremium())
         <x-slot name="actions">
             @include('partials/save_cancel_action')
         </x-slot>

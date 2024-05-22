@@ -11,8 +11,9 @@
     
     $user = Auth::user();
     $team = $user ? $user->currentTeam : null;
+    $isUserLicensedToTeam = $user && $user->isUserLicensedToTeam($team);
     $team_edit = $team && Auth::user()->hasTeamPermission($team, 'edit_guidelines');
-    $open_tab = $team_edit && (strpos(request()->path(), 'team') || strpos(request()->path(), 'livewire') !== false)
+    $open_tab = $team_edit && (strpos(request()->path(), 'team') || strpos(request()->path(), 'livewire') !== false) || !$isUserLicensedToTeam
         ? 'team' : 'user';
 
     $routeName = Route::currentRouteName();
@@ -51,7 +52,7 @@
 @auth
 <nav aria-label="{{ __('content.main_navigation_aria_label') }}">
     <div class="wittyworks-navigation-container">
-        @if ($team_edit)
+        @if ($team_edit && $isUserLicensedToTeam)
             <div class="wittyworks-navigation-account-toggle-wrapper">
                 <x-nav-link id="personal_account" class="wittyworks-navigation-item lato-small-paragraph-title-h4" href="{{ route($personalRoute) }}" :active="$open_tab === 'user'">
                     {{ __('guidelines.personal_account') }}
@@ -61,37 +62,37 @@
                     {{ __('guidelines.team_account') }}
                 </x-nav-link>
             </div>
-        @endif 
+        @endif
 
         @if (count($user->allSwitchableTeams()) > 1)
-        <div class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" style="cursor: default">
+        <div class="wittyworks-navigation-link-wrapper-no-mb lato-paragraph-text-p" style="cursor: default">
             <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/team.svg') }}" alt="" />
             {{ __('content.choose_team') }}
         </div>
         <div class="wittyworks-navigation-sub-wrapper">
-            @foreach ($user->allSwitchableTeams() as $team)
-                <x-switchable-team :team="$team" />
+            @foreach ($user->allSwitchableTeams() as $teamMemberOf)
+                <x-switchable-team :team="$teamMemberOf" />
             @endforeach
         </div>
         @endif
 
-        @if ($open_tab === 'user')
+        @if ($open_tab === 'user' || !$isUserLicensedToTeam)
         <div id="personal_account_content" aria-label="{{ __('content.personal_account_content') }}">
                 <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('profile.show') }}" :active="request()->routeIs('user.subscription')">
                     <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/user.svg') }}" alt="" />
                     {{ __('content.manage_account') }}
                 </x-nav-link>
 
+                @if($isUserLicensedToTeam)
                 @if(!$team_edit && $team && $team->user_access_to_team_analytics)
-                    <div class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" style="cursor: default">
+                    <div class="wittyworks-navigation-link-wrapper-no-mb lato-paragraph-text-p" style="cursor: default">
                         <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/analytics.svg') }}" alt="" />
                         {{ __('content.analytics') }}
                     </div>
 
                     <div class="wittyworks-navigation-sub-wrapper">
-                        <x-nav-link class="wittyworks-navigation-sub-link lato-small-text-p" href="{{ route('user.analytics') }}" :active="request()->routeIs('user.analytics')">{{ __('guidelines.personal_account') }}</x-nav-link>
-                        <br />
-                        <x-nav-link class="wittyworks-navigation-sub-link lato-small-text-p" href="{{ route('teams.analytics') }}" :active="request()->routeIs('teams.analytics')">{{ __('guidelines.team_account') }}</x-nav-link>
+                        <x-nav-link class="wittyworks-navigation-sub-sub-link lato-small-text-p" href="{{ route('user.analytics') }}" :active="request()->routeIs('user.analytics')">{{ __('guidelines.personal_account') }}</x-nav-link>
+                        <x-nav-link class="wittyworks-navigation-sub-sub-link lato-small-text-p" href="{{ route('teams.analytics') }}" :active="request()->routeIs('teams.analytics')">{{ __('guidelines.team_account') }}</x-nav-link>
                     </div>
                 @else
                     <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('user.analytics') }}" :active="request()->routeIs('user.analytics')">
@@ -100,7 +101,6 @@
                     </x-nav-link>
                 @endif
 
-                @if($user->isUserLicensedToTeam($team))
                 @foreach($links as $route => $label)
                 @if($loop->first)
                 <div class="wittyworks-navigation-label-wrapper lato-paragraph-text-p">
@@ -152,7 +152,7 @@
                 </div>
             </div>
         @endif
-        <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('editor') }}">
+        <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('editor') }}" target="_new">
             <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/editor.svg') }}" alt="" />
             {{ __('content.witty_editor') }}
         </x-nav-link>

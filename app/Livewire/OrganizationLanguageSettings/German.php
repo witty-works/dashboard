@@ -55,7 +55,7 @@ class German extends Component
             abort(403);
         }
 
-        if (!$this->model->subscribed()) {
+        if (!$this->model->isPremium()) {
             return;
         }
 

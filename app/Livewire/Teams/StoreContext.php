@@ -38,7 +38,7 @@ class StoreContext extends Component
         $this->resetErrorBag();
 
         $this->store_context = (bool) $this->model->store_context;
-        if (!$this->model->subscribed()) {
+        if (!$this->model->isPremium()) {
             $this->store_context = true;
         }
     }
@@ -51,7 +51,7 @@ class StoreContext extends Component
             abort(403);
         }
 
-        if (!$this->model->subscribed()) {
+        if (!$this->model->isPremium()) {
             $this->store_context = true;
         }
 

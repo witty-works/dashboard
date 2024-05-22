@@ -7,6 +7,7 @@ $classes = ($active ?? false) ? 'navigation-link navigation-link-active' : 'navi
         role="link"
         aria-current="{{ $active ?? false ? 'page' : 'false' }}"
         {{ $attributes->merge(['class' => $classes]) }}
+        target="{{ $target ?? '' }}"
     >
         {{ $slot }}
     </a>

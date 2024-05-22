@@ -231,11 +231,21 @@ class User extends Authenticatable implements MustVerifyEmail
         return config('stripe.plans.' . $planId . $key);
     }
 
-    public function planId()
+    public function isPremium()
+    {
+        $team = $this->currentTeam;
+        if (!$team) {
+            return false;
+        }
+
+        return $team->isPremium();
+    }
+
+    public function planId($featurePlan = false)
     {
         $team = $this->licenseTeam;
         if ($team) {
-            return $team->planId();
+            return $team->planId($featurePlan);
         }
 
         return "none";

@@ -46,6 +46,7 @@ class AnalyticsController extends Controller
             'user' => $user,
             'categories' => $this->categories,
             'default_event' => $this->getDefaultEvent(),
+            'is_premium_user' => $user->isPremium(),
         ]);
     }
 
@@ -73,6 +74,7 @@ class AnalyticsController extends Controller
             'team_edit' => $user->hasTeamPermission($user->currentTeam, 'edit_guidelines'),
             'categories' => $this->categories,
             'default_event' => $this->getDefaultEvent(),
+            'is_premium_user' => $user->currentTeam->isPremium(),
         ]);
     }
 
@@ -220,12 +222,12 @@ class AnalyticsController extends Controller
         return floor($differenceInWeeks);
     }
 
-    protected function filterEvents($events, $subscribed)
+    protected function filterEvents($events, $isPremium)
     {
         if (!is_array($events)) {
             $events = [];
         } else {
-            if (!$subscribed) {
+            if (!$isPremium) {
                 $key = array_search($this->getDefaultEvent(), $events);
                 if ($key) {
                     unset($events[$key]);
@@ -236,7 +238,7 @@ class AnalyticsController extends Controller
             }
         }
         if (empty($events)) {
-            $events = $subscribed ? [$this->getDefaultEvent()] : ['popover_open'];
+            $events = $isPremium ? [$this->getDefaultEvent()] : ['popover_open'];
         }
 
         return $events;
@@ -330,7 +332,7 @@ class AnalyticsController extends Controller
 
         switch ($chart) {
             case 'dau':
-                if ($request->user()->subscribed()) {
+                if ($model->isPremium()) {
                     $events = ['popover_open', 'alternative', 'ignore', 'learning_bites'];
                 } elseif (empty($events)) {
                     $events = [$this->getDefaultEvent()];
@@ -389,7 +391,7 @@ class AnalyticsController extends Controller
             case 'total':
                 if (empty($events)) {
                     $events = ['popover_open', 'alternative', 'ignore', 'learning_bites'];
-                    if ($request->user()->subscribed()) {
+                    if ($model->isPremium()) {
                         array_unshift($events, $this->getDefaultEvent());
                     }
                 }
@@ -473,7 +475,7 @@ class AnalyticsController extends Controller
                 $data['writing_streak'] = $writingStreak;
                 break;
             case 'topSubcategories':
-                $events = $this->filterEvents($events, $request->user()->subscribed());
+                $events = $this->filterEvents($events, $model->isPremium());
 
                 $data = $this->buildBreakdown(
                     $events,
@@ -525,7 +527,7 @@ class AnalyticsController extends Controller
                 }
                 break;
             case 'topWords':
-                $events = $this->filterEvents($events, $request->user()->subscribed());
+                $events = $this->filterEvents($events, $model->isPremium());
 
                 $data = $this->buildBreakdown(
                     $events,

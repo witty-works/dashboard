@@ -19,10 +19,10 @@
                 value="1"
                 :label="__('guidelines.enable_show_inspiration_alternatives')"
                 wire:model="show_inspiration_alternatives"
-                :disabled="!$model->subscribed()"
+                :disabled="!$model->isPremium()"
             />
 
-            @if(!$model->subscribed())
+            @if(!$model->isPremium())
               <div class="p-3">
                 @include('partials.witty-teams-only')
               </div>
@@ -37,10 +37,10 @@
                 value="1"
                 :label="__('guidelines.set_for_all')"
                 wire:model="show_inspiration_alternatives_force"
-                :disabled="!$model->subscribed()"
+                :disabled="!$model->isPremium()"
             />
 
-            @if(!$model->subscribed())
+            @if(!$model->isPremium())
               <div class="p-3">
                 @include('partials.witty-teams-only')
               </div>

@@ -99,7 +99,7 @@ class LanguageGuidelines extends Model
         $filter = [$model instanceof Team ? 'team_id' : 'user_id'  => $model->id];
         $languageGuideline = LanguageGuidelines::firstOrNew($filter);
 
-        if (!$model->subscribed()) {
+        if (!$model->isPremium()) {
             $disabled_categories = $languageGuideline->disabled_categories;
             foreach ($languageGuideline->getDiversityDimensionDrivers(null, true, true) as $ddd => $config) {
                 if (!in_array($ddd, $disabled_categories)) {
@@ -147,7 +147,7 @@ class LanguageGuidelines extends Model
             $genderedRolesFormat = $this->gendered_roles_format;
         }
 
-        $subscribed = $this->team_id ? $this->team->subscribed() : $this->user->subscribed();
+        $subscribed = $this->team_id ? $this->team->isPremium() : $this->user->isPremium();
         if (!$subscribed || !array_key_exists($genderedRolesFormat, GuidelinesInterface::GENDERED_ROLES_FORMAT)) {
             return key(GuidelinesInterface::GENDERED_ROLES_FORMAT);
         }
@@ -202,7 +202,7 @@ class LanguageGuidelines extends Model
             $level = LanguageGuidelines::BASIC_ENABLED;
         } elseif (empty($level)) {
             $level = LanguageGuidelines::DISABLED;
-        } elseif (!$this->model->subscribed()) {
+        } elseif (!$this->model->isPremium()) {
             $level = LanguageGuidelines::BASIC_ENABLED;
         }
 
@@ -264,7 +264,7 @@ class LanguageGuidelines extends Model
             $event = PosthogHelper::STORE_TEAM_LANGUAGE;
         }
 
-        $subscribed = $user->subscribed();
+        $subscribed = $user->isPremium();
 
         switch ($type) {
             case 'Language':
@@ -329,7 +329,7 @@ class LanguageGuidelines extends Model
 
     public static function isForcedOnTeam(User $user, $section, $category = null)
     {
-        if (!$user->subscribed()) {
+        if (!$user->isPremium()) {
             return 'locked_upgrade';
         }
 

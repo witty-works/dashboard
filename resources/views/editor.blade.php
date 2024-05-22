@@ -83,8 +83,22 @@
                                     editorElement.dispatchEvent(event);
                                 }
                             });
+                            FroalaEditor.DefineIcon('dashboard', {
+                                template: 'image',
+                                SRC: @json(URL::asset('witty-icon-color-inverted@2x-1.webp')),
+                                ALT: 'Dashboard'
+                            });
+                            FroalaEditor.RegisterCommand('dashboard', {
+                                title: 'Dashboard',
+                                focus: false,
+                                undo: false,
+                                refreshAfterCallback: false,
+                                callback: function () {
+                                    editor.fullscreen.toggle();
+                                }
+                            });
 
-                            new FroalaEditor('#witty_editor', {
+                            editor = new FroalaEditor('#witty_editor', {
                                 key: @json(config('app.froala_key')),
                                 language: @json(config('app.locale')),
                                 attribution: false,
@@ -92,11 +106,15 @@
                                 spellcheck: false,
                                 heightMax: 800,
                                 enter: FroalaEditor.ENTER_BR,
-                                toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'fontSize', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'insertLink', 'clearFormatting', 'undo', 'redo', 'copy', 'example', 'help'],
-                                toolbarButtonsMD: ['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'fontSize', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'insertLink', 'clearFormatting', 'undo', 'redo', 'copy', 'example', 'help'],
-                                toolbarButtonsSM: ['fullscreen', 'bold', 'underline', 'strikeThrough', 'fontSize', 'insertLink', 'undo', 'redo', 'copy', 'example', 'help'],
-                                toolbarButtonsXS: ['fullscreen', 'bold', 'underline', 'fontSize', 'copy', 'help'],
-                            });
+                                toolbarButtons: ['dashboard', 'bold', 'italic', 'underline', 'strikeThrough', 'fontSize', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'insertLink', 'clearFormatting', 'undo', 'redo', 'copy', 'example', 'help'],
+                                toolbarButtonsMD: ['dashboard', 'bold', 'italic', 'underline', 'strikeThrough', 'fontSize', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'insertLink', 'clearFormatting', 'undo', 'redo', 'copy', 'example', 'help'],
+                                toolbarButtonsSM: ['dashboard', 'bold', 'underline', 'strikeThrough', 'fontSize', 'insertLink', 'undo', 'redo', 'copy', 'example', 'help'],
+                                toolbarButtonsXS: ['dashboard', 'bold', 'underline', 'fontSize', 'copy', 'help'],
+                            }, function () {
+                            @if(!request()->get('onboarding'))
+                                editor.fullscreen.toggle();
+                            @endif
+                            })
                         </script>
                     </div>
                 </div>
