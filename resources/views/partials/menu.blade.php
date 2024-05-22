@@ -151,7 +151,7 @@
                 </div>
             </div>
         @endif
-        <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('editor') }}">
+        <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('editor') }}" target="_new">
             <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/editor.svg') }}" alt="" />
             {{ __('content.witty_editor') }}
         </x-nav-link>
