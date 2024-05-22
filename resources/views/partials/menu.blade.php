@@ -11,8 +11,9 @@
     
     $user = Auth::user();
     $team = $user ? $user->currentTeam : null;
+    $isUserLicensedToTeam = $user && $user->isUserLicensedToTeam($team);
     $team_edit = $team && Auth::user()->hasTeamPermission($team, 'edit_guidelines');
-    $open_tab = $team_edit && (strpos(request()->path(), 'team') || strpos(request()->path(), 'livewire') !== false) || !$user->isUserLicensedToTeam($team)
+    $open_tab = $team_edit && (strpos(request()->path(), 'team') || strpos(request()->path(), 'livewire') !== false) || !$isUserLicensedToTeam
         ? 'team' : 'user';
 
     $routeName = Route::currentRouteName();
@@ -51,7 +52,7 @@
 @auth
 <nav aria-label="{{ __('content.main_navigation_aria_label') }}">
     <div class="wittyworks-navigation-container">
-        @if ($team_edit && $user->isUserLicensedToTeam($team))
+        @if ($team_edit && $isUserLicensedToTeam)
             <div class="wittyworks-navigation-account-toggle-wrapper">
                 <x-nav-link id="personal_account" class="wittyworks-navigation-item lato-small-paragraph-title-h4" href="{{ route($personalRoute) }}" :active="$open_tab === 'user'">
                     {{ __('guidelines.personal_account') }}
@@ -75,14 +76,14 @@
         </div>
         @endif
 
-        @if ($open_tab === 'user' || !$user->isUserLicensedToTeam($team))
+        @if ($open_tab === 'user' || !$isUserLicensedToTeam)
         <div id="personal_account_content" aria-label="{{ __('content.personal_account_content') }}">
                 <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('profile.show') }}" :active="request()->routeIs('user.subscription')">
                     <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/user.svg') }}" alt="" />
                     {{ __('content.manage_account') }}
                 </x-nav-link>
 
-                @if($user->isUserLicensedToTeam($team))
+                @if($isUserLicensedToTeam)
                 @if(!$team_edit && $team && $team->user_access_to_team_analytics)
                     <div class="wittyworks-navigation-link-wrapper-no-mb lato-paragraph-text-p" style="cursor: default">
                         <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/analytics.svg') }}" alt="" />
