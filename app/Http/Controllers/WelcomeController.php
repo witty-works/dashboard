@@ -23,10 +23,6 @@ class WelcomeController extends Controller
             return redirect()->route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'login']);
         }
 
-        if ($user->isPremium()) {
-            return redirect()->route('editor');
-        }
-
         $route = $user->getTeamRoleName() === 'admin' ? 'teams' : 'user';
         return redirect()->route("$route.language-guidelines");
     }

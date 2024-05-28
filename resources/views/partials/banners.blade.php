@@ -9,7 +9,8 @@ $user = Auth::user();
 if ($user) {
     $team = $user->currentTeam;
     if ($team) {
-        $showInviteCheck = empty($hideInviteCheck) && $team->getTotalUserWithInvitationsCount() <= 1;
+        $hideInviteCheck = !$team->subscribed() && empty($hideInviteCheck);
+        $showInviteCheck = $hideInviteCheck && $team->getTotalUserWithInvitationsCount() <= 1;
         if ($user->hasTeamPermission($team, 'update')) {
             $showInvitationRequests = $team->invitationRequests->isNotEmpty();
         }
