@@ -29,6 +29,17 @@ class OfficeSsoHelper
      */
     protected $httpClient;
 
+    public function decodeIdToken($idToken)
+    {
+        // payload validation
+        $payload = explode('.', $idToken);
+        if (empty($payload[1])) {
+            throw new InvalidStateException('payload cannot be parsed');
+        }
+
+        return json_decode(base64_decode(str_pad(strtr($payload[1], '-_', '+/'), strlen($payload[1]) % 4, '=')), true);
+    }
+
     /**
      * validate id_token
      * - signature validation using firebase/jwt library.
@@ -45,13 +56,7 @@ class OfficeSsoHelper
     public function validateIdToken($idToken)
     {
         try {
-            // payload validation
-            $payload = explode('.', $idToken);
-            if (empty($payload[1])) {
-                throw new InvalidStateException('payload cannot be parsed');
-            }
-
-            $payloadJson = json_decode(base64_decode(str_pad(strtr($payload[1], '-_', '+/'), strlen($payload[1]) % 4, '=')), true);
+            $payloadJson = $this->decodeIdToken($idToken);
             $openIdConfiguration = $this->getOpenIdConfiguration();
 
             // iss validation - https://learn.microsoft.com/en-us/entra/identity-platform/access-tokens#multi-tenant-applications

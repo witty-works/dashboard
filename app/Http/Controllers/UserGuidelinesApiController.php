@@ -3,13 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Console\Commands\SyncToHubspotCategoriesCommand;
+use App\Helpers\OfficeSsoHelper;
 use App\Jobs\SyncUserToNlpApi;
 use App\Models\ConnectedAccount;
 use App\Models\Domain;
 use App\Models\FalsePositive;
 use App\Models\LanguageGuidelines;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use JoelButcher\Socialstream\Socialstream;
 use Laravel\Socialite\Two\InvalidStateException;
 use Socialite;
 
@@ -178,18 +181,37 @@ class UserGuidelinesApiController extends Controller
     protected function getUser(Request $request)
     {
         $accessToken = $request->bearerToken();
-        $provider = Socialite::driver('azureadb2c');
+        $officeSsoHelper = new OfficeSsoHelper();
 
         try {
-            $socialiteUser = $provider->getUserByToken($accessToken);
-            $connectedUser = ConnectedAccount::where('provider_id', $socialiteUser->getId())->first();
-            if (!$connectedUser instanceof ConnectedAccount) {
-                throw new InvalidStateException('Connected user not found');
-            }
-        } catch (InvalidStateException $e) {
+            $payload = $officeSsoHelper->decodeIdToken($accessToken);
+        } catch (Exception $e) {
             abort(403);
         }
 
-        return $connectedUser->user;
+        $aud = $payload['aud'] ?? null;
+        $user = null;
+
+        try {
+            if ($aud === config('services.azureadb2c.client_id')) {
+                $provider = Socialite::driver('azureadb2c');
+                $socialiteUser = $provider->getUserByToken($accessToken);
+                $connectedUser = ConnectedAccount::where('provider_id', $socialiteUser->getId())->first();
+                if ($connectedUser instanceof ConnectedAccount) {
+                    $user = $connectedUser->user;
+                }
+            } elseif ($aud === config('services.microsoft_office.client_id')) {
+                $claims = $officeSsoHelper->validateIdToken($accessToken);
+                $email = strtolower($claims['preferred_username'] ?? '');
+                $user = Socialstream::newUserModel()->where('email', $email)->first();
+            }
+        } catch (Exception $e) {
+        }
+
+        if ($user === null) {
+            abort(403);
+        }
+
+        return $user;
     }
 }
