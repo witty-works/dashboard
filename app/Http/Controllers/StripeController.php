@@ -26,7 +26,7 @@ class StripeController extends Controller
         }
 
         if (app('impersonate')->isImpersonating() && $request->get('trial_ends_at')) {
-            $team->trial_ends_at = $request->get('trial_ends_at');
+            $team->trial_ends_at = $request->get('trial_ends_at') . ' 23:59:59';
             $team->save();
         }
 

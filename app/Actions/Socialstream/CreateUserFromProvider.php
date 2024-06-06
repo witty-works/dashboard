@@ -52,7 +52,7 @@ class CreateUserFromProvider implements CreatesUserFromProvider
                 $user->applyAcceptedInvitiations();
 
                 if ($user->currentTeam && !$user->currentTeam->subscription() && !$user->currentTeam->trial_ends_at) {
-                    $user->currentTeam->trial_ends_at = Carbon::now()->addDays(config('cashier.trail_days'));
+                    $user->currentTeam->trial_ends_at = Carbon::now()->addDays(config('cashier.trail_days'))->format('Y-m-d') . ' 23:59:59';
                     $user->currentTeam->save();
                 }
             });
