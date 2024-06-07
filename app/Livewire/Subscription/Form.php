@@ -106,7 +106,7 @@ class Form extends Component
         $this->stripe_status = $subscription->stripe_status;
         $this->starts_at = $subscription->starts_at->format('Y-m-d');
         $this->ends_at = $subscription->ends_at ? $subscription->ends_at->format('Y-m-d') : null;
-        $this->trial_ends_at = $subscription->trial_ends_at ? $subscription->trial_ends_at->format('Y-m-d') : null;
+        $this->trial_ends_at = $subscription->trial_ends_at ? $subscription->trial_ends_at->format('Y-m-d'). ' 23:59:59' : null;
 
         return $this->render();
     }
