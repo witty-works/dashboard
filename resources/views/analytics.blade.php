@@ -681,7 +681,30 @@
                     },
                     options: {
                         tooltips: {
-                            mode: 'dataset',
+                            enabled: true,
+                            mode: 'nearest',
+                            intersect: true,
+                            backgroundColor: '#f5f5f5',
+                            titleFontColor: 'black',
+                            bodyFontColor: 'black',
+                            callbacks: {
+                                title: function(tooltipItems, data) {
+                                    return '';
+                                },
+                                label: function(tooltipItem, data) {
+                                    return data.datasets[tooltipItem.datasetIndex].label + ': ' + tooltipItem.yLabel;
+                                },
+                                labelColor: function(tooltipItem, chart) {
+                                    return {
+                                        borderColor: 'rgba(0,0,0,0)',
+                                        backgroundColor: 'rgba(0,0,0,0)'
+                                    };
+                                },
+                                afterLabel: function(tooltipItem, data) {
+                                    return '';
+                                }
+                            },
+                            displayColors: false
                         },
                         legend: {
                             onHover: function(e) {
