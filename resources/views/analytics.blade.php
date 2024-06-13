@@ -367,7 +367,7 @@
 
         let formattedSubcategories = '';
         if (subcategories && subcategories.length > 0) {
-            formattedSubcategories = '&' + subcategories.map(category => 'subcategories[]=' + subcategories).join('&');
+            formattedSubcategories = '&' + subcategories.map(category => 'subcategories[]=' + category).join('&');
         }
         let formattedEventTypes = '';
         if (eventTypes && eventTypes.length > 0) {
@@ -845,7 +845,9 @@
             true
         );
 
-
+        if (topSubChart) {
+            topSubChart.destroy();
+        }
         ctx = document.getElementById('topSubCategoriesChart').getContext('2d');
         topSubChart = new Chart(ctx, {
             type: 'line',
@@ -1084,9 +1086,6 @@ function updateDropdown(dropdownId, dropdownValue) {
 }
 
 function setParams(eventTypes = null) {
-    if (topSubChart) {
-        topSubChart.destroy();
-    }
     if (eventTypes === null) {
         eventTypes = isPremiumUser ? [@json($default_event)] : ['popover_open']
 
