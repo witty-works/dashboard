@@ -367,7 +367,7 @@
 
         let formattedSubcategories = '';
         if (subcategories && subcategories.length > 0) {
-            formattedSubcategories = '&' + subcategories.map(category => 'subcategories[]=' + subcategories).join('&');
+            formattedSubcategories = '&' + subcategories.map(category => 'subcategories[]=' + category).join('&');
         }
         let formattedEventTypes = '';
         if (eventTypes && eventTypes.length > 0) {
@@ -844,9 +844,10 @@
             eventTypes,
             true
         );
-
-
-        ctx = document.getElementById('topSubCategoriesChart').getContext('2d');
+        if (topSubChart) {
+            topSubChart.destroy();
+        }
+        const ctx = document.getElementById('topSubCategoriesChart').getContext('2d');
         topSubChart = new Chart(ctx, {
             type: 'line',
             data: {
@@ -921,7 +922,6 @@
                             else e.target.style.cursor = 'default';
                         }
                     },
-                    events: ['click', 'mousemove', 'mouseout'],
                     maintainAspectRatio: false,
                     responsive: true,
                     title: {
@@ -955,9 +955,15 @@
                     },
                 }
             });
-        const toggleLinesButton = document.getElementById('toggleLines');
-        toggleLinesButton.removeEventListener('click', toggleLines);
-        toggleLinesButton.addEventListener('click', toggleLines);
+
+        document.getElementById('toggleLines').addEventListener('click', function() {
+            const allVisible = topSubChart.data.datasets.every(dataset => !dataset.hidden);
+            topSubChart.data.datasets.forEach(function(dataset) {
+                dataset.hidden = allVisible;
+            });
+            console.log('opSubChart.data.datasets', topSubChart.data.datasets)
+            topSubChart.update();
+        });
 
         setElementStyle('loading-icon-top-categories', 'display', 'none');
         setElementStyle('top-categories-content', 'visibility', 'visible');
@@ -1063,15 +1069,6 @@
     });
 };
 
-function toggleLines() {
-    let allVisible = topSubChart.data.datasets.every(dataset => !dataset.hidden);
-    topSubChart.data.datasets.forEach(function(dataset) {
-        dataset.hidden = allVisible;
-    });
-
-    topSubChart.update();
-}
-
 function updateDropdown(dropdownId, dropdownValue) {
     const dropdown = document.getElementById(dropdownId);
     if (!dropdown) return;
@@ -1084,9 +1081,6 @@ function updateDropdown(dropdownId, dropdownValue) {
 }
 
 function setParams(eventTypes = null) {
-    if (topSubChart) {
-        topSubChart.destroy();
-    }
     if (eventTypes === null) {
         eventTypes = isPremiumUser ? [@json($default_event)] : ['popover_open']
 
