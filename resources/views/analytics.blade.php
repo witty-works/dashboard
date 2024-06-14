@@ -367,7 +367,7 @@
 
         let formattedSubcategories = '';
         if (subcategories && subcategories.length > 0) {
-            formattedSubcategories = '&' + subcategories.map(category => 'subcategories[]=' + subcategories).join('&');
+            formattedSubcategories = '&' + subcategories.map(category => 'subcategories[]=' + category).join('&');
         }
         let formattedEventTypes = '';
         if (eventTypes && eventTypes.length > 0) {
@@ -681,7 +681,30 @@
                     },
                     options: {
                         tooltips: {
-                            mode: 'dataset',
+                            enabled: true,
+                            mode: 'nearest',
+                            intersect: true,
+                            backgroundColor: '#f5f5f5',
+                            titleFontColor: 'black',
+                            bodyFontColor: 'black',
+                            callbacks: {
+                                title: function(tooltipItems, data) {
+                                    return '';
+                                },
+                                label: function(tooltipItem, data) {
+                                    return data.datasets[tooltipItem.datasetIndex].label + ': ' + tooltipItem.yLabel;
+                                },
+                                labelColor: function(tooltipItem, chart) {
+                                    return {
+                                        borderColor: 'rgba(0,0,0,0)',
+                                        backgroundColor: 'rgba(0,0,0,0)'
+                                    };
+                                },
+                                afterLabel: function(tooltipItem, data) {
+                                    return '';
+                                }
+                            },
+                            displayColors: false
                         },
                         legend: {
                             onHover: function(e) {
@@ -822,7 +845,9 @@
             true
         );
 
-
+        if (topSubChart) {
+            topSubChart.destroy();
+        }
         ctx = document.getElementById('topSubCategoriesChart').getContext('2d');
         topSubChart = new Chart(ctx, {
             type: 'line',
@@ -1061,9 +1086,6 @@ function updateDropdown(dropdownId, dropdownValue) {
 }
 
 function setParams(eventTypes = null) {
-    if (topSubChart) {
-        topSubChart.destroy();
-    }
     if (eventTypes === null) {
         eventTypes = isPremiumUser ? [@json($default_event)] : ['popover_open']
 
