@@ -2,10 +2,10 @@
 
 namespace App\Listeners;
 
-use App\Helpers\PosthogHelper;
-
 class PosthogReset
 {
+    public static $posthog_reset = false;
+
     /**
      * Handle the event.
      *
@@ -15,7 +15,7 @@ class PosthogReset
     public function handle($event)
     {
         if (config('posthog.js_enabled')) {
-            PosthogHelper::$posthog_reset = true;
+            self::$posthog_reset = true;
         }
     }
 }

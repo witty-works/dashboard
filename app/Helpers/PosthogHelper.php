@@ -26,8 +26,6 @@ class PosthogHelper
     public const ADDED_TEAM_MEMBER = 'added_team_member';
     public const JOINED_TEAM = 'joined_team';
 
-    public static $posthog_reset = false;
-
     public static function getInsightsUrl()
     {
         $projectId = config('posthog.project_id');
