@@ -304,8 +304,12 @@ class PosthogHelper
             $from = "{$from}d";
         }
 
-        $from = "-{$from}";
-        $to = "-{$to}";
+        if (preg_match('/^\d+[my]$/', $from)) {
+            $from = "-{$from}";
+        }
+        if (preg_match('/^\d+[my]$/', $from)) {
+            $to = "-{$to}";
+        }
 
         if (!empty($lang)) {
             $properties[] = [

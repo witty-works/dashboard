@@ -18,6 +18,7 @@ class Kpi extends Model
         'user_id',
         'date',
         'kpi',
+        'name',
         'value',
     ];
 
@@ -30,7 +31,7 @@ class Kpi extends Model
             ->whereDate('date', '>', now()->subDays(30))->sum('value');
     }
 
-    public static function storeKpi($model, $kpi, $value, $date)
+    public static function storeKpi($model, $kpi, $value, $date, $name = null)
     {
         $idColumnName = $model instanceof Team ? 'team_id' : 'user_id';
 
@@ -39,6 +40,7 @@ class Kpi extends Model
                 $idColumnName => $model->id,
                 'date' => $date,
                 'kpi' => $kpi,
+                'name' => $name,
             ],
             [
                 'value' => $value,
