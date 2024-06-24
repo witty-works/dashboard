@@ -363,7 +363,7 @@ If you have any questions, contact :name (:email). 🙂
     'invitation_request_license_limit_reached' => 'You have already invited two members to your team and have reached the limit. <a href="https://dashboard.witty.works/team/subscription">Upgrade</a> to invite more members!',
     'witty_editor_copy_button' => 'Copy text to clipboard',
     'witty_editor_example_button' => 'Show Example',
-    'witty_editor_example_text' => '<h4>Witty highlights language containing unconscious biased in orange and yellow.</h4><br><h3>Hey guys,<br>We have a large software project that will take man-hours to complete. Who would like to join us? Bring your extraordinary expertise and strong technical background. We are also looking for a digital native.</h3><h3><br></h3><h3>P.S. Your wives are welcome at the board\'s Christmas party.</h3><br><h4>Witty highlights positive terms in green.</h4><br><h3>We are a creative team.</h3>​<h4>Witty highlights grammar and spelling mistakes in red.</h4><br><h3>This is a spelling mistacke.</h3>',
+    'witty_editor_example_text' => '<h3>Hey guys,<br>We have a large software project that will take many man-hours to complete. Who would like to join us? Bring your extraordinary expertise and strong technical background. We are also looking for a digital native.</h3><br><br><h3>PS: We also support people who are bound to a wheelchair.</h3>',
     'learn_more' => 'Dig deeper',
     'example' => 'Example',
     'open' => 'Open',

@@ -20,7 +20,7 @@ return [
     'manage_organization_guidelines_german' => 'Deutsch',
     'manage_organization_guidelines_description_german' => 'Konfiguration für inklusive Sprache in Deutsch.',
     'manage_organization_guidelines_inspiration' => 'Vorschläge zur Umformulierung ganzer Sätze',
-    'manage_organization_guidelines_description_inspiration' => 'Vorschläge zur Umformulierung ganzer Sätze.',
+    'manage_organization_guidelines_description_inspiration' => 'Zeige Vorschläge zur Umformulierung ganzer Sätze. Diese werden mit einer Glühbirne💡gekennzeichnet.',
     'show_inspiration_alternatives' => 'Inspiration für Umformulierungen vorschlagen',
     'manage_organization_guidelines_language' => 'Dialektauswahl',
     'manage_organization_guidelines_description_language' => 'Wähle den englischen und deutschen Dialekt aus, um Vorschläge zu erhalten, die auf den Sprachhintergrund deines Teams zugeschnitten sind.',
