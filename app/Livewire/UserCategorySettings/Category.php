@@ -49,7 +49,11 @@ class Category extends OrganizationCategorySettingsCategory
         }
 
         foreach ($this->dimensions as $ddd => $enabled) {
-            $minValue = LanguageGuidelines::teamCategoryValue($this->model, $ddd);
+            $minValue = LanguageGuidelines::teamCategoryValue(
+                $this->model,
+                $ddd,
+                $this->diversityDimensionDrivers[$ddd]['proficiency_level']
+            );
             $this->dimensions[$ddd] = max($minValue, (int)$enabled);
         }
 
