@@ -39,7 +39,7 @@ All words added to this list will become highlighted by Witty, and your custom r
     'manage_organization_guidelines_description_german' => 'Configuration for inclusive language in German.',
     'manage_organization_guidelines_description_german_form_sub_title' => 'How should Witty handle the generic masculine?',
     'manage_organization_guidelines_inspiration' => 'Show inspirations to rephrase entire sentences',
-    'manage_organization_guidelines_description_inspiration' => 'Makes suggestions to rephrase entire sentences.',
+    'manage_organization_guidelines_description_inspiration' => 'Makes suggestions to rephrase entire sentences. These are marked with a light bulb 💡.',
     'show_inspiration_alternatives' => 'Show inspiration for rephrasing',
     'manage_organization_guidelines_language' => 'Dialect Selection',
     'manage_organization_guidelines_description_language' => 'Select the English and German dialect to get suggestions tailored to your team\'s language background.',
