@@ -87,7 +87,7 @@
             $minValue = \App\Models\LanguageGuidelines::BASIC_ENABLED;
             $title = __('guidelines.discriminating_language_cannot_be_disabled');
         } else {
-            $minValue = \App\Models\LanguageGuidelines::teamCategoryValue($model, $ddd);
+            $minValue = \App\Models\LanguageGuidelines::teamCategoryValue($model, $ddd, $proficiencyLevel);
             $title = $disabled ? __('content.customize_via_team_settings') : '';
         }
 
@@ -110,7 +110,7 @@
                 value="1"
                 :label="$label"
                 wire:model="dimensions.{{$ddd}}"
-                :enabled="$dimensions[$ddd]"
+                :enabled="$dimensions[$ddd] || $minValue === 1"
                 :disabled="(bool)$disabled || $minValue === 1"
                 :title="$title"
             />

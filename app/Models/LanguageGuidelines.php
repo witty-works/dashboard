@@ -346,7 +346,7 @@ class LanguageGuidelines extends Model
         return $teamGuidelines->{$section . '_force'} ? 'locked' : false;
     }
 
-    public static function teamCategoryValue(User $user, $category)
+    public static function teamCategoryValue(User $user, $category, $proficiencyLevel)
     {
         $teamGuidelines = self::getTeamGuidelines($user);
 
@@ -354,7 +354,10 @@ class LanguageGuidelines extends Model
             return false;
         }
 
-        if (in_array('advanced_' . $category, $teamGuidelines->disabled_categories)) {
+        if (
+            in_array('advanced_' . $category, $teamGuidelines->disabled_categories)
+            || self::isBasicOnly($proficiencyLevel)
+        ) {
             if (in_array($category, $teamGuidelines->disabled_categories)) {
                 return self::DISABLED;
             }
