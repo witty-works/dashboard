@@ -36,7 +36,8 @@
         <x-input-error for="preferred_variants_de" class="mt-2" role="alert" />
 
         @if(config('app.french_support'))
-        <label class="lato-small-text-p" for="preferred_variants_fr">
+        <div class="mt-4">
+        <label class="lato-small-text-p mt-20" for="preferred_variants_fr">
             {{ __('guidelines.team_preferred_variants_dialect') }}
         </label>
         <x-select id="preferred_variants_fr"
@@ -45,6 +46,7 @@
             wire:model="preferred_variants_fr"
         />
         <x-input-error for="preferred_variants_fr" class="mt-2" role="alert" />
+        </div>
         @endif
     </x-slot>
 
