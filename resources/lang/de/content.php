@@ -432,4 +432,5 @@ Bitte gehe dann erneut auf „Registrieren“, um die Registrierung im "Witty fo
     'subscription-ended_text' => 'Dein Team-Abonnement ist beendet.',
     'trial-ended_title' => 'Bereit, ein Abo abzuschließen?',
     'trial-ended_text' => 'Die Testphase Deines Teams ist beendet.',
+    'fr' => 'Französisch',
 ];
