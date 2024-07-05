@@ -38,6 +38,10 @@ class UserGuidelinesApiController extends Controller
         $user = $this->getUser($request);
         $domain = Domain::validateDomain($request->get('domain'));
 
+        if (strlen($domain) > 250) {
+            return response()->json(['message' => "'domain' query parameter is too long"], 400);
+        }
+
         $result = Domain::upsert(
             [
                 ['user_id' => $user->id, 'domain' => $domain],
@@ -83,6 +87,10 @@ class UserGuidelinesApiController extends Controller
         $false_positive = $request->get('false_positive', '');
         if (empty($false_positive)) {
             return response()->json(['message' => "'false_positive' query parameter is empty"], 400);
+        }
+
+        if (strlen($false_positive) > 250) {
+            return response()->json(['message' => "'false_positive' query parameter is too long"], 400);
         }
 
         $result = FalsePositive::upsert(
