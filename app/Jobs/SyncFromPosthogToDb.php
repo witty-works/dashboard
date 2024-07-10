@@ -31,19 +31,33 @@ class SyncFromPosthogToDb implements ShouldQueue
     protected $params = [];
     protected $categories = [];
     protected $subcategories = [];
-    protected $date;
+    protected $dateFrom;
+    protected $dateTo;
     protected $event = 'check_highlights';
-    protected $interval = 'month';
+    protected $interval;
     protected $charts = [
         'topSubcategories',
         'topWords',
     ];
 
-    public function __construct($model, $date)
+    public function __construct($model, $dateFrom, $interval)
     {
         $this->id = $model->id;
         $this->model = $model instanceof Team ? 'team' : 'user';
-        $this->date = $date;
+        $this->dateFrom = $dateFrom;
+        // 'month' or 'week'
+        $this->interval = $interval;
+
+        switch ($this->interval) {
+            case 'week':
+                $this->dateTo = date('Y-m-d', strtotime("{$this->dateFrom} +6 day"));
+                break;
+            case 'month':
+                $this->dateTo = date('Y-m-t', strtotime("{$this->dateFrom}"));
+                break;
+            default:
+                throw new InvalidArgumentException("The interval '{$this->interval} does not exist, use 'week' or 'month'.");
+        }
     }
 
     public function handle()
@@ -61,8 +75,8 @@ class SyncFromPosthogToDb implements ShouldQueue
 
         $this->params = [
             'interval' => $this->interval,
-            'from' => $this->date,
-            'to' => date('Y-m-t', strtotime($this->date)),
+            'from' => $this->dateFrom,
+            'to' => $this->dateTo,
             'lang' => null,
             'events' => [$this->event],
             'categories' => null,
@@ -106,13 +120,15 @@ class SyncFromPosthogToDb implements ShouldQueue
         $properties = PosthogHelper::getOrganizationFilter($team);
         $params = $this->params;
 
-        $kpi = $this->event . '-' . $this->interval . '-';
+        $kpi = "{$this->event}-{$this->interval}";
+        $dateRange = "{$this->dateFrom} - {$this->dateTo}";
+        print_r($dateRange);
 
         $result = [];
         foreach ($this->charts as $chart) {
             $params['chart'] = $chart;
             $data = PosthogHelper::getData($params, $properties, $team, true, $this->categories, $this->subcategories);
-            $result[$chart] = $this->storeKpis($team, $data['events']['check_highlights'], $kpi . $params['chart']);
+            $result["$chart $dateRange"] = $this->storeKpis($team, $data['events']['check_highlights'], $kpi . $params['chart']);
         }
 
         return $result;
@@ -131,7 +147,7 @@ class SyncFromPosthogToDb implements ShouldQueue
                     Kpi::storeKpi($model, $kpi, $count, $date, $name);
                 }
             } else {
-                Kpi::storeKpi($model, $kpi, $values, $this->date, $name);
+                Kpi::storeKpi($model, $kpi, $values, $this->dateFrom, $name);
             }
         }
 

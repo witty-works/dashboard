@@ -99,7 +99,6 @@ class PosthogHelper
             }
 
             $data = $response->collect()->all();
-
             $data['last_refresh'] = Carbon::now();
 
             return $data;
@@ -160,8 +159,8 @@ class PosthogHelper
             ],
             'filter_test_accounts' => false,
             'interval' => $interval,
-            'date_from' => $from,
-            'date_to' => $to,
+            'date_from' => $from . 'T00:00:00+00:00',
+            'date_to' => $to . 'T23:59:59.999999+00:00',
         ];
 
         if (!empty($filters)) {
