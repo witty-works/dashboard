@@ -417,7 +417,7 @@
         "translations": {
             "en": {
                 "hs_path": "50-years-and-older",
-                "hs_name": "Bias against 50+ years",
+                "hs_name": "Age-bias against 50+",
                 "canonical_url": "https:\/\/www.witty.works\/en\/categories\/acquired-diversity\/50-years-and-older",
                 "is_active": "1",
                 "short_explanation": "Reveals and feeds biases against people aged 50+",
@@ -514,7 +514,7 @@
         "translations": {
             "en": {
                 "hs_path": "25-years-and-younger",
-                "hs_name": "Bias against 25- years",
+                "hs_name": "Age-bias against 25-",
                 "canonical_url": "https:\/\/www.witty.works\/en\/categories\/acquired-diversity\/25-years-and-younger",
                 "is_active": "1",
                 "short_explanation": "Reveals and feeds biases against people under 25",
@@ -1478,10 +1478,10 @@
         "translations": {
             "en": {
                 "hs_path": "cognitive-perception",
-                "hs_name": "Cognitive perception",
+                "hs_name": "Misuses mental health",
                 "canonical_url": "https:\/\/www.witty.works\/en\/categories\/ability-physicality\/cognitive-perception",
                 "is_active": "1",
-                "short_explanation": "Fuels preconceived notions about cognitive perception",
+                "short_explanation": "Discriminatory wording on the back of people with mental health issues",
                 "sub_head": "",
                 "lead_video": "",
                 "lead_image": [],
@@ -1580,7 +1580,7 @@
         "translations": {
             "en": {
                 "hs_path": "color",
-                "hs_name": "Bias due to color",
+                "hs_name": "Color connotation bias",
                 "canonical_url": "https:\/\/www.witty.works\/en\/categories\/cultural-diversity\/color",
                 "is_active": "1",
                 "short_explanation": "Does this color carry biased implications?",
@@ -3096,10 +3096,10 @@
         "translations": {
             "en": {
                 "hs_path": "empty-words",
-                "hs_name": "Empty words",
+                "hs_name": "Empty word",
                 "canonical_url": "https:\/\/www.witty.works\/en\/categories\/cultural-diversity\/empty-words",
                 "is_active": "1",
-                "short_explanation": "Undermine or distract from your message",
+                "short_explanation": "It's overused and might distract from your message",
                 "sub_head": "To connect and engage your audience, avoid empty words and generic messages.",
                 "lead_video": "",
                 "lead_image": {
@@ -4487,7 +4487,7 @@
                 "hs_name": "Ancestry",
                 "canonical_url": "https:\/\/www.witty.works\/en\/categories\/cultural-diversity\/ancestry",
                 "is_active": "1",
-                "short_explanation": "Avoid language with racist roots, undertones, or connotations",
+                "short_explanation": "Has a racist or colonialist undertone",
                 "sub_head": "To make everyone around you feel psychologically safe, respected, engaged, and valued, avoid language that others and devalues people based on their ancestry or ethnic background.",
                 "lead_video": "",
                 "lead_image": [],
@@ -4962,7 +4962,7 @@
                 "hs_name": "Job Titles",
                 "canonical_url": "https:\/\/www.witty.works\/en\/categories\/gender-orientation\/jobs",
                 "is_active": "1",
-                "short_explanation": "People tend to picture a specific gender",
+                "short_explanation": "Generally provokes a mental image of men",
                 "sub_head": "To reach out to all genders, use gender-inclusive options to describe how someone contributes to a company\u2019s mission.",
                 "lead_video": "",
                 "lead_image": {
