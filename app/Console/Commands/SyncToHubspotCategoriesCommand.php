@@ -149,6 +149,9 @@ class SyncToHubspotCategoriesCommand extends Command
                         $translation = $data[$alias . '_translations'][$id];
                         $translation = $this->cleanRow($translation);
                         unset($translation['sort']);
+                        if ($alias === 'diversity_dimension_drivers') {
+                            unset($translation['name']);
+                        }
 
                         $row["translations"][$lang] = $translation;
                     }
