@@ -133,7 +133,7 @@
         "translations": {
             "en": {
                 "hs_path": "ability",
-                "hs_name": "Ability",
+                "hs_name": "Dis\/Ability",
                 "canonical_url": "https:\/\/www.witty.works\/en\/categories\/ability-physicality\/ability",
                 "is_active": "1",
                 "name": "Reveals and feeds biases against disabilities",
@@ -232,11 +232,11 @@
         "translations": {
             "en": {
                 "hs_path": "ableist",
-                "hs_name": "Ableist",
+                "hs_name": "Ableism",
                 "canonical_url": "https:\/\/www.witty.works\/en\/categories\/ability-physicality\/ableist",
                 "is_active": "1",
                 "name": "Constitutes an ableist slur or hate speech",
-                "short_explanation": "Ableist",
+                "short_explanation": "Constitutes a slur or hate speech against people with disabilities",
                 "sub_head": "Refrain from ableist slurs, even in jest. Failing to do so, can be considered grounds for legal or disciplinary action.",
                 "lead_video": "",
                 "lead_image": {
@@ -425,7 +425,7 @@
         "translations": {
             "en": {
                 "hs_path": "50-years-and-older",
-                "hs_name": "50 years and older",
+                "hs_name": "Bias against 50+ years",
                 "canonical_url": "https:\/\/www.witty.works\/en\/categories\/acquired-diversity\/50-years-and-older",
                 "is_active": "1",
                 "name": "Reveals and feeds biases against people aged 50+",
@@ -524,7 +524,7 @@
         "translations": {
             "en": {
                 "hs_path": "25-years-and-younger",
-                "hs_name": "25 years and younger",
+                "hs_name": "Bias against 25- years",
                 "canonical_url": "https:\/\/www.witty.works\/en\/categories\/acquired-diversity\/25-years-and-younger",
                 "is_active": "1",
                 "name": "Reveals and feeds biases against people under 25",
@@ -631,8 +631,8 @@
                 "hs_name": "Agentic language",
                 "canonical_url": "https:\/\/www.witty.works\/en\/categories\/social-motive\/agentic-language",
                 "is_active": "1",
-                "name": "Doesn\u2019t resonate with cooperative and supportive people ",
-                "short_explanation": "Doesn\u2019t resonate with team-minded people",
+                "name": "Has a connotation of competition and performance. Deters cooperatively minded people",
+                "short_explanation": "Has a connotation of competition and performance. Deters cooperatively minded people.",
                 "sub_head": "To reach out to team-minded people, use words that put cooperation, collaboration, connection, and a shared purpose first.",
                 "lead_video": "62987289559",
                 "lead_image": {
@@ -825,11 +825,11 @@
         "translations": {
             "en": {
                 "hs_path": "islamophobia-and-anti-muslim-sentiment",
-                "hs_name": "Islamophobia and anti-muslim sentiment",
+                "hs_name": "Islamophobia",
                 "canonical_url": "https:\/\/www.witty.works\/en\/categories\/religion\/islamophobia-and-anti-muslim-sentiment",
                 "is_active": "1",
-                "name": "Islamophobia and anti-muslim sentiment",
-                "short_explanation": "Constitutes an islamophobic and anti-muslim slur",
+                "name": "Does this insult the Islamic religion?",
+                "short_explanation": "Does this insult the Islamic religion?",
                 "sub_head": "",
                 "lead_video": "",
                 "lead_image": [],
@@ -917,8 +917,8 @@
                 "hs_name": "Anti-semitism",
                 "canonical_url": "https:\/\/www.witty.works\/en\/categories\/religion\/anti-semitism",
                 "is_active": "1",
-                "name": "Anti-semitic",
-                "short_explanation": "Constitutes an anti-semitic slur ",
+                "name": "Does this insult the Jewish religion?l",
+                "short_explanation": "Does this insult the Jewish religion?",
                 "sub_head": "",
                 "lead_video": "",
                 "lead_image": [],
@@ -1105,8 +1105,8 @@
                 "hs_name": "Belief",
                 "canonical_url": "https:\/\/www.witty.works\/en\/categories\/religion\/belief",
                 "is_active": "1",
-                "name": "Expression of a belief system not universally shared",
-                "short_explanation": "Expression of a belief system not universally shared",
+                "name": "Sure this religious reference is universally accepted?",
+                "short_explanation": "Sure this religious reference is universally accepted?",
                 "sub_head": "",
                 "lead_video": "",
                 "lead_image": [],
@@ -1204,8 +1204,8 @@
                 "hs_name": "Binary pronouns",
                 "canonical_url": "https:\/\/www.witty.works\/en\/categories\/gender-orientation\/binary-pronouns",
                 "is_active": "1",
-                "name": "Pronouns that exclude non-binary people",
-                "short_explanation": "Pronouns that exclude non-binary people",
+                "name": "Confident you're not excluding non-binary people?",
+                "short_explanation": "Confident you're not excluding non-binary people?",
                 "sub_head": "To include all genders, adress people directly or use the genderneutral \"they\"",
                 "lead_video": "",
                 "lead_image": {
@@ -1612,11 +1612,11 @@
         "translations": {
             "en": {
                 "hs_path": "color",
-                "hs_name": "Color",
+                "hs_name": "Bias due to color",
                 "canonical_url": "https:\/\/www.witty.works\/en\/categories\/cultural-diversity\/color",
                 "is_active": "1",
-                "name": "Don't use colors to describe good or bad",
-                "short_explanation": "Don\u2019t use colors to describe good or bad",
+                "name": "Does this color carry biased implications?",
+                "short_explanation": "Does this color carry biased implications?",
                 "sub_head": "Avoid using colors and tones to describe value, values, quality, or skin. Using color words figuratively can be highly offensive to the people around you who live with racialized identities.",
                 "lead_video": "",
                 "lead_image": [],
@@ -1818,8 +1818,8 @@
                 "hs_name": "Cultural stereotype",
                 "canonical_url": "https:\/\/www.witty.works\/en\/categories\/cultural-diversity\/cultural-stereotype",
                 "is_active": "1",
-                "name": "Suggests an idea of a person's culture defines their identity",
-                "short_explanation": "Suggests an idea of a person's culture defines their identity",
+                "name": "Are you relying on a cultural clich\u00e9?",
+                "short_explanation": "Are you relying on a cultural clich\u00e9?",
                 "sub_head": "When talking about a person or a group, appreciate them as individuals with their own cultural identity.",
                 "lead_video": "",
                 "lead_image": [],
@@ -2535,8 +2535,8 @@
                 "hs_name": "Generic masculine",
                 "canonical_url": "https:\/\/www.witty.works\/en\/categories\/gender-orientation\/generic-masculine",
                 "is_active": "1",
-                "name": "People tend to picture men",
-                "short_explanation": "People tend to picture men",
+                "name": "Generally provokes a mental image of men",
+                "short_explanation": "Generally provokes a mental image of men",
                 "sub_head": "To include everyone, use options that nudge people\u2019s brains into seeing all gender possibilities.",
                 "lead_video": "",
                 "lead_image": {
@@ -2576,8 +2576,8 @@
                 "hs_name": "Generisches Maskulinum",
                 "canonical_url": "https:\/\/www.witty.works\/de\/kategorien\/geschlecht-orientierung\/generisches-maskulinum",
                 "is_active": "1",
-                "name": "Viele denken bei diesem Wort zuerst an einen Mann",
-                "short_explanation": "Viele denken bei diesem Wort zuerst an einen Mann",
+                "name": "Viele denken bei diesem Wort tendentiell an einen Mann",
+                "short_explanation": "Viele denken bei diesem Wort tendentiell an einen Mann",
                 "sub_head": "Um alle anzusprechen, solltest du Lesende anregen, alle Geschlechter mitzudenken",
                 "lead_video": "",
                 "lead_image": {
@@ -2644,8 +2644,8 @@
                 "hs_name": "Gender binary",
                 "canonical_url": "https:\/\/www.witty.works\/en\/categories\/gender-orientation\/gender-binary",
                 "is_active": "1",
-                "name": "Enforces the heteronormative view of gender identity",
-                "short_explanation": "Impacts the visibility of marginalized genders",
+                "name": "Enforces the traditional binary form of gender",
+                "short_explanation": "Enforces the traditional binary form of gender",
                 "sub_head": "To welcome people of all genders, avoid limiting people to traditional gender roles, gender identities, and gender expressions.",
                 "lead_video": "",
                 "lead_image": {
@@ -3054,8 +3054,8 @@
                 "hs_name": "Gender cues",
                 "canonical_url": "https:\/\/www.witty.works\/en\/categories\/gender-orientation\/gender-cues",
                 "is_active": "1",
-                "name": "Word component impacting representation",
-                "short_explanation": "A part of this expression impacts representation",
+                "name": "Word component provokes a gendered mental image",
+                "short_explanation": "Word component provokes a gendered mental image",
                 "sub_head": "To show you want all genders to be seen and valued, choose gender-neutral expressions.",
                 "lead_video": "",
                 "lead_image": {
