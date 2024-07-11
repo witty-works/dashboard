@@ -338,6 +338,15 @@ class SyncToHubspotCategoriesCommand extends Command
         $this->info("Wrote HubSpot HubDB data to '$path'.");
     }
 
+    protected function arrayTrim($row)
+    {
+        foreach ($row as $key => $value) {
+            $row[$key] = is_array($value) ? $this->arrayTrim($value) : trim($value);
+        }
+
+        return $row;
+    }
+
     protected function cleanRow($row)
     {
         unset($row['hs_created_at']);
@@ -350,6 +359,8 @@ class SyncToHubspotCategoriesCommand extends Command
 
         unset($row['introduction']);
         unset($row['solution']);
+
+        $this->arrayTrim($row);
 
         return $row;
     }
