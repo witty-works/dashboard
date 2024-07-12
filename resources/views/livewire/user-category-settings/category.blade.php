@@ -98,7 +98,7 @@
                 $label = '<a href="'.$diversityDimensionDrivers[$ddd]['translation']['canonical_url'].'" />';
                 $label.= $diversityDimensionDrivers[$ddd]['translation']['hs_name'];
                 $label.= '</a>';
-                $label.= ' - '.$diversityDimensionDrivers[$ddd]['translation']['name'];
+                $label.= ' - '.$diversityDimensionDrivers[$ddd]['translation']['short_explanation'];
                 if (!in_array(app()->getLocale(), $diversityDimensionDrivers[$ddd]['has_rules'])) {
                     $label.= ' ('.(app()->getLocale() === 'en' ? __('guidelines.german_only') : __('guidelines.english_only')).')';
                 }

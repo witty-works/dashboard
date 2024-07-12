@@ -48,6 +48,27 @@
             </div>
             @include('partials.toggle_label', ['disabled' => \App\Models\LanguageGuidelines::isForcedOnTeam($model, 'preferred_variants')])
         </div>
+
+        @if(config('app.french_support'))
+        <div class="mt-4">
+        <label class="lato-small-text-p" for="preferred_variants_fr">
+            {{ __('guidelines.team_preferred_variants_dialect') }}
+        </label>
+
+        <div class="flex flex-row">
+            <div>
+                <x-select id="preferred_variants_fr"
+                    :options="App\Models\GuidelinesInterface::PREFERRED_VARIANTS_FR"
+                    class="guidelines-form-section-dropdown lato-small-text-p"
+                    wire:model="preferred_variants_fr"
+                    :disabled="\App\Models\LanguageGuidelines::isForcedOnTeam($model, 'preferred_variants')"
+                />
+                <x-input-error for="preferred_variants_fr" class="mt-2" role="alert" />
+            </div>
+            @include('partials.toggle_label', ['disabled' => \App\Models\LanguageGuidelines::isForcedOnTeam($model, 'preferred_variants')])
+        </div>
+        </div>
+        @endif
     </x-slot>
 
     @if(!\App\Models\LanguageGuidelines::isForcedOnTeam($model, 'preferred_variants'))

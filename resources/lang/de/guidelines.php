@@ -130,4 +130,6 @@ Alle Wörter, die zu dieser Liste hinzufügst, werden von Witty hervorgehoben, u
     'manage_organization_guidelines_orthography' => 'Rechtschreibung und Grammatik',
     'manage_organization_guidelines_description_orthography' => 'Wähle, ob Witty nach Rechtschreib- und Grammatikfehlern suchen soll',
     'enable_orthography' => 'Aktiviere Rechtschreibung und Grammatik',
+    'preferred_variants_fr_FR' => 'Französisch (🇫🇷 Frankreich)',
+    'preferred_variants_fr_CH' => 'Französisch (🇨🇭 Schweiz)',
 ];

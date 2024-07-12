@@ -258,7 +258,6 @@ return [
         Themsaid\Langman\LangmanServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         Mailjet\LaravelMailjet\MailjetServiceProvider::class,
-        Mews\Purifier\PurifierServiceProvider::class,
 
     ],
 

@@ -29,8 +29,6 @@
                         <div id="witty_editor">
                             @if(request()->get('onboarding'))
                             {!! nl2br(__('content.witty_editor_example_text')) !!}
-                            @else
-                            {!! clean(Request::get('content')) !!}
                             @endif
                         </div>
 
