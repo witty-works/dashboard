@@ -1,7 +1,7 @@
 <x-form-section submit="storeSubscription">
 
     <x-slot name="title">
-        <h2 id="subscriptions">Create subscription</h2>
+        <h2 id="organization_subscriptions">Create subscription</h2>
     </x-slot>
 
     <x-slot name="description">
