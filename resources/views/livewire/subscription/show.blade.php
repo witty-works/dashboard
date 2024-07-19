@@ -12,6 +12,8 @@
         <table class="table-auto w-full">
             <thead>
                 <tr>
+                    <th class="py-2 lato-paragraph-text-p">Company Name</th>
+                    <th class="py-2 lato-paragraph-text-p">Witty Contract ID</th>
                     <th class="py-2 lato-paragraph-text-p">Team Name</th>
                     <th class="py-2 lato-paragraph-text-p">Team Owner</th>
                     <th class="py-2 lato-paragraph-text-p">Quantity</th>
@@ -26,6 +28,8 @@
             <tbody>
             @foreach ($list as $subscription)
             <tr @if($loop->even)class="bg-grey"@endif>
+                <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $subscription->company_name }}</td>
+                <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $subscription->witty_contract_id }}</td>
                 <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $subscription->owner->name }}</td>
                 <td class="border px-4 py-2 text-left lato-paragraph-text-p"><a href="{{ route('impersonate', $subscription->owner->owner->id) }}">{{ $subscription->owner->owner->email }}</a></td>
                 <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $subscription->quantity }}</td>

@@ -31,6 +31,8 @@ class Form extends Component
         'enterprise',
     ];
 
+    public $witty_contract_id;
+    public $company_name;
     public $subscription_id;
     public $team_id;
     public $quantity;
@@ -43,6 +45,8 @@ class Form extends Component
     protected $listeners = ['edit'];
 
     protected $rules = [
+        'witty_contract_id' => 'string|nullable',
+        'company_name' => 'string|nullable',
         'subscription_id' => 'int|nullable',
         'team_id' => 'int',
         'quantity' => 'int|required',
@@ -80,6 +84,8 @@ class Form extends Component
     {
         $this->resetErrorBag();
 
+        $this->witty_contract_id = '';
+        $this->company_name = '';
         $this->subscription_id = '';
         $this->team_id = '';
         $this->quantity = '';
@@ -100,13 +106,15 @@ class Form extends Component
     public function edit(Subscription $subscription)
     {
         $this->subscription_id = $subscription->id;
+        $this->witty_contract_id = $subscription->witty_contract_id;
+        $this->company_name = $subscription->company_name;
         $this->team_id = $subscription->owner->id;
         $this->quantity = $subscription->quantity;
         $this->stripe_price = $subscription->stripe_price;
         $this->stripe_status = $subscription->stripe_status;
         $this->starts_at = $subscription->starts_at->format('Y-m-d');
         $this->ends_at = $subscription->ends_at ? $subscription->ends_at->format('Y-m-d') : null;
-        $this->trial_ends_at = $subscription->trial_ends_at ? $subscription->trial_ends_at->format('Y-m-d'). ' 23:59:59' : null;
+        $this->trial_ends_at = $subscription->trial_ends_at ? $subscription->trial_ends_at->format('Y-m-d') . ' 23:59:59' : null;
 
         return $this->render();
     }
@@ -142,6 +150,8 @@ class Form extends Component
             throw ValidationException::withMessages(['stripe_price' => $message]);
         }
 
+        $subscription->witty_contract_id = $this->witty_contract_id;
+        $subscription->company_name = $this->company_name;
         $subscription->quantity = $this->quantity;
         $subscription->stripe_price = $this->stripe_price;
         $subscription->stripe_status = $this->stripe_status;

@@ -11,11 +11,29 @@
     </x-slot>
 
     <x-slot name="form">
-        <div class="w-full col-span-6 sm:col-span-4">
-            <x-input id="subscription_id"
-                    type="hidden"
-                    wire:model="subscription_id" />
+        <x-input id="subscription_id"
+            type="hidden"
+            wire:model="subscription_id" />
 
+        <div class="w-full col-span-6 sm:col-span-4 mt-5">
+            <x-label for="company_name" value="Company Name" />
+            <x-input id="company_name"
+                type="text"
+                class="mt-1 block w-full"
+                wire:model="company_name" />
+            <x-input-error for="company_name" class="mt-2" />
+        </div>
+
+        <div class="w-full col-span-6 sm:col-span-4 mt-5">
+            <x-label for="witty_contract_id" value="Witty Contract ID" />
+            <x-input id="witty_contract_id"
+                type="text"
+                class="mt-1 block w-full"
+                wire:model="witty_contract_id" />
+            <x-input-error for="witty_contract_id" class="mt-2" />
+        </div>
+
+        <div class="w-full col-span-6 sm:col-span-4">
             <x-label for="team_id" value="Team ID *" />
             <x-input id="team_id"
                 type="text"
@@ -49,7 +67,7 @@
             <x-label id="quantity_label" for="quantity" value="Quantity *" />
             <x-input id="quantity"
                 type="text"
-                class="mt-1 block w-full textarea-as-input"
+                class="mt-1 block w-full"
                 wire:model="quantity" />
             <x-input-error for="quantity" class="mt-2" />
         </div>
