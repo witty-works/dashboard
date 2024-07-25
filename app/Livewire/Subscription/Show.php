@@ -21,7 +21,13 @@ class Show extends Component
             abort(403);
         }
 
-        $list = Subscription::all()->sortByDesc('created_at');
+        $list = Subscription::all()->sortBy(
+            [
+                ['company_name', 'asc'],
+                ['witty_contract_id', 'asc'],
+                ['created_at', 'asc'],
+            ]
+        );
 
         $plans = config('stripe.plans');
         $stripe_prices = [];
