@@ -18,7 +18,7 @@ return [
     'close' => 'Fermer',
     'api_token_permissions' => 'Autorisations pour les jetons API',
     'cancel' => 'Annuler',
-    'save' => 'Économiser',
+    'save' => 'Sauver',
     'delete_api_token' => 'supprimer le jeton API',
     'api_tokens' => 'Jetons API',
     'password' => 'Mot de passe',
