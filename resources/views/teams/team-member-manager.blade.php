@@ -52,9 +52,10 @@
                     <div role="group" class="col-span-6 lg:col-span-4">
                         <x-label class="lato-small-text-p" for="role" value="{{ __('content.role') }}" />
                         <x-input-error for="role" class="mt-2" />
-                        <div role="listbox" class="relative z-0 mt-1 border border-gray-200 rounded-lg">
+                        <div role="listbox" aria-labelledby="listbox-label" class="relative z-0 mt-1 border border-gray-200 rounded-lg">
+                            <span id="listbox-label" class="sr-only">Select a role</span>
                             @foreach ($this->roles as $index => $role)
-                                <button role="option" aria-selected="{{ $addTeamMemberForm['role'] === $role->key }}" type="button" class="relative px-4 py-3 inline-flex w-full rounded-lg"
+                                <button id="option-{{ $index }}" role="option" aria-selected="{{ $addTeamMemberForm['role'] === $role->key }}" type="button" class="relative px-4 py-3 inline-flex w-full rounded-lg"
                                         wire:click="$set('addTeamMemberForm.role', '{{ $role->key }}')">
                                     <div class="{{ $addTeamMemberForm['role'] !== $role->key ? 'opacity-50' : '' }}">
                                         <!-- Role Name -->
