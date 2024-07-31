@@ -7,7 +7,9 @@
     ;
 ?>
 <x-app-layout :pagetitle="__('content.analytics')">
-<div class="wittyworks-navigation-wrapper">@livewire('navigation-menu')</div>
+<div class="wittyworks-navigation-wrapper" role="navigation" aria-label="Main Navigation">
+    @livewire('navigation-menu')
+</div>
 <div class="wittyworks-page-wrapper" id="maincontent">
    <div class="wittyworks-page lg:ml-20">
       @include('partials.banners')

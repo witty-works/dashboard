@@ -1,6 +1,6 @@
 <x-app-layout :pagetitle="__('content.manage_account')">
-    <div class="wittyworks-navigation-wrapper" role="navigation">
-        @livewire('navigation-menu')
+    <div class="wittyworks-navigation-wrapper" role="navigation" aria-label="Main Navigation">
+    @livewire('navigation-menu')
     </div>
     <div class="wittyworks-page-wrapper" id="maincontent" role="main">
         <div class="wittyworks-page-subscription lg:ml-20">
