@@ -1,1 +1,1 @@
-<img src="{{ asset('svg/triple-toggle-lock.svg') }}"/>
+<img src="{{ asset('svg/triple-toggle-lock.svg') }}" alt=""/>
