@@ -429,5 +429,5 @@ Please then go to "Register" again to finalize the registration into the "Witty 
     'subscription-ended_title' => 'Subscription as ended',
     'subscription-ended_text' => 'Your teams subscription as ended.',
     'trial-ended_title' => 'Ready to upgrade?',
-    'trial-ended_text' => 'Your teams trial as ended.',
+    'trial-ended_text' => 'Your teams trial has ended.',
 ];
