@@ -41,7 +41,6 @@ return [
     'select_license_count_aria_label' => 'Wählen die Anzahl der Lizenzen aus',
     'invitation_removed' => 'Du hast die Einladung wahrscheinlich bereits angenommen. (Oder deine Einladung wurde entfernt).',
     'not_enough_data_to_display' => 'Nicht genügend Daten, um ein Diagramm anzuzeigen',
-    'get_cancel_invoices_update_payment' => 'Rechnungen herunterladen, Kreditkarte aktualisieren oder stornieren',
     'license_limit_reached_error' => 'Nur :license_count Lizenzen verfügbar. Bitte reduziere die :assigned_count zugewiesenen Lizenzen entsprechend.',
     'list_licenses' => 'Weise Lizenzen zu (:assigned_count/:license_count)',
     'list_licenses_description' => 'Nur Teammitglieder mit einer zugewiesenen Lizenz können Witty verwenden. Du kannst :license_count Lizenzen zuweisen.',
@@ -53,4 +52,6 @@ return [
     'trial_has_ended' => 'Deine Testphase endete am ',
     'trail_end_date' => 'Deine Testphase endet am ',
     'subscription_has_ended' => 'Dein Abonnement endete am ',
+    'update_subscription' => 'Aktualisieren Dein Abonnement',
+    'billing_portal_features' => '<ul><li>Abonnement und Rechnungen einsehen</li><li>Aktualisieren der Zahlungsarten</li><li>Abonnement kündigen</li></ul>',
 ];

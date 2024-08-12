@@ -76,15 +76,19 @@
         </ul>
 
         @if($team->subscribed() && Auth::user()->ownsTeam($team))
-            <h3 class="lato-small-paragraph-title-h4 mt-4">
-                {{ __('teams.get_cancel_invoices_update_payment') }}
+            <h3 class="lato-small-paragraph-title-h4 mt-4 mb-4">
+                {{ __('teams.update_subscription') }}
             </h3>
 
+            <a href="{{ route('stripe.portal') }}" role="button">
+                {{ $team->subscription()->isPaidByInvoice() ? __('stripe.contact_sales') : __('stripe.billing') }}
+            </a>
+
+            @if(!$team->subscription()->isPaidByInvoice())
             <p class="lato-small-text-p margin-bottom">
-                <a class="button primary-button-purple" href="{{ route('stripe.portal') }}" role="button">
-                    {{ $team->subscription()->isPaidByInvoice() ? __('stripe.contact_sales') : __('stripe.billing') }}
-                </a>
+                {!! __('teams.billing_portal_features') !!}
             </p>
+            @endif
         @endif
 
         @if(!$team->subscription() || !$team->subscription()->isPaidByInvoice())
