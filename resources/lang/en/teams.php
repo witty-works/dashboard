@@ -42,7 +42,7 @@ return [
     'to_upgrade_contact_owner' => 'To upgrade, please contact your team owner.',
     'select_license_count_aria_label' => 'select license count',
     'invitation_removed' => 'You probably have already accepted the invitation. (Or your invitation has been removed).',
-    'get_cancel_invoices_update_payment' => 'Download invoices, update payment or cancel',
+    'update_subscription' => 'Update your subscription',
     'list_licenses' => 'Assign licenses (:assigned_count/:license_count)',
     'list_licenses_description' => 'Only users with a license assigned can use Witty. Currently, you can assign :license_count licenses.',
     'active_license' => 'Licensed',
@@ -52,4 +52,5 @@ return [
     'trial_has_ended' => 'Your trial has ended on ',
     'trail_end_date' => 'Your trial will end at ',
     'subscription_has_ended' => 'Your subscription has ended on ',
+    'billing_portal_features' => '<ul><li>View your subscription and invoices</li><li>Update your payment methods</li><li>Cancel your subscription</li></ul>',
 ];

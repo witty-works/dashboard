@@ -42,7 +42,6 @@ return [
     'to_upgrade_contact_owner' => 'Pour effectuer une mise à niveau, veuillez contacter le propriétaire de votre équipe.',
     'select_license_count_aria_label' => 'sélectionner le nombre de licences',
     'invitation_removed' => 'Vous avez probablement déjà accepté l\'invitation. (Ou votre invitation a été retirée).',
-    'get_cancel_invoices_update_payment' => 'Télécharger les factures, mettre à jour le paiement ou annuler',
     'list_licenses' => 'Attribution de licences (:assigned_count/:license_count)',
     'list_licenses_description' => 'Seuls les utilisateurs auxquels une licence a été attribuée peuvent utiliser Witty. Actuellement, vous pouvez attribuer des licences :license_count.',
     'active_license' => 'Licencié',
@@ -52,4 +51,6 @@ return [
     'trial_has_ended' => 'Votre essai a pris fin le ',
     'trail_end_date' => 'Votre essai prendra fin à ',
     'subscription_has_ended' => 'Votre abonnement a pris fin le ',
+    'update_subscription' => 'Mise à jour de votre abonnement',
+    'billing_portal_features' => '<ul><li>Consulter votre abonnement et vos factures</li><li>Mettre à jour vos modes de paiement</li><li>Annuler votre abonnement</li></ul>',
 ];
