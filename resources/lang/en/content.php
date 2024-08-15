@@ -389,7 +389,7 @@ You can now close this window.
 <br>
 <br>
 Please then go to "Register" again to finalize the registration into the "Witty for Word" Add-in.',
-    'witty_word_addin_text_failed' => 'We have failed logged to log you into Witty Word-Addin.<br>Please close this window and try again or contact <a href="mailto:support@witty.works">support@witty.works</a>.',
+    'witty_word_addin_text_failed' => 'We have failed to log you into Witty Word-Addin.<br>Please close this window and try again or contact <a href="mailto:support@witty.works">support@witty.works</a>.',
     'inclusive_filter' => 'Inclusion',
     'inclusive_filter_non_inclusive' => 'Non-inclusive',
     'inclusive_filter_both' => 'Both',
