@@ -102,6 +102,12 @@ class SyncToHubspotCategoriesCommand extends Command
             'base_categories' => 'categories',
         ];
 
+        $canonicalURLMap = [
+            'en' => 'https://www.witty.works/en/categories/',
+            'de' => 'https://www.witty.works/de/kategorien/',
+            'fr' => 'https://www.witty.works/fr/categories/',
+        ];
+
         $data = [];
         foreach ($tables as $table => $alias) {
             $this->info("Fetch '$alias' data from '$table' table.");
@@ -132,7 +138,7 @@ class SyncToHubspotCategoriesCommand extends Command
             $data[$alias] = $rows;
         }
 
-        $langs = ['en', 'de'];
+        $langs = ['en', 'de', 'fr'];
         foreach ($data as $alias => $tableData) {
             $this->info("Cleaning '$alias' data.");
 
@@ -169,8 +175,12 @@ class SyncToHubspotCategoriesCommand extends Command
                     if (!empty($row['has_de_rules']) && $row['has_de_rules'] === 'true') {
                         $row['has_rules'][] = 'de';
                     }
+                    if (!empty($row['has_fr_rules']) && $row['has_fr_rules'] === 'true') {
+                        $row['has_rules'][] = 'fr';
+                    }
                     unset($row['has_en_rules']);
                     unset($row['has_de_rules']);
+                    unset($row['has_frn_rules']);
                 }
 
                 if (isset($row['canonical_url']) && !str_ends_with($row['canonical_url'], '/' . $row['hs_path'])) {
@@ -258,18 +268,35 @@ class SyncToHubspotCategoriesCommand extends Command
                         }
 
                         $data['categories'][$row['category']]['diversity_dimension_drivers'][$row['proficiency_level']][] = $row['name'];
+
+                        if (empty($row['emoji_image'])) {
+                            $proficiencyLevelEmoji = [
+                                'openly_discriminating' => 'https://www.witty.works/hubfs/prohibited%20emoji.png',
+                                'inclusive' => 'https://www.witty.works/hubfs/thumbs%20up%20emoji.png',
+                                'unconscious_bias' => 'https://www.witty.works/hubfs/thinking%20face%20emoji.png',
+                            ];
+
+                            $row['emoji_image'] = $proficiencyLevelEmoji[$row['proficiency_level']]
+                                ?? $proficiencyLevelEmoji['unconscious_bias'];
+                        }
                     }
 
                     if (!empty($row['translations'])) {
                         foreach ($row['translations'] as $lang => $translation) {
-                            $canonicalURL = $lang === 'en'
-                                ? 'https://www.witty.works/en/categories/'
-                                : 'https://www.witty.works/de/kategorien/';
+                            $canonicalURL = $canonicalURLMap[$lang];
 
-                            $canonicalURL .= $data['categories'][$row['category']]['translations'][$lang]['hs_path'];
-                            $canonicalURL .= '/' . $translation['hs_path'];
-                            if ($translation['canonical_url'] != $canonicalURL) {
-                                $this->warn("Canonical url mismatch: {$translation['canonical_url']} vs. {$canonicalURL}");
+                            if ($lang === 'fr') {
+                                $row['translations'][$lang]['canonical_url'] = str_replace('/fr/', '/en/', $translation['canonical_url']);
+                            } else {
+                                if (!empty($data['categories'][$row['category']]['translations'][$lang]['hs_path'])) {
+                                    $canonicalURL .= $data['categories'][$row['category']]['translations'][$lang]['hs_path'];
+                                } else {
+                                    $canonicalURL .= $data['categories'][$row['category']]['translations']['en']['hs_path'];
+                                }
+                                $canonicalURL .= '/' . $translation['hs_path'];
+                                if ($translation['canonical_url'] != $canonicalURL) {
+                                    $this->warn("Canonical url mismatch: {$translation['canonical_url']} vs. {$canonicalURL}");
+                                }
                             }
                         }
                     }
@@ -292,9 +319,7 @@ class SyncToHubspotCategoriesCommand extends Command
 
                     if (!empty($row['translations'])) {
                         foreach ($row['translations'] as $lang => $translation) {
-                            $canonicalURL = $lang === 'en'
-                                ? 'https://www.witty.works/en/categories/'
-                                : 'https://www.witty.works/de/kategorien/';
+                            $canonicalURL = $canonicalURLMap[$lang];
 
                             $canonicalURL .= $translation['hs_path'];
                             if ($translation['canonical_url'] != $canonicalURL) {
@@ -381,10 +406,14 @@ class SyncToHubspotCategoriesCommand extends Command
 
         Collection::macro('toLocale', function (string $locale) {
             return $this->map(function ($value) use ($locale) {
-                if ($locale === 'fr') {
+                if (
+                    empty($value['translations'][$locale])
+                    && $locale === 'fr'
+                    && !empty($value['translations']['en'])
+                ) {
                     $locale = 'en';
                 }
-    
+
                 if (!empty($value['translations'][$locale])) {
                     $value['translation'] = $value['translations'][$locale];
 
