@@ -36,7 +36,7 @@ return [
     'distinct' => 'Le champ :attribute contient une valeur en double.',
     'doesnt_end_with' => 'Le champ :attribute ne doit pas se terminer par l\'un des éléments suivants : :values.',
     'doesnt_start_with' => 'Le champ :attribute ne doit pas commencer par l\'un des éléments suivants : :values.',
-    'email' => 'L\'adresse :attribute doit être une adresse électronique valide.',
+    'email' => 'L\'adresse :attribute doit être une adresse e-mail valide.',
     'ends_with' => 'Le :attribute doit se terminer par l\'un des éléments suivants : :values.',
     'enum' => 'La valeur sélectionnée :attribute n\'est pas valide.',
     'exists' => 'La valeur sélectionnée :attribute n\'est pas valide.',

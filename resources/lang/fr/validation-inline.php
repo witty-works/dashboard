@@ -28,7 +28,7 @@ return [
     'digits_between' => 'chiffres entre',
     'dimensions' => 'les dimensions',
     'distinct' => 'distincts',
-    'email' => 'courriel',
+    'email' => 'e-mail',
     'ends_with' => 'se termine par',
     'exists' => 'existe',
     'file' => 'fichier',
