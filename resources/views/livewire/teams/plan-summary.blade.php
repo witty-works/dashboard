@@ -23,24 +23,24 @@
         @if($team->subscription())
             @if($team->subscription()->ended())
                 <p class="lato-small-text-p margin-bottom text-red-500">
-                    {{ __('teams.subscription_has_ended') }} {{ $team->subscription()->ends_at->toFormattedDateString() }}.
+                    {{ __('teams.subscription_has_ended') }} {{ $team->subscription()->ends_at->calendar() }}.
                 </p>
             @elseif($team->subscription()->ends_at)
                 <p class="lato-small-text-p margin-bottom text-red-500">
-                    {{ __('teams.end_date') }} {{ $team->subscription()->ends_at->toFormattedDateString() }}.
+                    {{ __('teams.end_date') }} {{ $team->subscription()->ends_at->calendar() }}.
                 </p>
             @elseif($team->subscription()->renews_at)
                 <p class="lato-small-text-p margin-bottom text-red-500">
-                    {{ __('teams.renewal_date') }} {{ $team->subscription()->renews_at->toFormattedDateString() }}.
+                    {{ __('teams.renewal_date') }} {{ $team->subscription()->renews_at->calendar() }}.
                 </p>
             @endif
         @elseif($team->hasExpiredGenericTrial())
             <p class="lato-small-text-p margin-bottom text-red-500">
-                {{ __('teams.trial_has_ended') }} {{ $team->trial_ends_at->toFormattedDateString() }}.
+                {{ __('teams.trial_has_ended') }} {{ $team->trial_ends_at->calendar() }}.
             </p>
         @elseif($team->onGenericTrial())
             <p class="lato-small-text-p margin-bottom">
-                {{ __('teams.trail_end_date') }} {{ $team->trial_ends_at->toFormattedDateString() }}.
+                {{ __('teams.trail_end_date') }} {{ $team->trial_ends_at->calendar() }}.
             </p>
         @endif
 
