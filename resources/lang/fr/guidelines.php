@@ -32,7 +32,6 @@ Witty surlignera tous les mots ajoutés à cette liste et suggérera vos alterna
     'preferred_variants_en_US' => 'Anglais (🇺🇸 États-Unis d\'Amérique)',
     'preferred_variants_en_GB' => 'Anglais (🇬🇧 Grande-Bretagne)',
     'preferred_variants_fr_FR' => 'Français (🇫🇷 France)',
-    'preferred_variants_fr_CH' => 'Français (🇨🇭 Suisse)',
     'preferred_variants_none' => ' - ',
     'set_for_all' => 'Rendre cette sélection obligatoire pour l\'ensemble des membres de mon équipe.',
     'manage_organization_guidelines_german' => 'Allemand',

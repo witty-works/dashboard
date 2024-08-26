@@ -23,7 +23,7 @@ class Language extends Component
     protected $rules = [
         'preferred_variants_de' => 'nullable|string|in:de-DE,de-AT,de-CH',
         'preferred_variants_en' => 'nullable|string|in:en-US,en-GB',
-        'preferred_variants_fr' => 'nullable|string|in:fr-FR,fr-CH',
+        'preferred_variants_fr' => 'nullable|string|in:fr-FR',
     ];
 
     public $model;

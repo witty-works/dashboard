@@ -32,7 +32,6 @@ All words added to this list will become highlighted by Witty, and your custom r
     'preferred_variants_en_US' => 'English (🇺🇸 USA)',
     'preferred_variants_en_GB' => 'English (🇬🇧 Great Britain)',
     'preferred_variants_fr_FR' => 'French (🇫🇷 France)',
-    'preferred_variants_fr_CH' => 'French (🇨🇭 Switzerland)',
     'preferred_variants_none' => ' - ',
     'set_for_all' => 'Make this selection mandatory for all members of my team.',
     'manage_organization_guidelines_german' => 'German',
