@@ -97,7 +97,7 @@ abstract class AbstractSyncToNlpApi implements ShouldQueue
             if ($termReplacement->language_code) {
                 $languageCodes = [$termReplacement->language_code];
             } else {
-                $languageCodes = ['en', 'de'];
+                $languageCodes = ['en', 'de', 'fr'];
             }
 
             foreach ($languageCodes as $languageCode) {

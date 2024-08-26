@@ -26,20 +26,6 @@
             <x-input-error for="false_positive" class="mt-2" />
         </div>
 
-{{--
-        <div class="w-full col-span-6 sm:col-span-4 mt-5">
-            <x-label for="language_code" value="{!! __('guidelines.language_code_label') !!}" />
-
-            <x-select id="language_code"
-                :options="\App\Models\FalsePositive::LANGUAGE_CODES"
-                class="mt-1 block w-full"
-                wire:model="language_code"
-            />
-
-                <x-input-error for="language_code" class="mt-2" />
-        </div>
---}}
-
     </x-slot>
 
     <x-slot name="actions">

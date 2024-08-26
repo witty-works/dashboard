@@ -62,6 +62,9 @@ class Form extends Component
     protected function getLanguageCodes()
     {
         $languageCodes = TermReplacement::LANGUAGE_CODES;
+        if (!config('app.french_support')) {
+            unset($languageCodes['fr']);
+        }
         if ($this->matching_type === 'lemmatize') {
             $this->show_word_type = true;
             unset($languageCodes['']);

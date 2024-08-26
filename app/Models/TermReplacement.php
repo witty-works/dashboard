@@ -15,12 +15,19 @@ class TermReplacement extends Model
     use HasFactory;
     use GuidelinesUpdateTrait;
 
-    const LANGUAGE_CODES = ['' => 'content.any', 'en' => 'content.en', 'de' => 'content.de'];
+    const LANGUAGE_CODES = [
+        '' => 'content.any',
+        'en' => 'content.en',
+        'de' => 'content.de',
+        'fr' => 'content.fr'
+    ];
+
     const MATCHING_TYPES = [
         'case_insensitive' => 'guidelines.case_insensitive_long',
         'case_sensitive' => 'guidelines.case_sensitive_long',
         'lemmatize' => 'guidelines.lemmatize_long'
     ];
+
     const WORD_TYPES = [
         'a' => 'guidelines.adjective_long',
         'v' => 'guidelines.verb_long',
