@@ -130,7 +130,7 @@ return [
     'admin' => 'Administrator*innen',
     'user' => 'Benutzer*innen',
     'actions' => 'Aktionen',
-    'any' => 'Englisch und Deutsch',
+    'any' => 'Alle Sprachen',
     'delete_permanently' => 'Löschen',
     'de' => 'Deutsch',
     'en' => 'Englisch',
