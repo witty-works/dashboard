@@ -122,12 +122,12 @@ return [
     'team_information' => 'Nom et responsable de l\'équipe',
     'for_your_security_confirm' => 'Pour votre sécurité, veuillez confirmer votre mot de passe pour continuer.',
     'whoops' => 'Oups ! Il y a eu un problème.',
-    'you_have_been_invited' => 'Bienvenue à <a href="https://www.witty.works/">Witty</a>!
+    'you_have_been_invited' => 'Bienvenue dans <a href="https://www.witty.works/">Witty</a> !
 
-:name vous invite à rejoindre l\'équipe de ":team" !
+:name vous invite à rejoindre l\'équipe ":team".
 ',
-    'invitation_email_welcome' => 'Witty vous aide à écrire de manière inclusive, à attirer des talents divers et à créer une culture où chacun se sent à sa place.',
-    'if_you_did_not_expect' => 'Bonne journée',
+    'invitation_email_welcome' => 'Witty vous aide à écrire en langage inclusif, à attirer toute une diversité de talents et à développer une culture dans laquelle tout le monde se sent à sa place.',
+    'if_you_did_not_expect' => 'Bonne journée,',
     'woops' => 'woops',
     'documentation' => 'Documentation',
     'welcome' => 'Bienvenue sur le tableau de bord Witty',
@@ -173,8 +173,8 @@ return [
     'already_belongs_to_team' => 'Cette personne est déjà membre de l\'équipe.',
     'team_invitation_subject' => 'Witty | :name vous a invité à rejoindre votre équipe sur Witty',
     'if_you_have_questions' => 'P.S. Vous avez besoin d\'aide ou vous avez des questions ?
-Vous trouverez <a href="https://www.witty.works/en/help/wittys-help-center">ici</a> les réponses à de nombreuses questions. Vous pouvez nous contacter à l\'adresse <a href="mailto:support@witty.works">support@witty.works.</a> Nous sommes là pour vous aider à chaque étape de votre parcours.',
-    'have_a_great_day' => 'Votre équipe Witty',
+Vous trouverez des réponses à de nombreuses questions <a href="https://www.witty.works/en/help/wittys-help-center">sur cette page</a>. Vous pouvez aussi nous contacter par e-mail à <a href="mailto:support@witty.works">support@witty.works.</a> Nous sommes disponibles pour vous aider et vous accompagner dans l\'utilisation de Witty.',
+    'have_a_great_day' => 'L\'équipe de Witty',
     'more_resouces' => 'Plus de ressources',
     'get_in_touch' => 'Nous contacter',
     'unable_to_find_user_with_this_email' => 'Cette adresse e-mail n\'est associée à aucun compte.',
@@ -320,7 +320,7 @@ Ignorez cet e-mail. 🙂',
     'pending_team_invitation_requests' => 'Demandes d\'adhésion à une équipe en attente',
     'these_people_have_requested_an_invite' => 'Ces personnes souhaitent rejoindre votre équipe. Laissez-les rejoindre votre équipe en cliquant sur "Accepter" ci-dessous.',
     'accept' => 'Accepter',
-    'team_invitation_request_accepted_subject' => 'Witty | Bienvenue à l\'équipe ":team"',
+    'team_invitation_request_accepted_subject' => 'Witty | Bienvenue dans l\'équipe ":team"',
     'invitation_request_accepted_explanation_user' => 'Oui, c\'est vrai,
 
 Bienvenue chez ":team", l\'équipe Witty de votre organisation pour l\'écriture inclusive. 🧡
@@ -419,7 +419,7 @@ Veuillez ensuite cliquer à nouveau sur "S\'inscrire" pour finaliser l\'inscript
     'triple_toggle_unlocked' => 'Cliquez pour basculer entre "off", "basic" et "advanced".',
     'event_type' => 'Type d\'événement',
     'customize_via_team_settings' => 'Avec l\'abonnement « Witty Free », vous pouvez personnaliser uniquement les paramètres de l\'équipe. Passez à la version supérieure pour personnaliser vos paramètres personnels.',
-    'toggle_lines' => 'Toggle All Lines',
+    'toggle_lines' => 'Afficher / Masquer toutes les lignes',
     'subscribe' => 'Acheter Witty',
     'choose_team' => 'Choisir une équipe',
     'license' => 'Licence ?',
