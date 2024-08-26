@@ -346,9 +346,9 @@
         const textElement = textElementId ? document.getElementById(textElementId) : null;
         if (textElement) {
             if (isApiError) {
-                textElement.innerHTML = '{!! __('content.no_data_image_text_temp_unavailable') !!}';
+                textElement.innerHTML = @json('content.no_data_image_text_temp_unavailable');
             } else {
-                textElement.innerHTML = '{!! __('content.no_data_image_text') !!}';
+                textElement.innerHTML = @json('content.no_data_image_text');
             }
         }
     }
