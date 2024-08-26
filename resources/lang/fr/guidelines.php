@@ -132,4 +132,6 @@ Witty surlignera tous les mots ajoutés à cette liste et suggérera vos alterna
     'manage_organization_guidelines_orthography' => 'Orthographe et grammaire',
     'manage_organization_guidelines_description_orthography' => 'Witty doit-il vérifier l\'orthographe et la grammaire ?',
     'enable_orthography' => 'Vérifier l\'orthographe et la grammaire',
+    'french_only' => 'Français uniquement',
+    'other_language' => 'Uniquement dans d\'autres langues',
 ];
