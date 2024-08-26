@@ -154,4 +154,7 @@ return [
     'required_if_accepted' => 'Das Feld :attribute ist erforderlich, wenn :other akzeptiert wird.',
     'uppercase' => 'Das Feld :attribute muss in Großbuchstaben geschrieben sein.',
     'ulid' => 'Das Feld :attribute muss eine gültige ULID sein.',
+    'contains' => ':attribute muss ausgefüllt werden, wenn :values ausgefüllt wurde.',
+    'list' => 'Das Feld :attribute muss eine Liste sein.',
+    'required_if_declined' => 'Das Feld :attribute ist erforderlich, wenn :other abgelehnt wird.',
 ];

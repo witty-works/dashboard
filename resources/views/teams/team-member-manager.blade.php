@@ -60,7 +60,7 @@
                                         <!-- Role Name -->
                                         <div class="flex items-center">
                                             <div class="lato-paragraph-text-p lato-small-paragraph-title-h4 {{ $addTeamMemberForm['role'] == $role->key ? 'font-semibold' : '' }}">
-                                                {{ $role->name }}
+                                                {{ __('content.'.$role->key) }}
                                             </div>
 
                                             @if ($addTeamMemberForm['role'] == $role->key)
@@ -69,7 +69,9 @@
                                         </div>
 
                                         <!-- Role Description -->
-                                        <div class="mt-2 lato-small-text-p text-left">{{ $role->description }}</div>
+                                        <div class="mt-2 lato-small-text-p text-left">
+                                            {{ __('content.'.$role->key.'_role') }}
+                                        </div>
                                     </div>
                                 </button>
                             @endforeach
@@ -231,11 +233,11 @@
                                 <!-- Manage Team Member Role -->
                                 @if (Gate::check('update', $team) && $team->subscribed() && Laravel\Jetstream\Jetstream::hasRoles())
                                     <button class="ml-2 text-sm text-gray-400 underline" wire:click="manageRole('{{ $user->id }}')">
-                                        {{ Laravel\Jetstream\Jetstream::findRole($user->membership->role)->name }}
+                                        {{ __('content.'.Laravel\Jetstream\Jetstream::findRole($user->membership->role)->key) }}
                                     </button>
                                 @elseif (Laravel\Jetstream\Jetstream::hasRoles())
                                     <div class="ml-2 text-sm text-gray-400">
-                                        {{ Laravel\Jetstream\Jetstream::findRole($user->membership->role)->name }}
+                                        {{ __('content.'.Laravel\Jetstream\Jetstream::findRole($user->membership->role)->key) }}
                                     </div>
                                 @endif
 
@@ -275,7 +277,7 @@
                             <!-- Role Name -->
                             <div class="flex items-center">
                                 <div class="text-sm text-gray-600 {{ $currentRole == $role->key ? 'font-semibold' : '' }}">
-                                    {{ $role->name }}
+                                    {{ __('content.'.$role->key) }}
                                 </div>
 
                                 @if ($currentRole == $role->key)
@@ -285,7 +287,7 @@
 
                             <!-- Role Description -->
                             <div class="mt-2 text-xs text-gray-600">
-                                {{ $role->description }}
+                                {{ __('content.'.$role->key.'_role') }}
                             </div>
                         </div>
                     </button>

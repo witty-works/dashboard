@@ -136,7 +136,7 @@ return [
     'user' => 'User',
     'user_role' => 'Users can use your teams custom language configuration.',
     'actions' => 'Actions',
-    'any' => 'English & German',
+    'any' => 'Any language',
     'delete_permanently' => 'Delete',
     'de' => 'German',
     'en' => 'English',

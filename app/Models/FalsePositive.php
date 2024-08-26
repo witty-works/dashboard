@@ -13,8 +13,6 @@ class FalsePositive extends Model
     use HasFactory;
     use GuidelinesUpdateTrait;
 
-    const LANGUAGE_CODES = ['' => 'content.any', 'en' => 'content.en', 'de' => 'content.de'];
-
     public function getExistsOnTeamAttribute()
     {
         $team = $this->user->currentTeam;

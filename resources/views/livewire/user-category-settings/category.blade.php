@@ -99,10 +99,17 @@
                 $label.= $diversityDimensionDrivers[$ddd]['translation']['hs_name'];
                 $label.= '</a>';
                 $label.= ' - '.$diversityDimensionDrivers[$ddd]['translation']['short_explanation'];
-                if (!in_array(app()->getLocale(), $diversityDimensionDrivers[$ddd]['has_rules'])) {
-                    $label.= ' ('.(app()->getLocale() === 'en' ? __('guidelines.german_only') : __('guidelines.english_only')).')';
+                if ($diversityDimensionDrivers[$ddd]['has_rules'] === ['en']) {
+                    $label.= ' ('.__('guidelines.english_only').')';
+                } elseif ($diversityDimensionDrivers[$ddd]['has_rules'] === ['de']) {
+                    $label.= ' ('.__('guidelines.german_only').')';
+                } elseif ($diversityDimensionDrivers[$ddd]['has_rules'] === ['fr']) {
+                    $label.= ' ('.__('guidelines.french_only').')';
+                } elseif (!in_array(app()->getLocale(), $diversityDimensionDrivers[$ddd]['has_rules'])) {
+                    $label.= ' ('.__('guidelines.other_language').')';
                 }
             @endphp
+
             @if($checkbox)
             <x-checkbox
                 id="dimensions['{{$ddd}}']"

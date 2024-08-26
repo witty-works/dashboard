@@ -12,7 +12,10 @@
             $disabled = !$model->isPremium() || \App\Models\LanguageGuidelines::isForcedOnTeam($model, 'german_rules');
         @endphp
 
-        <h3 class="lato-small-text-p mb-5">{!! __('guidelines.manage_organization_guidelines_description_german_form_sub_title') !!}</h3>
+        <h3 class="lato-small-text-p mb-5 flex">
+            {!! __('guidelines.manage_organization_guidelines_description_german_form_sub_title') !!}
+            @include('partials.toggle_label', ['disabled' => \App\Models\LanguageGuidelines::isForcedOnTeam($model, 'german_rules')])
+        </h3>
         <div class="container-column margin-bottom">
             @foreach (\App\Models\GuidelinesInterface::GENDERED_ROLES_FORMAT as $key => $value)
             <div class="margin-bottom">
@@ -45,7 +48,11 @@
                 {!! __('guidelines.german_gender_ending') !!}
             </div>
 
-            <h3 class="lato-small-text-p">{!! __('guidelines.manage_organization_guidelines_description_german_gender_ending_sub_title') !!}</h3>
+            <h3 class="lato-small-text-p flex">
+                {!! __('guidelines.manage_organization_guidelines_description_german_gender_ending_sub_title') !!}
+                @include('partials.toggle_label', ['disabled' => \App\Models\LanguageGuidelines::isForcedOnTeam($model, 'german_rules')])
+            </h3>
+
             <div class="margin-bottom flex flex-row mb-5">
                 <x-select id="german_gender_ending"
                     :options="\App\Models\GuidelinesInterface::GERMAN_GENDER_ENDING"
@@ -62,7 +69,6 @@
                 </div>
                 @endif
             </div>
-
         </div>
     </x-slot>
 

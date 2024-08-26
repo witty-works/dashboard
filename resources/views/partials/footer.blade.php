@@ -9,7 +9,7 @@ $resourceLinks = [
 
 $contactLinks = [
     __('content.contact') => 'https://www.witty.works/contact',
-    __('content.book-demo') => 'https://www.witty.works/demo',
+    __('content.book-demo') => 'https://www.witty.works'.(app()->getLocale() === 'en' ? '' : ('/'.app()->getLocale())).'/demo',
     __('content.help') => 'https://www.witty.works/en/help/wittys-help-center',
 ];
 @endphp

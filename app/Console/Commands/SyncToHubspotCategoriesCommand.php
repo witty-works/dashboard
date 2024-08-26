@@ -180,7 +180,7 @@ class SyncToHubspotCategoriesCommand extends Command
                     }
                     unset($row['has_en_rules']);
                     unset($row['has_de_rules']);
-                    unset($row['has_frn_rules']);
+                    unset($row['has_fr_rules']);
                 }
 
                 if (isset($row['canonical_url']) && !str_ends_with($row['canonical_url'], '/' . $row['hs_path'])) {

@@ -132,4 +132,6 @@ All words added to this list will become highlighted by Witty, and your custom r
     'manage_organization_guidelines_orthography' => 'Spelling & Grammar',
     'manage_organization_guidelines_description_orthography' => 'Choose if Witty should check for spelling & grammar mistakes',
     'enable_orthography' => 'Enable spelling & grammar',
+    'french_only' => 'French only',
+    'other_language' => 'Only in other languages',
 ];

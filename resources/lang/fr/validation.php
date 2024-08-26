@@ -154,4 +154,7 @@ return [
     ],
     'attached' => 'jointe',
     'relatable' => 'réaliste',
+    'contains' => 'Le champ :attribute est obligatoire.',
+    'list' => 'Le champ :attribute doit être une liste.',
+    'required_if_declined' => 'Le champ :attribute est requis lorsque le champ :other est refusé.',
 ];
