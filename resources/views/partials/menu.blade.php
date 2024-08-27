@@ -46,7 +46,7 @@
 
 
 <a href="https://www.witty.works/">
-    <img class="wittyworks-logo" src="{{ url('svg/witty-logo-white.svg') }}" alt="Witty Works" />
+    <img class="wittyworks-logo" src="{{ url('svg/witty-logo-white.svg') }}" alt="" />
 </a>
 
 @auth
