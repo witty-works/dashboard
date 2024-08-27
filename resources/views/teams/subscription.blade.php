@@ -6,9 +6,9 @@
             <div class="wittyworks-page-subscription lg:ml-20">
                 @include('partials.banners')
 
-                <div class="ibarra-sub-title-h1 margin-top">
+                <h1 class="ibarra-sub-title-h1 margin-top">
                     {{ __('teams.plan_headline') }}
-                </div>
+                </h1>
 
                 <div>
                     @livewire('teams.plan-summary', ['team' => $team])

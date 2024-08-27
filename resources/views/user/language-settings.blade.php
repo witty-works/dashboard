@@ -1,7 +1,7 @@
 <div>
-    <div class="ibarra-sub-title-h1 margin-top">
+    <h1 class="ibarra-sub-title-h1 margin-top">
         {!! __('guidelines.language_settings_label') !!}
-    </div>
+    </h1>
 
     @if($user->isPremium())
     @livewire('user-language-settings.intro', ['model' => $user])

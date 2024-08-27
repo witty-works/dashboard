@@ -2,7 +2,7 @@
 @if (Gate::check('viewUserCreateForm', $team))
     <!-- Add Team Member -->
     <section id="add-team-member" aria-labelledby="sectionTitle">
-        <h2 id="sectionTitle" class="ibarra-sub-title-h1 margin-top">{{ __('content.manage_members') }}</h2>
+        <h1 id="sectionTitle" class="ibarra-sub-title-h1 margin-top">{{ __('content.manage_members') }}</h1>
 
         @livewire('teams.update-team-name-form-cancel', ['team' => $team])
 

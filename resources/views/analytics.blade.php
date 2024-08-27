@@ -13,9 +13,9 @@
 <div class="wittyworks-page-wrapper" id="maincontent">
    <div class="wittyworks-page lg:ml-20">
       @include('partials.banners')
-      <div class="ibarra-sub-title-h1 margin-top">
+      <h1 class="ibarra-sub-title-h1 margin-top">
          {{ __('content.analytics') }}
-      </div>
+      </h1>
       <div id="lastRefresh" class="lato-small-text-p wittyworks-margin-right container-row margin-top" style="visibility: hidden; align-items: center;"></div>
       <div class="container-row margin-top">
         <div class="drowdown-wrapper">

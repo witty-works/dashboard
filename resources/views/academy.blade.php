@@ -5,9 +5,9 @@
     <div class="wittyworks-page-wrapper" id="maincontent">
         <div class="wittyworks-page-academy lg:ml-20">
             @include('partials.banners')
-            <div class="ibarra-sub-title-h1 margin-top">
+            <h1 class="ibarra-sub-title-h1 margin-top">
                 {{ __('content.academy') }}
-            </div>
+            </h1>
             <div class="wittyworks-video-wrapper">
                 <x-embed url="https://www.youtube.com/watch?v=giQrWB9C7Xg" />
             </div>

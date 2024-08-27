@@ -5,13 +5,13 @@
         <div class="wittyworks-page-wrapper" id="maincontent">
             <div class="wittyworks-page lg:ml-20">
                 @include('partials.banners')
-                <div class="ibarra-sub-title-h1 margin-top">
+                <h1 class="ibarra-sub-title-h1 margin-top">
                     @if(request()->get('onboarding'))
                     {{ __('content.witty_editor_try_out') }}
                     @else
                     {{ __('content.witty_editor') }}
                     @endif
-                </div>
+                </h1>
                 
                 <div>
                     <div class="py-10">
