@@ -11,38 +11,6 @@
             "homophobia",
             "transphobia"
         ],
-        "translations": {
-            "fr": {
-                "hs_path": "discrimination-anti-lgbtqia",
-                "hs_name": "Discrimination anti-LGBTQIA+",
-                "canonical_url": "https:\/\/www.witty.works\/en\/categories\/gender-orientation\/lgbtqia-hate",
-                "is_active": "1",
-                "short_explanation": "Insulte ou d\u00e9nigre les personnes de la communaut\u00e9 LGBTQIA+",
-                "sub_head": "",
-                "lead_video": "",
-                "lead_image": [],
-                "example_image": [],
-                "example_image_advanced": [],
-                "soft_explanation": "",
-                "hard_facts": "",
-                "hero_figure": "",
-                "hero_figure_alt_text": "",
-                "hero_figure_url": "",
-                "hero_fact": "",
-                "hero_fact_alt_text": "",
-                "hero_fact_url": "",
-                "inclusive_sentence": "",
-                "non_inclusive_sentence": "",
-                "meme": "",
-                "meme_alt_text": "",
-                "meme_url": "",
-                "meme_2": "",
-                "meme_2_alt_text": "",
-                "meme_2_url": "",
-                "read_on": "",
-                "anchor": ""
-            }
-        },
         "has_rules": [
             "en",
             "de",
