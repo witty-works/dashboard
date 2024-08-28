@@ -132,5 +132,5 @@ All words added to this list will become highlighted by Witty, and your custom r
     'french_only' => 'French only',
     'other_language' => 'Only in other languages',
     'manage_organization_guidelines_generic_masculine' => 'Generic masculine in gendered languages',
-    'manage_organization_guidelines_description_generic_masculine' => 'How should Witty handle the generic masculine?',
+    'manage_organization_guidelines_description_generic_masculine' => 'How should Witty handle the generic masculine in gendered languages like German or French?',
 ];

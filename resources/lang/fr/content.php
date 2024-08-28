@@ -173,7 +173,7 @@ return [
     'already_belongs_to_team' => 'Cette personne est déjà membre de l\'équipe.',
     'team_invitation_subject' => 'Witty | :name vous a invité à rejoindre votre équipe sur Witty',
     'if_you_have_questions' => 'P.S. Vous avez besoin d\'aide ou vous avez des questions ?
-Vous trouverez des réponses à de nombreuses questions <a href="https://www.witty.works/en/help/wittys-help-center">sur cette page</a>. Vous pouvez aussi nous contacter par e-mail à <a href="mailto:support@witty.works">support@witty.works.</a> Nous sommes disponibles pour vous aider et vous accompagner dans l\'utilisation de Witty.',
+Vous trouverez des réponses à de nombreuses questions <a href="https://www.witty.works/en/help/wittys-help-center">sur cette page</a> (en anglais uniquement). Vous pouvez aussi nous contacter par e-mail à <a href="mailto:support@witty.works">support@witty.works.</a> Nous sommes disponibles pour vous aider et vous accompagner dans l\'utilisation de Witty.',
     'have_a_great_day' => 'L\'équipe de Witty',
     'more_resouces' => 'Plus de ressources',
     'get_in_touch' => 'Nous contacter',

@@ -132,5 +132,5 @@ Alle Wörter, die zu dieser Liste hinzufügst, werden von Witty hervorgehoben, u
     'french_only' => 'Nur Französisch',
     'other_language' => 'Nur in anderen Sprachen',
     'manage_organization_guidelines_generic_masculine' => 'Generisches Maskulinum in geschlechtsspezifischen Sprachen',
-    'manage_organization_guidelines_description_generic_masculine' => 'Wie soll Witty mit dem generischen Maskulinum umgehen?',
+    'manage_organization_guidelines_description_generic_masculine' => 'Wie sollte Witty das generische Maskulinum in geschlechtsspezifischen Sprachen wie Deutsch oder Französisch behandeln?',
 ];

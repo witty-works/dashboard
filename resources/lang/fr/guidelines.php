@@ -132,5 +132,5 @@ Witty surlignera tous les mots ajoutés à cette liste et suggérera vos alterna
     'french_only' => 'Français uniquement',
     'other_language' => 'Uniquement dans d\'autres langues',
     'manage_organization_guidelines_generic_masculine' => 'Le masculin générique dans les langues genrées',
-    'manage_organization_guidelines_description_generic_masculine' => 'Comment Witty doit-il traiter le masculin générique ?',
+    'manage_organization_guidelines_description_generic_masculine' => 'Comment Witty devrait-il traiter le masculin générique dans des langues sexuées comme le français ou l\'allemand ?',
 ];
