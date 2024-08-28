@@ -133,4 +133,6 @@ Alle Wörter, die zu dieser Liste hinzufügst, werden von Witty hervorgehoben, u
     'preferred_variants_fr_FR' => 'Französisch (🇫🇷 Frankreich)',
     'french_only' => 'Nur Französisch',
     'other_language' => 'Nur in anderen Sprachen',
+    'manage_organization_guidelines_generic_masculine' => 'manage organization guidelines generic masculine',
+    'manage_organization_guidelines_description_generic_masculine' => 'manage organization guidelines description generic masculine',
 ];

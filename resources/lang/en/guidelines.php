@@ -34,9 +34,8 @@ All words added to this list will become highlighted by Witty, and your custom r
     'preferred_variants_fr_FR' => 'French (🇫🇷 France)',
     'preferred_variants_none' => ' - ',
     'set_for_all' => 'Make this selection mandatory for all members of my team.',
-    'manage_organization_guidelines_german' => 'German',
-    'manage_organization_guidelines_description_german' => 'Configuration for inclusive language in German.',
-    'manage_organization_guidelines_description_german_form_sub_title' => 'How should Witty handle the generic masculine?',
+    'manage_organization_guidelines_german' => 'German Genderstar',
+    'manage_organization_guidelines_description_german' => 'Choose the german gender ending.',
     'manage_organization_guidelines_inspiration' => 'Show inspirations to rephrase entire sentences',
     'manage_organization_guidelines_description_inspiration' => 'Makes suggestions to rephrase entire sentences. These are marked with a light bulb 💡.',
     'show_inspiration_alternatives' => 'Show inspiration for rephrasing',
@@ -86,7 +85,6 @@ All words added to this list will become highlighted by Witty, and your custom r
     'reset_to_team_suggestions_title' => 'Reset settings',
     'reset_to_team_suggestions_description' => 'You can reset all settings to the settings recommended by your team owner.',
     'reset_to_team' => 'Reset all settings',
-    'manage_organization_guidelines_description_german_gender_ending_sub_title' => 'Choose the gender ending',
     'team_analytics_description' => 'Team analytics makes it possible to see trends in how your team uses Witty to see where the team is excelling and where potentially more work needs to be done towards inclusive language and more importantly inclusive culture.',
     'team_analytics' => 'Team Analytics',
     'team_analytics_participate' => 'Participate',
@@ -133,4 +131,7 @@ All words added to this list will become highlighted by Witty, and your custom r
     'enable_orthography' => 'Enable spelling & grammar',
     'french_only' => 'French only',
     'other_language' => 'Only in other languages',
+    'manage_organization_guidelines_generic_masculine' => 'Generic masculine',
+    'manage_organization_guidelines_description_generic_masculine' => 'How should Witty handle the generic masculine?',
+
 ];

@@ -2,14 +2,14 @@
 
 namespace App\Livewire\UserLanguageSettings;
 
-use App\Livewire\OrganizationLanguageSettings\German as OrganizationLanguageSettingsGerman;
+use App\Livewire\OrganizationLanguageSettings\GenericMasculine as OrganizationLanguageSettingsGenericMasculine;
 use App\Livewire\UserGuidelineTrait;
 use App\Models\LanguageGuidelines;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
-class German extends Component
+class GenericMasculine extends Component
 {
     use AuthorizesRequests;
     use UserGuidelineTrait;
@@ -17,10 +17,10 @@ class German extends Component
     protected $listeners = ['saved'];
 
     public $enabled;
-    public $german_gender_ending;
+    public $gendered_roles_format;
 
     protected $rules = [
-        'german_gender_ending' => 'nullable|string|in::in,*in,/in,_in,In,/-in',
+        'gendered_roles_format' => 'nullable|string|in:both,inclusive_gender,binary_gender,none',
     ];
 
     public $model;
@@ -31,33 +31,23 @@ class German extends Component
 
         $languageGuidelines = LanguageGuidelines::getLanguageGuidelines($this->model);
 
-        $genderedRolesFormat = $this->mountAttribute(
-            $this->model,
-            $languageGuidelines,
-            'gendered_roles_format',
-            'generic_masculine'
-        );
-
         $preferredVariants = $this->mountAttribute(
             $this->model,
             $languageGuidelines,
             'preferred_variants'
         );
 
-        $this->enabled = OrganizationLanguageSettingsGerman::isEnabled(
-            $genderedRolesFormat,
-            $preferredVariants
-        );
+        $this->enabled = OrganizationLanguageSettingsGenericMasculine::isEnabled($preferredVariants);
 
-        $this->german_gender_ending = $this->mountAttribute(
+        $this->gendered_roles_format = $this->mountAttribute(
             $this->model,
             $languageGuidelines,
-            'german_gender_ending',
-            'german_rules'
+            'gendered_roles_format',
+            'generic_masculine'
         );
     }
 
-    public function updateLanguageGuidelinesGerman()
+    public function updateLanguageGuidelinesGenericMasculine()
     {
         $this->validate();
 
@@ -71,7 +61,7 @@ class German extends Component
 
         $languageGuidelines = LanguageGuidelines::getLanguageGuidelines($this->model);
 
-        $languageGuidelines->german_gender_ending = $this->german_gender_ending;
+        $languageGuidelines->gendered_roles_format = $this->gendered_roles_format = $languageGuidelines->getGenderedRolesFormat($this->gendered_roles_format);
 
         $languageGuidelines->save();
         $languageGuidelines->dispatchEventToPosthog((new \ReflectionClass($this))->getShortName());
@@ -87,6 +77,6 @@ class German extends Component
      */
     public function render()
     {
-        return view('livewire.user-language-settings.german');
+        return view('livewire.user-language-settings.generic_masculine');
     }
 }
