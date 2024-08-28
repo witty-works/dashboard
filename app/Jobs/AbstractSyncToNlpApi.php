@@ -142,12 +142,14 @@ abstract class AbstractSyncToNlpApi implements ShouldQueue
             'status' => $guidelines->show_inspiration_alternatives_force ? 'force' : 'suggestion',
         ];
 
-        $guidelines->german_rules_force = $guidelines->german_rules_force ?? $forceDefault;
+        $guidelines->generic_masculine_force = $guidelines->generic_masculine_force ?? $forceDefault;
 
         $config['gendered_roles_format'] = [
             'value' => $guidelines->gendered_roles_format,
-            'status' => $guidelines->german_rules_force ? 'force' : 'suggestion',
+            'status' => $guidelines->generic_masculine_force ? 'force' : 'suggestion',
         ];
+
+        $guidelines->german_rules_force = $guidelines->german_rules_force ?? $forceDefault;
 
         $config['german_gender_ending'] = [
             'value' => $guidelines->german_gender_ending,

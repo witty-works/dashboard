@@ -7,6 +7,8 @@
 
     @livewire('organization-language-settings.orthography', ['model' => $team])
 
+    @livewire('organization-language-settings.generic_masculine', ['model' => $team])
+
     @livewire('organization-language-settings.german', ['model' => $team])
 
     @livewire('organization-language-settings.inspirations', ['model' => $team])

@@ -133,4 +133,6 @@ Witty surlignera tous les mots ajoutés à cette liste et suggérera vos alterna
     'enable_orthography' => 'Vérifier l\'orthographe et la grammaire',
     'french_only' => 'Français uniquement',
     'other_language' => 'Uniquement dans d\'autres langues',
+    'manage_organization_guidelines_generic_masculine' => 'manage organization guidelines generic masculine',
+    'manage_organization_guidelines_description_generic_masculine' => 'manage organization guidelines description generic masculine',
 ];

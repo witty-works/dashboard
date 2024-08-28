@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
-class German extends Component
+class GenericMasculine extends Component
 {
     use AuthorizesRequests;
     use TeamsGuidelineTrait;
@@ -16,25 +16,23 @@ class German extends Component
     protected $listeners = ['saved'];
 
     public $enabled;
-    public $german_rules_force;
-    public $german_gender_ending;
+    public $generic_masculine_force;
+    public $gendered_roles_format;
 
     protected $rules = [
-        'german_rules_force' => 'nullable|boolean',
-        'german_gender_ending' => 'nullable|string|in::in,*in,/in,_in,In,/-in',
+        'generic_masculine_force' => 'nullable|boolean',
+        'gendered_roles_format' => 'nullable|string|in:both,inclusive_gender,binary_gender,none',
     ];
 
     public $model;
 
-    public static function isEnabled($genderedRolesFormat, $preferredVariants)
+    public static function isEnabled($preferredVariants)
     {
         $enabled = false;
 
-        if (in_array($genderedRolesFormat, ['inclusive_gender', 'both'])) {
-            foreach ($preferredVariants as $variant) {
-                if (strpos($variant, 'de') === 0) {
-                    $enabled = true;
-                }
+        foreach ($preferredVariants as $variant) {
+            if (strpos($variant, 'de') === 0 || strpos($variant, 'fr') === 0) {
+                $enabled = true;
             }
         }
 
@@ -47,16 +45,13 @@ class German extends Component
 
         $languageGuidelines = LanguageGuidelines::getLanguageGuidelines($this->model);
 
-        $this->enabled = self::isEnabled(
-            $languageGuidelines->gendered_roles_format,
-            $languageGuidelines->preferred_variants
-        );
+        $this->enabled = self::isEnabled($languageGuidelines->preferred_variants);
 
-        $this->german_rules_force = (bool) $languageGuidelines->german_rules_force;
-        $this->german_gender_ending = $languageGuidelines->german_gender_ending;
+        $this->generic_masculine_force = (bool) $languageGuidelines->generic_masculine_force;
+        $this->gendered_roles_format = $languageGuidelines->getGenderedRolesFormat();
     }
 
-    public function updateLanguageGuidelinesGerman()
+    public function updateLanguageGuidelinesGenericMasculine()
     {
         $this->validate();
 
@@ -70,9 +65,9 @@ class German extends Component
 
         $languageGuidelines = LanguageGuidelines::getLanguageGuidelines($this->model);
 
-        $languageGuidelines->german_rules_force = (bool) $this->german_rules_force;
+        $languageGuidelines->generic_masculine_force = (bool) $this->generic_masculine_force;
 
-        $languageGuidelines->german_gender_ending = $this->german_gender_ending;
+        $languageGuidelines->gendered_roles_format = $this->gendered_roles_format = $languageGuidelines->getGenderedRolesFormat($this->gendered_roles_format);
 
         $languageGuidelines->save();
         $languageGuidelines->dispatchEventToPosthog((new \ReflectionClass($this))->getShortName());
@@ -88,6 +83,6 @@ class German extends Component
      */
     public function render()
     {
-        return view('livewire.organization-language-settings.german');
+        return view('livewire.organization-language-settings.generic_masculine');
     }
 }
