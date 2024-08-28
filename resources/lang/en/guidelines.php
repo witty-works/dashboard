@@ -34,7 +34,7 @@ All words added to this list will become highlighted by Witty, and your custom r
     'preferred_variants_fr_FR' => 'French (🇫🇷 France)',
     'preferred_variants_none' => ' - ',
     'set_for_all' => 'Make this selection mandatory for all members of my team.',
-    'manage_organization_guidelines_german' => 'German Genderstar',
+    'manage_organization_guidelines_german' => 'Genderstar in German',
     'manage_organization_guidelines_description_german' => 'Choose the german gender ending.',
     'manage_organization_guidelines_inspiration' => 'Show inspirations to rephrase entire sentences',
     'manage_organization_guidelines_description_inspiration' => 'Makes suggestions to rephrase entire sentences. These are marked with a light bulb 💡.',
@@ -131,7 +131,6 @@ All words added to this list will become highlighted by Witty, and your custom r
     'enable_orthography' => 'Enable spelling & grammar',
     'french_only' => 'French only',
     'other_language' => 'Only in other languages',
-    'manage_organization_guidelines_generic_masculine' => 'Generic masculine',
+    'manage_organization_guidelines_generic_masculine' => 'Generic masculine in gendered languages',
     'manage_organization_guidelines_description_generic_masculine' => 'How should Witty handle the generic masculine?',
-
 ];
