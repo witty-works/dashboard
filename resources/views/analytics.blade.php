@@ -21,7 +21,7 @@
         <div class="drowdown-wrapper">
 
             <div class="container-row">
-                <label class="lato-small-text-p wittyworks-margin-right" aria-label="{{ __('content.chart_time_range') }}">{{ __('content.chart_time_range') }}</label>
+                <div class="lato-small-text-p wittyworks-margin-right" aria-label="{{ __('content.chart_time_range') }}">{{ __('content.chart_time_range') }}</div>
                 @if (!$is_premium_user)
                 <div style="margin-left: -1.5em"> @include('partials.locked')</div>
                 @endif
@@ -52,7 +52,7 @@
         </div>
 
         <div class="drowdown-wrapper">
-            <label class="lato-small-text-p wittyworks-margin-right" aria-label="{{ __('content.language_filter') }}">{{ __('content.language_filter') }}</label>
+            <div class="lato-small-text-p wittyworks-margin-right" aria-label="{{ __('content.language_filter') }}">{{ __('content.language_filter') }}</div>
 
             @php
                 $ranges = [
@@ -70,7 +70,7 @@
         </div>
 
         <div class="drowdown-wrapper">
-            <label class="lato-small-text-p wittyworks-margin-right" aria-label="{{ __('content.inclusive_filter') }}">{{ __('content.inclusive_filter') }}</label>
+            <div class="lato-small-text-p wittyworks-margin-right" aria-label="{{ __('content.inclusive_filter') }}">{{ __('content.inclusive_filter') }}</div>
             @php
                 $ranges = [
                     'non_inclusive' => __('content.inclusive_filter_non_inclusive'),
@@ -88,7 +88,7 @@
 
 
         <div class="drowdown-wrapper">
-            <label class="lato-small-text-p wittyworks-margin-right" aria-label="{{ __('content.category_filter') }}">{{ __('content.category_filter') }}</label>
+            <div class="lato-small-text-p wittyworks-margin-right" aria-label="{{ __('content.category_filter') }}">{{ __('content.category_filter') }}</div>
                 <div class="toggle-next checkbox-wrapper">
                     <button class="ellipsis lato-small-text-p">{{ __('content.all_categories') }}</button>
                     <div class="checkboxes" id="Categories">
