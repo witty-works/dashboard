@@ -21,7 +21,8 @@
                          type="textarea"
                          class="mt-1 block w-full textarea-as-input"
                          wire:model="false_positive"
-                         autocomplete="false_positive"
+                         autocomplete="off"
+                         aria-autocomplete="none"
             />
             <x-input-error for="false_positive" class="mt-2" />
         </div>
