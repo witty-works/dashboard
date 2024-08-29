@@ -13,6 +13,9 @@
     class="tripple-toggle {{ $value === 2 ? 'active' : ($value === 1 ? 'middle active' : '') }}
     {{ empty($disabled) ? '' : ' disabled' }}"
     id="tripple-toggle-{!! $attributes->get('name') !!}"
+    tabindex="0"
+    role="button"
+    aria-pressed="{{ $value === 2 ? 'true' : 'false' }}"
 >
     @if($minValue === 1)
     <div class="triple-toggle-lock">

@@ -1,6 +1,6 @@
-<div class="ibarra-sub-title-h1 margin-top">
+<h1 class="ibarra-sub-title-h1 margin-top">
     {{ __('guidelines.false_positives_label') }}
-</div>
+</h1>
 
 <div>
     <div class="py-10">

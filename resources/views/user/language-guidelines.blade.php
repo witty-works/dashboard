@@ -19,7 +19,9 @@ switch ($tab) {
 }
 @endphp
 <x-app-layout :pagetitle="$pagetitle">
-    <div class="wittyworks-navigation-wrapper" id="maincontent">@livewire('navigation-menu')</div>
+    <nav class="wittyworks-navigation-wrapper" id="maincontent" aria-label="Main Navigation">
+    @livewire('navigation-menu')
+    </nav>
         <div class="wittyworks-page-wrapper">
             <div class="wittyworks-page lg:ml-20">
                 @include('partials.banners')

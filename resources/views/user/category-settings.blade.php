@@ -1,7 +1,7 @@
 <div>
-    <div class="ibarra-sub-title-h1 margin-top">
+    <h1 class="ibarra-sub-title-h1 margin-top">
         {{ __('guidelines.language') }}
-    </div>
+    </h1>
 
     @livewire('user-category-settings.intro', ['model' => $user])
 

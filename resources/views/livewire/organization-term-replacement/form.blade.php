@@ -20,12 +20,14 @@
             <x-input id="term_replacement_id"
                          type="hidden"
                          wire:model="term_replacement_id"
-                         autocomplete="term_replacement_id" />
+                         autocomplete="off"
+                         aria-autocomplete="none" />
             <x-input id="term"
                          type="textarea"
                          class="mt-1 block w-full"
                          wire:model="term"
-                         autocomplete="term" />
+                         autocomplete="off"
+                         aria-autocomplete="none" />
             <x-input-error for="term" class="mt-2" />
         </div>
 
@@ -35,7 +37,8 @@
                          type="textarea"
                          class="mt-1 block w-full textarea-as-input"
                          wire:model="replacement"
-                         autocomplete="replacement" />
+                         autocomplete="off"
+                         aria-autocomplete="none" />
             <x-input-error for="replacement" class="mt-2" />
         </div>
 
@@ -78,7 +81,8 @@
                          type="textarea"
                          class="mt-1 block w-full"
                          wire:model="explanation"
-                         autocomplete="explanation" />
+                         autocomplete="off"
+                         aria-autocomplete="none" />
             <x-input-error for="explanation" class="mt-2" />
         </div>
 
@@ -88,7 +92,8 @@
                          type="text"
                          class="mt-1 block w-full"
                          wire:model="url"
-                         autocomplete="url" />
+                         autocomplete="off"
+                         aria-autocomplete="none" />
             <x-input-error for="url" class="mt-2" />
         </div>
 
@@ -98,7 +103,8 @@
                          type="text"
                          class="mt-1 block w-full"
                          wire:model="emoji"
-                         autocomplete="emoji" />
+                         autocomplete="off"
+                         aria-autocomplete="none" />
                          <x-input-error for="emoji" class="mt-2" />
         </div>
     </x-slot>

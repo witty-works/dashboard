@@ -1,5 +1,7 @@
 <x-app-layout :pagetitle="__('errors.page_not_found')">
-    <div class="wittyworks-navigation-wrapper">@livewire('navigation-menu')</div>
+    <nav class="wittyworks-navigation-wrapper" aria-label="Main Navigation">
+    @livewire('navigation-menu')
+    </nav>
     <div class="wittyworks-page-wrapper" id="maincontent">
         <div class="wittyworks-page lg:ml-20">
             <div class="pt-4 bg-gray-100">
