@@ -19,7 +19,7 @@
                         value="0"
                     />
                     <label for="consent-checkbox" class="guidelines-form-section-toggle-label">
-                        Consent to Terms of Service
+                        {{ __('content.consent_to_terms') }}
                     </label>
                     <input
                         type="checkbox"
@@ -50,7 +50,7 @@
                         value="0"
                     />
                     <label for="consent-mailing-checkbox" class="guidelines-form-section-toggle-label">
-                        Consent to Mailing
+                        {{ __('content.consent_to_mailing') }}
                     </label>
                     <input
                         type="checkbox"
