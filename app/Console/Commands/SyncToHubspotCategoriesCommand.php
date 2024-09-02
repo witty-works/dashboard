@@ -29,46 +29,57 @@ class SyncToHubspotCategoriesCommand extends Command
             "casing" => [
                 "category" => "orthography",
                 "emoji" => "❌",
+                "emoji_image" => "https://www.witty.works/hubfs/cross%20mark%20emoji.png",
             ],
             "compounding" => [
                 "category" => "orthography",
                 "emoji" => "⚠️",
+                "emoji_image" => "https://www.witty.works/hubfs/warning%20emoji.png",
             ],
             "confused_words" => [
                 "category" => "orthography",
                 "emoji" => "❌",
+                "emoji_image" => "https://www.witty.works/hubfs/cross%20mark%20emoji.png",
             ],
             "grammar" => [
                 "category" => "orthography",
                 "emoji" => "❌",
+                "emoji_image" => "https://www.witty.works/hubfs/cross%20mark%20emoji.png",
             ],
             "misc" => [
                 "category" => "orthography",
                 "emoji" => "🤔",
+                "emoji_image" => "https:\/\/www.witty.works\/hubfs\/thinking%20face%20emoji.png",
             ],
             "orthography" => [
                 "category" => "orthography",
                 "emoji" => "❌",
+                "emoji_image" => "https://www.witty.works/hubfs/cross%20mark%20emoji.png",
             ],
             "punctuation" => [
                 "category" => "orthography",
                 "emoji" => "❌",
+                "emoji_image" => "https://www.witty.works/hubfs/cross%20mark%20emoji.png",
             ],
             "repetitions" => [
                 "category" => "orthography",
                 "emoji" => "⚠️",
+                "emoji_image" => "https://www.witty.works/hubfs/warning%20emoji.png",
             ],
             "typography" => [
                 "category" => "orthography",
                 "emoji" => "❌",
+                "emoji_image" => "https://www.witty.works/hubfs/cross%20mark%20emoji.png",
             ],
             "typos" => [
                 "category" => "orthography",
                 "emoji" => "❌",
+                "emoji_image" => "https://www.witty.works/hubfs/cross%20mark%20emoji.png",
             ],
             "corporate_rules" => [
                 "category" => "corporate_rules",
                 "emoji" => "❗",
+                "emoji_image" => "https://www.witty.works/hubfs/exclamation%20mark%20emoji.png",
                 "translations" => [
                     "en" => [
                         "hs_name" => "Dictionary",
@@ -187,9 +198,9 @@ class SyncToHubspotCategoriesCommand extends Command
                     $this->warn("Canonical URL '{$row['canonical_url']}' does not end with '/{$row['hs_path']}' for '{$row['name']}'");
                 }
 
-                $converted_name = str_replace(['- und ', ' + ', ' / ', ' '], ['-und-', '-', '-', '-'], mb_strtolower($row['hs_name']));
-                if (!empty($row['hs_path']) && !empty($row['hs_name']) && $row['hs_path'] != $converted_name) {
-                    $this->warn("Page Title '{$row['hs_name']}' ('$converted_name') mis-aligned with Page Path '{$row['hs_path']}' for '{$row['name']}'");
+                $converted_name = str_replace(['- und ', ' + ', ' / ', ' ', ',', '\''], ['-und-', '-', '-', '-', '', ''], mb_strtolower($row['hs_name']));
+                if (!empty($row['hs_path']) && !empty($row['hs_name']) && ltrim($row['hs_path'], '_') != $converted_name) {
+                    $this->warn("Page Title '{$row['hs_name']}' ('$converted_name') mis-aligned with Page Path '{$row['hs_path']}'");
                 }
 
                 $row = $this->cleanRow($row);
@@ -285,18 +296,14 @@ class SyncToHubspotCategoriesCommand extends Command
                         foreach ($row['translations'] as $lang => $translation) {
                             $canonicalURL = $canonicalURLMap[$lang];
 
-                            if ($lang === 'fr') {
-                                $row['translations'][$lang]['canonical_url'] = str_replace('/fr/', '/en/', $translation['canonical_url']);
+                            if (!empty($data['categories'][$row['category']]['translations'][$lang]['hs_path'])) {
+                                $canonicalURL .= $data['categories'][$row['category']]['translations'][$lang]['hs_path'];
                             } else {
-                                if (!empty($data['categories'][$row['category']]['translations'][$lang]['hs_path'])) {
-                                    $canonicalURL .= $data['categories'][$row['category']]['translations'][$lang]['hs_path'];
-                                } else {
-                                    $canonicalURL .= $data['categories'][$row['category']]['translations']['en']['hs_path'];
-                                }
-                                $canonicalURL .= '/' . $translation['hs_path'];
-                                if ($translation['canonical_url'] != $canonicalURL) {
-                                    $this->warn("Canonical url mismatch: {$translation['canonical_url']} vs. {$canonicalURL}");
-                                }
+                                $canonicalURL .= $data['categories'][$row['category']]['translations']['en']['hs_path'];
+                            }
+                            $canonicalURL .= '/' . $translation['hs_path'];
+                            if ($translation['canonical_url'] != $canonicalURL) {
+                                $this->warn("Canonical url mismatch: {$translation['canonical_url']} vs. {$canonicalURL}");
                             }
                         }
                     }

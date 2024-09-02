@@ -29,6 +29,7 @@ class LanguageGuidelines extends Model
         'german_gender_ending' => '*in',
         'gendered_roles_format' => 'inclusive_gender',
         'show_inspiration_alternatives' => false,
+        'generic_masculine_force' => true,
         'german_rules_force' => true,
         'show_inspiration_alternatives_force' => true,
         'preferred_variants_force' => true,
@@ -45,6 +46,7 @@ class LanguageGuidelines extends Model
         'preferred_variants' => 'json',
         'disabled_categories' => 'json',
         'disabled_categories_force' => 'json',
+        'generic_masculine_force' => 'boolean',
         'german_rules_force' => 'boolean',
         'show_inspiration_alternatives_force' => 'boolean',
         'preferred_variants_force' => 'boolean',
@@ -278,8 +280,14 @@ class LanguageGuidelines extends Model
                 $properties = [
                     'language_type' => (new \ReflectionClass($this))->getShortName(),
                     'german_gender_ending' => $this->german_gender_ending,
-                    'gendered_roles_format' => $this->gendered_roles_format,
                     'force' => !$subscribed || $this->german_rules_force,
+                ];
+                break;
+            case 'GenericMasculine':
+                $properties = [
+                    'language_type' => (new \ReflectionClass($this))->getShortName(),
+                    'gendered_roles_format' => $this->gendered_roles_format,
+                    'force' => !$subscribed || $this->generic_masculine_force,
                 ];
                 break;
             case 'Inspiration':

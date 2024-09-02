@@ -17,13 +17,15 @@
                 <x-input id="domain_id"
                     type="hidden" 
                     wire:model="domain_id"
-                    autocomplete="domain_id" />
+                    autocomplete="off"
+                    aria-autocomplete="none" />
 
                 <x-input id="domain"
                     type="text" 
                     class="mt-1 block w-full"
                     wire:model="domain"
-                    autocomplete="domain"
+                    autocomplete="off"
+                    aria-autocomplete="none"
                     aria-labelledby="organization_domains_title"
                 />
 

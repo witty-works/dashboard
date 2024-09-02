@@ -20,7 +20,8 @@
                          type="textarea"
                          class="mt-1 block w-full textarea-as-input"
                          wire:model="false_positive"
-                         autocomplete="false_positive"
+                         autocomplete="off"
+                         aria-autocomplete="none"
                          :disabled="! Auth::user()->hasTeamPermission($model, 'edit_guidelines')"
             />
             <x-input-error for="false_positive" class="mt-2" />

@@ -18,14 +18,19 @@
                         name="has_consented_to_terms_of_service"
                         value="0"
                     />
+                    <label for="consent-checkbox" class="guidelines-form-section-toggle-label">
+                        {{ __('content.consent_to_terms') }}
+                    </label>
                     <input
                         type="checkbox"
+                        id="consent-checkbox"
                         class="guidelines-form-section-toggle"
                         name="has_consented_to_terms_of_service"
                         value="1"
                         @if(old('has_consented_to_terms_of_service'))
                         checked="checked"
                         @endif
+                        aria-labelledby="consent-checkbox"
                     />
                     <span class="slider round"></span>
                 </label>
@@ -44,20 +49,25 @@
                         name="has_consented_to_mailing"
                         value="0"
                     />
+                    <label for="consent-mailing-checkbox" class="guidelines-form-section-toggle-label">
+                        {{ __('content.consent_to_mailing') }}
+                    </label>
                     <input
                         type="checkbox"
+                        id="consent-mailing-checkbox"
                         class="guidelines-form-section-toggle"
                         name="has_consented_to_mailing"
                         value="1"
                         @if(old('has_consented_to_mailing'))
                         checked="checked"
                         @endif
+                        aria-labelledby="consent-mailing-checkbox"
                     />
                     <span class="slider round"></span>
                 </label>
-
+            
                 <x-label for="has_consented_to_mailing" value="{!! __('content.has_consented_to_mailing') !!}" />
-
+            
                 <x-input-error for="has_consented_to_mailing" class="mt-2" />
             </div>
 

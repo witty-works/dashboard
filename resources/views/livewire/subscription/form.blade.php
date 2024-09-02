@@ -39,7 +39,8 @@
                 type="text"
                 class="mt-1 block w-full"
                 wire:model="team_id"
-                autocomplete="team_id"
+                autocomplete="off"
+                aria-autocomplete="none"
                 :disabled="$subscription_id" />
             <x-input-error for="team_id" class="mt-2" />
         </div>

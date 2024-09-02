@@ -11,14 +11,14 @@
                 <span id="toggleDescription">{!! __('guidelines.advanced_toggle_description') !!}</span>
 
                 <div class="py-3 container-row m-5">
-                    <button id="off" disabled="disabled" class="tripple-toggle"></button>
-                    <label for="off">{{ __('guidelines.proficiency_level_off') }}</label>
+                    <button id="off" disabled="disabled" class="tripple-toggle" aria-label="{{ __('guidelines.proficiency_level_off') }}"></button>
+                    <label for="off" id="label-off">{{ __('guidelines.proficiency_level_off') }}</label>
                     
-                    <button id="basic" disabled="disabled" class="tripple-toggle active middle wittyworks-margin-left"></button>
-                    <label for="basic">{{ __('guidelines.proficiency_level_basic') }}</label>
+                    <button id="basic" disabled="disabled" class="tripple-toggle active middle wittyworks-margin-left" aria-label="{{ __('guidelines.proficiency_level_basic') }}"></button>
+                    <label for="basic" id="label-basic">{{ __('guidelines.proficiency_level_basic') }}</label>
                     
-                    <button id="advanced" disabled="disabled" class="tripple-toggle active wittyworks-margin-left"></button>
-                    <label for="advanced">{{ __('guidelines.proficiency_level_advanced') }}</label>
+                    <button id="advanced" disabled="disabled" class="tripple-toggle active wittyworks-margin-left" aria-label="{{ __('guidelines.proficiency_level_advanced') }}"></button>
+                    <label for="advanced" id="label-advanced">{{ __('guidelines.proficiency_level_advanced') }}</label>
                 </div>
 
                 <div class="guidelines-form-section-ident lato-small-text-p">

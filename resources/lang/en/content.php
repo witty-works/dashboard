@@ -430,4 +430,6 @@ Please then go to "Register" again to finalize the registration into the "Witty 
     'subscription-ended_text' => 'Your teams subscription as ended.',
     'trial-ended_title' => 'Ready to upgrade?',
     'trial-ended_text' => 'Your teams trial has ended.',
+    'consent_to_terms' => 'Consent to Terms of Service',
+    'consent_to_mailing' => 'Consent to Mailing',
 ];

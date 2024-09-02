@@ -433,4 +433,6 @@ Bitte gehe dann erneut auf „Registrieren“, um die Registrierung im "Witty fo
     'trial-ended_title' => 'Bereit, ein Abo abzuschließen?',
     'trial-ended_text' => 'Die Testphase Deines Teams ist beendet.',
     'fr' => 'Französisch',
+    'consent_to_terms' => 'Zustimmung zu den Nutzungsbedingungen',
+    'consent_to_mailing' => 'Zustimmung zu dem Mailing',
 ];

@@ -7,19 +7,21 @@
     ;
 ?>
 <x-app-layout :pagetitle="__('content.analytics')">
-<div class="wittyworks-navigation-wrapper">@livewire('navigation-menu')</div>
+<nav class="wittyworks-navigation-wrapper" aria-label="Main Navigation">
+    @livewire('navigation-menu')
+</nav>
 <div class="wittyworks-page-wrapper" id="maincontent">
    <div class="wittyworks-page lg:ml-20">
       @include('partials.banners')
-      <div class="ibarra-sub-title-h1 margin-top">
+      <h1 class="ibarra-sub-title-h1 margin-top">
          {{ __('content.analytics') }}
-      </div>
+      </h1>
       <div id="lastRefresh" class="lato-small-text-p wittyworks-margin-right container-row margin-top" style="visibility: hidden; align-items: center;"></div>
       <div class="container-row margin-top">
         <div class="drowdown-wrapper">
 
             <div class="container-row">
-                <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.chart_time_range') }}</div>
+                <div class="lato-small-text-p wittyworks-margin-right" aria-label="{{ __('content.chart_time_range') }}">{{ __('content.chart_time_range') }}</div>
                 @if (!$is_premium_user)
                 <div style="margin-left: -1.5em"> @include('partials.locked')</div>
                 @endif
@@ -50,7 +52,7 @@
         </div>
 
         <div class="drowdown-wrapper">
-            <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.language_filter') }}</div>
+            <div class="lato-small-text-p wittyworks-margin-right" aria-label="{{ __('content.language_filter') }}">{{ __('content.language_filter') }}</div>
 
             @php
                 $ranges = [
@@ -68,7 +70,7 @@
         </div>
 
         <div class="drowdown-wrapper">
-            <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.inclusive_filter') }}</div>
+            <div class="lato-small-text-p wittyworks-margin-right" aria-label="{{ __('content.inclusive_filter') }}">{{ __('content.inclusive_filter') }}</div>
             @php
                 $ranges = [
                     'non_inclusive' => __('content.inclusive_filter_non_inclusive'),
@@ -86,7 +88,7 @@
 
 
         <div class="drowdown-wrapper">
-            <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.category_filter') }}</div>
+            <div class="lato-small-text-p wittyworks-margin-right" aria-label="{{ __('content.category_filter') }}">{{ __('content.category_filter') }}</div>
                 <div class="toggle-next checkbox-wrapper">
                     <button class="ellipsis lato-small-text-p">{{ __('content.all_categories') }}</button>
                     <div class="checkboxes" id="Categories">
