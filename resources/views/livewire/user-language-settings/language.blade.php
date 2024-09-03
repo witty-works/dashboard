@@ -49,10 +49,10 @@
             @include('partials.toggle_label', ['disabled' => \App\Models\LanguageGuidelines::isForcedOnTeam($model, 'preferred_variants')])
         </div>
 
-        @if(config('app.french_support'))
+        @if(\App\Http\Kernel::isFrenchEnabled($model))
         <div class="mt-4">
         <label class="lato-small-text-p" for="preferred_variants_fr">
-            {{ __('guidelines.team_preferred_variants_dialect') }}
+            {{ __('guidelines.user_preferred_variants_dialect') }}
         </label>
 
         <div class="flex flex-row">

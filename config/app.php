@@ -137,7 +137,7 @@ return [
     */
 
     'locale' => 'en',
-    'french_support' => env('FRENCH_SUPPORT', false),
+    'french_support' => explode(',', env('FRENCH_SUPPORT', '')),
 
     /*
     |--------------------------------------------------------------------------
