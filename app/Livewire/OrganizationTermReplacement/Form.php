@@ -2,6 +2,7 @@
 
 namespace App\Livewire\OrganizationTermReplacement;
 
+use App\Http\Kernel;
 use App\Models\TermReplacement;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Client\RequestException;
@@ -62,7 +63,7 @@ class Form extends Component
     protected function getLanguageCodes()
     {
         $languageCodes = TermReplacement::LANGUAGE_CODES;
-        if (!config('app.french_support')) {
+        if (!Kernel::isFrenchEnabled($this->model)) {
             unset($languageCodes['fr']);
         }
         if ($this->matching_type === 'lemmatize') {
