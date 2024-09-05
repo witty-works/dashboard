@@ -111,10 +111,20 @@
                                 toolbarButtonsSM: ['dashboard', 'bold', 'underline', 'strikeThrough', 'fontSize', 'insertLink', 'undo', 'redo', 'copy', 'example', 'help'],
                                 toolbarButtonsXS: ['dashboard', 'bold', 'underline', 'fontSize', 'copy', 'help'],
                             }, function () {
-                            @if(!request()->get('onboarding'))
-                                editor.fullscreen.toggle();
-                            @endif
+                                @if(!request()->get('onboarding'))
+                                    editor.fullscreen.toggle();
+                                @endif
+
                             })
+
+                            window.addEventListener('load', (event) => {
+                                const wittyIsInstalled = document.querySelector('witty-is-installed');
+
+                                redirect = wittyIsInstalled ? wittyIsInstalled.getAttribute('login-url') : false;
+                                if (redirect) {
+                                    window.location.replace(@json(route('download')));
+                                }
+                            });
                         </script>
                     </div>
                 </div>
