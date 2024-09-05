@@ -20,7 +20,7 @@
                     </div>
 
                     <div id="already_installed" style="display: none" class="w-full col-span-6 sm:col-span-4 margin-bottom align-center">
-                        {!! __('content.witty_download_already_installed') !!}
+                        <h2>{!! __('content.witty_download_already_installed') !!}</h2>
 
                         <div class="mt-5">
                             <a id="login-witty-url" class="button primary-button-red download-button" href="https://witty.works/welcome">
