@@ -16,6 +16,7 @@
     tabindex="0"
     role="button"
     aria-pressed="{{ $value === 2 ? 'true' : 'false' }}"
+    aria-labelledby="toggle-label-{!! $attributes->get('name') !!}"
 >
     @if($minValue === 1)
     <div class="triple-toggle-lock">
@@ -23,6 +24,10 @@
     </div>
     @endif
 </div>
+
+<div id="toggle-label-{!! $attributes->get('name') !!}" class="sr-only">
+     {!! $label !!} </div>
+
 <input type="hidden" id="{!! $attributes->get('name') !!}" {!! $attributes->merge() !!} />
 
 @if(empty($disabled))
