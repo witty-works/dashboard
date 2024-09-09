@@ -119,10 +119,22 @@
 
                             window.addEventListener('load', (event) => {
                                 const wittyIsInstalled = document.querySelector('witty-is-installed');
-
-                                redirect = wittyIsInstalled ? wittyIsInstalled.getAttribute('login-url') : false;
+                                var redirect = wittyIsInstalled ? wittyIsInstalled.getAttribute('login-url') : true;
                                 if (redirect) {
                                     window.location.replace(@json(route('download')));
+                                    return
+                                }
+
+                                const installedVersion = wittyIsInstalled.getAttribute('extension-version')
+                                if (installedVersion) {
+                                    var toolbar = editor.$tb;
+                                    var customTag = document.createElement('span');
+                                    customTag.innerText = 'Witty Version: ' + installedVersion;
+                                    customTag.style.marginLeft = '10px';
+                                    customTag.style.fontSize = '14px';
+                                    customTag.style.color = '#555';
+
+                                    toolbar.append(customTag);
                                 }
                             });
                         </script>
