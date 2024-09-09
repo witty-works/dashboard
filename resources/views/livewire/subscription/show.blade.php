@@ -32,7 +32,7 @@
                 <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $subscription->witty_contract_id }}</td>
                 <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $subscription->owner->name }}</td>
                 <td class="border px-4 py-2 text-left lato-paragraph-text-p"><a href="{{ route('impersonate', $subscription->owner->owner->id) }}">{{ $subscription->owner->owner->email }}</a></td>
-                <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $subscription->quantity }}</td>
+                <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $subscription->quantity }}{{ $subscription->owner ? '/'.$subscription->owner->userLicenses()->count() : '' }}</td>
                 <td class="border px-4 py-2 text-left lato-paragraph-text-p">
                     @if (empty($stripe_prices[$subscription->stripe_price]))
                     witty_{{ $subscription->stripe_price }}
@@ -40,7 +40,7 @@
                     {{ $stripe_prices[$subscription->stripe_price] }}
                     @endif
                 </td>
-                <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $subscription->stripe_status }}</td>
+                <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $subscription->ends_at && $subscription->ends_at->isPast() ? 'ended' : $subscription->stripe_status }}</td>
                 <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $subscription->starts_at ? $subscription->starts_at->format('Y-m-d') : 'none' }}</td>
                 <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $subscription->ends_at ? $subscription->ends_at->format('Y-m-d') : 'none' }}</td>
                 <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $subscription->trial_ends_at ? $subscription->trial_ends_at->format('Y-m-d') : 'none' }}</td>
