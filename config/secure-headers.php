@@ -178,59 +178,14 @@ return [
         'enable' => true,
 
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy/accelerometer
-        'accelerometer' => [
-            'none' => false,
-
-            '*' => false,
-
-            'self' => true,
-
-            'origins' => [],
-        ],
 
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy/ambient-light-sensor
-        'ambient-light-sensor' => [
-            'none' => false,
-
-            '*' => false,
-
-            'self' => true,
-
-            'origins' => [],
-        ],
 
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy/autoplay
-        'autoplay' => [
-            'none' => false,
-
-            '*' => false,
-
-            'self' => true,
-
-            'origins' => [],
-        ],
 
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy/battery
-        'battery' => [
-            'none' => false,
-
-            '*' => false,
-
-            'self' => true,
-
-            'origins' => [],
-        ],
 
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy/camera
-        'camera' => [
-            'none' => false,
-
-            '*' => false,
-
-            'self' => true,
-
-            'origins' => [],
-        ],
 
         // https://www.chromestatus.com/feature/5690888397258752
         'cross-origin-isolated' => [
@@ -255,15 +210,6 @@ return [
         ],
 
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy/document-domain
-        'document-domain' => [
-            'none' => false,
-
-            '*' => true,
-
-            'self' => false,
-
-            'origins' => [],
-        ],
 
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy/encrypted-media
         'encrypted-media' => [
@@ -277,26 +223,8 @@ return [
         ],
 
         // https://wicg.github.io/page-lifecycle/#execution-while-not-rendered
-        'execution-while-not-rendered' => [
-            'none' => false,
-
-            '*' => true,
-
-            'self' => false,
-
-            'origins' => [],
-        ],
 
         // https://wicg.github.io/page-lifecycle/#execution-while-out-of-viewport
-        'execution-while-out-of-viewport' => [
-            'none' => false,
-
-            '*' => true,
-
-            'self' => false,
-
-            'origins' => [],
-        ],
 
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy/fullscreen
         'fullscreen' => [
@@ -365,15 +293,6 @@ return [
         ],
 
         // https://drafts.csswg.org/css-nav-1/
-        'navigation-override' => [
-            'none' => false,
-
-            '*' => false,
-
-            'self' => true,
-
-            'origins' => [],
-        ],
 
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy/payment
         'payment' => [
@@ -471,7 +390,7 @@ return [
      */
 
     'csp' => [
-        'enable' => false,
+        'enable' => true,
 
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy-Report-Only
         'report-only' => false,
@@ -492,17 +411,35 @@ return [
 
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/base-uri
         'base-uri' => [
-            //
+            'self' => true,
         ],
 
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/child-src
         'child-src' => [
-            //
+            'allow' => [
+                '*.hsforms.net',
+                '*.hsforms.com',
+            ]
         ],
 
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/connect-src
         'connect-src' => [
-            //
+            'allow' => [
+                '*.hubapi.com',
+                'js.hscta.net',
+                'js-eu1.hscta.net',
+                '*.hubspot.com',
+                '*.hs-banner.com',
+                '*.hscollectedforms.net',
+                '*.helphero.co',
+                'www.googletagmanager.com',
+                '*.google-analytics.com',
+                '*.analytics.google.com',
+                '*.g.doubleclick.net',
+                'td.doubleclick.net',
+                '*.google.com',
+                '*.posthog.com',
+            ]
         ],
 
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/default-src
@@ -512,12 +449,12 @@ return [
 
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/font-src
         'font-src' => [
-            //
+            'allow' => []
         ],
 
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/form-action
         'form-action' => [
-            //
+            'fonts.gstatic.com',
         ],
 
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-ancestors
@@ -527,12 +464,64 @@ return [
 
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-src
         'frame-src' => [
-            //
+            'self' => true,
+            'allow' => [
+                '*.hubspot.com',
+                '*.hs-sites.com',
+                '*.hs-sites-eu1.com',
+                '*.hubspotusercontent00.net',
+                '*.hubspotusercontent10.net',
+                '*.hubspotusercontent20.net',
+                '*.hubspotusercontent30.net',
+                '*.hubspotusercontent40.net',
+                '*.hubspot.net',
+                'play.hubspotvideo.com',
+                'play-eu1.hubspotvideo.com',
+                'wwww.witty.works',
+                '*.hsforms.net',
+                '*.hsforms.com',
+                'app.helphero.co',
+                'helphero.co',
+                '*.posthog.com',
+                'td.doubleclick.net',
+                '*.g.doubleclick.net',
+            ]
         ],
 
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/img-src
         'img-src' => [
-            //
+            'self' => true,
+
+            'schemes' => [
+                'data:',
+                'https:',
+            ],
+
+            'allow' => [
+                'www.witty.works',
+                'js.hscta.net',
+                'js-eu1.hscta.net',
+                'no-cache.hubspot.com',
+                '*.hubspot.com',
+                '*.hubspotusercontent00.net',
+                '*.hubspotusercontent10.net',
+                '*.hubspotusercontent20.net',
+                '*.hubspotusercontent30.net',
+                '*.hubspotusercontent40.net',
+                '*.hubspot.net',
+                'cdn2.hubspot.net',
+                '*.hsforms.net',
+                '*.hsforms.com',
+                'www.googletagmanager.com',
+                'tagmanager.google.com',
+                'ssl.gstatic.com',
+                'www.gstatic.com',
+                '*.google-analytics.com',
+                '*.analytics.google.com',
+                '*.g.doubleclick.net',
+                'td.doubleclick.net',
+                '*.google.com',
+            ],
         ],
 
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/manifest-src
@@ -552,7 +541,7 @@ return [
 
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/object-src
         'object-src' => [
-            //
+            'none' => true,
         ],
 
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/plugin-types
@@ -603,47 +592,43 @@ return [
 
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/script-src
         'script-src' => [
-            'none' => false,
-
-            'self' => false,
-
-            'report-sample' => false,
-
+            'self' => true,
+            // @TODO remove once https://github.com/livewire/livewire/discussions/6113 is resolved
+            'unsafe-eval' => true,
             'allow' => [
-                // 'url',
+                'cdnjs.cloudflare.com',
+                'cdn.jsdelivr.net',
+                'browser.sentry-cdn.com',
+                'www.googletagmanager.com',
+                'tagmanager.google.com',
+                'app.helphero.co',
+                'helphero.co',
+                'js-eu1.hs-scripts.com',
+                '*.posthog.com',
+                'js.hscta.net',
+                'js-eu1.hscta.net',
+                '*.hubspot.com',
+                'static.hsappstatic.net',
+                '*.usemessages.com',
+                '*.hs-banner.com',
+                '*.hubspotusercontent00.net',
+                '*.hubspotusercontent10.net',
+                '*.hubspotusercontent20.net',
+                '*.hubspotusercontent30.net',
+                '*.hubspotusercontent40.net',
+                '*.hubspot.net',
+                'www.witty.works',
+                '*.hscollectedforms.net',
+                '*.hsleadflows.net',
+                '*.hsforms.net',
+                '*.hsforms.com',
+                '*.hs-scripts.com',
+                '*.hubspotfeedback.com',
+                'feedback.hubapi.com',
+                'feedback-eu1.hubapi.com',
             ],
-
             'schemes' => [
-                // 'data:',
-                // 'https:',
-            ],
-
-            /* followings are only work for `script` and `style` related directives */
-
-            'unsafe-inline' => false,
-
-            'unsafe-eval' => false,
-
-            // https://www.w3.org/TR/CSP3/#unsafe-hashes-usage
-            'unsafe-hashes' => false,
-
-            // Enable `strict-dynamic` will *ignore* `self`, `unsafe-inline`,
-            // `allow` and `schemes`. You can find more information from:
-            // https://www.w3.org/TR/CSP3/#strict-dynamic-usage
-            'strict-dynamic' => false,
-
-            'hashes' => [
-                'sha256' => [
-                    // 'sha256-hash-value-with-base64-encode',
-                ],
-
-                'sha384' => [
-                    // 'sha384-hash-value-with-base64-encode',
-                ],
-
-                'sha512' => [
-                    // 'sha512-hash-value-with-base64-encode',
-                ],
+                'https:',
             ],
         ],
 
@@ -659,7 +644,21 @@ return [
 
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/style-src
         'style-src' => [
-            //
+            'self' => true,
+            'unsafe-inline' => true,
+            'allow' => [
+                '*.posthog.com',
+                '*.hubspotusercontent00.net',
+                '*.hubspotusercontent10.net',
+                '*.hubspotusercontent20.net',
+                '*.hubspotusercontent30.net',
+                '*.hubspotusercontent40.net',
+                'cdn2.hubspot.net',
+                'www.witty.works',
+                'googletagmanager.com',
+                'tagmanager.google.com',
+                'fonts.googleapis.com',
+            ]
         ],
 
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/style-src-attr

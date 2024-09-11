@@ -15,7 +15,7 @@
                 crossorigin="anonymous"
             ></script>
 
-            <script>
+            <script nonce="{{ csp_nonce('script') }}">
                 Sentry.init({ dsn: {!! json_encode(config('sentry.dsn')) !!} });
                 Sentry.showReportDialog({
                     eventId: '{{ app('sentry')->getLastEventId() }}'

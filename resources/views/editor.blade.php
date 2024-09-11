@@ -23,18 +23,13 @@
                             @endif
                         </h3>
 
-                        <link rel='stylesheet' type='text/css' href='https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css' />
-                        <link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_style.min.css">
-
-                        <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js'></script> 
-
                         <div id="witty_editor">
                             @if(request()->get('onboarding'))
                             {!! nl2br(__('content.witty_editor_example_text')) !!}
                             @endif
                         </div>
 
-                        <script type="text/javascript">
+                        <script nonce="{{ csp_nonce('script') }}">
                             if (typeof ClipboardItem === 'function') {
                                 FroalaEditor.DefineIcon('copy', {
                                     template: 'image',

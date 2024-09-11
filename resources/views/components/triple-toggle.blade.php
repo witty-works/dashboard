@@ -26,7 +26,7 @@
 <input type="hidden" id="{!! $attributes->get('name') !!}" {!! $attributes->merge() !!} />
 
 @if(empty($disabled))
-<script>
+<script nonce="{{ csp_nonce('script') }}">
     document.querySelector('#tripple-toggle-{!! $attributes->get('name') !!}').addEventListener('click', function() {
         toggle = document.querySelector('#tripple-toggle-{!! $attributes->get('name') !!}');
         hiddenInput = document.querySelector('#{!! $attributes->get('name') !!}');

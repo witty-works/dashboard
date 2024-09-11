@@ -17,5 +17,11 @@
         "postcss": "^8.4.35",
         "tailwindcss": "^3.4.1",
         "vite": "^5.1.7"
+    },
+    "dependencies": {
+        "chart.js": "^4.4.4",
+        "chartjs-plugin-datalabels": "^2.2.0",
+        "froala-editor": "^4.2.2",
+        "moment": "^2.30.1"
     }
 }

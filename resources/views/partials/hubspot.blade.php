@@ -1,5 +1,5 @@
 @if (config('hubspot.js_enabled'))
-<script type="text/javascript">
+<script nonce="{{ csp_nonce('script') }}">
     function onConversationsAPIReady() {
         if (window.PHSurveyClosed || window.PHSurveyClosed === undefined) {
             window.HubSpotConversations.widget.load();

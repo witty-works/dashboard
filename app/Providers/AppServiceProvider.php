@@ -20,6 +20,11 @@ class AppServiceProvider extends ServiceProvider
     {
         if ($this->app->isLocal()) {
             $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
+
+            // Set CSP nonce for Laravel Debugbar during development
+            if (class_exists(\Barryvdh\Debugbar\Facades\Debugbar::class) && app()->bound('debugbar')) {
+                app('debugbar')->getJavascriptRenderer()->setCspNonce(csp_nonce());
+            }
         }
 
         JWT::$leeway = 10;
