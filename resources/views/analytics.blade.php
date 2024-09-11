@@ -253,6 +253,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/0.7.0/chartjs-plugin-datalabels.min.js" rossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js" rossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/locale/de.js" rossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/locale/fr.js" rossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
     moment.locale(@json(app()->getLocale()))
@@ -348,9 +349,9 @@
         const textElement = textElementId ? document.getElementById(textElementId) : null;
         if (textElement) {
             if (isApiError) {
-                textElement.innerHTML = @json('content.no_data_image_text_temp_unavailable');
+                textElement.innerHTML = @json(__('content.no_data_image_text_temp_unavailable'));
             } else {
-                textElement.innerHTML = @json('content.no_data_image_text');
+                textElement.innerHTML = @json(__('content.no_data_image_text'));
             }
         }
     }
