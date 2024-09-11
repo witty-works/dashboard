@@ -6,6 +6,7 @@
         "php": "^8.2",
         "barryvdh/laravel-debugbar": "^3.6",
         "bensampo/laravel-embed": "^2.0",
+        "bepsvpt/secure-headers": "^7.5",
         "guzzlehttp/guzzle": "^7.0.1",
         "hubspot/api-client": "^9.2",
         "joelbutcher/socialstream": "^6.0",
