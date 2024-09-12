@@ -12,3 +12,11 @@ if (window.sentry_dsn) {
         }
     });
 }
+
+import moment from 'moment';
+import 'moment/locale/de'
+import 'moment/locale/fr'
+import {Chart} from 'chart.js';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
+import FroalaEditor from 'froala-editor'
+global.FroalaEditor = FroalaEditor;

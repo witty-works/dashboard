@@ -25,6 +25,7 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \App\Http\Middleware\SentryContext::class,
         \App\Http\Middleware\HttpsProtocol::class,
+        \Bepsvpt\SecureHeaders\SecureHeadersMiddleware::class,
     ];
 
     /**

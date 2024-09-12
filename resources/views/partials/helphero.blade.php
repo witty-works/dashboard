@@ -2,8 +2,8 @@
 @php
   $user = Auth::user();
 @endphp
-<script src="//app.helphero.co/embed/{{ config('helphero.app_id') }}"></script>
-<script>
+<script src="https://app.helphero.co/embed/{{ config('helphero.app_id') }}"></script>
+<script  nonce="{{ csp_nonce('script') }}">
     if (window.HelpHero) {
         @if(empty($user))
         HelpHero.anonymous();

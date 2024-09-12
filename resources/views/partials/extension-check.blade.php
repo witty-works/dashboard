@@ -1,4 +1,4 @@
-<script>
+<script nonce="{{ csp_nonce('script') }}">
     window.addEventListener('load', () => {
         const wittyIsInstalled = document.querySelector('witty-is-installed');
 

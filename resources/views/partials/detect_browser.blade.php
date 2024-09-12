@@ -1,4 +1,4 @@
-<script>
+<script nonce="{{ csp_nonce('script') }}">
     function detectBrowser() {
         if (window.navigator.userAgent.toLowerCase().indexOf("edg") > -1) {
             return 'edge';

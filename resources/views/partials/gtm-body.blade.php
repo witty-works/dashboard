@@ -3,7 +3,7 @@
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
-<script type="text/javascript">
+<script nonce="{{ csp_nonce('script') }}">
 window.dataLayer = window.dataLayer || [];
 window._hsp = window._hsp || [];
 _hsp.push(['addPrivacyConsentListener', function(consent) {

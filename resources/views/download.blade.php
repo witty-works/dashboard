@@ -49,7 +49,7 @@
                         @endforeach
                     </div>
 
-                    <script>
+                    <script nonce="{{ csp_nonce('script') }}">
                         window.addEventListener('load', (event) => {
                             const wittyIsInstalled = document.querySelector('witty-is-installed');
 
