@@ -9,7 +9,7 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "hubspot/api-client": "^9.2",
         "joelbutcher/socialstream": "^6.0",
-        "kineticamobile/lumki": "dev-remove-jet-widget-prefix-laravel-11",
+        "kineticamobile/lumki": "dev-main",
         "laravel/cashier": "^15.0",
         "laravel/framework": "^11",
         "laravel/jetstream": "^5.0",
@@ -76,10 +76,6 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "repositories": [
-        {
-            "type": "vcs",
-            "url": "git@github.com:witty-works/lumki.git"
-        },
         {
             "type": "vcs",
             "url": "git@github.com:lsmith77/AzureADB2C.git"
