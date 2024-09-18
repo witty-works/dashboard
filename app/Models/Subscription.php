@@ -41,12 +41,8 @@ class Subscription extends CashierSubscription
             return 'witty_free';
         }
 
-        if (!$this->valid() && !$ignoreInvalid) {
+        if (!$this->valid() && $ignoreInvalid === false) {
             return null;
-        }
-
-        if ('enterprise' === $this->stripe_price) {
-            return 'witty_enterprise';
         }
 
         $stripePlans = config('stripe.plans');
@@ -65,7 +61,7 @@ class Subscription extends CashierSubscription
 
     public function planName()
     {
-        return __('stripe.' . $this->planId());
+        return __('stripe.' . $this->planId() ?? 'witty_free');
     }
 
     public function isPaidByInvoice()

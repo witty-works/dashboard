@@ -245,18 +245,21 @@ class User extends Authenticatable implements MustVerifyEmail
         return $team->subscription($type);
     }
 
+    protected function getStripeConfig($key)
+    {
+        $plan = $this->planId() ?? 'witty_free';
+        $plan = str_replace('_trial', '', $plan);
+        return config('stripe.plans.' . $plan . '.' . $key);
+    }
+
     public function getTermReplacementsCount()
     {
-        $key = '.features.user_term_replacements.count';
-        $planId = $this->currentTeam ? $this->currentTeam->planId(true) : 'witty_free';
-        return config('stripe.plans.' . $planId . $key);
+        return $this->getStripeConfig('features.user_term_replacements.count');
     }
 
     public function getFalsePositivesCount()
     {
-        $key = '.features.user_false_positives.count';
-        $planId = $this->currentTeam ? $this->currentTeam->planId(true) : 'witty_free';
-        return config('stripe.plans.' . $planId . $key);
+        return $this->getStripeConfig('features.user_false_positives.count');
     }
 
     public function isPremium()
@@ -269,14 +272,14 @@ class User extends Authenticatable implements MustVerifyEmail
         return $team->isPremium();
     }
 
-    public function planId($featurePlan = false)
+    public function planId()
     {
         $team = $this->licenseTeam;
         if ($team) {
-            return $team->planId($featurePlan);
+            return $team->planId();
         }
 
-        return "none";
+        return null;
     }
 
     public function applyAcceptedInvitiations()
