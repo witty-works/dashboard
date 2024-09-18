@@ -95,13 +95,25 @@ class Team extends JetstreamTeam
             ?? 'dashboard-team:' . $this->id;
     }
 
+    public function hasExpiredSubscription()
+    {
+        return $this->hasExpiredGenericTrial() || ($this->subscription() && !$this->subscription()->valid());
+    }
+
+    protected function getStripeConfig($key)
+    {
+        $plan = $this->planId() ?? 'witty_free';
+        $plan = str_replace('_trial', '', $plan);
+        return config('stripe.plans.' . $plan . '.' . $key);
+    }
+
     public function getUserLicensesCount($ignoreInvalid = false)
     {
         if ($this->subscribed() || ($ignoreInvalid && $this->subscription())) {
             return $this->subscription()->quantity;
         }
 
-        return config('stripe.plans.' . $this->planId(true) . '.features.invite_smaller_teams.count');
+        return $this->getStripeConfig('features.invite_smaller_teams.count');
     }
 
     public function allUsers()
@@ -140,14 +152,12 @@ class Team extends JetstreamTeam
 
     public function getTermReplacementsCount()
     {
-        $key = '.features.organization_term_replacements.count';
-        return config('stripe.plans.' . $this->planId(true) . $key);
+        return $this->getStripeConfig('features.organization_term_replacements.count');
     }
 
     public function getFalsePositivesCount()
     {
-        $key = '.features.organization_false_positives.count';
-        return config('stripe.plans.' . $this->planId(true) . $key);
+        return $this->getStripeConfig('features.organization_false_positives.count');
     }
 
     public function isPremium()
@@ -155,19 +165,18 @@ class Team extends JetstreamTeam
         return $this->subscribed() || $this->onGenericTrial();
     }
 
-    public function planId($featurePlan = false)
+    public function planId()
     {
         $subscription = $this->subscription();
         if ($subscription) {
-            return $this->subscription()->planId($featurePlan);
+            return $this->subscription()->planId();
         }
 
         if ($this->onGenericTrial()) {
-            // Teams on the trial get "Witty Teams" features
-            return $featurePlan ? 'witty_teams' : 'witty_free';
+            return 'witty_teams_trial';
         }
 
-        return ($this->trial_ends_at === null || $featurePlan) ? 'witty_free' : null;
+        return null;
     }
 
     public function getDomainListType()

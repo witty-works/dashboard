@@ -15,7 +15,7 @@
             @if($team->subscription() && !$team->subscription()->valid())
                 {{ __('stripe.'.$team->subscription()->planId(true)) }}
             @else
-            {{ !$team->subscribed() && ($team->onGenericTrial() || $team->hasExpiredGenericTrial()) ? __('stripe.witty_trial') : __('stripe.'.$team->planId()) }}
+                {{ __('stripe.'.($team->planId() ?? 'no_plan')) }}
             @endif
         </p>
 
@@ -55,6 +55,7 @@
             </a>)
         </p>
 
+        @if($team->subscribed() || $team->onGenericTrial() || $team->hasExpiredSubscription())
         <h3 class="lato-small-paragraph-title-h4 mt-4" id="what-is-included">
             {{ __('teams.what_is_included') }}
         </h3>
@@ -74,6 +75,7 @@
                 {{ trans_choice('teams.total_of_max_used_ignored', $team->getFalsePositivesCount(), ['total' => $team->getTotalFalsePositivesCount(), 'max_count' => $team->getFalsePositivesCount()]) }}
             </li>
         </ul>
+        @endif
 
         @if($team->subscribed() && Auth::user()->ownsTeam($team))
             <h3 class="lato-small-paragraph-title-h4 mt-4 mb-4">
