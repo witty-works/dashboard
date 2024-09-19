@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cbcdf2b8175c5f578b513d24e975747c",
+    "content-hash": "f15d002e446b7ee2a7c9e3260c2fa878",
     "packages": [
         {
             "name": "artisansdk/ratelimiter",
@@ -1623,29 +1623,30 @@
         },
         {
             "name": "kineticamobile/lumki",
-            "version": "dev-remove-jet-widget-prefix-laravel-11",
+            "version": "dev-main",
             "source": {
                 "type": "git",
-                "url": "https://github.com/witty-works/lumki.git",
-                "reference": "ab526664437a2e7e4a4747b6cd4687080e205191"
+                "url": "https://github.com/kineticamobile/lumki.git",
+                "reference": "f1c491d888cce746c37925daebafe44fa7cdd0bc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/witty-works/lumki/zipball/ab526664437a2e7e4a4747b6cd4687080e205191",
-                "reference": "ab526664437a2e7e4a4747b6cd4687080e205191",
+                "url": "https://api.github.com/repos/kineticamobile/lumki/zipball/f1c491d888cce746c37925daebafe44fa7cdd0bc",
+                "reference": "f1c491d888cce746c37925daebafe44fa7cdd0bc",
                 "shasum": ""
             },
             "require": {
                 "illuminate/support": "~5|~6|~7|~8|~9|^10.0|^11.0",
-                "lab404/laravel-impersonate": "^1.7.5",
-                "spatie/laravel-permission": "^3.0|^4.0|^5.0|^6.0"
+                "lab404/laravel-impersonate": "^1.7",
+                "spatie/laravel-permission": "^3.0|^4.0|^5.0|^6.4"
             },
             "require-dev": {
                 "mockery/mockery": "^1.1",
-                "orchestra/testbench": "~3|~4|~5|~6|^8.0",
-                "phpunit/phpunit": "~8.0|~9.0",
+                "orchestra/testbench": "~3|~4|~5|~6|^8.0|^9.0",
+                "phpunit/phpunit": "~8.0|~9.0|^10.5",
                 "sempro/phpunit-pretty-print": "^1.0"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
@@ -1662,16 +1663,7 @@
                     "Kineticamobile\\Lumki\\": "src/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Kineticamobile\\Lumki\\Tests\\": "tests"
-                }
-            },
-            "scripts": {
-                "test": [
-                    "phpunit --testdox"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1695,15 +1687,16 @@
             "description": "Laravel User Management for Laravel 9 with Jetstream",
             "homepage": "https://github.com/kineticamobile/lumki",
             "keywords": [
-                "Laravel",
-                "Laravel 9",
                 "Lumki",
-                "Users Management"
+                "laravel",
+                "laravel 9",
+                "users management"
             ],
             "support": {
-                "source": "https://github.com/witty-works/lumki/tree/remove-jet-widget-prefix-laravel-11"
+                "issues": "https://github.com/kineticamobile/lumki/issues",
+                "source": "https://github.com/kineticamobile/lumki/tree/main"
             },
-            "time": "2024-08-20T12:03:49+00:00"
+            "time": "2024-09-13T15:19:43+00:00"
         },
         {
             "name": "lab404/laravel-impersonate",

@@ -41,10 +41,36 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     protected $emailProviders = [
-        'gmail.com', 'bluewin.ch', 'icloud.com', 'hotmail.com', 'protonmail.com', 'protonmail.ch',
-        'gmx.ch', 'gmx.at', 'gmx.de', 'gmx.net', 'mein.gmx', 'aol.com', 'outlook.com', 'zoho.com',
-        'zohomail.eu', 'yahoo.com', 'web.de', 'cyon.ch', 'orange.fr', 'vodafone.com', 'me.com', 'hotmail.de',
-        'hotmail.ch', 'yahoo.ch', 'yahoo.de', 'hey.com', 'hotmail.fr', 'bluemail.ch', 'freenet.de', 'sunrise.ch',
+        'gmail.com',
+        'bluewin.ch',
+        'icloud.com',
+        'hotmail.com',
+        'protonmail.com',
+        'protonmail.ch',
+        'gmx.ch',
+        'gmx.at',
+        'gmx.de',
+        'gmx.net',
+        'mein.gmx',
+        'aol.com',
+        'outlook.com',
+        'zoho.com',
+        'zohomail.eu',
+        'yahoo.com',
+        'web.de',
+        'cyon.ch',
+        'orange.fr',
+        'vodafone.com',
+        'me.com',
+        'hotmail.de',
+        'hotmail.ch',
+        'yahoo.ch',
+        'yahoo.de',
+        'hey.com',
+        'hotmail.fr',
+        'bluemail.ch',
+        'freenet.de',
+        'sunrise.ch',
         'googlemail.com'
     ];
 
@@ -54,7 +80,9 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name',
+        'email',
+        'password',
     ];
 
     /**

@@ -110,6 +110,15 @@ class AnalyticsController extends Controller
 
     protected function buildFilter($properties, $filters, $interval, $from, $to, $math)
     {
+        $properties[] = [
+            'key' => '$host',
+            'value' => [
+                "loop.cloud.microsoft"
+            ],
+            'operator' => 'is_not',
+            'type' => 'event',
+        ];
+
         $filter = [
             'events' => [
                 [
