@@ -133,4 +133,7 @@ Witty surlignera tous les mots ajoutés à cette liste et suggérera vos alterna
     'other_language' => 'Uniquement dans d\'autres langues',
     'manage_organization_guidelines_generic_masculine' => 'Le masculin générique dans les langues genrées',
     'manage_organization_guidelines_description_generic_masculine' => 'Comment Witty devrait-il traiter le masculin générique dans des langues sexuées comme le français ou l\'allemand ?',
+    'llm_alternatives_headline' => 'lternatives qui sont grammaticalement correctes (à venir au 4ème trimestre)',
+    'llm_alternatives_description' => 'Décidez si Witty peut utiliser un Large-Language-Model (LLM) pour générer des alternatives qui sont grammaticalement correctes. Witty utilise des prompts qui limitent la liberté du modèle afin de minimiser les risques de biais. Aucune donnée n\'est stockée ou utilisée à des fins de formation dans le cadre de cette fonctionnalité, comme expliqué sur notre page <a href= "https://www.witty.works/trust-and-security">Confiance et sécurité</a>. Si cette fonction est désactivée, les utilisateurs·rices devront ajuster manuellement les alternatives.',
+    'llm_alternatives' => 'Utiliser le LLM pour les alternatives',
 ];

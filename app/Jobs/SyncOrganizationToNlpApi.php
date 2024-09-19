@@ -72,7 +72,11 @@ class SyncOrganizationToNlpApi extends AbstractSyncToNlpApi
             'store_context' => [
                 'value' => $team->isPremium() ? (bool) $team->store_context : true,
                 'status' => 'force',
-            ]
+            ],
+            'llm_alternatives' => [
+                'value' => (bool) $team->llm_alternatives,
+                'status' => 'force',
+            ],
         ];
 
         $data['config_hash'] = md5(serialize($data));
