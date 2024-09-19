@@ -61,7 +61,7 @@
         </h3>
         <ul aria-labelledby="what-is-included">
             <li>
-                {{ __('teams.total_of_max_used_licenses', ['total' => $team->userLicenses()->count(), 'max_count' => $team->getUserLicensesCount(true)]) }}
+                {{ trans_choice('teams.total_of_max_used_licenses', $team->getUserLicensesCount(true), ['total' => $team->userLicenses()->count(), 'max_count' => $team->getUserLicensesCount(true)]) }}
                 @if($team->subscription() && $team->subscription()->isPaidByInvoice())
                     <div>
                         {!! __('teams.more_licenses') !!}

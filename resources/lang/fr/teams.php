@@ -17,7 +17,7 @@ return [
     'user_licenses' => 'Licences d\'utilisation',
     'term_replacements' => 'Dictionnaire de l\'équipe',
     'false_positives' => 'Paroles ignorées de votre équipe',
-    'total_of_max_used_licenses' => ':total des :max_count licences d\'utilisation ont été attribuées',
+    'total_of_max_used_licenses' => ':total licence d\'utilisation sur une a été attribuée|:total licences d\'utilisation sur :max_count ont été attribuées',
     'total_of_max_used_dictionary' => '[0,998] :total des :max_count ajouts possibles dans le dictionnaire de l\'équipe sont utilisés|[999,*] :total ajouts au dictionnaire de l\'équipe sont utilisés sur un nombre d\'ajouts illimité',
     'total_of_max_used_ignored' => '[0,998] :total des :max_count mots à ignorer possibles sont utilisés|[999,*] :total des mots à ignorer possibles sont utilisés sur un nombre de mots illimité',
     'more_licenses' => 'Si vous souhaitez acheter plus de licences, veuillez <a href="mailto:support@witty.works">contacter</a> Witty Works.',
