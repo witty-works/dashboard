@@ -7,7 +7,13 @@
         @livewire('teams.store-context', ['model' => $team])
     </div>
 </div>
-          
+
+<div>
+    <div class="py-10">
+        @livewire('teams.llm-alternatives', ['model' => $team])
+    </div>
+</div>
+
 <div>
     <div class="py-10">
         @livewire('teams.analytics-user-access', ['model' => $team])

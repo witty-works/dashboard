@@ -6,5 +6,6 @@ return [
     'billing' => 'Zum Abrechnungsportal gehen',
     'contact_sales' => 'Wenden dich an den Vertrieb',
     'witty_free' => 'Witty Free',
-    'witty_trial' => 'Witty Free Trial',
+    'witty_teams_trial' => 'Witty Teams Trial',
+    'no_plan' => 'Kein Plan',
 ];

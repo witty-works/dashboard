@@ -133,4 +133,7 @@ All words added to this list will become highlighted by Witty, and your custom r
     'other_language' => 'Only in other languages',
     'manage_organization_guidelines_generic_masculine' => 'Generic masculine in gendered languages',
     'manage_organization_guidelines_description_generic_masculine' => 'How should Witty handle the generic masculine in gendered languages like German or French?',
+    'llm_alternatives_headline' => 'Grammatically correct alternatives (coming in Q4)',
+    'llm_alternatives_description' => 'If Witty should use a Large-Language-Model (LLM) to generate grammatically correct alternatives. Witty uses prompts that restrict the freedom of the model to minimize risks of biases. No data is stored or used for training purposes related to this feature as explained on our <a href="https://www.witty.works/trust-and-security">Trust & Security</a> page. If this feature is disabled users will need to manually adjust alternatives to fit.',
+    'llm_alternatives' => 'Use LLM for alternatives',
 ];

@@ -63,7 +63,7 @@ class SyncOrganizationToNlpApi extends AbstractSyncToNlpApi
         $data = [
             'id' => $team->posthogId(),
             'name' => $team->name,
-            'plan' => $team->planId(true),
+            'plan' => $team->planId() ?? "none",
             'trial_ends_at' => $team->subscribed() ? null : $team->trial_ends_at,
             'false_positives' => $falsePositives,
             'term_replacements' => $termReplacements,
@@ -72,7 +72,11 @@ class SyncOrganizationToNlpApi extends AbstractSyncToNlpApi
             'store_context' => [
                 'value' => $team->isPremium() ? (bool) $team->store_context : true,
                 'status' => 'force',
-            ]
+            ],
+            'llm_alternatives' => [
+                'value' => (bool) $team->llm_alternatives,
+                'status' => 'force',
+            ],
         ];
 
         $data['config_hash'] = md5(serialize($data));

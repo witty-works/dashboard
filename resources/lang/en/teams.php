@@ -17,7 +17,7 @@ return [
     'user_licenses' => 'User licenses',
     'term_replacements' => 'Team dictionary',
     'false_positives' => 'Ignored words of your team',
-    'total_of_max_used_licenses' => ':total of :max_count user licenses have been assigned',
+    'total_of_max_used_licenses' => ':total of one user license has been assigned|:total of :max_count user licenses have been assigned',
     'total_of_max_used_dictionary' => '[0,998] :total of :max_count possible entries in the team dictionary are used|[999,*] :total of unlimited possible entries in the team dictionary are used',
     'total_of_max_used_ignored' => '[0,998] :total of :max_count possible ignored words are used|[999,*]:total of unlimited possible ignored words are used',
     'more_licenses' => 'If you like to purchase more licenses, please <a href="mailto:support@witty.works">contact</a> Witty Works.',

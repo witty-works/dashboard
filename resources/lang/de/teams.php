@@ -26,7 +26,7 @@ return [
     'witty_teams_only' => 'Upgrade',
     'plan_headline' => 'Abonnement',
     'profile' => 'Profil',
-    'total_of_max_used_licenses' => ':total von :max_count Benutzerlizenzen wurden zugewiesen',
+    'total_of_max_used_licenses' => ':total von einer Benutzerlizenz wurde zugewiesen|:total von :max_count Benutzerlizenzen wurden zugewiesen',
     'total_of_max_used_dictionary' => '[0,998] :total von :max_count möglichen Einträgen in das Team-Wörterbuch wurden erstellt|[999,*] :total von unlimitiert möglichen Einträgen in das Team-Wörterbuch wurden erstellt
 ',
     'total_of_max_used_ignored' => '[0,998] :total von :max_count möglichen Einträgen in die Liste ignorierter Wörter wurden erstellt |[999,*]:total von unlimitierten möglichen Einträgen in die Liste ignorierter Wörter wurden erstellt ',

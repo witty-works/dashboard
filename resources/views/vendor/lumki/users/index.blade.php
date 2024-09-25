@@ -31,9 +31,9 @@
                 @if($user->subscribed())
                     {{ $user->currentteam->subscription()->planName() }}
                 @elseif($user->currentTeam && ($user->currentTeam->onGenericTrial() || $user->currentTeam->hasExpiredGenericTrial()))
-                    {{ __('stripe.witty_trial') }}
+                    {{ __('stripe.witty_teams_trial') }}
                 @else
-                    {{ __('stripe.witty_free')}}
+                    {{ __('stripe.no_plan')}}
                 @endif
             </td>
             <td class="p-2">

@@ -125,11 +125,23 @@
                                     return
                                 }
 
-                                const installedVersion = wittyIsInstalled.getAttribute('extension-version')
-                                if (installedVersion) {
+                                const wittyVersion = wittyIsInstalled.getAttribute('extension-version')
+                                const wittyPlan = wittyIsInstalled.getAttribute('extension-plan')
+                                const wittyTeam = wittyIsInstalled.getAttribute('extension-team')
+                                if (wittyVersion) {
                                     var toolbar = editor.$tb;
                                     var customTag = document.createElement('span');
-                                    customTag.innerText = 'Witty Version: ' + installedVersion;
+                                    customTag.innerText = 'Witty Version: ' + wittyVersion;
+                                    if (wittyTeam) {
+                                        customTag.innerText+= ', Team: ' + wittyTeam;
+                                    }
+                                    if (wittyPlan) {
+                                        let wittyPlanWords = wittyPlan.split("_");
+                                        for (let i=0; i < wittyPlanWords.length; i++) {
+                                            wittyPlanWords[i] = wittyPlanWords[i].charAt(0).toUpperCase() + wittyPlanWords[i].slice(1);
+                                        }
+                                        customTag.innerText+= ' (' +  wittyPlanWords.join(' ') + ')';
+                                    }
                                     customTag.style.marginLeft = '10px';
                                     customTag.style.fontSize = '14px';
                                     customTag.style.color = '#555';
