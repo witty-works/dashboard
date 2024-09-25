@@ -85,6 +85,10 @@ class Kernel extends HttpKernel
             return false;
         }
 
+        if (in_array('0', $frenchSupport)) {
+            return true;
+        }
+
         if ($model instanceof User) {
             $model = $model->currentTeam;
         }
@@ -92,7 +96,7 @@ class Kernel extends HttpKernel
         if (!$model instanceof Team) {
             return false;
         }
-//dd($model->id, $frenchSupport);
+
         return in_array($model->id, $frenchSupport);
     }
 }
