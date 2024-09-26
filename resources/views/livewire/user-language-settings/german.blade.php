@@ -22,12 +22,6 @@
             @include('partials.toggle_label', ['disabled' => \App\Models\LanguageGuidelines::isForcedOnTeam($model, 'german_rules')])
 
             <x-input-error for="german_gender_ending" class="mt-2" />
-
-            @if(!$model->isPremium())
-            <div class="p-3">
-                @include('partials.witty-teams-only')
-            </div>
-            @endif
         </div>
     </x-slot>
 

@@ -25,11 +25,6 @@
                     @if($disabled) disabled @endif
                 >
                     {!! __($value) !!}
-                    @if(!$model->isPremium())
-                        <span class="p-3">
-                            @include('partials.witty-teams-only')
-                        </span>
-                    @endif
             </label>
         </div>
         @endforeach
