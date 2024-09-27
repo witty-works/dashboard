@@ -289,6 +289,9 @@ class SyncToHubspotCategoriesCommand extends Command
 
                             $row['emoji_image'] = $proficiencyLevelEmoji[$row['proficiency_level']]
                                 ?? $proficiencyLevelEmoji['unconscious_bias'];
+                        } else {
+                            $row['emoji_image'] = explode(',', $row['emoji_image']);
+                            $row['emoji_image'] = reset($row['emoji_image']);
                         }
                     }
 
