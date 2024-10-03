@@ -32,10 +32,23 @@
 
 @if(empty($disabled))
 <script>
-    document.querySelector('#tripple-toggle-{!! $attributes->get('name') !!}').addEventListener('click', function() {
-        toggle = document.querySelector('#tripple-toggle-{!! $attributes->get('name') !!}');
-        hiddenInput = document.querySelector('#{!! $attributes->get('name') !!}');
-        disabled = {{ (empty($minValue) || $minValue === \App\Models\LanguageGuidelines::DISABLED) ? 'true' : 'false' }};
+    document.querySelectorAll('.tripple-toggle').forEach(toggleElement => {
+        toggleElement.addEventListener('click', function() {
+            handleToggle(toggleElement);
+        });
+
+        toggleElement.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();  
+                handleToggle(toggleElement); 
+            }
+        });
+    });
+
+    function handleToggle(toggle) {
+        const hiddenInput = document.querySelector(`#${toggle.id.replace('tripple-toggle-', '')}`);
+        const disabled = {{ (empty($minValue) || $minValue === \App\Models\LanguageGuidelines::DISABLED) ? 'true' : 'false' }};
+        
         if (disabled) {
             if (toggle.classList.contains('active')) {
                 if (toggle.classList.contains('middle')) {
@@ -62,7 +75,7 @@
         }
 
         hiddenInput.dispatchEvent(new Event('input'));
-    });
+    }
 </script>
 @endif
 
