@@ -17,6 +17,8 @@
     role="button"
     aria-pressed="{{ $value === 2 ? 'true' : 'false' }}"
     aria-labelledby="toggle-label-{!! $attributes->get('name') !!}"
+    onclick="handleToggle(this)"
+    onkeydown="handleKeyDown(this, event)"
 >
     @if($minValue === 1)
     <div class="triple-toggle-lock">
@@ -32,18 +34,12 @@
 
 @if(empty($disabled))
 <script>
-    document.querySelectorAll('.tripple-toggle').forEach(toggleElement => {
-        toggleElement.addEventListener('click', function() {
-            handleToggle(toggleElement);
-        });
-
-        toggleElement.addEventListener('keydown', function(event) {
-            if (event.key === 'Enter' || event.key === ' ') {
-                event.preventDefault();  
-                handleToggle(toggleElement); 
-            }
-        });
-    });
+    function handleKeyDown(toggleElement, event) {
+        if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();  
+            handleToggle(toggleElement); 
+        }
+    }
 
     function handleToggle(toggle) {
         const hiddenInput = document.querySelector(`#${toggle.id.replace('tripple-toggle-', '')}`);
