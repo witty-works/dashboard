@@ -32,6 +32,9 @@
 
 <input type="hidden" id="{!! $attributes->get('name') !!}" {!! $attributes->merge() !!} />
 
+<!-- Live region to announce changes for screen readers -->
+<div id="toggle-announcement" class="sr-only" aria-live="polite"></div>
+
 @if(empty($disabled))
 <script>
     function handleKeyDown(toggleElement, event) {
@@ -43,6 +46,9 @@
 
     function handleToggle(toggle) {
         const hiddenInput = document.querySelector(`#${toggle.id.replace('tripple-toggle-', '')}`);
+        const announcement = document.getElementById('toggle-announcement');
+        let currentState = hiddenInput.value;
+        
         const disabled = {{ (empty($minValue) || $minValue === \App\Models\LanguageGuidelines::DISABLED) ? 'true' : 'false' }};
         
         if (disabled) {
@@ -50,23 +56,33 @@
                 if (toggle.classList.contains('middle')) {
                     toggle.classList.remove('middle');
                     hiddenInput.setAttribute('value', '2');
+                    toggle.setAttribute('aria-pressed', 'true');
+                    announcement.innerText =  "{{ __('guidelines.proficiency_level_advanced_toggle_message') }}"; // Announce "on" status
                 } else {
                     toggle.classList.remove('active');
                     hiddenInput.setAttribute('value', '0');
+                    toggle.setAttribute('aria-pressed', 'false');
+                    announcement.innerText = "{{ __('guidelines.proficiency_level_off_toggle_message') }}"; // Announce "off" status
                 }
             } else {
                 toggle.classList.add('active');
                 toggle.classList.add('middle');
                 hiddenInput.setAttribute('value', '1');
+                toggle.setAttribute('aria-pressed', 'false');
+                announcement.innerText = "{{ __('guidelines.proficiency_level_basic_toggle_message') }}"; // Announce "middle" status
             }
         } else {
             if (toggle.classList.contains('middle')) {
                 toggle.classList.remove('middle');
                 hiddenInput.setAttribute('value', '2');
+                toggle.setAttribute('aria-pressed', 'true');
+                announcement.innerText = "{{ __('guidelines.proficiency_level_advanced_toggle_message') }}";
             } else {
                 toggle.classList.add('active');
                 toggle.classList.add('middle');
                 hiddenInput.setAttribute('value', '1');
+                toggle.setAttribute('aria-pressed', 'false');
+                announcement.innerText = "{{ __('guidelines.proficiency_level_off_toggle_message') }}";
             }
         }
 
