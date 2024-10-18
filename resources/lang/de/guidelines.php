@@ -117,9 +117,6 @@ Alle Wörter, die zu dieser Liste hinzufügst, werden von Witty hervorgehoben, u
     'proficiency_level_off' => 'Aus',
     'proficiency_level_basic' => 'Grundlagen',
     'proficiency_level_advanced' => 'Erweitert',
-    'proficiency_level_off_toggle_message' => 'Auf Aus gestellt',
-    'proficiency_level_basic_toggle_message' => 'Auf Grundlagen gestellt',
-    'proficiency_level_advanced_toggle_message' => 'Auf Erweitert Stufe gestellt',
     'form_reset_category_aria_label' => 'Diversitätsdimensionen Einstellungen zurücksetzen',
     'form_reset_language_aria_label' => 'Spracheinstellungen zurücksetzen',
     'advanced_toggle_advice' => 'So kannst du Witty genau auf deine Bedürfnisse und Prioritäten abstimmen.',
@@ -139,4 +136,7 @@ Alle Wörter, die zu dieser Liste hinzufügst, werden von Witty hervorgehoben, u
     'llm_alternatives_headline' => 'Grammatikalisch korrekte Alternativen (kommt in Q4)',
     'llm_alternatives_description' => 'Ob Witty ein Large-Language-Model (LLM) verwenden, um grammatikalisch korrekte Alternativen zu erzeugen. Witty verwendet LLM-Prompts, die die Freiheit des Modells einschränken, um das Risiko von Bias zu minimieren. Im Zusammenhang mit dieser Funktion werden keine Daten gespeichert oder für Trainingszwecke verwendet, wie auf unserer Seite <a href="https://www.witty.works/trust-and-security">Trust & Security</a> erläutert. Wenn diese Funktion deaktiviert ist, müssen die Benutzer die Alternativen manuell anpassen, damit sie passen.',
     'llm_alternatives' => 'LLM für Alternativen nutzen',
+    'proficiency_level_off_toggle_message' => 'Ausgeschaltet',
+    'proficiency_level_basic_toggle_message' => 'Auf Grundlagen gestellt',
+    'proficiency_level_advanced_toggle_message' => 'Auf Erweitert gestellt',
 ];

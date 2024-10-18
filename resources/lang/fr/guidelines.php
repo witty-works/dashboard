@@ -121,9 +121,6 @@ Witty surlignera tous les mots ajoutés à cette liste et suggérera vos alterna
     'proficiency_level_off' => 'Désactivé',
     'proficiency_level_basic' => 'De base',
     'proficiency_level_advanced' => 'Avancé',
-    'proficiency_level_off_toggle_message' =>  'Réglé sur désactivé',
-    'proficiency_level_basic_toggle_message' => 'Réglé sur niveau Basique',
-    'proficiency_level_advanced_toggle_message' => 'Réglé sur niveau Avancé',
     'form_reset_category_aria_label' => 'réinitialisation des paramètres de la dimension de la diversité',
     'form_reset_language_aria_label' => 'réinitialiser les paramètres linguistiques',
     'discriminating_language_cannot_be_disabled' => 'Les dimensions de la diversité ouvertement discriminatoires ne peuvent pas être désactivées.',
@@ -139,4 +136,7 @@ Witty surlignera tous les mots ajoutés à cette liste et suggérera vos alterna
     'llm_alternatives_headline' => 'lternatives qui sont grammaticalement correctes (à venir au 4ème trimestre)',
     'llm_alternatives_description' => 'Décidez si Witty peut utiliser un Large-Language-Model (LLM) pour générer des alternatives qui sont grammaticalement correctes. Witty utilise des prompts qui limitent la liberté du modèle afin de minimiser les risques de biais. Aucune donnée n\'est stockée ou utilisée à des fins de formation dans le cadre de cette fonctionnalité, comme expliqué sur notre page <a href= "https://www.witty.works/trust-and-security">Confiance et sécurité</a>. Si cette fonction est désactivée, les utilisateurs·rices devront ajuster manuellement les alternatives.',
     'llm_alternatives' => 'Utiliser le LLM pour les alternatives',
+    'proficiency_level_off_toggle_message' => 'Régler sur off',
+    'proficiency_level_basic_toggle_message' => 'Régler au niveau de base',
+    'proficiency_level_advanced_toggle_message' => 'Régler au niveau avancé',
 ];
