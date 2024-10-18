@@ -36,7 +36,8 @@
 <!-- Live region to announce changes for screen readers -->
 <div id="toggle-announcement" class="sr-only" aria-live="polite"></div>
 
-@if(empty($disabled))
+@if(\App\Models\LanguageGuidelines::$tripleToogleLoaded === false)
+@php \App\Models\LanguageGuidelines::$tripleToogleLoaded = true; @endphp
 <script>
     function handleKeyDown(toggle, event) {
         if (event.key === 'Enter' || event.key === ' ') {
