@@ -6,7 +6,7 @@
 @endphp
 <div
     title="{{ empty($disabled) 
-        ? (empty($minValue) || $minValue === \App\Models\LanguageGuidelines::DISABLED) 
+        ? ($minValue === \App\Models\LanguageGuidelines::DISABLED) 
         ? __('content.triple_toggle_unlocked') : __('content.triple_toggle_locked_second_pos') 
         : __('content.triple_toggle_locked_third_pos')
     }}"
@@ -19,6 +19,7 @@
     aria-labelledby="toggle-label-{!! $attributes->get('name') !!}"
     onclick="handleToggle(this)"
     onkeydown="handleKeyDown(this, event)"
+    minvalue="{{ $minValue }}"
 >
     @if($minValue === 1)
     <div class="triple-toggle-lock">
@@ -37,21 +38,20 @@
 
 @if(empty($disabled))
 <script>
-    function handleKeyDown(toggleElement, event) {
+    function handleKeyDown(toggle, event) {
         if (event.key === 'Enter' || event.key === ' ') {
             event.preventDefault();  
-            handleToggle(toggleElement); 
+            handleToggle(toggle); 
         }
     }
 
     function handleToggle(toggle) {
-        const hiddenInput = document.querySelector(`#${toggle.id.replace('tripple-toggle-', '')}`);
-        const announcement = document.getElementById('toggle-announcement');
+        let hiddenInput = document.querySelector(`#${toggle.id.replace('tripple-toggle-', '')}`);
+        let announcement = document.getElementById('toggle-announcement');
         let currentState = hiddenInput.value;
         
-        const disabled = {{ (empty($minValue) || $minValue === \App\Models\LanguageGuidelines::DISABLED) ? 'true' : 'false' }};
-        
-        if (disabled) {
+        switch (toggle.getAttribute('minvalue')) {
+        case '{{\App\Models\LanguageGuidelines::DISABLED}}':
             if (toggle.classList.contains('active')) {
                 if (toggle.classList.contains('middle')) {
                     toggle.classList.remove('middle');
@@ -71,7 +71,8 @@
                 toggle.setAttribute('aria-pressed', 'false');
                 announcement.innerText = "{{ __('guidelines.proficiency_level_basic_toggle_message') }}"; // Announce "middle" status
             }
-        } else {
+            break;
+        case '{{\App\Models\LanguageGuidelines::BASIC_ENABLED}}':
             if (toggle.classList.contains('middle')) {
                 toggle.classList.remove('middle');
                 hiddenInput.setAttribute('value', '2');
@@ -84,6 +85,9 @@
                 toggle.setAttribute('aria-pressed', 'false');
                 announcement.innerText = "{{ __('guidelines.proficiency_level_off_toggle_message') }}";
             }
+            break;
+        case '{{\App\Models\LanguageGuidelines::ADVANCED_ENABLED}}':
+            return
         }
 
         hiddenInput.dispatchEvent(new Event('input'));
