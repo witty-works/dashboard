@@ -20,6 +20,8 @@ class LanguageGuidelines extends Model
 
     const UNLIMITED = 999;
 
+    static public $tripleToogleLoaded = false;
+
     use HasFactory;
     use GuidelinesUpdateTrait {
         fireCustomModelEvent as fireCustomModelEventParent;
