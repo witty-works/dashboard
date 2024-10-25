@@ -433,4 +433,5 @@ Veuillez ensuite cliquer à nouveau sur "S\'inscrire" pour finaliser l\'inscript
     'trial-ended_text' => 'La période d\'essai de votre équipe est terminée.',
     'consent_to_terms' => 'Consentement aux conditions de service',
     'consent_to_mailing' => 'Consentement à l\'envoi',
+    'language_filter_fr' => 'Français',
 ];

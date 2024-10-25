@@ -432,4 +432,5 @@ Please then go to "Register" again to finalize the registration into the "Witty 
     'trial-ended_text' => 'Your teams trial has ended.',
     'consent_to_terms' => 'Consent to Terms of Service',
     'consent_to_mailing' => 'Consent to Mailing',
+    'language_filter_fr' => 'French',
 ];
