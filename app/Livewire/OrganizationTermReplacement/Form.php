@@ -35,7 +35,7 @@ class Form extends Component
         'explanation' => 'required_with:url,emoji|max:100',
         'url' => 'nullable|url|max:250',
         'emoji' => 'nullable',
-        'language_code' => 'nullable|string|in:en,de,',
+        'language_code' => 'nullable|string|in:en,de,fr',
         'matching_type' => 'nullable|string|in:case_insensitive,case_sensitive,lemmatize',
         'word_type' => 'nullable|string|in:a,v,n',
     ];
