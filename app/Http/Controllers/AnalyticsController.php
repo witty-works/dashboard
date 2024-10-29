@@ -260,7 +260,7 @@ class AnalyticsController extends Controller
             'interval' => 'in:day,week,month',
             'from' => 'required',
             'to' => 'nullable',
-            'lang' => 'nullable|in:en,de',
+            'lang' => 'nullable|in:en,de,fr',
             'events' => 'nullable|array|in:check_highlights,popover_open,alternative,ignore,learning_bites',
             'categories' => 'nullable|array|in:' . implode(',', $this->categories->keys()->toArray()),
             'subcategories' => 'nullable|array|in:' . implode(',', $this->subcategories->keys()->toArray()),

@@ -59,6 +59,7 @@
                     '' => __('content.language_filter_both'),
                     'en' => __('content.language_filter_en'),
                     'de' => __('content.language_filter_de'),
+                    'fr' => __('content.language_filter_fr'),
                 ];
             @endphp
             <x-select
