@@ -234,7 +234,7 @@ class OAuthController extends BaseOAuthController
             return $this->handleOfficeSsoRegister($request);
         }
 
-        return $this->loginUser($user);
+        return $this->loginUser($user, self::OFFICE_PROVIDER);
     }
 
     public function handleProviderCallback(Request $request, string $provider, ResolvesSocialiteUsers $resolver, $policy = 'login')
@@ -270,7 +270,7 @@ class OAuthController extends BaseOAuthController
 
         $user = $this->handleProviderAccount($request, $providerAccount, $provider);
 
-        return $this->login($user);
+        return $this->login($user, $provider);
     }
 
     protected function handleProviderAccount(Request $request, $providerAccount, string $provider)
@@ -429,10 +429,10 @@ class OAuthController extends BaseOAuthController
         return redirect(config('fortify.home'));
     }
 
-    protected function loginUser(Authenticatable $user): SocialstreamResponse
+    protected function loginUser(Authenticatable $user, $provider): SocialstreamResponse
     {
         $this->guard->login($user, Socialstream::hasRememberSessionFeatures());
-        request()->session()->put('login_source', $user->source);
+        request()->session()->put(self::LOGIN_SOURCE, $provider);
 
         return app(OAuthLoginResponse::class);
     }
@@ -443,14 +443,14 @@ class OAuthController extends BaseOAuthController
      * @param  \Illuminate\Contracts\Auth\Authenticatable|mixed  $user
      * @return mixed
      */
-    protected function login($user)
+    protected function login($user, $provider = self::AZURE_AD_B2C_PROVIDER)
     {
         $policy = self::isBrowserLogin();
 
-        $loginResponse = $this->loginUser($user, self::AZURE_AD_B2C_PROVIDER);
+        $loginResponse = $this->loginUser($user, $provider);
 
         if ($policy) {
-            $provider = self::getProvider(self::AZURE_AD_B2C_PROVIDER, $policy);
+            $provider = self::getProvider($provider, $policy);
             $tokens = self::getAccessTokenResponse($provider, true);
 
             return $this->returnAccessTokenResponse($tokens);
