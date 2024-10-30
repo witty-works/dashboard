@@ -16,7 +16,7 @@ services:
     type: mailhog
     portforward: true
     hogfrom:
-      - appserver_nginx
+      - appserver
 
 tooling:
   npm:
