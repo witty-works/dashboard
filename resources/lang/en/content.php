@@ -433,4 +433,5 @@ Please then go to "Register" again to finalize the registration into the "Witty 
     'consent_to_terms' => 'Consent to Terms of Service',
     'consent_to_mailing' => 'Consent to Mailing',
     'language_filter_fr' => 'French',
+    'language_filter_any' => 'All',
 ];

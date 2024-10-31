@@ -161,7 +161,7 @@
             {{ __('content.academy') }}
         </x-nav-link>
 
-        @if (Session::get('login_source') !== \App\Http\Controllers\OAuthController::OFFICE_PROVIDER)
+        @if (Session::get(\App\Http\Controllers\OAuthController::LOGIN_SOURCE) !== \App\Http\Controllers\OAuthController::OFFICE_PROVIDER)
         <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('logout', ['provider' => 'azureadb2c']) }}">
             <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/logout.svg') }}" alt="" />
             {{ __('content.log_out') }}

@@ -434,4 +434,5 @@ Veuillez ensuite cliquer à nouveau sur "S\'inscrire" pour finaliser l\'inscript
     'consent_to_terms' => 'Consentement aux conditions de service',
     'consent_to_mailing' => 'Consentement à l\'envoi',
     'language_filter_fr' => 'Français',
+    'language_filter_any' => 'Toutes',
 ];
