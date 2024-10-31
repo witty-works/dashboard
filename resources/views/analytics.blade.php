@@ -56,7 +56,7 @@
 
             @php
                 $ranges = [
-                    '' => __('content.language_filter_both'),
+                    '' => __('content.language_filter_any'),
                     'en' => __('content.language_filter_en'),
                     'de' => __('content.language_filter_de'),
                     'fr' => __('content.language_filter_fr'),

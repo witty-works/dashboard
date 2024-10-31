@@ -436,4 +436,5 @@ Bitte gehe dann erneut auf „Registrieren“, um die Registrierung im "Witty fo
     'consent_to_terms' => 'Zustimmung zu den Nutzungsbedingungen',
     'consent_to_mailing' => 'Zustimmung zu dem Mailing',
     'language_filter_fr' => 'Französisch',
+    'language_filter_any' => 'Alle',
 ];
