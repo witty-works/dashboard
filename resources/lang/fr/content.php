@@ -18,7 +18,7 @@ return [
     'close' => 'Fermer',
     'api_token_permissions' => 'Autorisations pour les jetons API',
     'cancel' => 'Annuler',
-    'save' => 'Enregistrer',
+    'save' => 'Sauver',
     'delete_api_token' => 'supprimer le jeton API',
     'api_tokens' => 'Jetons API',
     'password' => 'Mot de passe',
@@ -182,7 +182,7 @@ Vous trouverez des réponses à de nombreuses questions <a href="https://www.wit
     'account_not_found' => 'Aucun compte n\'a été trouvé.',
     'account_already_exists' => 'Un compte avec cette adresse e-mail existe déjà.',
     'onboarding_invitations' => 'Invitations ouvertes à l\'équipe',
-    'witty_for_teams' => 'De l\'esprit pour les équipes',
+    'witty_for_teams' => 'Witty for Teams',
     'witty_editor' => 'Éditeur Witty',
     'academy' => 'Formation',
     'invite_team_members_title' => 'Inviter des membres de votre équipe',
@@ -384,12 +384,12 @@ Si vous avez des questions, contactez :name (:email). 🙂
     'chart_period_comparison_from' => 'Comparaison de la période : ',
     'chart_period_comparison_to' => 'à la période : ',
     'witty_word_addin' => 'Bienvenue !',
-    'witty_word_addin_text' => 'Vous vous êtes connecté(e) avec succès au Word-Addin de l\'esprit.
+    'witty_word_addin_text' => 'Vous vous êtes connecté·e avec succès au Word-Addin "Witty for Word".
 <br>
 Vous pouvez maintenant fermer cette fenêtre.
 <br>
 <br>
-Veuillez ensuite cliquer à nouveau sur "S\'inscrire" pour finaliser l\'inscription au complément "Witty pour Word".',
+Veuillez ensuite cliquer à nouveau sur "S\'inscrire" pour finaliser l\'inscription.',
     'witty_word_addin_text_failed' => 'Nous n\'avons pas réussi à vous connecter à Witty Word-Addin.<br>Veuillez fermer cette fenêtre et réessayer ou contacter <a href="mailto:support@witty.works">support@witty.works</a>.',
     'inclusive_filter' => 'Inclusion :',
     'inclusive_filter_non_inclusive' => 'Non inclusif',
