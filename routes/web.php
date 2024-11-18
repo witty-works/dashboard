@@ -16,6 +16,7 @@ use App\Http\Controllers\TeamInvitationController;
 use Laravel\Jetstream\Http\Controllers\CurrentTeamController;
 use Laravel\Jetstream\Http\Controllers\Livewire\ApiTokenController;
 use App\Http\Controllers\Livewire\TeamController;
+use App\Http\Controllers\Livewire\PromptController;
 use App\Http\Controllers\Livewire\UserGuidelinesController;
 use Laravel\Jetstream\Http\Controllers\Livewire\UserProfileController;
 use Laravel\Jetstream\Jetstream;
@@ -88,6 +89,8 @@ Route::group(
                     return view('editor');
                 })->name('editor');
 
+                Route::get('/prompt', [PromptController::class, 'show'])->name('prompt');
+
                 Route::get('/subscribe', [StripeController::class, 'subscribe'])->name('stripe.subscribe');
 
                 Route::post('/user/onboarding', [UserProfileController::class, 'storeOnboarding'])
@@ -142,7 +145,7 @@ Route::group(
 
                     $prefix = config('lumki.prefix') ?? "lumki";
                     $lumkiPermission = config('lumki.lumkiPermission') ?? "manage users";
-                    $middleware = config('lumki.middleware') ?? ["auth:sanctum","web","can:$lumkiPermission"];
+                    $middleware = config('lumki.middleware') ?? ["auth:sanctum", "web", "can:$lumkiPermission"];
                     Route::prefix($prefix)->middleware($middleware)->group(function () {
                         Route::get('/subscriptions', [StripeController::class, 'subscriptions'])->name('subscriptions');
                     });
