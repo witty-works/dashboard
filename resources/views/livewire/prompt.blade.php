@@ -8,7 +8,12 @@
     </x-slot>
 
     <x-slot name="form">
+        @if(!Auth::user()->currentTeam->llm_alternatives)
+            {!! Str::markdown(__('content.enable_llm', ['url' => route('teams.privacy-settings')])) !!}
+        @else
         <div class="w-full col-span-6 sm:col-span-4">
+            <label for="prompt">{{ __('content.prompt') }}</label>
+
             <x-input id="prompt"
                 type="textarea"
                 class="mt-1 block w-full"
@@ -23,7 +28,7 @@
         <div class="align-middle items-center" wire:loading.remove>
             <h2>{{ __('content.witty_response') }}</h2>
             <div>
-                {{ $witty_response }}
+                {!! nl2br($witty_response) !!}
             </div>
 
             <h2>{{ __('content.edits') }}</h2>
@@ -32,9 +37,11 @@
             </div>
         </div>
         @endif
+        @endif
     </x-slot>
 
     <x-slot name="actions">
+        @if(Auth::user()->currentTeam->llm_alternatives)
         <div class="flex flex-row align-middle items-center" role="toolbar" aria-label="Action buttons">
             <x-button>
                 {{ __('content.submit') }}
@@ -44,5 +51,6 @@
                 {{ __('content.send_prompt') }}
             </div>
         </div>
+        @endif
     </x-slot>
 </x-form-section>

@@ -34,14 +34,14 @@ class Prompt extends Component
         $this->resetErrorBag();
     }
 
-    public function sendPrompt(Request $request)
+    public function sendPrompt()
     {
         $this->orignal_response = '';
         $this->witty_response = '';
         $this->resetErrorBag();
 
         $user = Auth::user();
-        if (!$user->hasRole('Superadmin')) {
+        if (!$user->currentTeam->llm_alternatives || !$user->hasRole('Superadmin')) {
             $message = __('content.prompt_error');
             throw ValidationException::withMessages(['prompt' => $message]);
         }
