@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Http\Controllers\OAuthController;
 use Livewire\Component;
 use Jfcherng\Diff\DiffHelper;
 use Illuminate\Support\Facades\Http;
@@ -37,8 +38,10 @@ class Prompt extends Component
     {
         $this->orignal_response = '';
         $this->witty_response = '';
+        $this->resetErrorBag();
 
-        if (!Auth::user()->hasRole('Superadmin')) {
+        $user = Auth::user();
+        if (!$user->hasRole('Superadmin')) {
             $message = __('content.prompt_error');
             throw ValidationException::withMessages(['prompt' => $message]);
         }
@@ -48,25 +51,25 @@ class Prompt extends Component
             return;
         }
 
-        $url = reset($endpoint['urls']) . '/debug/prompt';
+        $url = reset($endpoint['urls']) . '/v1.0/prompt';
 
         $data = [
             'text' => $this->prompt,
         ];
 
         try {
-            if (empty($endpoint['user'])) {
-                $response = Http::post($url, $data);
-            } else {
-                $response = Http::withBasicAuth($endpoint['user'], $endpoint['password'])
-                    ->post($url, $data);
+            $token = $user->getTokenFor(OAuthController::AZURE_AD_B2C_PROVIDER);
+            if ($token === null) {
+                $message = __('content.prompt_error');
+                throw ValidationException::withMessages(['prompt' => $message]);
             }
+            $response = Http::withToken($token)->post($url, $data);
         } catch (RequestException $e) {
             return;
         }
 
-        if (!$response || ($response->failed() && $response->status() !== 404)) {
-            $message = __('content.prompt_error');
+        if (!$response || $response->failed()) {
+            $message = $response->status() === 403 ? __('content.prompt_auth_error') : __('content.prompt_error');
             throw ValidationException::withMessages(['prompt' => $message]);
         }
 

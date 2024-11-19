@@ -435,4 +435,12 @@ Veuillez ensuite cliquer à nouveau sur "S\'inscrire" pour finaliser l\'inscript
     'consent_to_mailing' => 'Consentement à l\'envoi',
     'language_filter_fr' => 'Français',
     'language_filter_any' => 'Toutes',
+    'prompt_error' => 'Le prompt a échoué, veuillez réessayer.',
+    'prompt_auth_error' => 'L\'authentification a échoué, veuillez vous connecter à l\'extension du navigateur et réessayer.',
+    'prompt_description' => 'Witty Prompt utilise Witty pour réviser les réponses du modèle de la langue large (LLM) avec Witty afin d\'aider le LLM à écrire de manière plus inclusive.',
+    'witty_response' => 'Witty Réponse',
+    'edits' => 'Modifications effectuées par Witty Prompt',
+    'submit' => 'Soumettre',
+    'send_prompt' => 'Envoi de le prompt ...',
+    'witty_prompt' => 'Witty Prompt',
 ];

@@ -435,6 +435,7 @@ Please then go to "Register" again to finalize the registration into the "Witty 
     'language_filter_fr' => 'French',
     'language_filter_any' => 'All',
     'prompt_error' => 'Prompt failed, please try again.',
+    'prompt_auth_error' => 'Authentication failed, please login to the browser extension and try again.',
     'prompt_description' => 'Witty Prompt uses Witty to review Large-Language-Model (LLM) responses with Witty to help the LLM write more inclusively.',
     'witty_response' => 'Witty Response',
     'edits' => 'Edits done by Witty Prompt',

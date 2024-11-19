@@ -437,4 +437,12 @@ Bitte gehe dann erneut auf „Registrieren“, um die Registrierung im "Witty fo
     'consent_to_mailing' => 'Zustimmung zu dem Mailing',
     'language_filter_fr' => 'Französisch',
     'language_filter_any' => 'Alle',
+    'prompt_error' => 'Prompt fehlgeschlagen, bitte versuche es erneut.',
+    'prompt_auth_error' => 'Authentifizierung fehlgeschlagen, bitte melden Sie sich bei der Browsererweiterung an und versuche es erneut.',
+    'prompt_description' => 'Witty Prompt verwendet Witty zur Überprüfung von Large-Language-Model (LLM)-Antworten mit Witty, um dem LLM zu helfen, inklusiver zu schreiben.',
+    'witty_response' => 'Witty Antwort',
+    'edits' => 'Bearbeitet durch Witty Prompt',
+    'submit' => 'Senden',
+    'send_prompt' => 'Prompt wurde versendet ..',
+    'witty_prompt' => 'Witty Prompt',
 ];
