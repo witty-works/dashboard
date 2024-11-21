@@ -439,11 +439,16 @@ Bitte gehe dann erneut auf „Registrieren“, um die Registrierung im "Witty fo
     'language_filter_any' => 'Alle',
     'prompt_error' => 'Prompt fehlgeschlagen, bitte versuche es erneut.',
     'prompt_auth_error' => 'Authentifizierung fehlgeschlagen, bitte melden Sie sich bei der Browsererweiterung an und versuche es erneut.',
-    'prompt_description' => 'Witty Prompt verwendet Witty, den inklusiven Schreibassistenz, um die Antworten von einem Large-Language-Model (LLM) mit Witty zu überprüfen, um den LLM zu helfen, inklusiver zu schreiben.',
+    'prompt_description' => 'Witty GPT verwendet Witty, die inklusive Schreibassistenz, um die Antworten des Large-Language-Model (LLM) mit Witty zu überprüfen, um den LLM zu helfen, inklusiver zu schreiben.
+
+Witty GPT speichert keine Antworten und behält aus Gründen des Datenschutzes keinen Kontext zwischen Anfragen bei. Es verwendet grundlegende Filter für schädliche Prompts.',
     'witty_response' => 'Witty GPT Antwort',
     'edits' => 'Witzige GPT Bearbeitungen',
     'submit' => 'Senden',
     'send_prompt' => 'Prompt wurde versendet ..',
     'witty_prompt' => 'Witty GPT',
     'prompt' => 'Prompt',
+    'enable_llm' => 'Um Witty GPT nutzen zu können, müssen die Team-Administrator*innen in den <a href=":url">Datenschutzeinstellungen des Teams</a> LLM-Nutzung aktivieren.',
+    'witty_issues' => 'Witty Probleme entdeckt',
+    'witty_edits' => 'Witty GPT Änderungen',
 ];

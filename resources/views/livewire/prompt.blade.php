@@ -31,10 +31,23 @@
                 {!! nl2br($witty_response) !!}
             </div>
 
-            <h2>{{ __('content.edits') }}</h2>
+            @if(!empty($results))
+            <h2 class="mt-2">{{ __('content.witty_issues') }}</h2>
+            <div>
+                <ul>
+                @foreach($results as $result)
+                    <li>"{{ $result['text'] }}": {{ $result['explanation']['text'] }}</li>
+                @endforeach
+                </ul>
+            </div>
+            @endif
+
+            @if(!empty($diff))
+            <h2 class="mt-2">{{ __('content.witty_edits') }}</h2>
             <div>
                 {!! $diff !!}
             </div>
+            @endif
         </div>
         @endif
         @endif

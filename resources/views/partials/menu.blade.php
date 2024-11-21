@@ -157,12 +157,10 @@
             {{ __('content.witty_editor') }}
         </x-nav-link>
 
-        @if(Auth::user()->hasRole('Superadmin'))
         <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('prompt') }}" target="_new">
             <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/prompt.svg') }}" alt="" />
             {{ __('content.witty_prompt') }}
         </x-nav-link>
-        @endif
         <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('academy') }}" :active="request()->routeIs('academy')">
             <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/bulb.svg') }}" alt="" />
             {{ __('content.academy') }}

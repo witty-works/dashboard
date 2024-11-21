@@ -16,6 +16,7 @@ class Prompt extends Component
     public $prompt;
     public $orignal_response;
     public $witty_response;
+    public $results;
     public $diff;
 
     /**
@@ -38,33 +39,35 @@ class Prompt extends Component
     {
         $this->orignal_response = '';
         $this->witty_response = '';
+        $this->results = '';
         $this->resetErrorBag();
 
         $user = Auth::user();
-        if (!$user->currentTeam->llm_alternatives || !$user->hasRole('Superadmin')) {
+        if (!$user->currentTeam->llm_alternatives) {
             $message = __('content.prompt_error');
             throw ValidationException::withMessages(['prompt' => $message]);
         }
 
         $endpoint = config('app.nlp_api_endpoint');
         if (empty($endpoint['urls'])) {
-            return;
+            $message = __('content.prompt_error');
+            throw ValidationException::withMessages(['prompt' => $message]);
         }
 
-        $url = reset($endpoint['urls']) . '/v1.0/prompt';
+        $url = reset($endpoint['urls']) . '/v1.0/prompt?user_email=' . $user->email;
 
         $data = [
             'text' => $this->prompt,
         ];
 
         try {
-            $token = $user->getTokenFor(OAuthController::AZURE_AD_B2C_PROVIDER);
-            if ($token === null) {
-                $message = __('content.prompt_error');
-                throw ValidationException::withMessages(['prompt' => $message]);
+            if (empty($endpoint['user'])) {
+                $response = Http::post($url, $data);
+            } else {
+                $response = Http::withBasicAuth($endpoint['user'], $endpoint['password'])
+                    ->post($url, $data);
             }
-            $response = Http::withToken($token)->post($url, $data);
-        } catch (RequestException $e) {
+        } catch (\Exception $e) {
             return;
         }
 
@@ -77,6 +80,7 @@ class Prompt extends Component
 
         $this->orignal_response = $response['inititial_response'] ?? '';
         $this->witty_response = $response['reviewed_response'] ?? $this->orignal_response;
+        $this->results = $response['check_results'] ?? [];
 
         $rendererName = 'Combined';
         $this->diff = DiffHelper::calculate(
