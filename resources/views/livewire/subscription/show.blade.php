@@ -32,7 +32,7 @@
                 <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $subscription->witty_contract_id }}</td>
                 <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $subscription->owner->name }}</td>
                 <td class="border px-4 py-2 text-left lato-paragraph-text-p"><a href="{{ route('impersonate', $subscription->owner->owner->id) }}">{{ $subscription->owner->owner->email }}</a></td>
-                <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $subscription->quantity }}{{ $subscription->owner ? '/'.$subscription->owner->userLicenses()->count() : '' }}</td>
+                <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $subscription->owner ? $subscription->owner->userLicenses()->count().'/' : '' }}{{ $subscription->quantity }}</td>
                 <td class="border px-4 py-2 text-left lato-paragraph-text-p">
                     @if (empty($stripe_prices[$subscription->stripe_price]))
                     witty_{{ $subscription->stripe_price }}
