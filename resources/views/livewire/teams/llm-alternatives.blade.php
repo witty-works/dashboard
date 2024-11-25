@@ -1,6 +1,7 @@
 <x-form-section submit="updateTeamsLlmAlternatives">
     <x-slot name="title">
         {{ __('guidelines.llm_alternatives_headline') }}
+        @include('partials.beta')
     </x-slot>
 
     <x-slot name="description">

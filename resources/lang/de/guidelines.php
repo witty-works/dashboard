@@ -133,7 +133,7 @@ Alle Wörter, die zu dieser Liste hinzufügst, werden von Witty hervorgehoben, u
     'other_language' => 'Nur in anderen Sprachen',
     'manage_organization_guidelines_generic_masculine' => 'Generisches Maskulinum in geschlechtsspezifischen Sprachen',
     'manage_organization_guidelines_description_generic_masculine' => 'Wie sollte Witty das generische Maskulinum in geschlechtsspezifischen Sprachen wie <a href="https://www.witty.works/de/blog/inklusiv-schreiben-auf-deutsch" target="_new">Deutsch</a> oder <a href="https://www.witty.works/fr/blog/post/langage-non-genr%C3%A9-en-fran%C3%A7ais" target="_new">Französisch</a> behandeln?',
-    'llm_alternatives_headline' => 'Verwendung von Large-Language-Model (LLM)',
+    'llm_alternatives_headline' => 'Verwendung von Large-Language-Model',
     'llm_alternatives_description' => 'Darf Witty Large-Language-Modelle (LLMs) verwenden?
 
 Diese werden verwendet, um grammatikalisch korrekte Alternativen zu generieren. Hier verwendet Witty Eingabeaufforderungen, die die Freiheit des Modells einschränken, um das Risiko von Verzerrungen zu minimieren. Im Zusammenhang mit dieser Funktion werden keine Daten gespeichert oder für Trainingszwecke verwendet, wie auf unserer Seite <a href="https://www.witty.works/trust-and-security">Vertrauen & Sicherheit</a> erläutert. Wenn diese Funktion deaktiviert ist, müssen die Benutzer die Alternativen manuell anpassen, damit sie passen.

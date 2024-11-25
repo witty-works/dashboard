@@ -1,6 +1,7 @@
 <x-form-section submit="sendPrompt">
     <x-slot name="title">
         {{ __('content.witty_prompt') }}
+        @include('partials.beta')
     </x-slot>
 
     <x-slot name="description">
