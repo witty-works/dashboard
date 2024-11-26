@@ -434,4 +434,18 @@ Please then go to "Register" again to finalize the registration into the "Witty 
     'consent_to_mailing' => 'Consent to Mailing',
     'language_filter_fr' => 'French',
     'language_filter_any' => 'All',
+    'prompt_error' => 'Prompt failed, please try again.',
+    'prompt_auth_error' => 'Authentication failed, please login to the browser extension and try again.',
+    'prompt_description' => 'Witty GPT uses Witty, the inclusive writing assistant, to review Large-Language-Model (LLM) responses with Witty to help the LLM write more inclusively.
+
+Witty GPT does not cache any responses and does not maintain context between requests for privacy reasons. It uses basic filters for harmful prompts.',
+    'witty_response' => 'Witty GPT Response',
+    'edits' => 'Witty GPT Edits',
+    'submit' => 'Submit',
+    'send_prompt' => 'Sending the prompt ..',
+    'witty_prompt' => 'Witty GPT',
+    'prompt' => 'Prompt',
+    'enable_llm' => 'In order to use Witty GPT, your team admin must enable LLM usage in the <a href=":url">team privacy settings</a>.',
+    'witty_issues' => 'Witty Issues Detected',
+    'witty_edits' => 'Witty GPT Modifications',
 ];

@@ -133,9 +133,13 @@ Alle Wörter, die zu dieser Liste hinzufügst, werden von Witty hervorgehoben, u
     'other_language' => 'Nur in anderen Sprachen',
     'manage_organization_guidelines_generic_masculine' => 'Generisches Maskulinum in geschlechtsspezifischen Sprachen',
     'manage_organization_guidelines_description_generic_masculine' => 'Wie sollte Witty das generische Maskulinum in geschlechtsspezifischen Sprachen wie <a href="https://www.witty.works/de/blog/inklusiv-schreiben-auf-deutsch" target="_new">Deutsch</a> oder <a href="https://www.witty.works/fr/blog/post/langage-non-genr%C3%A9-en-fran%C3%A7ais" target="_new">Französisch</a> behandeln?',
-    'llm_alternatives_headline' => 'Grammatikalisch korrekte Alternativen (kommt in Q4)',
-    'llm_alternatives_description' => 'Ob Witty ein Large-Language-Model (LLM) verwenden, um grammatikalisch korrekte Alternativen zu erzeugen. Witty verwendet LLM-Prompts, die die Freiheit des Modells einschränken, um das Risiko von Bias zu minimieren. Im Zusammenhang mit dieser Funktion werden keine Daten gespeichert oder für Trainingszwecke verwendet, wie auf unserer Seite <a href="https://www.witty.works/trust-and-security">Trust & Security</a> erläutert. Wenn diese Funktion deaktiviert ist, müssen die Benutzer die Alternativen manuell anpassen, damit sie passen.',
-    'llm_alternatives' => 'LLM für Alternativen nutzen',
+    'llm_alternatives_headline' => 'Verwendung von Large-Language-Model',
+    'llm_alternatives_description' => 'Darf Witty Large-Language-Models (LLMs) verwenden, um erweiterte Funktionalitäten bereitzustellen? Es werden keine Daten gespeichert oder für Schulungszwecke im Zusammenhang mit diesen Funktionen verwendet, wie auf unserer Seite <a href="https://www.witty.works/trust-and-security">Vertrauen und Sicherheit</a> erläutert.
+
+Witty kann LLMs verwenden, um grammatikalisch korrekte Alternativen zu generieren. Hier verwendet Witty Eingabeaufforderungen, die die Freiheit des Modells einschränken, um das Risiko von Verzerrungen zu minimieren. Wenn diese Funktion deaktiviert ist, müssen die Benutzer die Alternativen manuell anpassen, damit sie passen.
+
+LLM werden auch für Witty GPT verwendet, unsere Lösung für GenerativeAI (GenAI), die inklusivere Inhalte produziert.',
+    'llm_alternatives' => 'Verwendung von LLM zulassen',
     'proficiency_level_off_toggle_message' => 'Ausgeschaltet',
     'proficiency_level_basic_toggle_message' => 'Auf Grundlagen gestellt',
     'proficiency_level_advanced_toggle_message' => 'Auf Erweitert gestellt',

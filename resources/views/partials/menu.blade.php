@@ -156,6 +156,15 @@
             <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/editor.svg') }}" alt="" />
             {{ __('content.witty_editor') }}
         </x-nav-link>
+
+        <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('prompt') }}">
+            <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/prompt.svg') }}" alt="" />
+            {{ __('content.witty_prompt') }}
+            <span class="ml-2 no-underline">
+                @include('partials.beta')
+            </span>
+        </x-nav-link>
+
         <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('academy') }}" :active="request()->routeIs('academy')">
             <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/bulb.svg') }}" alt="" />
             {{ __('content.academy') }}

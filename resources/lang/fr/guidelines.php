@@ -133,9 +133,13 @@ Witty surlignera tous les mots ajoutés à cette liste et suggérera vos alterna
     'other_language' => 'Uniquement dans d\'autres langues',
     'manage_organization_guidelines_generic_masculine' => 'Le masculin générique dans les langues genrées',
     'manage_organization_guidelines_description_generic_masculine' => 'Comment Witty devrait-il traiter le masculin générique dans des langues sexuées comme <a href="https://www.witty.works/fr/blog/post/langage-non-genr%C3%A9-en-fran%C3%A7ais" target="_new">le français</a> ou <a href="https://www.witty.works/en/blog/gender-inclusive-writing-in-german" target="_new">l\'allemand</a>  ?',
-    'llm_alternatives_headline' => 'lternatives qui sont grammaticalement correctes (à venir au 4ème trimestre)',
-    'llm_alternatives_description' => 'Décidez si Witty peut utiliser un Large-Language-Model (LLM) pour générer des alternatives qui sont grammaticalement correctes. Witty utilise des prompts qui limitent la liberté du modèle afin de minimiser les risques de biais. Aucune donnée n\'est stockée ou utilisée à des fins de formation dans le cadre de cette fonctionnalité, comme expliqué sur notre page <a href= "https://www.witty.works/trust-and-security">Confiance et sécurité</a>. Si cette fonction est désactivée, les utilisateurs·rices devront ajuster manuellement les alternatives.',
-    'llm_alternatives' => 'Utiliser le LLM pour les alternatives',
+    'llm_alternatives_headline' => 'Utilisation du Large-Language-Model',
+    'llm_alternatives_description' => 'Witty a-t-il le droit d\'utiliser des Large-Language-Model (LLM) pour fournir des fonctionnalités avancées ? Aucune donnée n\'est stockée ou utilisée à des fins de formation liées à ces fonctionnalités, comme expliqué sur notre page <a href="https://www.witty.works/trust-and-security">Trust & Security.</a> 
+
+Witty peut utiliser des LLM pour générer des alternatives grammaticalement correctes. Dans ce cas, Witty utilise des invites qui limitent la liberté du modèle afin de minimiser les risques de biais. Si cette fonctionnalité est désactivée, les utilisateurs devront ajuster manuellement les alternatives.
+
+Les LLM sont également utilisés pour Witty GPT, notre solution pour l\'IA générative (GenAI) qui produit un contenu plus inclusif.',
+    'llm_alternatives' => 'Permettre l\'utilisation du LLM',
     'proficiency_level_off_toggle_message' => 'Régler sur off',
     'proficiency_level_basic_toggle_message' => 'Régler au niveau de base',
     'proficiency_level_advanced_toggle_message' => 'Régler au niveau avancé',

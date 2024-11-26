@@ -60,6 +60,16 @@ class SyncOrganizationToNlpApi extends AbstractSyncToNlpApi
         }
         $config['force_categories'] = $guidelines->disabled_categories_force;
 
+        $config['store_context'] = [
+            'value' => $team->isPremium() ? (bool) $team->store_context : true,
+            'status' => 'force',
+        ];
+
+        $config['llm_alternatives'] = [
+            'value' => (bool) $team->llm_alternatives,
+            'status' => 'force',
+        ];
+
         $data = [
             'id' => $team->posthogId(),
             'name' => $team->name,
@@ -69,14 +79,6 @@ class SyncOrganizationToNlpApi extends AbstractSyncToNlpApi
             'term_replacements' => $termReplacements,
             'domains' => $domains,
             'config' => $config,
-            'store_context' => [
-                'value' => $team->isPremium() ? (bool) $team->store_context : true,
-                'status' => 'force',
-            ],
-            'llm_alternatives' => [
-                'value' => (bool) $team->llm_alternatives,
-                'status' => 'force',
-            ],
         ];
 
         $data['config_hash'] = md5(serialize($data));

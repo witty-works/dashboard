@@ -435,4 +435,18 @@ Veuillez ensuite cliquer à nouveau sur "S\'inscrire" pour finaliser l\'inscript
     'consent_to_mailing' => 'Consentement à l\'envoi',
     'language_filter_fr' => 'Français',
     'language_filter_any' => 'Toutes',
+    'prompt_error' => 'Le prompt a échoué, veuillez réessayer.',
+    'prompt_auth_error' => 'L\'authentification a échoué, veuillez vous connecter à l\'extension du navigateur et réessayer.',
+    'prompt_description' => 'Witty GPT utilise Witty, l\'assistant d\'écriture inclusive, pour réviser les réponses du Large-Language-Model (LLM) avec Witty afin d\'aider le LLM à écrire de manière plus inclusive.
+
+Witty GPT ne met aucune réponse en cache et ne conserve pas le contexte entre les demandes pour des raisons de confidentialité. Il utilise des filtres de base pour les invites nuisibles.',
+    'witty_response' => 'Witty GPT Réponse',
+    'edits' => 'Witty GPT Modifications',
+    'submit' => 'Soumettre',
+    'send_prompt' => 'Envoi de le prompt ...',
+    'witty_prompt' => 'Witty GPT',
+    'prompt' => 'Prompt',
+    'enable_llm' => 'Afin d\'utiliser Witty GPT, l\'administrateur de votre équipe doit activer l\'utilisation du LLM dans les <a href=":url">paramètres de confidentialité de l\'équipe</a>.',
+    'witty_issues' => 'Détection des questions de Witty',
+    'witty_edits' => 'Modifications du Witty GPT',
 ];
