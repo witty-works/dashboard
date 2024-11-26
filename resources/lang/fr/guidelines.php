@@ -134,9 +134,9 @@ Witty surlignera tous les mots ajoutés à cette liste et suggérera vos alterna
     'manage_organization_guidelines_generic_masculine' => 'Le masculin générique dans les langues genrées',
     'manage_organization_guidelines_description_generic_masculine' => 'Comment Witty devrait-il traiter le masculin générique dans des langues sexuées comme <a href="https://www.witty.works/fr/blog/post/langage-non-genr%C3%A9-en-fran%C3%A7ais" target="_new">le français</a> ou <a href="https://www.witty.works/en/blog/gender-inclusive-writing-in-german" target="_new">l\'allemand</a>  ?',
     'llm_alternatives_headline' => 'Utilisation du Large-Language-Model',
-    'llm_alternatives_description' => 'Witty est-il autorisé à utiliser des Large-Language-Model (LLM) ?
+    'llm_alternatives_description' => 'Witty a-t-il le droit d\'utiliser des Large-Language-Model (LLM) pour fournir des fonctionnalités avancées ? Aucune donnée n\'est stockée ou utilisée à des fins de formation liées à ces fonctionnalités, comme expliqué sur notre page <a href="https://www.witty.works/trust-and-security">Trust & Security.</a> 
 
-Ces modèles sont utilisés pour générer des alternatives grammaticalement correctes. Dans ce cas, Witty utilise des invites qui limitent la liberté du modèle afin de minimiser les risques de biais. Aucune donnée n\'est stockée ou utilisée à des fins de formation dans le cadre de cette fonctionnalité, comme l\'explique notre page <a href="https://www.witty.works/trust-and-security">Confiance et sécurité.</a> Si cette fonction est désactivée, les utilisateurs devront ajuster manuellement les alternatives.
+Witty peut utiliser des LLM pour générer des alternatives grammaticalement correctes. Dans ce cas, Witty utilise des invites qui limitent la liberté du modèle afin de minimiser les risques de biais. Si cette fonctionnalité est désactivée, les utilisateurs devront ajuster manuellement les alternatives.
 
 Les LLM sont également utilisés pour Witty GPT, notre solution pour l\'IA générative (GenAI) qui produit un contenu plus inclusif.',
     'llm_alternatives' => 'Permettre l\'utilisation du LLM',

@@ -134,9 +134,9 @@ Alle Wörter, die zu dieser Liste hinzufügst, werden von Witty hervorgehoben, u
     'manage_organization_guidelines_generic_masculine' => 'Generisches Maskulinum in geschlechtsspezifischen Sprachen',
     'manage_organization_guidelines_description_generic_masculine' => 'Wie sollte Witty das generische Maskulinum in geschlechtsspezifischen Sprachen wie <a href="https://www.witty.works/de/blog/inklusiv-schreiben-auf-deutsch" target="_new">Deutsch</a> oder <a href="https://www.witty.works/fr/blog/post/langage-non-genr%C3%A9-en-fran%C3%A7ais" target="_new">Französisch</a> behandeln?',
     'llm_alternatives_headline' => 'Verwendung von Large-Language-Model',
-    'llm_alternatives_description' => 'Darf Witty Large-Language-Modelle (LLMs) verwenden?
+    'llm_alternatives_description' => 'Darf Witty Large-Language-Models (LLMs) verwenden, um erweiterte Funktionalitäten bereitzustellen? Es werden keine Daten gespeichert oder für Schulungszwecke im Zusammenhang mit diesen Funktionen verwendet, wie auf unserer Seite <a href="https://www.witty.works/trust-and-security">Vertrauen und Sicherheit</a> erläutert.
 
-Diese werden verwendet, um grammatikalisch korrekte Alternativen zu generieren. Hier verwendet Witty Eingabeaufforderungen, die die Freiheit des Modells einschränken, um das Risiko von Verzerrungen zu minimieren. Im Zusammenhang mit dieser Funktion werden keine Daten gespeichert oder für Trainingszwecke verwendet, wie auf unserer Seite <a href="https://www.witty.works/trust-and-security">Vertrauen & Sicherheit</a> erläutert. Wenn diese Funktion deaktiviert ist, müssen die Benutzer die Alternativen manuell anpassen, damit sie passen.
+Witty kann LLMs verwenden, um grammatikalisch korrekte Alternativen zu generieren. Hier verwendet Witty Eingabeaufforderungen, die die Freiheit des Modells einschränken, um das Risiko von Verzerrungen zu minimieren. Wenn diese Funktion deaktiviert ist, müssen die Benutzer die Alternativen manuell anpassen, damit sie passen.
 
 LLM werden auch für Witty GPT verwendet, unsere Lösung für GenerativeAI (GenAI), die inklusivere Inhalte produziert.',
     'llm_alternatives' => 'Verwendung von LLM zulassen',

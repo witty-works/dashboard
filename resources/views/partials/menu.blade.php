@@ -157,7 +157,7 @@
             {{ __('content.witty_editor') }}
         </x-nav-link>
 
-        <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('prompt') }}" target="_new">
+        <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('prompt') }}">
             <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/prompt.svg') }}" alt="" />
             {{ __('content.witty_prompt') }}
             <span class="ml-2 no-underline">

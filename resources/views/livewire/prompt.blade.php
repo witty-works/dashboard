@@ -27,13 +27,13 @@
 
         @if($witty_response)
         <div class="align-middle items-center" wire:loading.remove>
-            <h2>{{ __('content.witty_response') }}</h2>
+            <h2 class="mt-5">{{ __('content.witty_response') }}</h2>
             <div>
                 {!! nl2br($witty_response) !!}
             </div>
 
             @if(!empty($results))
-            <h2 class="mt-2">{{ __('content.witty_issues') }}</h2>
+            <h2 class="mt-5">{{ __('content.witty_issues') }}</h2>
             <div>
                 <ul>
                 @foreach($results as $result)
@@ -44,7 +44,7 @@
             @endif
 
             @if(!empty($diff))
-            <h2 class="mt-2">{{ __('content.witty_edits') }}</h2>
+            <h2 class="mt-5">{{ __('content.witty_edits') }}</h2>
             <div>
                 {!! $diff !!}
             </div>
