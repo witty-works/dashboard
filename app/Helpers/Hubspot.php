@@ -286,4 +286,68 @@ class Hubspot
 
         return true;
     }
+
+
+    public function getFileUrl($fileID)
+    {
+        // fileType=movie&query=lang&showDetails=62987289558
+        $properties = null;
+        $after = null;
+        $before = null;
+        $limit = null;
+        $sort = null;
+        $id = (int)$fileID;
+        $created_at = null;
+        $created_at_lte = null;
+        $created_at_gte = null;
+        $updated_at = null;
+        $updated_at_lte = null;
+        $updated_at_gte = null;
+        $name = null;
+        $path = null;
+        $parent_folder_id = null;
+        $size = null;
+        $height = null;
+        $width = null;
+        $encoding = null;
+        $type = null;
+        $extension = null;
+        $url = null;
+        $is_usable_in_content = null;
+        $allows_anonymous_access = null;
+
+        $files = $this->api->files()->filesApi()->doSearch(
+            $properties,
+            $after,
+            $before,
+            $limit,
+            $sort,
+            $id,
+            $created_at,
+            $created_at_lte,
+            $created_at_gte,
+            $updated_at,
+            $updated_at_lte,
+            $updated_at_gte,
+            $name,
+            $path,
+            $parent_folder_id,
+            $size,
+            $height,
+            $width,
+            $encoding,
+            $type,
+            $extension,
+            $url,
+            $is_usable_in_content,
+            $allows_anonymous_access
+        );
+        $files = $files->getResults();
+        if (count($files) == 0) {
+            return null;
+        }
+
+        $file = $files[0];
+        return 'https://www.witty.works/hubfs/' . $file->getPath();
+    }
 }

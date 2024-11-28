@@ -203,6 +203,21 @@ class SyncToHubspotCategoriesCommand extends Command
                     $this->warn("Page Title '{$row['hs_name']}' ('$converted_name') mis-aligned with Page Path '{$row['hs_path']}'");
                 }
 
+                if (array_key_exists('sub_head', $row)) {
+                    if (strlen($row['sub_head']) === 0) {
+                        if (!empty($row['introduction'])) {
+                            $row['sub_head'] = $row['introduction'];
+                            if (!empty($row['solution'])) {
+                                $row['sub_head'] .= "<br /><br /><p>" . $row['solution'] . '</p>';
+                            }
+                        } elseif (!empty($row['name'])) {
+                            $row['sub_head'] = $row['name'];
+                        } else {
+                            $row['sub_head'] = $row['hs_name'];
+                        }
+                    }
+                }
+
                 $row = $this->cleanRow($row);
                 if ($alias === 'categories_translations') {
                     unset($row['category']);
@@ -210,6 +225,18 @@ class SyncToHubspotCategoriesCommand extends Command
                 unset($row['subcategory_name']);
                 if ($alias === 'diversity_dimension_drivers_translations') {
                     unset($row['diversity_dimension_driver']);
+                }
+
+                $videoIDMap = [
+                    '63619779304' => 63619779299,
+                    '65429849304' => 65429849302,
+                    '62987289559' => 62987289558,
+                    '68997489891' => 68997489890,
+                    '68997490679' => 68997490678,
+                    '65429849296' => 65429849295,
+                ];
+                if (!empty($row['lead_video']) && !empty($videoIDMap[$row['lead_video']])) {
+                    $row['lead_video_url'] = $hubspot->getFileURL($videoIDMap[$row['lead_video']]);
                 }
 
                 foreach (['lead_image', 'example_image', 'example_image_advanced', 'icon'] as $imageKey) {

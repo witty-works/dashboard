@@ -439,9 +439,11 @@ Bitte gehe dann erneut auf „Registrieren“, um die Registrierung im "Witty fo
     'language_filter_any' => 'Alle',
     'prompt_error' => 'Prompt fehlgeschlagen, bitte versuche es erneut.',
     'prompt_auth_error' => 'Authentifizierung fehlgeschlagen, bitte melden Sie sich bei der Browsererweiterung an und versuche es erneut.',
-    'prompt_description' => 'Witty GPT verwendet Witty, die inklusive Schreibassistenz, um die Antworten des Large-Language-Model (LLM) mit Witty zu überprüfen, um den LLM zu helfen, inklusiver zu schreiben.
+    'prompt_description' => 'Witty GPT überprüft die Antworten von Large-Language-Models (LLM) mit Witty, um den LLM zu helfen, inklusiver zu schreiben.
 
-Witty GPT speichert keine Antworten und behält aus Gründen des Datenschutzes keinen Kontext zwischen Anfragen bei. Es verwendet grundlegende Filter für schädliche Prompts.',
+Zum Schutz der Privatsphäre speichert Witty GPT keine deiner Antworten und erinnert sich nicht an vergangene Gespräche. Es verwendet grundlegende Filter, um schädliche Prompts zu blockieren.
+
+Witty GPT kann in den Microsoft Copilot oder andere interne generative KI/LLM-Lösungen deines Unternehmens integriert werden. <a href="mailto:sales@witty.works" target="_new">Kontaktiere uns</a> für weitere Informationen.',
     'witty_response' => 'Witty GPT Antwort',
     'edits' => 'Witzige GPT Bearbeitungen',
     'submit' => 'Senden',
