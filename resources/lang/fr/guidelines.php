@@ -134,11 +134,11 @@ Witty surlignera tous les mots ajoutés à cette liste et suggérera vos alterna
     'manage_organization_guidelines_generic_masculine' => 'Le masculin générique dans les langues genrées',
     'manage_organization_guidelines_description_generic_masculine' => 'Comment Witty devrait-il traiter le masculin générique dans des langues sexuées comme <a href="https://www.witty.works/fr/blog/post/langage-non-genr%C3%A9-en-fran%C3%A7ais" target="_new">le français</a> ou <a href="https://www.witty.works/en/blog/gender-inclusive-writing-in-german" target="_new">l\'allemand</a>  ?',
     'llm_alternatives_headline' => 'Utilisation du Large-Language-Model',
-    'llm_alternatives_description' => 'Witty a-t-il le droit d\'utiliser des Large-Language-Model (LLM) pour fournir des fonctionnalités avancées ? Aucune donnée n\'est stockée ou utilisée à des fins de formation liées à ces fonctionnalités, comme expliqué sur notre page <a href="https://www.witty.works/trust-and-security">Trust & Security.</a> 
+    'llm_alternatives_description' => 'Activer cette fonctionnalité permet à Witty d\'utiliser des outils d\'IA avancés pour améliorer ses fonctionnalités. Aucune donnée n\'est stockée ni utilisée à des fins d\'entraînement, comme indiqué sur notre page <a href="https://www.witty.works/trust-and-security">Confiance et Sécurité</a>.
 
-Witty peut utiliser des LLM pour générer des alternatives grammaticalement correctes. Dans ce cas, Witty utilise des invites qui limitent la liberté du modèle afin de minimiser les risques de biais. Si cette fonctionnalité est désactivée, les utilisateurs devront ajuster manuellement les alternatives.
+Lorsqu\'elle est activée, Witty utilise des LLM (Large-Language-Model) pour générer des alternatives grammaticalement correctes. Si vous désactivez cette fonctionnalité, les utilisateur·trices devront manuellement ajuster les alternatives.
 
-Les LLM sont également utilisés pour Witty GPT, notre solution pour l\'IA générative (GenAI) qui produit un contenu plus inclusif.',
+Les LLM sont également utilisés pour Witty GPT, notre solution GenAI qui produit un contenu plus inclusif. Witty GPT analyse vos prompts pour détecter les biais et veille à ce que la langue utilisée dans le résultat soit inclusive.',
     'llm_alternatives' => 'Permettre l\'utilisation du LLM',
     'proficiency_level_off_toggle_message' => 'Régler sur off',
     'proficiency_level_basic_toggle_message' => 'Régler au niveau de base',

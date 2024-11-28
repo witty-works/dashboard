@@ -436,9 +436,11 @@ Please then go to "Register" again to finalize the registration into the "Witty 
     'language_filter_any' => 'All',
     'prompt_error' => 'Prompt failed, please try again.',
     'prompt_auth_error' => 'Authentication failed, please login to the browser extension and try again.',
-    'prompt_description' => 'Witty GPT uses Witty, the inclusive writing assistant, to review Large-Language-Model (LLM) responses with Witty to help the LLM write more inclusively.
+    'prompt_description' => 'Witty GPT reviews the responses of Large-Language-Models (LLM) with Witty to help the LLM write more inclusively.
 
-Witty GPT does not cache any responses and does not maintain context between requests for privacy reasons. It uses basic filters for harmful prompts.',
+For privacy, Witty GPT doesn’t save any of your responses or remember past conversations. It uses basic filters to block harmful prompts.
+
+Witty GPT can be integrated with your organizations Microsoft Copilot or other internal Generative AI/LLM solutions. <a href="mailto:sales@witty.works" target="_new">Contact us</a> for details.',
     'witty_response' => 'Witty GPT Response',
     'edits' => 'Witty GPT Edits',
     'submit' => 'Submit',

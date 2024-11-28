@@ -437,9 +437,11 @@ Veuillez ensuite cliquer à nouveau sur "S\'inscrire" pour finaliser l\'inscript
     'language_filter_any' => 'Toutes',
     'prompt_error' => 'Le prompt a échoué, veuillez réessayer.',
     'prompt_auth_error' => 'L\'authentification a échoué, veuillez vous connecter à l\'extension du navigateur et réessayer.',
-    'prompt_description' => 'Witty GPT utilise Witty, l\'assistant d\'écriture inclusive, pour réviser les réponses du Large-Language-Model (LLM) avec Witty afin d\'aider le LLM à écrire de manière plus inclusive.
+    'prompt_description' => 'Witty GPT examine les réponses des Large-Language-Models (LLM) avec Witty afin d\'aider les LLM à écrire de manière plus inclusive.
 
-Witty GPT ne met aucune réponse en cache et ne conserve pas le contexte entre les demandes pour des raisons de confidentialité. Il utilise des filtres de base pour les invites nuisibles.',
+Pour garantir la confidentialité, Witty GPT ne sauvegarde aucune de vos réponses et ne se souvient pas des conversations passées. Il utilise des filtres de base pour bloquer les requête nuisibles.
+
+Witty GPT peut être intégré à Microsoft Copilot ou à d\'autres solutions internes d\'IA générative/LLM de votre organisation. <a href="mailto:sales@witty.works" target="_new">Contactez-nous</a> pour plus de détails.',
     'witty_response' => 'Witty GPT Réponse',
     'edits' => 'Witty GPT Modifications',
     'submit' => 'Soumettre',

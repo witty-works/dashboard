@@ -137,10 +137,10 @@ All words added to this list will become highlighted by Witty, and your custom r
     'manage_organization_guidelines_generic_masculine' => 'Generic masculine in gendered languages',
     'manage_organization_guidelines_description_generic_masculine' => 'How should Witty handle the generic masculine in gendered languages like <a href="https://www.witty.works/en/blog/gender-inclusive-writing-in-german" target="_new">German</a> or <a href="https://www.witty.works/fr/blog/post/langage-non-genr%C3%A9-en-fran%C3%A7ais" target="_new">French</a>?',
     'llm_alternatives_headline' => 'Usage of Large-Language-Model',
-    'llm_alternatives_description' => 'Is Witty allowed to use Large-Language-Models (LLMs) to provide advanced functionality? No data is stored or used for training purposes related to these features as explained on our <a href="https://www.witty.works/trust-and-security">Trust & Security</a> page.
+    'llm_alternatives_description' => 'Enabling this feature allows Witty to use advanced AI tools to enhance functionality. No data is stored or used for training, as outlined on our <a href="https://www.witty.works/trust-and-security">Trust & Security</a> page.
 
-Witty can use LLMs to generate grammatically correct alternatives. Here, Witty uses prompts that restrict the freedom of the model to minimize risks of biases. If this feature is disabled users will need to manually adjust alternatives to fit.
+When enabled, Witty uses LLMs to generate grammatically correct alternatives. If you disable this feature, users will need to manually adjust the alternatives to fit grammatically.
 
-LLM are also used for Witty GPT, our solution for GenerativeAI (GenAI) that produces more inclusive content.',
+LLM are also used for Witty GPT, our solution for GenerativeAI that produces more inclusive content. Witty GPT monitors your promts for bias and makes sure that the language used in the result is inclusive.',
     'llm_alternatives' => 'Allow use of LLM ',
 ];
