@@ -461,15 +461,20 @@
                                     if (calledDirectly) return '';
                                     const index = yValues.indexOf(currentValue);
                                     const currentLabel = xValues[index];
-                                    const previousPeriodPopoverOpened = data.events?.popover_open || {};
-                                    if (previousPeriodPopoverOpened[currentLabel]) {
-                                        const diff = currentValue - previousPeriodPopoverOpened[currentLabel];
-                                        const percentage = (diff / previousPeriodPopoverOpened[currentLabel] * 100).toFixed(0);
-                                        if (percentage == 0) return '+ 100 %';
-                                        return percentage >= 0 ? '+' + percentage + '%' : percentage + '%';
-                                    } else {
-                                        return '+ 100 %';
+                                    const eventTypeTopWords = document.getElementById("eventTypeTopWords").value;
+                                    if (data.events && Object.hasOwn(data.events, eventTypeTopWords)) {
+                                        const previousPeriodPopoverOpened = data.events?.[eventTypeTopWords];
+                                        if (previousPeriodPopoverOpened[currentLabel]) {
+                                            const diff = currentValue - previousPeriodPopoverOpened[currentLabel];
+                                            const percentage = (diff / previousPeriodPopoverOpened[currentLabel] * 100).toFixed(0);
+                                            if (percentage == 0) {
+                                                return '+ 100 %';
+                                            }
+
+                                            return percentage >= 0 ? '+' + percentage + '%' : percentage + '%';
+                                        }
                                     }
+                                    return '+ 100 %';
                                 },
                             }
                         },
