@@ -21,7 +21,7 @@ class AnalyticsController extends Controller
 
     public function __construct(Request $request)
     {
-        $this->refresh = $request->get('refresh', false);
+        $this->refresh = $request->get('refresh', false) === 'true';
         $this->categories = SyncToHubspotCategoriesCommand::loadTableData('categories');
         $this->subcategories = SyncToHubspotCategoriesCommand::loadTableData('diversity_dimension_drivers', true);
     }
