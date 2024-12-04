@@ -2,12 +2,9 @@
 
 namespace App\Livewire;
 
-use App\Http\Controllers\OAuthController;
 use Livewire\Component;
 use Jfcherng\Diff\DiffHelper;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Http\Client\RequestException;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
@@ -58,6 +55,7 @@ class Prompt extends Component
 
         $data = [
             'text' => $this->prompt,
+            'client' => 'dasboard',
         ];
 
         try {
@@ -100,5 +98,33 @@ class Prompt extends Component
     public function render()
     {
         return view('livewire.prompt');
+    }
+
+    static public function getColor($result)
+    {
+        if ($result['subcategory'] === 'corporate_rules') {
+            return '#6f9FED';
+        }
+        # inclusive green
+        if (empty($result['gravity'])) {
+            return '#BCD485';
+        }
+        # openly discriminating red
+        if ($result['gravity'] < 1.5) {
+            return '#E6635A';
+        }
+        # advanced
+        if ($result['gravity'] > 2.5) {
+            return '#F6EC6B';
+        }
+        #basic
+        return '#EB9F46';
+    }
+
+    static public function getSubcategoryLabel($result)
+    {
+        $words = explode(':', $result['label']);
+        $word = end($words);
+        return trim($word);
     }
 }
