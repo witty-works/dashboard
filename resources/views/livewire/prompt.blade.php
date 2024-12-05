@@ -37,7 +37,12 @@
             <div>
                 <ul>
                 @foreach($results as $result)
-                    <li>"{{ $result['text'] }}": {{ $result['explanation']['text'] }}</li>
+                    <li>
+                        <span class="underlined" style="text-decoration-color: {{ \App\Livewire\Prompt::getColor($result)}}">{{ $result['text'] }}</span>
+                        -
+                        {{ $result['explanation']['text'] }}
+                        (<a href="{{ $result['explanation']['url'] }}" target="_new">{{ \App\Livewire\Prompt::getSubcategoryLabel($result) }}</a>)
+                    </li>
                 @endforeach
                 </ul>
             </div>
