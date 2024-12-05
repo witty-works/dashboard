@@ -21,7 +21,7 @@ class AnalyticsController extends Controller
 
     public function __construct(Request $request)
     {
-        $this->refresh = $request->get('refresh', false);
+        $this->refresh = $request->get('refresh', false) === 'true';
         $this->categories = SyncToHubspotCategoriesCommand::loadTableData('categories');
         $this->subcategories = SyncToHubspotCategoriesCommand::loadTableData('diversity_dimension_drivers', true);
     }
@@ -108,7 +108,7 @@ class AnalyticsController extends Controller
         }
     }
 
-    protected function buildFilter($properties, $filters, $interval, $from, $to, $math)
+    protected function buildFilter($properties, $interval, $from, $to, $math)
     {
         $properties[] = [
             'key' => '$host',
@@ -132,24 +132,12 @@ class AnalyticsController extends Controller
             'date_to' => $to,
         ];
 
-        if (!empty($filters)) {
-            $filter['properties'] = [
-                'type' => 'AND',
-                'values' => [
-                    [
-                        'type' => 'OR',
-                        'values' => $filters
-                    ]
-                ]
-            ];
-        }
-
         return $filter;
     }
 
-    protected function buildEventData($events, $properties, $filters, $interval, $from, $to, $math = 'total')
+    protected function buildEventData($events, $properties, $interval, $from, $to, $math = 'total')
     {
-        $filter = $this->buildFilter($properties, $filters, $interval, $from, $to, $math);
+        $filter = $this->buildFilter($properties, $interval, $from, $to, $math);
 
         $data = [];
         foreach ($events as $event) {
@@ -166,7 +154,7 @@ class AnalyticsController extends Controller
         return $data;
     }
 
-    protected function buildBreakdown($events, $properties, $filters, $breakdown, $interval, $from, $to, $display = null)
+    protected function buildBreakdown($events, $properties, $breakdown, $interval, $from, $to, $display = null)
     {
         // filter out orthography
         $properties[] = [
@@ -176,22 +164,10 @@ class AnalyticsController extends Controller
             'type' => 'event',
         ];
 
-        $filter = $this->buildFilter($properties, $filters, $interval, $from, $to, 'total');
+        $filter = $this->buildFilter($properties, $interval, $from, $to, 'total');
 
         $filter['breakdown'] = $breakdown;
         $filter['breakdown_type'] = 'hogql';
-
-        if (!empty($filters)) {
-            $filter['properties'] = [
-                'type' => 'AND',
-                'values' => [
-                    [
-                        'type' => 'OR',
-                        'values' => $filters
-                    ]
-                ]
-            ];
-        }
 
         $data = [];
 
@@ -263,8 +239,6 @@ class AnalyticsController extends Controller
             'lang' => 'nullable|in:en,de,fr',
             'events' => 'nullable|array|in:check_highlights,popover_open,alternative,ignore,learning_bites',
             'categories' => 'nullable|array|in:' . implode(',', $this->categories->keys()->toArray()),
-            'subcategories' => 'nullable|array|in:' . implode(',', $this->subcategories->keys()->toArray()),
-            'group_subcategories' => 'nullable:bool',
             'inclusive' => 'nullable|in:inclusive,non_inclusive,both',
         ];
 
@@ -277,10 +251,10 @@ class AnalyticsController extends Controller
         $lang = $validated['lang'] ?? null;
         $events = $validated['events'] ?? null;
         $categories = $validated['categories'] ?? [];
-        $subcategories = $validated['subcategories'] ?? [];
-        // @TODO make it possible to choose if to group or not
-        $group_subcategories = $validated['group_subcategories'] ?? true;
         $inclusive = $validated['inclusive'] ?? 'non_inclusive';
+
+        // @TODO make it possible to choose if to group or not
+        $group_subcategories = true;
 
         // BC code
         if (is_numeric($from)) {
@@ -299,39 +273,40 @@ class AnalyticsController extends Controller
             ];
         }
 
-        $filters = [];
-        if (!empty($categories) && count($categories) != $this->categories->count()) {
-            $filters[] = [
-                'key' => 'response__data__category',
-                'value' => $categories,
-                'operator' => 'exact',
-                'type' => 'event',
-            ];
-        }
-
-        if ($inclusive !== 'both') {
-            $subcategoriesToRemove = [];
-            foreach ($this->subcategories as $subcategory => $subcategoryData) {
-                $proficiencyLevel = $subcategoryData['proficiency_level'] ?? 'corporate_rules';
-                if ($proficiencyLevel === 'inclusive') {
-                    if ($inclusive === 'non_inclusive') {
-                        $subcategoriesToRemove[] = $subcategory;
-                    }
-                } elseif ($inclusive === 'inclusive') {
-                    $subcategoriesToRemove[] = $subcategory;
+        if (!empty($categories) || $inclusive !== 'both') {
+            if (empty($categories)) {
+                foreach ($this->categories as $category => $categoryData) {
+                    $categories[] = $category;
                 }
             }
 
-            if (empty($subcategories)) {
-                $subcategories = $this->subcategories->keys()->toArray();
+            $subcategoriesToRemove = [];
+            foreach ($this->subcategories as $subcategory => $subcategoryData) {
+                if ($subcategory === 'corporate_rules') {
+                    if ($inclusive === 'inclusive') {
+                        $subcategoriesToRemove[] = $subcategory;
+                    }
+                    continue;
+                }
+
+                if (!in_array($subcategoryData['category'], $categories)) {
+                    $subcategoriesToRemove[] = $subcategory;
+                } else {
+                    if ($subcategoryData['proficiency_level'] === 'inclusive') {
+                        if ($inclusive === 'non_inclusive') {
+                            $subcategoriesToRemove[] = $subcategory;
+                        }
+                    } elseif ($inclusive === 'inclusive') {
+                        $subcategoriesToRemove[] = $subcategory;
+                    }
+                }
             }
 
+            $subcategories = $this->subcategories->keys()->toArray();
             $subcategories = array_diff($subcategories, $subcategoriesToRemove);
             $subcategories = array_values($subcategories);
-        }
 
-        if (!empty($subcategories)) {
-            $filters[] = [
+            $properties[] = [
                 'key' => 'response__data__subcategory',
                 'value' => $subcategories,
                 'operator' => 'exact',
@@ -351,7 +326,6 @@ class AnalyticsController extends Controller
                 $data = $this->buildEventData(
                     $events,
                     $properties,
-                    $filters,
                     $interval,
                     $from,
                     $to,
@@ -410,7 +384,6 @@ class AnalyticsController extends Controller
                 $data = $this->buildEventData(
                     $events,
                     $properties,
-                    $filters,
                     $interval,
                     $from,
                     $to,
@@ -489,7 +462,6 @@ class AnalyticsController extends Controller
                 $data = $this->buildBreakdown(
                     $events,
                     $properties,
-                    $filters,
                     'properties.response__data__subcategory',
                     $interval,
                     $from,
@@ -541,7 +513,6 @@ class AnalyticsController extends Controller
                 $data = $this->buildBreakdown(
                     $events,
                     $properties,
-                    $filters,
                     'coalesce(properties.response__data__text, properties.response__data_text)',
                     $interval,
                     $from,
