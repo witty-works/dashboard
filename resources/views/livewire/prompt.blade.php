@@ -9,7 +9,9 @@
     </x-slot>
 
     <x-slot name="form">
-        @if(!Auth::user()->currentTeam->llm_alternatives)
+        @if(!Auth::user()->planId())
+            @include('partials.trial-ended', ['user' => Auth::user()])
+        @elseif(!Auth::user()->currentTeam->llm_alternatives)
             {!! Str::markdown(__('content.enable_llm', ['url' => route('teams.privacy-settings')])) !!}
         @else
         <div class="w-full col-span-6 sm:col-span-4">
@@ -60,7 +62,7 @@
     </x-slot>
 
     <x-slot name="actions">
-        @if(Auth::user()->currentTeam->llm_alternatives)
+        @if(Auth::user()->planId() && Auth::user()->currentTeam->llm_alternatives)
         <div class="flex flex-row align-middle items-center" role="toolbar" aria-label="Action buttons">
             <x-button>
                 {{ __('content.submit') }}

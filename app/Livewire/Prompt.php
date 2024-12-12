@@ -40,7 +40,7 @@ class Prompt extends Component
         $this->resetErrorBag();
 
         $user = Auth::user();
-        if (!$user->currentTeam->llm_alternatives) {
+        if (!$user->planId() || !$user->currentTeam->llm_alternatives) {
             $message = __('content.prompt_error');
             throw ValidationException::withMessages(['prompt' => $message]);
         }
