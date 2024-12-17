@@ -453,4 +453,5 @@ Witty GPT kann in den Microsoft Copilot oder andere interne generative KI/LLM-L�
     'enable_llm' => 'Um Witty GPT nutzen zu können, müssen die Team-Administrator*innen in den <a href=":url">Datenschutzeinstellungen des Teams</a> LLM-Nutzung aktivieren.',
     'witty_issues' => 'Witty Probleme entdeckt',
     'witty_edits' => 'Witty GPT Änderungen',
+    'copy_to_clipboard' => 'In die Zwischenablage kopieren',
 ];

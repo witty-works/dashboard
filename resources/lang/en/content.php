@@ -450,4 +450,5 @@ Witty GPT can be integrated with your organizations Microsoft Copilot or other i
     'enable_llm' => 'In order to use Witty GPT, your team admin must enable LLM usage in the <a href=":url">team privacy settings</a>.',
     'witty_issues' => 'Witty Issues Detected',
     'witty_edits' => 'Witty GPT Modifications',
+    'copy_to_clipboard' => 'Copy to clipboard',
 ];
