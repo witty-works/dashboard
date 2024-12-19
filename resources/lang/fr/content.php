@@ -451,4 +451,5 @@ Witty GPT peut être intégré à Microsoft Copilot ou à d\'autres solutions in
     'enable_llm' => 'Afin d\'utiliser Witty GPT, l\'administrateur de votre équipe doit activer l\'utilisation du LLM dans les <a href=":url">paramètres de confidentialité de l\'équipe</a>.',
     'witty_issues' => 'Détection des questions de Witty',
     'witty_edits' => 'Modifications du Witty GPT',
+    'copy_to_clipboard' => 'Copier dans le presse-papiers',
 ];
