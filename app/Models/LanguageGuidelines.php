@@ -29,10 +29,12 @@ class LanguageGuidelines extends Model
 
     protected $attributes = [
         'german_gender_ending' => '*in',
+        'french_gender_separator' => '·',
         'gendered_roles_format' => 'inclusive_gender',
         'show_inspiration_alternatives' => false,
         'generic_masculine_force' => true,
         'german_rules_force' => true,
+        'french_rules_force' => true,
         'show_inspiration_alternatives_force' => true,
         'preferred_variants_force' => true,
     ];
@@ -50,6 +52,7 @@ class LanguageGuidelines extends Model
         'disabled_categories_force' => 'json',
         'generic_masculine_force' => 'boolean',
         'german_rules_force' => 'boolean',
+        'french_rules_force' => 'boolean',
         'show_inspiration_alternatives_force' => 'boolean',
         'preferred_variants_force' => 'boolean',
     ];
@@ -58,6 +61,7 @@ class LanguageGuidelines extends Model
         'preferred_languages',
         'preferred_variants',
         'german_gender_ending',
+        'french_gender_separator',
         'gendered_roles_format',
         'show_inspiration_alternatives',
     ];
@@ -282,6 +286,13 @@ class LanguageGuidelines extends Model
                 $properties = [
                     'language_type' => (new \ReflectionClass($this))->getShortName(),
                     'german_gender_ending' => $this->german_gender_ending,
+                    'force' => !$subscribed || $this->german_rules_force,
+                ];
+                break;
+            case 'French':
+                $properties = [
+                    'language_type' => (new \ReflectionClass($this))->getShortName(),
+                    'french_gender_separator' => $this->french_gender_separator,
                     'force' => !$subscribed || $this->german_rules_force,
                 ];
                 break;

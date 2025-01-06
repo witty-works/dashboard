@@ -4,7 +4,22 @@ namespace App\Models;
 
 interface GuidelinesInterface
 {
-    const GERMAN_GENDER_ENDING = ['*in', '_in', ':in', '/in', '/-in', 'In'];
+    const GERMAN_GENDER_ENDING = [
+        '*in' => 'guidelines.germam_gender_separator_genderstar',
+        ':in' => 'guidelines.germam_gender_separator_colon',
+        '_in' => 'guidelines.germam_gender_separator_gendergap',
+        '/in' => 'guidelines.germam_gender_separator_slash',
+        '/-in' => 'guidelines.germam_gender_separator_slash_dash',
+        'In' => 'guidelines.germam_gender_separator_binnen_i',
+    ];
+    const FRENCH_GENDER_SEPARATOR = [
+        '·' => 'guidelines.french_gender_separator_point_median',
+        '·s' => 'guidelines.french_gender_separator_point_median_s',
+        '.' => 'guidelines.french_gender_separator_point',
+        '.s' => 'guidelines.french_gender_separator_point_s',
+        '/' => 'guidelines.french_gender_separator_barre_oblique',
+        '/s' => 'guidelines.french_gender_separator_barre_oblique_s',
+    ];
     const GENDERED_ROLES_FORMAT = ['inclusive_gender' => 'guidelines.inclusive_gender', 'both' => 'guidelines.both', 'binary_gender' => 'guidelines.binary_gender',  'none' => 'guidelines.none'];
     const PREFERRED_VARIANTS_EN = ['' => 'guidelines.preferred_variants_none', 'en-US' => 'guidelines.preferred_variants_en_US', 'en-GB' => 'guidelines.preferred_variants_en_GB'];
     const PREFERRED_VARIANTS_DE = ['' => 'guidelines.preferred_variants_none', 'de-DE' => 'guidelines.preferred_variants_de_DE', 'de-CH' => 'guidelines.preferred_variants_de_CH', 'de-AT' => 'guidelines.preferred_variants_de_AT'];

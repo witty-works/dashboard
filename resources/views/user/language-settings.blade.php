@@ -15,5 +15,7 @@
 
     @livewire('user-language-settings.german', ['model' => $user])
 
+    @livewire('user-language-settings.french', ['model' => $user])
+
     @livewire('user-language-settings.inspirations', ['model' => $user])
 </div>
