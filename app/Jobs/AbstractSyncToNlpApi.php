@@ -156,6 +156,13 @@ abstract class AbstractSyncToNlpApi implements ShouldQueue
             'status' => $guidelines->german_rules_force ? 'force' : 'suggestion',
         ];
 
+        $guidelines->french_rules_force = $guidelines->french_rules_force ?? $forceDefault;
+
+        $config['french_gender_separator'] = [
+            'value' => $guidelines->french_gender_separator,
+            'status' => $guidelines->french_rules_force ? 'force' : 'suggestion',
+        ];
+
         $guidelines->preferred_variants_force = $guidelines->preferred_variants_force ?? $forceDefault;
 
         $config['preferred_variants'] = [

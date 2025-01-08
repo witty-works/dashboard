@@ -11,6 +11,8 @@
 
     @livewire('organization-language-settings.german', ['model' => $team])
 
+    @livewire('organization-language-settings.french', ['model' => $team])
+
     @livewire('organization-language-settings.inspirations', ['model' => $team])
 
 </div>
