@@ -11,6 +11,9 @@
         @php
             $disabled = !$model->isPremium();
         @endphp
+        <div class="margin-bottom">
+            {!! __('guidelines.french_gender_separator') !!}
+        </div>
 
         <div class="margin-bottom flex flex-row mb-5">
             <x-select id="french_gender_separator"

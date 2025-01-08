@@ -15,7 +15,7 @@ Witty surlignera tous les mots ajoutés à cette liste et suggérera vos alterna
     'language_settings_label' => 'Paramètres linguistiques',
     'manage_organization_guidelines' => 'Gérer les lignes directrices de l\'organisation',
     'manage_organization_guidelines_description' => 'Configurez Witty pour qu\'il corresponde mieux au style d\'écriture de votre équipe.',
-    'german_gender_ending' => 'Choisissez le séparateur de genre allemand. Par défaut, Witty utilise l\'astérisque. Découvrez pourquoi <a href="https://be-hindernisse.org/2022/02/15/mythos-der-doppelpunkt-ist-perfekt-zum-entgendern/" target="_blank">dans cet article</a>. Pour en savoir plus sur toutes les formes de langage inclusif en allemand, consultez <a href="https://www.witty.works/fr/blog/post/langage-non-genr%C3%A9-en-fran%C3%A7ais"  target="_blank">notre article de blog dédié</a>.',
+    'german_gender_ending' => 'Witty recommande l\'astérisque (\'Genderstar\'). Nous expliquons <a href="https://be-hindernisse.org/2022/02/15/mythos-der-doppelpunkt-ist-perfekt-zum-entgendern/" target="_blank">ici</a> pourquoi. Pour en savoir plus sur toutes les formes de langage inclusif en allemand, consultez <a href="https://www.witty.works/fr/blog/post/langage-non-genr%C3%A9-en-fran%C3%A7ais"  target="_blank">notre article de blog dédié</a>.',
     'list_false_positives' => 'Mots ignorés',
     'list_false_positives_description' => 'Witty ne surlignera plus aucun mot de cette liste pour vous.',
     'list_term_replacements' => 'Dictionnaire personnel',
@@ -157,4 +157,5 @@ Les LLM sont également utilisés pour Witty GPT, notre solution GenAI qui produ
     'germam_gender_separator_slash' => 'Barre oblique, p. ex. Expert/in',
     'germam_gender_separator_slash_dash' => 'Barre oblique + Tiret, p. ex. Expert/-in',
     'germam_gender_separator_binnen_i' => 'Capitalisé \'I\' (Binnen-I), p. ex. ExpertIn',
+    'french_gender_separator' => 'Witty recommande le point médian. Nous expliquons <a href="https://www.witty.works/fr/blog/post/langage-non-genr%C3%A9-en-fran%C3%A7ais" target="_blank">ici</a> pourquoi.',
 ];

@@ -11,6 +11,9 @@
         @php
             $disabled = !$model->isPremium() || \App\Models\LanguageGuidelines::isForcedOnTeam($model, 'german_rules');
         @endphp
+        <div class="margin-bottom">
+            {!! __('guidelines.german_gender_ending') !!}
+        </div>
 
         <div class="margin-bottom flex flex-row mb-5">
             <x-select id="german_gender_ending"
