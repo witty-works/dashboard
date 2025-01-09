@@ -1,4 +1,4 @@
 rdbms:
     type: mariadb:10.5
-    disk: 3072
+    disk: 3800
 
