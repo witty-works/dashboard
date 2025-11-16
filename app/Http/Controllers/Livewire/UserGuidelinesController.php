@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Livewire;
 
-use App\Console\Commands\SyncToHubspotCategoriesCommand;
+use App\Helpers\CategoryDataHelper;
 use App\Models\LanguageGuidelines;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -76,7 +76,7 @@ class UserGuidelinesController extends Controller
             'user' => $user,
             'tab' => $tab,
             'tabs' => $tabs,
-            'categories' => SyncToHubspotCategoriesCommand::loadTableData('categories'),
+            'categories' => CategoryDataHelper::loadTableData('categories'),
         ]);
     }
 }

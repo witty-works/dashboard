@@ -22,7 +22,7 @@
         @include('partials/sentry')
         <script src="{{ mix('js/app.js') }}" defer></script>
         @include('partials/detect_browser')
-        @include('partials/hubspot')
+
     </head>
     <body class="font-sans antialiased">
         @include('partials/gtm-body')

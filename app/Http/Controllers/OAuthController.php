@@ -146,7 +146,6 @@ class OAuthController extends BaseOAuthController
                 $this->createsConnectedAccounts->create($user, $provider, $providerAccount);
             } else {
                 $user = $this->createsUser->create($provider, $providerAccount);
-                $userData['hubspotutk'] = $request->cookie('hubspotutk');
             }
 
             if (!empty($providerAccount->attributes['has_consented_to_mailing'])) {

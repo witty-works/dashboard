@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Console\Commands\SyncToHubspotCategoriesCommand;
+use App\Helpers\CategoryDataHelper;
 use App\Models\Kpi;
 use App\Models\Team;
 use App\Models\User;
@@ -22,8 +22,8 @@ class AnalyticsController extends Controller
     public function __construct(Request $request)
     {
         $this->refresh = $request->get('refresh', false) === 'true';
-        $this->categories = SyncToHubspotCategoriesCommand::loadTableData('categories');
-        $this->subcategories = SyncToHubspotCategoriesCommand::loadTableData('diversity_dimension_drivers', true);
+        $this->categories = CategoryDataHelper::loadTableData('categories');
+        $this->subcategories = CategoryDataHelper::loadTableData('diversity_dimension_drivers', true);
     }
 
     protected function getDefaultEvent()

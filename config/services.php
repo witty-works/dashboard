@@ -19,9 +19,4 @@ return [
         'client_id' => env('MICROSOFT_CLIENT_ID'),
         'redirect_uri' => env('MICROSOFT_CLIENT_REDIRECT_URI'),
     ],
-
-    'mailjet' => [
-        'key' => env('MAILJET_APIKEY'),
-        'secret' => env('MAILJET_APISECRET'),
-    ]
 ];

@@ -27,10 +27,7 @@
         @php
             $user = Auth::user();
         @endphp
-        @include('partials/hubspot', ['user' => $user])
     </head>
-
-
 
     <body class="font-sans antialiased">
         <x-banner />

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Jobs\SyncUserToHubSpot;
 use App\Jobs\SyncUserToNlpApi;
 use App\Jobs\SyncToPosthog;
 use App\Models\TeamInvitation as ModelsTeamInvitation;
@@ -89,7 +88,6 @@ class TeamInvitationController extends BaseTeamInvitationController
 
         $invitation->delete();
 
-        dispatch(new SyncUserToHubSpot($invitation->team->owner));
         dispatch(new SyncToPosthog($invitation->team->owner));
 
         // update notification count

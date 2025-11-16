@@ -10,7 +10,6 @@ use App\Events\UserCompanyUpdated;
 use App\Events\UserCreated;
 use App\Events\UserDeleted;
 use App\Events\UserUpdated;
-use App\Listeners\HubspotUpdateUser;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use App\Listeners\PosthogBilling;
 use App\Listeners\PosthogReset;
@@ -43,29 +42,24 @@ class EventServiceProvider extends ServiceProvider
         UserCreated::class => [
             UpdateUserGuidelines::class,
             UserAddedSlackAlert::class,
-            HubspotUpdateUser::class,
         ],
         UserDeleted::class => [
             UpdateUserGuidelines::class,
-            HubspotUpdateUser::class,
             PostHogUpdateUser::class,
         ],
         UserUpdated::class => [
             UpdateUserGuidelines::class,
-            HubspotUpdateUser::class,
             PostHogUpdateUser::class,
         ],
         UserCompanyUpdated::class => [
             UserCompanyUpdatedSlackAlert::class,
         ],
         InvitedTeamMember::class => [
-            HubspotUpdateUser::class,
             PostHogUpdateUser::class,
             TeamMemberInvitedSlackAlert::class,
         ],
         TeamMemberAdded::class => [
             UpdateOrganizationGuidelines::class,
-            HubspotUpdateUser::class,
             PostHogUpdateUser::class,
             PostHogUpdateOrganization::class,
             TeamMemberAddedSlackAlert::class,
@@ -73,25 +67,21 @@ class EventServiceProvider extends ServiceProvider
         TeamMemberRemoved::class => [
             UpdateCurrentTeam::class,
             UpdateOrganizationGuidelines::class,
-            HubspotUpdateUser::class,
             PostHogUpdateUser::class,
             PostHogUpdateOrganization::class,
         ],
         TeamCreated::class => [
             UpdateOrganizationGuidelines::class,
-            HubspotUpdateUser::class,
             PostHogUpdateUser::class,
             PostHogUpdateOrganization::class,
         ],
         TeamUpdated::class => [
             UpdateOrganizationGuidelines::class,
-            HubspotUpdateUser::class,
             PostHogUpdateUser::class,
             PostHogUpdateOrganization::class,
         ],
         TeamDeleted::class => [
             UpdateOrganizationGuidelines::class,
-            HubspotUpdateUser::class,
             PostHogUpdateUser::class,
             PostHogUpdateOrganization::class,
         ],
@@ -103,21 +93,18 @@ class EventServiceProvider extends ServiceProvider
         ],
         SubscriptionCreated::class => [
             UpdateOrganizationGuidelines::class,
-            HubspotUpdateUser::class,
             PostHogUpdateUser::class,
             PostHogUpdateOrganization::class,
             SyncStartRenwalDates::class,
         ],
         SubscriptionUpdated::class => [
             UpdateOrganizationGuidelines::class,
-            HubspotUpdateUser::class,
             PostHogUpdateUser::class,
             PostHogUpdateOrganization::class,
             SyncStartRenwalDates::class,
         ],
         SubscriptionCancelled::class => [
             UpdateOrganizationGuidelines::class,
-            HubspotUpdateUser::class,
             PostHogUpdateUser::class,
             PostHogUpdateOrganization::class,
             SyncStartRenwalDates::class,

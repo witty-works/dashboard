@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Console\Commands\SyncToHubspotCategoriesCommand;
+use App\Helpers\CategoryDataHelper;
 use App\Helpers\OfficeSsoHelper;
 use App\Jobs\SyncUserToNlpApi;
 use App\Models\ConnectedAccount;
@@ -130,7 +130,7 @@ class UserGuidelinesApiController extends Controller
             $is_advanced = false;
         }
 
-        $diversityDimensionDrivers = SyncToHubspotCategoriesCommand::loadTableData('diversity_dimension_drivers');
+        $diversityDimensionDrivers = CategoryDataHelper::loadTableData('diversity_dimension_drivers');
         $ddds = $diversityDimensionDrivers->toArray();
         if (!array_key_exists($diversity_dimension, $ddds)) {
             return response()->json(['error' => "Invalid parameter for 'diversity_dimension': '$diversity_dimension'"], 400);
