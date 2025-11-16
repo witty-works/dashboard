@@ -171,10 +171,13 @@
         </x-nav-link>
 
         @if (Session::get(\App\Http\Controllers\OAuthController::LOGIN_SOURCE) !== \App\Http\Controllers\OAuthController::OFFICE_PROVIDER)
-        <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('logout', ['provider' => 'azureadb2c']) }}">
-            <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/logout.svg') }}" alt="" />
-            {{ __('content.log_out') }}
-        </x-nav-link>
+        <form method="POST" action="{{ route('logout') }}" class="wittyworks-navigation-link-wrapper">
+            @csrf
+            <button type="submit" class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" style="background: none; border: none; padding: 0; cursor: pointer; width: 100%; text-align: left; display: flex; align-items: center;">
+                <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/logout.svg') }}" alt="" />
+                {{ __('content.log_out') }}
+            </button>
+        </form>
         @endif
         <div class="wittyworks-navigation-username lato-small-text-p">
             {{ $user->name }}
@@ -199,11 +202,11 @@
             <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/star.svg') }}" alt="" />
             {{ __('teams.pricing') }}
         </x-nav-link>
-        <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'login']) }}">
+        <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('login') }}">
             <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/login.svg') }}" alt="" />
             {{ __('content.log_in') }}
         </x-nav-link>
-        <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'register']) }}">
+        <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('register') }}">
             <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/register.svg') }}" alt="" />
             {{ __('content.register') }}
         </x-nav-link>

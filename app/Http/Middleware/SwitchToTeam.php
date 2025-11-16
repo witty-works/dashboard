@@ -18,12 +18,6 @@ class SwitchToTeam
         if ($user instanceof User) {
             $this->checkTeam($user);
             $user->applyAcceptedInvitiations();
-        } elseif (
-            !Route::is('mock-login')
-            && config('app.mock_login')
-            && (new Config())->branch !== 'dev'
-        ) {
-            return redirect()->route('mock-login', ['email' => config('app.mock_login')]);
         }
 
         return $next($request);

@@ -31,8 +31,6 @@ use Laravel\Jetstream\Events\TeamDeleted;
 use Laravel\Jetstream\Events\TeamMemberAdded;
 use Laravel\Jetstream\Events\TeamMemberRemoved;
 use Laravel\Cashier\Events\WebhookReceived;
-use SocialiteProviders\AzureADB2C\AzureADB2CExtendSocialite;
-use SocialiteProviders\Manager\SocialiteWasCalled;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -123,9 +121,6 @@ class EventServiceProvider extends ServiceProvider
             PostHogUpdateUser::class,
             PostHogUpdateOrganization::class,
             SyncStartRenwalDates::class,
-        ],
-        SocialiteWasCalled::class => [
-            AzureADB2CExtendSocialite::class,
         ],
     ];
 

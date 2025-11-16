@@ -9,16 +9,21 @@
             $user = Auth::user();
         @endphp
         <div class="wittyworks-form-section-wrapper" role="group" aria-labelledby="form-title">
+        
+        @if (Session::get(\App\Http\Controllers\OAuthController::LOGIN_SOURCE) !== \App\Http\Controllers\OAuthController::OFFICE_PROVIDER)
+        <!-- Name -->
+        <div class="col-span-6 sm:col-span-4 margin-bottom">
+            <x-label for="name" value="{{ __('content.name') }}" />
+            <x-input id="name" type="text" class="mt-1 block w-full" wire:model.defer="state.name" autocomplete="name" />
+            <x-input-error for="name" class="mt-2" />
+        </div>
+        @else
         <div class="lato-small-text-p margin-bottom">
             <div>{{ __('content.name') }}:</div>
             <div>{{ $state['name'] }}</div>
-
-            @if (Session::get(\App\Http\Controllers\OAuthController::LOGIN_SOURCE) !== \App\Http\Controllers\OAuthController::OFFICE_PROVIDER)
-            <a href="{{ route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'profile']) }}">
-                {!! __('content.update_your_account_profile', ['profile_url' => route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'profile'])]) !!}
-            </a>
-            @endif
         </div>
+        @endif
+        
         <div class="lato-small-text-p margin-bottom">
             <div>{{ __('content.email') }}:</div>
             <div>{{ $state['email'] }}</div>
@@ -41,5 +46,17 @@
         @endif
 
     </div>
+    </x-slot>
+
+    <x-slot name="actions">
+        @if (Session::get(\App\Http\Controllers\OAuthController::LOGIN_SOURCE) !== \App\Http\Controllers\OAuthController::OFFICE_PROVIDER)
+        <x-action-message class="mr-3" on="saved">
+            {{ __('Saved.') }}
+        </x-action-message>
+
+        <x-button wire:loading.attr="disabled" wire:target="photo">
+            {{ __('Save') }}
+        </x-button>
+        @endif
     </x-slot>
 </x-form-section>

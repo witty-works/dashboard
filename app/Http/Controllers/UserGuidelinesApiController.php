@@ -201,14 +201,7 @@ class UserGuidelinesApiController extends Controller
         $user = null;
 
         try {
-            if ($aud === config('services.azureadb2c.client_id')) {
-                $provider = Socialite::driver('azureadb2c');
-                $socialiteUser = $provider->getUserByToken($accessToken);
-                $connectedUser = ConnectedAccount::where('provider_id', $socialiteUser->getId())->first();
-                if ($connectedUser instanceof ConnectedAccount) {
-                    $user = $connectedUser->user;
-                }
-            } elseif ($aud === config('services.microsoft_office.client_id')) {
+            if ($aud === config('services.microsoft_office.client_id')) {
                 $claims = $officeSsoHelper->validateIdToken($accessToken);
                 $email = strtolower($claims['preferred_username'] ?? '');
                 $user = Socialstream::newUserModel()->where('email', $email)->first();
