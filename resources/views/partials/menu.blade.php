@@ -128,10 +128,12 @@
                     {{ __('content.manage_members') }}
                 </x-nav-link>
 
+                @if(config('stripe.enabled'))
                 <x-nav-link class="wittyworks-navigation-link-wrapper" href="{{ route('teams.subscription') }}" :active="request()->routeIs('teams.subscription')">
                     <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/dollar.svg') }}" alt="" />
                     {{ __('content.subscription') }}
                 </x-nav-link>
+                @endif
 
                 @if(config('posthog.enabled'))
                     <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('teams.analytics') }}" :active="request()->routeIs('teams.analytics')">

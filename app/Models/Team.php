@@ -167,15 +167,17 @@ class Team extends JetstreamTeam
 
     public function planId()
     {
+        // If Stripe is disabled, all users get witty_enterprise
+        if (!config('stripe.enabled')) {
+            return 'witty_enterprise';
+        }
         $subscription = $this->subscription();
         if ($subscription) {
             return $this->subscription()->planId();
         }
-
         if ($this->onGenericTrial()) {
             return 'witty_teams_trial';
         }
-
         return null;
     }
 

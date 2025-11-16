@@ -94,7 +94,9 @@ Route::group(
 
                 Route::get('/prompt', [PromptController::class, 'show'])->name('prompt');
 
-                Route::get('/subscribe', [StripeController::class, 'subscribe'])->name('stripe.subscribe');
+                if (config('stripe.enabled')) {
+                    Route::get('/subscribe', [StripeController::class, 'subscribe'])->name('stripe.subscribe');
+                }
 
                 Route::post('/user/onboarding', [UserProfileController::class, 'storeOnboarding'])
                     ->name('profile.onboarding.store');
@@ -119,7 +121,9 @@ Route::group(
                 if (Jetstream::hasTeamFeatures()) {
                     Route::get('/team/show', [TeamController::class, 'show'])->name('teams.show');
                     Route::put('/current-team', [CurrentTeamController::class, 'update'])->name('current-team.update');
-                    Route::get('/team/subscription', [StripeController::class, 'show'])->name('teams.subscription');
+                    if (config('stripe.enabled')) {
+                        Route::get('/team/subscription', [StripeController::class, 'show'])->name('teams.subscription');
+                    }
 
                     Route::get('/team-invitations/{invitation}/accept', [TeamInvitationController::class, 'accept'])
                         ->middleware(['auth'])
@@ -154,7 +158,9 @@ Route::group(
                     $lumkiPermission = config('lumki.lumkiPermission') ?? "manage users";
                     $middleware = config('lumki.middleware') ?? ["auth:sanctum", "web", "can:$lumkiPermission"];
                     Route::prefix($prefix)->middleware($middleware)->group(function () {
-                        Route::get('/subscriptions', [StripeController::class, 'subscriptions'])->name('subscriptions');
+                        if (config('stripe.enabled')) {
+                            Route::get('/subscriptions', [StripeController::class, 'subscriptions'])->name('subscriptions');
+                        }
                     });
                 }
             });
@@ -171,9 +177,11 @@ Route::group(
         |------------------
         */
 
-        Route::middleware(['auth:sanctum'])->group(function () {
-            Route::get('/stripe/portal', [StripeController::class, 'portal'])->name('stripe.portal');
-        });
+        if (config('stripe.enabled')) {
+            Route::middleware(['auth:sanctum'])->group(function () {
+                Route::get('/stripe/portal', [StripeController::class, 'portal'])->name('stripe.portal');
+            });
+        }
 
         /*
         |------------------
@@ -210,10 +218,12 @@ Route::group(['middleware' => config('socialstream.middleware', ['web'])], funct
 |------------------
 */
 
-Route::post(
-    '/stripe/webhook',
-    [WebhookController::class, 'handleWebhook']
-)->name('cashier.webhook');
+if (config('stripe.enabled')) {
+    Route::post(
+        '/stripe/webhook',
+        [WebhookController::class, 'handleWebhook']
+    )->name('cashier.webhook');
+}
 
 
 Route::fallback(function () {

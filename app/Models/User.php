@@ -240,11 +240,14 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function planId()
     {
+        // If Stripe is disabled, all users get witty_enterprise
+        if (!config('stripe.enabled')) {
+            return 'witty_enterprise';
+        }
         $team = $this->licenseTeam;
         if ($team) {
             return $team->planId();
         }
-
         return null;
     }
 
