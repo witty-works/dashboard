@@ -1,7 +1,6 @@
-version: '3.9'
+version: "3.9"
 
 # to use this docker-compose file copy the .env.example file to .env
-# and overwrite the azure ad b2c provider configuration
 
 services:
   dashboard:
@@ -29,7 +28,7 @@ services:
       - "2222:2222"
 
   mariadb:
-    image: mariadb:10.3 # same version as in azure
+    image: mariadb:10.3
     volumes:
       - db_data:/var/lib/mysql
     environment:

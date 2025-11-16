@@ -11,7 +11,6 @@ use GuzzleHttp\Client;
 use SocialiteProviders\Manager\OAuth2\User;
 use Symfony\Component\Uid\Uuid;
 
-// some code taken from https://github.com/SocialiteProviders/AzureADB2C
 // license: MIT
 class OfficeSsoHelper
 {
