@@ -19,7 +19,6 @@
         "laravel/socialite": "^5.2",
         "laravel/tinker": "^2.5",
         "livewire/livewire": "^3.4",
-        "mailjet/laravel-mailjet": "^3.0.4",
         "mcamara/laravel-localization": "^2.0",
         "p3k/emoji-detector": "^1.0.0",
         "platformsh/laravel-bridge": "^2.2",

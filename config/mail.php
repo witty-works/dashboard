@@ -79,9 +79,7 @@ return [
             ],
         ],
 
-        'mailjet' => [
-            'transport' => 'mailjet',
-        ],
+
     ],
 
     /*
