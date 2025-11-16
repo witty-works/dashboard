@@ -13,6 +13,18 @@
                 @livewire('profile.update-profile-information-form')
             @endif
 
+            @if (Laravel\Fortify\Features::enabled(Laravel\Fortify\Features::updatePasswords()) && Session::get(\App\Http\Controllers\OAuthController::LOGIN_SOURCE) !== \App\Http\Controllers\OAuthController::OFFICE_PROVIDER)
+                <x-section-border />
+
+                @livewire('profile.update-password-form')
+            @endif
+
+            @if (Laravel\Fortify\Features::canManageTwoFactorAuthentication())
+                <x-section-border />
+
+                @livewire('profile.two-factor-authentication-form')
+            @endif
+
             @cannot('update', $user->currentTeam)
             <div class="py-10">
                 @livewire('teams.plan-summary', ['team' => $user->currentTeam])

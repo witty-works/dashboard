@@ -44,9 +44,7 @@ class StripeController extends Controller
     {
         $user = $request->user();
         if (empty($user)) {
-            return redirect(
-                route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'login'])
-            );
+            return redirect()->route('login');
         }
 
         $team = $user->currentTeam;

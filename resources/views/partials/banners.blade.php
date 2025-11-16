@@ -21,7 +21,7 @@ if ($user) {
 }
 @endphp
 
-@if (Session::get(\App\Http\Controllers\OAuthController::LOGIN_SOURCE) === \App\Http\Controllers\OAuthController::AZURE_AD_B2C_PROVIDER)
+@if (Session::get(\App\Http\Controllers\OAuthController::LOGIN_SOURCE) !== \App\Http\Controllers\OAuthController::OFFICE_PROVIDER)
 @include('partials.extension-check')
 @endif
 

@@ -403,9 +403,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         $clients = [];
         foreach ($this->connectedAccounts as $connectedAccount) {
-            if ($connectedAccount->provider == OAuthController::AZURE_AD_B2C_PROVIDER) {
-                $clients[] = 'browser';
-            } elseif ($connectedAccount->provider == OAuthController::OFFICE_PROVIDER) {
+            if ($connectedAccount->provider == OAuthController::OFFICE_PROVIDER) {
                 $clients[] = 'word';
             }
         }

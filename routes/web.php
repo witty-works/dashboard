@@ -72,6 +72,9 @@ Route::group(
     function () {
         Route::impersonate();
 
+        Route::get('/terms', [\App\Http\Controllers\TermsController::class, 'show'])->name('terms.show');
+        Route::get('/policy', [\App\Http\Controllers\PolicyController::class, 'show'])->name('policy.show');
+
         Route::get('/office-login', [OAuthController::class, 'handleOfficeSsoLogin'])->name('office_login');
         Route::get('/office-register', [OAuthController::class, 'handleOfficeSsoRegister'])->name('office_register');
         Route::post('/office-register', [OAuthController::class, 'handleOfficeSsoRegister'])->name('office_register_post');
@@ -183,13 +186,6 @@ Route::group(
 |------------------
 */
 Route::group(['middleware' => config('socialstream.middleware', ['web'])], function () {
-    Route::get('/', [WelcomeController::class, 'show'])->name('login');
-    Route::redirect('/register', '/oauth/azureadb2c/register')->name('register');
-    Route::get('/mock-login', [OAuthController::class, 'mockLogin'])->name('mock-login');
-    Route::get('/logout/{provider}', [OAuthController::class, 'logout'])->name('logout');
-    Route::get('/oauth/{provider}/{policy}', [OAuthController::class, 'redirectToProvider'])->name('oauth.redirect');
-    Route::get('/oauth/{provider}/{policy}/callback', [OAuthController::class, 'handleProviderCallback'])->name('oauth.callback');
-    Route::get('/browser-login', [OAuthController::class, 'redirectToProviderBrowserLogin'])->name('browser_login');
 
     Route::get('/team-invitations/{invitation}', [TeamInvitationController::class, 'acceptSigned'])
         ->middleware(['signed'])
@@ -210,8 +206,6 @@ Route::group(['middleware' => config('socialstream.middleware', ['web'])], funct
 |------------------
 */
 
-Route::get('/roadmap', [WelcomeController::class, 'roadmap'])->name('roadmap');
-
 Route::post(
     '/stripe/webhook',
     [WebhookController::class, 'handleWebhook']
@@ -221,3 +215,5 @@ Route::post(
 Route::fallback(function () {
     return view('errors.404');
 });
+
+Route::get('/browser-login', [OAuthController::class, 'browserLogin'])->name('browser_login');

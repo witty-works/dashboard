@@ -20,7 +20,7 @@ class WelcomeController extends Controller
     {
         $user = $request->user();
         if (!$user) {
-            return redirect()->route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'login']);
+            return redirect()->route('login');
         }
 
         $route = $user->getTeamRoleName() === 'admin' ? 'teams' : 'user';

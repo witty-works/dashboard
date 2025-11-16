@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "761eca0d42ea7a0258c55f3cd5f4194d",
+    "content-hash": "a5bd39aab6c7da5356881ac530b5c908",
     "packages": [
         {
             "name": "artisansdk/ratelimiter",
@@ -5963,60 +5963,6 @@
             "time": "2025-11-11T09:01:14+00:00"
         },
         {
-            "name": "socialiteproviders/azureadb2c",
-            "version": "dev-multiple-policies-2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/lsmith77/AzureADB2C.git",
-                "reference": "46bf2e589a2b37d981b99e9160ae2b9320490eef"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/lsmith77/AzureADB2C/zipball/46bf2e589a2b37d981b99e9160ae2b9320490eef",
-                "reference": "46bf2e589a2b37d981b99e9160ae2b9320490eef",
-                "shasum": ""
-            },
-            "require": {
-                "ext-json": "*",
-                "ext-openssl": "*",
-                "firebase/php-jwt": "^6.8",
-                "php": "^8.0",
-                "socialiteproviders/manager": "^4.4"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "SocialiteProviders\\AzureADB2C\\": ""
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Naohiro Fujie",
-                    "email": "naohiro.fujie@eidentity.jp"
-                }
-            ],
-            "description": "AzureADB2C OAuth2 Provider for Laravel Socialite",
-            "keywords": [
-                "Azure AD",
-                "Azure AD B2C",
-                "Azure Active Directory",
-                "Azure Active Directory B2C",
-                "OpenID Connect",
-                "laravel",
-                "laravel Azure AD B2C",
-                "laravel socialite",
-                "socialite",
-                "socialite Azure AD B2C"
-            ],
-            "support": {
-                "source": "https://github.com/lsmith77/AzureADB2C/tree/multiple-policies-2"
-            },
-            "time": "2023-09-12T12:43:46+00:00"
-        },
-        {
             "name": "socialiteproviders/manager",
             "version": "v4.8.1",
             "source": {
@@ -10326,7 +10272,6 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "kineticamobile/lumki": 20,
-        "socialiteproviders/azureadb2c": 20,
         "themsaid/laravel-langman": 20,
         "tio/laravel": 20
     },

@@ -41,7 +41,8 @@ return [
     */
 
     'providers' => [
-        'azureadb2c',
+        // Microsoft Office login is handled separately via office-login routes
+        // and is not exposed in the UI as it's only for Office Add-in users
     ],
 
     /*
