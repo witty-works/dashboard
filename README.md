@@ -3,64 +3,56 @@
 Dashboard for Witty
 
 Handles registration, SSO, user license management, organization rules and
-personal/team statistics.
+personal/team statistics by integrating with https://github.com/witty-works/nlp_api as well as https://github.com/witty-works/browser-extension and https://github.com/witty-works/word-plugin
 
-- https://jetstream.laravel.com/
-- https://laravel.com/docs/8.x/socialite
+Based on
 
-# Production
+-   https://jetstream.laravel.com/
+-   https://laravel.com/docs/8.x/socialite
 
-Hosted at platform.sh
-
-- https://admin.witty.works
-
-For documentation see https://docs.platform.sh/
-
-Email sending on platform.sh is enabled for master and develop branches only.
+For deployment we recommend https://docs.platform.sh/
 
 # Local Install
 
-Fetch code from https://github.com/witty-works/dashboard
+-   Clone Code
 
-- Clone Admin UI
-  - Make sure to add your SSH key to github
-  - Run `git clone git@github.com:witty-works/dashboard.git`
-  - Get a current env file from a co-worker or `cp .env.example .env` (might
-    need to set some API keys in order for the next steps to work)
-  - Install Lando https://docs.lando.dev/basics/installation.html
-    - On Windows 10 use WSL2
-      https://blog.calevans.com/2020/06/18/making-lando-work-inside-wsl2/
-  - Run `lando start`
-  - Run `lando composer install`
-  - Run `lando artisan migrate`
-  - Run `lando artisan storage:link`
-  - Run `lando npm install --save`
-  - Run `lando npm run dev`
-  - Install the lando certificate in your browser
-    - https://docs.lando.dev/config/security.html#certificates
-  - Go to the website and create an account
-  - Run `lando artisan lumki:setup` (answer yes, ie. hit enter, for every question)
+    -   Make sure to add your SSH key to github
+    -   Run `git clone git@github.com:witty-works/dashboard.git`
+    -   Get a current env file from a co-worker or `cp .env.example .env` (might
+        need to set some API keys in order for the next steps to work)
+    -   Install Lando https://docs.lando.dev/basics/installation.html
+        -   On Windows 10 use WSL2
+            https://blog.calevans.com/2020/06/18/making-lando-work-inside-wsl2/
+    -   Run `lando start`
+    -   Run `lando composer install`
+    -   Run `lando artisan migrate`
+    -   Run `lando artisan storage:link`
+    -   Run `lando npm install --save`
+    -   Run `lando npm run dev`
+    -   Install the lando certificate in your browser
+        -   https://docs.lando.dev/config/security.html#certificates
+    -   Go to the website and create an account
+    -   Run `lando artisan lumki:setup` (answer yes, ie. hit enter, for every question)
 
-- Install Platform.sh CLI https://docs.platform.sh/development/cli.html
-  - Run `platform login`
-  - Run `platform project:set-remote` (select `dashboard`)
-  - Run `platform list` to find out what commands are available
-  - Run `platform help [command]` to find out details about a command
+-   Install Platform.sh CLI https://docs.platform.sh/development/cli.html
 
-- Install Sentry CLI https://docs.sentry.io/product/cli/installation/
-  - Run `sentry-cli login`
-  - Run `cp .sentryclirc.example .sentryclirc`
-  - Edit `.sentryclirc` to add the auth token from
-    https://sentry.io/settings/account/api/auth-tokens/
+    -   Run `platform login`
+    -   Run `platform project:set-remote` (select `dashboard`)
+    -   Run `platform list` to find out what commands are available
+    -   Run `platform help [command]` to find out details about a command
+
+-   Install Sentry CLI https://docs.sentry.io/product/cli/installation/
+    -   Run `sentry-cli login`
+    -   Run `cp .sentryclirc.example .sentryclirc`
+    -   Edit `.sentryclirc` to add the auth token from
+        https://sentry.io/settings/account/api/auth-tokens/
+
+**Note:** Route caching is _not supported_ by the multilingual route extension used in this project. Avoid running `php artisan route:cache` or similar commands, as it may break route localization.
 
 # Development
 
-- Run via Lando (Docker)
-  - Run `lando start`
-  - Run `lando npm run watch`
-  - Run `lando artisan queue:listen --queue=high,medium,low,default`
-
-- Goto `https://dashboard.lndo.site`
+See [docs/docker.md](docs/docker.md) for Docker/Lando development workflow.
+Go to `https://dashboard.lndo.site`
 
 Use gitflow to do feature or hotfix branches:
 https://nvie.com/posts/a-successful-git-branching-model/
@@ -70,95 +62,85 @@ https://github.com/nvie/gitflow/wiki/Installation
 
 # Other relevant URLs:
 
-- For local test emails see: http://mail.lndo.site/
-
-# Add a subscription
-
-Follow https://www.notion.so/witty-works/Manual-subscriptions-afbefd554e3245e0b82c36ede76ddabb with the following differences
-
-* Use `lando mysql laravel` to connect to MySQL
-* In the two `INSERT` statements replace the `stripe_price` with `price_1Kl7JnCKySiDI8CQEbY6vN2H`
-
-# Using Stripe in development
-
-- Install Stripe CLI https://stripe.com/docs/stripe-cli
-- Run `./stripe_listen.sh`
+-   For local test emails see: http://mail.lndo.site/
 
 # Translations
 
-Add missing translation keys from blade views and javascript code
-
-```bash
-lando artisan langman:sync --create
-```
-
-If you notice translation keys being added that are not proper strings, then
-remove those translations keys and instead add this key to the
-`langman.ignore_keys` configuration setting and add the keys manually into the
-translation file instead.
-
-Sync translations with translation.io
-
-```bash
-lando artisan translation:sync_and_purge
-```
+See [docs/docker.md](docs/docker.md) for translation workflow and troubleshooting.
 
 # Deployments
 
-Use https://github.com/witty-works/make-release
-
-In `~/.gitconfig` add make sure you have the following setting
-
-```
-[tag]
-        sort = -version:refname
-```
-
-## Make a release
-
-- Make sure translations are up to date
-- Check https://github.com/witty-works/dashboard/compare/main...dev
-- Check that staging works fine
-- Go to the console
-  - `make-release.sh release` // to start a minor release, replace `release`
-    with `major` to start a major release
-  - `make-release.sh finish` // use `:wq` to save, use `i` to insert the copied
-    milestone URL and `esc` to get out of insert mode
-  - `make-release.sh finalize`
-
-## Make a hotfix
-
-- Go to the console
-  - `make-release.sh hotfix` // to start a hotfix release
-  - Make your changes, ie. `git commit`, ensure that they work locally, to test
-    remotely use `platform environment:push`
-  - Make sure translations are up to date but _do not_ run
-    `lando artisan translation:sync_and_purge`
-    - Instead manually add the translations for `de` and `fr` if new
-      translations were added for `en`
-  - Optionally test the hotfix branch with production data
-    - Push the branch got gitlab `git push origin hotfix/[new version]`
-    - To activate the branch on platform.sh run `platform environment:activate`
-    - _ATTENTION_ This will use production data, so be careful and use your
-      production passwords etc
-    - If testing email related features, enable email sending for the hotfix
-      environment on platform.sh
-  - `make-release.sh finish` // use `:wq` to save, use `i` to insert the copied
-    milestone URL and `esc` to get out of insert mode
-  - `make-release.sh finalize`
+See [docs/release.md](docs/release.md) for release and hotfix instructions, including git config and deployment steps.
 
 ## User management
 
-Make sure the user has "superadmin" rights on:
-https://dashboard.lndo.site/admin/users
+See [docs/subscriptions.md](docs/subscriptions.md) for user management, superadmin rights, and impersonation instructions.
 
-There it is possible to give other users superadmin rights or impersonate users.
+# Documentation Index
 
-### Manual SQL queries
+-   [Docker & Local Development](docs/docker.md)
+-   [Stripe CLI Integration](docs/stripe.md)
+-   [Sentry CLI Integration](docs/sentry.md)
+-   [Release & Hotfix Process](docs/release.md)
+-   [Subscription & Team Management](docs/subscriptions.md)
 
-To update the default `user_licenses`, `term_replacements` and `false_positives`
-counts please run the following query:
+# Custom Application Configuration
 
-```
-UPDATE teams SET user_licenses = [number of licenses], term_replacements = [number of term replacements], false_positives = [number of false positives] WHERE user_id = [some id];
-```
+## NLP API Sync
+
+Use for the integration with the NLP API.
+
+-   `APP_NLP_API_SYNC_ENDPOINT` — Main endpoint for NLP API sync
+-   `APP_NLP_API_SYNC_ENDPOINT_2` — (Optional) Secondary endpoint for NLP API sync
+-   `APP_NLP_API_SYNC_USER` — Username for NLP API sync
+-   `APP_NLP_API_SYNC_PASSWORD` — Password for NLP API sync
+-   `APP_NLP_API_SYNC_CONFIGS` — Enable/disable sync configs
+-   `APP_NLP_API_SYNC_DELAY_PER_COUNT` — Delay per sync count (default: 0.1)
+
+## Browser Version Tracking
+
+Enabled the browser extension integration.
+
+-   `BROWSER_VERSION_CHROME` — Latest supported Chrome version
+-   `BROWSER_VERSION_EDGE` — Latest supported Edge version
+-   `BROWSER_VERSION_FIREFOX` — Latest supported Firefox version
+
+## Helphero Integration
+
+Used for application overlays for onboarding.
+
+-   `HELPHERO_JS_ENABLED` — Enable Helphero JS widget
+-   `HELPHERO_APP_ID` — Helphero App ID
+
+## Translation.io
+
+Only used for local development to ease translation maintenance.
+
+-   `TRANSLATIONIO_KEY` — API key for Translation.io integration
+
+## PostHog Analytics
+
+Posthog is used both for analytics of usage of the dashboard as well as for collecting statistics in the Witty client applications (browser extension, Microsoft Word Add-in).
+
+-   `POSTHOG_ENABLED` — Enable PostHog analytics
+-   `POSTHOG_JS_ENABLED` — Enable PostHog JS tracking
+-   `POSTHOG_API_KEY` — API key for PostHog
+-   `POSTHOG_HOST` — Host URL for PostHog instance
+-   `POSTHOG_DEBUG` — Enable debug mode for PostHog
+-   `POSTHOG_PROJECT_ID` — Project ID for PostHog
+-   `POSTHOG_PERSONAL_API_KEY` — Personal API key for PostHog
+-   `POSTHOG_INSIGHTS_CACHE_TIME` — Cache time for insights (seconds)
+-   `POSTHOG_DASHBOARD_USER_ID` — Dashboard user ID override
+-   `POSTHOG_DASHBOARD_TEAM_ID` — Dashboard team ID override
+-   `POSTHOG_RATE_LIMIT` — API rate limit (default: 16)
+-   `POSTHOG_RATE_INTERVAL_SECONDS` — API rate interval in seconds (default: 60)
+-   `POSTHOG_RATE_MULTIPLIER` — API rate multiplier (default: 3)
+
+## Microsoft Office SSO
+
+Relevant for the Microsoft Word Add-in integration.
+
+-   `OFFICE365_CLIENT_ID` — Client ID for Microsoft Office 365 SSO
+-   `OFFICE365_CLIENT_SECRET` — Client Secret for Microsoft Office 365 SSO
+-   `OFFICE365_REDIRECT_URI` — Redirect URI for Office 365 SSO callback
+-   `OFFICE365_TENANT_ID` — (Optional) Tenant ID for restricting SSO to a specific organization

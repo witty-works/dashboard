@@ -76,26 +76,4 @@ class Kernel extends HttpKernel
         'localeCookieRedirect'    => \Mcamara\LaravelLocalization\Middleware\LocaleCookieRedirect::class,
         'localeViewPath'          => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationViewPath::class,
     ];
-
-    public static function isFrenchEnabled($model)
-    {
-        $frenchSupport = config('app.french_support');
-        if (empty($frenchSupport)) {
-            return false;
-        }
-
-        if (in_array('0', $frenchSupport)) {
-            return true;
-        }
-
-        if ($model instanceof User) {
-            $model = $model->currentTeam;
-        }
-
-        if (!$model instanceof Team) {
-            return false;
-        }
-
-        return in_array($model->id, $frenchSupport);
-    }
 }

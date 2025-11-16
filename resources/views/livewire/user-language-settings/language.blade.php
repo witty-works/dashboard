@@ -49,7 +49,6 @@
             @include('partials.toggle_label', ['disabled' => \App\Models\LanguageGuidelines::isForcedOnTeam($model, 'preferred_variants')])
         </div>
 
-        @if(\App\Http\Kernel::isFrenchEnabled($model))
         <div class="mt-4">
         <label class="lato-small-text-p" for="preferred_variants_fr">
             {{ __('guidelines.user_preferred_variants_dialect') }}
@@ -68,7 +67,6 @@
             @include('partials.toggle_label', ['disabled' => \App\Models\LanguageGuidelines::isForcedOnTeam($model, 'preferred_variants')])
         </div>
         </div>
-        @endif
     </x-slot>
 
     @if(!\App\Models\LanguageGuidelines::isForcedOnTeam($model, 'preferred_variants'))

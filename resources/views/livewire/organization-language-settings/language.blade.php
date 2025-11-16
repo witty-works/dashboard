@@ -35,7 +35,6 @@
         />
         <x-input-error for="preferred_variants_de" class="mt-2" role="alert" />
 
-        @if(\App\Http\Kernel::isFrenchEnabled($model))
         <div class="mt-4">
         <label class="lato-small-text-p mt-20" for="preferred_variants_fr">
             {{ __('guidelines.team_preferred_variants_dialect') }}
@@ -47,7 +46,6 @@
         />
         <x-input-error for="preferred_variants_fr" class="mt-2" role="alert" />
         </div>
-        @endif
     </x-slot>
 
     <x-slot name="actions">
