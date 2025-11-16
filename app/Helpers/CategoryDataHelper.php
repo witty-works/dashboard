@@ -16,7 +16,7 @@ class CategoryDataHelper
         }
 
         if (!array_key_exists($tableName, self::$tableData)) {
-            $file = storage_path("app/hubdb/$tableName.json");
+            $file = storage_path("app/data/$tableName.json");
             self::$tableData[$tableName] = json_decode(file_get_contents($file), true);
         }
 

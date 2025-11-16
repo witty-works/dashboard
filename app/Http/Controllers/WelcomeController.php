@@ -37,30 +37,4 @@ class WelcomeController extends Controller
 
         return redirect()->back();
     }
-
-    public function roadmap(Request $request)
-    {
-        $params = [
-            'url' => config('productboard.url'),
-            'token' => null,
-        ];
-
-        $user = $request->user();
-        if ($user) {
-            $userData = [
-                'email' => $user->email,
-                'id' => $user->posthogId(),
-                'name' => $user->name,
-                'company_name' => $user->currentTeam->name,
-            ];
-
-            if (!$user->isSharedEmailAccount()) {
-                $userData['company_domain'] = $user->getEmailDomain();
-            }
-
-            $params['token'] = JWT::encode($userData, config('productboard.private_key'), 'HS256');
-        }
-
-        return view('roadmap', $params);
-    }
 }

@@ -4,7 +4,6 @@ $resourceLinks = [
     __('content.terms') => 'https://www.witty.works/terms',
     __('content.privacy') => 'https://www.witty.works/privacy',
     __('content.imprint') => 'https://www.witty.works/imprint',
-    __('content.roadmap') => url('roadmap'),
 ];
 
 $contactLinks = [
