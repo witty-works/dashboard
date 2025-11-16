@@ -107,6 +107,9 @@ class User extends Authenticatable implements MustVerifyEmail
         }
 
         $switchableTeams = [];
+        /**
+         * @var \App\Models\Team $team
+         */
         foreach ($teams as $team) {
             if ($team->getTotalUserWithInvitationsCount() > 1 || $team->id === $this->license_team_id) {
                 $switchableTeams[] = $team;
@@ -359,6 +362,9 @@ class User extends Authenticatable implements MustVerifyEmail
     protected function getUserClients()
     {
         $clients = [];
+        /**
+         * @var \JoelButcher\Socialstream\ConnectedAccount $connectedAccount
+         */
         foreach ($this->connectedAccounts as $connectedAccount) {
             if ($connectedAccount->provider == OAuthController::OFFICE_PROVIDER) {
                 $clients[] = 'word';
