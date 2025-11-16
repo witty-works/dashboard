@@ -29,13 +29,7 @@
                         </div>
                     </div>
     
-                    <div id="already_signedin" style="display: none" class="w-full col-span-6 sm:col-span-4 margin-bottom align-center">
-                        <div class="mt-5">
-                            <a class="button primary-button-red download-button" href="{{ route('editor', ['onboarding' => 'true']) }}">
-                                {{ __('content.try_out') }}
-                            </a>
-                        </div>
-                    </div>
+
     
                     <div id="store_links" style="display: none" class="h-56 grid grid-cols-3 gap-4 content-center">
                         @foreach (config('app.browsers') as $key => $browser)
@@ -61,7 +55,7 @@
 
                                 if (loginUrl) {
                                     const loginWittyUrl = document.querySelector('#login-witty-url');
-                                    loginWittyUrl.setAttribute('href', loginUrl + '?target=' + encodeURIComponent(@json(route('editor', ['onboarding' => 'true']))))
+
 
                                     const alreadyInstalled = document.querySelector('#already_installed');
                                     alreadyInstalled.style.display = 'block';

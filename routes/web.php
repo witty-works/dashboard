@@ -88,9 +88,6 @@ Route::group(
             Route::group(['middleware' => ['auth:' . config('fortify.guard')]], function () {
                 Route::get('/', [WelcomeController::class, 'show'])->name('root');
 
-                Route::get('/editor', function () {
-                    return view('editor');
-                })->name('editor');
 
                 Route::get('/prompt', [PromptController::class, 'show'])->name('prompt');
 

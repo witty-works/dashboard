@@ -15,7 +15,6 @@ return [
 
     'name' => env('APP_NAME', 'Witty - Dashboard'),
 
-    'froala_key' => env('FROALA_KEY', 'Kb3A3pA1E2B1B4I4A3A11hBd1a1c1Zd1IXBc1a1THTBPLIIWBORpI1A1A1D6A1F6E5A1I4J4=='),
 
     /*
     |--------------------------------------------------------------------------
