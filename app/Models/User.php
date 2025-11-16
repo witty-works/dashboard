@@ -40,40 +40,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'employee' => 'content.employee'
     ];
 
-    protected $emailProviders = [
-        'gmail.com',
-        'bluewin.ch',
-        'icloud.com',
-        'hotmail.com',
-        'protonmail.com',
-        'protonmail.ch',
-        'gmx.ch',
-        'gmx.at',
-        'gmx.de',
-        'gmx.net',
-        'mein.gmx',
-        'aol.com',
-        'outlook.com',
-        'zoho.com',
-        'zohomail.eu',
-        'yahoo.com',
-        'web.de',
-        'cyon.ch',
-        'orange.fr',
-        'vodafone.com',
-        'me.com',
-        'hotmail.de',
-        'hotmail.ch',
-        'yahoo.ch',
-        'yahoo.de',
-        'hey.com',
-        'hotmail.fr',
-        'bluemail.ch',
-        'freenet.de',
-        'sunrise.ch',
-        'googlemail.com'
-    ];
-
     /**
      * The attributes that are mass assignable.
      *
@@ -347,13 +313,6 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         $email = explode('@', $this->email);
         return array_pop($email);
-    }
-
-    public function isSharedEmailAccount()
-    {
-        $provider = $this->getEmailDomain();
-
-        return in_array($provider, $this->emailProviders);
     }
 
     public function getTeamRoleName()
