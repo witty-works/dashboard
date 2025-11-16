@@ -394,11 +394,6 @@ class User extends Authenticatable implements MustVerifyEmail
         return $query->get();
     }
 
-    public function getHubspotCompanyUserCount()
-    {
-        return self::where('hubspot_company_id', $this->hubspot_company_id)->count();
-    }
-
     protected function getUserClients()
     {
         $clients = [];
@@ -411,7 +406,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return array_unique($clients);
     }
 
-    public function getHubspotData($booleanAsStrings = false)
+    public function getUserData($booleanAsStrings = false)
     {
         $true = $booleanAsStrings ? 'Yes' : true;
         $false = $booleanAsStrings ? 'No' : false;
@@ -437,7 +432,6 @@ class User extends Authenticatable implements MustVerifyEmail
             'team_member_count' => 0,
             'team_dictionary_count' => 0,
             'team_ignore_count' => 0,
-            'hubspot_company_user_count' => $this->hubspot_company_id ? $this->getHubspotCompanyUserCount() : null,
             'writing_streak' => $this->getWritingStreakPast30Days(),
             'clients' => implode(';', $this->getUserClients()),
         ];

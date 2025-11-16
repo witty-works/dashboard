@@ -8,6 +8,6 @@ trait HelpHeroTrait
 {
     protected function updateHelpHero()
     {
-        $this->dispatch('helpHeroUpdate', helpHeroData: Auth::user()->getHubspotData());
+        $this->dispatch('helpHeroUpdate', helpHeroData: Auth::user()->getUserData());
     }
 }

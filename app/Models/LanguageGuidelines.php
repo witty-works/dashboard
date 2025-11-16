@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Console\Commands\SyncToHubspotCategoriesCommand;
+use App\Helpers\CategoryDataHelper;
 use App\Helpers\PosthogHelper;
 use App\Http\Controllers\Livewire\UserGuidelinesController;
 use App\Jobs\SendEventToPosthog;
@@ -72,8 +72,8 @@ class LanguageGuidelines extends Model
 
     public function __construct(array $attributes = [])
     {
-        $this->proficiencyLevels = SyncToHubspotCategoriesCommand::loadTableData('proficiency_levels');
-        $this->diversityDimensionDrivers = SyncToHubspotCategoriesCommand::loadTableData('diversity_dimension_drivers');
+        $this->proficiencyLevels = CategoryDataHelper::loadTableData('proficiency_levels');
+        $this->diversityDimensionDrivers = CategoryDataHelper::loadTableData('diversity_dimension_drivers');
 
         $disabled_categories = [];
         foreach ($this->getDiversityDimensionDrivers(null, true, true) as $ddd => $config) {
@@ -404,7 +404,7 @@ class LanguageGuidelines extends Model
 
         switch ($type) {
             case UserGuidelinesController::CATEGORY_SETTINGS:
-                $diversityDimensionDrivers = SyncToHubspotCategoriesCommand::loadTableData('diversity_dimension_drivers');
+                $diversityDimensionDrivers = CategoryDataHelper::loadTableData('diversity_dimension_drivers');
 
                 foreach ($diversityDimensionDrivers as $ddd => $config) {
                     if (!empty($config['category']) && $config['category'] === 'orthography') {

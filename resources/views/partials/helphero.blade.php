@@ -8,7 +8,7 @@
         @if(empty($user))
         HelpHero.anonymous();
         @else
-        HelpHero.identify({!! json_encode($user->posthogId()) !!}, {!! json_encode($user->getHubspotData()) !!});
+        HelpHero.identify({!! json_encode($user->posthogId()) !!}, {!! json_encode($user->getUserData()) !!});
         window.addEventListener('helpHeroUpdate', (e) => {
           HelpHero.reset();
           HelpHero.identify({!! json_encode($user->posthogId()) !!}, e.detail.helpHeroData);
