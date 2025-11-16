@@ -203,9 +203,11 @@ Route::group(['middleware' => config('socialstream.middleware', ['web'])], funct
         ->middleware(['signed'])
         ->name('team-invitations.accept-signed');
 
-    Route::get('/download', function () {
-        return view('download');
-    })->name('download');
+    if (!empty(config('app.browsers'))) {
+        Route::get('/download', function () {
+            return view('download');
+        })->name('download');
+    }
 
     Route::get('/word-addin', function () {
         return view('word-addin');
@@ -230,4 +232,6 @@ Route::fallback(function () {
     return view('errors.404');
 });
 
-Route::get('/browser-login', [OAuthController::class, 'browserLogin'])->name('browser_login');
+if (config('app.browsers')) {
+    Route::get('/browser-login', [OAuthController::class, 'browserLogin'])->name('browser_login');
+}
