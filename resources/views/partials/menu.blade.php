@@ -84,21 +84,23 @@
                 </x-nav-link>
 
                 @if($isUserLicensedToTeam)
-                @if(!$team_edit && $team && $team->user_access_to_team_analytics)
-                    <div class="wittyworks-navigation-link-wrapper-no-mb lato-paragraph-text-p" style="cursor: default">
-                        <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/analytics.svg') }}" alt="" />
-                        {{ __('content.analytics') }}
-                    </div>
+                @if(config('posthog.enabled'))
+                    @if(!$team_edit && $team && $team->user_access_to_team_analytics)
+                        <div class="wittyworks-navigation-link-wrapper-no-mb lato-paragraph-text-p" style="cursor: default">
+                            <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/analytics.svg') }}" alt="" />
+                            {{ __('content.analytics') }}
+                        </div>
 
-                    <div class="wittyworks-navigation-sub-wrapper">
-                        <x-nav-link class="wittyworks-navigation-sub-sub-link lato-small-text-p" href="{{ route('user.analytics') }}" :active="request()->routeIs('user.analytics')">{{ __('guidelines.personal_account') }}</x-nav-link>
-                        <x-nav-link class="wittyworks-navigation-sub-sub-link lato-small-text-p" href="{{ route('teams.analytics') }}" :active="request()->routeIs('teams.analytics')">{{ __('guidelines.team_account') }}</x-nav-link>
-                    </div>
-                @else
-                    <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('user.analytics') }}" :active="request()->routeIs('user.analytics')">
-                        <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/analytics.svg') }}" alt="" />
-                        {{ __('content.analytics') }}
-                    </x-nav-link>
+                        <div class="wittyworks-navigation-sub-wrapper">
+                            <x-nav-link class="wittyworks-navigation-sub-sub-link lato-small-text-p" href="{{ route('user.analytics') }}" :active="request()->routeIs('user.analytics')">{{ __('guidelines.personal_account') }}</x-nav-link>
+                            <x-nav-link class="wittyworks-navigation-sub-sub-link lato-small-text-p" href="{{ route('teams.analytics') }}" :active="request()->routeIs('teams.analytics')">{{ __('guidelines.team_account') }}</x-nav-link>
+                        </div>
+                    @else
+                        <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('user.analytics') }}" :active="request()->routeIs('user.analytics')">
+                            <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/analytics.svg') }}" alt="" />
+                            {{ __('content.analytics') }}
+                        </x-nav-link>
+                    @endif
                 @endif
 
                 @foreach($links as $route => $label)
@@ -131,10 +133,12 @@
                     {{ __('content.subscription') }}
                 </x-nav-link>
 
-                <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('teams.analytics') }}" :active="request()->routeIs('teams.analytics')">
-                    <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/analytics.svg') }}" alt="" />
-                    {{ __('content.analytics') }}
-                </x-nav-link>
+                @if(config('posthog.enabled'))
+                    <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('teams.analytics') }}" :active="request()->routeIs('teams.analytics')">
+                        <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/analytics.svg') }}" alt="" />
+                        {{ __('content.analytics') }}
+                    </x-nav-link>
+                @endif
 
                 @foreach($links as $route => $label)
                 @if($loop->first)

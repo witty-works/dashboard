@@ -42,8 +42,10 @@ Route::group([
 });
 
 Route::middleware(['auth:sanctum'])->group(function () {
-    Route::get('/user/analytics', [AnalyticsController::class, 'userApi'])
-        ->name('api_user_analytics');
-    Route::get('/team/analytics', [AnalyticsController::class, 'organizationApi'])
-        ->name('api_team_analytics');
+    if (config('posthog.enabled')) {
+        Route::get('/user/analytics', [AnalyticsController::class, 'userApi'])
+            ->name('api_user_analytics');
+        Route::get('/team/analytics', [AnalyticsController::class, 'organizationApi'])
+            ->name('api_team_analytics');
+    }
 });
