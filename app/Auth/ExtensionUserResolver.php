@@ -33,18 +33,55 @@ class ExtensionUserResolver
 
     public function __invoke(Request $request): ?Authenticatable
     {
+        // Read before anything else touches the request. When Passport's guard
+        // cannot validate a bearer token it blanks the Authorization header
+        // (TokenGuard::getPsrRequestViaBearerToken), so a later
+        // $request->bearerToken() returns null.
         $token = $request->bearerToken();
 
         if (empty($token)) {
             return null;
         }
 
-        // Browser extension: an access token minted by our own /oauth/token.
-        if ($user = $this->auth->guard('api')->user()) {
-            return $user;
+        // Dispatch on the audience rather than trying Passport and falling
+        // through. An Office add-in token is issued by Microsoft and can only
+        // ever fail Passport's validation, and that failure is not free: the
+        // guard converts the request to PSR-7, runs a full validation pass, and
+        // then hands the exception to the exception handler — which in
+        // production means a Sentry event for every add-in request.
+        if ($this->looksLikeOfficeSsoToken($token)) {
+            return $this->resolveOfficeSsoUser($token);
         }
 
-        return $this->resolveOfficeSsoUser($token);
+        // Browser extension: an access token minted by our own /oauth/token.
+        return $this->auth->guard('api')->user();
+    }
+
+    /**
+     * Whether the token claims to be for the Office add-in.
+     *
+     * Routing only — the claim is read without any signature check, so nothing
+     * here is trusted. A forged audience just sends the token down a path that
+     * verifies it against Microsoft's keys and rejects it.
+     */
+    protected function looksLikeOfficeSsoToken(string $token): bool
+    {
+        $clientId = config('services.microsoft_office.client_id');
+
+        // With no Office client configured there is no such thing as an Office
+        // token. Returning early also stops the audience check below from
+        // degenerating into `null === null` for a token with no aud claim.
+        if (empty($clientId)) {
+            return false;
+        }
+
+        try {
+            $payload = $this->officeSso->decodeIdToken($token);
+        } catch (Exception $e) {
+            return false;
+        }
+
+        return ($payload['aud'] ?? null) === $clientId;
     }
 
     /**
@@ -52,29 +89,6 @@ class ExtensionUserResolver
      */
     protected function resolveOfficeSsoUser(string $token): ?Authenticatable
     {
-        $clientId = config('services.microsoft_office.client_id');
-
-        // With no Office client configured there is no such thing as a valid
-        // Office token. Returning early also stops the audience check below
-        // from degenerating into `null === null` for a token that carries no
-        // aud claim at all.
-        if (empty($clientId)) {
-            return null;
-        }
-
-        try {
-            $payload = $this->officeSso->decodeIdToken($token);
-        } catch (Exception $e) {
-            return null;
-        }
-
-        // decodeIdToken() only base64-decodes; nothing is trusted yet. This
-        // check exists so that a Passport token that merely failed to resolve
-        // does not cost us a JWKS round-trip to Microsoft.
-        if (($payload['aud'] ?? null) !== $clientId) {
-            return null;
-        }
-
         try {
             // This is the call that actually verifies signature, issuer,
             // audience and expiry.
