@@ -85,15 +85,41 @@ Access tokens live 1 hour, refresh tokens 30 days
 (`PASSPORT_ACCESS_TOKEN_TTL` / `PASSPORT_REFRESH_TOKEN_TTL`). When the refresh
 token expires the extension must send the user through step 2 again.
 
-The access token is an RS256 JWT with `aud` = the client ID, `sub` = the user ID
-and a `kid` header matching the JWK Set. It carries no email claim —
-league/oauth2-server builds the JWT and Passport exposes no hook for extra
-claims. `GET /api/userinfo` serves it instead, which also means a renamed user is
-reflected immediately rather than at the next token refresh.
+### Access token claims
 
-league/oauth2-server emits no `kid` of its own, and without one neither
-firebase/php-jwt's `JWK::parseKeySet()` nor PyJWT's `PyJWKClient` can look the key
-up — both fail outright. `App\Auth\AccessToken` adds it.
+An RS256 JWT with a `kid` header matching the JWK Set:
+
+```json
+{
+  "aud": "1",
+  "sub": "21",
+  "jti": "6f0d2e21bb4f…",
+  "iat": 1785837701.841862,
+  "nbf": 1785837701.841863,
+  "exp": 1785841301.837657,
+  "scopes": [],
+  "email": "oauth-e2e@example.test",
+  "preferred_username": "oauth-e2e@example.test"
+}
+```
+
+> **`aud` is the OAuth client ID. `sub` is the local user ID.** They are unrelated
+> numbers from different tables and must never be conflated — in a small dev
+> database both can easily read `1` at the same time, which makes a swap look
+> like it works.
+
+`email` and `preferred_username` carry the same value on purpose: `email` is the
+standard OIDC claim, and `preferred_username` is what the NLP API's existing
+`fetch_email_from_claims()` already reads off Azure AD B2C tokens, so that side
+needs no extraction changes. Both are added by `App\Auth\AccessToken`;
+league/oauth2-server builds the JWT itself and Passport exposes no other hook.
+
+The same override supplies the `kid`. Without one, neither firebase/php-jwt's
+`JWK::parseKeySet()` nor PyJWT's `PyJWKClient` can look the key up — both fail
+outright.
+
+`GET /api/userinfo` remains the source for the display name, and for an email
+that reflects a change made since the token was issued.
 
 ### Sign in / Sign up entry point
 
@@ -252,10 +278,11 @@ into a `boot()` method — package providers boot before application ones:
 - **The NLP API still has to be taught these tokens.** It currently decodes
   bearer tokens against Azure AD B2C's JWKS and matches `aud` against its
   configured `client_id`. Passport tokens are RS256, verifiable with the key at
-  `/.well-known/jwks.json`, and their `aud` is the OAuth client ID (`1` in dev).
-  A stock JWKS client works — `PyJWKClient(f"{base}/.well-known/jwks.json")` then
-  `jwt.decode(token, key, algorithms=["RS256"], audience=client_id)`. That is an
-  `nlp_api` change, outside this repo.
+  `/.well-known/jwks.json`, and their `aud` is the OAuth client ID. A stock JWKS
+  client works — `PyJWKClient(f"{base}/.well-known/jwks.json")` then
+  `jwt.decode(token, key, algorithms=["RS256"], audience=client_id)`, and
+  `fetch_email_from_claims()` finds `preferred_username` unchanged. Note there is
+  no `iss` claim to check against. That is an `nlp_api` change, outside this repo.
 - **No scopes.** One client, one purpose, so every token carries full user
   access. Adding `Passport::tokensCan()` and `scopes:` middleware later needs the
   `extension` guard adjusted, since Office-SSO users have no Passport token for

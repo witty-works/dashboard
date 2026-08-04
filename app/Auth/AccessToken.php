@@ -2,6 +2,7 @@
 
 namespace App\Auth;
 
+use App\Models\User;
 use DateTimeImmutable;
 use League\OAuth2\Server\Entities\AccessTokenEntityInterface;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
@@ -49,7 +50,7 @@ class AccessToken implements AccessTokenEntityInterface
     {
         $this->initJwtConfiguration();
 
-        return $this->jwtConfiguration->builder()
+        $builder = $this->jwtConfiguration->builder()
             ->withHeader('kid', app(OAuthSigningKey::class)->kid())
             ->permittedFor($this->getClient()->getIdentifier())
             ->identifiedBy($this->getIdentifier())
@@ -57,8 +58,39 @@ class AccessToken implements AccessTokenEntityInterface
             ->canOnlyBeUsedAfter(new DateTimeImmutable())
             ->expiresAt($this->getExpiryDateTime())
             ->relatedTo((string) $this->getUserIdentifier())
-            ->withClaim('scopes', $this->getScopes())
+            ->withClaim('scopes', $this->getScopes());
+
+        // The NLP API identifies a user by email, and `sub` carries only our
+        // local user id — meaningless to it. Emitted under two names on purpose:
+        // `email` is the standard OIDC claim, and `preferred_username` is what
+        // the NLP API's existing fetch_email_from_claims() already reads off
+        // Azure AD B2C tokens, so that side needs no extraction changes.
+        if ($email = $this->userEmail()) {
+            $builder = $builder
+                ->withClaim('email', $email)
+                ->withClaim('preferred_username', $email);
+        }
+
+        return $builder
             ->getToken($this->jwtConfiguration->signer(), $this->jwtConfiguration->signingKey())
             ->toString();
+    }
+
+    /**
+     * One query per token issued — i.e. once an hour per signed-in user, on a
+     * path that is already doing RSA signing.
+     */
+    protected function userEmail(): ?string
+    {
+        $userId = $this->getUserIdentifier();
+
+        // No user identifier means a client_credentials token, which belongs to
+        // no one. We do not issue those today, but the claim must not be faked
+        // if we ever do.
+        if ($userId === null) {
+            return null;
+        }
+
+        return User::find($userId)?->email;
     }
 }
