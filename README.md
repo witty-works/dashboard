@@ -90,9 +90,8 @@ DB_HOST=127.0.0.1 DB_PORT=3307 vendor/bin/phpunit
 
 Two things to know when writing tests:
 
--   **Assert on the view, not the status code.** The fallback route renders
-    `errors.404` with a **200**, so `assertOk()` alone passes against the error
-    page. Use `assertViewIs(...)`.
+-   **Assert the view as well as the status.** Use `assertViewIs(...)` alongside
+    `assertOk()` so a test cannot pass against the fallback error page.
 -   **Call `$this->withoutLocaleRedirects()` for localized routes.** Routes are
     registered under a prefix from `LaravelLocalization::setLocale()`, which reads
     the request. In tests the route file loads during bootstrap, before a request

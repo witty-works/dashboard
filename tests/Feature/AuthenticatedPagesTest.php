@@ -12,8 +12,8 @@ use Tests\TestCase;
  * the policy layer together, which is where a framework upgrade is most likely to
  * surface.
  *
- * Each case asserts the rendered view name rather than the status code, because
- * the fallback route serves errors.404 with a 200 status.
+ * Each case asserts the rendered view name as well as the status, so a test
+ * cannot pass against the fallback error page.
  */
 class AuthenticatedPagesTest extends TestCase
 {

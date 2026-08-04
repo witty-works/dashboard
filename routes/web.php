@@ -226,7 +226,7 @@ if (config('stripe.enabled')) {
 
 
 Route::fallback(function () {
-    return view('errors.404');
+    return response()->view('errors.404', [], 404);
 });
 
 if (config('app.browsers')) {

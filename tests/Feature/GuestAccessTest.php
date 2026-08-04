@@ -8,9 +8,8 @@ use Tests\TestCase;
 /**
  * Routes reachable without authentication.
  *
- * Every assertion names the expected view. The application's fallback route
- * renders errors.404 with a 200 status, so asserting only the status code would
- * pass against the error page — see test_unknown_url_renders_the_404_view.
+ * Assertions name the expected view as well as the status, so a test cannot pass
+ * against the fallback error page.
  */
 class GuestAccessTest extends TestCase
 {
@@ -59,15 +58,10 @@ class GuestAccessTest extends TestCase
             ->assertRedirect(route('login'));
     }
 
-    /**
-     * Documents current behaviour: the fallback renders the 404 view with a 200
-     * status rather than a real 404. Pinned so the upgrade cannot change it
-     * unnoticed, and as the reason the tests above assert on view names.
-     */
-    public function test_unknown_url_renders_the_404_view(): void
+    public function test_unknown_url_returns_a_404(): void
     {
         $this->get('/this-route-does-not-exist')
-            ->assertOk()
+            ->assertNotFound()
             ->assertViewIs('errors.404');
     }
 }
