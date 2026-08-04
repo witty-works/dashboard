@@ -40,6 +40,22 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+
+        // OAuth2 access tokens issued by Passport through /oauth/token. Used by
+        // the browser extension, which is a public (secret-less) client and
+        // authenticates with authorization_code + PKCE.
+        'api' => [
+            'driver' => 'passport',
+            'provider' => 'users',
+        ],
+
+        // The extension API accepts two kinds of bearer token: Passport access
+        // tokens (browser extension) and Microsoft-issued id_tokens (Office
+        // add-in). This guard tries them in that order so both clients can share
+        // the same routes. See App\Providers\AuthServiceProvider.
+        'extension' => [
+            'driver' => 'extension',
+        ],
     ],
 
     /*

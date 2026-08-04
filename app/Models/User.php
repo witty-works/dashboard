@@ -18,11 +18,17 @@ use Lab404\Impersonate\Models\Impersonate;
 use Laravel\Jetstream\Contracts\AddsTeamMembers;
 use Laravel\Jetstream\HasTeams;
 use Laravel\Jetstream\Jetstream;
-use Laravel\Sanctum\HasApiTokens;
+use Laravel\Passport\HasApiTokens;
 use Laravel\Jetstream\Role;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
+    // Passport's trait, not Sanctum's. Sanctum is still the guard for the
+    // session-backed SPA requests, but it only reaches for this trait when a
+    // bearer token is present (see Laravel\Sanctum\Guard::supportsTokens), and
+    // nothing in the application ever issued a Sanctum personal access token —
+    // Jetstream's api feature is disabled in config/jetstream.php. Bearer
+    // tokens are Passport's job now.
     use HasApiTokens;
     use HasFactory;
     use Impersonate;
