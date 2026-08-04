@@ -9,7 +9,7 @@
 
     <x-slot name="form" submit="updateLanguageGuidelinesFrench">
         @php
-            $disabled = !$model->isPremium();
+            $disabled = false;
         @endphp
         <div class="margin-bottom">
             {!! __('guidelines.french_gender_separator') !!}
@@ -27,7 +27,6 @@
         </div>
     </x-slot>
 
-    @if($model->isPremium())
     <x-slot name="actions">
         <div class="guidelines-form-section--apply-for-all">
             <x-checkbox
@@ -42,6 +41,5 @@
         @include('partials/save_cancel_action')
         @endif
     </x-slot>
-    @endif
 
 </x-form-section>

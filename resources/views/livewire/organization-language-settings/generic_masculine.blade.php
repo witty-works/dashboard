@@ -9,7 +9,7 @@
 
     <x-slot name="form" submit="updateLanguageGuidelinesGenericMasculine">
         @php
-            $disabled = !$model->isPremium();
+            $disabled = false;
         @endphp
 
         @foreach (\App\Models\GuidelinesInterface::GENDERED_ROLES_FORMAT as $key => $value)
@@ -32,7 +32,6 @@
         <x-input-error for="gendered_roles_format" class="mt-2" />
     </x-slot>
 
-    @if($model->isPremium())
     <x-slot name="actions">
         <div class="guidelines-form-section--apply-for-all">
             <x-checkbox
@@ -47,6 +46,5 @@
         @include('partials/save_cancel_action')
         @endif
     </x-slot>
-    @endif
 
 </x-form-section>

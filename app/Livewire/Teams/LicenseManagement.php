@@ -72,14 +72,6 @@ class LicenseManagement extends Component
         }
 
         $this->updateAssignedCount();
-        if ($this->team->getUserLicensesCount() < $this->assignedCount) {
-            $params = [
-                'license_count' => $this->team->getUserLicensesCount(),
-                'assigned_count' => $this->assignedCount
-            ];
-            $message = __('teams.license_limit_reached_error', $params);
-            throw ValidationException::withMessages([$message]);
-        }
 
         foreach ($this->team->allUsers() as $user) {
             if (!empty($this->licenses[$user->id])) {

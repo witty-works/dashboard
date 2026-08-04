@@ -8,12 +8,10 @@ use Laravel\Jetstream\Events\TeamCreated;
 use Laravel\Jetstream\Events\TeamDeleted;
 use Laravel\Jetstream\Events\TeamUpdated;
 use Laravel\Jetstream\Team as JetstreamTeam;
-use Laravel\Cashier\Billable;
 
 class Team extends JetstreamTeam
 {
     use HasFactory;
-    use Billable;
     use GuidelinesTrait;
 
     /**
@@ -23,7 +21,6 @@ class Team extends JetstreamTeam
      */
     protected $casts = [
         'personal_team' => 'boolean',
-        'trial_ends_at' => 'datetime',
     ];
 
     /**
@@ -34,7 +31,6 @@ class Team extends JetstreamTeam
     protected $fillable = [
         'name',
         'personal_team',
-        'stripe_id',
     ];
 
     /**
@@ -52,16 +48,6 @@ class Team extends JetstreamTeam
     public function setNameAttribute($name)
     {
         $this->attributes['name'] = strip_tags($name);
-    }
-
-    public function stripeEmail()
-    {
-        return $this->owner->email;
-    }
-
-    public function stripeName()
-    {
-        return $this->owner->name;
     }
 
     public function languageGuidelines()
@@ -95,27 +81,6 @@ class Team extends JetstreamTeam
             ?? 'dashboard-team:' . $this->id;
     }
 
-    public function hasExpiredSubscription()
-    {
-        return $this->hasExpiredGenericTrial() || ($this->subscription() && !$this->subscription()->valid());
-    }
-
-    protected function getStripeConfig($key)
-    {
-        $plan = $this->planId() ?? 'witty_free';
-        $plan = str_replace('_trial', '', $plan);
-        return config('stripe.plans.' . $plan . '.' . $key);
-    }
-
-    public function getUserLicensesCount($ignoreInvalid = false)
-    {
-        if ($this->subscribed() || ($ignoreInvalid && $this->subscription())) {
-            return $this->subscription()->quantity;
-        }
-
-        return $this->getStripeConfig('features.invite_smaller_teams.count');
-    }
-
     public function allUsers()
     {
         if ($this->owner === null) {
@@ -138,47 +103,6 @@ class Team extends JetstreamTeam
     public function userLicenses()
     {
         return $this->allUsers()->where('license_team_id', $this->id);
-    }
-
-    public function getUserLicensesLimitReached($invitations = false)
-    {
-        $count = $this->userLicenses()->count();
-        if ($invitations) {
-            $count += $this->teamInvitations()->count();
-        }
-
-        return $count >= $this->getUserLicensesCount();
-    }
-
-    public function getTermReplacementsCount()
-    {
-        return $this->getStripeConfig('features.organization_term_replacements.count');
-    }
-
-    public function getFalsePositivesCount()
-    {
-        return $this->getStripeConfig('features.organization_false_positives.count');
-    }
-
-    public function isPremium()
-    {
-        return $this->subscribed() || $this->onGenericTrial();
-    }
-
-    public function planId()
-    {
-        // If Stripe is disabled, all users get witty_enterprise
-        if (!config('stripe.enabled')) {
-            return 'witty_enterprise';
-        }
-        $subscription = $this->subscription();
-        if ($subscription) {
-            return $this->subscription()->planId();
-        }
-        if ($this->onGenericTrial()) {
-            return 'witty_teams_trial';
-        }
-        return null;
     }
 
     public function getDomainListType()
@@ -205,31 +129,6 @@ class Team extends JetstreamTeam
         }
 
         return (bool) $this->domains()->count();
-    }
-
-    public function redirectToCheckout($licenseCount = null)
-    {
-        $this->owner->has_accessed_stripe = true;
-        $this->owner->save();
-
-        $subscriptionRoute = route('teams.subscription');
-        if ($this->subscribed() && !$this->subscription()->canceled()) {
-            return false;
-        }
-
-        return $this
-            ->allowPromotionCodes()
-            ->checkout(
-                [[
-                    'price' => config('stripe.plans.witty_teams.price_id'),
-                    'quantity' => $licenseCount ?? $this->getTotalUserWithInvitationsCount()
-                ]],
-                [
-                    'success_url' => $subscriptionRoute,
-                    'cancel_url' => $subscriptionRoute,
-                    'mode' => 'subscription'
-                ]
-            )->redirect();
     }
 
     public function getWritingStreakPast30Days()

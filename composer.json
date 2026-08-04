@@ -10,7 +10,6 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "jfcherng/php-diff": "^7.0",
         "kineticamobile/lumki": "^0.2.0",
-        "laravel/cashier": "^15.0",
         "laravel/framework": "^13.0",
         "laravel/jetstream": "^5.0",
         "laravel/sanctum": "^4.0",

@@ -38,9 +38,6 @@ class StoreContext extends Component
         $this->resetErrorBag();
 
         $this->store_context = (bool) $this->model->store_context;
-        if (!$this->model->isPremium()) {
-            $this->store_context = true;
-        }
     }
 
     public function updateTeamsStoreContext()
@@ -49,10 +46,6 @@ class StoreContext extends Component
 
         if (!Auth::user()->hasTeamPermission($this->model, 'update')) {
             abort(403);
-        }
-
-        if (!$this->model->isPremium()) {
-            $this->store_context = true;
         }
 
         $this->model->store_context = (bool) $this->store_context;

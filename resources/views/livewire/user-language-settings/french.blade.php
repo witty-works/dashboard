@@ -9,7 +9,7 @@
 
     <x-slot name="form" submit="updateLanguageGuidelinesFrench">
         @php
-            $disabled = !$model->isPremium() || \App\Models\LanguageGuidelines::isForcedOnTeam($model, 'french_rules');
+            $disabled = \App\Models\LanguageGuidelines::isForcedOnTeam($model, 'french_rules');
         @endphp
         <div class="margin-bottom">
             {!! __('guidelines.french_gender_separator') !!}

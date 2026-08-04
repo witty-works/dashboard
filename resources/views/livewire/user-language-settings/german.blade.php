@@ -9,7 +9,7 @@
 
     <x-slot name="form" submit="updateLanguageGuidelinesGerman">
         @php
-            $disabled = !$model->isPremium() || \App\Models\LanguageGuidelines::isForcedOnTeam($model, 'german_rules');
+            $disabled = \App\Models\LanguageGuidelines::isForcedOnTeam($model, 'german_rules');
         @endphp
         <div class="margin-bottom">
             {!! __('guidelines.german_gender_ending') !!}

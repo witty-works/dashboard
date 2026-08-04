@@ -17,8 +17,6 @@ class PreventRequestForgery extends Middleware
      * @var array
      */
     protected $except = [
-        'stripe/*',
-        '/refresh-token',
         '/user/language/domains',
     ];
 }

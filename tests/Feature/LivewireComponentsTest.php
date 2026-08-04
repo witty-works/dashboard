@@ -46,15 +46,6 @@ class LivewireComponentsTest extends TestCase
         Livewire::test($component, ['model' => $user->currentTeam])->assertOk();
     }
 
-    public function test_plan_summary_mounts(): void
-    {
-        $user = $this->signedInUser();
-        $this->actingAs($user);
-
-        Livewire::test(\App\Livewire\Teams\PlanSummary::class, ['team' => $user->currentTeam])
-            ->assertOk();
-    }
-
     public static function userScopedComponentProvider(): array
     {
         return [
@@ -80,6 +71,21 @@ class LivewireComponentsTest extends TestCase
             'term replacement: show' => [\App\Livewire\OrganizationTermReplacement\Show::class],
             'domain: show' => [\App\Livewire\OrganizationDomain\Show::class],
             'store context' => [\App\Livewire\Teams\StoreContext::class],
+            'team analytics' => [\App\Livewire\TeamAnalytics::class],
+            'analytics user access' => [\App\Livewire\Teams\AnalyticsUserAccess::class],
         ];
+    }
+
+    /**
+     * Takes `team` rather than `model`. Seat caps went with billing, so this is
+     * now purely about which team a user's licence is assigned to.
+     */
+    public function test_license_management_mounts(): void
+    {
+        $user = $this->signedInUser();
+        $this->actingAs($user);
+
+        Livewire::test(\App\Livewire\Teams\LicenseManagement::class, ['team' => $user->currentTeam])
+            ->assertOk();
     }
 }

@@ -22,6 +22,12 @@ abstract class AbstractSyncToNlpApi implements ShouldQueue
      */
     public $tries = 50;
 
+    /**
+     * Every account has the full feature set since billing was removed; the NLP
+     * API still expects a plan identifier, so it always gets this one.
+     */
+    public const PLAN = 'witty_enterprise';
+
     public function updateRules($url, $data)
     {
         $endpoint = config('app.nlp_api_endpoint');
@@ -65,18 +71,12 @@ abstract class AbstractSyncToNlpApi implements ShouldQueue
         return $response;
     }
 
-    protected function getFalsePositives($falsePositives, $subscribed, $count)
+    protected function getFalsePositives($falsePositives)
     {
-        $data = $falsePositives->pluck('false_positive')->toArray();
-
-        if (!$subscribed) {
-            $data = array_slice($data, 0, $count);
-        }
-
-        return $data;
+        return $falsePositives->pluck('false_positive')->toArray();
     }
 
-    protected function getTermReplacements($termReplacements, $subscribed, $count)
+    protected function getTermReplacements($termReplacements)
     {
         $data = [];
         foreach ($termReplacements as $termReplacement) {
@@ -103,10 +103,6 @@ abstract class AbstractSyncToNlpApi implements ShouldQueue
             foreach ($languageCodes as $languageCode) {
                 $data[$termReplacement->term . '|' . $languageCode] = $termReplacementData;
             }
-        }
-
-        if (!$subscribed) {
-            $data = array_slice($data, 0, $count);
         }
 
         return $data;

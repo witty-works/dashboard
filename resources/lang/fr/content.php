@@ -421,8 +421,6 @@ Veuillez ensuite cliquer à nouveau sur "S\'inscrire" pour finaliser l\'inscript
     'on-trial_text' => 'Votre équipe utilise actuellement la version d\'essai.',
     'subscription-ended_title' => 'Souscription à la fin de l\'exercice',
     'subscription-ended_text' => 'L\'abonnement de vos équipes est terminé.',
-    'trial-ended_title' => 'Prêt·e à passer au niveau supérieur ?',
-    'trial-ended_text' => 'La période d\'essai de votre équipe est terminée.',
     'consent_to_terms' => 'Consentement aux conditions de service',
     'consent_to_mailing' => 'Consentement à l\'envoi',
     'language_filter_fr' => 'Français',

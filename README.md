@@ -127,15 +127,14 @@ See [docs/release.md](docs/release.md) for release and hotfix instructions, incl
 
 ## User management
 
-See [docs/subscriptions.md](docs/subscriptions.md) for user management, superadmin rights, and impersonation instructions.
+See [docs/user-management.md](docs/user-management.md) for superadmin rights, the admin area and impersonation.
 
 # Documentation Index
 
 -   [Docker & Local Development](docs/docker.md)
--   [Stripe CLI Integration](docs/stripe.md)
 -   [Sentry CLI Integration](docs/sentry.md)
 -   [Release & Hotfix Process](docs/release.md)
--   [User & Team Management](docs/subscriptions.md)
+-   [User & Team Management](docs/user-management.md)
 
 # Custom Application Configuration
 

@@ -18,8 +18,6 @@ class LanguageGuidelines extends Model
     const BASIC_ENABLED = 1;
     const ADVANCED_ENABLED = 2;
 
-    const UNLIMITED = 999;
-
     static public $tripleToogleLoaded = false;
 
     use HasFactory;
@@ -107,15 +105,6 @@ class LanguageGuidelines extends Model
         $filter = [$model instanceof Team ? 'team_id' : 'user_id'  => $model->id];
         $languageGuideline = LanguageGuidelines::firstOrNew($filter);
 
-        if (!$model->isPremium()) {
-            $disabled_categories = $languageGuideline->disabled_categories;
-            foreach ($languageGuideline->getDiversityDimensionDrivers(null, true, true) as $ddd => $config) {
-                if (!in_array($ddd, $disabled_categories)) {
-                    $disabled_categories[] = $ddd;
-                }
-            }
-            $languageGuideline->disabled_categories = $disabled_categories;
-        }
         if ($languageGuideline->disabled_categories_force === null) {
             $languageGuideline->disabled_categories_force = [];
         }
@@ -155,8 +144,7 @@ class LanguageGuidelines extends Model
             $genderedRolesFormat = $this->gendered_roles_format;
         }
 
-        $subscribed = $this->team_id ? $this->team->isPremium() : $this->user->isPremium();
-        if (!$subscribed || !array_key_exists($genderedRolesFormat, GuidelinesInterface::GENDERED_ROLES_FORMAT)) {
+        if (!array_key_exists($genderedRolesFormat, GuidelinesInterface::GENDERED_ROLES_FORMAT)) {
             return key(GuidelinesInterface::GENDERED_ROLES_FORMAT);
         }
 
@@ -210,8 +198,6 @@ class LanguageGuidelines extends Model
             $level = LanguageGuidelines::BASIC_ENABLED;
         } elseif (empty($level)) {
             $level = LanguageGuidelines::DISABLED;
-        } elseif (!$this->model->isPremium()) {
-            $level = LanguageGuidelines::BASIC_ENABLED;
         }
 
         switch ($level) {
@@ -272,55 +258,44 @@ class LanguageGuidelines extends Model
             $event = PosthogHelper::STORE_TEAM_LANGUAGE;
         }
 
-        $subscribed = $user->isPremium();
-
         switch ($type) {
             case 'Language':
                 $properties = [
                     'language_type' => (new \ReflectionClass($this))->getShortName(),
                     'preferred_variants' => $this->preferred_variants,
-                    'force' => !$subscribed || $this->preferred_variants_force,
+                    'force' => $this->preferred_variants_force,
                 ];
                 break;
             case 'German':
                 $properties = [
                     'language_type' => (new \ReflectionClass($this))->getShortName(),
                     'german_gender_ending' => $this->german_gender_ending,
-                    'force' => !$subscribed || $this->german_rules_force,
+                    'force' => $this->german_rules_force,
                 ];
                 break;
             case 'French':
                 $properties = [
                     'language_type' => (new \ReflectionClass($this))->getShortName(),
                     'french_gender_separator' => $this->french_gender_separator,
-                    'force' => !$subscribed || $this->german_rules_force,
+                    'force' => $this->german_rules_force,
                 ];
                 break;
             case 'GenericMasculine':
                 $properties = [
                     'language_type' => (new \ReflectionClass($this))->getShortName(),
                     'gendered_roles_format' => $this->gendered_roles_format,
-                    'force' => !$subscribed || $this->generic_masculine_force,
+                    'force' => $this->generic_masculine_force,
                 ];
                 break;
             case 'Inspiration':
                 $properties = [
                     'language_type' => (new \ReflectionClass($this))->getShortName(),
                     'show_inspiration_alternatives' => $this->show_inspiration_alternatives,
-                    'force' => !$subscribed || $this->show_inspiration_alternatives_force,
+                    'force' => $this->show_inspiration_alternatives_force,
                 ];
                 break;
             case 'Category':
-                if (!$subscribed) {
-                    $disabled_categories_force = [];
-                    if (is_array($this->disabled_categories_force)) {
-                        foreach ($this->disabled_categories_force as $key => $value) {
-                            $disabled_categories_force[] = $key;
-                        }
-                    }
-                } else {
-                    $disabled_categories_force = (array) $this->disabled_categories_force;
-                }
+                $disabled_categories_force = (array) $this->disabled_categories_force;
                 $properties = [
                     'language_type' => (new \ReflectionClass($this))->getShortName(),
                     'disabled_categories' => $this->disabled_categories,
@@ -350,9 +325,6 @@ class LanguageGuidelines extends Model
 
     public static function isForcedOnTeam(User $user, $section, $category = null)
     {
-        if (!$user->isPremium()) {
-            return 'locked_upgrade';
-        }
 
         $teamGuidelines = self::getTeamGuidelines($user);
 

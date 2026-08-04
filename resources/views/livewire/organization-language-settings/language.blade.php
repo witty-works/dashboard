@@ -55,7 +55,6 @@
                 value="1"
                 :label="__('guidelines.set_for_all')"
                 wire:model="preferred_variants_force"
-                :disabled="!$model->isPremium()"
             />
         </div>
 

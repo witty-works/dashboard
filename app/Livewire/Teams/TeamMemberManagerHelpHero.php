@@ -99,10 +99,6 @@ class TeamMemberManagerHelpHero extends TeamMemberManagerBase
 
         $user = $invitationRequest->user;
 
-        if (!$this->team->subscribed()) {
-            $role = 'admin';
-        }
-
         app(AddsTeamMembers::class)->add(
             $this->team->owner,
             $this->team,
@@ -163,7 +159,7 @@ class TeamMemberManagerHelpHero extends TeamMemberManagerBase
 
         $this->addTeamMemberForm = [
             'email' => '',
-            'role' => $this->team->subscribed() ? null : 'admin',
+            'role' => null,
         ];
     }
 

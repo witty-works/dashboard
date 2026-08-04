@@ -59,10 +59,6 @@ class GenericMasculine extends Component
             abort(403);
         }
 
-        if (!$this->model->isPremium()) {
-            return;
-        }
-
         $languageGuidelines = LanguageGuidelines::getLanguageGuidelines($this->model);
 
         $languageGuidelines->generic_masculine_force = (bool) $this->generic_masculine_force;

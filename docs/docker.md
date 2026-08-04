@@ -31,7 +31,6 @@ them run `lando rebuild -y`.
 ## Optional Features
 
 -   Local test emails: http://mail.lndo.site/
--   Stripe CLI integration: See [docs/stripe.md](stripe.md)
 -   Sentry CLI integration: See [docs/sentry.md](sentry.md)
 
 ## Notes

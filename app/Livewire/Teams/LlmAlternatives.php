@@ -38,7 +38,7 @@ class LlmAlternatives extends Component
         $this->resetErrorBag();
 
         $this->llm_alternatives = (bool) $this->model->llm_alternatives;
-        if (!config('app.llm_enabled') || !$this->model->isPremium()) {
+        if (!config('app.llm_enabled')) {
             $this->llm_alternatives = false;
         }
     }
@@ -53,7 +53,7 @@ class LlmAlternatives extends Component
 
         // The toggle is hidden when the installation has LLM support switched
         // off, but the Livewire endpoint still accepts the update.
-        if (!config('app.llm_enabled') || !$this->model->isPremium()) {
+        if (!config('app.llm_enabled')) {
             $this->llm_alternatives = false;
         }
 

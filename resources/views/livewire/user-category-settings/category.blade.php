@@ -48,7 +48,7 @@
                 if ($force) {
                     $disabled = 'locked';
                 } else {
-                    $disabled = !$model->isPremium();
+                    $disabled = false;
                 }
             }
         @endphp
@@ -82,7 +82,7 @@
         @foreach ($list as $ddd)
         @if(isset($diversityDimensionDrivers[$ddd]['translation']) && isset($dimensions[$ddd]))
         @php
-        $checkbox = \App\Models\LanguageGuidelines::isBasicOnly($proficiencyLevel) || !$model->isPremium();
+        $checkbox = \App\Models\LanguageGuidelines::isBasicOnly($proficiencyLevel);
         if ($proficiencyLevel === 'openly_discriminating') {
             $minValue = \App\Models\LanguageGuidelines::BASIC_ENABLED;
             $title = __('guidelines.discriminating_language_cannot_be_disabled');

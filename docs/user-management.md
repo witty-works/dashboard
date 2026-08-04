@@ -63,7 +63,9 @@ While impersonating, the admin navigation stays visible regardless of
 ## Teams
 
 Teams come from Jetstream, with the personal team created during registration by
-`App\Actions\Fortify\CreateNewUser`. `App\Models\Team` extends Cashier's billable
-model, so subscription state and seat counts hang off the team rather than the
-user — `Team::subscribed()`, `Team::planId()` and `Team::isPremium()` are the
-usual entry points.
+`App\Actions\Fortify\CreateNewUser`.
+
+Billing was removed, so there are no plans, no seat caps and no premium tier —
+every team has the full feature set. `license_team_id` still decides which team's
+guidelines apply to a user (managed under team settings), but the number of
+licences is no longer limited.

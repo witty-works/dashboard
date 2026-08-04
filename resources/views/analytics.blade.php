@@ -22,25 +22,14 @@
 
             <div class="container-row">
                 <div class="lato-small-text-p wittyworks-margin-right" aria-label="{{ __('content.chart_time_range') }}">{{ __('content.chart_time_range') }}</div>
-                @if (!$is_premium_user)
-                <div style="margin-left: -1.5em"> @include('partials.locked')</div>
-                @endif
             </div>
             @php
                 $ranges = [
                     '1m' => __('content.chart_time_range_month'),
-                    '3m' => __('content.chart_time_range_quarter').($is_premium_user ? '' : ' ('.__('teams.witty_teams_only').')'),
-                    '1y' => __('content.chart_time_range_year').($is_premium_user ? '' : ' ('.__('teams.witty_teams_only').')'),
+                    '3m' => __('content.chart_time_range_quarter'),
+                    '1y' => __('content.chart_time_range_year'),
                 ];
-                if ($is_premium_user) {
-                    $disabled = false;
-                } else {
-                    $disabled = [
-                        '1m' => false,
-                        '3m' => true,
-                        '1y' => true,
-                    ];
-                }
+                $disabled = false;
             @endphp
             <x-select
                 :options="$ranges"
@@ -258,7 +247,6 @@
 
 <script>
     moment.locale(@json(app()->getLocale()))
-    const isPremiumUser = @json($is_premium_user);
     let topSubChart;
     const setElementStyle = (elementId, property, value) => {
         const element = document.getElementById(elementId);
@@ -269,7 +257,7 @@
 
     function load_charts(refresh, chartType = 'overview', timerange = '1m', interval = 'week', language = [], categories = [], inclusive = 'non_inclusive', eventTypes = null) {
         if (eventTypes === null) {
-            eventTypes = isPremiumUser ? [@json($default_event)] : ['popover_open']
+            eventTypes = [@json($default_event)]
         }
 
         const colors = ['#f06567', '#f06773', '#f16980', '#f16b8c', '#f16d99', '#f16fa5', '#f172b1', '#f274be', '#f276ca', '#ed78d1',
@@ -545,15 +533,13 @@
                 handleNoData('loading-icon-overview', 'overview-no-data', '', true);
                 return;
             }
-            const showCheckHighlights= isPremiumUser &&
+            const showCheckHighlights=
                 @json($default_event) !== 'popover_open' &&
                 data.events?.check_highlights &&
                 Object.entries(data.events.check_highlights).filter(([key, value]) => value > 0).length > 0 //could adjust this to a min amount of check highlights
             
             if (
-                (!isPremiumUser && !data.events?.popover_open) ||
                 (!showCheckHighlights&& !data.events?.popover_open) ||
-                (!isPremiumUser && Object.entries(data.events?.popover_open).filter(([key, value]) => value > 0).length == 0) ||
                 (!showCheckHighlights&& Object.entries(data.events?.popover_open).filter(([key, value]) => value > 0).length == 0)) {
                 handleNoData('loading-icon-overview', 'overview-no-data', '', false);
                 return;
@@ -636,9 +622,7 @@
                                 borderColor: colors[0],
                                 fill: false,
                                 label: @json(__('content.check_highlights_label_line_chart')) +
-                                    (!isPremiumUser
-                                    ? ' ({{ __('teams.witty_teams_only') }})'
-                                    : !showCheckHighlights
+                                    (!showCheckHighlights
                                     ? ' ({{ __('teams.not_enough_data_to_display') }})'
                                     : ''),
                                 hidden: !showCheckHighlights,
@@ -724,7 +708,7 @@
                                     else e.target.style.cursor = 'default';
                                 }
                             },
-                            events: isPremiumUser ? ['click', 'mousemove', 'mouseout'] : [],
+                            events: ['click', 'mousemove', 'mouseout'],
                             maintainAspectRatio: false,
                             responsive: true,
                             title: {
@@ -763,11 +747,11 @@
         });
 
         (chartType == 'top-categories') && getChartData('topSubcategories', timerange, interval, language, categories, null,  null, inclusive, eventTypes).then(data => {
-            const selectedDropdownValue = eventTypes[0] || (isPremiumUser ? @json($default_event) : 'popover_open');
+            const selectedDropdownValue = eventTypes[0] || @json($default_event);
             const eventTypeDropdownTopCategories = document.getElementById("eventTypeDropdownTopCategories");
             eventTypeDropdownTopCategories.innerHTML = `
                 <select id="eventTypeTopCategories" class="dropdown" onchange="setParams([this?.value])">
-                    ${getOptionsHtml(isPremiumUser)}
+                    ${getOptionsHtml()}
                 </select>`;
 
             updateDropdown("eventTypeTopCategories", selectedDropdownValue);
@@ -943,11 +927,11 @@
         });
 
         chartType == 'top-words' && getChartData('topWords', timerange, interval, language, categories, null, null, inclusive, eventTypes).then(data => {
-            const selectedDropdownValue = eventTypes[0] || (isPremiumUser ? @json($default_event) : 'popover_open');
+            const selectedDropdownValue = eventTypes[0] || @json($default_event);
             const eventTypeDropdownTopWords = document.getElementById("eventTypeDropdownTopWords");
             eventTypeDropdownTopWords.innerHTML = `
                 <select id="eventTypeTopWords" class="dropdown" onchange="setParams([this?.value])">
-                    ${getOptionsHtml(isPremiumUser)}
+                    ${getOptionsHtml()}
                 </select>`;
             updateDropdown("eventTypeTopWords", selectedDropdownValue);
 
@@ -1064,9 +1048,9 @@
 
     function setParams(eventTypes = null, refresh = false) {
         if (eventTypes === null) {
-            eventTypes = isPremiumUser ? [@json($default_event)] : ['popover_open']
+            eventTypes = [@json($default_event)]
 
-            const selectedDropdownValue = eventTypes[0] || (isPremiumUser ? @json($default_event) : 'popover_open');
+            const selectedDropdownValue = eventTypes[0] || @json($default_event);
             updateDropdown("eventTypeTopCategories", selectedDropdownValue);
             updateDropdown("eventTypeTopWords", selectedDropdownValue);
         }
@@ -1136,12 +1120,12 @@
         updateSection()
     }, 30000);
 
-    function getOptionsHtml(isPremiumUser) {
+    function getOptionsHtml() {
         var options = new Object();
         var optionsDisabled = new Object();
         if (@json($default_event) !== 'popover_open') {
-            options['check_highlights'] = @json(__('content.check_highlights_label_line_chart').($is_premium_user ? '' : ' ('.__('teams.witty_teams_only').')'));
-            optionsDisabled['check_highlights'] = isPremiumUser ? '' : 'disabled';
+            options['check_highlights'] = @json(__('content.check_highlights_label_line_chart'));
+            optionsDisabled['check_highlights'] = '';
         }
         options['popover_open'] = @json(__('content.popover_label_line_chart'));
         optionsDisabled['popover_open'] = '';

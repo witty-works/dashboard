@@ -55,10 +55,6 @@ class GenericMasculine extends Component
             abort(403);
         }
 
-        if (!$this->model->isPremium()) {
-            return;
-        }
-
         $languageGuidelines = LanguageGuidelines::getLanguageGuidelines($this->model);
 
         $languageGuidelines->gendered_roles_format = $this->gendered_roles_format = $languageGuidelines->getGenderedRolesFormat($this->gendered_roles_format);

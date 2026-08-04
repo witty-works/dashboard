@@ -31,22 +31,14 @@ class SyncOrganizationToNlpApi extends AbstractSyncToNlpApi
 
     public function getData(Team $team)
     {
-        $termReplacements = $this->getTermReplacements(
-            $team->termReplacements,
-            $team->isPremium(),
-            $team->getTermReplacementsCount()
-        );
+        $termReplacements = $this->getTermReplacements($team->termReplacements);
 
-        $falsePositives = $this->getFalsePositives(
-            $team->falsePositives,
-            $team->isPremium(),
-            $team->getFalsePositivesCount()
-        );
+        $falsePositives = $this->getFalsePositives($team->falsePositives);
 
         $domains = $this->getDomains($team->domains, $team->getDomainListType());
 
         $guidelines = LanguageGuidelines::getLanguageGuidelines($team);
-        $config = self::getConfig($guidelines, !$team->isPremium());
+        $config = self::getConfig($guidelines, false);
 
         $config['categories']['orthography'] = [
             'value' => !in_array('orthography', $guidelines->disabled_categories),
@@ -61,7 +53,7 @@ class SyncOrganizationToNlpApi extends AbstractSyncToNlpApi
         $config['force_categories'] = $guidelines->disabled_categories_force;
 
         $config['store_context'] = [
-            'value' => $team->isPremium() ? (bool) $team->store_context : true,
+            'value' => (bool) $team->store_context,
             'status' => 'force',
         ];
 
@@ -75,8 +67,10 @@ class SyncOrganizationToNlpApi extends AbstractSyncToNlpApi
         $data = [
             'id' => $team->posthogId(),
             'name' => $team->name,
-            'plan' => $team->planId() ?? "none",
-            'trial_ends_at' => $team->subscribed() ? null : $team->trial_ends_at,
+            // Billing was removed. The NLP API contract is unchanged: these are the
+            // values the previous "Stripe disabled" path already produced.
+            'plan' => self::PLAN,
+            'trial_ends_at' => null,
             'false_positives' => $falsePositives,
             'term_replacements' => $termReplacements,
             'domains' => $domains,

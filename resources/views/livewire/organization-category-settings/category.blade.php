@@ -91,7 +91,7 @@
                 }
             @endphp
 
-            @if(\App\Models\LanguageGuidelines::isBasicOnly($proficiencyLevel) || !$model->isPremium())
+            @if(\App\Models\LanguageGuidelines::isBasicOnly($proficiencyLevel))
             <x-checkbox
                 id="dimensions['{{$ddd}}']"
                 name="dimensions_{{$ddd}}"
@@ -131,7 +131,6 @@
                 value="1"
                 :label="__('guidelines.set_for_all')"
                 wire:model.defer="dimensions_force"
-                :disabled="!$model->isPremium()"
             />
         </div>
 

@@ -1,15 +1,12 @@
 <x-form-section submit="updateLicenses">
     <x-slot name="title">
         <span id="license">
-        {{ __('teams.list_licenses', [
-            'license_count' => $team->getUserLicensesCount(true),
-            'assigned_count' => $assignedCount
-        ]) }}
+        {{ __('teams.list_licenses', ['assigned_count' => $assignedCount]) }}
         </span>
     </x-slot>
 
     <x-slot name="description">
-        {!! Str::markdown(__('teams.list_licenses_description', ['license_count' => $team->getUserLicensesCount()])) !!}
+        {!! Str::markdown(__('teams.list_licenses_description')) !!}
     </x-slot>
 
     <x-slot name="form">
@@ -27,9 +24,6 @@
                         if ($user->licenseTeam) {
                             $disabled = $licenseOnOtherTeam = !$user->isUserLicensedToTeam($team);
                             $title = __('teams.active_license_on_team', ['team_name' => $user->licenseTeam->name]);
-                        } else {
-                            $disabled = $assignedCount >= $team->getUserLicensesCount();
-                            $title = __('teams.no_more_licenses_available');
                         }
                     @endphp
                     @if($licenseOnOtherTeam)

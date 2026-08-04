@@ -26,6 +26,8 @@ class StoreKpisCommand extends AbstractSyncCommand
     protected function handleTeam(Team $team)
     {
         Kpi::storeKpi($team, Kpi::TEAM_COUNT, $team->getTotalUserCount(), $this->date);
-        Kpi::storeKpi($team, Kpi::LICENSE_COUNT, $team->getUserLicensesCount(), $this->date);
+        // Seats are no longer capped, so this records how many are actually
+        // assigned rather than how many the plan allowed.
+        Kpi::storeKpi($team, Kpi::LICENSE_COUNT, $team->userLicenses()->count(), $this->date);
     }
 }

@@ -118,7 +118,6 @@ class SyncToPosthog implements ShouldQueue
             'owner' => $team->owner->posthogId(),
             'impersonate_url' => config('app.url') . '/impersonate/take/' . $team->owner->id,
             'users' => $team->getTotalUserCount(),
-            'stripe_plan' => $team->planId(),
         ];
 
         $encodedProperties = json_encode($properties);

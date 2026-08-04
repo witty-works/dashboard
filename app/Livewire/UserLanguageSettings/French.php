@@ -65,10 +65,6 @@ class French extends Component
             abort(403);
         }
 
-        if (!$this->model->isPremium()) {
-            return;
-        }
-
         $languageGuidelines = LanguageGuidelines::getLanguageGuidelines($this->model);
 
         $languageGuidelines->french_gender_separator = $this->french_gender_separator;
