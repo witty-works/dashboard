@@ -25,10 +25,19 @@ class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens;
     use HasFactory;
-    use HasRoles;
     use Impersonate;
-    use HasTeams;
     use HasConnectedAccounts;
+
+    /**
+     * spatie/laravel-permission 8 added HasRoles::teams(), which collides with
+     * Jetstream's. Its own teams feature is not enabled here (config/permission.php
+     * sets no 'teams' key), so that method is a stub that deliberately returns no
+     * rows — Jetstream's real relation wins.
+     */
+    use HasRoles, HasTeams {
+        HasTeams::teams insteadof HasRoles;
+    }
+
     use Notifiable;
     use TwoFactorAuthenticatable;
     use GuidelinesTrait;
