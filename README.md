@@ -60,6 +60,46 @@ https://nvie.com/posts/a-successful-git-branching-model/
 See here for installation instructions:
 https://github.com/nvie/gitflow/wiki/Installation
 
+# Testing
+
+The suite covers the critical paths (guest pages, login, registration, the signed-in
+pages, the `/admin` permission gate, Livewire mounting and localization). It exists
+mainly as a safety net for framework upgrades.
+
+Tests run against a real MariaDB schema, not SQLite: the migration history uses
+MySQL-specific DDL that SQLite cannot replay. `phpunit.xml` pins only the database
+_name_ (`testing`), so a run can never touch your development database.
+
+Create the database once:
+
+```
+lando mysql -uroot -e "CREATE DATABASE IF NOT EXISTS testing CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci; GRANT ALL ON testing.* TO 'laravel'@'%';"
+```
+
+Then run the suite inside Lando, where the connection details in `.env` already apply:
+
+```
+lando php vendor/bin/phpunit
+```
+
+To run it from the host instead, point it at Lando's forwarded MariaDB port:
+
+```
+DB_HOST=127.0.0.1 DB_PORT=3307 vendor/bin/phpunit
+```
+
+Two things to know when writing tests:
+
+-   **Assert on the view, not the status code.** The fallback route renders
+    `errors.404` with a **200**, so `assertOk()` alone passes against the error
+    page. Use `assertViewIs(...)`.
+-   **Call `$this->withoutLocaleRedirects()` for localized routes.** Routes are
+    registered under a prefix from `LaravelLocalization::setLocale()`, which reads
+    the request. In tests the route file loads during bootstrap, before a request
+    exists, so routes register unprefixed while the redirect middleware still
+    expects a prefix. This is the same limitation behind the route-caching note
+    above.
+
 # Other relevant URLs:
 
 -   For local test emails see: http://mail.lndo.site/
