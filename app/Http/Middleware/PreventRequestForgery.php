@@ -14,9 +14,14 @@ class PreventRequestForgery extends Middleware
     /**
      * The URIs that should be excluded from request forgery verification.
      *
+     * Empty on purpose. The one entry that used to live here,
+     * '/user/language/domains', never did anything: the only route at that path
+     * is in routes/api.php, which runs under the 'api' middleware group, and
+     * this middleware is only in the 'web' group. An exception list that looks
+     * like it is protecting an endpoint from CSRF checks it never received is
+     * worse than an empty one.
+     *
      * @var array
      */
-    protected $except = [
-        '/user/language/domains',
-    ];
+    protected $except = [];
 }
