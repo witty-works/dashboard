@@ -8,7 +8,9 @@ personal/team statistics by integrating with https://github.com/witty-works/nlp_
 Based on
 
 -   https://jetstream.laravel.com/
--   https://laravel.com/docs/8.x/socialite
+-   https://laravel.com/docs/socialite
+
+Runs on Laravel 13 / PHP 8.4, with Node 24 for the asset build.
 
 For deployment we recommend https://docs.platform.sh/
 
@@ -47,7 +49,10 @@ For deployment we recommend https://docs.platform.sh/
     -   Edit `.sentryclirc` to add the auth token from
         https://sentry.io/settings/account/api/auth-tokens/
 
-**Note:** Route caching is _not supported_ by the multilingual route extension used in this project. Avoid running `php artisan route:cache` or similar commands, as it may break route localization.
+**Note:** Plain `php artisan route:cache` is _not supported_ by the multilingual
+route extension used in this project and will break route localization. Use
+`php artisan route:trans:cache`, which builds one cache per locale — that is what
+the Platform.sh deploy hook runs. `route:trans:clear` removes them again.
 
 # Development
 
@@ -105,7 +110,16 @@ Two things to know when writing tests:
 
 # Translations
 
-See [docs/docker.md](docs/docker.md) for translation workflow and troubleshooting.
+Translation files live in `resources/lang` (`de`, `en`, `fr`) and are edited
+directly — Translation.io is no longer used. The `langman:*` artisan commands
+help with maintenance:
+
+-   `lando artisan langman:show <group>` — compare a group across all locales
+-   `lando artisan langman:missing` — find keys that still need a value
+-   `lando artisan langman:sync` — pick up new keys used in views
+
+The commands are vendored in `app/Support/Langman` rather than pulled in as a
+dependency; see that directory for why.
 
 # Deployments
 
@@ -121,7 +135,7 @@ See [docs/subscriptions.md](docs/subscriptions.md) for user management, superadm
 -   [Stripe CLI Integration](docs/stripe.md)
 -   [Sentry CLI Integration](docs/sentry.md)
 -   [Release & Hotfix Process](docs/release.md)
--   [Subscription & Team Management](docs/subscriptions.md)
+-   [User & Team Management](docs/subscriptions.md)
 
 # Custom Application Configuration
 
@@ -135,6 +149,20 @@ Use for the integration with the NLP API.
 -   `APP_NLP_API_SYNC_PASSWORD` — Password for NLP API sync
 -   `APP_NLP_API_SYNC_CONFIGS` — Enable/disable sync configs
 -   `APP_NLP_API_SYNC_DELAY_PER_COUNT` — Delay per sync count (default: 0.1)
+
+## Witty GPT
+
+Witty GPT reviews LLM responses through the NLP API. Not every backend supports
+LLMs, so the feature can be switched off for a whole installation.
+
+-   `APP_LLM_ENABLED` — Enable Witty GPT (default: `true`)
+
+When set to `false` the `/prompt` route is not registered, the navigation entry
+and the per-team toggle are hidden, and every team is reported to the NLP API as
+having LLM alternatives disabled regardless of its own setting.
+
+Teams still opt in individually under team privacy settings; this is the
+installation-wide switch above that.
 
 ## Browser Version Tracking
 
@@ -150,13 +178,6 @@ Used for application overlays for onboarding.
 
 -   `HELPHERO_JS_ENABLED` — Enable Helphero JS widget
 -   `HELPHERO_APP_ID` — Helphero App ID
-
-## Translations
-
-Translation files live in `resources/lang` (`de`, `en`, `fr`) and are edited
-directly. The `langman:*` artisan commands help with maintenance — `langman:show`
-to compare a group across locales, `langman:missing` to find untranslated keys,
-`langman:sync` to pick up new keys used in views.
 
 ## PostHog Analytics
 

@@ -4,6 +4,10 @@ This document covers advanced Docker usage, troubleshooting, and optional featur
 
 ## Lando (Docker)
 
+The runtime versions live in `.lando.yml` and are kept in step with
+`.platform.app.yaml`: PHP 8.4, Node 24 and MariaDB 10.5. After changing any of
+them run `lando rebuild -y`.
+
 -   Install Lando: https://docs.lando.dev/basics/installation.html
 -   On Windows 10 use WSL2: https://blog.calevans.com/2020/06/18/making-lando-work-inside-wsl2/
 -   Start the environment:
