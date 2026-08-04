@@ -241,7 +241,7 @@ return [
         App\Providers\JetstreamServiceProvider::class,
         App\Providers\SocialstreamServiceProvider::class,
         SocialiteProviders\Manager\ServiceProvider::class,
-        Themsaid\Langman\LangmanServiceProvider::class,
+        App\Support\Langman\LangmanServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
 
     ],

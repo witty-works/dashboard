@@ -27,8 +27,7 @@
         "spatie/laravel-google-fonts": "^1.2",
         "spatie/laravel-rate-limited-job-middleware": "^2.2",
         "spatie/laravel-slack-alerts": "^1.1",
-        "symfony/http-client": "^7.0",
-        "themsaid/laravel-langman": "dev-master"
+        "symfony/http-client": "^7.0"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^3.0",
@@ -78,10 +77,6 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "repositories": [
-        {
-            "type": "vcs",
-            "url": "git@github.com:witty-works/laravel-langman.git"
-        },
         {
             "type": "vcs",
             "url": "git@github.com:lsmith77/laravel.git"

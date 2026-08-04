@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "30ac226ac9623fb2cb7f03dad1b3eaa0",
+    "content-hash": "9c47905458080c6623fa7349af23c8cc",
     "packages": [
         {
             "name": "artisansdk/ratelimiter",
@@ -9127,66 +9127,6 @@
             "time": "2026-07-21T15:13:06+00:00"
         },
         {
-            "name": "themsaid/laravel-langman",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:witty-works/laravel-langman.git",
-                "reference": "71b1c66bcb462168424403c51466f0813b9059ce"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/witty-works/laravel-langman/zipball/71b1c66bcb462168424403c51466f0813b9059ce",
-                "reference": "71b1c66bcb462168424403c51466f0813b9059ce",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/console": "~5.1|~6.0|~7.0|~8.0|~9.0|~10.0|~11.0",
-                "illuminate/filesystem": "~5.1|~6.0|~7.0|~8.0|~9.0|~10.0|~11.0",
-                "illuminate/support": "~5.1|~6.0|~7.0|~8.0|~9.0|~10.0|~11.0",
-                "php": "^5.5.9 || ^7.0 || ^8.0"
-            },
-            "default-branch": true,
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Themsaid\\Langman\\LangmanServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Themsaid\\Langman\\": "src"
-                },
-                "classmap": [
-                    "tests"
-                ]
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Lukas Kahwe Smith",
-                    "email": "smith@pooteeweet.org"
-                },
-                {
-                    "name": "Mohamed Said",
-                    "email": "theMohamedSaid@gmail.com",
-                    "homepage": "https://themsaid.github.io"
-                }
-            ],
-            "description": "Manage language files with ease. (forked from @themsaid)",
-            "homepage": "https://github.com/themsaid/laravel-langman",
-            "keywords": [
-                "laravel",
-                "localization",
-                "multilingual"
-            ],
-            "time": "2024-08-20T11:59:38+00:00"
-        },
-        {
             "name": "tijsverkoyen/css-to-inline-styles",
             "version": "v2.3.0",
             "source": {
@@ -11835,7 +11775,6 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "kineticamobile/lumki": 20,
-        "themsaid/laravel-langman": 20,
         "tio/laravel": 20
     },
     "prefer-stable": true,
