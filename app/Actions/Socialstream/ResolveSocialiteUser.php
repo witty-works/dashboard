@@ -5,7 +5,7 @@ namespace App\Actions\Socialstream;
 use App\Http\Controllers\OAuthController;
 use Laravel\Socialite\Contracts\User;
 use App\Models\User as ModelUser;
-use JoelButcher\Socialstream\Contracts\ResolvesSocialiteUsers;
+use App\Contracts\SocialAuth\ResolvesSocialiteUsers;
 use GuzzleHttp\Exception\ClientException;
 
 class ResolveSocialiteUser implements ResolvesSocialiteUsers

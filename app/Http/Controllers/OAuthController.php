@@ -2,23 +2,32 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\SocialAuth\CreatesConnectedAccounts;
+use App\Contracts\SocialAuth\CreatesUserFromProvider;
+use App\Contracts\SocialAuth\UpdatesConnectedAccounts;
 use App\Helpers\OfficeSsoHelper;
+use App\Models\ConnectedAccount;
 use App\Models\User;
 use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Contracts\Auth\Guard;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use JoelButcher\Socialstream\Http\Controllers\OAuthController as BaseOAuthController;
-use JoelButcher\Socialstream\Socialstream;
+use Illuminate\Support\Facades\Auth;
+use Laravel\Fortify\Fortify;
 use Mail;
 use Exception;
-use JoelButcher\Socialstream\Contracts\CreatesConnectedAccounts;
-use JoelButcher\Socialstream\Contracts\CreatesUserFromProvider;
-use JoelButcher\Socialstream\Contracts\OAuthLoginResponse;
-use JoelButcher\Socialstream\Contracts\SocialstreamResponse;
-use JoelButcher\Socialstream\Contracts\UpdatesConnectedAccounts;
 
-class OAuthController extends BaseOAuthController
+/**
+ * Handles Microsoft Office SSO.
+ *
+ * This used to extend JoelButcher\Socialstream\Http\Controllers\OAuthController,
+ * but that package was archived upstream in December 2025 and never supported
+ * Laravel 13. Nothing here ever called into the parent — the inherited
+ * redirect/callback/prompt/confirm actions only served the generic OAuth routes,
+ * and socialstream.providers has always been empty — so the base class was
+ * dropped and the handful of Socialstream:: helpers inlined.
+ */
+class OAuthController extends Controller
 {
     public const OFFICE_PROVIDER = 'microsoft_office';
     public const LOGIN_SOURCE = 'login_source';
@@ -27,7 +36,6 @@ class OAuthController extends BaseOAuthController
      * Create a new controller instance.
      */
     public function __construct(
-        protected Guard $guard,
         protected CreatesUserFromProvider $createsUser,
         protected CreatesConnectedAccounts $createsConnectedAccounts,
         protected UpdatesConnectedAccounts $updatesConnectedAccounts
@@ -67,7 +75,7 @@ class OAuthController extends BaseOAuthController
             return redirect(config('services.microsoft_office.redirect_uri') . '?status=success');
         }
 
-        $user = Socialstream::newUserModel()->where('email', $email)->first();
+        $user = User::where('email', $email)->first();
 
         // no account for email that has consented to the terms => show the form
         if ($request->getMethod() === 'POST') {
@@ -119,7 +127,7 @@ class OAuthController extends BaseOAuthController
             Auth::logout();
         }
 
-        $user = Socialstream::newUserModel()->where('email', $email)->first();
+        $user = User::where('email', $email)->first();
 
         // no account for email that has consented to the terms => show the form
         if ($user === null || !$user->has_consented_to_terms_of_service) {
@@ -138,10 +146,12 @@ class OAuthController extends BaseOAuthController
             $userData['has_consented_to_terms_of_service'] = $providerAccount->attributes['has_consented_to_terms_of_service'];
         }
 
-        $account = Socialstream::findConnectedAccountForProviderAndId($provider, $providerAccount->getId());
+        $account = ConnectedAccount::where('provider', $provider)
+            ->where('provider_id', $providerAccount->getId())
+            ->first();
 
         if (!$account) {
-            $user = Socialstream::newUserModel()->where('email', $providerAccount->getEmail())->first();
+            $user = User::where('email', $providerAccount->getEmail())->first();
             if ($user) {
                 $this->createsConnectedAccounts->create($user, $provider, $providerAccount);
             } else {
@@ -193,12 +203,18 @@ class OAuthController extends BaseOAuthController
         return false;
     }
 
-    protected function loginUser(Authenticatable $user, $provider): SocialstreamResponse
+    /**
+     * Mirrors the response socialstream produced for a Jetstream application:
+     * a JSON body for XHR callers, otherwise Fortify's intended login redirect.
+     */
+    protected function loginUser(Authenticatable $user, $provider): JsonResponse|RedirectResponse
     {
-        Auth::login($user, Socialstream::hasRememberSessionFeatures());
+        Auth::login($user, config('socialstream.remember_session', true));
         request()->session()->put(self::LOGIN_SOURCE, $provider);
 
-        return app(OAuthLoginResponse::class);
+        return request()->wantsJson()
+            ? response()->json(['two_factor' => false])
+            : redirect()->intended(Fortify::redirects('login'));
     }
 
 

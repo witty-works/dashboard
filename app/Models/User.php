@@ -11,7 +11,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use JoelButcher\Socialstream\HasConnectedAccounts;
+use App\Models\Concerns\HasConnectedAccounts;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Spatie\Permission\Traits\HasRoles;
 use Lab404\Impersonate\Models\Impersonate;
@@ -363,7 +363,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         $clients = [];
         /**
-         * @var \JoelButcher\Socialstream\ConnectedAccount $connectedAccount
+         * @var \App\Models\ConnectedAccount $connectedAccount
          */
         foreach ($this->connectedAccounts as $connectedAccount) {
             if ($connectedAccount->provider == OAuthController::OFFICE_PROVIDER) {

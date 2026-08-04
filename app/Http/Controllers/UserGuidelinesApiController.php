@@ -9,10 +9,10 @@ use App\Models\ConnectedAccount;
 use App\Models\Domain;
 use App\Models\FalsePositive;
 use App\Models\LanguageGuidelines;
+use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use JoelButcher\Socialstream\Socialstream;
 use Laravel\Socialite\Two\InvalidStateException;
 use Socialite;
 
@@ -204,7 +204,7 @@ class UserGuidelinesApiController extends Controller
             if ($aud === config('services.microsoft_office.client_id')) {
                 $claims = $officeSsoHelper->validateIdToken($accessToken);
                 $email = strtolower($claims['preferred_username'] ?? '');
-                $user = Socialstream::newUserModel()->where('email', $email)->first();
+                $user = User::where('email', $email)->first();
             }
         } catch (Exception $e) {
         }

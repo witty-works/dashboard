@@ -3,7 +3,7 @@
 namespace App\Actions\Socialstream;
 
 use Illuminate\Http\Response;
-use JoelButcher\Socialstream\Contracts\HandlesInvalidState;
+use App\Contracts\SocialAuth\HandlesInvalidState;
 use Laravel\Socialite\Two\InvalidStateException;
 
 class HandleInvalidState implements HandlesInvalidState

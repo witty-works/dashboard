@@ -9,7 +9,6 @@
         "firebase/php-jwt": "^7.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "jfcherng/php-diff": "^6.16",
-        "joelbutcher/socialstream": "^6.0",
         "kineticamobile/lumki": "dev-main",
         "laravel/cashier": "^15.0",
         "laravel/framework": "^11",

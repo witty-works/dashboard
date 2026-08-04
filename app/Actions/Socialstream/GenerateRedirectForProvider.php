@@ -3,7 +3,7 @@
 namespace App\Actions\Socialstream;
 
 use App\Http\Controllers\OAuthController;
-use JoelButcher\Socialstream\Contracts\GeneratesProviderRedirect;
+use App\Contracts\SocialAuth\GeneratesProviderRedirect;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use GuzzleHttp\Exception\ClientException;
 

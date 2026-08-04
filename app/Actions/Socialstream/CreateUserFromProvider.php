@@ -6,8 +6,8 @@ use App\Http\Middleware\SwitchToTeam;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
-use JoelButcher\Socialstream\Contracts\CreatesConnectedAccounts;
-use JoelButcher\Socialstream\Contracts\CreatesUserFromProvider;
+use App\Contracts\SocialAuth\CreatesConnectedAccounts;
+use App\Contracts\SocialAuth\CreatesUserFromProvider;
 use Laravel\Socialite\Contracts\User as ProviderUserContract;
 
 class CreateUserFromProvider implements CreatesUserFromProvider
@@ -15,14 +15,14 @@ class CreateUserFromProvider implements CreatesUserFromProvider
     /**
      * The creates connected accounts instance.
      *
-     * @var \JoelButcher\Socialstream\Contracts\CreatesConnectedAccounts
+     * @var \App\Contracts\SocialAuth\CreatesConnectedAccounts
      */
     public $createsConnectedAccounts;
 
     /**
      * Create a new action instance.
      *
-     * @param  \JoelButcher\Socialstream\Contracts\CreatesConnectedAccounts  $createsConnectedAccounts
+     * @param  \App\Contracts\SocialAuth\CreatesConnectedAccounts  $createsConnectedAccounts
      */
     public function __construct(CreatesConnectedAccounts $createsConnectedAccounts)
     {

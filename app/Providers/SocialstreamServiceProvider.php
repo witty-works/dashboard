@@ -4,39 +4,44 @@ namespace App\Providers;
 
 use App\Actions\Socialstream\CreateConnectedAccount;
 use App\Actions\Socialstream\CreateUserFromProvider;
+use App\Actions\Socialstream\GenerateRedirectForProvider;
 use App\Actions\Socialstream\HandleInvalidState;
 use App\Actions\Socialstream\ResolveSocialiteUser;
 use App\Actions\Socialstream\SetUserPassword;
 use App\Actions\Socialstream\UpdateConnectedAccount;
+use App\Contracts\SocialAuth\CreatesConnectedAccounts;
+use App\Contracts\SocialAuth\CreatesUserFromProvider;
+use App\Contracts\SocialAuth\GeneratesProviderRedirect;
+use App\Contracts\SocialAuth\HandlesInvalidState;
+use App\Contracts\SocialAuth\ResolvesSocialiteUsers;
+use App\Contracts\SocialAuth\SetsUserPasswords;
+use App\Contracts\SocialAuth\UpdatesConnectedAccounts;
 use Illuminate\Support\ServiceProvider;
-use App\Actions\Socialstream\GenerateRedirectForProvider;
-use JoelButcher\Socialstream\Socialstream;
 
+/**
+ * These bindings used to go through joelbutcher/socialstream's static registry
+ * (Socialstream::createUsersFromProviderUsing(...) and friends). That package was
+ * archived upstream in December 2025 and never supported Laravel 13, so the
+ * actions are now bound to application-owned contracts in the container instead.
+ *
+ * OAuthController resolves CreatesUserFromProvider, CreatesConnectedAccounts and
+ * UpdatesConnectedAccounts from here for the Microsoft Office SSO flow.
+ */
 class SocialstreamServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     *
-     * @return void
-     */
-    public function register()
+    public function register(): void
     {
-        //
+        $this->app->singleton(ResolvesSocialiteUsers::class, ResolveSocialiteUser::class);
+        $this->app->singleton(CreatesUserFromProvider::class, CreateUserFromProvider::class);
+        $this->app->singleton(CreatesConnectedAccounts::class, CreateConnectedAccount::class);
+        $this->app->singleton(UpdatesConnectedAccounts::class, UpdateConnectedAccount::class);
+        $this->app->singleton(SetsUserPasswords::class, SetUserPassword::class);
+        $this->app->singleton(HandlesInvalidState::class, HandleInvalidState::class);
+        $this->app->singleton(GeneratesProviderRedirect::class, GenerateRedirectForProvider::class);
     }
 
-    /**
-     * Bootstrap any application services.
-     *
-     * @return void
-     */
-    public function boot()
+    public function boot(): void
     {
-        Socialstream::resolvesSocialiteUsersUsing(ResolveSocialiteUser::class);
-        Socialstream::createUsersFromProviderUsing(CreateUserFromProvider::class);
-        Socialstream::createConnectedAccountsUsing(CreateConnectedAccount::class);
-        Socialstream::updateConnectedAccountsUsing(UpdateConnectedAccount::class);
-        Socialstream::setUserPasswordsUsing(SetUserPassword::class);
-        Socialstream::handlesInvalidStateUsing(HandleInvalidState::class);
-        Socialstream::generatesProvidersRedirectsUsing(GenerateRedirectForProvider::class);
+        //
     }
 }
