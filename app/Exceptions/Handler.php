@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use League\OAuth2\Server\Exception\OAuthServerException as LeagueOAuthServerException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
@@ -14,7 +15,14 @@ class Handler extends ExceptionHandler
      * @var string[]
      */
     protected $dontReport = [
-        //
+        // Passport's token guard hands this to the exception handler for any
+        // bearer token it cannot validate — including an expired extension
+        // token, which by design happens once an hour for every signed-in user.
+        // The request is already answered with a 401; there is nothing to alert
+        // on. Scoped to the guard: failures on /oauth/token are
+        // Laravel\Passport\Exceptions\OAuthServerException, which does not
+        // extend this class and is still reported.
+        LeagueOAuthServerException::class,
     ];
 
     /**
