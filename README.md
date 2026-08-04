@@ -151,11 +151,12 @@ Used for application overlays for onboarding.
 -   `HELPHERO_JS_ENABLED` — Enable Helphero JS widget
 -   `HELPHERO_APP_ID` — Helphero App ID
 
-## Translation.io
+## Translations
 
-Only used for local development to ease translation maintenance.
-
--   `TRANSLATIONIO_KEY` — API key for Translation.io integration
+Translation files live in `resources/lang` (`de`, `en`, `fr`) and are edited
+directly. The `langman:*` artisan commands help with maintenance — `langman:show`
+to compare a group across locales, `langman:missing` to find untranslated keys,
+`langman:sync` to pick up new keys used in views.
 
 ## PostHog Analytics
 

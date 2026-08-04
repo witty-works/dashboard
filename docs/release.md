@@ -15,8 +15,9 @@
 -   Go to the console
     -   `make-release.sh hotfix` // to start a hotfix release
     -   Make your changes, ie. `git commit`, ensure that they work locally, to test remotely use `platform environment:push`
-    -   Make sure translations are up to date but _do not_ run `lando artisan translation:sync_and_purge`
-        -   Instead manually add the translations for `de` and `fr` if new translations were added for `en`
+    -   Make sure translations are up to date
+        -   Manually add the translations for `de` and `fr` if new translations were added for `en`
+        -   `lando artisan langman:missing` lists keys that still need a value
     -   Optionally test the hotfix branch with production data
         -   Push the branch got gitlab `git push origin hotfix/[new version]`
         -   To activate the branch on platform.sh run `platform environment:activate`

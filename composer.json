@@ -33,8 +33,7 @@
         "barryvdh/laravel-ide-helper": "^3.0",
         "fakerphp/faker": "^1.23",
         "mockery/mockery": "^1.6",
-        "phpunit/phpunit": "^11.5",
-        "tio/laravel": "dev-remove-array-align-laravel-10"
+        "phpunit/phpunit": "^11.5"
     },
     "autoload": {
         "psr-4": {
@@ -75,11 +74,5 @@
         "sort-packages": true
     },
     "minimum-stability": "dev",
-    "prefer-stable": true,
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "git@github.com:lsmith77/laravel.git"
-        }
-    ]
+    "prefer-stable": true
 }
