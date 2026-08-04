@@ -65,8 +65,10 @@ class SyncOrganizationToNlpApi extends AbstractSyncToNlpApi
             'status' => 'force',
         ];
 
+        // An installation whose backend has no LLM support reports every team as
+        // opted out, whatever the team's own setting says.
         $config['llm_alternatives'] = [
-            'value' => (bool) $team->llm_alternatives,
+            'value' => config('app.llm_enabled') && (bool) $team->llm_alternatives,
             'status' => 'force',
         ];
 

@@ -39,6 +39,14 @@ class Prompt extends Component
         $this->results = '';
         $this->resetErrorBag();
 
+        // The /prompt route is not registered when LLM support is switched off
+        // for this installation, but the component is still reachable over the
+        // Livewire endpoint, so the check is repeated here.
+        if (!config('app.llm_enabled')) {
+            $message = __('content.prompt_error');
+            throw ValidationException::withMessages(['prompt' => $message]);
+        }
+
         $user = Auth::user();
         if (!$user->planId() || !$user->currentTeam->llm_alternatives) {
             $message = __('content.prompt_error');

@@ -89,7 +89,9 @@ Route::group(
                 Route::get('/', [WelcomeController::class, 'show'])->name('root');
 
 
-                Route::get('/prompt', [PromptController::class, 'show'])->name('prompt');
+                if (config('app.llm_enabled')) {
+                    Route::get('/prompt', [PromptController::class, 'show'])->name('prompt');
+                }
 
                 if (config('stripe.enabled')) {
                     Route::get('/subscribe', [StripeController::class, 'subscribe'])->name('stripe.subscribe');
