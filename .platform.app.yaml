@@ -21,7 +21,7 @@ variables:
         # https://github.com/nvm-sh/nvm/releases
         NVM_VERSION: v0.39.7
         # https://nodejs.org/en/about/previous-releases
-        NODE_VERSION: v18.19.1
+        NODE_VERSION: v24.19.0
 
 # The hooks that will be performed when the package is deployed.
 hooks:

@@ -11,7 +11,7 @@ services:
   database:
     portforward: 3307
   node:
-    type: node:18
+    type: node:24
   mailhog:
     type: mailhog
     portforward: true
