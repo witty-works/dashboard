@@ -68,7 +68,7 @@ class TeamMemberManagerHelpHero extends TeamMemberManagerBase
      * @param  TeamInvitationRequest  $invitationRequest
      * @return void
      */
-    public function cancelTeamInvitationRequest(TeamInvitationRequest $invitationRequest = null)
+    public function cancelTeamInvitationRequest(?TeamInvitationRequest $invitationRequest = null)
     {
         if (!empty($invitationRequest)) {
             $invitationRequest->delete();
@@ -85,7 +85,7 @@ class TeamMemberManagerHelpHero extends TeamMemberManagerBase
      * @param  TeamInvitationRequest  $invitationRequest
      * @return void
      */
-    public function acceptTeamInvitationRequest(TeamInvitationRequest $invitationRequest = null, $role = 'user')
+    public function acceptTeamInvitationRequest(?TeamInvitationRequest $invitationRequest = null, $role = 'user')
     {
         if (empty($invitationRequest)) {
             session()->flash('teams_invitation_request_message', __('content.invitation_request_already_accepted'));

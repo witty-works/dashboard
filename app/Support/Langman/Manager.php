@@ -51,7 +51,7 @@ class Manager
      * @param Filesystem $disk
      * @param string $path
      */
-    public function __construct(Filesystem $disk, $path, array $syncPaths, array $functions, string $targetLanguage = null)
+    public function __construct(Filesystem $disk, $path, array $syncPaths, array $functions, ?string $targetLanguage = null)
     {
         $this->disk = $disk;
         $this->path = $path;

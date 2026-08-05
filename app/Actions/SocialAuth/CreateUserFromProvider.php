@@ -4,7 +4,6 @@ namespace App\Actions\SocialAuth;
 
 use App\Http\Middleware\SwitchToTeam;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Contracts\SocialAuth\CreatesConnectedAccounts;
 use App\Contracts\SocialAuth\CreatesUserFromProvider;
@@ -50,11 +49,6 @@ class CreateUserFromProvider implements CreatesUserFromProvider
                 SwitchToTeam::ensureTeam($user);
 
                 $user->applyAcceptedInvitiations();
-
-                if ($user->currentTeam && !$user->currentTeam->subscription() && !$user->currentTeam->trial_ends_at) {
-                    $user->currentTeam->trial_ends_at = Carbon::now()->addDays(config('cashier.trail_days'))->format('Y-m-d') . ' 23:59:59';
-                    $user->currentTeam->save();
-                }
             });
         });
     }

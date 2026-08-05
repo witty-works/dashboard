@@ -20,7 +20,7 @@ class AddTeamMember implements AddsTeamMembers
      * @param  string|null  $role
      * @return void
      */
-    public function add($user, $team, string $email, string $role = null)
+    public function add($user, $team, string $email, ?string $role = null)
     {
         $this->validate($team, $email, $role);
 

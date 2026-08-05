@@ -49,7 +49,7 @@ class AnalyticsController extends Controller
         ]);
     }
 
-    protected function teamAnalyticsAllowed(User $user = null)
+    protected function teamAnalyticsAllowed(?User $user = null)
     {
         if (
             empty($user)

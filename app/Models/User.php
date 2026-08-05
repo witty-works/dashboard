@@ -355,7 +355,6 @@ class User extends Authenticatable implements MustVerifyEmail
         // so in that case it will simply sync the data of the team they most recently used
         $personalTeam = $this->personalTeam();
         if ($personalTeam) {
-            $data['witty_trial_ends_at'] = $personalTeam->trial_ends_at ? $personalTeam->trial_ends_at->format('Y-m-d') : null;
             $data['has_team_language_rules'] = $personalTeam->hasLanguageRules() ? $true : $false;
             $data['has_team_privacy_set'] = $personalTeam->hasConfiguredPrivacy() ? $true : $false;
             $data['team_dictionary_count'] = $personalTeam->termReplacements->count();
