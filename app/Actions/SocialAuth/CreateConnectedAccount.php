@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions\Socialstream;
+namespace App\Actions\SocialAuth;
 
 use App\Contracts\SocialAuth\CreatesConnectedAccounts;
 use App\Models\ConnectedAccount;

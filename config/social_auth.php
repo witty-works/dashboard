@@ -8,7 +8,7 @@
 | This file used to configure joelbutcher/socialstream. That package was
 | archived upstream in December 2025 and never supported Laravel 13, so it was
 | removed and the pieces this application actually used were absorbed into
-| App\ (see App\Providers\SocialstreamServiceProvider).
+| App\ (see App\Providers\SocialAuthServiceProvider).
 |
 | Generic OAuth login was never enabled here — the providers list has always
 | been empty. Microsoft Office SSO is handled separately by

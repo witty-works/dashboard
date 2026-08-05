@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions\Socialstream;
+namespace App\Actions\SocialAuth;
 
 use Illuminate\Http\Response;
 use App\Contracts\SocialAuth\HandlesInvalidState;

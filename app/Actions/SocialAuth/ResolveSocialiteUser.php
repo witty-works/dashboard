@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions\Socialstream;
+namespace App\Actions\SocialAuth;
 
 use App\Http\Controllers\OAuthController;
 use Laravel\Socialite\Contracts\User;

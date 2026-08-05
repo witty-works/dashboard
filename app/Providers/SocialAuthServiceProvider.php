@@ -2,13 +2,13 @@
 
 namespace App\Providers;
 
-use App\Actions\Socialstream\CreateConnectedAccount;
-use App\Actions\Socialstream\CreateUserFromProvider;
-use App\Actions\Socialstream\GenerateRedirectForProvider;
-use App\Actions\Socialstream\HandleInvalidState;
-use App\Actions\Socialstream\ResolveSocialiteUser;
-use App\Actions\Socialstream\SetUserPassword;
-use App\Actions\Socialstream\UpdateConnectedAccount;
+use App\Actions\SocialAuth\CreateConnectedAccount;
+use App\Actions\SocialAuth\CreateUserFromProvider;
+use App\Actions\SocialAuth\GenerateRedirectForProvider;
+use App\Actions\SocialAuth\HandleInvalidState;
+use App\Actions\SocialAuth\ResolveSocialiteUser;
+use App\Actions\SocialAuth\SetUserPassword;
+use App\Actions\SocialAuth\UpdateConnectedAccount;
 use App\Contracts\SocialAuth\CreatesConnectedAccounts;
 use App\Contracts\SocialAuth\CreatesUserFromProvider;
 use App\Contracts\SocialAuth\GeneratesProviderRedirect;
@@ -27,7 +27,7 @@ use Illuminate\Support\ServiceProvider;
  * OAuthController resolves CreatesUserFromProvider, CreatesConnectedAccounts and
  * UpdatesConnectedAccounts from here for the Microsoft Office SSO flow.
  */
-class SocialstreamServiceProvider extends ServiceProvider
+class SocialAuthServiceProvider extends ServiceProvider
 {
     public function register(): void
     {

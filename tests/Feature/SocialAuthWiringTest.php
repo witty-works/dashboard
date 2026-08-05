@@ -35,13 +35,13 @@ class SocialAuthWiringTest extends TestCase
     public static function contractProvider(): array
     {
         return [
-            'resolves socialite users' => [ResolvesSocialiteUsers::class, \App\Actions\Socialstream\ResolveSocialiteUser::class],
-            'creates user from provider' => [CreatesUserFromProvider::class, \App\Actions\Socialstream\CreateUserFromProvider::class],
-            'creates connected accounts' => [CreatesConnectedAccounts::class, \App\Actions\Socialstream\CreateConnectedAccount::class],
-            'updates connected accounts' => [UpdatesConnectedAccounts::class, \App\Actions\Socialstream\UpdateConnectedAccount::class],
-            'sets user passwords' => [SetsUserPasswords::class, \App\Actions\Socialstream\SetUserPassword::class],
-            'handles invalid state' => [HandlesInvalidState::class, \App\Actions\Socialstream\HandleInvalidState::class],
-            'generates provider redirect' => [GeneratesProviderRedirect::class, \App\Actions\Socialstream\GenerateRedirectForProvider::class],
+            'resolves socialite users' => [ResolvesSocialiteUsers::class, \App\Actions\SocialAuth\ResolveSocialiteUser::class],
+            'creates user from provider' => [CreatesUserFromProvider::class, \App\Actions\SocialAuth\CreateUserFromProvider::class],
+            'creates connected accounts' => [CreatesConnectedAccounts::class, \App\Actions\SocialAuth\CreateConnectedAccount::class],
+            'updates connected accounts' => [UpdatesConnectedAccounts::class, \App\Actions\SocialAuth\UpdateConnectedAccount::class],
+            'sets user passwords' => [SetsUserPasswords::class, \App\Actions\SocialAuth\SetUserPassword::class],
+            'handles invalid state' => [HandlesInvalidState::class, \App\Actions\SocialAuth\HandleInvalidState::class],
+            'generates provider redirect' => [GeneratesProviderRedirect::class, \App\Actions\SocialAuth\GenerateRedirectForProvider::class],
         ];
     }
 

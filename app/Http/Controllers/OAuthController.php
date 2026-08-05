@@ -209,7 +209,7 @@ class OAuthController extends Controller
      */
     protected function loginUser(Authenticatable $user, $provider): JsonResponse|RedirectResponse
     {
-        Auth::login($user, config('socialstream.remember_session', true));
+        Auth::login($user, config('social_auth.remember_session', true));
         request()->session()->put(self::LOGIN_SOURCE, $provider);
 
         return request()->wantsJson()

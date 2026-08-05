@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions\Socialstream;
+namespace App\Actions\SocialAuth;
 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;

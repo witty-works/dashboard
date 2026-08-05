@@ -257,7 +257,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\FortifyServiceProvider::class,
         App\Providers\JetstreamServiceProvider::class,
-        App\Providers\SocialstreamServiceProvider::class,
+        App\Providers\SocialAuthServiceProvider::class,
         SocialiteProviders\Manager\ServiceProvider::class,
         App\Support\Langman\LangmanServiceProvider::class,
 

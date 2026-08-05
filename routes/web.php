@@ -26,14 +26,14 @@ use Laravel\Jetstream\Jetstream;
 
 /*
 |------------------
-| SOCIALSTREAM
+| SOCIAL AUTH
 |------------------
 */
 use App\Http\Controllers\OAuthController;
 use App\Http\Controllers\WelcomeController;
 /*
 |------------------
-| \SOCIALSTREAM
+| \SOCIAL AUTH
 |------------------
 */
 
@@ -156,10 +156,10 @@ Route::group(
 
 /*
 |------------------
-| SOCIALSTREAM
+| SOCIAL AUTH
 |------------------
 */
-Route::group(['middleware' => config('socialstream.middleware', ['web'])], function () {
+Route::group(['middleware' => config('social_auth.middleware', ['web'])], function () {
 
     Route::get('/team-invitations/{invitation}', [TeamInvitationController::class, 'acceptSigned'])
         ->middleware(['signed'])
@@ -178,7 +178,7 @@ Route::group(['middleware' => config('socialstream.middleware', ['web'])], funct
 
 /*
 |------------------
-| \SOCIALSTREAM
+| \SOCIAL AUTH
 |------------------
 */
 
