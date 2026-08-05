@@ -11,14 +11,16 @@ use League\OAuth2\Server\Entities\Traits\EntityTrait;
 use League\OAuth2\Server\Entities\Traits\TokenEntityTrait;
 
 /**
- * Passport's access token entity, with a `kid` header and email claims.
+ * Passport's access token entity, with a `kid` header and `iss` and email claims.
  *
- * Two things league/oauth2-server does not emit, each of which a consumer
+ * Three things league/oauth2-server does not emit, each of which a consumer
  * needs:
  *
  * - **`kid`**: without it no off-the-shelf JWKS client can verify our tokens.
  *   Both firebase/php-jwt's JWK::parseKeySet() and PyJWT's PyJWKClient look the
  *   key up by `kid` and fail outright when the header has none.
+ * - **`iss`**: convertToJWT() never calls issuedBy(), so the token names no
+ *   issuer and anything checking one rejects it outright. See [OAuthIssuer].
  * - **`email`**: the NLP API identifies users by email; `sub` is our local user
  *   id and means nothing to it.
  *
@@ -65,6 +67,7 @@ class AccessToken implements AccessTokenEntityInterface
 
         $builder = $this->jwtConfiguration->builder()
             ->withHeader('kid', app(OAuthSigningKey::class)->kid())
+            ->issuedBy(app(OAuthIssuer::class)->value())
             ->permittedFor($this->getClient()->getIdentifier())
             ->identifiedBy($this->getIdentifier())
             ->issuedAt(new DateTimeImmutable())

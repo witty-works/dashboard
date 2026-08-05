@@ -91,32 +91,59 @@ An RS256 JWT with a `kid` header matching the JWK Set:
 
 ```json
 {
-  "aud": "1",
-  "sub": "21",
-  "jti": "6f0d2e21bb4f…",
-  "iat": 1785837701.841862,
-  "nbf": 1785837701.841863,
-  "exp": 1785841301.837657,
+  "iss": "https://dashboard.lndo.site",
+  "aud": "019fd178-4d22-7072-bc22-b7a74cb9107d",
+  "sub": "22",
+  "jti": "b127277ac8536cfc…",
+  "iat": 1785926968.728481,
+  "nbf": 1785926968.728481,
+  "exp": 1785930568.718138,
   "scopes": [],
   "email": "oauth-e2e@example.test",
   "preferred_username": "oauth-e2e@example.test"
 }
 ```
 
-> **`aud` is the OAuth client ID. `sub` is the local user ID.** They are unrelated
-> numbers from different tables and must never be conflated — in a small dev
-> database both can easily read `1` at the same time, which makes a swap look
-> like it works.
+> **`aud` is the OAuth client ID. `sub` is the local user ID.** Different tables,
+> unrelated values, and they must never be conflated. Since Passport 13 the client
+> ID is a UUID and the user ID is still an integer, so a swap now fails loudly
+> rather than quietly — but do not rely on that, since the NLP API dispatches on
+> `aud` and would simply find no matching config.
+
+`iss` is the application URL with no trailing slash, from `App\Auth\OAuthIssuer`.
+The NLP API compares it byte-for-byte against its `DASHBOARD_ISSUER`, so the two
+must match exactly; see [Issuer](#issuer) below.
 
 `email` and `preferred_username` carry the same value on purpose: `email` is the
 standard OIDC claim, and `preferred_username` is what the NLP API's existing
 `fetch_email_from_claims()` already reads off Azure AD B2C tokens, so that side
-needs no extraction changes. Both are added by `App\Auth\AccessToken`;
-league/oauth2-server builds the JWT itself and Passport exposes no other hook.
+needs no extraction changes.
 
-The same override supplies the `kid`. Without one, neither firebase/php-jwt's
-`JWK::parseKeySet()` nor PyJWT's `PyJWKClient` can look the key up — both fail
-outright.
+All of the above are added by `App\Auth\AccessToken`; league/oauth2-server builds
+the JWT itself and Passport exposes no other hook. Note that league 9 renamed the
+method that does it from `__toString()` to `toString()` — an override of the old
+name is *silently* ignored, and tokens go out signed and valid but with none of
+these claims. `tests/Feature/AccessTokenClaimsTest.php` guards that.
+
+### Issuer
+
+`iss` is `config('app.url')` with any trailing slash removed. That value differs
+per environment, so **`DASHBOARD_ISSUER` on the NLP API is a per-environment
+setting too**:
+
+| Environment | `iss` |
+| --- | --- |
+| Local (lando) | `https://dashboard.lndo.site` |
+| Production | `https://dashboard.witty.works` |
+
+The slash-stripping is not defensive padding: `APP_URL` is written *with* a
+trailing slash in `.env.example` and *without* one in a typical local `.env`, and
+PyJWT compares `iss` with plain string equality, so the two spellings are
+different issuers.
+
+**Deployment order matters.** The NLP API rejects a token that has no `iss` as
+soon as `DASHBOARD_ISSUER` is set (`MissingRequiredClaimError`), so this change
+must be live *before* that variable is set, never in the same release.
 
 `GET /api/userinfo` remains the source for the display name, and for an email
 that reflects a change made since the token was issued.
@@ -140,6 +167,15 @@ This is why `GET /oauth/authorize` deliberately carries no `auth` middleware:
 `AuthenticationException` that the handler renders as a redirect for any request
 that is not `expectsJson()`. A JSON 401 here would dead-end the flow, which is
 what the interim `browserLogin` did.
+
+That redirect does not happen by itself on Laravel 13. `Handler::unauthenticated()`
+used to fall back to `route('login')`; it now answers `noContent(401)` unless the
+exception carries a redirect. The `auth` middleware supplies one, so ordinary
+protected routes are unaffected — but Passport throws the exception directly, so
+`AuthServiceProvider` registers `AuthenticationException::redirectUsing(...)` to
+restore it. Note it is `AuthenticationException::redirectUsing()`, not
+`Authenticate::redirectUsing()`: the middleware keeps its callback on its own
+class, and setting that one leaves the flow returning 401.
 
 ### Logging out revokes extension tokens
 
@@ -217,10 +253,22 @@ php artisan migrate          # creates the five oauth_* tables
 php artisan passport:keys    # writes storage/oauth-{private,public}.key
 ```
 
-Passport 12 only *publishes* its migrations, it does not load them from the
-package, so the five `2016_06_01_*_create_oauth_*` files are committed to
+Passport only *publishes* its migrations, it does not load them from the package,
+so the five files (`2016_06_01_*_create_oauth_*` plus
+`2024_06_01_000001_create_oauth_device_codes_table`) are committed to
 `database/migrations` in this repo. `vendor:publish --tag=passport-migrations`
 has already been run; do not run it again or you will get duplicates.
+
+> Upgrading from Passport 12 is not a no-op migration. Passport 13 changed the
+> schema: `oauth_clients.id` became a **UUID** instead of an auto-increment
+> integer, `user_id` became a polymorphic `owner`, `redirect` became
+> `redirect_uris`, and the `personal_access_client` / `password_client` booleans
+> became a single `grant_types` column. The `oauth_personal_access_clients` table
+> is gone and `oauth_device_codes` is new. An environment carrying v12 tables
+> needs them dropped and recreated, which invalidates every issued token and
+> **changes the client ID** — so `EXTENSION_OAUTH_CLIENT_ID`,
+> `PASSPORT_FIRST_PARTY_CLIENTS`, the extension's `oauth_client_id`, and the NLP
+> API's expected `aud` all have to be updated together.
 
 `storage/*.key` is gitignored. Where the filesystem is ephemeral, set
 `PASSPORT_PRIVATE_KEY` / `PASSPORT_PUBLIC_KEY` instead of shipping the files.
@@ -251,11 +299,13 @@ then into `oauth_client_id` on each `BASE_URLS` entry in the extension's
 | `routes/oauth.php` | The four `/oauth` routes we serve |
 | `routes/wellknown.php` | `/.well-known/jwks.json` |
 | `config/passport.php` | Client provisioning, first-party list, TTLs, key overrides |
-| `app/Providers/AuthServiceProvider.php` | `Passport::ignoreRoutes()`, TTLs, `extension` guard |
+| `app/Providers/AuthServiceProvider.php` | `Passport::ignoreRoutes()`, TTLs, `extension` guard, consent view, login redirect |
 | `app/Auth/ExtensionUserResolver.php` | Passport token, else Microsoft id_token |
 | `app/Models/OAuthClient.php` | Consent-screen skip for first-party clients |
 | `app/Auth/OAuthSigningKey.php` | The signing key as a JWK; the one source of `kid` |
-| `app/Auth/AccessToken.php` | Token entity, adds the `kid` header |
+| `app/Auth/AccessToken.php` | Token entity: `kid` header, `iss`, email claims |
+| `app/Auth/OAuthIssuer.php` | The `iss` value; the one source of the issuer string |
+| `resources/views/oauth/authorize.blade.php` | Consent screen (Passport 13 ships none) |
 | `app/Http/Controllers/JwksController.php` | Public key as a JWK Set |
 | `app/Http/Controllers/UserInfoController.php` | `/api/userinfo` |
 | `app/Listeners/RevokeOAuthTokens.php` | Revokes tokens on dashboard logout |
@@ -280,9 +330,9 @@ into a `boot()` method — package providers boot before application ones:
   configured `client_id`. Passport tokens are RS256, verifiable with the key at
   `/.well-known/jwks.json`, and their `aud` is the OAuth client ID. A stock JWKS
   client works — `PyJWKClient(f"{base}/.well-known/jwks.json")` then
-  `jwt.decode(token, key, algorithms=["RS256"], audience=client_id)`, and
-  `fetch_email_from_claims()` finds `preferred_username` unchanged. Note there is
-  no `iss` claim to check against. That is an `nlp_api` change, outside this repo.
+  `jwt.decode(token, key, algorithms=["RS256"], audience=client_id, issuer=...)`,
+  and `fetch_email_from_claims()` finds `preferred_username` unchanged. That is an
+  `nlp_api` change, outside this repo.
 - **No scopes.** One client, one purpose, so every token carries full user
   access. Adding `Passport::tokensCan()` and `scopes:` middleware later needs the
   `extension` guard adjusted, since Office-SSO users have no Passport token for
