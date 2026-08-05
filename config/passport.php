@@ -21,6 +21,28 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Auto-granted Scopes
+    |--------------------------------------------------------------------------
+    |
+    | Scopes a first-party client may receive without the consent screen. Empty
+    | by default, and the application defines no scopes at all today, so an
+    | ordinary request asks for nothing and skips the prompt as before.
+    |
+    | This exists so that introducing a scope cannot silently widen what a
+    | first-party client is handed. A request carrying a scope that is not listed
+    | here goes through the normal consent path instead of being waved through on
+    | the strength of the client's identity alone.
+    |
+    | See App\Models\OAuthClient::skipsAuthorization().
+    |
+    */
+
+    'first_party_scopes' => array_values(array_filter(
+        array_map('trim', explode(',', (string) env('PASSPORT_FIRST_PARTY_SCOPES', '')))
+    )),
+
+    /*
+    |--------------------------------------------------------------------------
     | Browser Extension Client
     |--------------------------------------------------------------------------
     |

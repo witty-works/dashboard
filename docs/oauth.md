@@ -198,6 +198,29 @@ extension as a side effect of opening the Word add-in.
 > revocation to be immediate, the NLP API has to call back to the dashboard, and
 > the TTL should be cut in the meantime.
 
+### Skipping the consent screen
+
+A client skips the "…is requesting permission to access your account" prompt only
+when **both** hold:
+
+1. its ID is in `PASSPORT_FIRST_PARTY_CLIENTS`, and
+2. every scope in the request is in `PASSPORT_FIRST_PARTY_SCOPES`.
+
+The second condition is the one that matters later. Being first-party says who is
+asking; it says nothing about what they are asking for. Skipping on identity alone
+means the day someone introduces scopes, the extension silently receives whatever
+it puts in the request — the exact grant the consent screen exists to authorise.
+
+Both lists work out to today's behaviour: the application defines no scopes, so an
+ordinary request asks for nothing, and the extension skips the prompt as before.
+Introduce a scope and requests carrying it stop skipping until it is added to
+`PASSPORT_FIRST_PARTY_SCOPES` — a deliberate, reviewable config change rather than
+a silent widening.
+
+Returning "do not skip" is not the same as forcing a prompt. Passport falls back
+to its own `hasGrantedScopes()`, so a user who has already approved those scopes
+is still let through without one.
+
 ### Redirect URIs
 
 league/oauth2-server compares the `redirect_uri` against the registered list with
@@ -301,7 +324,7 @@ then into `oauth_client_id` on each `BASE_URLS` entry in the extension's
 | `config/passport.php` | Client provisioning, first-party list, TTLs, key overrides |
 | `app/Providers/AuthServiceProvider.php` | `Passport::ignoreRoutes()`, TTLs, `extension` guard, consent view, login redirect |
 | `app/Auth/ExtensionUserResolver.php` | Passport token, else Microsoft id_token |
-| `app/Models/OAuthClient.php` | Consent-screen skip for first-party clients |
+| `app/Models/OAuthClient.php` | Consent-screen skip: first-party **and** scope-bounded |
 | `app/Auth/OAuthSigningKey.php` | The signing key as a JWK; the one source of `kid` |
 | `app/Auth/AccessToken.php` | Token entity: `kid` header, `iss`, email claims |
 | `app/Auth/OAuthIssuer.php` | The `iss` value; the one source of the issuer string |
