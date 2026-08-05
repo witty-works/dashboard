@@ -23,6 +23,35 @@ them run `lando rebuild -y`.
 -   Go to the website and create an account
 -   Run `lando artisan lumki:setup` (answer yes for every question)
 
+## Switching between branches
+
+`vendor/`, `node_modules/`, `storage/framework/views/` and `bootstrap/cache/`
+are all gitignored, so they survive a `git checkout` and keep whatever versions
+the *previous* branch installed. Branches that differ in Laravel, Livewire or
+Vite therefore break in confusing ways until those are resynced:
+
+```bash
+lando composer install                 # vendor to this branch's lock
+lando npm ci                           # node_modules to this branch's lock
+lando artisan view:clear               # compiled Blade
+rm -f bootstrap/cache/*.php            # cached package manifest
+lando artisan package:discover
+```
+
+Two failures that look unrelated but are always this:
+
+-   `Class "Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys"
+    not found` — Blade compiled under a newer Livewire than the one installed.
+    Fixed by `view:clear`.
+-   `Class "Barryvdh\Debugbar\ServiceProvider" not found` — `bootstrap/cache`
+    still lists the old debugbar provider; v4 moved to
+    `Fruitcake\LaravelDebugbar`. Fixed by clearing the cache and re-discovering.
+
+Install node modules **inside Lando** (`lando npm ci`), not on the host. Vite's
+Rolldown ships platform-specific native bindings, so a host install on macOS
+leaves the Linux container without `@rolldown/binding-linux-*` and the build
+dies.
+
 ## Troubleshooting
 
 -   If you encounter issues with Docker containers, check Lando logs and restart containers as needed.
