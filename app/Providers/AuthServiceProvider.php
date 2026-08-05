@@ -11,6 +11,7 @@ use App\Policies\ConnectedAccountPolicy;
 use App\Policies\TeamPolicy;
 use DateInterval;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Passport\Passport;
@@ -63,6 +64,23 @@ class AuthServiceProvider extends ServiceProvider
         // Adds a `kid` to the access token header. Without it no standard JWKS
         // client can verify our tokens — see App\Auth\AccessToken.
         Passport::useAccessTokenEntity(AccessToken::class);
+
+        // Passport 13 ships no views and binds this contract nowhere by
+        // default, so AuthorizationController cannot even be constructed
+        // without it — /oauth/authorize 500s for every client, including the
+        // first-party one that never renders a consent screen.
+        Passport::authorizationView('oauth.authorize');
+
+        // Laravel 13 stopped falling back to route('login') for an
+        // AuthenticationException that carries no redirect — Handler::
+        // unauthenticated() now answers with a bare 401 instead. The auth
+        // middleware supplies its own redirect and is unaffected, but Passport's
+        // AuthorizationController throws the exception directly, so a guest
+        // following the extension's "Sign in" link would hit a 401 dead end
+        // rather than the login page and back into the flow.
+        AuthenticationException::redirectUsing(
+            fn (Request $request) => $request->expectsJson() ? null : route('login')
+        );
 
         Passport::tokensExpireIn(new DateInterval(config('passport.access_token_ttl')));
         Passport::refreshTokensExpireIn(new DateInterval(config('passport.refresh_token_ttl')));

@@ -442,4 +442,8 @@ Witty GPT peut être intégré à Microsoft Copilot ou à d\'autres solutions in
     'witty_issues' => 'Détection des questions de Witty',
     'witty_edits' => 'Modifications du Witty GPT',
     'copy_to_clipboard' => 'Copier dans le presse-papiers',
+    'authorize_title' => 'Demande d\'autorisation',
+    'authorize_intro' => ':client demande l\'autorisation d\'accéder à votre compte.',
+    'authorize_approve' => 'Autoriser',
+    'authorize_deny' => 'Annuler',
 ];

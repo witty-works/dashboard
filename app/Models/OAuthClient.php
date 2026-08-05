@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Auth\Authenticatable;
 use Laravel\Passport\Client as PassportClient;
 
 /**
@@ -21,9 +22,14 @@ class OAuthClient extends PassportClient
      * firstParty() is not usable for this — it means "personal access or
      * password grant client", and the extension is neither.
      *
-     * @return bool
+     * The $user and $scopes arguments are part of Passport 13's signature and
+     * are deliberately unused: membership of the configured list is a property
+     * of the client, not of who is signing in or what they are asking for. We
+     * request no scopes at all.
+     *
+     * @param  \Laravel\Passport\Scope[]  $scopes
      */
-    public function skipsAuthorization()
+    public function skipsAuthorization(Authenticatable $user, array $scopes): bool
     {
         return in_array(
             (string) $this->getKey(),

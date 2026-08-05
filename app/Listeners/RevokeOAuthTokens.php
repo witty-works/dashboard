@@ -4,8 +4,6 @@ namespace App\Listeners;
 
 use App\Models\User;
 use Illuminate\Auth\Events\Logout;
-use Laravel\Passport\RefreshTokenRepository;
-use Laravel\Passport\TokenRepository;
 
 /**
  * Revokes a user's OAuth tokens when they log out of the dashboard.
@@ -16,12 +14,6 @@ use Laravel\Passport\TokenRepository;
  */
 class RevokeOAuthTokens
 {
-    public function __construct(
-        protected TokenRepository $tokens,
-        protected RefreshTokenRepository $refreshTokens
-    ) {
-    }
-
     public function handle(Logout $event): void
     {
         // Illuminate\Auth\Events\Logout also fires for programmatic logouts, and
@@ -38,11 +30,17 @@ class RevokeOAuthTokens
             return;
         }
 
+        // Revoked through the models rather than a repository: Passport 13
+        // deleted RefreshTokenRepository and reduced TokenRepository to lookups.
+        //
         // cursor() because a long-lived account can accumulate a lot of expired
-        // rows, and this runs synchronously inside the logout request.
+        // rows, and this runs synchronously inside the logout request. The
+        // refresh token goes first — it is the one that could mint a new access
+        // token, so if this loop is interrupted the surviving half is the
+        // short-lived one.
         foreach ($event->user->tokens()->where('revoked', false)->cursor() as $token) {
-            $this->refreshTokens->revokeRefreshTokensByAccessTokenId($token->id);
-            $this->tokens->revokeAccessToken($token->id);
+            $token->refreshToken?->revoke();
+            $token->revoke();
         }
     }
 }

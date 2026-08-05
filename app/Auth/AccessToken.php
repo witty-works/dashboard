@@ -11,19 +11,27 @@ use League\OAuth2\Server\Entities\Traits\EntityTrait;
 use League\OAuth2\Server\Entities\Traits\TokenEntityTrait;
 
 /**
- * Passport's access token entity, with a `kid` in the JWT header.
+ * Passport's access token entity, with a `kid` header and email claims.
  *
- * league/oauth2-server emits no `kid`, which makes the token unusable with an
- * off-the-shelf JWKS client: both firebase/php-jwt's JWK::parseKeySet() and
- * PyJWT's PyJWKClient look the key up by `kid` and fail outright when the header
- * has none. Since the NLP API is meant to verify these tokens the same way it
- * already verifies Microsoft's, the header has to carry one.
+ * Two things league/oauth2-server does not emit, each of which a consumer
+ * needs:
  *
- * This deliberately re-uses AccessTokenTrait rather than extending Passport's
+ * - **`kid`**: without it no off-the-shelf JWKS client can verify our tokens.
+ *   Both firebase/php-jwt's JWK::parseKeySet() and PyJWT's PyJWKClient look the
+ *   key up by `kid` and fail outright when the header has none.
+ * - **`email`**: the NLP API identifies users by email; `sub` is our local user
+ *   id and means nothing to it.
+ *
+ * This re-uses AccessTokenTrait rather than extending Passport's
  * Bridge\AccessToken: the trait's $jwtConfiguration and $privateKey are private,
  * so a subclass could not reach them, but a class that uses the trait itself
- * can. Defining __toString() here overrides the trait's copy — the body is the
- * trait's private convertToJWT() plus the one extra header.
+ * can. Defining toString() here overrides the trait's copy — the body is the
+ * trait's private convertToJWT() plus the additions above.
+ *
+ * Note the method name. league/oauth2-server 8 spelled this `__toString()`; 9
+ * renamed it to `toString()`. The rename is silent for anyone overriding the old
+ * name — the trait's own method simply keeps winning, and tokens go out without
+ * any of the above.
  *
  * @see \Laravel\Passport\Bridge\AccessToken the class this replaces
  */
@@ -32,12 +40,17 @@ class AccessToken implements AccessTokenEntityInterface
     use AccessTokenTrait, EntityTrait, TokenEntityTrait;
 
     /**
-     * @param  string  $userIdentifier
+     * @param  non-empty-string|null  $userIdentifier
      * @param  \League\OAuth2\Server\Entities\ScopeEntityInterface[]  $scopes
      */
-    public function __construct($userIdentifier, array $scopes, ClientEntityInterface $client)
+    public function __construct(?string $userIdentifier, array $scopes, ClientEntityInterface $client)
     {
-        $this->setUserIdentifier($userIdentifier);
+        // Guarded rather than called unconditionally: setUserIdentifier() is
+        // typed non-empty-string in league 9, so passing the null of a
+        // client_credentials token through it is a TypeError.
+        if (! is_null($userIdentifier)) {
+            $this->setUserIdentifier($userIdentifier);
+        }
 
         foreach ($scopes as $scope) {
             $this->addScope($scope);
@@ -46,7 +59,7 @@ class AccessToken implements AccessTokenEntityInterface
         $this->setClient($client);
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
         $this->initJwtConfiguration();
 
@@ -57,14 +70,16 @@ class AccessToken implements AccessTokenEntityInterface
             ->issuedAt(new DateTimeImmutable())
             ->canOnlyBeUsedAfter(new DateTimeImmutable())
             ->expiresAt($this->getExpiryDateTime())
-            ->relatedTo((string) $this->getUserIdentifier())
+            // Matches the trait's own getSubjectIdentifier(): the user for a
+            // user token, the client for a client_credentials one, never an
+            // empty `sub`.
+            ->relatedTo($this->getUserIdentifier() ?? $this->getClient()->getIdentifier())
             ->withClaim('scopes', $this->getScopes());
 
-        // The NLP API identifies a user by email, and `sub` carries only our
-        // local user id — meaningless to it. Emitted under two names on purpose:
-        // `email` is the standard OIDC claim, and `preferred_username` is what
-        // the NLP API's existing fetch_email_from_claims() already reads off
-        // Azure AD B2C tokens, so that side needs no extraction changes.
+        // Emitted under two names on purpose: `email` is the standard OIDC
+        // claim, and `preferred_username` is what the NLP API's existing
+        // fetch_email_from_claims() already reads off Azure AD B2C tokens, so
+        // that side needs no extraction changes.
         if ($email = $this->userEmail()) {
             $builder = $builder
                 ->withClaim('email', $email)

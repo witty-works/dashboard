@@ -32,23 +32,42 @@ class CreateExtensionOAuthClientCommand extends Command
         $clientId = config('passport.extension.client_id');
         $client = $clientId ? OAuthClient::find($clientId) : null;
 
+        // A configured ID that resolves to nothing is an error, not an
+        // invitation to create a second client. Silently creating one would
+        // mint a fresh UUID while the shipped extension keeps sending the old
+        // one, and every login would fail with an unhelpful "client not found"
+        // long after this command reported success.
+        if ($clientId && ! $client) {
+            $this->error(sprintf(
+                'EXTENSION_OAUTH_CLIENT_ID is set to "%s" but no such client exists.',
+                $clientId
+            ));
+            $this->line('Clear the variable to provision a new client, or point it at the right database.');
+
+            return self::FAILURE;
+        }
+
+        $existed = (bool) $client;
         $client ??= new OAuthClient();
 
         $client->forceFill([
-            'user_id' => null,
             'name' => config('passport.extension.name'),
             // A public client. The extension ships to end users, so any secret
             // in it is readable by anyone who unzips the bundle — PKCE is what
             // authenticates the token exchange instead.
             'secret' => null,
             'provider' => 'users',
-            'redirect' => implode(',', $redirectUris),
-            'personal_access_client' => false,
-            'password_client' => false,
+            // Passport 13 replaced the `redirect` string and the
+            // personal_access_client/password_client booleans with these two
+            // array columns. Naming the grants explicitly also keeps the client
+            // to exactly the two we use: no password grant, no client
+            // credentials, no device code.
+            'redirect_uris' => $redirectUris,
+            'grant_types' => ['authorization_code', 'refresh_token'],
             'revoked' => false,
         ])->save();
 
-        $this->info(sprintf('%s OAuth client "%s".', $clientId ? 'Updated' : 'Created', $client->name));
+        $this->info(sprintf('%s OAuth client "%s".', $existed ? 'Updated' : 'Created', $client->name));
 
         $this->newLine();
         $this->line('  Client ID:     ' . $client->getKey());

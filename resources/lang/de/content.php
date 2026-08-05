@@ -444,4 +444,8 @@ Witty GPT kann in den Microsoft Copilot oder andere interne generative KI/LLM-LÃ
     'witty_issues' => 'Witty Probleme entdeckt',
     'witty_edits' => 'Witty GPT Ã„nderungen',
     'copy_to_clipboard' => 'In die Zwischenablage kopieren',
+    'authorize_title' => 'Zugriffsanfrage',
+    'authorize_intro' => ':client bittet um Zugriff auf Ihr Konto.',
+    'authorize_approve' => 'Zulassen',
+    'authorize_deny' => 'Abbrechen',
 ];
