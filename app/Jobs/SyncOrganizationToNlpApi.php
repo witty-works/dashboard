@@ -67,10 +67,6 @@ class SyncOrganizationToNlpApi extends AbstractSyncToNlpApi
         $data = [
             'id' => $team->posthogId(),
             'name' => $team->name,
-            // Billing was removed. The NLP API contract is unchanged: these are the
-            // values the previous "Stripe disabled" path already produced.
-            'plan' => self::PLAN,
-            'trial_ends_at' => null,
             'false_positives' => $falsePositives,
             'term_replacements' => $termReplacements,
             'domains' => $domains,

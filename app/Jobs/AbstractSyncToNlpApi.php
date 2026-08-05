@@ -22,12 +22,6 @@ abstract class AbstractSyncToNlpApi implements ShouldQueue
      */
     public $tries = 50;
 
-    /**
-     * Every account has the full feature set since billing was removed; the NLP
-     * API still expects a plan identifier, so it always gets this one.
-     */
-    public const PLAN = 'witty_enterprise';
-
     public function updateRules($url, $data)
     {
         $endpoint = config('app.nlp_api_endpoint');
