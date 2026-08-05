@@ -311,17 +311,18 @@ then into `oauth_client_id` on each `BASE_URLS` entry in the extension's
 | `app/Listeners/RevokeOAuthTokens.php` | Revokes tokens on dashboard logout |
 | `app/Console/Commands/CreateExtensionOAuthClientCommand.php` | `passport:extension-client` |
 
-Two pieces of wiring are load-order sensitive and will silently break if moved
-into a `boot()` method — package providers boot before application ones:
+One piece of wiring is load-order sensitive and will silently break if moved into
+a `boot()` method — package providers boot before application ones:
 
 - `AuthServiceProvider::register()` calls `Passport::ignoreRoutes()` so we own
   the route definitions. Passport's own file throttles `/oauth/token` at 60/min
   and exposes client-management endpoints this app has no UI for.
-- `SocialstreamServiceProvider::register()` sets
-  `Socialstream::$registersRoutes = false`. Socialstream declares a
-  `GET oauth/{provider}` wildcard that is registered *before* Passport's routes
-  and would otherwise swallow `GET oauth/authorize`. Its provider list has been
-  empty since Azure AD B2C was removed, so it serves nothing.
+
+This used to list a second item: `SocialstreamServiceProvider` had to disable
+`joelbutcher/socialstream`'s `GET oauth/{provider}` wildcard, which was
+registered before Passport's routes and would otherwise swallow
+`GET oauth/authorize`. That package has since been removed from the application
+entirely, so the collision is gone and so is the provider.
 
 ## Not done
 

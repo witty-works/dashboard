@@ -4,6 +4,7 @@ namespace App\Listeners;
 
 use App\Models\User;
 use Illuminate\Auth\Events\Logout;
+use Laravel\Passport\Passport;
 
 /**
  * Revokes a user's OAuth tokens when they log out of the dashboard.
@@ -33,14 +34,24 @@ class RevokeOAuthTokens
         // Revoked through the models rather than a repository: Passport 13
         // deleted RefreshTokenRepository and reduced TokenRepository to lookups.
         //
-        // cursor() because a long-lived account can accumulate a lot of expired
-        // rows, and this runs synchronously inside the logout request. The
-        // refresh token goes first — it is the one that could mint a new access
-        // token, so if this loop is interrupted the surviving half is the
-        // short-lived one.
-        foreach ($event->user->tokens()->where('revoked', false)->cursor() as $token) {
-            $token->refreshToken?->revoke();
-            $token->revoke();
-        }
+        // Refresh tokens are matched against *every* access token this user has,
+        // not just the unrevoked ones. league/oauth2-server's refresh grant does
+        // not look at the access token's revoked flag, so a refresh token whose
+        // access token was revoked by some other path still mints new access
+        // tokens for its full 30 days. Filtering the outer set would silently
+        // leave those behind.
+        //
+        // Two bulk statements rather than a loop: this runs synchronously inside
+        // the logout request, and an account that has been signing in for a year
+        // has a lot of rows. The subquery keeps the token ids in the database
+        // instead of loading them all into memory.
+        Passport::refreshTokenModel()::query()
+            ->whereIn('access_token_id', $event->user->tokens()->select('id'))
+            ->where('revoked', false)
+            ->update(['revoked' => true]);
+
+        $event->user->tokens()
+            ->where('revoked', false)
+            ->update(['revoked' => true]);
     }
 }
