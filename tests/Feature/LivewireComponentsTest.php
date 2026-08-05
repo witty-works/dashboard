@@ -76,16 +76,4 @@ class LivewireComponentsTest extends TestCase
         ];
     }
 
-    /**
-     * Takes `team` rather than `model`. Seat caps went with billing, so this is
-     * now purely about which team a user's licence is assigned to.
-     */
-    public function test_license_management_mounts(): void
-    {
-        $user = $this->signedInUser();
-        $this->actingAs($user);
-
-        Livewire::test(\App\Livewire\Teams\LicenseManagement::class, ['team' => $user->currentTeam])
-            ->assertOk();
-    }
 }

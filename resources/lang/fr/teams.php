@@ -40,8 +40,6 @@ return [
     'to_upgrade_contact_owner' => 'Pour passer à la version supériéure, contactez la personne responsable de votre équipe.',
     'select_license_count_aria_label' => 'sélectionner le nombre de licences',
     'invitation_removed' => 'Vous avez probablement déjà accepté l\'invitation. (Ou votre invitation a été retirée).',
-    'list_licenses' => 'Licences attribuées (:assigned_count/:license_count)',
-    'list_licenses_description' => 'Seules les personnes auxquelles une licence a été attribuée peuvent utiliser Witty. Actuellement, vous pouvez attribuer :license_count licences.',
     'active_license' => 'Licencié',
     'no_active_license' => 'Sans licence',
     'active_license_on_team' => 'Licencié dans l\'équipe ":team_name"',

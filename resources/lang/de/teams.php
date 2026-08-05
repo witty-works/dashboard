@@ -40,8 +40,6 @@ return [
     'select_license_count_aria_label' => 'Wählen die Anzahl der Lizenzen aus',
     'invitation_removed' => 'Du hast die Einladung wahrscheinlich bereits angenommen. (Oder deine Einladung wurde entfernt).',
     'not_enough_data_to_display' => 'Nicht genügend Daten, um ein Diagramm anzuzeigen',
-    'list_licenses' => 'Weise Lizenzen zu (:assigned_count/:license_count)',
-    'list_licenses_description' => 'Nur Teammitglieder mit einer zugewiesenen Lizenz können Witty verwenden. Du kannst :license_count Lizenzen zuweisen.',
     'active_license' => 'mit Lizenz',
     'no_active_license' => 'ohne Lizenz',
     'active_license_on_team' => 'mit Lizenz in :team_name',

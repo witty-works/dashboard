@@ -41,8 +41,6 @@ return [
     'select_license_count_aria_label' => 'select license count',
     'invitation_removed' => 'You probably have already accepted the invitation. (Or your invitation has been removed).',
     'update_subscription' => 'Update your subscription',
-    'list_licenses' => 'Assign licenses (:assigned_count assigned)',
-    'list_licenses_description' => 'Only users with a license assigned can use Witty.',
     'active_license' => 'Licensed',
     'no_active_license' => 'Unlicensed',
     'active_license_on_team' => 'Licensed on team ":team_name"',
