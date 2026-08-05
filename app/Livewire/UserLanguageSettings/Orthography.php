@@ -47,13 +47,11 @@ class Orthography extends Component
             abort(403);
         }
 
-        if ($this->model->isPremium()) {
-            $languageGuidelines = LanguageGuidelines::getLanguageGuidelines($this->model);
-            $languageGuidelines->inPlaceUpateArray('orthography', 'disabled_categories', $this->orthography);
+        $languageGuidelines = LanguageGuidelines::getLanguageGuidelines($this->model);
+        $languageGuidelines->inPlaceUpateArray('orthography', 'disabled_categories', $this->orthography);
 
-            $languageGuidelines->save();
-            $languageGuidelines->dispatchEventToPosthog((new \ReflectionClass($this))->getShortName());
-        }
+        $languageGuidelines->save();
+        $languageGuidelines->dispatchEventToPosthog((new \ReflectionClass($this))->getShortName());
 
         $this->dispatch('saved');
         $this->updateHelpHero();

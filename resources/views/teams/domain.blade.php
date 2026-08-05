@@ -8,11 +8,13 @@
     </div>
 </div>
 
+@if (config('app.llm_enabled'))
 <div>
     <div class="py-10">
         @livewire('teams.llm-alternatives', ['model' => $team])
     </div>
 </div>
+@endif
 
 <div>
     <div class="py-10">

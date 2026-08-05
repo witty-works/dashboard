@@ -9,7 +9,7 @@
 
     <x-slot name="form" submit="updateLanguageGuidelinesGenericMasculine">
         @php
-            $disabled = !$model->isPremium() || \App\Models\LanguageGuidelines::isForcedOnTeam($model, 'generic_masculine');
+            $disabled = \App\Models\LanguageGuidelines::isForcedOnTeam($model, 'generic_masculine');
         @endphp
 
         @foreach (\App\Models\GuidelinesInterface::GENDERED_ROLES_FORMAT as $key => $value)

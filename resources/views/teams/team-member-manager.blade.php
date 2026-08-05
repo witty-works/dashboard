@@ -11,28 +11,13 @@
             <x-slot name="title">{{ __('content.add_team_member') }}</x-slot>
 
             <x-slot name="description">
-                {{ trans_choice('content.add_a_new_team_member', $team->getUserLicensesCount(), ['max_count' => $team->getUserLicensesCount()]) }}
+                {{ __('content.add_a_new_team_member') }}
 
                 @if (session()->has('teams_invitation_request_message'))
                 <p role="alert" class="lato-small-text-p margin-bottom limit-reached">{{ session('teams_invitation_request_message') }}</p>
                 @endif
 
                 <!-- Limit reached -->
-                @if($team->getUserLicensesLimitReached(true))
-                <p role="alert" class="lato-small-text-p margin-bottom limit-reached">
-                    @if($team->getUserLicensesLimitReached())
-                    {!! __('teams.user_limit_reached_error') !!}
-                    @else
-                    {!! __('teams.pending_user_limit_reached_error') !!}
-                    @endif
-
-                    @if(Auth::user()->ownsTeam($team))
-                    <a role="button" class="button primary-button-red" href="{{ route('teams.subscription') }}">
-                        {{ __('teams.add_licenses') }}
-                    </a>
-                    @endif
-                </p>
-                @endif
             </x-slot>
 
             <x-slot name="form">
@@ -142,21 +127,6 @@
             <x-slot name="description">
                 {{ __('content.these_people_have_requested_an_invite') }}
 
-                @if($team->getUserLicensesLimitReached(true))
-                <p role="alert" class="lato-small-text-p margin-bottom limit-reached">
-                    @if($team->getUserLicensesLimitReached())
-                    {!! __('teams.user_limit_reached_error') !!}
-                    @else
-                    {!! __('teams.pending_user_limit_reached_error') !!}
-                    @endif
-
-                    @if(Auth::user()->ownsTeam($team))
-                    <a role="button" class="button primary-button-red" href="{{ route('teams.subscription') }}">
-                        {{ __('teams.add_licenses') }}
-                    </a>
-                    @endif
-                </p>
-                @endif
             </x-slot>
 
             <x-slot name="content">
@@ -218,21 +188,16 @@
                                             $label =  __('teams.no_active_license');
                                         }
                                     @endphp
-                                    @if (Gate::check('update', $team))
-                                    <a href="{{ route('teams.subscription') }}#license" class="ml-2 text-sm text-gray-400 underline">
-                                        {{ $label }}
-                                    </a>
-                                    @else
+                                    {{-- linked to the subscription page before billing was removed --}}
                                     <span class="ml-2 text-sm text-gray-400">
                                         {{ $label }}
                                     </span>
-                                    @endif
                                 </div>
                             </div>
 
                             <div class="flex items-center">
                                 <!-- Manage Team Member Role -->
-                                @if (Gate::check('update', $team) && $team->subscribed() && Laravel\Jetstream\Jetstream::hasRoles())
+                                @if (Gate::check('update', $team) && Laravel\Jetstream\Jetstream::hasRoles())
                                     <button class="ml-2 text-sm text-gray-400 underline" wire:click="manageRole('{{ $user->id }}')">
                                         {{ __('content.'.Laravel\Jetstream\Jetstream::findRole($user->membership->role)->key) }}
                                     </button>

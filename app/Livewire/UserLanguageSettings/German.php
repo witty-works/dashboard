@@ -65,10 +65,6 @@ class German extends Component
             abort(403);
         }
 
-        if (!$this->model->isPremium()) {
-            return;
-        }
-
         $languageGuidelines = LanguageGuidelines::getLanguageGuidelines($this->model);
 
         $languageGuidelines->german_gender_ending = $this->german_gender_ending;

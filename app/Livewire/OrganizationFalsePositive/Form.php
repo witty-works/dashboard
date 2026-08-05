@@ -96,11 +96,6 @@ class Form extends Component
                 throw ValidationException::withMessages(['false_positive' => $message]);
             }
         } else {
-            if ($this->model->getFalsePositivesLimitReached()) {
-                $message = __('guidelines.false_positive_limit_reached_error', ['max_count' => $this->model->getFalsePositivesCount()]);
-                throw ValidationException::withMessages(['false_positive' => $message]);
-            }
-
             $falsePositive = new FalsePositive();
         }
 

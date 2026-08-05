@@ -37,9 +37,6 @@ class TeamAnalytics extends Component
         $this->resetErrorBag();
 
         $this->team_analytics = (bool) $this->model->team_analytics;
-        if (!$this->model->isPremium()) {
-            $this->team_analytics = true;
-        }
     }
 
     public function updateTeamsAnalytics()
@@ -48,10 +45,6 @@ class TeamAnalytics extends Component
 
         if (Auth::user()->id !== $this->model->id) {
             abort(403);
-        }
-
-        if (!$this->model->isPremium()) {
-            $this->team_analytics = true;
         }
 
         $this->model->team_analytics = (bool) $this->team_analytics;

@@ -9,11 +9,8 @@
         <thead>
             <tr>
             <th>Name</th>
-            <th>Subscribed</th>
-            <th>Team Plan</th>
             <th>Team License</th>
-            <th>Licenses</th>
-            <th>Trial Ends At</th>
+            <th>Team</th>
             <th>Roles</th>
             <th>Actions</th>
             </tr>
@@ -25,18 +22,6 @@
                 <a href="mailto:{{ $user->email }}">{{ $user->name }}</a>
             </td>
             <td class="p-2">
-                {{ $user->isPremium() ? 'yes' : 'no' }}
-            </td>
-            <td class="p-2">
-                @if($user->subscribed())
-                    {{ $user->currentteam->subscription()->planName() }}
-                @elseif($user->currentTeam && ($user->currentTeam->onGenericTrial() || $user->currentTeam->hasExpiredGenericTrial()))
-                    {{ __('stripe.witty_teams_trial') }}
-                @else
-                    {{ __('stripe.no_plan')}}
-                @endif
-            </td>
-            <td class="p-2">
                 {{ $user->licenseTeam ? $user->licenseTeam->name : '-' }}
             </td>
             <td class="p-2">
@@ -44,15 +29,8 @@
                     {{ $user->currentTeam->name }}
                     (
                     {{ ($user->currentTeam->owner->id === $user->id ? 'Owner, ' : '') }}
-                    {{ $user->currentTeam->getTotalUserWithInvitationsCount() }} / {{ $user->currentTeam->getUserLicensesCount() }}
+                    {{ $user->currentTeam->getTotalUserWithInvitationsCount() }} members
                     )
-                @endif
-            </td>
-            <td class="p-2">
-                @if($user->currentTeam)
-                    <span style="{{ $user->currentTeam->hasExpiredGenericTrial() ? 'color: red' : '' }}">
-                    {{ $user->currentTeam->trial_ends_at ? $user->currentTeam->trial_ends_at->format('Y-m-d') : '' }}
-                    </span>
                 @endif
             </td>
             <td class="p-2">

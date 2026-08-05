@@ -31,19 +31,9 @@ class SyncUserToNlpApi extends AbstractSyncToNlpApi
 
     public function getData(User $user)
     {
-        $subscribed = $user->licenseTeam && $user->licenseTeam->isPremium();
+        $termReplacements = $this->getTermReplacements($user->termReplacements);
 
-        $termReplacements = $this->getTermReplacements(
-            $user->termReplacements,
-            $subscribed,
-            $user->getTermReplacementsCount()
-        );
-
-        $falsePositives = $this->getFalsePositives(
-            $user->falsePositives,
-            $subscribed,
-            $user->getFalsePositivesCount()
-        );
+        $falsePositives = $this->getFalsePositives($user->falsePositives);
 
         $domains = $this->getDomains($user->domains, 'deny');
 
@@ -62,7 +52,6 @@ class SyncUserToNlpApi extends AbstractSyncToNlpApi
             'id' => $user->posthogId(),
             'email' => $user->email,
             'name' => $user->name,
-            'plan' => $user->planId() ?? "none",
             'organization_id' => $user->posthogTeamId(),
             'false_positives' => $falsePositives,
             'term_replacements' => $termReplacements,
@@ -70,7 +59,7 @@ class SyncUserToNlpApi extends AbstractSyncToNlpApi
             'config' => $config,
             'notifications' => $user->getNotificationCount(),
             'has_consented_to_mailing' => (bool) $user->has_consented_to_mailing,
-            'team_analytics' => $subscribed ? $user->team_analytics !== false : true,
+            'team_analytics' => $user->team_analytics !== false,
         ];
 
         $data['config_hash'] = md5(serialize($data));

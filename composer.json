@@ -3,37 +3,36 @@
     "type": "project",
     "description": "The Witty Dashboard",
     "require": {
-        "php": "^8.2",
-        "barryvdh/laravel-debugbar": "^3.6",
-        "bensampo/laravel-embed": "^2.0",
-        "firebase/php-jwt": "^6.11",
+        "php": "^8.4",
+        "barryvdh/laravel-debugbar": "^4.0",
+        "bensampo/laravel-embed": "^3.0",
+        "firebase/php-jwt": "^7.0",
         "guzzlehttp/guzzle": "^7.0.1",
-        "jfcherng/php-diff": "^6.16",
-        "joelbutcher/socialstream": "^6.0",
-        "kineticamobile/lumki": "dev-main",
-        "laravel/cashier": "^15.0",
-        "laravel/framework": "^11",
+        "jfcherng/php-diff": "^7.0",
+        "kineticamobile/lumki": "^0.2.0",
+        "laravel/framework": "^13.0",
         "laravel/jetstream": "^5.0",
         "laravel/sanctum": "^4.0",
         "laravel/socialite": "^5.2",
-        "laravel/tinker": "^2.5",
+        "laravel/tinker": "^3.0",
         "livewire/livewire": "^3.4",
         "mcamara/laravel-localization": "^2.0",
         "p3k/emoji-detector": "^1.0.0",
         "platformsh/laravel-bridge": "^2.2",
-        "posthog/posthog-php": "^3.0",
+        "posthog/posthog-php": "^4.0",
         "sentry/sentry-laravel": "^4.0",
         "socialiteproviders/manager": "^4.8",
         "spatie/laravel-failed-job-monitor": "^4.3",
         "spatie/laravel-google-fonts": "^1.2",
         "spatie/laravel-rate-limited-job-middleware": "^2.2",
         "spatie/laravel-slack-alerts": "^1.1",
-        "symfony/http-client": "^7.0",
-        "themsaid/laravel-langman": "dev-master"
+        "symfony/http-client": "^8.0"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^3.0",
-        "tio/laravel": "dev-remove-array-align-laravel-10"
+        "fakerphp/faker": "^1.23",
+        "mockery/mockery": "^1.6",
+        "phpunit/phpunit": "^12.0"
     },
     "autoload": {
         "psr-4": {
@@ -72,17 +71,5 @@
         "optimize-autoloader": true,
         "preferred-install": "dist",
         "sort-packages": true
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "git@github.com:witty-works/laravel-langman.git"
-        },
-        {
-            "type": "vcs",
-            "url": "git@github.com:lsmith77/laravel.git"
-        }
-    ]
+    }
 }

@@ -128,13 +128,6 @@
                     {{ __('content.manage_members') }}
                 </x-nav-link>
 
-                @if(config('stripe.enabled'))
-                <x-nav-link class="wittyworks-navigation-link-wrapper" href="{{ route('teams.subscription') }}" :active="request()->routeIs('teams.subscription')">
-                    <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/dollar.svg') }}" alt="" />
-                    {{ __('content.subscription') }}
-                </x-nav-link>
-                @endif
-
                 @if(config('posthog.enabled'))
                     <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('teams.analytics') }}" :active="request()->routeIs('teams.analytics')">
                         <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/analytics.svg') }}" alt="" />
@@ -160,6 +153,7 @@
         @endif
 
 
+        @if (config('app.llm_enabled'))
         <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('prompt') }}">
             <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/prompt.svg') }}" alt="" />
             {{ __('content.witty_prompt') }}
@@ -167,6 +161,7 @@
                 @include('partials.beta')
             </span>
         </x-nav-link>
+        @endif
 
         <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('academy') }}" :active="request()->routeIs('academy')">
             <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/bulb.svg') }}" alt="" />
@@ -190,12 +185,6 @@
 
     @if(config('lumki.show_lumki') || app('impersonate')->isImpersonating())
         @lumki
-
-        @can(config('lumki.lumkiPermission'))
-        <a href="{{ route('subscriptions') }}" class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out">
-            Subscriptions
-        </a>
-        @endcan
     @endif
 
 @else

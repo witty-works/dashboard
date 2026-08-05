@@ -31,22 +31,14 @@ class SyncOrganizationToNlpApi extends AbstractSyncToNlpApi
 
     public function getData(Team $team)
     {
-        $termReplacements = $this->getTermReplacements(
-            $team->termReplacements,
-            $team->isPremium(),
-            $team->getTermReplacementsCount()
-        );
+        $termReplacements = $this->getTermReplacements($team->termReplacements);
 
-        $falsePositives = $this->getFalsePositives(
-            $team->falsePositives,
-            $team->isPremium(),
-            $team->getFalsePositivesCount()
-        );
+        $falsePositives = $this->getFalsePositives($team->falsePositives);
 
         $domains = $this->getDomains($team->domains, $team->getDomainListType());
 
         $guidelines = LanguageGuidelines::getLanguageGuidelines($team);
-        $config = self::getConfig($guidelines, !$team->isPremium());
+        $config = self::getConfig($guidelines, false);
 
         $config['categories']['orthography'] = [
             'value' => !in_array('orthography', $guidelines->disabled_categories),
@@ -61,20 +53,20 @@ class SyncOrganizationToNlpApi extends AbstractSyncToNlpApi
         $config['force_categories'] = $guidelines->disabled_categories_force;
 
         $config['store_context'] = [
-            'value' => $team->isPremium() ? (bool) $team->store_context : true,
+            'value' => (bool) $team->store_context,
             'status' => 'force',
         ];
 
+        // An installation whose backend has no LLM support reports every team as
+        // opted out, whatever the team's own setting says.
         $config['llm_alternatives'] = [
-            'value' => (bool) $team->llm_alternatives,
+            'value' => config('app.llm_enabled') && (bool) $team->llm_alternatives,
             'status' => 'force',
         ];
 
         $data = [
             'id' => $team->posthogId(),
             'name' => $team->name,
-            'plan' => $team->planId() ?? "none",
-            'trial_ends_at' => $team->subscribed() ? null : $team->trial_ends_at,
             'false_positives' => $falsePositives,
             'term_replacements' => $termReplacements,
             'domains' => $domains,

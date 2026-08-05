@@ -36,9 +36,6 @@ class AnalyticsUserAccess extends Component
         $this->resetErrorBag();
 
         $this->user_access_to_team_analytics = (bool) $this->model->user_access_to_team_analytics;
-        if (!$this->model->isPremium()) {
-            $this->user_access_to_team_analytics = true;
-        }
     }
 
     public function updateUserAccessToTeamAnalytics()
@@ -48,10 +45,6 @@ class AnalyticsUserAccess extends Component
         }
 
         $this->validate();
-
-        if (!$this->model->isPremium()) {
-            $this->user_access_to_team_analytics = true;
-        }
 
         $this->model->user_access_to_team_analytics = (bool) $this->user_access_to_team_analytics;
         $this->model->save();

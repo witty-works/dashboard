@@ -29,7 +29,7 @@ class SendEventToPosthog implements ShouldQueue
     protected $event;
     protected $properties;
 
-    public function __construct(User $user, $event, $properties, $isEdit = false, Team $team = null)
+    public function __construct(User $user, $event, $properties, $isEdit = false, ?Team $team = null)
     {
         $this->id = $user->id;
         $this->event = $event;

@@ -65,18 +65,12 @@ abstract class AbstractSyncToNlpApi implements ShouldQueue
         return $response;
     }
 
-    protected function getFalsePositives($falsePositives, $subscribed, $count)
+    protected function getFalsePositives($falsePositives)
     {
-        $data = $falsePositives->pluck('false_positive')->toArray();
-
-        if (!$subscribed) {
-            $data = array_slice($data, 0, $count);
-        }
-
-        return $data;
+        return $falsePositives->pluck('false_positive')->toArray();
     }
 
-    protected function getTermReplacements($termReplacements, $subscribed, $count)
+    protected function getTermReplacements($termReplacements)
     {
         $data = [];
         foreach ($termReplacements as $termReplacement) {
@@ -103,10 +97,6 @@ abstract class AbstractSyncToNlpApi implements ShouldQueue
             foreach ($languageCodes as $languageCode) {
                 $data[$termReplacement->term . '|' . $languageCode] = $termReplacementData;
             }
-        }
-
-        if (!$subscribed) {
-            $data = array_slice($data, 0, $count);
         }
 
         return $data;

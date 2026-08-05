@@ -3,9 +3,7 @@
         {!! __('guidelines.language_settings_label') !!}
     </h1>
 
-    @if($user->isPremium())
     @livewire('user-language-settings.intro', ['model' => $user])
-    @endif
 
     @livewire('user-language-settings.language', ['model' => $user])
 

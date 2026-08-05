@@ -74,18 +74,15 @@ class Form extends Component
         return $languageCodes;
     }
 
-    protected function cleanValues($subscribed)
+    protected function cleanValues()
     {
         $this->term = trim($this->term);
         $this->replacement = trim($this->replacement);
-        if (!$subscribed) {
-            $this->matching_type = 'case_insensitive';
-        }
     }
 
     public function render()
     {
-        $this->cleanValues($this->model->isPremium());
+        $this->cleanValues();
 
         $params = ['language_codes' => $this->getLanguageCodes()];
         return view('livewire.organization-term-replacement.form', $params);
@@ -136,7 +133,7 @@ class Form extends Component
     public function storeTermReplacement()
     {
         $this->validate();
-        $this->cleanValues($this->model->isPremium());
+        $this->cleanValues();
 
         if (!Auth::user()->hasTeamPermission($this->model, 'edit_guidelines')) {
             abort(403);
@@ -173,13 +170,6 @@ class Form extends Component
                 throw ValidationException::withMessages(['term' => $message]);
             }
         } else {
-            if ($this->model->getTermReplacementsLimitReached()) {
-                $message = __(
-                    'guidelines.term_replacement_limit_reached_error',
-                    ['max_count' => $this->model->getTermReplacementsCount()]
-                );
-                throw ValidationException::withMessages(['term' => $message]);
-            }
 
             $termReplacement = new TermReplacement();
         }

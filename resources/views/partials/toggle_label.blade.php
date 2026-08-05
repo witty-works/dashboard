@@ -1,11 +1,5 @@
 @if(!empty($disabled && !is_bool($disabled)))
-  @if($disabled === 'locked' || $disabled === 'locked_upgrade')
+  @if($disabled === 'locked')
       @include('partials.locked')
   @endif
-  @if($disabled !== 'locked')
-      <div class="p-3 whitespace-nowrap">
-        @include('partials.witty-teams-only')
-      </div>
-  @endif
-
 @endif

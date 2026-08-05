@@ -11,7 +11,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use JoelButcher\Socialstream\HasConnectedAccounts;
+use App\Models\Concerns\HasConnectedAccounts;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Spatie\Permission\Traits\HasRoles;
 use Lab404\Impersonate\Models\Impersonate;
@@ -25,10 +25,19 @@ class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens;
     use HasFactory;
-    use HasRoles;
     use Impersonate;
-    use HasTeams;
     use HasConnectedAccounts;
+
+    /**
+     * spatie/laravel-permission 8 added HasRoles::teams(), which collides with
+     * Jetstream's. Its own teams feature is not enabled here (config/permission.php
+     * sets no 'teams' key), so that method is a stub that deliberately returns no
+     * rows — Jetstream's real relation wins.
+     */
+    use HasRoles, HasTeams {
+        HasTeams::teams insteadof HasRoles;
+    }
+
     use Notifiable;
     use TwoFactorAuthenticatable;
     use GuidelinesTrait;
@@ -194,66 +203,6 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->licenseTeam->id === $team->id;
     }
 
-    public function subscribed($type = 'default', $price = null)
-    {
-        $team = $this->currentTeam;
-        if (!$team) {
-            return false;
-        }
-
-        return $team->subscribed($type, $price);
-    }
-
-    public function subscription($type = 'default')
-    {
-        $team = $this->currentTeam;
-        if (!$team) {
-            return null;
-        }
-
-        return $team->subscription($type);
-    }
-
-    protected function getStripeConfig($key)
-    {
-        $plan = $this->planId() ?? 'witty_free';
-        $plan = str_replace('_trial', '', $plan);
-        return config('stripe.plans.' . $plan . '.' . $key);
-    }
-
-    public function getTermReplacementsCount()
-    {
-        return $this->getStripeConfig('features.user_term_replacements.count');
-    }
-
-    public function getFalsePositivesCount()
-    {
-        return $this->getStripeConfig('features.user_false_positives.count');
-    }
-
-    public function isPremium()
-    {
-        $team = $this->currentTeam;
-        if (!$team) {
-            return false;
-        }
-
-        return $team->isPremium();
-    }
-
-    public function planId()
-    {
-        // If Stripe is disabled, all users get witty_enterprise
-        if (!config('stripe.enabled')) {
-            return 'witty_enterprise';
-        }
-        $team = $this->licenseTeam;
-        if ($team) {
-            return $team->planId();
-        }
-        return null;
-    }
-
     public function applyAcceptedInvitiations()
     {
         # are there any remaining invitations that were previously accept?
@@ -340,7 +289,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return Kpi::getWritingStreakPast30Days($this);
     }
 
-    public function getOrganizationUsers($owners = false, $subscribed = false)
+    public function getOrganizationUsers($owners = false)
     {
         $query = User::where('users.email', '!=', $this->email)
             ->where('users.id', '!=', $this->id)
@@ -352,10 +301,6 @@ class User extends Authenticatable implements MustVerifyEmail
                 ->whereColumn('users.id', 'teams.user_id');
         }
 
-        if ($subscribed) {
-            $query->join('subscriptions', 'subscriptions.team_id', '=', 'users.current_team_id');
-        }
-
         return $query->get();
     }
 
@@ -363,7 +308,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         $clients = [];
         /**
-         * @var \JoelButcher\Socialstream\ConnectedAccount $connectedAccount
+         * @var \App\Models\ConnectedAccount $connectedAccount
          */
         foreach ($this->connectedAccounts as $connectedAccount) {
             if ($connectedAccount->provider == OAuthController::OFFICE_PROVIDER) {
@@ -385,8 +330,6 @@ class User extends Authenticatable implements MustVerifyEmail
             'how_did_you_find' => $this->found,
             'has_witty_account' => $true,
             'has_consented_to_mailing' => $this->has_consented_to_mailing ? $true : $false,
-            'has_accessed_stripe' => $this->has_accessed_stripe ? $true : $false,
-            'witty_plan' => $this->planId() ?? 'unlicensed',
             'hs_language' => $this->language,
             'dashboard_id' => $this->posthogId(),
             'team_dashboard_id' => $this->posthogTeamId(),
@@ -412,7 +355,6 @@ class User extends Authenticatable implements MustVerifyEmail
         // so in that case it will simply sync the data of the team they most recently used
         $personalTeam = $this->personalTeam();
         if ($personalTeam) {
-            $data['witty_trial_ends_at'] = $personalTeam->trial_ends_at ? $personalTeam->trial_ends_at->format('Y-m-d') : null;
             $data['has_team_language_rules'] = $personalTeam->hasLanguageRules() ? $true : $false;
             $data['has_team_privacy_set'] = $personalTeam->hasConfiguredPrivacy() ? $true : $false;
             $data['team_dictionary_count'] = $personalTeam->termReplacements->count();

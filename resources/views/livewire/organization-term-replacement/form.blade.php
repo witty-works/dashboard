@@ -6,11 +6,7 @@
 
     <x-slot name="description">
         <p aria-describedby="term_replacements">
-            @if($model->getFalsePositivesLimitReached() && Auth::user()->ownsTeam($model) && !$model->isPremium())
-                {!! __('guidelines.term_replacement_limit_reached', ['max_count' => $model->getTermReplacementsCount(), 'url' => route('teams.subscription')]) !!}
-            @else
                 {!! Str::markdown(__('guidelines.create_new_term_replacement_description')) !!}
-            @endif
         </p>
     </x-slot>
 
@@ -57,8 +53,7 @@
                       :options="\App\Models\TermReplacement::MATCHING_TYPES"
                       class="mt-1 block w-full"
                       wire:model="matching_type"
-                      wire:change="showHideWordType"
-                      :disabled="!$model->isPremium()" />
+                      wire:change="showHideWordType" />
             <x-input-error for="matching_type" class="mt-2" />
             <x-input-error for="word_type" class="mt-2" />
         </div>
@@ -70,8 +65,7 @@
                 <x-select id="word_type"
                           :options="\App\Models\TermReplacement::WORD_TYPES"
                           class="mt-1 block w-full"
-                          wire:model="word_type"
-                          :disabled="!$model->isPremium()" />
+                          wire:model="word_type" />
             </div>
         @endif
 

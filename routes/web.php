@@ -4,8 +4,6 @@ use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\Livewire\OrganizationGuidelinesController;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\StripeController;
-use App\Http\Controllers\WebhookController;
 
 /*
 |------------------
@@ -28,14 +26,14 @@ use Laravel\Jetstream\Jetstream;
 
 /*
 |------------------
-| SOCIALSTREAM
+| SOCIAL AUTH
 |------------------
 */
 use App\Http\Controllers\OAuthController;
 use App\Http\Controllers\WelcomeController;
 /*
 |------------------
-| \SOCIALSTREAM
+| \SOCIAL AUTH
 |------------------
 */
 
@@ -89,10 +87,8 @@ Route::group(
                 Route::get('/', [WelcomeController::class, 'show'])->name('root');
 
 
-                Route::get('/prompt', [PromptController::class, 'show'])->name('prompt');
-
-                if (config('stripe.enabled')) {
-                    Route::get('/subscribe', [StripeController::class, 'subscribe'])->name('stripe.subscribe');
+                if (config('app.llm_enabled')) {
+                    Route::get('/prompt', [PromptController::class, 'show'])->name('prompt');
                 }
 
                 Route::post('/user/onboarding', [UserProfileController::class, 'storeOnboarding'])
@@ -118,10 +114,6 @@ Route::group(
                 if (Jetstream::hasTeamFeatures()) {
                     Route::get('/team/show', [TeamController::class, 'show'])->name('teams.show');
                     Route::put('/current-team', [CurrentTeamController::class, 'update'])->name('current-team.update');
-                    if (config('stripe.enabled')) {
-                        Route::get('/team/subscription', [StripeController::class, 'show'])->name('teams.subscription');
-                    }
-
                     Route::get('/team-invitations/{invitation}/accept', [TeamInvitationController::class, 'accept'])
                         ->middleware(['auth'])
                         ->name('team-invitations.accept');
@@ -150,15 +142,6 @@ Route::group(
                     if (config('posthog.enabled')) {
                         Route::get('/team/analytics', [AnalyticsController::class, 'organization'])->name('teams.analytics');
                     }
-
-                    $prefix = config('lumki.prefix') ?? "lumki";
-                    $lumkiPermission = config('lumki.lumkiPermission') ?? "manage users";
-                    $middleware = config('lumki.middleware') ?? ["auth:sanctum", "web", "can:$lumkiPermission"];
-                    Route::prefix($prefix)->middleware($middleware)->group(function () {
-                        if (config('stripe.enabled')) {
-                            Route::get('/subscriptions', [StripeController::class, 'subscriptions'])->name('subscriptions');
-                        }
-                    });
                 }
             });
         });
@@ -167,34 +150,16 @@ Route::group(
         | \JETSTREAM LIVEWIRE
         |------------------
         */
-
-        /*
-        |------------------
-        | CASHIER
-        |------------------
-        */
-
-        if (config('stripe.enabled')) {
-            Route::middleware(['auth:sanctum'])->group(function () {
-                Route::get('/stripe/portal', [StripeController::class, 'portal'])->name('stripe.portal');
-            });
-        }
-
-        /*
-        |------------------
-        | /CASHIER
-        |------------------
-        */
     }
 );
 
 
 /*
 |------------------
-| SOCIALSTREAM
+| SOCIAL AUTH
 |------------------
 */
-Route::group(['middleware' => config('socialstream.middleware', ['web'])], function () {
+Route::group(['middleware' => config('social_auth.middleware', ['web'])], function () {
 
     Route::get('/team-invitations/{invitation}', [TeamInvitationController::class, 'acceptSigned'])
         ->middleware(['signed'])
@@ -213,20 +178,13 @@ Route::group(['middleware' => config('socialstream.middleware', ['web'])], funct
 
 /*
 |------------------
-| \SOCIALSTREAM
+| \SOCIAL AUTH
 |------------------
 */
 
-if (config('stripe.enabled')) {
-    Route::post(
-        '/stripe/webhook',
-        [WebhookController::class, 'handleWebhook']
-    )->name('cashier.webhook');
-}
-
 
 Route::fallback(function () {
-    return view('errors.404');
+    return response()->view('errors.404', [], 404);
 });
 
 if (config('app.browsers')) {

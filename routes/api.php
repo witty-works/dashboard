@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\UserGuidelinesApiController;
-use App\Http\Controllers\OAuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,13 +16,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 if (config('app.browsers')) {
-    Route::group([
-        'excluded_middleware' => ['ensureStateful'],
-    ], function () {
-        Route::post('/refresh-token', [OAuthController::class, 'accessTokenFromRefreshToken'])
-            ->name('browser.refresh_token');
-    });
-
     Route::group([
         'prefix' => '/user',
         'excluded_middleware' => ['ensureStateful'],

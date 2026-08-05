@@ -53,7 +53,7 @@ class SwitchToTeam
         $team = $ownedTeams->first();
         $user->switchTeam($team);
 
-        if ($user->licenseTeam === null && !$team->getUserLicensesLimitReached()) {
+        if ($user->licenseTeam === null) {
             $user->license_team_id = $team->id;
             $user->save();
         }

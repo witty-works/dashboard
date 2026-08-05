@@ -188,6 +188,24 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Witty GPT
+    |--------------------------------------------------------------------------
+    |
+    | Witty GPT reviews LLM responses through the NLP API. Not every backend
+    | this dashboard is deployed against supports LLMs, so the whole feature can
+    | be switched off for an installation: the /prompt route is not registered,
+    | the navigation entry and the per-team toggle are hidden, and teams are
+    | reported to the NLP API as having LLM alternatives disabled.
+    |
+    | Teams still opt in individually via the team privacy settings; this is the
+    | installation-wide switch that sits above that.
+    |
+    */
+
+    'llm_enabled' => (bool) env('APP_LLM_ENABLED', true),
+
+    /*
+    |--------------------------------------------------------------------------
     | Autoloaded Service Providers
     |--------------------------------------------------------------------------
     |
@@ -239,10 +257,9 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\FortifyServiceProvider::class,
         App\Providers\JetstreamServiceProvider::class,
-        App\Providers\SocialstreamServiceProvider::class,
+        App\Providers\SocialAuthServiceProvider::class,
         SocialiteProviders\Manager\ServiceProvider::class,
-        Themsaid\Langman\LangmanServiceProvider::class,
-        Barryvdh\Debugbar\ServiceProvider::class,
+        App\Support\Langman\LangmanServiceProvider::class,
 
     ],
 
@@ -298,7 +315,6 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
-        'Debugbar' => Barryvdh\Debugbar\Facades\Debugbar::class,
     ],
 
 ];

@@ -3,19 +3,14 @@
 namespace App\Providers;
 
 use App\Events\InvitedTeamMember;
-use App\Events\SubscriptionCancelled;
-use App\Events\SubscriptionCreated;
-use App\Events\SubscriptionUpdated;
 use App\Events\UserCompanyUpdated;
 use App\Events\UserCreated;
 use App\Events\UserDeleted;
 use App\Events\UserUpdated;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use App\Listeners\PosthogBilling;
 use App\Listeners\PosthogReset;
 use App\Listeners\PostHogUpdateOrganization;
 use App\Listeners\PostHogUpdateUser;
-use App\Listeners\SyncStartRenwalDates;
 use App\Listeners\TeamMemberAddedSlackAlert;
 use App\Listeners\TeamMemberInvitedSlackAlert;
 use App\Listeners\UpdateCurrentTeam;
@@ -29,7 +24,6 @@ use Laravel\Jetstream\Events\TeamUpdated;
 use Laravel\Jetstream\Events\TeamDeleted;
 use Laravel\Jetstream\Events\TeamMemberAdded;
 use Laravel\Jetstream\Events\TeamMemberRemoved;
-use Laravel\Cashier\Events\WebhookReceived;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -87,27 +81,6 @@ class EventServiceProvider extends ServiceProvider
         ],
         Logout::class => [
             PosthogReset::class,
-        ],
-        WebhookReceived::class => [
-            PosthogBilling::class,
-        ],
-        SubscriptionCreated::class => [
-            UpdateOrganizationGuidelines::class,
-            PostHogUpdateUser::class,
-            PostHogUpdateOrganization::class,
-            SyncStartRenwalDates::class,
-        ],
-        SubscriptionUpdated::class => [
-            UpdateOrganizationGuidelines::class,
-            PostHogUpdateUser::class,
-            PostHogUpdateOrganization::class,
-            SyncStartRenwalDates::class,
-        ],
-        SubscriptionCancelled::class => [
-            UpdateOrganizationGuidelines::class,
-            PostHogUpdateUser::class,
-            PostHogUpdateOrganization::class,
-            SyncStartRenwalDates::class,
         ],
     ];
 
