@@ -11,6 +11,8 @@ interface GuidelinesInterface
         '/in' => 'guidelines.germam_gender_separator_slash',
         '/-in' => 'guidelines.germam_gender_separator_slash_dash',
         'In' => 'guidelines.germam_gender_separator_binnen_i',
+        '(-)' => 'guidelines.germam_gender_separator_parenthesis_dash',
+        '()' => 'guidelines.germam_gender_separator_parenthesis',
     ];
     const FRENCH_GENDER_SEPARATOR = [
         '·' => 'guidelines.french_gender_separator_point_median',

@@ -157,5 +157,7 @@ LLM are also used for Witty GPT, our solution for GenerativeAI that produces mor
     'germam_gender_separator_slash' => 'Slash, f.e Expert/in',
     'germam_gender_separator_slash_dash' => 'Slash + Dash, f.e Expert/-in',
     'germam_gender_separator_binnen_i' => 'Binnen-I, f.e ExpertIn',
+    'germam_gender_separator_parenthesis_dash' => 'Parenthesis + Dash, f.e Expert(-in)',
+    'germam_gender_separator_parenthesis' => 'Parenthesis, f.e Expert(in)',
     'french_gender_separator' => 'Witty recommends the \'point médian\'. We explain why <a href="https://www.witty.works/fr/blog/post/langage-non-genr%C3%A9-en-fran%C3%A7ais" target="_blank">here</a>.',
 ];

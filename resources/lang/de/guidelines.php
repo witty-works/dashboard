@@ -157,5 +157,7 @@ LLMs werden auch für Witty GPT verwendet, unsere GenerativeAI-Lösung, die inkl
     'germam_gender_separator_slash' => 'Schrägstrich, z.B. Expert/in',
     'germam_gender_separator_slash_dash' => 'Schrägstrich + Strich, z.B. Experte/-in',
     'germam_gender_separator_binnen_i' => 'Binnen-I, z.B. ExpertIn',
+    'germam_gender_separator_parenthesis_dash' => 'Klammern + Strich, z.B. Expert(-in)',
+    'germam_gender_separator_parenthesis' => 'Klammern, z.B. Expert(in)',
     'french_gender_separator' => 'Witty empfielt die Nutzung des \'Punkt Médian\'. Wir erklären <a href="https://www.witty.works/fr/blog/post/langage-non-genr%C3%A9-en-fran%C3%A7ais" target="_blank">hier</a> warum.',
 ];
