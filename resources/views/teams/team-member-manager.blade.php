@@ -188,15 +188,10 @@
                                             $label =  __('teams.no_active_license');
                                         }
                                     @endphp
-                                    @if (Gate::check('update', $team))
-                                    <a href="{{ route('teams.subscription') }}#license" class="ml-2 text-sm text-gray-400 underline">
-                                        {{ $label }}
-                                    </a>
-                                    @else
+                                    {{-- linked to the subscription page before billing was removed --}}
                                     <span class="ml-2 text-sm text-gray-400">
                                         {{ $label }}
                                     </span>
-                                    @endif
                                 </div>
                             </div>
 
