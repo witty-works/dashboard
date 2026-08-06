@@ -40,6 +40,17 @@ class RouteServiceProvider extends ServiceProvider
         $this->configureRateLimiting();
 
         $this->routes(function () {
+            // Registered first so nothing declared later can shadow it. These
+            // are the Passport routes, taken over from the package — see
+            // App\Providers\AuthServiceProvider::register().
+            Route::prefix('oauth')
+                ->as('passport.')
+                ->group(base_path('routes/oauth.php'));
+
+            // RFC 8615 fixes these paths at the domain root, so they must be
+            // registered before the localized groups in routes/web.php.
+            Route::group([], base_path('routes/wellknown.php'));
+
             Route::prefix('api')
                 ->middleware('api')
                 ->namespace($this->namespace)
@@ -60,6 +71,15 @@ class RouteServiceProvider extends ServiceProvider
     {
         RateLimiter::for('api', function (Request $request) {
             return Limit::perMinute(60)->by(optional($request->user())->id ?: $request->ip());
+        });
+
+        // Credential-issuing endpoints are brute-force targets and are hit far
+        // less often than the general API, so they get their own, much tighter
+        // budget. Keyed on IP only: these requests are by definition made before
+        // a session exists, so `$request->user()` is null and keying on it would
+        // collapse every caller into one bucket.
+        RateLimiter::for('auth', function (Request $request) {
+            return Limit::perMinute(10)->by($request->ip());
         });
     }
 }

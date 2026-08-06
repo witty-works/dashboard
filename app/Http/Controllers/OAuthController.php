@@ -221,30 +221,42 @@ class OAuthController extends Controller
     // mockLogin feature removed
 
     /**
-     * Issue a JWT for the browser extension after user is authenticated via username/password.
+     * Entry point for the extension's "Sign in" / "Sign up" buttons.
+     *
+     * Issues nothing itself — it is a redirect into /oauth/authorize, which runs
+     * the real authorization_code + PKCE flow. (It used to mint an HS256 JWT
+     * signed with APP_KEY that nothing ever validated: the extension API only
+     * accepted Microsoft id_tokens, so every call made with one of those JWTs
+     * was rejected with a 403.)
+     *
+     * The only thing this adds over linking straight to /oauth/authorize is the
+     * `register` case. Passport's authorization endpoint sends guests to the
+     * login page; a user who came from "Sign up" wants the registration page,
+     * and there is no OAuth parameter for that.
      */
     public function browserLogin(Request $request)
     {
-        if (!Auth::check()) {
-            return response()->json(['error' => 'Not authenticated'], 401);
+        // Every parameter except our own `register` flag belongs to the OAuth
+        // request — response_type, client_id, redirect_uri, code_challenge,
+        // code_challenge_method, state — and is passed through untouched. The
+        // destination is our own named route, so nothing here can be redirected
+        // off-site; validating the OAuth parameters is the authorization
+        // endpoint's job, not ours.
+        $authorizeUrl = route('passport.authorizations.authorize', $request->except('register'));
+
+        if ($request->boolean('register') && !Auth::check()) {
+            // Fortify sends the user to fortify.home after registering, so the
+            // OAuth request has to be stashed as the intended URL to come back
+            // to. redirect()->guest() would stash this route instead, which
+            // would bounce the user through here a second time.
+            $request->session()->put('url.intended', $authorizeUrl);
+
+            return redirect()->route('register');
         }
 
-        $user = Auth::user();
-        $key = config('app.key');
-        $payload = [
-            'iss' => config('app.url'),
-            'sub' => $user->id,
-            'email' => $user->email,
-            'name' => $user->name,
-            'iat' => time(),
-            'exp' => time() + 3600, // 1 hour expiry
-        ];
-        $jwt = \Firebase\JWT\JWT::encode($payload, $key, 'HS256');
-        return response()->json([
-            'token' => $jwt,
-            'email' => $user->email,
-            'name' => $user->name,
-            'id' => $user->id,
-        ]);
+        // Guests get here too: AuthorizationController throws an
+        // AuthenticationException, which the handler turns into a redirect to
+        // the login page with url.intended set, and back here afterwards.
+        return redirect()->to($authorizeUrl);
     }
 }

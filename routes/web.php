@@ -188,5 +188,8 @@ Route::fallback(function () {
 });
 
 if (config('app.browsers')) {
+    // Entry point for the extension's "Sign in" / "Sign up" buttons: a thin
+    // redirect into the PKCE flow in routes/oauth.php. It no longer issues a
+    // token of its own.
     Route::get('/browser-login', [OAuthController::class, 'browserLogin'])->name('browser_login');
 }

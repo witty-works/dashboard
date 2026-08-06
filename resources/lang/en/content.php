@@ -441,4 +441,8 @@ Witty GPT can be integrated with your organizations Microsoft Copilot or other i
     'witty_issues' => 'Witty Issues Detected',
     'witty_edits' => 'Witty GPT Modifications',
     'copy_to_clipboard' => 'Copy to clipboard',
+    'authorize_title' => 'Authorisation Request',
+    'authorize_intro' => ':client is requesting permission to access your account.',
+    'authorize_approve' => 'Authorise',
+    'authorize_deny' => 'Cancel',
 ];

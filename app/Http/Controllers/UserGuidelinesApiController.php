@@ -3,18 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\CategoryDataHelper;
-use App\Helpers\OfficeSsoHelper;
 use App\Jobs\SyncUserToNlpApi;
-use App\Models\ConnectedAccount;
 use App\Models\Domain;
 use App\Models\FalsePositive;
 use App\Models\LanguageGuidelines;
-use App\Models\User;
-use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Laravel\Socialite\Two\InvalidStateException;
-use Socialite;
 
 class UserGuidelinesApiController extends Controller
 {
@@ -186,33 +180,16 @@ class UserGuidelinesApiController extends Controller
         return response()->noContent();
     }
 
+    /**
+     * The routes carry `auth:extension`, so the bearer token — a Passport access
+     * token from the browser extension, or a Microsoft id_token from the Office
+     * add-in — has already been validated by App\Auth\ExtensionUserResolver and
+     * an unauthenticated request never reaches the controller.
+     *
+     * @return \App\Models\User
+     */
     protected function getUser(Request $request)
     {
-        $accessToken = $request->bearerToken();
-        $officeSsoHelper = new OfficeSsoHelper();
-
-        try {
-            $payload = $officeSsoHelper->decodeIdToken($accessToken);
-        } catch (Exception $e) {
-            abort(403);
-        }
-
-        $aud = $payload['aud'] ?? null;
-        $user = null;
-
-        try {
-            if ($aud === config('services.microsoft_office.client_id')) {
-                $claims = $officeSsoHelper->validateIdToken($accessToken);
-                $email = strtolower($claims['preferred_username'] ?? '');
-                $user = User::where('email', $email)->first();
-            }
-        } catch (Exception $e) {
-        }
-
-        if ($user === null) {
-            abort(403);
-        }
-
-        return $user;
+        return $request->user();
     }
 }
