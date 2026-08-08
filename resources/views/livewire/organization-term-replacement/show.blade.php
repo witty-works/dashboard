@@ -10,14 +10,15 @@
 
     <x-slot name="list">
         <table class="table-auto w-full">
+            <caption class="sr-only">{{ __('guidelines.list_team_term_replacements') }}</caption>
             <thead>
                 <tr>
-                    <th class="py-2 lato-paragraph-text-p">{{ __('guidelines.term_label') }}</th>
-                    <th class="py-2 lato-paragraph-text-p">{{ __('guidelines.replacement_label') }}</th>     
-                    <th class="py-2 lato-paragraph-text-p">{{ __('guidelines.emoji_short_label') }}</th>
-                    <th class="py-2 lato-paragraph-text-p">{{ __('guidelines.matching_type_label') }}</th>     
+                    <th scope="col" class="py-2 lato-paragraph-text-p">{{ __('guidelines.term_label') }}</th>
+                    <th scope="col" class="py-2 lato-paragraph-text-p">{{ __('guidelines.replacement_label') }}</th>
+                    <th scope="col" class="py-2 lato-paragraph-text-p">{{ __('guidelines.emoji_short_label') }}</th>
+                    <th scope="col" class="py-2 lato-paragraph-text-p">{{ __('guidelines.matching_type_label') }}</th>
                     @if (Auth::user()->hasTeamPermission($model, 'edit_guidelines') && empty($hide_actions))
-                    <th class="py-2 lato-paragraph-text-p">{{ __('guidelines.action_label') }}</th>     
+                    <th scope="col" class="py-2 lato-paragraph-text-p">{{ __('guidelines.action_label') }}</th>
                     @endif
                 </tr>
             </thead>
@@ -39,7 +40,7 @@
                     <button onclick="document.getElementById('organization_term_replacements')?.scrollIntoView({behavior: 'smooth'});" wire:click="editTermReplacement({{ $term_replacement->id }})" class="button primary-button-red ">
                         {{ __('content.edit') }}
                     </button>
-                    <button wire:click="deleteTermReplacement({{ $term_replacement->id }})" class="button secondary-button-red ">
+                    <button wire:click="deleteTermReplacement({{ $term_replacement->id }})" wire:confirm="{{ __('content.confirm_delete_entry') }}" class="button secondary-button-red ">
                         {{ __('content.delete_permanently') }}
                     </button>
                 </td>

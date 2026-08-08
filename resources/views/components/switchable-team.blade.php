@@ -1,13 +1,15 @@
 @props(['team', 'component' => 'dropdown-link'])
 
-<form method="POST" action="{{ route('current-team.update') }}" x-data>
+<form method="POST" action="{{ route('current-team.update') }}">
     @method('PUT')
     @csrf
 
     <!-- Hidden Team ID -->
     <input type="hidden" name="team_id" value="{{ $team->id }}">
 
-    <x-nav-link class="navigation-link wittyworks-navigation-sub-sub-link lato-small-text-p" x-on:click.prevent="$root.submit();" href="#" :active="Auth::user()->isCurrentTeam($team)">
+    <button type="submit"
+        class="navigation-link wittyworks-navigation-sub-sub-link lato-small-text-p w-full text-left {{ Auth::user()->isCurrentTeam($team) ? 'navigation-link-active' : '' }}"
+        @if (Auth::user()->isCurrentTeam($team)) aria-current="true" @endif>
         <div class="truncate">{{ $team->name }}</div>
-    </x-nav-link>
+    </button>
 </form>

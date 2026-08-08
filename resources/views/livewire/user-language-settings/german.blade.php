@@ -21,6 +21,8 @@
                 class="guidelines-form-section-dropdown"
                 wire:model="german_gender_ending"
                 :disabled="$disabled"
+                aria-label="{{ __('guidelines.german_gender_ending_label') }}"
+                @error('german_gender_ending') aria-invalid="true" aria-describedby="german_gender_ending-error" @enderror
             />
             @include('partials.toggle_label', ['disabled' => \App\Models\LanguageGuidelines::isForcedOnTeam($model, 'german_rules')])
 

@@ -15,9 +15,10 @@
                 wire:model="team_analytics"
                 :label="__('guidelines.team_analytics_participate')"
                 aria-label="{{ __('guidelines.team_analytics_participate') }}"
+                @error('team_analytics') aria-invalid="true" aria-describedby="team_analytics-error" @enderror
             />
 
-            <x-input-error for="team_analytics" class="mt-2" aria-describedby="team_analytics" />
+            <x-input-error for="team_analytics" class="mt-2" />
         </div>
     </x-slot>
 

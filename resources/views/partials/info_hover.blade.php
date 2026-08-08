@@ -1,28 +1,17 @@
-<span class="m-3"
-    onmouseover="
-        setTimeout(function() {
-            document.getElementById('{{ $category }}-image').style.zIndex = '1';
-            document.getElementById('{{ $category }}-image').style.visibility = 'visible';
-            document.getElementById('{{ $category }}-image').style.left = (event.clientX/2.5) + 'px';
-            document.getElementById('{{ $category }}-image').style.top = (event.clientY + window.scrollY + 20) + 'px';
-        }, 50);"
-    onmouseout="
-        const allinformationImages = document.getElementsByClassName('information-image');
-        for (let i = 0; i < allinformationImages.length; i++) {
-            allinformationImages[i].style.zIndex = '-1';
-            allinformationImages[i].style.visibility = 'hidden';
-        }
-    ">
-    <img width="15" src="{{ asset('information-icon.svg') }}" alt="Info" />
-</span>
-<div id="{{ $category }}-image" class="information-image"
-    onmouseover="
-        const allinformationImages = document.getElementsByClassName('information-image');
-        for (let i = 0; i < allinformationImages.length; i++) {
-            allinformationImages[i].style.zIndex = '-1';
-            allinformationImages[i].style.visibility = 'hidden';
-        }
-    ">
+<button type="button" class="m-3 info-hover-trigger"
+    aria-expanded="false"
+    aria-controls="{{ $category }}-image"
+    onmouseover="infoHoverShow(this)"
+    onfocus="infoHoverShow(this)"
+    onclick="infoHoverShow(this)"
+    onmouseout="infoHoverScheduleHide()"
+    onblur="infoHoverScheduleHide()">
+    <img width="15" src="{{ asset('information-icon.svg') }}" alt="" aria-hidden="true" />
+    <span class="sr-only">{{ __('content.example') }}: {{ $name }}</span>
+</button>
+<div id="{{ $category }}-image" class="information-image" role="tooltip"
+    onmouseover="infoHoverCancelHide()"
+    onmouseout="infoHoverScheduleHide()">
     <div class="information-title">{{ __('content.example') }}: {{ $name }}</div>
 
     @if(!empty($text))

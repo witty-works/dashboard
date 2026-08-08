@@ -7,21 +7,21 @@
     ;
 ?>
 <x-app-layout :pagetitle="__('content.analytics')">
-<nav class="wittyworks-navigation-wrapper" aria-label="Main Navigation">
+<div class="wittyworks-navigation-wrapper">
     @livewire('navigation-menu')
-</nav>
+</div>
 <div class="wittyworks-page-wrapper" id="maincontent">
    <div class="wittyworks-page lg:ml-20">
       @include('partials.banners')
       <h1 class="ibarra-sub-title-h1 margin-top">
          {{ __('content.analytics') }}
       </h1>
-      <div id="lastRefresh" class="lato-small-text-p wittyworks-margin-right container-row margin-top" style="visibility: hidden; align-items: center;"></div>
+      <div id="lastRefresh" role="status" class="lato-small-text-p wittyworks-margin-right container-row margin-top" style="visibility: hidden; align-items: center;"></div>
       <div class="container-row margin-top">
         <div class="drowdown-wrapper">
 
             <div class="container-row">
-                <div class="lato-small-text-p wittyworks-margin-right" aria-label="{{ __('content.chart_time_range') }}">{{ __('content.chart_time_range') }}</div>
+                <label class="lato-small-text-p wittyworks-margin-right" for="timerangeDropdown">{{ __('content.chart_time_range') }}</label>
             </div>
             @php
                 $ranges = [
@@ -41,7 +41,7 @@
         </div>
 
         <div class="drowdown-wrapper">
-            <div class="lato-small-text-p wittyworks-margin-right" aria-label="{{ __('content.language_filter') }}">{{ __('content.language_filter') }}</div>
+            <label class="lato-small-text-p wittyworks-margin-right" for="languageDropdown">{{ __('content.language_filter') }}</label>
 
             @php
                 $ranges = [
@@ -60,7 +60,7 @@
         </div>
 
         <div class="drowdown-wrapper">
-            <div class="lato-small-text-p wittyworks-margin-right" aria-label="{{ __('content.inclusive_filter') }}">{{ __('content.inclusive_filter') }}</div>
+            <label class="lato-small-text-p wittyworks-margin-right" for="inclusiveDropdown">{{ __('content.inclusive_filter') }}</label>
             @php
                 $ranges = [
                     'non_inclusive' => __('content.inclusive_filter_non_inclusive'),
@@ -78,9 +78,9 @@
 
 
         <div class="drowdown-wrapper">
-            <div class="lato-small-text-p wittyworks-margin-right" aria-label="{{ __('content.category_filter') }}">{{ __('content.category_filter') }}</div>
+            <div class="lato-small-text-p wittyworks-margin-right" id="category-filter-label">{{ __('content.category_filter') }}</div>
                 <div class="toggle-next checkbox-wrapper">
-                    <button class="ellipsis lato-small-text-p">{{ __('content.all_categories') }}</button>
+                    <button type="button" class="ellipsis lato-small-text-p" aria-haspopup="true" aria-expanded="false" aria-controls="Categories" aria-describedby="category-filter-label">{{ __('content.all_categories') }}</button>
                     <div class="checkboxes" id="Categories">
                         <div class="inner-wrap">
                             @foreach ($categories as $category => $category_data)
@@ -95,26 +95,27 @@
             </div>
         </div>
 
-      <div class="analytics-tab-container">
-         <div class="analytics-tab" id="overview-tab" onclick="handleTabClick('overview')" style="color: #9489DB;">
+      <div class="analytics-tab-container" role="tablist" aria-label="{{ __('content.analytics') }}">
+         <button type="button" role="tab" aria-selected="true" aria-controls="overview" class="analytics-tab" id="overview-tab" onclick="handleTabClick('overview')" style="color: #6357b8;">
             {{ __('content.analytic_overview') }}
-            <div class="analytics-tab-line" id="overview-line"></div>
-        </div>
-         <div class="analytics-tab" id="top-categories-tab" onclick="handleTabClick('top-categories')">
+            <span class="analytics-tab-line" id="overview-line" aria-hidden="true"></span>
+        </button>
+         <button type="button" role="tab" aria-selected="false" tabindex="-1" aria-controls="top-categories" class="analytics-tab" id="top-categories-tab" onclick="handleTabClick('top-categories')">
             {{ __('content.top_categories') }}
-            <div id="top-categories-line"></div>
-        </div>
-         <div class="analytics-tab" id="top-words-tab" onclick="handleTabClick('top-words')">
+            <span id="top-categories-line" aria-hidden="true"></span>
+        </button>
+         <button type="button" role="tab" aria-selected="false" tabindex="-1" aria-controls="top-words" class="analytics-tab" id="top-words-tab" onclick="handleTabClick('top-words')">
             {{ __('content.analytic_top_words') }}
-            <div id="top-words-line"></div>
-        </div>
+            <span id="top-words-line" aria-hidden="true"></span>
+        </button>
       </div>
 
       <!-- Overview content here -->
       <div id="overview" role="tabpanel" aria-labelledby="overview-tab">
          <div class="wittyworks-form-section container border-radius mt-5">
-            <div id="loading-icon-overview" class="loading-icon-wrapper" style="width: 100%">
-               <div class="lds-grid">
+            <div id="loading-icon-overview" class="loading-icon-wrapper" role="status" style="width: 100%">
+               <span class="sr-only">{{ __('content.loading') }}</span>
+               <div class="lds-grid" aria-hidden="true">
                   <div></div>
                   <div></div>
                   <div></div>
@@ -129,13 +130,13 @@
             <div id="overview-no-data" style="visibility: hidden; width: 100%">
                <div class="lato-small-text-p warning-message">{!! __('content.no_data_events') !!}</div>
                <div class="image-container">
-                  <img src="{{ url('svg/screenshots/overviewNoData.png') }}" alt="activity" class="image">
+                  <img src="{{ url('svg/screenshots/overviewNoData.png') }}" alt="" class="image">
                   <div id="overview-no-data-text" class="centered-image-text"></div>
                </div>
             </div>
             <div id="overview-wrapper" style="visibility: hidden; width: 100%">
                <div class="container-row wittyworks-margin-top">
-                  <canvas id="eventsChart" class="wittyworks-analytics-chart-extra-large"></canvas>
+                  <canvas id="eventsChart" role="img" aria-label="{{ __('content.analytic_overview') }}" class="wittyworks-analytics-chart-extra-large"></canvas>
                </div>
             </div>
          </div>
@@ -146,11 +147,12 @@
          <div id="top-categories-wrapper" style="width: 100%">
             <div class="wittyworks-form-section container border-radius mt-5">
                 <div class="container-row wittyworks-margin-right">
-                    <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.event_type') }}</div>
+                    <label class="lato-small-text-p wittyworks-margin-right" for="eventTypeTopCategories">{{ __('content.event_type') }}</label>
                     <div id="eventTypeDropdownTopCategories"></div>
                 </div>
-                <div id="loading-icon-top-categories" class="loading-icon-wrapper"  style="width: 100%">
-                    <div class="lds-grid">
+                <div id="loading-icon-top-categories" class="loading-icon-wrapper" role="status" style="width: 100%">
+                    <span class="sr-only">{{ __('content.loading') }}</span>
+                    <div class="lds-grid" aria-hidden="true">
                         <div></div>
                         <div></div>
                         <div></div>
@@ -165,16 +167,16 @@
                <div id="top-categories-no-data" style="visibility: hidden; width: 100%">
                     <div class="lato-small-text-p warning-message">{!! __('content.no_data_events') !!}</div>
                     <div class="image-container">
-                        <img src="{{ url('svg/screenshots/topCategoriesNoData.png') }}" alt="activity" class="image">
+                        <img src="{{ url('svg/screenshots/topCategoriesNoData.png') }}" alt="" class="image">
                         <div id="top-categories-no-data-text" class="centered-image-text"></div>
                     </div>
                </div>
                <div id="top-categories-content" style="visibility: hidden; width: 100%">
                     <div class="chart-container-row">
-                        <canvas id="topSubCategoriesBarChart" class="wittyworks-analytics-chart-extra-large"></canvas>
+                        <canvas id="topSubCategoriesBarChart" role="img" aria-label="{{ __('content.top_categories') }}" class="wittyworks-analytics-chart-extra-large"></canvas>
                     </div>
                     <div class="chart-container-row">
-                        <canvas id="topSubCategoriesChart" class="wittyworks-analytics-chart-extra-large"></canvas>
+                        <canvas id="topSubCategoriesChart" role="img" aria-label="{{ __('content.top_categories') }}" class="wittyworks-analytics-chart-extra-large"></canvas>
                         <button id="toggleLines" class="button primary-button-red">{{ __('content.toggle_lines') }}</button>
                   </div>
                </div>
@@ -187,11 +189,12 @@
          <div id="top-words-wrapper" style="width: 100%">
             <div class="wittyworks-form-section container border-radius mt-5">
                 <div class="container-row wittyworks-margin-right">
-                    <div class="lato-small-text-p wittyworks-margin-right">{{ __('content.event_type') }}</div>
+                    <label class="lato-small-text-p wittyworks-margin-right" for="eventTypeTopWords">{{ __('content.event_type') }}</label>
                     <div id="eventTypeDropdownTopWords"></div>
                 </div>
-                <div id="loading-icon-top-words" class="loading-icon-wrapper" style="width: 100%">
-                    <div class="lds-grid">
+                <div id="loading-icon-top-words" class="loading-icon-wrapper" role="status" style="width: 100%">
+                    <span class="sr-only">{{ __('content.loading') }}</span>
+                    <div class="lds-grid" aria-hidden="true">
                         <div></div>
                         <div></div>
                         <div></div>
@@ -206,7 +209,7 @@
                <div id="top-words-no-data" style="visibility: hidden; width: 100%">
                     <div class="lato-small-text-p warning-message">{!! __('content.no_data_events') !!}</div>
                     <div class="image-container">
-                        <img src="{{ url('svg/screenshots/topWordsNoData.png') }}" alt="activity" class="image">
+                        <img src="{{ url('svg/screenshots/topWordsNoData.png') }}" alt="" class="image">
                         <div id="top-words-no-data-text" class="centered-image-text"></div>
                     </div>
                </div>
@@ -214,6 +217,7 @@
                     <div class="chart-container-row">
                         <canvas
                             id="topWordsChart"
+                            role="img" aria-label="{{ __('content.analytic_top_words') }}"
                             class="wittyworks-analytics-chart-extra-large wittyworks-margin-top">
                         </canvas>
                         <div class="chart-footer" id="topWordsChartFooter"></div>
@@ -221,6 +225,7 @@
                     <div class="chart-container-row wittyworks-margin-top">
                         <canvas
                             id="topWordsChartCorporateRules"
+                            role="img" aria-label="{{ __('content.analytic_top_words') }}"
                             class="wittyworks-analytics-chart-extra-large">
                         </canvas>
                         <div class="chart-footer" id="topWordsChartCorporateRulesFooter"></div>
@@ -750,7 +755,7 @@
             const selectedDropdownValue = eventTypes[0] || @json($default_event);
             const eventTypeDropdownTopCategories = document.getElementById("eventTypeDropdownTopCategories");
             eventTypeDropdownTopCategories.innerHTML = `
-                <select id="eventTypeTopCategories" class="dropdown" onchange="setParams([this?.value])">
+                <select id="eventTypeTopCategories" class="dropdown" aria-label="{{ __('content.event_type') }}" onchange="setParams([this?.value])">
                     ${getOptionsHtml()}
                 </select>`;
 
@@ -930,7 +935,7 @@
             const selectedDropdownValue = eventTypes[0] || @json($default_event);
             const eventTypeDropdownTopWords = document.getElementById("eventTypeDropdownTopWords");
             eventTypeDropdownTopWords.innerHTML = `
-                <select id="eventTypeTopWords" class="dropdown" onchange="setParams([this?.value])">
+                <select id="eventTypeTopWords" class="dropdown" aria-label="{{ __('content.event_type') }}" onchange="setParams([this?.value])">
                     ${getOptionsHtml()}
                 </select>`;
             updateDropdown("eventTypeTopWords", selectedDropdownValue);
@@ -1110,7 +1115,7 @@
         const lastRefreshDateFormatted = new Date(lastRefresh);
         const lastRefreshMinutes = Math.floor((new Date() - lastRefreshDateFormatted) / 60000);
         if (lastRefreshMinutes >= 3) {
-            innerHTML += '&nbsp; &nbsp; <a class="button primary-button-red" onclick="setParams(null, true); updateLastRefresh()">{{ __('content.refresh_data') }}</a>';
+            innerHTML += '&nbsp; &nbsp; <button type="button" class="button primary-button-red" onclick="setParams(null, true); updateLastRefresh()">{{ __('content.refresh_data') }}</button>';
         }
 
         element.innerHTML = innerHTML
@@ -1145,8 +1150,11 @@
     function handleTabClick(clickedTabId) {
         const allTabs = ['overview', 'top-categories', 'top-words'];
         allTabs.forEach(tab => {
+            const tabButton = document.getElementById(tab + '-tab');
             if (tab !== clickedTabId) {
-                setElementStyle(tab + '-tab', 'color', '#808080');
+                setElementStyle(tab + '-tab', 'color', '#6b6b6b');
+                tabButton.setAttribute('aria-selected', 'false');
+                tabButton.setAttribute('tabindex', '-1');
                 document.getElementById(tab + '-line').classList.remove('analytics-tab-line');
                 setElementStyle(tab, 'display', 'none');
                 if (tab !== 'overview') {
@@ -1155,7 +1163,9 @@
                     setElementStyle(tab + '-wrapper', 'visibility', 'hidden');
                 }
             } else {
-                setElementStyle(tab + '-tab', 'color', '#9489DB');
+                setElementStyle(tab + '-tab', 'color', '#6357b8');
+                tabButton.setAttribute('aria-selected', 'true');
+                tabButton.removeAttribute('tabindex');
                 document.getElementById(tab + '-line').classList.add('analytics-tab-line');
                 setElementStyle(tab + '-no-data', 'display', 'none');
                 setElementStyle('loading-icon-' + tab, 'display', 'flex');
@@ -1167,14 +1177,38 @@
     }
 
     document.addEventListener("DOMContentLoaded", function() {
+        // Roving-tabindex arrow-key support for the chart tabs (WAI-ARIA tabs pattern).
+        const tabButtons = Array.from(document.querySelectorAll('.analytics-tab-container [role="tab"]'));
+        tabButtons.forEach(function(tab, i) {
+            tab.addEventListener('keydown', function(event) {
+                let next = null;
+                if (event.key === 'ArrowRight') next = (i + 1) % tabButtons.length;
+                if (event.key === 'ArrowLeft') next = (i - 1 + tabButtons.length) % tabButtons.length;
+                if (next !== null) {
+                    event.preventDefault();
+                    tabButtons[next].focus();
+                    tabButtons[next].click();
+                }
+            });
+        });
+
         setCheckboxSelectLabels();
         const checkboxes = document.querySelector('.checkboxes');
         if (!checkboxes) return;
         let toggleNext = document.querySelectorAll('.toggle-next');
 
+        function setCategoryPopupExpanded(expanded) {
+            document.querySelectorAll('.toggle-next > button').forEach(function(button) {
+                button.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+            });
+        }
+
         document.addEventListener('keydown', function(event) {
-            if ((event.key === 'Enter' || event.keyCode === 13) && checkboxes.style.display !== 'none') {
+            // Only act while the category popup is actually open; a document-wide
+            // Enter handler would otherwise hijack Enter for every control on the page.
+            if ((event.key === 'Enter' || event.key === 'Escape') && checkboxes.style.display === 'block') {
                 checkboxes.style.display = 'none';
+                setCategoryPopupExpanded(false);
                 setParams();
             }
         });
@@ -1186,10 +1220,11 @@
                 && !e.target.classList.contains('inner-wrap')
                 && !e.target.classList.contains('checkbox-wrapper')
                 && !e.target.classList.contains('ellipsis')
-                && checkboxes.style.display !== 'none'
+                && checkboxes.style.display === 'block'
                 && !e.target.classList.contains('wittyworks-analytics-chart-extra-large')
             ) {
                 checkboxes.style.display = 'none';
+                setCategoryPopupExpanded(false);
                 setParams();
             }
         });
@@ -1198,6 +1233,7 @@
             toggleNext[i].addEventListener('click', function(e) {
                 if (checkboxes.style.display === 'none' || !checkboxes.style.display) {
                     checkboxes.style.display = 'block';
+                    setCategoryPopupExpanded(true);
                 }
             });
         }

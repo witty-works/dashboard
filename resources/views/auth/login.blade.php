@@ -7,7 +7,7 @@
         <x-validation-errors class="mb-4" />
 
         @if (session('status'))
-            <div class="mb-4 font-medium text-sm text-green-600">
+            <div class="mb-4 font-medium text-sm text-green-600" role="status">
                 {{ session('status') }}
             </div>
         @endif
@@ -17,19 +17,16 @@
 
             <div>
                 <x-label for="email" value="{{ __('content.email') }}" />
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
+                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" @error('email') aria-invalid="true" aria-describedby="email-error" @enderror />
             </div>
 
             <div class="mt-4">
                 <x-label for="password" value="{{ __('content.password') }}" />
-                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
+                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" @error('password') aria-invalid="true" aria-describedby="password-error" @enderror />
             </div>
 
-            <div class="block mt-4">
-                <label for="remember_me" class="flex items-center">
-                    <x-checkbox id="remember_me" name="remember" label="" />
-                    <span class="ml-2 text-sm text-gray-600">{{ __('content.remember_me') }}</span>
-                </label>
+            <div class="block mt-4 flex items-center">
+                <x-checkbox id="remember_me" name="remember" label="{{ __('content.remember_me') }}" />
             </div>
 
             <div class="flex items-center justify-end mt-4">

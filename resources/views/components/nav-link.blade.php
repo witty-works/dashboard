@@ -2,13 +2,10 @@
 $classes = ($active ?? false) ? 'navigation-link navigation-link-active' : 'navigation-link';
 @endphp
 
-<nav>
-    <a 
-        role="link"
-        aria-current="{{ $active ?? false ? 'page' : 'false' }}"
-        {{ $attributes->merge(['class' => $classes]) }}
-        target="{{ $target ?? '' }}"
-    >
-        {{ $slot }}
-    </a>
-</nav>
+<a
+    @if ($active ?? false) aria-current="page" @endif
+    {{ $attributes->merge(['class' => $classes]) }}
+    @if (!empty($target ?? '')) target="{{ $target }}" rel="noopener" @endif
+>
+    {{ $slot }}
+</a>

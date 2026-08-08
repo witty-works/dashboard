@@ -9,7 +9,7 @@
         </div>
 
         @if (session('status'))
-            <div class="mb-4 font-medium text-sm text-green-600">
+            <div class="mb-4 font-medium text-sm text-green-600" role="status">
                 {{ session('status') }}
             </div>
         @endif
@@ -21,7 +21,7 @@
 
             <div class="block">
                 <x-label for="email" value="{{ __('Email') }}" />
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
+                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" @error('email') aria-invalid="true" aria-describedby="email-error" @enderror />
             </div>
 
             <div class="flex items-center justify-end mt-4">

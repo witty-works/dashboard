@@ -4,7 +4,7 @@
     </x-slot>
 
     <x-slot name="description">
-        <p aria-describedby="organization_false_positives">
+        <p>
                 {!! Str::markdown(__('guidelines.create_new_false_positive_description')) !!}
         </p>
     </x-slot>
@@ -19,6 +19,7 @@
                          autocomplete="off"
                          aria-autocomplete="none"
                          :disabled="! Auth::user()->hasTeamPermission($model, 'edit_guidelines')"
+                         @error('false_positive') aria-invalid="true" aria-describedby="false_positive-error" @enderror
             />
             <x-input-error for="false_positive" class="mt-2" />
         </div>

@@ -10,7 +10,7 @@
     <x-slot name="form">
         <!-- Team Owner Information -->
         <div class="w-full col-span-6 sm:col-span-4" id="updateTeamName">
-            <x-label for="team-owner" value="{{ __('content.team_owner') }}" />
+            <span class="lato-paragraph-text-p">{{ __('content.team_owner') }}</span>
             <div id="team-owner" class="lato-small-text-p margin-bottom">
                 {{ $team->owner->name }} - {{ $team->owner->email }}
             </div>
@@ -18,15 +18,15 @@
 
         <!-- Team Name -->
         <div class="w-full col-span-6 sm:col-span-4">
-            <x-label id="team-name-label" for="team-name" value="{{ __('content.team_name') }}" />
+            <x-label for="team-name" value="{{ __('content.team_name') }}" />
             <x-input id="team-name"
                         type="text"
                         class="mt-2 block w-full"
                         wire:model="state.name"
                         :disabled="! Gate::check('update', $team)"
-                        aria-describedby="team-name-label" />
+                        @error('team-name') aria-invalid="true" aria-describedby="team-name-error" @enderror />
 
-            <x-input-error id="nameError" for="team-name" class="mt-2" />
+            <x-input-error for="team-name" class="mt-2" />
         </div>
     </x-slot>
 

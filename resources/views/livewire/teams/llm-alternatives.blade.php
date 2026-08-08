@@ -17,9 +17,10 @@
                 :label="__('guidelines.llm_alternatives')"
                 :disabled="Auth::user()->hasTeamPermission($model, 'update') ? false : 'locked'"
                 aria-label="{{ __('guidelines.llm_alternatives') }}"
+                @error('llm_alternatives') aria-invalid="true" aria-describedby="llm_alternatives-error" @enderror
             />
 
-            <x-input-error for="llm_alternatives" class="mt-2" aria-describedby="llm_alternatives" />
+            <x-input-error for="llm_alternatives" class="mt-2" />
         </div>
     </x-slot>
 

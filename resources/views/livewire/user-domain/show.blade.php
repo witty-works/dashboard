@@ -10,11 +10,12 @@
 
     <x-slot name="list">
         <table class="table-auto w-full">
+            <caption class="sr-only">{{ __('guidelines.list_domains') }}</caption>
             <thead>
                 <tr>
-                    <th class="py-2 lato-paragraph-text-p">{{ __('guidelines.domain_label') }}</th>
-                    <th class="py-2 lato-paragraph-text-p">{{ __('guidelines.exists_on_team_label') }}</th>
-                    <th class="py-2 lato-paragraph-text-p">{{ __('guidelines.action_label') }}</th>     
+                    <th scope="col" class="py-2 lato-paragraph-text-p">{{ __('guidelines.domain_label') }}</th>
+                    <th scope="col" class="py-2 lato-paragraph-text-p">{{ __('guidelines.exists_on_team_label') }}</th>
+                    <th scope="col" class="py-2 lato-paragraph-text-p">{{ __('guidelines.action_label') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -26,7 +27,7 @@
                     <button onclick="document.getElementById('domains')?.scrollIntoView({behavior: 'smooth'});" wire:click="editDomain({{ $domain->id }})" class="button primary-button-red ">
                         {{ __('content.edit') }}
                     </button>
-                    <button wire:click="deleteDomain({{ $domain->id }})" class="button secondary-button-red ">
+                    <button wire:click="deleteDomain({{ $domain->id }})" wire:confirm="{{ __('content.confirm_delete_entry') }}" class="button secondary-button-red ">
                         {{ __('content.delete_permanently') }}
                     </button>
                 </td>

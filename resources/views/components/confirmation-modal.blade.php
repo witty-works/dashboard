@@ -1,5 +1,9 @@
 @props(['id' => null, 'maxWidth' => null])
 
+@php
+$id = $id ?? md5($attributes->wire('model'));
+@endphp
+
 <x-modal :id="$id" :maxWidth="$maxWidth" {{ $attributes }}>
     <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
         <div class="sm:flex sm:items-start">
@@ -10,7 +14,7 @@
             </div>
 
             <div class="mt-3 text-center sm:mt-0 sm:ms-4 sm:text-start">
-                <h3 class="text-lg font-medium text-gray-900">
+                <h3 class="text-lg font-medium text-gray-900" id="{{ $id }}-title">
                     {{ $title }}
                 </h3>
 

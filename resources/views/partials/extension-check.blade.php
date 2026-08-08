@@ -39,7 +39,7 @@
     });
 </script>
 
-    <div id="install-witty" style="display: none" class="wittyworks-upgrade-banner" role="alert" aria-labelledby="install-witty-title" aria-describedby="install-witty-text">
+    <div id="install-witty" style="display: none" class="wittyworks-upgrade-banner" role="status" aria-labelledby="install-witty-title" aria-describedby="install-witty-text">
         <div>
             <h2 id="install-witty-title" class="wittyworks-upgrade-banner-title">
                 {!! __('content.onboarding_install_witty_title') !!}
@@ -49,13 +49,13 @@
             </p>
         </div>
         <div class="wittyworks-upgrade-banner-button-container">
-            <a href="{{ route('download') }}" class="button primary-button-purple" role="button">
+            <a href="{{ route('download') }}" class="button primary-button-purple">
                 {{ __('content.onboarding_install_witty_button') }}
             </a>
         </div>
     </div>
 
-    <div id="login-witty" style="display: none" class="wittyworks-upgrade-banner" role="alert" aria-labelledby="login-witty-title" aria-describedby="login-witty-text">
+    <div id="login-witty" style="display: none" class="wittyworks-upgrade-banner" role="status" aria-labelledby="login-witty-title" aria-describedby="login-witty-text">
         <div>
             <h2 id="login-witty-title" class="wittyworks-upgrade-banner-title">
                 {!! __('content.onboarding_login_witty_title') !!}
@@ -65,13 +65,13 @@
             </p>
         </div>
         <div class="wittyworks-upgrade-banner-button-container">
-            <a id="login-witty-url" href="#" class="button primary-button-purple" role="button">
+            <a id="login-witty-url" href="#" class="button primary-button-purple">
                 {{ __('content.onboarding_login_witty_button') }}
             </a>
         </div>
     </div>
 
-    <div id="upgrade-witty-version" style="display: none" class="wittyworks-upgrade-banner" role="alert" aria-labelledby="upgrade-witty-title" aria-describedby="upgrade-witty-text">
+    <div id="upgrade-witty-version" style="display: none" class="wittyworks-upgrade-banner" role="status" aria-labelledby="upgrade-witty-title" aria-describedby="upgrade-witty-text">
         <div>
             <h2 id="upgrade-witty-title" class="wittyworks-upgrade-banner-title">
                 {!! __('content.update_witty_version_title') !!}
@@ -81,7 +81,7 @@
             </p>
         </div>
         <div class="wittyworks-upgrade-banner-button-container">
-            <a id="witty-version-options-url" class="button primary-button-purple" target="_blank" rel="noopener noreferrer" role="button" aria-label="{{ __('content.update_witty_version_button') . ' (opens in a new window)' }}">
+            <a id="witty-version-options-url" class="button primary-button-purple" target="_blank" rel="noopener noreferrer" aria-label="{{ __('content.opens_in_new_tab', ['label' => __('content.update_witty_version_button')]) }}">
                 {{ __('content.update_witty_version_button') }}
             </a>
         </div>

@@ -1,11 +1,11 @@
-<div class="wittyworks-upgrade-banner" id="wittyworks-upgrade-banner">
+<div class="wittyworks-upgrade-banner" id="wittyworks-upgrade-banner-requests">
     <div>
-        <div class="wittyworks-upgrade-banner-title">
+        <h2 class="wittyworks-upgrade-banner-title">
             {!! __('content.invition_requests_title') !!}
-        </div>
-        <div class="wittyworks-upgrade-banner-text">
+        </h2>
+        <p class="wittyworks-upgrade-banner-text">
             {!! __('content.invition_requests_text') !!}
-        </div>
+        </p>
     </div>
     <div class="wittyworks-upgrade-banner-button-container">
         <a class="button primary-button-purple" href="{{ route('teams.show').'#requests' }}">

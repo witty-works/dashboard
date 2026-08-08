@@ -8,11 +8,11 @@
     <table class="w-full">
         <thead>
             <tr>
-            <th>Name</th>
-            <th>Team License</th>
-            <th>Team</th>
-            <th>Roles</th>
-            <th>Actions</th>
+            <th scope="col">Name</th>
+            <th scope="col">Team License</th>
+            <th scope="col">Team</th>
+            <th scope="col">Roles</th>
+            <th scope="col">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -37,12 +37,8 @@
                 {{ $user->getRoleNames()->join(", ") }}
             </td>
             <td class="p-2 flex items-center">
-                <button class="cursor-pointer ml-6 text-sm text-blue-500 focus:outline-none">
-                    <a href="{{ route('lumki.users.edit', $user) }}">{{ __('lumki::ui.edit_roles') }}</a>
-                </button>
-                <button class="cursor-pointer ml-6 text-sm text-red-500 focus:outline-none">
-                    <a href="{{ route('impersonate', $user->id) }}">{{ __('lumki::ui.impersonate') }}</a>
-                </button>
+                <a href="{{ route('lumki.users.edit', $user) }}" class="cursor-pointer ml-6 text-sm text-blue-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">{{ __('lumki::ui.edit_roles') }}</a>
+                <a href="{{ route('impersonate', $user->id) }}" class="cursor-pointer ml-6 text-sm text-red-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">{{ __('lumki::ui.impersonate') }}</a>
             </td>
         </tr>
 @endforeach
