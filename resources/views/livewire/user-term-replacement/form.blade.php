@@ -5,7 +5,7 @@
     </x-slot>
 
     <x-slot name="description">
-        <p aria-describedby="term_replacements">
+        <p>
                 {!! Str::markdown(__('guidelines.create_new_term_replacement_description')) !!}
         </p>
     </x-slot>
@@ -23,7 +23,8 @@
                          class="mt-1 block w-full textarea-as-input"
                          wire:model="term"
                          autocomplete="off"
-                         aria-autocomplete="none" />
+                         aria-autocomplete="none"
+                         @error('term') aria-invalid="true" aria-describedby="term-error" @enderror />
             <x-input-error for="term" class="mt-2" />
         </div>
 
@@ -34,7 +35,8 @@
                          class="mt-1 block w-full textarea-as-input"
                          wire:model="replacement"
                          autocomplete="off"
-                         aria-autocomplete="none" />
+                         aria-autocomplete="none"
+                         @error('replacement') aria-invalid="true" aria-describedby="replacement-error" @enderror />
             <x-input-error for="replacement" class="mt-2" />
         </div>
 
@@ -43,7 +45,8 @@
             <x-select id="language_code"
                       :options="$language_codes"
                       class="mt-1 block w-full"
-                      wire:model="language_code" />
+                      wire:model="language_code"
+                      @error('language_code') aria-invalid="true" aria-describedby="language_code-error" @enderror />
             <x-input-error for="language_code" class="mt-2" />
         </div>
 
@@ -53,7 +56,8 @@
                       :options="\App\Models\TermReplacement::MATCHING_TYPES"
                       class="mt-1 block w-full"
                       wire:model="matching_type"
-                      wire:change="showHideWordType" />
+                      wire:change="showHideWordType"
+                      @error('matching_type') aria-invalid="true" aria-describedby="matching_type-error" @enderror />
             <x-input-error for="matching_type" class="mt-2" />
             <x-input-error for="word_type" class="mt-2" />
         </div>
@@ -65,7 +69,8 @@
                 <x-select id="word_type"
                           :options="\App\Models\TermReplacement::WORD_TYPES"
                           class="mt-1 block w-full"
-                          wire:model="word_type" />
+                          wire:model="word_type"
+                          @error('word_type') aria-invalid="true" aria-describedby="word_type-error" @enderror />
             </div>
         @endif
 
@@ -76,7 +81,8 @@
                          class="mt-1 block w-full"
                          wire:model="explanation"
                          autocomplete="off"
-                         aria-autocomplete="none" />
+                         aria-autocomplete="none"
+                         @error('explanation') aria-invalid="true" aria-describedby="explanation-error" @enderror />
             <x-input-error for="explanation" class="mt-2" />
         </div>
 
@@ -87,7 +93,8 @@
                          class="mt-1 block w-full"
                          wire:model="url"
                          autocomplete="off"
-                         aria-autocomplete="none" />
+                         aria-autocomplete="none"
+                         @error('url') aria-invalid="true" aria-describedby="url-error" @enderror />
             <x-input-error for="url" class="mt-2" />
         </div>
 
@@ -98,7 +105,8 @@
                          class="mt-1 block w-full"
                          wire:model="emoji"
                          autocomplete="off"
-                         aria-autocomplete="none" />
+                         aria-autocomplete="none"
+                         @error('emoji') aria-invalid="true" aria-describedby="emoji-error" @enderror />
             <x-input-error for="emoji" class="mt-2" />
         </div>
     </x-slot>

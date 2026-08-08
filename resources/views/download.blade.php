@@ -1,13 +1,13 @@
 <x-app-layout :pagetitle="__('content.witty_download')">
     <div class="wittyworks-page-wrapper">
         <div class="wittyworks-page-subscription lg:ml-20 margin-bottom">
-            <div id="not_installed_title" style="display: none" class="ibarra-sub-title-h1 margin-top align-center">
+            <h1 id="not_installed_title" style="display: none" class="ibarra-sub-title-h1 margin-top align-center">
                 {{ __('content.witty_download') }}
-            </div>
+            </h1>
 
-            <div id="installed_title" style="display: none" class="ibarra-sub-title-h1 margin-top align-center">
+            <h1 id="installed_title" style="display: none" class="ibarra-sub-title-h1 margin-top align-center">
                 {{ __('content.witty_download_installed') }}
-            </div>
+            </h1>
 
             <div>
                 <div class="py-10">
@@ -34,11 +34,10 @@
                     <div id="store_links" style="display: none" class="h-56 grid grid-cols-3 gap-4 content-center">
                         @foreach (config('app.browsers') as $key => $browser)
                         <div class="rounded-lg bg-white browser-selection" id="{{ $key }}">
-                            <a href="{{ $browser['store_href'] }}">
-                                <img class="browser-logo" width="100px;" src="{{ URL::asset($browser['image_src']) }}" alt="{{ __('content.browser_name_'.$key) }}" />
+                            <a href="{{ $browser['store_href'] }}" class="button primary-button-red download-button">
+                                <img class="browser-logo" width="100px;" src="{{ URL::asset($browser['image_src']) }}" alt="" />
+                                {{ __('content.browser_get_'.$key) }}
                             </a>
-
-                            <a href="{{ $browser['store_href'] }}" class="button primary-button-red download-button">{{ __('content.browser_get_'.$key) }}</a>
                         </div>
                         @endforeach
                     </div>

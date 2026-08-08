@@ -9,18 +9,24 @@
 
     <x-slot name="form">
         <div class="w-full col-span-6 sm:col-span-4">
-            @foreach (\App\Models\Domain::TYPES as $type => $label)
-            <div class="margin-bottom">
-            <x-input name="type"
-                type="radio"
-                wire:model="type"
-                value="{{ $type }}"
-            />
-            {{ __($label) }}
-            </div>
-            @endforeach
+            <fieldset>
+                <legend class="sr-only">{{ __('guidelines.set_type') }}</legend>
+                @foreach (\App\Models\Domain::TYPES as $type => $label)
+                <div class="margin-bottom">
+                <label>
+                    <x-input name="type"
+                        type="radio"
+                        wire:model="type"
+                        value="{{ $type }}"
+                        @error('type') aria-invalid="true" aria-describedby="type-error" @enderror
+                    />
+                    {{ __($label) }}
+                </label>
+                </div>
+                @endforeach
 
-            <x-input-error for="type" class="mt-2" />
+                <x-input-error for="type" class="mt-2" />
+            </fieldset>
         </div>
 
 

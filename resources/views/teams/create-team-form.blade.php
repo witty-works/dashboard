@@ -10,7 +10,7 @@
     <x-slot name="form">
         <div class="col-span-6">
 
-            <x-label for="team-owner" value="{{ __('content.team_owner') }}" />
+            <span class="lato-paragraph-text-p">{{ __('content.team_owner') }}</span>
             <div id="team-owner" class="flex items-center mt-2">
                 {{ $this->user->name }} - {{ $this->user->email }}
             </div>
@@ -18,15 +18,15 @@
 
         <div class="w-full col-span-6 sm:col-span-4">
             <x-label for="name" value="{{ __('content.team_name') }}" />
-            <x-input 
-                id="name" 
-                type="text" 
-                class="mt-1 block w-full" 
-                wire:model="state.name" 
-                autofocus 
-                aria-describedby="nameError"
+            <x-input
+                id="name"
+                type="text"
+                class="mt-1 block w-full"
+                wire:model="state.name"
+                autofocus
+                @error('name') aria-invalid="true" aria-describedby="name-error" @enderror
             />
-            <x-input-error id="nameError" for="name" class="mt-2" />
+            <x-input-error for="name" class="mt-2" />
         </div>
     </x-slot>
 

@@ -21,6 +21,8 @@
                 class="guidelines-form-section-dropdown"
                 wire:model="german_gender_ending"
                 :disabled="$disabled"
+                aria-label="{{ __('guidelines.german_gender_ending_label') }}"
+                @error('german_gender_ending') aria-invalid="true" aria-describedby="german_gender_ending-error" @enderror
             />
 
             <x-input-error for="german_gender_ending" class="mt-2" />

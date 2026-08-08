@@ -25,7 +25,10 @@ li {
 }
 
 a {
-    color: #9489DB;
+    /* WCAG 1.4.3: darkened from #9489DB (~3:1 on white); underline so links
+       are not distinguished by color alone (WCAG 1.4.1). */
+    color: #6357b8;
+    text-decoration: underline;
 }
 
 /* FONTS */
@@ -56,7 +59,7 @@ h2 {
     font-weight: 400;
     font-size: 44px;
     line-height: 49px;
-    color: #9489DB;
+    color: #7568c9;
     margin-bottom: 0.1em;
 }
 
@@ -78,7 +81,7 @@ h4 {
     font-weight: 600 !important;
     font-size: 22px !important;
     line-height: 28px !important;
-    color: #9489DB;
+    color: #7568c9;
 }
 
 .proficiency-level-p {
@@ -107,7 +110,7 @@ h4 {
     font-weight: 400;
     font-size: 18px;
     line-height: 30px;
-    color: #f06464;
+    color: #d43535;
 }
 
 .lato-paragraph-text-p-purple {
@@ -116,7 +119,7 @@ h4 {
     font-weight: 400;
     font-size: 18px;
     line-height: 30px;
-    color: #9489DB;
+    color: #6357b8;
 }
 
 .footer-links {
@@ -146,10 +149,13 @@ h4 {
     margin-top: 0.5em;
     margin-bottom: 0.5em;
     cursor: pointer;
+    text-decoration: none;
 }
 
+/* WCAG 1.4.3: button colors darkened from #f06464 / #9489db (~3:1) to reach
+   4.5:1 against/for white text. */
 .primary-button-red {
-    background: #f06464;
+    background: #d43535;
     border-radius: 8px;
     color: #ffffff;
     width: max-content;
@@ -157,14 +163,14 @@ h4 {
 
 .secondary-button-red {
     background: #ffffff;
-    border: 1px solid #f06464;
+    border: 1px solid #d43535;
     border-radius: 8px;
-    color: #f06464;
+    color: #d43535;
     width: max-content;
 }
 
 .primary-button-purple {
-    background: #9489db;
+    background: #6357b8;
     border-radius: 8px;
     color: #ffffff;
     width: max-content;
@@ -172,9 +178,9 @@ h4 {
 
 .secondary-button-purple {
     background: #ffffff;
-    border: 1px solid #9489db;
+    border: 1px solid #6357b8;
     border-radius: 8px;
-    color: #9489db;
+    color: #6357b8;
     width: max-content;
 }
 
@@ -350,11 +356,11 @@ h4 {
     padding: 3px 4px;
 
     background: linear-gradient(114.59deg,
-            #f06464 1.6%,
-            #f277d0 32.79%,
-            #9489db 71.64%,
-            #37d1e5 101.91%,
-            #5acfb9 131.52%);
+            #d43535 1.6%,
+            #c736a0 32.79%,
+            #6357b8 71.64%,
+            #1793a5 101.91%,
+            #2e9d87 131.52%);
     border-radius: 4px;
     font-family: Lato, Arial, Helvetica, sans-serif;
     font-style: normal;
@@ -393,7 +399,8 @@ input[type="checkbox"]:focus+.slider {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #ccc;
+    /* WCAG 1.4.11: track darkened from #ccc for 3:1 non-text contrast. */
+    background-color: #767676;
     -webkit-transition: .4s;
     transition: .4s;
 }
@@ -415,7 +422,7 @@ input[type="checkbox"]:focus+.slider {
 }
 
 input:checked+.slider {
-    background-color: #5FCA7D;
+    background-color: #3da55c;
 }
 
 input:checked+.slider:before {
@@ -437,11 +444,11 @@ input:checked+.slider:before {
     height: 100vh;
     padding: 12px 24px;
     background: linear-gradient(139.06deg,
-            #f06464 12.41%,
-            #f277d0 51.43%,
-            #9489db 100.03%,
-            #37d1e5 137.9%,
-            #5acfb9 174.94%);
+            #d43535 12.41%,
+            #c736a0 51.43%,
+            #6357b8 100.03%,
+            #1793a5 137.9%,
+            #2e9d87 174.94%);
 }
 
 .wittyworks-navigation-content-wrapper--burger {
@@ -449,17 +456,18 @@ input:checked+.slider:before {
     height: 100vh;
     padding: 12px 24px;
     background: linear-gradient(139.06deg,
-            #f06464 12.41%,
-            #f277d0 51.43%,
-            #9489db 100.03%,
-            #37d1e5 137.9%,
-            #5acfb9 174.94%);
+            #d43535 12.41%,
+            #c736a0 51.43%,
+            #6357b8 100.03%,
+            #1793a5 137.9%,
+            #2e9d87 174.94%);
     min-width: 100%;
 }
 
 .navigation-link {
     font-size: 18px;
     color: white;
+    text-decoration: none;
 }
 
 .navigation-link:hover {
@@ -529,12 +537,12 @@ input:checked+.slider:before {
     font-weight: 700;
     margin: 4px 0px;
     font-size: 18px;
-    color: #9489db;
+    color: #6357b8;
 }
 
 .wittyworks-upgrade-banner-text {
     font-weight: normal;
-    color: #9489db;
+    color: #6357b8;
 }
 
 .wittyworks-upgrade-banner-text a {
@@ -770,7 +778,7 @@ input:checked+.slider:before {
 
 .wittyworks-accept-invite-team-name {
     font-weight: 600;
-    color: #9489DB;
+    color: #6357b8;
     margin-bottom: 0.3em;
 }
 
@@ -934,12 +942,12 @@ input:checked+.slider:before {
 }
 
 .limit-reached {
-    color: #f06464;
+    color: #d43535;
     margin: 1rem 0;
 }
 
 .red {
-    color: #f06464;
+    color: #d43535;
 }
 
 .image-container {
@@ -960,7 +968,7 @@ input:checked+.slider:before {
     top: 40%;
     -webkit-transform: rotate(-45deg);
     font-weight: 600;
-    font-size: 3vw;
+    font-size: clamp(1.25rem, 3vw, 3rem);
     line-height: 70px;
     letter-spacing: -0.025em;
     text-transform: uppercase;
@@ -1016,7 +1024,7 @@ input:checked+.slider:before {
 }
 
 .warning-message {
-    color: #f06464;
+    color: #d43535;
     font-size: 22px;
     font-weight: 600;
 }
@@ -1034,7 +1042,7 @@ input:checked+.slider:before {
 }
 
 .information-title {
-    background: linear-gradient(114.59deg, #F06464 1.6%, #F277D0 32.79%, #9489DB 71.64%);
+    background: linear-gradient(114.59deg, #d43535 1.6%, #c736a0 32.79%, #6357b8 71.64%);
     height: 2.8em;
     display: flex;
     align-items: center;
@@ -1077,7 +1085,8 @@ input:checked+.slider:before {
     min-width: 50px;
     min-height: 21px;
     border-radius: 20px;
-    background-color: lightgrey;
+    /* WCAG 1.4.11: darkened from lightgrey for 3:1 non-text contrast. */
+    background-color: #767676;
     position: relative;
     cursor: pointer;
     margin-right: 1em;
@@ -1110,7 +1119,7 @@ input:checked+.slider:before {
 }
 
 .tripple-toggle.active.middle {
-    background-color: #5FCA7D;
+    background-color: #3da55c;
 }
 
 .triple-toggle-lock {
@@ -1144,7 +1153,8 @@ input:checked+.slider:before {
     white-space: nowrap;
 }
 
-.dropdown:hover .dropdown-content {
+.dropdown:hover .dropdown-content,
+.dropdown:focus-within .dropdown-content {
     display: block;
 }
 
@@ -1166,7 +1176,7 @@ input:checked+.slider:before {
     position: relative;
     cursor: pointer;
     text-transform: uppercase;
-    color: #808080;
+    color: #6b6b6b;
     margin-bottom: 1em;
 }
 
@@ -1281,6 +1291,19 @@ label {
     top: auto;
 }
 
+/* Reveal the skip link when it receives keyboard focus (WCAG 2.4.1). */
+.skip-link:focus {
+    position: fixed;
+    left: 1rem;
+    top: 1rem;
+    z-index: 100;
+    padding: 0.5rem 1rem;
+    background: #ffffff;
+    color: #000000;
+    border-radius: 4px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+}
+
 /* Office login  */
 .office-login-wrapper {
     display: flex;
@@ -1311,4 +1334,19 @@ label {
     text-decoration-skip-ink: none;
     text-decoration-thickness: 3px;
     text-decoration-line: underline;
+}
+
+/* WCAG 2.3.3: honor the user's reduced-motion preference. */
+@media (prefers-reduced-motion: reduce) {
+
+    .lds-grid div {
+        animation: none;
+    }
+
+    .slider,
+    .slider:before,
+    .tripple-toggle:before {
+        -webkit-transition: none;
+        transition: none;
+    }
 }

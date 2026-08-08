@@ -22,6 +22,8 @@
             :options="App\Models\GuidelinesInterface::PREFERRED_VARIANTS_EN"
             class="guidelines-form-section-dropdown margin-bottom"
             wire:model="preferred_variants_en"
+            aria-label="{{ __('guidelines.team_preferred_variants_dialect') }} {{ __('content.en') }}"
+            @error('preferred_variants_en') aria-invalid="true" aria-describedby="preferred_variants_en-error" @enderror
         />
         <x-input-error for="preferred_variants_en" class="mt-2" role="alert" />
 
@@ -32,6 +34,8 @@
             :options="App\Models\GuidelinesInterface::PREFERRED_VARIANTS_DE"
             class="guidelines-form-section-dropdown"
             wire:model="preferred_variants_de"
+            aria-label="{{ __('guidelines.team_preferred_variants_dialect') }} {{ __('content.de') }}"
+            @error('preferred_variants_de') aria-invalid="true" aria-describedby="preferred_variants_de-error" @enderror
         />
         <x-input-error for="preferred_variants_de" class="mt-2" role="alert" />
 
@@ -43,6 +47,8 @@
             :options="App\Models\GuidelinesInterface::PREFERRED_VARIANTS_FR"
             class="guidelines-form-section-dropdown"
             wire:model="preferred_variants_fr"
+            aria-label="{{ __('guidelines.team_preferred_variants_dialect') }} {{ __('content.fr') }}"
+            @error('preferred_variants_fr') aria-invalid="true" aria-describedby="preferred_variants_fr-error" @enderror
         />
         <x-input-error for="preferred_variants_fr" class="mt-2" role="alert" />
         </div>

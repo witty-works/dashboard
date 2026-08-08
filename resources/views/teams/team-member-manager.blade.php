@@ -21,26 +21,25 @@
             </x-slot>
 
             <x-slot name="form">
-                <div role="group" class="col-span-6">
-                    <label class="lato-paragraph-text-p margin-bottom">{{ __('content.please_provide_the_email_address') }}</label>
+                <div class="col-span-6">
+                    <p class="lato-paragraph-text-p margin-bottom">{{ __('content.please_provide_the_email_address') }}</p>
                 </div>
 
                 <!-- Member Email -->
                 <div class="w-full margin-bottom">
                     <x-label id="email-label" class="lato-small-text-p" for="email" value="{{ __('content.email') }}" />
-                    <x-input id="email" type="email" class=" mt-1 block w-full" wire:model="addTeamMemberForm.email" disabled="{{ !Gate::check('addTeamMember', $team) }}" aria-describedby="email-label" />
-                    <x-input-error id="emailError" for="email"></x-input-error>
+                    <x-input id="email" type="email" class=" mt-1 block w-full" wire:model="addTeamMemberForm.email" @disabled(!Gate::check('addTeamMember', $team)) @error('email') aria-invalid="true" aria-describedby="email-error" @enderror />
+                    <x-input-error for="email"></x-input-error>
                 </div>
 
                 <!-- Role -->
                 @if (count($this->roles) > 0)
-                    <div role="group" class="col-span-6 lg:col-span-4">
-                        <x-label class="lato-small-text-p" for="role" value="{{ __('content.role') }}" />
+                    <div class="col-span-6 lg:col-span-4">
+                        <span id="role-group-label" class="lato-small-text-p">{{ __('content.role') }}</span>
                         <x-input-error for="role" class="mt-2" />
-                        <div role="listbox" aria-labelledby="listbox-label" class="relative z-0 mt-1 border border-gray-200 rounded-lg">
-                            <span id="listbox-label" class="sr-only">Select a role</span>
+                        <div role="group" aria-labelledby="role-group-label" class="relative z-0 mt-1 border border-gray-200 rounded-lg">
                             @foreach ($this->roles as $index => $role)
-                                <button id="option-{{ $index }}" role="option" aria-selected="{{ $addTeamMemberForm['role'] === $role->key }}" type="button" class="relative px-4 py-3 inline-flex w-full rounded-lg"
+                                <button type="button" aria-pressed="{{ $addTeamMemberForm['role'] === $role->key ? 'true' : 'false' }}" class="relative px-4 py-3 inline-flex w-full rounded-lg"
                                         wire:click="$set('addTeamMemberForm.role', '{{ $role->key }}')">
                                     <div class="{{ $addTeamMemberForm['role'] !== $role->key ? 'opacity-50' : '' }}">
                                         <!-- Role Name -->
@@ -50,7 +49,7 @@
                                             </div>
 
                                             @if ($addTeamMemberForm['role'] == $role->key)
-                                                <svg class="ml-2 h-5 w-5 text-green-400 lato-small-text-p" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                                <svg aria-hidden="true" focusable="false" class="ml-2 h-5 w-5 text-green-400 lato-small-text-p" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                             @endif
                                         </div>
 
@@ -67,13 +66,13 @@
             </x-slot>
 
             <x-slot name="actions">
-                <div role="group" class="flex flex-row align-middle items-center">
+                <div class="flex flex-row align-middle items-center">
                     <x-button>
                         {{ __('content.add') }}
                     </x-button>
 
-                    <a role="button" wire:click="cancel()" class="button secondary-button-red ">{{ __('content.cancel') }}</a>
-                    <x-action-message role="status" class="m-3" on="saved">{{ __('content.added') }}</x-action-message>
+                    <button type="button" wire:click="cancel()" class="button secondary-button-red ">{{ __('content.cancel') }}</button>
+                    <x-action-message class="m-3" on="saved">{{ __('content.added') }}</x-action-message>
                 </div>
             </x-slot>
         </x-form-section>
@@ -103,7 +102,7 @@
                                     <!-- Cancel Team Invitation -->
                                     <button class="cursor-pointer ml-6 lato-paragraph-text-p-red"
                                             wire:click="cancelTeamInvitation({{ $invitation->id }})"
-                                            aria-label="Cancel invitation for {{ $invitation->email }}">
+                                            aria-label="{{ __('content.cancel_invitation_for', ['email' => $invitation->email]) }}">
                                         {{ __('content.cancel') }}
                                     </button>
                                 @endif
@@ -118,7 +117,7 @@
 
 @if ($team->invitationRequests->isNotEmpty() && Gate::check('viewUserCreateForm', $team))
     <!-- Team Member Invitations -->
-    <div class="py-5" id="requests" role="tablist" aria-label="Team member invitations">
+    <div class="py-5" id="requests">
         <x-action-section>
             <x-slot name="title">
                 {{ trans_choice('content.pending_team_invitation_requests', $team->invitationRequests->count(), ['count' => $team->invitationRequests->count()]) }}
@@ -138,12 +137,12 @@
                                 @if (Gate::check('removeTeamMember', $team))
                                     <button class="cursor-pointer ml-6 lato-paragraph-text-p-red"
                                             wire:click="cancelTeamInvitationRequest({{ $invitationRequest->id }})"
-                                            aria-label="Cancel invitation request for {{ $invitationRequest->user->email }}">
+                                            aria-label="{{ __('content.cancel_invitation_request_for', ['email' => $invitationRequest->user->email]) }}">
                                         {{ __('content.cancel') }}
                                     </button>
                                     <button class="cursor-pointer ml-6 lato-paragraph-text-p-red"
                                             wire:click="acceptTeamInvitationRequest({{ $invitationRequest->id }})"
-                                            aria-label="Accept invitation request for {{ $invitationRequest->user->email }}">
+                                            aria-label="{{ __('content.accept_invitation_request_for', ['email' => $invitationRequest->user->email]) }}">
                                         {{ __('content.accept') }}
                                     </button>
                                 @endif
@@ -189,7 +188,7 @@
                                         }
                                     @endphp
                                     {{-- linked to the subscription page before billing was removed --}}
-                                    <span class="ml-2 text-sm text-gray-400">
+                                    <span class="ml-2 text-sm text-gray-600">
                                         {{ $label }}
                                     </span>
                                 </div>
@@ -198,24 +197,24 @@
                             <div class="flex items-center">
                                 <!-- Manage Team Member Role -->
                                 @if (Gate::check('update', $team) && Laravel\Jetstream\Jetstream::hasRoles())
-                                    <button class="ml-2 text-sm text-gray-400 underline" wire:click="manageRole('{{ $user->id }}')">
+                                    <button class="ml-2 text-sm text-gray-600 underline" wire:click="manageRole('{{ $user->id }}')">
                                         {{ __('content.'.Laravel\Jetstream\Jetstream::findRole($user->membership->role)->key) }}
                                     </button>
                                 @elseif (Laravel\Jetstream\Jetstream::hasRoles())
-                                    <div class="ml-2 text-sm text-gray-400">
+                                    <div class="ml-2 text-sm text-gray-600">
                                         {{ __('content.'.Laravel\Jetstream\Jetstream::findRole($user->membership->role)->key) }}
                                     </div>
                                 @endif
 
                                 <!-- Leave Team -->
                                 @if ($this->user->id === $user->id)
-                                    <button class="cursor-pointer ml-6 text-sm text-red-500" wire:click="$toggle('confirmingLeavingTeam')">
+                                    <button class="cursor-pointer ml-6 text-sm text-red-700" wire:click="$toggle('confirmingLeavingTeam')">
                                         {{ __('content.leave') }}
                                     </button>
 
                                 <!-- Remove Team Member -->
                                 @elseif (Gate::check('removeTeamMember', $team))
-                                    <button class="cursor-pointer ml-6 text-sm text-red-500" wire:click="confirmTeamMemberRemoval('{{ $user->id }}')">
+                                    <button class="cursor-pointer ml-6 text-sm text-red-700" wire:click="confirmTeamMemberRemoval('{{ $user->id }}')">
                                         {{ __('content.remove') }}
                                     </button>
                                 @endif
@@ -247,7 +246,7 @@
                                 </div>
 
                                 @if ($currentRole == $role->key)
-                                    <svg class="ml-2 h-5 w-5 text-green-400" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                    <svg aria-hidden="true" focusable="false" class="ml-2 h-5 w-5 text-green-400" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                 @endif
                             </div>
 

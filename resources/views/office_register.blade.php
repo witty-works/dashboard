@@ -9,10 +9,10 @@
                 value="{{ $token }}"
             />
 
-            <h2>{{ $name }} {{ $email }}</h2>
-        
+            <h1>{{ $name }} {{ $email }}</h1>
+
             <div style="margin-top: 2em">
-                <label class="switch">
+                <div class="switch">
                     <input
                         type="hidden"
                         name="has_consented_to_terms_of_service"
@@ -30,20 +30,23 @@
                         @if(old('has_consented_to_terms_of_service'))
                         checked="checked"
                         @endif
-                        aria-labelledby="consent-checkbox"
+                        @if($errors->hasBag('default') && $errors->getBag('default')->getMessages())
+                        aria-invalid="true"
+                        aria-describedby="consent-error"
+                        @endif
                     />
                     <span class="slider round"></span>
-                </label>
+                </div>
 
-                <x-label for="has_consented_to_terms_of_service" value="{!! __('content.has_consented_to_terms_of_service') !!}" />
+                <span class="lato-paragraph-text-p">{!! __('content.has_consented_to_terms_of_service') !!}</span>
 
                 @if($errors->hasBag('default') && $errors->getBag('default')->getMessages())
-                <p class="mt-2 text-sm text-red-600">{{ __('content.you_must_consent') }}</p>
+                <p id="consent-error" class="mt-2 text-sm text-red-600" role="alert">{{ __('content.you_must_consent') }}</p>
                 @endif
             </div>
 
             <div>
-                <label class="switch">
+                <div class="switch">
                     <input
                         type="hidden"
                         name="has_consented_to_mailing"
@@ -61,13 +64,16 @@
                         @if(old('has_consented_to_mailing'))
                         checked="checked"
                         @endif
-                        aria-labelledby="consent-mailing-checkbox"
+                        @error('has_consented_to_mailing')
+                        aria-invalid="true"
+                        aria-describedby="has_consented_to_mailing-error"
+                        @enderror
                     />
                     <span class="slider round"></span>
-                </label>
-            
-                <x-label for="has_consented_to_mailing" value="{!! __('content.has_consented_to_mailing') !!}" />
-            
+                </div>
+
+                <span class="lato-paragraph-text-p">{!! __('content.has_consented_to_mailing') !!}</span>
+
                 <x-input-error for="has_consented_to_mailing" class="mt-2" />
             </div>
 
@@ -78,7 +84,7 @@
             </div>
 
             <div style="margin-top: 2em">
-                <h3>{{ __('content.already_registered_with_a_different_email_title') }}</h3>
+                <h2>{{ __('content.already_registered_with_a_different_email_title') }}</h2>
 
                 <p>{{ __('content.already_registered_with_a_different_email_description') }}</p>
             </div>
@@ -96,4 +102,4 @@
             </div>
         </form>
     </div>
-</x-app-layout>
+</x-plain-layout>

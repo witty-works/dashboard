@@ -10,11 +10,12 @@
 
     <x-slot name="list">
         <table class="table-auto w-full">
+            <caption class="sr-only">{{ __('guidelines.list_team_false_positives') }}</caption>
             <thead>
                 <tr>
-                    <th class="py-2 lato-paragraph-text-p">{{ __('guidelines.false_positive_label') }}</th>
+                    <th scope="col" class="py-2 lato-paragraph-text-p">{{ __('guidelines.false_positive_label') }}</th>
                     @if (Auth::user()->hasTeamPermission($model, 'edit_guidelines') && empty($hide_actions))
-                    <th class="py-2 lato-paragraph-text-p">{{ __('guidelines.action_label') }}</th>     
+                    <th scope="col" class="py-2 lato-paragraph-text-p">{{ __('guidelines.action_label') }}</th>
                     @endif
                 </tr>
             </thead>
@@ -27,7 +28,7 @@
                     <button onclick="document.getElementById('organization_false_positives')?.scrollIntoView({behavior: 'smooth'});" wire:click="editFalsePositive({{ $false_positive->id }})" class="button primary-button-red ">
                         {{ __('content.edit') }}
                     </button>
-                    <button wire:click="deleteFalsePositive({{ $false_positive->id }})" class="button secondary-button-red ">
+                    <button wire:click="deleteFalsePositive({{ $false_positive->id }})" wire:confirm="{{ __('content.confirm_delete_entry') }}" class="button secondary-button-red ">
                         {{ __('content.delete_permanently') }}
                     </button>
                 </td>

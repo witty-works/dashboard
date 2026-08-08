@@ -1,4 +1,4 @@
-<div class="flex flex-row align-middle items-center" role="toolbar" aria-label="Action buttons">
+<div class="flex flex-row align-middle items-center">
     <x-button>
         {{ __('content.save') }}
     </x-button>

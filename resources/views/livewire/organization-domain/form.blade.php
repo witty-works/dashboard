@@ -21,15 +21,15 @@
                     aria-autocomplete="none" />
 
                 <x-input id="domain"
-                    type="text" 
+                    type="text"
                     class="mt-1 block w-full"
                     wire:model="domain"
                     autocomplete="off"
                     aria-autocomplete="none"
-                    aria-labelledby="organization_domains_title"
+                    @error('domain') aria-invalid="true" aria-describedby="domain-error" @enderror
                 />
 
-                <x-input-error for="domain" class="mt-2" aria-describedby="domain" />
+                <x-input-error for="domain" class="mt-2" />
             </div>
         </x-slot>
 

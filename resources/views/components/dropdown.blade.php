@@ -25,8 +25,10 @@ switch ($width) {
 }
 @endphp
 
-<div class="relative" x-data="{ open: false }" @click.away="open = false" @close.stop="open = false">
-    <div @click="open = ! open">
+<div class="relative" x-data="{ open: false }" @click.away="open = false" @close.stop="open = false"
+        @keydown.escape.window="if (open) { open = false; $refs.trigger.querySelector('button, a, [tabindex]')?.focus() }">
+    <div x-ref="trigger" @click="open = ! open"
+            x-init="const t = $el.querySelector('button, a, [tabindex]'); if (t) { t.setAttribute('aria-haspopup', 'true'); t.setAttribute('aria-expanded', 'false'); $watch('open', v => t.setAttribute('aria-expanded', v)) }">
         {{ $trigger }}
     </div>
 

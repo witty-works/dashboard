@@ -21,6 +21,8 @@
                 class="guidelines-form-section-dropdown"
                 wire:model="french_gender_separator"
                 :disabled="$disabled"
+                aria-label="{{ __('guidelines.french_gender_separator_label') }}"
+                @error('french_gender_separator') aria-invalid="true" aria-describedby="french_gender_separator-error" @enderror
             />
             @include('partials.toggle_label', ['disabled' => \App\Models\LanguageGuidelines::isForcedOnTeam($model, 'french_rules')])
 

@@ -2,7 +2,7 @@
 
     <x-slot name="title">
         <div class="headline-row">
-            <img width="60" class="category_icon" src="{{ $config['icon']['src'] }}" alt="{{ $config['translation']['name'] }} Icon"/>
+            <img width="60" class="category_icon" src="{{ $config['icon']['src'] }}" alt=""/>
             <span>{{ $config['translation']['name'] }}</span>
             @if(!empty($config['translation']['example_image']['src']))
             @include('partials.info_hover', ['category' => $category, 'name' => $config['translation']['name'], 'config' => $config])
@@ -45,21 +45,22 @@
             $disabled = $proficiencyLevel === 'openly_discriminating';
             $title = $disabled ? __('guidelines.discriminating_language_cannot_be_disabled') : '';
         @endphp
-        <div class="guidelines-form-section lato-small-text-p guidelines-form-section-proficiency-level" aria-expanded="false">
+        <div class="guidelines-form-section lato-small-text-p guidelines-form-section-proficiency-level">
             <h3>{{ $proficiencyLevelData['translation']['hs_name'] }}</h3>
 
             @include('partials.toggle_label', ['disabled' => $disabled])
 
             @if(!empty($proficiencyLevelData['translation']['lead_text']))
-            <a href="#" class="wittyworks-margin-left" onclick="
+            <button type="button" class="wittyworks-margin-left" aria-expanded="false" aria-controls="{{ $category }}-{{ $proficiencyLevel }}" onclick="
                 document.getElementById('arrow-down-icon-{{ $category}}-{{ $proficiencyLevel }}').style.display == 'none' ? document.getElementById('arrow-down-icon-{{ $category}}-{{ $proficiencyLevel }}').style.display = 'block' : document.getElementById('arrow-down-icon-{{ $category}}-{{ $proficiencyLevel }}').style.display = 'none';
                 document.getElementById('arrow-up-icon-{{ $category}}-{{ $proficiencyLevel }}').style.display == 'none' ? document.getElementById('arrow-up-icon-{{ $category}}-{{ $proficiencyLevel }}').style.display = 'block' : document.getElementById('arrow-up-icon-{{ $category}}-{{ $proficiencyLevel }}').style.display = 'none';
                 document.getElementById('{{ $category}}-{{ $proficiencyLevel }}').style.display = (document.getElementById('{{ $category}}-{{ $proficiencyLevel }}').style.display === 'none' ? 'block' : 'none');
-                return false;"
+                this.setAttribute('aria-expanded', this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true');"
             >
-                <img id="arrow-down-icon-{{ $category}}-{{ $proficiencyLevel }}" src="{{ asset('arrow-down-sign-to-navigate_small.svg') }}" alt="{{ __('content.open') }}" />
-                <img id="arrow-up-icon-{{ $category}}-{{ $proficiencyLevel }}" src="{{ asset('arrow-up-sign-to-navigate_small.svg') }}" alt="{{ __('content.close') }}" style="display: none;" />
-            </a>
+                <span class="sr-only">{{ $proficiencyLevelData['translation']['hs_name'] }}</span>
+                <img id="arrow-down-icon-{{ $category}}-{{ $proficiencyLevel }}" src="{{ asset('arrow-down-sign-to-navigate_small.svg') }}" alt="" aria-hidden="true" />
+                <img id="arrow-up-icon-{{ $category}}-{{ $proficiencyLevel }}" src="{{ asset('arrow-up-sign-to-navigate_small.svg') }}" alt="" aria-hidden="true" style="display: none;" />
+            </button>
             @endif
 
         </div>
@@ -76,19 +77,21 @@
         @if(isset($diversityDimensionDrivers[$ddd]['translation']) && isset($dimensions[$ddd]))
         <div class="guidelines-form-section-ident lato-small-text-p">
             @php
+                $labelSuffix = ' - '.$diversityDimensionDrivers[$ddd]['translation']['short_explanation'];
+                if ($diversityDimensionDrivers[$ddd]['has_rules'] === ['en']) {
+                    $labelSuffix.= ' ('.__('guidelines.english_only').')';
+                } elseif ($diversityDimensionDrivers[$ddd]['has_rules'] === ['de']) {
+                    $labelSuffix.= ' ('.__('guidelines.german_only').')';
+                } elseif ($diversityDimensionDrivers[$ddd]['has_rules'] === ['fr']) {
+                    $labelSuffix.= ' ('.__('guidelines.french_only').')';
+                } elseif (!in_array(app()->getLocale(), $diversityDimensionDrivers[$ddd]['has_rules'])) {
+                    $labelSuffix.= ' ('.__('guidelines.other_language').')';
+                }
+                $checkboxLabel = $diversityDimensionDrivers[$ddd]['translation']['hs_name'].$labelSuffix;
                 $label = '<a href="'.$diversityDimensionDrivers[$ddd]['translation']['canonical_url'].'" />';
                 $label.= $diversityDimensionDrivers[$ddd]['translation']['hs_name'];
                 $label.= '</a>';
-                $label.= ' - '.$diversityDimensionDrivers[$ddd]['translation']['short_explanation'];
-                if ($diversityDimensionDrivers[$ddd]['has_rules'] === ['en']) {
-                    $label.= ' ('.__('guidelines.english_only').')';
-                } elseif ($diversityDimensionDrivers[$ddd]['has_rules'] === ['de']) {
-                    $label.= ' ('.__('guidelines.german_only').')';
-                } elseif ($diversityDimensionDrivers[$ddd]['has_rules'] === ['fr']) {
-                    $label.= ' ('.__('guidelines.french_only').')';
-                } elseif (!in_array(app()->getLocale(), $diversityDimensionDrivers[$ddd]['has_rules'])) {
-                    $label.= ' ('.__('guidelines.other_language').')';
-                }
+                $label.= $labelSuffix;
             @endphp
 
             @if(\App\Models\LanguageGuidelines::isBasicOnly($proficiencyLevel))
@@ -96,12 +99,13 @@
                 id="dimensions['{{$ddd}}']"
                 name="dimensions_{{$ddd}}"
                 value="1"
-                :label="$label"
+                :label="$checkboxLabel"
                 wire:model="dimensions.{{$ddd}}"
                 :enabled="$dimensions[$ddd]"
                 :disabled="(bool)$disabled"
                 :title="$title"
             />
+            <a href="{{ $diversityDimensionDrivers[$ddd]['translation']['canonical_url'] }}">{{ __('content.learn_more') }}</a>
             @else
             <x-triple-toggle
                 id="dimensions['{{$ddd}}']"

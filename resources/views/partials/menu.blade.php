@@ -46,18 +46,18 @@
 
 
 <a href="https://www.witty.works/">
-    <img class="wittyworks-logo" src="{{ url('svg/witty-logo-white.svg') }}" alt="" />
+    <img class="wittyworks-logo" src="{{ url('svg/witty-logo-white.svg') }}" alt="Witty Works" />
 </a>
 
 @auth
-<nav aria-label="{{ __('content.main_navigation_aria_label') }}">
+<div>
     <div class="wittyworks-navigation-container">
         @if ($team_edit && $isUserLicensedToTeam)
             <div class="wittyworks-navigation-account-toggle-wrapper">
                 <x-nav-link id="personal_account" class="wittyworks-navigation-item lato-small-paragraph-title-h4" href="{{ route($personalRoute) }}" :active="$open_tab === 'user'">
                     {{ __('guidelines.personal_account') }}
                 </x-nav-link>
-                <div class="wittyworks-navigation-account-divider">|</div>
+                <div class="wittyworks-navigation-account-divider" aria-hidden="true">|</div>
                  <x-nav-link id="team_account" class="wittyworks-navigation-item lato-small-paragraph-title-h4" href="{{ route($teamRoute) }}" :active="$open_tab === 'team'">
                     {{ __('guidelines.team_account') }}
                 </x-nav-link>
@@ -69,7 +69,7 @@
             <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/team.svg') }}" alt="" />
             {{ __('content.choose_team') }}
         </div>
-        <div class="wittyworks-navigation-sub-wrapper">
+        <div class="wittyworks-navigation-sub-wrapper" role="group" aria-label="{{ __('content.choose_team') }}">
             @foreach ($user->allSwitchableTeams() as $teamMemberOf)
                 <x-switchable-team :team="$teamMemberOf" />
             @endforeach
@@ -77,7 +77,7 @@
         @endif
 
         @if ($open_tab === 'user' || !$isUserLicensedToTeam)
-        <div id="personal_account_content" aria-label="{{ __('content.personal_account_content') }}">
+        <div id="personal_account_content" role="group" aria-label="{{ __('content.personal_account_content') }}">
                 <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('profile.show') }}" :active="request()->routeIs('user.subscription')">
                     <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/user.svg') }}" alt="" />
                     {{ __('content.manage_account') }}
@@ -91,7 +91,7 @@
                             {{ __('content.analytics') }}
                         </div>
 
-                        <div class="wittyworks-navigation-sub-wrapper">
+                        <div class="wittyworks-navigation-sub-wrapper" role="group" aria-label="{{ __('content.analytics') }}">
                             <x-nav-link class="wittyworks-navigation-sub-sub-link lato-small-text-p" href="{{ route('user.analytics') }}" :active="request()->routeIs('user.analytics')">{{ __('guidelines.personal_account') }}</x-nav-link>
                             <x-nav-link class="wittyworks-navigation-sub-sub-link lato-small-text-p" href="{{ route('teams.analytics') }}" :active="request()->routeIs('teams.analytics')">{{ __('guidelines.team_account') }}</x-nav-link>
                         </div>
@@ -122,7 +122,7 @@
             @endif
 
         @if ($open_tab === 'team')
-            <div id='team_account_content' aria-label="{{ __('content.team_account_content_aria_label') }}">
+            <div id='team_account_content' role="group" aria-label="{{ __('content.team_account_content_aria_label') }}">
                 <x-nav-link class="wittyworks-navigation-link-wrapper" href="{{ route('teams.show') }}" :active="request()->routeIs('teams.show')">
                     <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/team.svg') }}" alt="" />
                     {{ __('content.manage_members') }}
@@ -181,7 +181,7 @@
             {{ $user->name }}
         </div>
     </div>
-</nav>
+</div>
 
     @if(config('lumki.show_lumki') || app('impersonate')->isImpersonating())
         @lumki

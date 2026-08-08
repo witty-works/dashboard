@@ -9,7 +9,7 @@ body *:not(html):not(style):not(br):not(tr):not(code) {
 }
 
 body {
-    -webkit-text-size-adjust: none;
+    -webkit-text-size-adjust: 100%;
     background-color: #ffffff;
     color: #000000;
     height: 100%;
@@ -29,7 +29,7 @@ blockquote {
 }
 
 a {
-    color: #9489DB;
+    color: #6357b8;
 }
 
 a img {
@@ -173,13 +173,13 @@ p.sub {
 }
 
 .footer p {
-    color: #b0adc5;
+    color: #5f5b73;
     font-size: 12px;
     text-align: center;
 }
 
 .footer a {
-    color: #b0adc5;
+    color: #5f5b73;
     text-decoration: underline;
 }
 
@@ -200,7 +200,7 @@ p.sub {
 }
 
 .table td {
-    color: #74787e;
+    color: #6b6f75;
     font-size: 15px;
     line-height: 18px;
     margin: 0;
@@ -235,11 +235,11 @@ p.sub {
 
 .button-blue,
 .button-primary {
-    background-color: #f06464;
-    border-bottom: 8px solid #f06464;
-    border-left: 18px solid #f06464;
-    border-right: 18px solid #f06464;
-    border-top: 8px solid #f06464;
+    background-color: #d43535;
+    border-bottom: 8px solid #d43535;
+    border-left: 18px solid #d43535;
+    border-right: 18px solid #d43535;
+    border-top: 8px solid #d43535;
 }
 
 .button-green,
