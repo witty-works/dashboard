@@ -159,5 +159,6 @@ Les LLM sont également utilisés pour Witty GPT, notre solution GenAI qui produ
     'germam_gender_separator_binnen_i' => 'Binnen-I, p. ex. ExpertIn',
     'germam_gender_separator_parenthesis_dash' => 'Parenthèses + Tiret, p. ex. Expert(-in)',
     'germam_gender_separator_parenthesis' => 'Parenthèses, p. ex. Expert(in)',
+    'germam_gender_separator_inklusivum' => 'Inklusivum, p. ex. de Expertere',
     'french_gender_separator' => 'Witty recommande le point médian. Nous expliquons <a href="https://www.witty.works/fr/blog/post/langage-non-genr%C3%A9-en-fran%C3%A7ais" target="_blank">ici</a> pourquoi.',
 ];
