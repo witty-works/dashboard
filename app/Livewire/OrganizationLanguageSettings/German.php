@@ -3,9 +3,11 @@
 namespace App\Livewire\OrganizationLanguageSettings;
 
 use App\Livewire\TeamsGuidelineTrait;
+use App\Models\GuidelinesInterface;
 use App\Models\LanguageGuidelines;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 use Livewire\Component;
 
 class German extends Component
@@ -19,10 +21,17 @@ class German extends Component
     public $german_rules_force;
     public $german_gender_ending;
 
-    protected $rules = [
-        'german_rules_force' => 'nullable|boolean',
-        'german_gender_ending' => 'nullable|string|in::in,*in,/in,_in,In,/-in',
-    ];
+    protected function rules()
+    {
+        return [
+            'german_rules_force' => 'nullable|boolean',
+            'german_gender_ending' => [
+                'nullable',
+                'string',
+                Rule::in(array_keys(GuidelinesInterface::GERMAN_GENDER_ENDING)),
+            ],
+        ];
+    }
 
     public $model;
 
