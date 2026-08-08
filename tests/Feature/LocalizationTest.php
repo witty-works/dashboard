@@ -18,7 +18,7 @@ class LocalizationTest extends TestCase
     {
         $this->assertSame(
             ['de', 'en', 'fr'],
-            array_keys(config('laravellocalization.supportedLocales'))
+            config('localizer.supported_locales')
         );
     }
 

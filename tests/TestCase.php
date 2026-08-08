@@ -4,8 +4,7 @@ namespace Tests;
 
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Support\Facades\Http;
-use Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRedirectFilter;
-use Mcamara\LaravelLocalization\Middleware\LocaleSessionRedirect;
+use NielsNumbers\LaravelLocalizer\Middleware\RedirectLocale;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -22,21 +21,15 @@ abstract class TestCase extends BaseTestCase
     }
 
     /**
-     * Routes in routes/web.php are registered under a prefix produced by
-     * LaravelLocalization::setLocale(), which reads the incoming request. Under a
-     * real request the prefix is the locale; in tests the route file is loaded
-     * during bootstrap, before any request exists, so setLocale() returns null and
-     * the routes register unprefixed. The redirect middleware still insists on a
-     * prefix, so every URL bounces to /en, which then matches nothing.
-     *
-     * Disabling the two redirect filters lets these tests hit the routes as
-     * registered. Locale behaviour itself is covered separately in LocalizationTest.
+     * Tests that hit localized routes with unprefixed URLs would be redirected
+     * to the locale-prefixed variant by the localizer middleware. Disabling the
+     * redirect lets those tests exercise the route directly. Locale behaviour
+     * itself is covered separately in LocalizationTest.
      */
     protected function withoutLocaleRedirects(): static
     {
         $this->withoutMiddleware([
-            LaravelLocalizationRedirectFilter::class,
-            LocaleSessionRedirect::class,
+            RedirectLocale::class,
         ]);
 
         return $this;

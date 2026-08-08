@@ -38,20 +38,6 @@ use App\Http\Controllers\WelcomeController;
 */
 
 /*
-|------------------
-| MCAMARA LARAVELLOCALIZATION
-|------------------
-*/
-
-use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
-
-/*
-|------------------
-| \MCAMARA LARAVELLOCALIZATION
-|------------------
-*/
-
-/*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
@@ -62,11 +48,7 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 |
 */
 
-Route::group(
-    [
-        'prefix' => LaravelLocalization::setLocale(),
-        'middleware' => ['localize', 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath']
-    ],
+Route::localize(
     function () {
         Route::impersonate();
 

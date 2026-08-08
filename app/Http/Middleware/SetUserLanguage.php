@@ -3,7 +3,6 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class SetUserLanguage
 {
@@ -11,7 +10,7 @@ class SetUserLanguage
     {
         $user = $request->user();
         if ($user) {
-            $user->language = LaravelLocalization::getCurrentLocale();
+            $user->language = app()->getLocale();
             $user->save();
         }
 
