@@ -35,6 +35,18 @@ $fields = [
     'french_gender_separator' => \App\Models\GuidelinesInterface::FRENCH_GENDER_SEPARATOR,
 ];
 
+// The Inklusivum is not a separator spliced into Expert…in but its own
+// paradigm (de Expertere), so it carries the VGD logo instead of an emoji.
+// The API copies this file and emits the URL as Result.icon_image whenever
+// this ending is the configured one; clients without it fall back to the
+// emoji icon. Hosted on the website because that is the one origin whose
+// media the repositories guarantee (see www.witty.works/AGENTS.md).
+$icons = [
+    'german_gender_ending' => [
+        'de-e' => 'https://www.witty.works/assets/media/vgd-icon-bunt.svg',
+    ],
+];
+
 $out = [];
 foreach ($fields as $field => $map) {
     $entry = ['translations' => []];
@@ -51,6 +63,10 @@ foreach ($fields as $field => $map) {
         }
 
         $entry['translations'][$locale] = $labels;
+    }
+
+    if (!empty($icons[$field])) {
+        $entry['icon_image'] = $icons[$field];
     }
 
     $out[$field] = $entry;
