@@ -19,6 +19,6 @@ class TeamMemberInvitedSlackAlert
             $event->team->teamInvitations()->count(),
         );
 
-        SlackAlert::message(getenv('PLATFORM_ENVIRONMENT') . $message);
+        SlackAlert::message(config('app.env') . $message);
     }
 }

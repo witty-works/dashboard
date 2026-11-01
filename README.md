@@ -12,8 +12,6 @@ Based on
 
 Runs on Laravel 13 / PHP 8.4, with Node 24 for the asset build.
 
-For deployment we recommend https://docs.platform.sh/
-
 # Local Install
 
 -   Clone Code
@@ -36,13 +34,6 @@ For deployment we recommend https://docs.platform.sh/
     -   Go to the website and create an account
     -   Run `lando artisan lumki:setup` (answer yes, ie. hit enter, for every question)
 
--   Install Platform.sh CLI https://docs.platform.sh/development/cli.html
-
-    -   Run `platform login`
-    -   Run `platform project:set-remote` (select `dashboard`)
-    -   Run `platform list` to find out what commands are available
-    -   Run `platform help [command]` to find out details about a command
-
 -   Install Sentry CLI https://docs.sentry.io/product/cli/installation/
     -   Run `sentry-cli login`
     -   Run `cp .sentryclirc.example .sentryclirc`
@@ -51,8 +42,8 @@ For deployment we recommend https://docs.platform.sh/
 
 **Note:** Plain `php artisan route:cache` is _not supported_ by the multilingual
 route extension used in this project and will break route localization. Use
-`php artisan route:trans:cache`, which builds one cache per locale — that is what
-the Platform.sh deploy hook runs. `route:trans:clear` removes them again.
+`php artisan route:trans:cache`, which builds one cache per locale — run it on
+deploy, after the code is in place. `route:trans:clear` removes them again.
 
 # Development
 

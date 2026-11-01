@@ -7,7 +7,6 @@ use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Platformsh\ConfigReader\Config;
 
 class SwitchToTeam
 {

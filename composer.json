@@ -19,7 +19,6 @@
         "livewire/livewire": "^3.4",
         "niels-numbers/laravel-localizer": "^1.4",
         "p3k/emoji-detector": "^1.0.0",
-        "platformsh/laravel-bridge": "^2.2",
         "posthog/posthog-php": "^4.0",
         "sentry/sentry-laravel": "^4.0",
         "socialiteproviders/manager": "^4.8",

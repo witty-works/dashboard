@@ -8,7 +8,7 @@ return [
     'release' => '1.42.9',
 
     // When left empty or `null` the Laravel environment will be used
-    'environment' => env('PLATFORM_BRANCH', 'local'),
+    'environment' => env('SENTRY_ENVIRONMENT'),
 
     'breadcrumbs' => [
         // Capture Laravel logs in breadcrumbs
