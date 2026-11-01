@@ -14,15 +14,10 @@
 
 -   Go to the console
     -   `make-release.sh hotfix` // to start a hotfix release
-    -   Make your changes, ie. `git commit`, ensure that they work locally, to test remotely use `platform environment:push`
+    -   Make your changes, ie. `git commit`, ensure that they work locally
     -   Make sure translations are up to date
         -   Manually add the translations for `de` and `fr` if new translations were added for `en`
         -   `lando artisan langman:missing` lists keys that still need a value
-    -   Optionally test the hotfix branch with production data
-        -   Push the branch got gitlab `git push origin hotfix/[new version]`
-        -   To activate the branch on platform.sh run `platform environment:activate`
-        -   _ATTENTION_ This will use production data, so be careful and use your production passwords etc
-        -   If testing email related features, enable email sending for the hotfix environment on platform.sh
     -   `make-release.sh finish` // use `:wq` to save, use `i` to insert the copied milestone URL and `esc` to get out of insert mode
     -   `make-release.sh finalize`
 
