@@ -12,7 +12,7 @@
             <fieldset>
                 <legend class="sr-only">{{ __('guidelines.set_type') }}</legend>
                 @foreach (\App\Models\Domain::TYPES as $type => $label)
-                <div class="margin-bottom">
+                <div class="margin-bottom" wire:key="domain-type-{{ $type }}">
                 <label>
                     <x-input name="type"
                         type="radio"
