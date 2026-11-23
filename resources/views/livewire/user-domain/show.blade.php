@@ -20,7 +20,7 @@
             </thead>
             <tbody>
             @foreach ($list as $domain)
-            <tr @if($loop->even)class="bg-grey"@endif>
+            <tr wire:key="domain-{{ $domain->id }}" @if($loop->even)class="bg-grey"@endif>
                 <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $domain->domain }}</td>
                 <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $domain->exists_on_team ? __('guidelines.yes') : __('guidelines.no') }} </td>
                 <td class="border px-4 py-2 text-center container-row">

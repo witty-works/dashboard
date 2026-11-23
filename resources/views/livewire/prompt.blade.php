@@ -61,7 +61,8 @@
             <div>
                 <ul>
                 @foreach($results as $result)
-                    <li>
+                    {{-- Read-only, and replaced whole with each answer. --}}
+                    <li wire:key="result-{{ $loop->index }}">
                         <span class="underlined" style="text-decoration-color: {{ \App\Livewire\Prompt::getColor($result)}}">{{ $result['text'] }}</span>
                         -
                         {{ $result['explanation']['text'] }}

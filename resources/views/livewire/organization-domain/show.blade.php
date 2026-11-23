@@ -21,7 +21,7 @@
             </thead>
             <tbody>
             @foreach ($list as $domain)
-            <tr @if($loop->even)class="bg-grey"@endif>
+            <tr wire:key="domain-{{ $domain->id }}" @if($loop->even)class="bg-grey"@endif>
                 <td class="border px-4 py-2 text-left">{{ $domain->domain }}</td>
                 @if (Auth::user()->hasTeamPermission($model, 'edit_guidelines') && empty($hide_actions))
                 <td class="border px-4 py-2 text-center container-row">

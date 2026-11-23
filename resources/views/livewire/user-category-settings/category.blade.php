@@ -53,7 +53,7 @@
             }
         @endphp
 
-        <div class="guidelines-form-section lato-small-text-p guidelines-form-section-proficiency-level">
+        <div class="guidelines-form-section lato-small-text-p guidelines-form-section-proficiency-level" wire:key="level-{{ $proficiencyLevel }}">
             <h3>{{ $proficiencyLevelData['translation']['hs_name'] }}</h3>
 
             @include('partials.toggle_label', ['disabled' => $disabled])
@@ -75,7 +75,7 @@
         <x-input-error for="dimensions" class="mt-2" />
 
         @if(!empty($proficiencyLevelData['translation']['lead_text']))
-        <div id="{{ $category }}-{{ $proficiencyLevel }}" style="display: none" class="proficiency-level-p">
+        <div id="{{ $category }}-{{ $proficiencyLevel }}" style="display: none" class="proficiency-level-p" wire:key="level-{{ $proficiencyLevel }}-explanation">
             {!! $proficiencyLevelData['translation']['lead_text'] !!}
         </div>
         @endif
@@ -94,7 +94,7 @@
 
         @endphp
 
-        <div class="guidelines-form-section-ident lato-small-text-p">
+        <div class="guidelines-form-section-ident lato-small-text-p" wire:key="dimension-{{ $proficiencyLevel }}-{{ $ddd }}">
             @php
                 $labelSuffix = ' - '.$diversityDimensionDrivers[$ddd]['translation']['short_explanation'];
                 if ($diversityDimensionDrivers[$ddd]['has_rules'] === ['en']) {

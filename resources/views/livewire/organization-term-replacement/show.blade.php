@@ -24,7 +24,7 @@
             </thead>
             <tbody>
             @foreach ($list as $term_replacement)
-            <tr @if($loop->even)class="bg-grey"@endif>
+            <tr wire:key="term-replacement-{{ $term_replacement->id }}" @if($loop->even)class="bg-grey"@endif>
                 <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $term_replacement->term }}</td>
                 <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $term_replacement->replacement }}</td>
                 <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $term_replacement->emoji }}</td>
