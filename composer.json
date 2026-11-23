@@ -2,6 +2,7 @@
     "name": "wityworks/dashboard",
     "type": "project",
     "description": "The Witty Dashboard",
+    "license": "MIT",
     "require": {
         "php": "^8.4",
         "barryvdh/laravel-debugbar": "^4.0",
