@@ -8,6 +8,12 @@
     </div>
 </div>
 
+<div>
+    <div class="py-10">
+        @livewire('teams.confirm-before-checking', ['model' => $team])
+    </div>
+</div>
+
 @if (config('app.llm_enabled'))
 <div>
     <div class="py-10">
