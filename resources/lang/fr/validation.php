@@ -100,6 +100,7 @@ return [
     'missing_with' => 'Le champ :attribute doit être absent lorsque :values est présent.',
     'missing_with_all' => 'Le champ :attribute doit être absent lorsque :values est présent.',
     'multiple_of' => 'Le :attribute doit être un multiple de :value.',
+    'no_markup' => 'Le champ :attribute ne doit pas contenir de HTML. Supprimez tout « < » suivi directement d\'une lettre, de « / », de « ! » ou de « ? ».',
     'not_in' => 'La valeur sélectionnée :attribute n\'est pas valide.',
     'not_regex' => 'Le format :attribute n\'est pas valide.',
     'numeric' => 'Le :attribute doit être un nombre.',

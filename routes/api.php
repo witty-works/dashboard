@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AnalyticsController;
+use App\Http\Controllers\RevokeTokenController;
 use App\Http\Controllers\UserGuidelinesApiController;
 use App\Http\Controllers\UserInfoController;
 use Illuminate\Support\Facades\Route;
@@ -57,6 +58,20 @@ if (config('app.browsers')) {
 
         Route::put('/language/customize-witty', [UserGuidelinesApiController::class, 'adjustDDDLevel'])
             ->name('user.adjust_ddd_level.put');
+    });
+
+    /*
+     * The extension's "Sign out". `auth:api` rather than `auth:extension`: only
+     * a Passport access token has anything to revoke, and an Office add-in
+     * id_token is Microsoft's, not ours.
+     */
+    Route::group([
+        'prefix' => '/user',
+        'middleware' => ['auth:api'],
+        'excluded_middleware' => ['ensureStateful'],
+    ], function () {
+        Route::post('/revoke-token', RevokeTokenController::class)
+            ->name('user.revoke-token.post');
     });
 }
 

@@ -71,6 +71,7 @@ class LivewireComponentsTest extends TestCase
             'term replacement: show' => [\App\Livewire\OrganizationTermReplacement\Show::class],
             'domain: show' => [\App\Livewire\OrganizationDomain\Show::class],
             'store context' => [\App\Livewire\Teams\StoreContext::class],
+            'confirm before checking' => [\App\Livewire\Teams\ConfirmBeforeChecking::class],
             'team analytics' => [\App\Livewire\TeamAnalytics::class],
             'analytics user access' => [\App\Livewire\Teams\AnalyticsUserAccess::class],
         ];

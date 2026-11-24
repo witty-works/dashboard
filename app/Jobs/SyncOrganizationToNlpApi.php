@@ -57,6 +57,13 @@ class SyncOrganizationToNlpApi extends AbstractSyncToNlpApi
             'status' => 'force',
         ];
 
+        // Forced only when switched on: members cannot turn it off, but a team
+        // that leaves it off does not stop a member from asking for it.
+        $config['confirm_before_checking'] = [
+            'value' => (bool) $team->confirm_before_checking,
+            'status' => $team->confirm_before_checking ? 'force' : 'suggestion',
+        ];
+
         // An installation whose backend has no LLM support reports every team as
         // opted out, whatever the team's own setting says.
         $config['llm_alternatives'] = [

@@ -4,6 +4,7 @@ namespace App\Livewire\OrganizationTermReplacement;
 
 use App\Http\Kernel;
 use App\Models\TermReplacement;
+use App\Rules\NoMarkup;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Facades\Auth;
@@ -28,17 +29,27 @@ class Form extends Component
 
     protected $listeners = ['edit'];
 
-    protected $rules = [
-        'term_replacement_id' => 'int|nullable',
-        'term' => 'required|min:1|max:250',
-        'replacement' => 'required|min:1|max:250|different:term',
-        'explanation' => 'required_with:url,emoji|max:100',
-        'url' => 'nullable|url|max:250',
-        'emoji' => 'nullable',
-        'language_code' => 'nullable|string|in:en,de,fr',
-        'matching_type' => 'nullable|string|in:case_insensitive,case_sensitive,lemmatize',
-        'word_type' => 'nullable|string|in:a,v,n',
-    ];
+    /**
+     * Also used by UserTermReplacement\Form, which extends this component.
+     *
+     * The explanation and URL are shown by the browser extension inside
+     * third-party pages, so the explanation may carry no markup and the URL
+     * must be http or https (a bare `url` rule accepts other schemes too).
+     */
+    protected function rules()
+    {
+        return [
+            'term_replacement_id' => 'int|nullable',
+            'term' => 'required|min:1|max:250',
+            'replacement' => 'required|min:1|max:250|different:term',
+            'explanation' => ['required_with:url,emoji', 'max:100', new NoMarkup()],
+            'url' => 'nullable|url:http,https|max:250',
+            'emoji' => 'nullable',
+            'language_code' => 'nullable|string|in:en,de,fr',
+            'matching_type' => 'nullable|string|in:case_insensitive,case_sensitive,lemmatize',
+            'word_type' => 'nullable|string|in:a,v,n',
+        ];
+    }
 
     /**
      * The model instance.

@@ -13,7 +13,7 @@ use League\OAuth2\Server\Entities\Traits\TokenEntityTrait;
 /**
  * Passport's access token entity, with a `kid` header and `iss` and email claims.
  *
- * Three things league/oauth2-server does not emit, each of which a consumer
+ * Four things league/oauth2-server does not emit, each of which a consumer
  * needs:
  *
  * - **`kid`**: without it no off-the-shelf JWKS client can verify our tokens.
@@ -23,6 +23,10 @@ use League\OAuth2\Server\Entities\Traits\TokenEntityTrait;
  *   issuer and anything checking one rejects it outright. See [OAuthIssuer].
  * - **`email`**: the NLP API identifies users by email; `sub` is our local user
  *   id and means nothing to it.
+ * - **`email_verified`**: whether the user has confirmed that address, from
+ *   `email_verified_at`. Anyone can register with any address, so the email
+ *   alone proves nothing; the NLP API refuses dashboard tokens unless this is
+ *   `true`. Present whenever `email` is.
  *
  * This re-uses AccessTokenTrait rather than extending Passport's
  * Bridge\AccessToken: the trait's $jwtConfiguration and $privateKey are private,
@@ -83,10 +87,12 @@ class AccessToken implements AccessTokenEntityInterface
         // claim, and `preferred_username` is what the NLP API's existing
         // fetch_email_from_claims() already reads off Azure AD B2C tokens, so
         // that side needs no extraction changes.
-        if ($email = $this->userEmail()) {
+        $user = $this->user();
+        if ($user?->email) {
             $builder = $builder
-                ->withClaim('email', $email)
-                ->withClaim('preferred_username', $email);
+                ->withClaim('email', $user->email)
+                ->withClaim('preferred_username', $user->email)
+                ->withClaim('email_verified', $user->hasVerifiedEmail());
         }
 
         return $builder
@@ -98,7 +104,7 @@ class AccessToken implements AccessTokenEntityInterface
      * One query per token issued — i.e. once an hour per signed-in user, on a
      * path that is already doing RSA signing.
      */
-    protected function userEmail(): ?string
+    protected function user(): ?User
     {
         $userId = $this->getUserIdentifier();
 
@@ -109,6 +115,6 @@ class AccessToken implements AccessTokenEntityInterface
             return null;
         }
 
-        return User::find($userId)?->email;
+        return User::find($userId);
     }
 }

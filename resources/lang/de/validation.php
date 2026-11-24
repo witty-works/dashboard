@@ -80,6 +80,7 @@ return [
         'string' => ':attribute muss mindestens :min Zeichen lang sein.',
     ],
     'multiple_of' => ':attribute muss ein Vielfaches von :value sein.',
+    'no_markup' => ':attribute darf kein HTML enthalten. Entferne jedes "<", auf das direkt ein Buchstabe, "/", "!" oder "?" folgt.',
     'not_in' => 'Der gewählte Wert für :attribute ist ungültig.',
     'not_regex' => ':attribute hat ein ungültiges Format.',
     'numeric' => ':attribute muss eine Zahl sein.',
