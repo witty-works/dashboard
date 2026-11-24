@@ -191,11 +191,11 @@ return [
     | Witty GPT
     |--------------------------------------------------------------------------
     |
-    | Witty GPT reviews LLM responses through the NLP API. Not every backend
-    | this dashboard is deployed against supports LLMs, so the whole feature can
-    | be switched off for an installation: the /prompt route is not registered,
-    | the navigation entry and the per-team toggle are hidden, and teams are
-    | reported to the NLP API as having LLM alternatives disabled.
+    | The write page's prompt and AI suggestions use an LLM through the NLP API.
+    | Not every backend this dashboard is deployed against supports LLMs, so
+    | they can be switched off for an installation: the page still checks text
+    | but hides both, the per-team toggle is hidden, and teams are reported to
+    | the NLP API as having LLM alternatives disabled.
     |
     | Teams still opt in individually via the team privacy settings; this is the
     | installation-wide switch that sits above that.
@@ -203,6 +203,22 @@ return [
     */
 
     'llm_enabled' => (bool) env('APP_LLM_ENABLED', true),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Write Page
+    |--------------------------------------------------------------------------
+    |
+    | The NLP API address the browser calls from the write page. Not the
+    | server-side nlp_api_endpoint, which may be an internal address. Without
+    | it the page says it is not configured. The contact is whom users ask
+    | for access when the API does not let them in.
+    |
+    */
+
+    'nlp_api_public_url' => env('NLP_API_PUBLIC_URL', ''),
+
+    'write_contact' => env('WRITE_CONTACT', 'api@witty.works'),
 
     /*
     |--------------------------------------------------------------------------

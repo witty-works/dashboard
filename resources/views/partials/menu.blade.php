@@ -153,15 +153,13 @@
         @endif
 
 
-        @if (config('app.llm_enabled'))
-        <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('prompt') }}">
+        <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('write') }}">
             <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/prompt.svg') }}" alt="" />
-            {{ __('content.witty_prompt') }}
+            {{ __('content.write_title') }}
             <span class="ml-2 no-underline">
                 @include('partials.beta')
             </span>
         </x-nav-link>
-        @endif
 
         <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('academy') }}" :active="request()->routeIs('academy')">
             <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/bulb.svg') }}" alt="" />
