@@ -66,6 +66,25 @@ return [
     |
     */
 
+    /*
+    |--------------------------------------------------------------------------
+    | Write Page Client
+    |--------------------------------------------------------------------------
+    |
+    | The public PKCE client the dashboard's own write page signs in with, so
+    | its tokens are told apart from the extension's and can be revoked on
+    | their own. Provisioned by `php artisan passport:editor-client`; its id
+    | also goes into PASSPORT_FIRST_PARTY_CLIENTS (no consent screen) and into
+    | the NLP API's DASHBOARD_CLIENT_ID. Its one redirect URI is the page's
+    | callback, outside the locale prefix so the address stays fixed.
+    |
+    */
+
+    'editor' => [
+        'name' => env('EDITOR_OAUTH_CLIENT_NAME', 'Witty editor (dashboard)'),
+        'client_id' => env('PASSPORT_EDITOR_CLIENT_ID'),
+    ],
+
     'extension' => [
         'name' => env('EXTENSION_OAUTH_CLIENT_NAME', 'Witty Browser Extension'),
         'client_id' => env('EXTENSION_OAUTH_CLIENT_ID'),
