@@ -100,7 +100,8 @@ An RS256 JWT with a `kid` header matching the JWK Set:
   "exp": 1785930568.718138,
   "scopes": [],
   "email": "oauth-e2e@example.test",
-  "preferred_username": "oauth-e2e@example.test"
+  "preferred_username": "oauth-e2e@example.test",
+  "email_verified": true
 }
 ```
 
@@ -118,6 +119,15 @@ must match exactly; see [Issuer](#issuer) below.
 standard OIDC claim, and `preferred_username` is what the NLP API's existing
 `fetch_email_from_claims()` already reads off Azure AD B2C tokens, so that side
 needs no extraction changes.
+
+`email_verified` is `true` once the user has confirmed their address
+(`email_verified_at` is set) and `false` until then. It is present whenever
+`email` is. Registration accepts any address, so the email alone does not show
+that the token holder owns it. **The NLP API requires `email_verified === true`
+for dashboard tokens**: a user who has not confirmed their address can sign in
+to the extension, but the NLP API refuses their token until they do. The claim
+is fixed when the token is issued, so after confirming, the extension gets an
+accepted token on its next refresh.
 
 All of the above are added by `App\Auth\AccessToken`; league/oauth2-server builds
 the JWT itself and Passport exposes no other hook. Note that league 9 renamed the
@@ -326,7 +336,7 @@ then into `oauth_client_id` on each `BASE_URLS` entry in the extension's
 | `app/Auth/ExtensionUserResolver.php` | Passport token, else Microsoft id_token |
 | `app/Models/OAuthClient.php` | Consent-screen skip: first-party **and** scope-bounded |
 | `app/Auth/OAuthSigningKey.php` | The signing key as a JWK; the one source of `kid` |
-| `app/Auth/AccessToken.php` | Token entity: `kid` header, `iss`, email claims |
+| `app/Auth/AccessToken.php` | Token entity: `kid` header, `iss`, email and `email_verified` claims |
 | `app/Auth/OAuthIssuer.php` | The `iss` value; the one source of the issuer string |
 | `resources/views/oauth/authorize.blade.php` | Consent screen (Passport 13 ships none) |
 | `app/Http/Controllers/JwksController.php` | Public key as a JWK Set |

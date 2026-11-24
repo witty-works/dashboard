@@ -4,7 +4,9 @@ namespace Tests\Feature;
 
 use App\Auth\AccessToken;
 use App\Auth\OAuthSigningKey;
+use App\Models\User;
 use DateTimeImmutable;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Passport\Bridge\Client;
 use Laravel\Passport\Passport;
 use League\OAuth2\Server\CryptKey;
@@ -14,7 +16,8 @@ use Tests\TestCase;
  * Covers the claims App\Auth\AccessToken adds on top of league/oauth2-server,
  * each of which exists for a consumer that breaks without it: `kid` so a stock
  * JWKS client can find the key, `iss` so a consumer checking the issuer does not
- * reject the token outright.
+ * reject the token outright, `email_verified` so the NLP API can refuse tokens
+ * of users who never confirmed their address.
  *
  * These assert on a token built through the real entity rather than on a mocked
  * builder, because the failure mode being guarded against is precisely that the
@@ -24,6 +27,8 @@ use Tests\TestCase;
  */
 class AccessTokenClaimsTest extends TestCase
 {
+    use RefreshDatabase;
+
     private function issueToken(?string $userIdentifier = null): array
     {
         $keyPath = Passport::keyPath('oauth-private.key');
@@ -32,8 +37,8 @@ class AccessTokenClaimsTest extends TestCase
             $this->markTestSkipped('Passport keys are missing; run `php artisan passport:keys`.');
         }
 
-        // No user identifier by default: userEmail() then short-circuits and the
-        // test needs no database at all. The email claim is covered separately.
+        // No user identifier by default: user() then short-circuits and the
+        // token carries no email claims. Those are covered by the user tests below.
         $token = new AccessToken(
             $userIdentifier,
             [],
@@ -98,5 +103,35 @@ class AccessTokenClaimsTest extends TestCase
         // a silent regression rather than an error.
         $this->assertSame('client-id', $claims['sub']);
         $this->assertArrayNotHasKey('email', $claims);
+    }
+
+    public function test_a_verified_user_token_says_the_email_is_verified(): void
+    {
+        $user = User::factory()->create();
+
+        $claims = $this->issueToken((string) $user->id)['payload'];
+
+        $this->assertSame($user->email, $claims['email']);
+        $this->assertSame($user->email, $claims['preferred_username']);
+        $this->assertTrue($claims['email_verified']);
+    }
+
+    public function test_an_unverified_user_token_says_the_email_is_not_verified(): void
+    {
+        $user = User::factory()->unverified()->create();
+
+        $claims = $this->issueToken((string) $user->id)['payload'];
+
+        $this->assertSame($user->email, $claims['email']);
+        // Strictly false, not absent: the NLP API checks for `=== true`, and an
+        // explicit false says the dashboard knows the address is unconfirmed.
+        $this->assertFalse($claims['email_verified']);
+    }
+
+    public function test_a_userless_token_has_no_email_verified_claim(): void
+    {
+        $claims = $this->issueToken()['payload'];
+
+        $this->assertArrayNotHasKey('email_verified', $claims);
     }
 }
