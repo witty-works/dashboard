@@ -36,6 +36,7 @@ two — see `App\Auth\ExtensionUserResolver`.
 | `GET /.well-known/jwks.json` | none | Public key, for the NLP API to verify tokens |
 | `GET /api/userinfo` | bearer | `{id, email, name}` of the token's owner |
 | `PUT/DELETE /api/user/language/*` | bearer | Guidelines, as before |
+| `POST /api/user/revoke-token` | bearer (Passport only) | The extension's sign-out: revokes the presented token |
 
 ## The extension flow
 
@@ -79,6 +80,13 @@ client that started the flow.
      grant_type=refresh_token
      refresh_token=<refresh_token>
      client_id=<EXTENSION_OAUTH_CLIENT_ID>
+
+8. On sign-out:
+   POST /api/user/revoke-token
+     Authorization: Bearer <access_token>
+     Accept: application/json
+
+   -> 204, then discard both tokens
 ```
 
 Access tokens live 1 hour, refresh tokens 30 days
@@ -207,6 +215,32 @@ extension as a side effect of opening the Word add-in.
 > (1 hour). That window is the price of offline validation. If Phase 3 needs
 > revocation to be immediate, the NLP API has to call back to the dashboard, and
 > the TTL should be cut in the meantime.
+
+### Signing out of the extension revokes its token
+
+`POST /api/user/revoke-token` (`App\Http\Controllers\RevokeTokenController`)
+revokes the access token the request carries and every refresh token issued
+with it, then answers `204`. The user's other tokens are untouched, so the
+extension stays signed in on their other browsers and devices; logging out of
+the dashboard is what revokes all of them.
+
+Revoking the refresh token is the part that signs the extension out.
+league/oauth2-server's refresh grant does not check whether the access token was
+revoked, so a refresh token left alive keeps minting access tokens for the rest
+of its 30 days. After this call the refresh grant answers `invalid_grant`.
+
+The route uses the `auth:api` guard, not `auth:extension`: only a Passport token
+has a database row to revoke, and an Office add-in id_token is Microsoft's.
+Without a valid token the answer is `401`, provided the request sends
+`Accept: application/json`; without that header the `auth` middleware redirects
+to the login page instead, as on every other `/api/user` route.
+
+`config/cors.php` covers `api/*` with any method, origin and header, so the
+extension's background service worker can call it with an `Authorization`
+header like the other `/api/user` routes.
+
+The same caveat as for logout applies: the NLP API validates tokens offline and
+keeps accepting a revoked access token until it expires.
 
 ### Skipping the consent screen
 
@@ -341,6 +375,7 @@ then into `oauth_client_id` on each `BASE_URLS` entry in the extension's
 | `resources/views/oauth/authorize.blade.php` | Consent screen (Passport 13 ships none) |
 | `app/Http/Controllers/JwksController.php` | Public key as a JWK Set |
 | `app/Http/Controllers/UserInfoController.php` | `/api/userinfo` |
+| `app/Http/Controllers/RevokeTokenController.php` | `/api/user/revoke-token` |
 | `app/Listeners/RevokeOAuthTokens.php` | Revokes tokens on dashboard logout |
 | `app/Console/Commands/CreateExtensionOAuthClientCommand.php` | `passport:extension-client` |
 
