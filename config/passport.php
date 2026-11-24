@@ -83,7 +83,21 @@ return [
     'editor' => [
         'name' => env('EDITOR_OAUTH_CLIENT_NAME', 'Witty editor (dashboard)'),
         'client_id' => env('PASSPORT_EDITOR_CLIENT_ID'),
+        // Requests a minute per IP to /oauth/token for this client.
+        'token_rate_limit' => (int) env('OAUTH_EDITOR_TOKEN_RATE_LIMIT', 30),
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Token Endpoint Rate Limit
+    |--------------------------------------------------------------------------
+    |
+    | Requests a minute per IP to POST /oauth/token for every client but the
+    | write page's, which has its own (editor.token_rate_limit).
+    |
+    */
+
+    'token_rate_limit' => (int) env('OAUTH_TOKEN_RATE_LIMIT', 10),
 
     'extension' => [
         'name' => env('EXTENSION_OAUTH_CLIENT_NAME', 'Witty Browser Extension'),
