@@ -84,6 +84,10 @@ To run it from the host instead, point it at Lando's forwarded MariaDB port:
 DB_HOST=127.0.0.1 DB_PORT=3307 vendor/bin/phpunit
 ```
 
+The OAuth tests need Passport's signing keys; create them once with `php artisan passport:keys`.
+
+CI (`.github/workflows/ci.yaml`) runs the suite on every pull request and on `dev` and `main`, against a MariaDB 10.5 service, and runs `npm test` and the Vite build. The tests fake the Google Fonts request and skip Vite, so they need neither the network nor a build.
+
 Two things to know when writing tests:
 
 -   **Assert the view as well as the status.** Use `assertViewIs(...)` alongside
