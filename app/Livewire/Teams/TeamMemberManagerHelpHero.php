@@ -6,14 +6,26 @@ use App\Livewire\HelpHeroTrait;
 use App\Jobs\SyncUserToNlpApi;
 use App\Models\TeamInvitationRequest;
 use App\Mail\TeamInvitationRequestAccepted;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
 use Laravel\Jetstream\Contracts\AddsTeamMembers;
 use Laravel\Jetstream\Http\Livewire\TeamMemberManager as TeamMemberManagerBase;
 use Laravel\Jetstream\Contracts\RemovesTeamMembers;
+use Livewire\Attributes\Locked;
 
+/**
+ * Rendered for admins on the team page and, so that they can leave, for
+ * members without admin rights on their profile page. The view hides what
+ * those members may not do, but every action can be called from the browser,
+ * so each one checks the permission itself.
+ */
 class TeamMemberManagerHelpHero extends TeamMemberManagerBase
 {
     use HelpHeroTrait;
+
+    /** The team being managed: the server's, never the browser's to change. */
+    #[Locked]
+    public $team;
 
     public function mount($team)
     {
@@ -29,7 +41,8 @@ class TeamMemberManagerHelpHero extends TeamMemberManagerBase
      */
     public function addTeamMember()
     {
-        $invitationRequest = TeamInvitationRequest::join('users', 'users.id', '=', 'team_invitation_requests.user_id')
+        $invitationRequest = TeamInvitationRequest::select('team_invitation_requests.*')
+            ->join('users', 'users.id', '=', 'team_invitation_requests.user_id')
             ->where('email', $this->addTeamMemberForm['email'])
             ->where('team_id', $this->team->id)
             ->first();
@@ -58,6 +71,8 @@ class TeamMemberManagerHelpHero extends TeamMemberManagerBase
      */
     public function cancelTeamInvitation($invitationId)
     {
+        Gate::authorize('removeTeamMember', $this->team);
+
         parent::cancelTeamInvitation($invitationId);
         $this->updateHelpHero();
     }
@@ -70,7 +85,11 @@ class TeamMemberManagerHelpHero extends TeamMemberManagerBase
      */
     public function cancelTeamInvitationRequest(?TeamInvitationRequest $invitationRequest = null)
     {
+        Gate::authorize('removeTeamMember', $this->team);
+
         if (!empty($invitationRequest)) {
+            abort_unless((int) $invitationRequest->team_id === (int) $this->team->id, 403);
+
             $invitationRequest->delete();
         }
 
@@ -87,15 +106,15 @@ class TeamMemberManagerHelpHero extends TeamMemberManagerBase
      */
     public function acceptTeamInvitationRequest(?TeamInvitationRequest $invitationRequest = null, $role = 'user')
     {
+        Gate::authorize('addTeamMember', $this->team);
+
         if (empty($invitationRequest)) {
             session()->flash('teams_invitation_request_message', __('content.invitation_request_already_accepted'));
 
             return;
         }
 
-        if ($this->team->id != $invitationRequest->team->id) {
-            return;
-        }
+        abort_unless((int) $invitationRequest->team_id === (int) $this->team->id, 403);
 
         $user = $invitationRequest->user;
 
