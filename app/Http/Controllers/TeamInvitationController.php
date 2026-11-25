@@ -57,6 +57,15 @@ class TeamInvitationController extends BaseTeamInvitationController
             abort(403, 'Unauthorized action.');
         }
 
+        // Matching the address is not enough: anyone can register with it.
+        // Keep the acceptance for when its owner has verified it.
+        if (! $user->hasVerifiedEmail()) {
+            $invitation->accepted = true;
+            $invitation->save();
+
+            return redirect()->route('verification.notice');
+        }
+
         parent::accept($request, $invitation);
 
         $user->switchTeam($invitation->team);

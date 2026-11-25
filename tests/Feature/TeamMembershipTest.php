@@ -220,6 +220,81 @@ class TeamMembershipTest extends TestCase
         $this->assertModelMissing($invitation);
     }
 
+    public function test_an_invitation_is_not_applied_to_an_unverified_account(): void
+    {
+        $team = $this->owner()->currentTeam;
+        TeamInvitation::forceCreate(['team_id' => $team->id, 'email' => 'invited@example.com', 'role' => 'admin', 'accepted' => true]);
+        $claimant = User::factory()->unverified()->withPersonalTeam()->create(['email' => 'invited@example.com']);
+
+        $claimant->applyAcceptedInvitiations();
+
+        $this->assertFalse($team->fresh()->hasUser($claimant));
+    }
+
+    public function test_an_accepted_invitation_is_applied_to_a_verified_account(): void
+    {
+        $team = $this->owner()->currentTeam;
+        TeamInvitation::forceCreate(['team_id' => $team->id, 'email' => 'invited@example.com', 'role' => 'user', 'accepted' => true]);
+        $invitee = User::factory()->withPersonalTeam()->create(['email' => 'invited@example.com']);
+
+        $invitee->applyAcceptedInvitiations();
+
+        $this->assertTrue($team->fresh()->hasUser($invitee));
+        $this->assertSame('user', $invitee->teamRole($team)->key);
+    }
+
+    public function test_the_accept_link_does_not_add_an_unverified_account(): void
+    {
+        $team = $this->owner()->currentTeam;
+        $invitation = $team->teamInvitations()->create(['email' => 'invited@example.com', 'role' => 'admin']);
+        $claimant = User::factory()->unverified()->withPersonalTeam()->create(['email' => 'invited@example.com']);
+
+        $this->actingAs($claimant)
+            ->get("/en/team-invitations/{$invitation->id}/accept")
+            ->assertRedirect(route('verification.notice'));
+
+        $this->assertFalse($team->fresh()->hasUser($claimant));
+        $this->assertTrue((bool) $invitation->fresh()->accepted, 'kept for after verification');
+    }
+
+    public function test_the_accept_link_adds_a_verified_invitee(): void
+    {
+        $team = $this->owner()->currentTeam;
+        $invitation = $team->teamInvitations()->create(['email' => 'invited@example.com', 'role' => 'user']);
+        $invitee = User::factory()->withPersonalTeam()->create(['email' => 'invited@example.com']);
+
+        $this->actingAs($invitee)->get("/en/team-invitations/{$invitation->id}/accept")->assertRedirect();
+
+        $this->assertTrue($team->fresh()->hasUser($invitee));
+        $this->assertModelMissing($invitation);
+    }
+
+    public function test_an_accepted_invitation_is_applied_once_the_address_is_verified(): void
+    {
+        $team = $this->owner()->currentTeam;
+        TeamInvitation::forceCreate(['team_id' => $team->id, 'email' => 'invited@example.com', 'role' => 'user', 'accepted' => true]);
+        $invitee = User::factory()->unverified()->withPersonalTeam()->create(['email' => 'invited@example.com']);
+
+        $invitee->applyAcceptedInvitiations();
+        $this->assertFalse($team->fresh()->hasUser($invitee));
+
+        $invitee->markEmailAsVerified();
+        $invitee->applyAcceptedInvitiations();
+        $this->assertTrue($team->fresh()->hasUser($invitee));
+    }
+
+    public function test_an_accepted_invitation_to_a_team_the_user_is_already_on_is_dropped(): void
+    {
+        $team = $this->owner()->currentTeam;
+        $member = $this->member($team, 'user');
+        $invitation = TeamInvitation::forceCreate(['team_id' => $team->id, 'email' => $member->email, 'role' => 'admin', 'accepted' => true]);
+
+        $member->applyAcceptedInvitiations();
+
+        $this->assertModelMissing($invitation);
+        $this->assertDatabaseHas('team_user', ['team_id' => $team->id, 'user_id' => $member->id, 'role' => 'user']);
+    }
+
     // --- Members ---
 
     public function test_a_member_without_admin_rights_cannot_change_a_role_or_remove_a_member(): void

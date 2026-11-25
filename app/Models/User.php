@@ -211,6 +211,12 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function applyAcceptedInvitiations()
     {
+        // The invitation went to an address; only its verified owner takes it
+        // up, not whoever registers with that address first.
+        if (! $this->hasVerifiedEmail()) {
+            return;
+        }
+
         # are there any remaining invitations that were previously accept?
         $invitations = TeamInvitation::where('email', $this->email)
             ->where('accepted', true)
@@ -222,6 +228,14 @@ class User extends Authenticatable implements MustVerifyEmail
         }
 
         foreach ($invitations as $invitation) {
+            // Already added another way, such as through a join request:
+            // adding again would fail on every request.
+            if ($invitation->team->hasUser($this)) {
+                $invitation->delete();
+
+                continue;
+            }
+
             app(AddsTeamMembers::class)->add(
                 $invitation->team->owner,
                 $invitation->team,
