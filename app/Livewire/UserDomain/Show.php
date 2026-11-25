@@ -2,6 +2,8 @@
 
 namespace App\Livewire\UserDomain;
 
+use Livewire\Attributes\Locked;
+use App\Livewire\GuidelineEntryAuthorization;
 use App\Livewire\HelpHeroTrait;
 use App\Models\Domain;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -10,6 +12,7 @@ use Livewire\Component;
 
 class Show extends Component
 {
+    use GuidelineEntryAuthorization;
     use AuthorizesRequests;
     use HelpHeroTrait;
 
@@ -20,6 +23,7 @@ class Show extends Component
      *
      * @var mixed
      */
+    #[Locked]
     public $model;
 
     /**
@@ -48,15 +52,15 @@ class Show extends Component
 
     public function editDomain(Domain $domain)
     {
-        if (Auth::user()->id !== $this->model->id) {
-            abort(403);
-        }
+        $this->authorizeUserEntry($domain);
 
         $this->dispatch('edit', domain: $domain);
     }
 
     public function deleteDomain(Domain $domain)
     {
+        $this->authorizeUserEntry($domain);
+
         $domain->delete();
         $this->updateHelpHero();
     }

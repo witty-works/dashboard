@@ -2,6 +2,7 @@
 
 namespace App\Livewire\OrganizationDomain;
 
+use Livewire\Attributes\Locked;
 use App\Models\LanguageGuidelines;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
@@ -17,6 +18,7 @@ class Type extends Component
         'type' => 'required|string|in:allow,allow_witty_works,deny',
     ];
 
+    #[Locked]
     public $model;
 
     /**

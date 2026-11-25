@@ -2,6 +2,7 @@
 
 namespace App\Livewire\OrganizationLanguageSettings;
 
+use Livewire\Attributes\Locked;
 use App\Livewire\TeamsGuidelineTrait;
 use App\Models\LanguageGuidelines;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -24,6 +25,7 @@ class GenericMasculine extends Component
         'gendered_roles_format' => 'nullable|string|in:both,inclusive_gender,binary_gender,none',
     ];
 
+    #[Locked]
     public $model;
 
     public static function isEnabled($preferredVariants)

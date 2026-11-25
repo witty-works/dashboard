@@ -2,6 +2,7 @@
 
 namespace App\Livewire\UserLanguageSettings;
 
+use Livewire\Attributes\Locked;
 use App\Livewire\OrganizationLanguageSettings\German as OrganizationLanguageSettingsGerman;
 use App\Livewire\UserGuidelineTrait;
 use App\Models\GuidelinesInterface;
@@ -32,6 +33,7 @@ class German extends Component
         ];
     }
 
+    #[Locked]
     public $model;
 
     protected function resetForm()

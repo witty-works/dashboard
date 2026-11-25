@@ -2,6 +2,7 @@
 
 namespace App\Livewire\OrganizationLanguageSettings;
 
+use Livewire\Attributes\Locked;
 use App\Livewire\TeamsGuidelineTrait;
 use App\Models\GuidelinesInterface;
 use App\Models\LanguageGuidelines;
@@ -28,6 +29,7 @@ class Language extends Component
         'preferred_variants_fr' => 'nullable|string|in:fr-FR',
     ];
 
+    #[Locked]
     public $model;
 
     public function resetForm()

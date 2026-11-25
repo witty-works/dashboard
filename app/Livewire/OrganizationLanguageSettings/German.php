@@ -2,6 +2,7 @@
 
 namespace App\Livewire\OrganizationLanguageSettings;
 
+use Livewire\Attributes\Locked;
 use App\Livewire\TeamsGuidelineTrait;
 use App\Models\GuidelinesInterface;
 use App\Models\LanguageGuidelines;
@@ -33,6 +34,7 @@ class German extends Component
         ];
     }
 
+    #[Locked]
     public $model;
 
     public static function isEnabled($genderedRolesFormat, $preferredVariants)

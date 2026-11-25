@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Teams;
 
+use Livewire\Attributes\Locked;
 use App\Livewire\HelpHeroTrait;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
@@ -18,6 +19,7 @@ class StoreContext extends Component
         'store_context' => 'nullable|boolean',
     ];
 
+    #[Locked]
     public $model;
 
     /**

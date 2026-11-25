@@ -2,6 +2,7 @@
 
 namespace App\Livewire\UserDomain;
 
+use Livewire\Attributes\Locked;
 use App\Models\Domain;
 use Illuminate\Validation\ValidationException;
 use App\Livewire\OrganizationDomain\Form as OrganizationForm;
@@ -19,6 +20,7 @@ class Form extends OrganizationForm
      *
      * @var mixed
      */
+    #[Locked]
     public $model;
 
     /**

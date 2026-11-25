@@ -2,6 +2,7 @@
 
 namespace App\Livewire\UserLanguageSettings;
 
+use Livewire\Attributes\Locked;
 use App\Livewire\UserGuidelineTrait;
 use App\Models\LanguageGuidelines;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -14,6 +15,7 @@ class Inspirations extends Component
     use UserGuidelineTrait;
 
     public $show_inspiration_alternatives;
+    #[Locked]
     public $model;
 
     protected $rules = [
