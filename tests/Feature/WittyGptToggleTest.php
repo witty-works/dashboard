@@ -30,7 +30,10 @@ class WittyGptToggleTest extends TestCase
 
     public function test_prompt_route_is_registered_when_enabled(): void
     {
-        $this->assertNotNull(Route::getRoutes()->getByName('prompt'));
+        // The localizer registers every route twice, with and without the
+        // locale prefix, under prefixed names.
+        $this->assertNotNull(Route::getRoutes()->getByName('without_locale.prompt'));
+        $this->assertNotNull(Route::getRoutes()->getByName('with_locale.prompt'));
     }
 
     public function test_prompt_page_renders_when_enabled(): void
