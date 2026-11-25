@@ -55,8 +55,11 @@ Route::localize(
         Route::get('/terms', [\App\Http\Controllers\TermsController::class, 'show'])->name('terms.show');
         Route::get('/policy', [\App\Http\Controllers\PolicyController::class, 'show'])->name('policy.show');
 
-        Route::get('/office-login', [OAuthController::class, 'handleOfficeSsoLogin'])->name('office_login');
-        Route::get('/office-register', [OAuthController::class, 'handleOfficeSsoRegister'])->name('office_register');
+        // The add-in opens these with its token in the URL fragment; the page
+        // posts it. See OAuthController::showOfficeSsoBridge().
+        Route::get('/office-login', [OAuthController::class, 'showOfficeSsoBridge'])->name('office_login');
+        Route::post('/office-login', [OAuthController::class, 'handleOfficeSsoLogin'])->name('office_login_post');
+        Route::get('/office-register', [OAuthController::class, 'showOfficeSsoBridge'])->name('office_register');
         Route::post('/office-register', [OAuthController::class, 'handleOfficeSsoRegister'])->name('office_register_post');
 
         /*

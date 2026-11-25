@@ -93,7 +93,7 @@ class SocialAuthWiringTest extends TestCase
     public function test_office_login_with_an_invalid_token_redirects_to_the_failure_url(): void
     {
         $this->withoutLocaleRedirects()
-            ->get('/office-login?token=not-a-valid-jwt')
+            ->post('/office-login', ['token' => 'not-a-valid-jwt'])
             ->assertRedirectContains('status=failed');
     }
 

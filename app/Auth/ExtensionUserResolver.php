@@ -3,8 +3,7 @@
 namespace App\Auth;
 
 use App\Helpers\OfficeSsoHelper;
-use App\Models\User;
-use Exception;
+use Throwable;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Factory as AuthFactory;
 use Illuminate\Http\Request;
@@ -77,7 +76,7 @@ class ExtensionUserResolver
 
         try {
             $payload = $this->officeSso->decodeIdToken($token);
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             return false;
         }
 
@@ -93,16 +92,10 @@ class ExtensionUserResolver
             // This is the call that actually verifies signature, issuer,
             // audience and expiry.
             $claims = $this->officeSso->validateIdToken($token);
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             return null;
         }
 
-        $email = strtolower($claims['preferred_username'] ?? '');
-
-        if ($email === '') {
-            return null;
-        }
-
-        return User::where('email', $email)->first();
+        return $this->officeSso->findUser($claims);
     }
 }

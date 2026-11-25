@@ -2,6 +2,9 @@
 
 namespace App\Helpers;
 
+use App\Http\Controllers\OAuthController;
+use App\Models\ConnectedAccount;
+use App\Models\User as AppUser;
 use Exception;
 use Laravel\Socialite\Two\InvalidStateException;
 
@@ -56,6 +59,22 @@ class OfficeSsoHelper
     {
         try {
             $payloadJson = $this->decodeIdToken($idToken);
+
+            // A deployment serves one organisation: with its tenant set,
+            // accept only that tenant's tokens. Checked before anything is
+            // fetched, and again below, once the signature is verified.
+            $tenantId = config('services.microsoft_office.tenant_id');
+            if (!empty($tenantId) && (!is_string($payloadJson['tid'] ?? null) || strcasecmp($payloadJson['tid'], $tenantId) !== 0)) {
+                throw new InvalidStateException('tid is not the configured tenant');
+            }
+
+            // aud validation: the token has to be for this application.
+            // Checked before anything is fetched.
+            $audience = (array) ($payloadJson['aud'] ?? []);
+            if (!in_array(config('services.microsoft_office.client_id'), $audience, true)) {
+                throw new InvalidStateException('aud on id_token does not match the client_id for this application');
+            }
+
             $openIdConfiguration = $this->getOpenIdConfiguration();
 
             // iss validation - https://learn.microsoft.com/en-us/entra/identity-platform/access-tokens#multi-tenant-applications
@@ -66,18 +85,20 @@ class OfficeSsoHelper
             if (strcmp($payloadJson['iss'], $issuer) !== 0) {
                 throw new InvalidStateException('iss on id_token does not match issuer value on the OpenID configuration');
             }
-            // aud validation
-            if (!str_contains($payloadJson['aud'], config('services.microsoft_office.client_id'))) {
-                throw new InvalidStateException('aud on id_token does not match the client_id for this application');
-            }
             // exp validation
             if ((int) $payloadJson['exp'] < time()) {
                 throw new InvalidStateException('id_token is expired');
             }
 
             // signature validation and return claims
-            return (array) JWT::decode($idToken, JWK::parseKeySet($this->getJWTKeys($openIdConfiguration), 'RS256'));
-        } catch (Exception $ex) {
+            $claims = (array) JWT::decode($idToken, JWK::parseKeySet($this->getJWTKeys($openIdConfiguration), 'RS256'));
+            if (!empty($tenantId) && (!is_string($claims['tid'] ?? null) || strcasecmp($claims['tid'], $tenantId) !== 0)) {
+                throw new InvalidStateException('tid is not the configured tenant');
+            }
+
+            return $claims;
+        } catch (\Throwable $ex) {
+            // A malformed token can raise an Error (a TypeError, say) as well.
             throw new InvalidStateException("Error on validating id_token. {$ex}");
         }
     }
@@ -88,8 +109,47 @@ class OfficeSsoHelper
             'id'       => $user['sub'],
             'nickname' => $user['name'] ?? null,
             'name'     => $user['name'] ?? null,
-            'email'    => $user['preferred_username'] ?? null,
+            'email'    => $this->verifiedEmail($user),
         ]);
+    }
+
+    /**
+     * The token's email address, if the tenant verified its domain.
+     *
+     * Tokens are accepted from any Entra tenant, and Microsoft documents
+     * `email` and `preferred_username` as values a tenant's admin can set, so
+     * neither identifies anyone on its own. `xms_edov: true` says the tenant
+     * verified the email's domain; it and `email` are optional claims the app
+     * registration has to issue.
+     */
+    public function verifiedEmail(array $claims): ?string
+    {
+        if (($claims['xms_edov'] ?? null) !== true || empty($claims['email'])) {
+            return null;
+        }
+
+        return strtolower($claims['email']);
+    }
+
+    /**
+     * The dashboard user a validated token stands for: the one this Microsoft
+     * account is linked to (`sub`, which Microsoft keeps unique and immutable
+     * per user and application), or else the one with the verified email.
+     */
+    public function findUser(array $claims): ?AppUser
+    {
+        if (!empty($claims['sub'])) {
+            $account = ConnectedAccount::where('provider', OAuthController::OFFICE_PROVIDER)
+                ->where('provider_id', $claims['sub'])
+                ->first();
+            if ($account?->user) {
+                return $account->user;
+            }
+        }
+
+        $email = $this->verifiedEmail($claims);
+
+        return $email === null ? null : AppUser::where('email', $email)->first();
     }
 
     /**
