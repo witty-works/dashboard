@@ -2,6 +2,8 @@
 
 namespace App\Livewire\OrganizationTermReplacement;
 
+use Livewire\Attributes\Locked;
+use App\Livewire\GuidelineEntryAuthorization;
 use App\Http\Kernel;
 use App\Models\TermReplacement;
 use App\Rules\NoMarkup;
@@ -14,6 +16,7 @@ use Livewire\Component;
 
 class Form extends Component
 {
+    use GuidelineEntryAuthorization;
     use AuthorizesRequests;
 
     public $term;
@@ -56,6 +59,7 @@ class Form extends Component
      *
      * @var mixed
      */
+    #[Locked]
     public $model;
 
     /**
@@ -128,6 +132,8 @@ class Form extends Component
 
     public function edit(TermReplacement $termReplacement)
     {
+        $this->authorizeEntry($termReplacement);
+
         $this->term_replacement_id = $termReplacement->id;
         $this->term = $termReplacement->term;
         $this->replacement = $termReplacement->replacement;

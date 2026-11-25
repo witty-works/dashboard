@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Teams;
 
+use Livewire\Attributes\Locked;
 use App\Livewire\HelpHeroTrait;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
@@ -23,6 +24,7 @@ class ConfirmBeforeChecking extends Component
         'confirm_before_checking' => 'nullable|boolean',
     ];
 
+    #[Locked]
     public $model;
 
     /**

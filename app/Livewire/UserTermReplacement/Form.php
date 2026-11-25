@@ -2,6 +2,7 @@
 
 namespace App\Livewire\UserTermReplacement;
 
+use Livewire\Attributes\Locked;
 use App\Models\TermReplacement;
 use App\Livewire\OrganizationTermReplacement\Form as OrganizationForm;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -12,6 +13,7 @@ class Form extends OrganizationForm
 {
     use AuthorizesRequests;
 
+    #[Locked]
     public $model;
 
     public function mount($model)

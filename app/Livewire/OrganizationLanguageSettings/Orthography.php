@@ -2,6 +2,7 @@
 
 namespace App\Livewire\OrganizationLanguageSettings;
 
+use Livewire\Attributes\Locked;
 use App\Livewire\TeamsGuidelineTrait;
 use App\Models\LanguageGuidelines;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -21,6 +22,7 @@ class Orthography extends Component
         'orthography_force' => 'nullable|boolean',
     ];
 
+    #[Locked]
     public $model;
 
     public function resetForm()

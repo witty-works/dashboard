@@ -2,6 +2,7 @@
 
 namespace App\Livewire\OrganizationLanguageSettings;
 
+use Livewire\Attributes\Locked;
 use App\Livewire\TeamsGuidelineTrait;
 use App\Models\LanguageGuidelines;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -24,6 +25,7 @@ class French extends Component
         'french_gender_separator' => 'nullable|string|in:·,·s,.,.s,/,/s',
     ];
 
+    #[Locked]
     public $model;
 
     public static function isEnabled($genderedRolesFormat, $preferredVariants)

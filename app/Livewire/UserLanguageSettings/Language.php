@@ -2,6 +2,7 @@
 
 namespace App\Livewire\UserLanguageSettings;
 
+use Livewire\Attributes\Locked;
 use App\Livewire\UserGuidelineTrait;
 use App\Models\GuidelinesInterface;
 use App\Models\LanguageGuidelines;
@@ -26,6 +27,7 @@ class Language extends Component
         'preferred_variants_fr' => 'nullable|string|in:fr-FR',
     ];
 
+    #[Locked]
     public $model;
 
     protected function resetForm()

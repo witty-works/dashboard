@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Teams;
 
+use Livewire\Attributes\Locked;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -16,6 +17,7 @@ class AnalyticsUserAccess extends Component
         'user_access_to_team_analytics' => 'nullable|boolean',
     ];
 
+    #[Locked]
     public $model;
 
     /**

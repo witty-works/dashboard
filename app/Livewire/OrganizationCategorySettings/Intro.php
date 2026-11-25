@@ -2,6 +2,7 @@
 
 namespace App\Livewire\OrganizationCategorySettings;
 
+use Livewire\Attributes\Locked;
 use App\Livewire\UserGuidelineTrait;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
@@ -11,6 +12,7 @@ class Intro extends Component
     use AuthorizesRequests;
     use UserGuidelineTrait;
 
+    #[Locked]
     public $model;
 
     /**

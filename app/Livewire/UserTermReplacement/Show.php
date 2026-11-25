@@ -2,6 +2,8 @@
 
 namespace App\Livewire\UserTermReplacement;
 
+use Livewire\Attributes\Locked;
+use App\Livewire\GuidelineEntryAuthorization;
 use App\Livewire\HelpHeroTrait;
 use App\Models\TermReplacement;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -10,11 +12,13 @@ use Livewire\Component;
 
 class Show extends Component
 {
+    use GuidelineEntryAuthorization;
     use AuthorizesRequests;
     use HelpHeroTrait;
 
     protected $listeners = ['saved'];
 
+    #[Locked]
     public $model;
 
     public function mount($model)
@@ -37,15 +41,15 @@ class Show extends Component
 
     public function editTermReplacement(TermReplacement $termReplacement)
     {
-        if (Auth::user()->id !== $this->model->id) {
-            abort(403);
-        }
+        $this->authorizeUserEntry($termReplacement);
 
         $this->dispatch('edit', termReplacement: $termReplacement);
     }
 
     public function deleteTermReplacement(TermReplacement $termReplacement)
     {
+        $this->authorizeUserEntry($termReplacement);
+
         $termReplacement->delete();
         $this->updateHelpHero();
     }

@@ -2,6 +2,7 @@
 
 namespace App\Livewire\UserLanguageSettings;
 
+use Livewire\Attributes\Locked;
 use App\Livewire\OrganizationLanguageSettings\GenericMasculine as OrganizationLanguageSettingsGenericMasculine;
 use App\Livewire\UserGuidelineTrait;
 use App\Models\LanguageGuidelines;
@@ -23,6 +24,7 @@ class GenericMasculine extends Component
         'gendered_roles_format' => 'nullable|string|in:both,inclusive_gender,binary_gender,none',
     ];
 
+    #[Locked]
     public $model;
 
     protected function resetForm()

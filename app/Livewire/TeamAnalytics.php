@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use Livewire\Attributes\Locked;
 use App\Jobs\SyncUserToNlpApi;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
@@ -17,6 +18,7 @@ class TeamAnalytics extends Component
         'team_analytics' => 'nullable|boolean',
     ];
 
+    #[Locked]
     public $model;
 
     /**

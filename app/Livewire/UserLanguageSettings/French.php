@@ -2,6 +2,7 @@
 
 namespace App\Livewire\UserLanguageSettings;
 
+use Livewire\Attributes\Locked;
 use App\Livewire\OrganizationLanguageSettings\French as OrganizationLanguageSettingsFrench;
 use App\Livewire\UserGuidelineTrait;
 use App\Models\LanguageGuidelines;
@@ -23,6 +24,7 @@ class French extends Component
         'french_gender_separator' => 'nullable|string|in:·,·s,.,.s,/,/s',
     ];
 
+    #[Locked]
     public $model;
 
     protected function resetForm()

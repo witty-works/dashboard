@@ -2,6 +2,7 @@
 
 namespace App\Livewire\OrganizationCategorySettings;
 
+use Livewire\Attributes\Locked;
 use App\Livewire\TeamsGuidelineTrait;
 use App\Jobs\SyncOrganizationToNlpApi;
 use App\Models\LanguageGuidelines;
@@ -25,6 +26,7 @@ class Category extends Component
         'dimensions.*' => 'nullable|int|max:2',
     ];
 
+    #[Locked]
     public $model;
 
     public $category;

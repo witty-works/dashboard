@@ -2,6 +2,7 @@
 
 namespace App\Livewire\UserFalsePositive;
 
+use Livewire\Attributes\Locked;
 use App\Models\FalsePositive;
 use Illuminate\Validation\ValidationException;
 use App\Livewire\OrganizationFalsePositive\Form as OrganizationForm;
@@ -17,6 +18,7 @@ class Form extends OrganizationForm
      *
      * @var mixed
      */
+    #[Locked]
     public $model;
 
     /**
@@ -40,6 +42,10 @@ class Form extends OrganizationForm
     public function storeFalsePositive()
     {
         $this->validate();
+
+        if (Auth::user()->id !== $this->model->id) {
+            abort(403);
+        }
 
         $query = FalsePositive::query()
             ->where('user_id', $this->model->id)
