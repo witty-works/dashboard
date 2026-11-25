@@ -2,7 +2,6 @@
 $team = false;
 $showInviteCheck = false;
 $showInvitations = false;
-$showInvitationRequests = false;
 $showMailing = false;
 
 $user = Auth::user();
@@ -12,9 +11,6 @@ if ($user) {
         // This used to be limited to unsubscribed teams. Billing is gone, so the
         // nudge now goes to any team that has not invited anyone yet.
         $showInviteCheck = empty($hideInviteCheck) && $team->getTotalUserWithInvitationsCount() <= 1;
-        if ($user->hasTeamPermission($team, 'update')) {
-            $showInvitationRequests = $team->invitationRequests->isNotEmpty();
-        }
     }
 
     $showInvitations = $user->invitations->count();
@@ -28,8 +24,6 @@ if ($user) {
 
 @if($showInvitations)
 @include('partials.invitations', ['user' => $user])
-@elseif($showInvitationRequests && !Route::is('teams.show'))
-@include('partials.invitation-requests')
 @elseif($showInviteCheck)
 @include('partials.invite-check')
 @elseif($showMailing && !Route::is('profile.show'))

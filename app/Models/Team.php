@@ -70,11 +70,6 @@ class Team extends JetstreamTeam
         return $this->hasMany(Domain::class, 'team_id');
     }
 
-    public function invitationRequests()
-    {
-        return $this->hasMany(TeamInvitationRequest::class, 'team_id');
-    }
-
     public function posthogId()
     {
         return config('posthog.dashboard_team_id_override')

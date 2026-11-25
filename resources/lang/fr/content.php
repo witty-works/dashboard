@@ -294,71 +294,7 @@ Veuillez utiliser Witty plus souvent et cliquez sur les termes mis en évidence.
     'witty_download_installed' => 'Vous voulez utiliser Witty ?',
     'sign_in' => 'S\'inscrire',
     'try_out' => 'Aller à l\'Éditeur Witty',
-    'request_invite' => 'Demander à rejoindre leur équipe',
-    'co-workers-with-witty-account' => '{1} Une autre personne de votre organisation utilise Witty. |{2} :count personnes de votre organisation utilisent Witty.',
-    'team_invitation_request_subject' => 'Le :name veut rejoindre votre équipe',
-    'invitation_request_explanation' => 'Oui, c\'est vrai, 
-
-:name (:email) vient de rejoindre Witty et souhaite collaborer. 🧡',
-    'accept_invitation_request' => 'Ajouter :name',
-    'if_you_did_not_expect_request' => 'Pourquoi former une équipe ?
-
-<b>Une équipe amplifie votre voix pour plus d\'inclusion :</b>
-
-<ul><li><a href="https://dashboard.witty.works/team/language/language-settings">Définir des préférences</a> pour soutenir au mieux le processus de rédaction de votre équipe</li>
-
-<li><a href="https://dashboard.witty.works/team/language/dictionary">Créez un dictionnaire</a> pour garantir la cohérence de la voix de la marque</li>
-
-<li><a href="https://dashboard.witty.works/team/analytics">Utilisez l\'analyse</a> pour aider votre équipe à s\'améliorer efficacement</li>
-</ul>
-
-Vous préférez ne pas ajouter :name à votre équipe ?
-Ignorez cet e-mail. 🙂',
-    'pending_team_invitation_requests' => 'Demandes d\'adhésion à une équipe en attente',
-    'these_people_have_requested_an_invite' => 'Ces personnes souhaitent rejoindre votre équipe. Laissez-les rejoindre votre équipe en cliquant sur "Accepter" ci-dessous.',
     'accept' => 'Accepter',
-    'team_invitation_request_accepted_subject' => 'Witty | Bienvenue dans l\'équipe ":team"',
-    'invitation_request_accepted_explanation_user' => 'Oui, c\'est vrai,
-
-Bienvenue chez ":team", l\'équipe Witty de votre organisation pour l\'écriture inclusive. 🧡
-
-Quel est votre avantage ?
-
-<b>Une équipe amplifie votre voix pour plus d\'inclusion :</b>
-
-<ul><li><a href="https://dashboard.witty.works/team/language/language-settings">Définir des préférences</a> pour soutenir au mieux le processus de rédaction de votre équipe</li>
-
-<li><a href="https://dashboard.witty.works/team/language/dictionary">Créez un dictionnaire</a> pour garantir la cohérence de la voix de la marque</li>
-
-<li><a href="https://dashboard.witty.works/team/analytics">Utilisez l\'analyse</a> pour aider votre équipe à s\'améliorer efficacement</li>
-</ul>
-
-Si vous avez des questions, contactez :name (:email). 🙂
-
-',
-    'invitation_request_accepted_explanation_admin' => 'Oui, c\'est vrai,
-
-Bienvenue chez ":team", l\'équipe Witty de votre organisation pour l\'écriture inclusive. 🧡
-
-Quel est votre avantage ?
-
-<b>Une équipe amplifie votre voix pour plus d\'inclusion :</b>
-
-<ul><li><a href="https://dashboard.witty.works/team/language/language-settings">Définir des préférences</a> pour soutenir au mieux le processus de rédaction de votre équipe</li>
-
-<li><a href="https://dashboard.witty.works/team/language/dictionary">Créez un dictionnaire</a> pour garantir la cohérence de la voix de la marque</li>
-
-<li><a href="https://dashboard.witty.works/team/analytics">Utilisez l\'analyse</a> pour aider votre équipe à s\'améliorer efficacement</li>
-</ul>
-
-Si vous avez des questions, contactez :name (:email). 🙂
-
-',
-    'invition_requests_title' => 'Demande d\'adhésion à une équipe',
-    'invition_requests_text' => 'Une personne a demandé à rejoindre votre équipe.',
-    'review_invitation_requests_button' => 'Révision',
-    'invitation_request_already_accepted' => ':name a déjà rejoint une autre équipe.',
-    'invitation_request_license_limit_reached' => 'Vous avez déjà invité deux membres dans votre équipe et vous avez atteint la limite. <a href="https://dashboard.witty.works/team/subscription">Passez à la version supérieure</a> pour inviter plus de membres !',
     'learn_more' => 'En savoir plus',
     'example' => 'Exemple',
     'open' => 'Ouvrir',
@@ -436,8 +372,6 @@ Veuillez ensuite cliquer à nouveau sur "S\'inscrire" pour finaliser l\'inscript
     'opens_in_new_tab' => ':label (s\'ouvre dans un nouvel onglet)',
     'loading' => 'Chargement…',
     'cancel_invitation_for' => 'Annuler l\'invitation pour :email',
-    'cancel_invitation_request_for' => 'Refuser la demande d\'invitation de :email',
-    'accept_invitation_request_for' => 'Accepter la demande d\'invitation de :email',
     'confirm_delete_entry' => 'Voulez-vous vraiment supprimer définitivement cette entrée ?',
     'academy_video_1_label' => 'Vidéo Witty Academy 1',
     'academy_video_2_label' => 'Vidéo Witty Academy 2',

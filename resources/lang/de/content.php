@@ -271,75 +271,7 @@ Bitte verwende Witty öfter und klicke auf die hervorgehobenen Begriffe.',
     'witty_download_installed' => 'Möchtest Du Witty verwenden?',
     'sign_in' => 'Logge dich ein',
     'try_out' => 'Weiter zum Witty Editor',
-    'request_invite' => 'Anbieten, im Team mitzumachen',
-    'co-workers-with-witty-account' => '{1} Eine Person aus deiner Organisation nutzt Witty bereits. | :count Personen aus deiner Organisation nutzen Witty bereits.',
-    'team_invitation_request_subject' => 'Witty | :name möchte sich deinem Team anschließen',
-    'invitation_request_explanation' => 'Hey, 
-
-:name (:email) ist nun auch bei Witty und fragt, ob du an einer Zusammenarbeit interessiert bist.  🧡',
-    'accept_invitation_request' => ':name hinzufügen',
-    'if_you_did_not_expect_request' => 'Was bringt ein Team?
-
-<b>Gemeinsam könnt ihr euch effektiver für Inklusion starkmachen:</b>
-
-<ul><li><a href="https://dashboard.witty.works/team/language/language-settings">Wähle Einstellungen</a>, die euch beim Schreiben besser unterstützen
-</li>
-
-<li><a href="https://dashboard.witty.works/team/language/dictionary">Das Wörterbuch</a> verhilft euch zu einer konsistenteren Markenstimme</li>
-
-<li><a href="https://dashboard.witty.works/team/analytics">Mit Statistiken</a> kann sich euer Team gezielt verbessern</li>
-</ul>
-
-Du möchtest lieber nicht mit :name im Team zusammenarbeiten?
-
-Dann kannst du diese Mail einfach ignorieren. 🙂',
-    'pending_team_invitation_requests' => 'Ausstehende Teamanfragen',
-    'these_people_have_requested_an_invite' => 'Diese Personen möchten deinem Team beitreten. Sie können deinem Team beitreten, indem du unten auf "Akzeptieren" klickst.',
     'accept' => 'Annehmen',
-    'team_invitation_request_accepted_subject' => 'Witty | Willkommen im Team ":team"',
-    'invition_requests_title' => 'Teamanfrage',
-    'invition_requests_text' => 'Jemand hat darum gebeten, deinem Team beizutreten.',
-    'review_invitation_requests_button' => 'Überprüfen',
-    'invitation_request_already_accepted' => ':name ist bereits einem anderen Team beigetreten.',
-    'invitation_request_license_limit_reached' => 'Du hast bereits zwei Mitglieder in dein Team eingeladen und hast das Limit erreicht. Mach ein <a href="https://dashboard.witty.works/team/subscription">Upgrade</a>, um mehr Mitglieder einzuladen!',
-    'invitation_request_accepted_explanation_user' => 'Hey,
-
-Willkommen im Team ":team" von Witty. 🧡
-
-Was bringt dir das?
-
-<b>Gemeinsam könnt ihr euch effektiver für Inklusion starkmachen:</b>
-
-<ul><li><a href="https://dashboard.witty.works/team/language/language-settings">Wähle Einstellungen</a>, die euch beim Schreiben besser unterstützen
-</li>
-
-<li><a href="https://dashboard.witty.works/team/language/dictionary">Das Wörterbuch</a> verhilft euch zu einer konsistenteren Markenstimme</li>
-
-<li><a href="https://dashboard.witty.works/team/analytics">Mit Statistiken</a> kann sich euer Team gezielt verbessern</li>
-</ul>
-
-Falls du Fragen hast, nimm Kontakt mit :name (:email) auf. 🙂
-
-',
-    'invitation_request_accepted_explanation_admin' => 'Hey,
-
-Willkommen im Team ":team" von Witty. 🧡
-
-Was bringt dir das?
-
-<b>Gemeinsam könnt ihr euch effektiver für Inklusion starkmachen:</b>
-
-<ul><li><a href="https://dashboard.witty.works/team/language/language-settings">Wähle Einstellungen</a>, die euch beim Schreiben besser unterstützen
-</li>
-
-<li><a href="https://dashboard.witty.works/team/language/dictionary">Das Wörterbuch</a> verhilft euch zu einer konsistenteren Markenstimme</li>
-
-<li><a href="https://dashboard.witty.works/team/analytics">Mit Statistiken</a> kann sich euer Team gezielt verbessern</li>
-</ul>
-
-Falls du Fragen hast, nimm Kontakt mit :name (:email) auf. 🙂
-
-',
     'learn_more' => 'Warum das so ist',
     'example' => 'Beispiel',
     'open' => 'Öffnen',
@@ -438,8 +370,6 @@ Bitte gehe dann erneut auf „Registrieren“, um die Registrierung im "Witty fo
     'opens_in_new_tab' => ':label (öffnet in einem neuen Tab)',
     'loading' => 'Wird geladen…',
     'cancel_invitation_for' => 'Einladung für :email zurückziehen',
-    'cancel_invitation_request_for' => 'Einladungsanfrage von :email ablehnen',
-    'accept_invitation_request_for' => 'Einladungsanfrage von :email annehmen',
     'confirm_delete_entry' => 'Möchten Sie diesen Eintrag wirklich dauerhaft löschen?',
     'academy_video_1_label' => 'Witty-Academy-Video 1',
     'academy_video_2_label' => 'Witty-Academy-Video 2',
