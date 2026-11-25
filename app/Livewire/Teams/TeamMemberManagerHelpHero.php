@@ -2,7 +2,9 @@
 
 namespace App\Livewire\Teams;
 
+use App\Actions\Jetstream\TransferTeamOwnership;
 use App\Livewire\HelpHeroTrait;
+use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Jetstream\Http\Livewire\TeamMemberManager as TeamMemberManagerBase;
 use Laravel\Jetstream\Contracts\RemovesTeamMembers;
@@ -21,6 +23,11 @@ class TeamMemberManagerHelpHero extends TeamMemberManagerBase
     /** The team being managed: the server's, never the browser's to change. */
     #[Locked]
     public $team;
+
+    /** Whether the hand-over of the team is being confirmed, and to whom. */
+    public $confirmingOwnershipTransfer = false;
+
+    public $ownershipTransferTo = null;
 
     public function mount($team)
     {
@@ -52,6 +59,39 @@ class TeamMemberManagerHelpHero extends TeamMemberManagerBase
         Gate::authorize('removeTeamMember', $this->team);
 
         parent::cancelTeamInvitation($invitationId);
+        $this->updateHelpHero();
+    }
+
+    /**
+     * Ask the owner to confirm handing the team over to the given admin.
+     *
+     * @param  int  $userId
+     * @return void
+     */
+    public function confirmOwnershipTransfer($userId)
+    {
+        $this->ownershipTransferTo = (int) $userId;
+        $this->confirmingOwnershipTransfer = true;
+    }
+
+    /**
+     * Hand the team over. TransferTeamOwnership checks that the signed-in
+     * user owns the team and that the new owner is one of its admins.
+     *
+     * @return void
+     */
+    public function transferOwnership(TransferTeamOwnership $transfer)
+    {
+        $newOwner = User::find($this->ownershipTransferTo);
+        abort_unless($newOwner instanceof User, 403);
+
+        $transfer->transfer($this->user, $this->team, $newOwner);
+
+        $this->confirmingOwnershipTransfer = false;
+        $this->ownershipTransferTo = null;
+        $this->team = $this->team->fresh();
+
+        $this->dispatch('saved');
         $this->updateHelpHero();
     }
 

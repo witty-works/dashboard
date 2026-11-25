@@ -162,6 +162,13 @@
                                     </div>
                                 @endif
 
+                                <!-- Hand the team over -->
+                                @if ($this->user->ownsTeam($team) && $user->membership->role === 'admin')
+                                    <button class="cursor-pointer ml-6 text-sm text-gray-600 underline" wire:click="confirmOwnershipTransfer('{{ $user->id }}')">
+                                        {{ __('content.make_owner') }}
+                                    </button>
+                                @endif
+
                                 <!-- Leave Team -->
                                 @if ($this->user->id === $user->id)
                                     <button class="cursor-pointer ml-6 text-sm text-red-700" wire:click="$toggle('confirmingLeavingTeam')">
@@ -244,6 +251,27 @@
 
             <x-danger-button class="ml-3" wire:click="leaveTeam" wire:loading.attr="disabled">
                 {{ __('content.leave') }}
+            </x-danger-button>
+        </x-slot>
+    </x-confirmation-modal>
+
+    <!-- Hand-over Confirmation Modal -->
+    <x-confirmation-modal wire:model.live="confirmingOwnershipTransfer">
+        <x-slot name="title">
+            {{ __('content.make_owner') }}
+        </x-slot>
+
+        <x-slot name="content">
+            {{ __('content.are_you_sure_you_would_like_to_make_owner') }}
+        </x-slot>
+
+        <x-slot name="footer">
+            <x-secondary-button wire:click="$toggle('confirmingOwnershipTransfer')" wire:loading.attr="disabled">
+                {{ __('content.cancel') }}
+            </x-secondary-button>
+
+            <x-danger-button class="ml-3" wire:click="transferOwnership" wire:loading.attr="disabled">
+                {{ __('content.make_owner') }}
             </x-danger-button>
         </x-slot>
     </x-confirmation-modal>

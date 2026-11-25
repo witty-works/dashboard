@@ -149,6 +149,17 @@ Route::get('/write/callback', [WriteController::class, 'show'])
     ->middleware(['web', 'auth:' . config('fortify.guard'), 'verified'])
     ->name('write.callback');
 
+// The emailed link for deleting an account without a password: outside the
+// locale prefix, so the signature covers the address the user opens. The
+// signed link proves the mailbox, so it works without a session: such
+// accounts sign in only from Word, and the mail opens in another browser.
+Route::get('/account/delete/{user}', [\App\Http\Controllers\DeleteAccountController::class, 'show'])
+    ->middleware(['web', 'signed'])
+    ->name('account.delete.confirm');
+Route::post('/account/delete/{user}', [\App\Http\Controllers\DeleteAccountController::class, 'destroy'])
+    ->middleware(['web', 'signed'])
+    ->name('account.delete.destroy');
+
 Route::group(['middleware' => config('social_auth.middleware', ['web'])], function () {
 
     Route::get('/team-invitations/{invitation}', [TeamInvitationController::class, 'acceptSigned'])

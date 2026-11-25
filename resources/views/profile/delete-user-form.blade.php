@@ -12,11 +12,27 @@
             {{ __('content.once_your_account_is_deleted') }}
         </div>
 
-        <div class="mt-5">
-            <x-danger-button wire:click="confirmUserDeletion" wire:loading.attr="disabled">
-                {{ __('content.delete_account') }}
-            </x-danger-button>
-        </div>
+        @if ($this->teamsToHandOver->isNotEmpty())
+            <p role="alert" class="mt-5 max-w-xl text-sm text-gray-600">
+                {{ __('content.delete_account_hand_over_teams', ['teams' => $this->teamsToHandOver->pluck('name')->join(', ')]) }}
+            </p>
+        @elseif ($confirmationSent)
+            <p role="status" class="mt-5 max-w-xl text-sm text-gray-600">
+                {{ __('content.delete_account_link_sent') }}
+            </p>
+        @elseif ($confirmByEmail)
+            <div class="mt-5">
+                <x-danger-button wire:click="deleteUser" wire:loading.attr="disabled">
+                    {{ __('content.delete_account_send_link') }}
+                </x-danger-button>
+            </div>
+        @else
+            <div class="mt-5">
+                <x-danger-button wire:click="confirmUserDeletion" wire:loading.attr="disabled">
+                    {{ __('content.delete_account') }}
+                </x-danger-button>
+            </div>
+        @endif
 
         <!-- Delete User Confirmation Modal -->
         <x-dialog-modal wire:model.live="confirmingUserDeletion">
@@ -31,11 +47,13 @@
                     <x-input type="password" class="mt-1 block w-3/4"
                                 placeholder="{{ __('content.password') }}"
                                 aria-label="{{ __('content.password') }}"
+                                autocomplete="current-password"
                                 x-ref="password"
                                 wire:model="password"
                                 wire:keydown.enter="deleteUser" />
 
                     <x-input-error for="password" class="mt-2" />
+                    <x-input-error for="team" class="mt-2" />
                 </div>
             </x-slot>
 

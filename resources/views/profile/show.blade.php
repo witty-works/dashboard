@@ -30,6 +30,12 @@
                 @livewire('teams.team-member-manager-help-hero', ['team' => Auth::user()->currentTeam])
             </div>
             @endcannot
+
+            @if (Laravel\Jetstream\Jetstream::hasAccountDeletionFeatures())
+                <x-section-border />
+
+                @livewire('profile.delete-account-form')
+            @endif
         </div>
     </div>
 </x-app-layout>
