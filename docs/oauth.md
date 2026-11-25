@@ -21,6 +21,7 @@ registered, and each has been driven through a full code-for-token exchange.
 | --- | --- | --- |
 | Dashboard web UI | Session cookie (`web` / `sanctum` guard) | Fortify |
 | Browser extensions (Chrome, Opera, Edge, Firefox) | Passport access token, RS256 | `/oauth/token` |
+| The dashboard's write page (`/write`) | Passport access token, RS256 | `/oauth/token` |
 | Office add-in | Microsoft id_token | The Office host, not us |
 
 The extension API uses the `extension` guard, which accepts either of the last
@@ -92,6 +93,20 @@ client that started the flow.
 Access tokens live 1 hour, refresh tokens 30 days
 (`PASSPORT_ACCESS_TOKEN_TTL` / `PASSPORT_REFRESH_TOKEN_TTL`). When the refresh
 token expires the extension must send the user through step 2 again.
+
+## The write page's flow
+
+`/write` checks and rewrites text with Witty's editor (`@witty-works/editor`), and calls the NLP API from the browser with the dashboard's own tokens. The page is a second public client, `passport:editor-client`, with its own client id and the redirect URI `{APP_URL}/write/callback`. It runs the same flow as the extension, in `resources/js/write.js`:
+
+1. Without a code in the address, the page makes a PKCE verifier, challenge and state, keeps the verifier and state in `sessionStorage` for the one redirect, and goes to `/oauth/authorize`. The user is signed in to the dashboard already, and the client is first-party, so there is no login and no consent screen.
+2. `/write/callback` renders the same page. The script removes the code from the address and history, checks the state, and exchanges the code with its verifier at `/oauth/token`.
+3. The tokens stay in memory: a reload signs in again, at the cost of one redirect. The access token is refreshed two minutes before it expires.
+4. The page asks the NLP API's `/v2.0/auth` whether it lets the user in, and `/v2.0/features` whether the user may use the language model. It then mounts the editor with the access token, and shows the prompt and AI suggestions only when the model is allowed and `APP_LLM_ENABLED` is on.
+5. A refused token is refreshed once, on `401` or `403` alike, because an NLP API before 4.0.0 answers `403` for an expired token. If the fresh token is refused too, a `401` asks the user to reload and a `403` says they have no access and whom to ask (`WRITE_CONTACT`). The text stays in the editor in both cases, so it can be copied.
+
+The NLP API accepts the page's tokens only when the editor client's id is in its `DASHBOARD_CLIENT_ID`, next to the extension's.
+
+`/oauth/token` limits requests a minute per IP: `OAUTH_EDITOR_TOKEN_RATE_LIMIT` (default 30) for the write page's client, and `OAUTH_TOKEN_RATE_LIMIT` (default 10) for every other client. The page needs a higher limit of its own, because it exchanges a code on every load, and colleagues behind one office address share an IP. Codes and refresh tokens cannot be guessed, so the separate limit costs no security.
 
 ### Access token claims
 
@@ -359,6 +374,14 @@ It prints the client ID. Put it in `EXTENSION_OAUTH_CLIENT_ID` and in
 then into `oauth_client_id` on each `BASE_URLS` entry in the extension's
 `witty.config.json`.
 
+The write page has a client of its own:
+
+```sh
+php artisan passport:editor-client
+```
+
+It is idempotent in the same way, with `PASSPORT_EDITOR_CLIENT_ID`, and registers `{APP_URL}/write/callback` as the only redirect URI. Put the id it prints in `PASSPORT_EDITOR_CLIENT_ID`, in `PASSPORT_FIRST_PARTY_CLIENTS`, and in the NLP API's `DASHBOARD_CLIENT_ID`. Then set `NLP_API_PUBLIC_URL` to the NLP API's address as the browser reaches it. Until both the client id and that address are set, `/write` says it is not set up.
+
 ## Layout
 
 | Path | Role |
@@ -378,6 +401,9 @@ then into `oauth_client_id` on each `BASE_URLS` entry in the extension's
 | `app/Http/Controllers/RevokeTokenController.php` | `/api/user/revoke-token` |
 | `app/Listeners/RevokeOAuthTokens.php` | Revokes tokens on dashboard logout |
 | `app/Console/Commands/CreateExtensionOAuthClientCommand.php` | `passport:extension-client` |
+| `app/Console/Commands/CreateEditorOAuthClientCommand.php` | `passport:editor-client`, the write page's client |
+| `app/Http/Controllers/WriteController.php` | `/write` and `/write/callback`: the page and its config |
+| `resources/js/write.js`, `resources/js/write/` | The write page's sign-in, token refresh and editor |
 
 One piece of wiring is load-order sensitive and will silently break if moved into
 a `boot()` method — package providers boot before application ones:
