@@ -228,7 +228,7 @@ class User extends Authenticatable implements MustVerifyEmail
         }
 
         foreach ($invitations as $invitation) {
-            // Already added another way, such as through a join request:
+            // Already on the team, for example through an earlier invitation:
             // adding again would fail on every request.
             if ($invitation->team->hasUser($this)) {
                 $invitation->delete();
@@ -254,12 +254,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function getNotificationCount()
     {
-        $count = $this->invitations->count();
-        if ($this->currentTeam && $this->ownsTeam($this->currentTeam)) {
-            $count += $this->currentTeam->invitationRequests->count();
-        }
-
-        return $count;
+        return $this->invitations->count();
     }
 
     public function getFirstNameAttribute()
@@ -284,12 +279,6 @@ class User extends Authenticatable implements MustVerifyEmail
         return array_pop($split);
     }
 
-    public function getEmailDomain()
-    {
-        $email = explode('@', $this->email);
-        return array_pop($email);
-    }
-
     public function getTeamRoleName()
     {
         if (!$this->currentTeam) {
@@ -307,21 +296,6 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getWritingStreakPast30Days()
     {
         return Kpi::getWritingStreakPast30Days($this);
-    }
-
-    public function getOrganizationUsers($owners = false)
-    {
-        $query = User::where('users.email', '!=', $this->email)
-            ->where('users.id', '!=', $this->id)
-            ->where('users.current_team_id', '!=', $this->current_team_id)
-            ->where('users.email', 'LIKE', '%@' . $this->getEmailDomain());
-
-        if ($owners) {
-            $query->join('teams', 'users.current_team_id', '=', 'teams.id')
-                ->whereColumn('users.id', 'teams.user_id');
-        }
-
-        return $query->get();
     }
 
     protected function getUserClients()

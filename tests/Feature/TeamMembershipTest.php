@@ -5,7 +5,6 @@ namespace Tests\Feature;
 use App\Livewire\Teams\TeamMemberManagerHelpHero;
 use App\Models\Team;
 use App\Models\TeamInvitation;
-use App\Models\TeamInvitationRequest;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Bus;
@@ -51,13 +50,6 @@ class TeamMembershipTest extends TestCase
         return $user->refresh();
     }
 
-    private function joinRequest(Team $team): TeamInvitationRequest
-    {
-        $requester = User::factory()->withPersonalTeam()->create();
-
-        return TeamInvitationRequest::create(['user_id' => $requester->id, 'team_id' => $team->id]);
-    }
-
     private function manager(User $user, Team $team)
     {
         $this->actingAs($user);
@@ -96,79 +88,6 @@ class TeamMembershipTest extends TestCase
         $actual = array_map(fn (User $user) => Gate::forUser($user)->check($ability, $team), $users);
 
         $this->assertSame($expected, $actual, 'owner, admin, user, outsider');
-    }
-
-    // --- Join requests ---
-
-    public function test_a_member_without_admin_rights_cannot_accept_a_join_request(): void
-    {
-        $team = $this->owner()->currentTeam;
-        $request = $this->joinRequest($team);
-
-        $this->manager($this->member($team, 'user'), $team)
-            ->call('acceptTeamInvitationRequest', $request->id, 'admin')
-            ->assertForbidden();
-
-        $this->assertFalse($team->fresh()->hasUser($request->user));
-        $this->assertModelExists($request);
-    }
-
-    public function test_a_member_without_admin_rights_cannot_accept_a_join_request_by_adding_the_email(): void
-    {
-        $team = $this->owner()->currentTeam;
-        $request = $this->joinRequest($team);
-
-        $this->manager($this->member($team, 'user'), $team)
-            ->set('addTeamMemberForm.email', $request->user->email)
-            ->set('addTeamMemberForm.role', 'admin')
-            ->call('addTeamMember')
-            ->assertForbidden();
-
-        $this->assertFalse($team->fresh()->hasUser($request->user));
-        $this->assertModelExists($request);
-    }
-
-    public function test_a_member_without_admin_rights_cannot_cancel_a_join_request(): void
-    {
-        $team = $this->owner()->currentTeam;
-        $request = $this->joinRequest($team);
-
-        $this->manager($this->member($team, 'user'), $team)
-            ->call('cancelTeamInvitationRequest', $request->id)
-            ->assertForbidden();
-
-        $this->assertModelExists($request);
-    }
-
-    public function test_an_admin_cannot_cancel_another_teams_join_request(): void
-    {
-        $owner = $this->owner();
-        $request = $this->joinRequest($this->owner()->currentTeam);
-
-        $this->manager($owner, $owner->currentTeam)
-            ->call('cancelTeamInvitationRequest', $request->id)
-            ->assertForbidden();
-
-        $this->assertModelExists($request);
-    }
-
-    public function test_an_admin_can_accept_and_cancel_join_requests(): void
-    {
-        $owner = $this->owner();
-        $team = $owner->currentTeam;
-        $admin = $this->member($team, 'admin');
-        $accepted = $this->joinRequest($team);
-        $cancelled = $this->joinRequest($team);
-
-        $this->manager($admin, $team)
-            ->call('acceptTeamInvitationRequest', $accepted->id, 'user')
-            ->assertOk()
-            ->call('cancelTeamInvitationRequest', $cancelled->id)
-            ->assertOk();
-
-        $this->assertDatabaseHas('team_user', ['team_id' => $team->id, 'user_id' => $accepted->user_id, 'role' => 'user']);
-        $this->assertModelMissing($accepted);
-        $this->assertModelMissing($cancelled);
     }
 
     // --- Invitations ---

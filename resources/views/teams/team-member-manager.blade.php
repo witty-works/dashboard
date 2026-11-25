@@ -13,10 +13,6 @@
             <x-slot name="description">
                 {{ __('content.add_a_new_team_member') }}
 
-                @if (session()->has('teams_invitation_request_message'))
-                <p role="alert" class="lato-small-text-p margin-bottom limit-reached">{{ session('teams_invitation_request_message') }}</p>
-                @endif
-
                 <!-- Limit reached -->
             </x-slot>
 
@@ -104,46 +100,6 @@
                                             wire:click="cancelTeamInvitation({{ $invitation->id }})"
                                             aria-label="{{ __('content.cancel_invitation_for', ['email' => $invitation->email]) }}">
                                         {{ __('content.cancel') }}
-                                    </button>
-                                @endif
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            </x-slot>
-        </x-action-section>
-    </div>
-@endif
-
-@if ($team->invitationRequests->isNotEmpty() && Gate::check('viewUserCreateForm', $team))
-    <!-- Team Member Invitations -->
-    <div class="py-5" id="requests">
-        <x-action-section>
-            <x-slot name="title">
-                {{ trans_choice('content.pending_team_invitation_requests', $team->invitationRequests->count(), ['count' => $team->invitationRequests->count()]) }}
-            </x-slot>
-
-            <x-slot name="description">
-                {{ __('content.these_people_have_requested_an_invite') }}
-
-            </x-slot>
-
-            <x-slot name="content">
-                <div class="space-y-6">
-                    @foreach ($team->invitationRequests as $invitationRequest)
-                        <div class="flex items-center justify-between">
-                            <div class="lato-paragraph-text-p">{{ $invitationRequest->user->email }}</div>
-                            <div class="flex items-center">
-                                @if (Gate::check('removeTeamMember', $team))
-                                    <button class="cursor-pointer ml-6 lato-paragraph-text-p-red"
-                                            wire:click="cancelTeamInvitationRequest({{ $invitationRequest->id }})"
-                                            aria-label="{{ __('content.cancel_invitation_request_for', ['email' => $invitationRequest->user->email]) }}">
-                                        {{ __('content.cancel') }}
-                                    </button>
-                                    <button class="cursor-pointer ml-6 lato-paragraph-text-p-red"
-                                            wire:click="acceptTeamInvitationRequest({{ $invitationRequest->id }})"
-                                            aria-label="{{ __('content.accept_invitation_request_for', ['email' => $invitationRequest->user->email]) }}">
-                                        {{ __('content.accept') }}
                                     </button>
                                 @endif
                             </div>

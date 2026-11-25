@@ -293,71 +293,7 @@ Please use Witty more often and click on the highlighted terms.',
     'witty_download_installed' => 'Want to use Witty?',
     'sign_in' => 'Sign in',
     'try_out' => 'Go to the Witty Editor',
-    'request_invite' => 'Ask to join their team',
-    'co-workers-with-witty-account' => '{1} Another person from your organization uses Witty. |{2} :count people from your organization use Witty.',
-    'team_invitation_request_subject' => 'Witty | :name wants to join your team',
-    'invitation_request_explanation' => 'Yay, 
-
-:name (:email) just joined Witty and is interested in collaborating. 🧡',
-    'accept_invitation_request' => 'Add :name',
-    'if_you_did_not_expect_request' => 'Why form a team?
-
-<b>A team amplifies your voice for more inclusion:</b>
-
-<ul><li><a href="https://dashboard.witty.works/team/language/language-settings">Set preferences</a> to best support your team‘s writing process</li>
-
-<li><a href="https://dashboard.witty.works/team/language/dictionary">Create a dictionary</a> to ensure a consistent brand voice</li>
-
-<li><a href="https://dashboard.witty.works/team/analytics">Use analytics</a> to help your team improve effectively</li>
-</ul>
-
-You\'d rather not add :name to your team?
-Just ignore this email. 🙂',
-    'pending_team_invitation_requests' => 'Pending team join requests',
-    'these_people_have_requested_an_invite' => 'These people want to join your team. Let them join your team by clicking "Accept" below.',
     'accept' => 'Accept',
-    'team_invitation_request_accepted_subject' => 'Witty | Welcome to team ":team"',
-    'invitation_request_accepted_explanation_user' => 'Yay,
-
-Welcome to ":team", your organization\'s Witty team for inclusive writing. 🧡
-
-What\'s your benefit?
-
-<b>A team amplifies your voice for more inclusion:</b>
-
-<ul><li><a href="https://dashboard.witty.works/team/language/language-settings">Set preferences</a> to best support your team‘s writing process</li>
-
-<li><a href="https://dashboard.witty.works/team/language/dictionary">Create a dictionary</a> to ensure a consistent brand voice</li>
-
-<li><a href="https://dashboard.witty.works/team/analytics">Use analytics</a> to help your team improve effectively</li>
-</ul>
-
-If you have any questions, contact :name (:email). 🙂
-
-',
-    'invitation_request_accepted_explanation_admin' => 'Yay,
-
-Welcome to ":team", your organization\'s Witty team for inclusive writing. 🧡
-
-What\'s your benefit?
-
-<b>A team amplifies your voice for more inclusion:</b>
-
-<ul><li><a href="https://dashboard.witty.works/team/language/language-settings">Set preferences</a> to best support your team‘s writing process</li>
-
-<li><a href="https://dashboard.witty.works/team/language/dictionary">Create a dictionary</a> to ensure a consistent brand voice</li>
-
-<li><a href="https://dashboard.witty.works/team/analytics">Use analytics</a> to help your team improve effectively</li>
-</ul>
-
-If you have any questions, contact :name (:email). 🙂
-
-',
-    'invition_requests_title' => 'Team Join Request',
-    'invition_requests_text' => 'Someone has requested to join your team.',
-    'review_invitation_requests_button' => 'Review',
-    'invitation_request_already_accepted' => ':name already join another team.',
-    'invitation_request_license_limit_reached' => 'You have already invited two members to your team and have reached the limit. <a href="https://dashboard.witty.works/team/subscription">Upgrade</a> to invite more members!',
     'learn_more' => 'Dig deeper',
     'example' => 'Example',
     'open' => 'Open',
@@ -435,8 +371,6 @@ Please then go to "Register" again to finalize the registration into the "Witty 
     'opens_in_new_tab' => ':label (opens in a new tab)',
     'loading' => 'Loading…',
     'cancel_invitation_for' => 'Cancel invitation for :email',
-    'cancel_invitation_request_for' => 'Cancel invitation request for :email',
-    'accept_invitation_request_for' => 'Accept invitation request for :email',
     'confirm_delete_entry' => 'Are you sure you want to permanently delete this entry?',
     'academy_video_1_label' => 'Witty Academy video 1',
     'academy_video_2_label' => 'Witty Academy video 2',
