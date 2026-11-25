@@ -26,6 +26,8 @@ class WriteController extends Controller
                 'authorizeUrl' => route('passport.authorizations.authorize'),
                 'tokenUrl' => route('passport.token'),
                 'redirectUri' => CreateEditorOAuthClientCommand::redirectUri(),
+                // Where the script returns after the callback, without its code.
+                'pageUrl' => route('write'),
                 'llmEnabled' => (bool) config('app.llm_enabled'),
                 'contact' => $contact,
                 'lang' => app()->getLocale(),
@@ -34,6 +36,10 @@ class WriteController extends Controller
             'messages' => [
                 'noAccess' => __('content.write_no_access', ['contact' => $contact]),
                 'reload' => __('content.write_reload'),
+                'editorLabel' => __('content.write_editor_label'),
+                'signInFailed' => __('content.write_sign_in_failed'),
+                'rewriting' => __('content.write_rewriting'),
+                'rewriteFailed' => __('content.write_rewrite_failed'),
             ],
         ]);
     }

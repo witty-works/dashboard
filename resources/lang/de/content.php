@@ -451,4 +451,8 @@ Bitte gehe dann erneut auf „Registrieren“, um die Registrierung im "Witty fo
     'write_no_access' => 'Dein Konto kann den Sprachdienst von Witty noch nicht nutzen. Bitte frage :contact nach Zugang.',
     'write_reload' => 'Deine Sitzung ist abgelaufen. Kopiere deinen Text, falls du ihn brauchst, und lade die Seite dann neu.',
     'write_not_configured' => 'Diese Seite ist für diese Installation noch nicht eingerichtet.',
+    'write_editor_label' => 'Dein Text',
+    'write_sign_in_failed' => 'Die Anmeldung beim Sprachdienst von Witty ist fehlgeschlagen. Lade die Seite neu, um es nochmals zu versuchen.',
+    'write_rewriting' => 'Witty schreibt deinen Text um …',
+    'write_rewrite_failed' => 'Das Umschreiben ist fehlgeschlagen. Dein Text ist unverändert; bitte versuche es nochmals.',
 ];

@@ -448,4 +448,8 @@ Please then go to "Register" again to finalize the registration into the "Witty 
     'write_no_access' => 'Your account cannot use Witty\'s language service yet. Please ask :contact for access.',
     'write_reload' => 'Your session has ended. Copy your text if you need it, then reload the page to continue.',
     'write_not_configured' => 'This page is not set up for this installation yet.',
+    'write_editor_label' => 'Your text',
+    'write_sign_in_failed' => 'Signing in to Witty\'s language service failed. Reload the page to try again.',
+    'write_rewriting' => 'Witty is rewriting your text…',
+    'write_rewrite_failed' => 'The rewrite failed. Your text is unchanged; please try again.',
 ];

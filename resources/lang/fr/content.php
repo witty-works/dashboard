@@ -449,4 +449,8 @@ Veuillez ensuite cliquer à nouveau sur "S\'inscrire" pour finaliser l\'inscript
     'write_no_access' => 'Votre compte ne peut pas encore utiliser le service linguistique de Witty. Veuillez demander l\'accès à :contact.',
     'write_reload' => 'Votre session a expiré. Copiez votre texte si vous en avez besoin, puis rechargez la page pour continuer.',
     'write_not_configured' => 'Cette page n\'est pas encore configurée pour cette installation.',
+    'write_editor_label' => 'Votre texte',
+    'write_sign_in_failed' => 'La connexion au service linguistique de Witty a échoué. Rechargez la page pour réessayer.',
+    'write_rewriting' => 'Witty réécrit votre texte…',
+    'write_rewrite_failed' => 'La réécriture a échoué. Votre texte n\'a pas changé ; veuillez réessayer.',
 ];

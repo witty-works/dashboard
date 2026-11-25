@@ -67,6 +67,22 @@ class WritePageTest extends TestCase
         $this->assertSame('https://dashboard.example.com/write/callback', $config['redirectUri']);
         $this->assertStringEndsWith('/oauth/authorize', $config['authorizeUrl']);
         $this->assertStringEndsWith('/oauth/token', $config['tokenUrl']);
+        // Where the script returns after the callback, without its code.
+        $this->assertStringEndsWith('/write', $config['pageUrl']);
+    }
+
+    public function test_the_page_passes_its_messages(): void
+    {
+        $html = $this->actingAs($this->signedInUser())->withoutLocaleRedirects()->get('/write')
+            ->assertOk()->getContent();
+
+        preg_match('#<script type="application/json" id="write-messages">(.*?)</script>#s', $html, $match);
+        $messages = json_decode($match[1], true, flags: JSON_THROW_ON_ERROR);
+        $this->assertSame(
+            ['noAccess', 'reload', 'editorLabel', 'signInFailed', 'rewriting', 'rewriteFailed'],
+            array_keys($messages),
+        );
+        $this->assertNotContains('', $messages);
     }
 
     public function test_the_callback_has_no_locale_prefix(): void
