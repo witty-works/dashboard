@@ -71,6 +71,8 @@ class Kernel extends HttpKernel
         'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        #'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        // Registered as an alias only, not applied to a group: /write uses it,
+        // since the NLP API refuses tokens of users with an unverified email.
+        'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
     ];
 }

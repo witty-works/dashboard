@@ -14,7 +14,7 @@ use App\Http\Controllers\TeamInvitationController;
 use Laravel\Jetstream\Http\Controllers\CurrentTeamController;
 use Laravel\Jetstream\Http\Controllers\Livewire\ApiTokenController;
 use App\Http\Controllers\Livewire\TeamController;
-use App\Http\Controllers\Livewire\PromptController;
+use App\Http\Controllers\WriteController;
 use App\Http\Controllers\Livewire\UserGuidelinesController;
 use Laravel\Jetstream\Http\Controllers\Livewire\UserProfileController;
 use Laravel\Jetstream\Jetstream;
@@ -69,9 +69,11 @@ Route::localize(
                 Route::get('/', [WelcomeController::class, 'show'])->name('root');
 
 
-                if (config('app.llm_enabled')) {
-                    Route::get('/prompt', [PromptController::class, 'show'])->name('prompt');
-                }
+                Route::get('/write', [WriteController::class, 'show'])
+                    ->middleware('verified')
+                    ->name('write');
+                // Witty GPT's old address.
+                Route::get('/prompt', fn () => redirect()->route('write'))->name('prompt');
 
                 Route::post('/user/onboarding', [UserProfileController::class, 'storeOnboarding'])
                     ->name('profile.onboarding.store');
@@ -141,6 +143,12 @@ Route::localize(
 | SOCIAL AUTH
 |------------------
 */
+// The write page's OAuth callback: outside the locale prefix, so the redirect
+// URI registered for its client (passport:editor-client) stays fixed.
+Route::get('/write/callback', [WriteController::class, 'show'])
+    ->middleware(['web', 'auth:' . config('fortify.guard'), 'verified'])
+    ->name('write.callback');
+
 Route::group(['middleware' => config('social_auth.middleware', ['web'])], function () {
 
     Route::get('/team-invitations/{invitation}', [TeamInvitationController::class, 'acceptSigned'])

@@ -75,8 +75,20 @@ class RouteServiceProvider extends ServiceProvider
         // budget. Keyed on IP only: these requests are by definition made before
         // a session exists, so `$request->user()` is null and keying on it would
         // collapse every caller into one bucket.
+        // POST /oauth/token. The write page's client gets a limit of its own:
+        // it exchanges a code on every page load and refreshes about hourly
+        // per open tab, which colleagues behind one office IP would otherwise
+        // spend together with the extension's sign-ins. Codes and refresh
+        // tokens cannot be guessed, so a separate limit costs no security.
+        // Both are deployment settings (config/passport.php).
         RateLimiter::for('auth', function (Request $request) {
-            return Limit::perMinute(10)->by($request->ip());
+            $editorClient = config('passport.editor.client_id');
+            if ($editorClient && $request->input('client_id') === (string) $editorClient) {
+                return Limit::perMinute((int) config('passport.editor.token_rate_limit'))
+                    ->by('editor|' . $request->ip());
+            }
+
+            return Limit::perMinute((int) config('passport.token_rate_limit'))->by($request->ip());
         });
     }
 }

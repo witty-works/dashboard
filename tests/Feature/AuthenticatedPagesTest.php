@@ -40,7 +40,7 @@ class AuthenticatedPagesTest extends TestCase
     public static function pageProvider(): array
     {
         return [
-            'prompt' => ['/prompt', 'prompt'],
+            'write' => ['/write', 'write'],
             'user profile' => ['/user/profile', 'profile.show'],
             'academy' => ['/user/academy', 'academy'],
             'team show' => ['/team/show', 'teams.show'],
