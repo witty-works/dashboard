@@ -223,6 +223,17 @@ class LanguageGuidelines extends Model
 
     public function inPlaceUpateArray($element, $column, $enabled)
     {
+        // A user or team that never saved a setting has no row yet:
+        // getLanguageGuidelines() returns an unsaved one with the defaults, and
+        // the UPDATE below, by id, would change nothing. JSON_CONTAINS on a NULL
+        // column is NULL, so a NULL list would not change either; in memory it
+        // may already read as [] (getLanguageGuidelines() sets that for the
+        // force list), so a changed attribute is saved too.
+        if (! $this->exists || $this->isDirty($column) || $this->{$column} === null) {
+            $this->{$column} ??= [];
+            $this->save();
+        }
+
         $params = [':id' => $this->id, ':element' => $element, ':element_json' => "\"$element\""];
 
         if ($enabled) {
