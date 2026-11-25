@@ -20,7 +20,9 @@ class SyncUserToNlpApi extends AbstractSyncToNlpApi
     {
         $user = User::find($this->id);
         if (!$user instanceof User) {
-            throw new InvalidArgumentException("User id '{$this->id} does not exist.");
+            // Deleted since the job was queued; DeleteUserFromNlpApi removes
+            // what the NLP API holds for them.
+            return true;
         }
 
         $url = '/user/configs';
