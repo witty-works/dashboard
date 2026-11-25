@@ -1,0 +1,68 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [dev, main]
+
+permissions:
+  contents: read
+
+jobs:
+  php:
+    runs-on: ubuntu-latest
+    services:
+      # The migrations use MySQL-specific DDL that SQLite cannot replay; the
+      # version is the one Lando runs (.lando.yml).
+      mariadb:
+        image: mariadb:10.5
+        env:
+          MARIADB_DATABASE: testing
+          MARIADB_USER: laravel
+          MARIADB_PASSWORD: laravel
+          MARIADB_ROOT_PASSWORD: root
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -uroot -proot"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=20
+    env:
+      DB_CONNECTION: mysql
+      DB_HOST: 127.0.0.1
+      DB_PORT: 3306
+      DB_USERNAME: laravel
+      DB_PASSWORD: laravel
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
+        with:
+          php-version: '8.4'
+          extensions: intl, pdo_mysql, gd, zip
+          coverage: none
+      - run: composer install --no-interaction --prefer-dist --no-progress
+      # The example environment with a fresh application key and OAuth signing
+      # keys; the database settings come from the job's env above.
+      - name: Prepare the environment
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+          php artisan passport:keys
+      - run: vendor/bin/phpunit
+
+  js:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          # As Lando's node service (.lando.yml).
+          node-version: '24'
+      - run: npm ci
+      - run: npm test --if-present
+      - run: npm run build
