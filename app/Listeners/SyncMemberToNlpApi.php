@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Jobs\RevokeApiKeysInNlpApi;
 use App\Jobs\SyncUserToNlpApi;
 use Laravel\Jetstream\Events\TeamMemberAdded;
 use Laravel\Jetstream\Events\TeamMemberRemoved;
@@ -9,7 +10,8 @@ use Laravel\Jetstream\Events\TeamMemberRemoved;
 /**
  * Tell the NLP API about a membership change: which teams a person is in
  * decides which of their keys still work. A person leaving their licence team
- * gets another of their teams as licence team, or none.
+ * gets another of their teams as licence team, or none, and loses their keys
+ * for the team.
  */
 class SyncMemberToNlpApi
 {
@@ -35,5 +37,6 @@ class SyncMemberToNlpApi
         }
 
         dispatch(new SyncUserToNlpApi($user, 'high', $leaving));
+        dispatch(new RevokeApiKeysInNlpApi($user->email, $event->team->posthogId()));
     }
 }

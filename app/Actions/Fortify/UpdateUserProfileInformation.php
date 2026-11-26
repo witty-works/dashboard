@@ -2,6 +2,8 @@
 
 namespace App\Actions\Fortify;
 
+use App\Jobs\DeleteUserFromNlpApi;
+use App\Jobs\RevokeApiKeysInNlpApi;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -22,6 +24,14 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
         ])->validateWithBag('updateProfileInformation');
+
+        if (strtolower($input['email']) !== strtolower($user->email)) {
+            // The NLP API knows people by address, and the new one is not
+            // verified yet: keys are not moved to it. The person makes new
+            // ones once it is verified.
+            dispatch(new DeleteUserFromNlpApi($user));
+            dispatch(new RevokeApiKeysInNlpApi($user->email, null));
+        }
 
         if (strtolower($input['email']) !== strtolower($user->email) &&
             $user instanceof MustVerifyEmail) {
