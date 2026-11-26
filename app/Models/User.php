@@ -156,12 +156,12 @@ class User extends Authenticatable implements MustVerifyEmail
 
     /**
      * Only superadmins may sign in as another user: the permission that
-     * opens the admin pages (config lumki.lumkiPermission). The package's
+     * opens the admin pages (config admin.permission). The package's
      * default lets every user sign in as anyone.
      */
     public function canImpersonate()
     {
-        return $this->can(config('lumki.lumkiPermission'));
+        return $this->can(config('admin.permission'));
     }
 
     /**
@@ -169,7 +169,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function canBeImpersonated()
     {
-        return !$this->can(config('lumki.lumkiPermission'));
+        return !$this->can(config('admin.permission'));
     }
 
     public function posthogId()
