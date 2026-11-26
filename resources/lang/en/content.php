@@ -447,4 +447,5 @@ Please then go to "Register" again to finalize the registration into the "Witty 
     'admin_owner_invitation_exists' => 'This team already has an open owner invitation.',
     'admin_owner_invitation_not_superadmin_team' => 'Only a team that a superadmin still owns can be given an owner.',
     'admin_invitation_exists_for_address' => 'This address already has an invitation to this team.',
+    'delete_account_open_invitations' => 'Revoke the open invitations of these teams first, or wait until they are accepted: :teams.',
 ];

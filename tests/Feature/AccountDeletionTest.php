@@ -352,4 +352,42 @@ class AccountDeletionTest extends TestCase
         $this->assertModelMissing($owner);
         $this->assertSame($admin->id, $team->fresh()->user_id);
     }
+
+    // --- Open invitations ---
+
+    public function test_an_owner_whose_team_has_open_invitations_must_resolve_them_first(): void
+    {
+        // A team waiting for its owner has an invitation but no members;
+        // deleting the account would delete the team with the invitation.
+        $owner = $this->user();
+        $team = $owner->currentTeam;
+        $team->teamInvitations()->create(['email' => 'future@example.org', 'role' => 'user']);
+
+        $this->deleteForm($owner)->set('password', 'secret-password')->call('deleteUser')->assertHasErrors('team');
+
+        $this->assertNotNull($owner->fresh());
+        $this->assertNotNull($team->fresh());
+        $this->assertSame(1, $team->teamInvitations()->count());
+    }
+
+    public function test_the_profile_page_names_teams_with_open_invitations(): void
+    {
+        $owner = $this->user();
+        $owner->currentTeam->forceFill(['name' => 'Waiting team'])->save();
+        $owner->currentTeam->teamInvitations()->create(['email' => 'future@example.org', 'role' => 'user']);
+
+        $this->deleteForm($owner)->assertSee(__('content.delete_account_open_invitations', ['teams' => 'Waiting team']));
+    }
+
+    public function test_no_confirmation_mail_is_sent_while_invitations_are_open(): void
+    {
+        Mail::fake();
+        $owner = $this->passwordless();
+        $owner->currentTeam->teamInvitations()->create(['email' => 'future@example.org', 'role' => 'user']);
+
+        $this->deleteForm($owner)->call('deleteUser')->assertHasErrors('team');
+
+        Mail::assertNothingQueued();
+        Mail::assertNothingSent();
+    }
 }

@@ -446,4 +446,5 @@ Bitte gehe dann erneut auf „Registrieren“, um die Registrierung im "Witty fo
     'admin_owner_invitation_exists' => 'Für dieses Team ist bereits eine Einladung für die Eigentümer*in offen.',
     'admin_owner_invitation_not_superadmin_team' => 'Nur ein Team, das noch einem Superadmin gehört, kann eine Eigentümer*in bekommen.',
     'admin_invitation_exists_for_address' => 'Diese Adresse hat bereits eine Einladung in dieses Team.',
+    'delete_account_open_invitations' => 'Ziehe zuerst die offenen Einladungen dieser Teams zurück oder warte, bis sie angenommen sind: :teams.',
 ];
