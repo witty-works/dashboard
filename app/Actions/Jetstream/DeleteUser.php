@@ -77,12 +77,22 @@ class DeleteUser implements DeletesUsers
      */
     protected function ensureNoTeamToHandOver($user, $ownedTeams)
     {
-        $teams = $ownedTeams->filter(fn ($team) => $team->users()->exists())->pluck('name');
+        $messages = [];
 
-        if ($teams->isNotEmpty()) {
-            throw ValidationException::withMessages([
-                'team' => [__('content.delete_account_hand_over_teams', ['teams' => $teams->join(', ')])],
-            ]);
+        $withMembers = $ownedTeams->filter(fn ($team) => $team->users()->exists())->pluck('name');
+        if ($withMembers->isNotEmpty()) {
+            $messages[] = __('content.delete_account_hand_over_teams', ['teams' => $withMembers->join(', ')]);
+        }
+
+        // A team waiting for its owner has an invitation but no members;
+        // deleting it would silently drop the invitation with it.
+        $withInvitations = $ownedTeams->filter(fn ($team) => $team->teamInvitations()->exists())->pluck('name');
+        if ($withInvitations->isNotEmpty()) {
+            $messages[] = __('content.delete_account_open_invitations', ['teams' => $withInvitations->join(', ')]);
+        }
+
+        if ($messages) {
+            throw ValidationException::withMessages(['team' => $messages]);
         }
     }
 

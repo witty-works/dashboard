@@ -46,10 +46,9 @@ class DeleteAccountForm extends Component
         $user = Auth::user();
 
         if (blank($user->password)) {
-            if ($this->getTeamsToHandOverProperty()->isNotEmpty()) {
-                throw ValidationException::withMessages([
-                    'team' => [__('content.delete_account_hand_over_teams', ['teams' => $this->getTeamsToHandOverProperty()->pluck('name')->join(', ')])],
-                ]);
+            $messages = $this->handOverMessages();
+            if ($messages) {
+                throw ValidationException::withMessages(['team' => $messages]);
             }
 
             $mailKey = 'delete-account-mail:' . $user->id;
@@ -91,6 +90,26 @@ class DeleteAccountForm extends Component
     public function getTeamsToHandOverProperty()
     {
         return Auth::user()->ownedTeams()->whereHas('users')->get();
+    }
+
+    /** Owned teams with open invitations, such as a team waiting for its owner. */
+    public function getTeamsWithOpenInvitationsProperty()
+    {
+        return Auth::user()->ownedTeams()->whereHas('teamInvitations')->get();
+    }
+
+    /** Why the account cannot be deleted yet, if it cannot. */
+    public function handOverMessages(): array
+    {
+        $messages = [];
+        if ($this->teamsToHandOver->isNotEmpty()) {
+            $messages[] = __('content.delete_account_hand_over_teams', ['teams' => $this->teamsToHandOver->pluck('name')->join(', ')]);
+        }
+        if ($this->teamsWithOpenInvitations->isNotEmpty()) {
+            $messages[] = __('content.delete_account_open_invitations', ['teams' => $this->teamsWithOpenInvitations->pluck('name')->join(', ')]);
+        }
+
+        return $messages;
     }
 
     public function render()

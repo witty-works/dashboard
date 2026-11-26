@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\Team;
 use App\Models\User;
+use App\Support\InviteOnly;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class TeamPolicy
@@ -41,6 +42,11 @@ class TeamPolicy
      */
     public function create(User $user)
     {
+        // Invite only: superadmins set up the teams.
+        if (InviteOnly::enabled()) {
+            return $user->can(config('admin.permission'));
+        }
+
         return $user->allTeams()->count() === 0;
     }
 

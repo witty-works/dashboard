@@ -25,11 +25,11 @@
                 @livewire('profile.two-factor-authentication-form')
             @endif
 
-            @cannot('update', $user->currentTeam)
+            @if ($user->currentTeam && Gate::denies('update', $user->currentTeam))
             <div class="py-10">
                 @livewire('teams.team-member-manager-help-hero', ['team' => Auth::user()->currentTeam])
             </div>
-            @endcannot
+            @endif
 
             @if (Laravel\Jetstream\Jetstream::hasAccountDeletionFeatures())
                 <x-section-border />

@@ -42,7 +42,9 @@ class TeamInvitation extends Mailable
         $param = [
             'name' => $invitor->name,
             'email' => $invitor->email,
-            'team' => $invitor->currentTeam->name,
+            // The invited team, not the inviter's current one.
+            'team' => $this->invitation->team->name,
+            'asOwner' => (bool) $this->invitation->as_owner,
             'acceptUrl' => URL::signedRoute('team-invitations.accept-signed', ['invitation' => $this->invitation])
         ];
 

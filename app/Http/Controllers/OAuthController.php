@@ -8,6 +8,7 @@ use App\Contracts\SocialAuth\UpdatesConnectedAccounts;
 use App\Helpers\OfficeSsoHelper;
 use App\Models\ConnectedAccount;
 use App\Models\User;
+use App\Support\InviteOnly;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -77,6 +78,12 @@ class OAuthController extends Controller
         // one to sign in or to create an account for.
         if ($user === null && $email === null) {
             return redirect(config('services.microsoft_office.redirect_uri') . '?status=failed');
+        }
+
+        // Invite only: no account for an address nobody invited, and no
+        // consent form for one either.
+        if ($user === null && ! InviteOnly::allowsSignUp($email)) {
+            return redirect(config('services.microsoft_office.redirect_uri') . '?status=invite_only');
         }
 
         if (

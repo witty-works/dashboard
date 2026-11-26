@@ -133,6 +133,10 @@ See [docs/user-management.md](docs/user-management.md) for superadmin rights, th
 
 # Custom Application Configuration
 
+## Invite only
+
+-   `INVITE_ONLY` — `true` closes sign-up: only an address with a pending team invitation can get an account, on the sign-up page and through Office sign-up (the add-in is sent back with `?status=invite_only`). Only superadmins create teams, and nobody gets a personal team. Default `false`. See [docs/user-management.md](docs/user-management.md).
+
 ## NLP API Sync
 
 Use for the integration with the NLP API.

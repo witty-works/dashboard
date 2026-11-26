@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\Log;
+use Illuminate\Auth\Access\AuthorizationException;
+use App\Actions\Jetstream\HandOverInvitedTeam;
 use App\Events\UserCreated;
 use App\Events\UserDeleted;
 use App\Events\UserUpdated;
@@ -224,7 +227,7 @@ class User extends Authenticatable implements MustVerifyEmail
             $team = $this->currentTeam;
         }
 
-        return $this->licenseTeam->id === $team->id;
+        return $team !== null && $this->licenseTeam->id === $team->id;
     }
 
     public function applyAcceptedInvitiations()
@@ -246,6 +249,23 @@ class User extends Authenticatable implements MustVerifyEmail
         }
 
         foreach ($invitations as $invitation) {
+            // An invitation to own the team, handed over rather than joined.
+            // Before the membership check: the invitee may already be in it.
+            if ($invitation->as_owner) {
+                try {
+                    app(HandOverInvitedTeam::class)->hand($this, $invitation);
+                } catch (AuthorizationException $e) {
+                    // No longer valid; dropped rather than retried on every request.
+                    Log::warning('An owner invitation could not be handed over', ['invitation' => $invitation->id, 'reason' => $e->getMessage()]);
+                    $invitation->delete();
+                }
+                $this->unsetRelation('ownedTeams');
+                $this->unsetRelation('teams');
+                $this->unsetRelation('currentTeam');
+
+                continue;
+            }
+
             // Already on the team, for example through an earlier invitation:
             // adding again would fail on every request.
             if ($invitation->team->hasUser($this)) {
@@ -263,6 +283,9 @@ class User extends Authenticatable implements MustVerifyEmail
 
             $invitation->delete();
 
+            // switchTeam() checks membership against the loaded relation,
+            // which does not know the team this user was just added to.
+            $this->unsetRelation('teams');
             $this->switchTeam($invitation->team);
 
             // update notification count

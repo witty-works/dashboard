@@ -21,6 +21,7 @@ class Team extends JetstreamTeam
      */
     protected $casts = [
         'personal_team' => 'boolean',
+        'llm_requests_per_minute' => 'integer',
     ];
 
     /**

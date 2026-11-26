@@ -12,10 +12,10 @@
             {{ __('content.once_your_account_is_deleted') }}
         </div>
 
-        @if ($this->teamsToHandOver->isNotEmpty())
-            <p role="alert" class="mt-5 max-w-xl text-sm text-gray-600">
-                {{ __('content.delete_account_hand_over_teams', ['teams' => $this->teamsToHandOver->pluck('name')->join(', ')]) }}
-            </p>
+        @if ($handOverMessages = $this->handOverMessages())
+            @foreach ($handOverMessages as $message)
+                <p role="alert" class="mt-5 max-w-xl text-sm text-gray-600">{{ $message }}</p>
+            @endforeach
         @elseif ($confirmationSent)
             <p role="status" class="mt-5 max-w-xl text-sm text-gray-600">
                 {{ __('content.delete_account_link_sent') }}
