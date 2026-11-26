@@ -195,7 +195,8 @@ Posthog is used both for analytics of usage of the dashboard as well as for coll
 
 Relevant for the Microsoft Word Add-in integration.
 
--   `OFFICE365_CLIENT_ID` — Client ID for Microsoft Office 365 SSO
--   `OFFICE365_CLIENT_SECRET` — Client Secret for Microsoft Office 365 SSO
--   `OFFICE365_REDIRECT_URI` — Redirect URI for Office 365 SSO callback
--   `OFFICE365_TENANT_ID` — (Optional) Tenant ID for restricting SSO to a specific organization
+-   `MICROSOFT_CLIENT_ID` — Client ID of the add-in's Entra app registration
+-   `MICROSOFT_CLIENT_REDIRECT_URI` — Where the add-in's sign-in dialog returns to
+-   `MICROSOFT_TENANT_ID` — (Optional) The organisation's Entra tenant ID, a GUID; tokens from any other tenant are refused
+
+The app registration has to issue the optional claims `email` and `xms_edov` in the **access** token, which is what the add-in receives (**Token configuration** → **Add optional claim** → token type **Access**). A user is identified by the Microsoft account linked to their dashboard account or, failing that, by `email`, and `email` counts only with `xms_edov: true`, which says the tenant verified the address's domain. `preferred_username` is not used: Microsoft documents it, like `email`, as a value a tenant's admin can set. A Microsoft account is linked to the dashboard account the first time it signs in or signs up through the add-in with a verified email; without the two claims, only users already linked get in.

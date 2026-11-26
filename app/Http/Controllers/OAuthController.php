@@ -14,8 +14,11 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Fortify\Fortify;
-use Mail;
-use Exception;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\MessageBag;
+use Illuminate\Support\ViewErrorBag;
+use Throwable;
 
 /**
  * Handles Microsoft Office SSO.
@@ -45,64 +48,79 @@ class OAuthController extends Controller
 
 
 
+    /**
+     * The page the Word add-in opens, for signing in and for signing up. The
+     * add-in can only open a URL, so it puts its token in the fragment
+     * (`#token=`), which browsers never send to the server; this page posts
+     * it, so the token stays out of server, proxy and error logs.
+     */
+    public function showOfficeSsoBridge()
+    {
+        return view('office_sso_bridge', ['action' => url()->current()]);
+    }
+
     public function handleOfficeSsoRegister(Request $request)
     {
-        $token = $request->get('token');
-        $officeSsoHelper = new OfficeSsoHelper();
-
-        $ssoDebugEmail = env('OFFICE_SSO_DEBUG_EMAIL', false);
+        $token = $this->officeSsoToken($request);
+        $officeSsoHelper = app(OfficeSsoHelper::class);
 
         try {
             $claims = $officeSsoHelper->validateIdToken($token);
-        } catch (Exception $e) {
-            if ($ssoDebugEmail) {
-                Mail::raw('token: ' . $token . "\n\n" . $e->getMessage(), function ($m) use ($ssoDebugEmail) {
-                    $m->to($ssoDebugEmail)->subject('SSO Login Failed');
-                });
-            }
+        } catch (Throwable $e) {
+            return $this->officeSsoFailed($e);
+        }
 
+        $user = $officeSsoHelper->findUser($claims);
+        $email = $officeSsoHelper->verifiedEmail($claims);
+
+        // Neither linked nor with an address the tenant verified: there is no
+        // one to sign in or to create an account for.
+        if ($user === null && $email === null) {
             return redirect(config('services.microsoft_office.redirect_uri') . '?status=failed');
         }
 
-        $email = strtolower($claims['preferred_username'] ?? '');
-
-        $user = Auth::user();
         if (
-            $user instanceof User
-            && $user->email === $email
+            $user !== null
+            && $user->is(Auth::user())
             && $user->has_consented_to_terms_of_service
         ) {
             return redirect(config('services.microsoft_office.redirect_uri') . '?status=success');
         }
 
-        $user = User::where('email', $email)->first();
-
-        // no account for email that has consented to the terms => show the form
-        if ($request->getMethod() === 'POST') {
-            $validated = $request->validate([
+        // The consent form always sends this field; the token alone, from the
+        // add-in's page or from signing in, asks for the form.
+        $errors = null;
+        if ($request->has('has_consented_to_terms_of_service')) {
+            // Not validate(): its redirect would go back to the add-in's page,
+            // which has no token without the fragment. Show the form again.
+            $validator = Validator::make($request->all(), [
                 'has_consented_to_terms_of_service' => 'required|in:1',
                 'has_consented_to_mailing' => 'nullable|boolean',
             ]);
+            $validated = $validator->fails() ? false : $validator->validated();
+            $errors = $validator->errors();
         } else {
             $validated = $user instanceof User && $user->has_consented_to_terms_of_service;
         }
 
-        // not yet consented => show the form again
+        // not yet consented => show the form
         if (!$validated) {
             $params = [
                 'name' => $claims['name'] ?? null,
-                'email' => $email,
+                'email' => $user?->email ?? $email,
                 'token' => $token,
             ];
 
-            return view('office_register', $params);
+            return response(
+                view('office_register', $params)->with('errors', (new ViewErrorBag())->put('default', $errors ?? new MessageBag())),
+                $errors?->isNotEmpty() ? 422 : 200
+            );
         }
 
         $providerAccount = $officeSsoHelper->getProviderAccount($claims);
-        $providerAccount->setToken($token);
         if (is_array($validated) && $validated['has_consented_to_terms_of_service']) {
             $providerAccount->attributes['has_consented_to_terms_of_service'] = true;
-            $providerAccount->attributes['has_consented_to_mailing'] = $validated['has_consented_to_mailing'];
+            $providerAccount->attributes['has_consented_to_mailing'] = $validated['has_consented_to_mailing'] ?? false;
         }
 
         $this->handleProviderAccount($request, $providerAccount, self::OFFICE_PROVIDER);
@@ -112,31 +130,63 @@ class OAuthController extends Controller
 
     public function handleOfficeSsoLogin(Request $request)
     {
-        $officeSsoHelper = new OfficeSsoHelper();
+        $token = $this->officeSsoToken($request);
+        $officeSsoHelper = app(OfficeSsoHelper::class);
 
         try {
-            $claims = $officeSsoHelper->validateIdToken($request->get('token'));
-        } catch (Exception $e) {
-            return redirect(config('services.microsoft_office.redirect_uri') . '?status=failed');
+            $claims = $officeSsoHelper->validateIdToken($token);
+        } catch (Throwable $e) {
+            return $this->officeSsoFailed($e);
         }
 
-        $email = strtolower($claims['preferred_username'] ?? '');
-
-        $user = Auth::user();
-        if ($user !== null) {
-            Auth::logout();
-        }
-
-        $user = User::where('email', $email)->first();
+        $user = $officeSsoHelper->findUser($claims);
 
         // no account for email that has consented to the terms => show the form
         if ($user === null || !$user->has_consented_to_terms_of_service) {
             return $this->handleOfficeSsoRegister($request);
         }
 
+        // Anyone can be sent a link with someone else's token. Unless that
+        // user is already signed in here, say who this signs in as and let
+        // the person confirm, instead of switching accounts silently.
+        if (!$user->is(Auth::user()) && !$request->boolean('confirm')) {
+            return view('office_login_confirm', [
+                'email' => $user->email,
+                'signedInAs' => Auth::user()?->email,
+                'token' => $token,
+                'action' => url()->current(),
+            ]);
+        }
+
+        // Switching accounts: nothing of the previous user's session stays.
+        if (Auth::user() !== null && !$user->is(Auth::user())) {
+            Auth::logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+        }
+
+        // Found by its verified email: link the Microsoft account, so that it
+        // is recognised by its `sub` from now on.
+        $this->handleProviderAccount($request, $officeSsoHelper->getProviderAccount($claims), self::OFFICE_PROVIDER);
+
         return $this->loginUser($user, self::OFFICE_PROVIDER);
     }
 
+    /** The posted token; anything but a string counts as none. */
+    protected function officeSsoToken(Request $request): string
+    {
+        $token = $request->input('token');
+
+        return is_string($token) ? $token : '';
+    }
+
+    /** A refused token: logged without the token itself, which is a credential. */
+    protected function officeSsoFailed(Throwable $e)
+    {
+        Log::info('Office sign-in refused a token', ['exception' => $e::class, 'reason' => strtok($e->getMessage(), "\n")]);
+
+        return redirect(config('services.microsoft_office.redirect_uri') . '?status=failed');
+    }
 
     protected function handleProviderAccount(Request $request, $providerAccount, string $provider)
     {
@@ -149,6 +199,12 @@ class OAuthController extends Controller
         $account = ConnectedAccount::where('provider', $provider)
             ->where('provider_id', $providerAccount->getId())
             ->first();
+
+        // Left behind by a deleted user: it links nobody.
+        if ($account && !$account->user) {
+            $account->delete();
+            $account = null;
+        }
 
         if (!$account) {
             $user = User::where('email', $providerAccount->getEmail())->first();
@@ -210,6 +266,8 @@ class OAuthController extends Controller
     protected function loginUser(Authenticatable $user, $provider): JsonResponse|RedirectResponse
     {
         Auth::login($user, config('social_auth.remember_session', true));
+        // A new session id for the signed-in user, against session fixation.
+        request()->session()->regenerate();
         request()->session()->put(self::LOGIN_SOURCE, $provider);
 
         return request()->wantsJson()
