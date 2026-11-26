@@ -4,10 +4,12 @@ namespace App\Console\Commands;
 
 use App\Models\User;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Throwable;
 
 /**
  * The way into a deployment whose sign-up is closed (INVITE_ONLY): run on
@@ -51,20 +53,28 @@ class CreateSuperadminCommand extends Command
             return self::SUCCESS;
         }
 
-        $user = User::create([
-            'name' => $name,
-            'email' => $email,
-            // Unusable until they set one through the link.
-            'password' => Hash::make(Str::random(64)),
-        ]);
-        $user->forceFill(['email_verified_at' => now()])->save();
-        $user->assignRole(config('admin.role'));
+        // All or nothing: an account without its role would only confuse.
+        DB::transaction(function () use ($name, $email) {
+            $user = User::create([
+                'name' => $name,
+                'email' => $email,
+                // Unusable until they set one through the link.
+                'password' => Hash::make(Str::random(64)),
+            ]);
+            $user->forceFill(['email_verified_at' => now()])->save();
+            $user->assignRole(config('admin.role'));
+        });
 
-        $status = Password::sendResetLink(['email' => $email]);
+        try {
+            $status = Password::sendResetLink(['email' => $email]);
+        } catch (Throwable $e) {
+            $status = $e->getMessage();
+        }
         if ($status !== Password::RESET_LINK_SENT) {
-            $this->warn("Created {$email}, but the password link was not sent: " . __($status));
+            $this->error("Created superadmin {$email}, but the link to set a password was not sent: " . __($status));
+            $this->line('They can request one at ' . route('password.request') . ' once mail works.');
 
-            return self::SUCCESS;
+            return self::FAILURE;
         }
 
         $this->info("Created superadmin {$email} and mailed a link to set a password.");

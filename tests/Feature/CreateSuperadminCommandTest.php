@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Password;
 use Tests\TestCase;
 
 /**
@@ -66,5 +67,26 @@ class CreateSuperadminCommandTest extends TestCase
             ->assertExitCode(1);
 
         $this->assertFalse($user->fresh()->hasRole(config('admin.role')));
+    }
+
+    public function test_a_failed_mail_is_reported_with_the_way_to_set_a_password(): void
+    {
+        Password::shouldReceive('sendResetLink')->andThrow(new \RuntimeException('mail transport down'));
+
+        $this->artisan('superadmin:create', ['email' => 'admin@example.org', 'name' => 'Ada Admin'])
+            ->expectsOutputToContain(route('password.request'))
+            ->assertExitCode(1);
+
+        // The account is complete; only the link is missing.
+        $this->assertTrue(User::where('email', 'admin@example.org')->firstOrFail()->hasRole(config('admin.role')));
+    }
+
+    public function test_a_link_that_was_not_sent_is_reported(): void
+    {
+        Password::shouldReceive('sendResetLink')->andReturn(Password::RESET_THROTTLED);
+
+        $this->artisan('superadmin:create', ['email' => 'admin@example.org', 'name' => 'Ada Admin'])
+            ->expectsOutputToContain(route('password.request'))
+            ->assertExitCode(1);
     }
 }
