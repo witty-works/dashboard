@@ -5,8 +5,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        @include('partials/gtm-header')
-
         <title>{{ $pagetitle ? str_replace('&shy;', '', $pagetitle) : config('app.name') }}</title>
 
         <!-- Fonts -->
@@ -33,8 +31,6 @@
         <x-banner />
 
         <div class="min-h-screen bg-gray-100">
-            @include('partials/gtm-body')
-
             <!-- Page Heading -->
             @if (isset($header))
                 <header class="bg-white shadow">
@@ -55,6 +51,5 @@
         @stack('modals')
 
         @livewireScripts
-        @include('partials/helphero')
     </body>
 </html>

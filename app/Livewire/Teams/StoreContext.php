@@ -3,7 +3,6 @@
 namespace App\Livewire\Teams;
 
 use Livewire\Attributes\Locked;
-use App\Livewire\HelpHeroTrait;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -11,7 +10,6 @@ use Livewire\Component;
 class StoreContext extends Component
 {
     use AuthorizesRequests;
-    use HelpHeroTrait;
 
     public $store_context;
 
@@ -55,7 +53,6 @@ class StoreContext extends Component
         $this->model->save();
 
         $this->dispatch('saved');
-        $this->updateHelpHero();
     }
 
     /**

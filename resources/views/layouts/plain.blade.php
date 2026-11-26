@@ -8,12 +8,6 @@
         {{-- Runs before anything else on the page, e.g. to take a credential out of the address. --}}
         @stack('head-first')
 
-        {{-- Pages that handle a credential leave out tag manager and analytics. --}}
-        @hasSection('no-tracking')
-        @else
-            @include('partials/gtm-header')
-        @endif
-
         <title>{{ $pagetitle ?? config('app.name') }}</title>
 
         <!-- Fonts -->
@@ -32,10 +26,6 @@
 
     </head>
     <body class="font-sans antialiased">
-        @hasSection('no-tracking')
-        @else
-            @include('partials/gtm-body')
-        @endif
         <div class="font-sans text-gray-900 antialiased">
             <main class="relative flex items-top justify-center min-h-screen bg-gray-100 sm:items-center py-4 sm:pt-0">
                 {{ $slot }}

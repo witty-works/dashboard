@@ -3,7 +3,6 @@
 namespace App\Livewire\Teams;
 
 use Livewire\Attributes\Locked;
-use App\Livewire\HelpHeroTrait;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -11,7 +10,6 @@ use Livewire\Component;
 class LlmAlternatives extends Component
 {
     use AuthorizesRequests;
-    use HelpHeroTrait;
 
     public $llm_alternatives;
 
@@ -64,7 +62,6 @@ class LlmAlternatives extends Component
         $this->model->save();
 
         $this->dispatch('saved');
-        $this->updateHelpHero();
     }
 
     /**

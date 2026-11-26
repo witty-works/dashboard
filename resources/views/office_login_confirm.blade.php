@@ -1,4 +1,3 @@
-@section('no-tracking', true)
 <x-plain-layout :pagetitle="__('content.office_register')">
     <div class="office-login-wrapper">
         <div class="office-login-image" style="background-image: url({{ asset('witty-background.png') }});"></div>

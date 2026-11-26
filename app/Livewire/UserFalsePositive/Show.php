@@ -4,7 +4,6 @@ namespace App\Livewire\UserFalsePositive;
 
 use Livewire\Attributes\Locked;
 use App\Livewire\GuidelineEntryAuthorization;
-use App\Livewire\HelpHeroTrait;
 use App\Models\FalsePositive;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
@@ -14,7 +13,6 @@ class Show extends Component
 {
     use GuidelineEntryAuthorization;
     use AuthorizesRequests;
-    use HelpHeroTrait;
 
     protected $listeners = ['saved'];
 
@@ -36,7 +34,6 @@ class Show extends Component
     public function saved()
     {
         $this->render();
-        $this->updateHelpHero();
     }
 
     public function editFalsePositive(FalsePositive $falsePositive)
@@ -51,6 +48,5 @@ class Show extends Component
         $this->authorizeUserEntry($falsePositive);
 
         $falsePositive->delete();
-        $this->updateHelpHero();
     }
 }

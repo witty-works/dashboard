@@ -8,7 +8,6 @@ use App\Events\UserCreated;
 use App\Events\UserDeleted;
 use App\Events\UserUpdated;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use App\Listeners\PosthogReset;
 use App\Listeners\RevokeOAuthTokens;
 use App\Listeners\PostHogUpdateOrganization;
 use App\Listeners\PostHogUpdateUser;
@@ -81,7 +80,6 @@ class EventServiceProvider extends ServiceProvider
             PostHogUpdateOrganization::class,
         ],
         Logout::class => [
-            PosthogReset::class,
             RevokeOAuthTokens::class,
         ],
     ];
