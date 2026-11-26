@@ -420,4 +420,6 @@ Bitte gehe dann erneut auf „Registrieren“, um die Registrierung im "Witty fo
     'admin_no_users' => 'Keine Benutzer*innen gefunden.',
     'admin_menu' => 'Admin',
     'admin_leave_impersonation' => 'Zurück zum eigenen Konto',
+    'admin_unverified' => 'Adresse nicht bestätigt',
+    'admin_unverified_cannot_be_superadmin' => ':email hat die Adresse nicht bestätigt und kann nicht Superadmin werden.',
 ];

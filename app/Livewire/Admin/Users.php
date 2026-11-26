@@ -33,7 +33,15 @@ class Users extends Component
     {
         $this->authorizeSuperadmin();
 
-        User::findOrFail($userId)->assignRole(config('admin.role'));
+        $user = User::findOrFail($userId);
+        // Anyone can register any address before its owner does.
+        if (! $user->hasVerifiedEmail()) {
+            $this->addError('superadmin', __('content.admin_unverified_cannot_be_superadmin', ['email' => $user->email]));
+
+            return;
+        }
+
+        $user->assignRole(config('admin.role'));
     }
 
     public function removeSuperadmin(int $userId): void

@@ -162,4 +162,15 @@ class UsersPageTest extends TestCase
     {
         return [['makeSuperadmin'], ['removeSuperadmin'], ['deleteUser']];
     }
+
+    public function test_an_unverified_account_cannot_be_made_superadmin(): void
+    {
+        // Anyone can register any address before its owner does.
+        $admin = $this->superadmin();
+        $user = User::factory()->withPersonalTeam()->unverified()->create();
+
+        $this->page($admin)->call('makeSuperadmin', $user->id)->assertHasErrors('superadmin');
+
+        $this->assertFalse($user->fresh()->hasRole(config('admin.role')));
+    }
 }

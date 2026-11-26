@@ -422,4 +422,6 @@ Veuillez ensuite cliquer à nouveau sur "S\'inscrire" pour finaliser l\'inscript
     'admin_no_users' => 'Aucun·e utilisateur·rice trouvé·e.',
     'admin_menu' => 'Admin',
     'admin_leave_impersonation' => 'Revenir à votre propre compte',
+    'admin_unverified' => 'Adresse non vérifiée',
+    'admin_unverified_cannot_be_superadmin' => ':email n’a pas vérifié son adresse et ne peut pas devenir superadmin.',
 ];

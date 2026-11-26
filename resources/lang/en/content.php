@@ -421,4 +421,6 @@ Please then go to "Register" again to finalize the registration into the "Witty 
     'admin_no_users' => 'No users found.',
     'admin_menu' => 'Admin',
     'admin_leave_impersonation' => 'Back to your own account',
+    'admin_unverified' => 'Address not verified',
+    'admin_unverified_cannot_be_superadmin' => ':email has not verified its address and cannot be made a superadmin.',
 ];

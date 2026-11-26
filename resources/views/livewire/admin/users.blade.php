@@ -41,8 +41,10 @@
                     <td class="px-4 py-2">
                         @if ($isSuperadmin)
                             <button type="button" class="text-sm underline" wire:click="removeSuperadmin({{ $user->id }})">{{ __('content.admin_remove_superadmin') }}</button>
-                        @else
+                        @elseif ($user->hasVerifiedEmail())
                             <button type="button" class="text-sm underline" wire:click="makeSuperadmin({{ $user->id }})">{{ __('content.admin_make_superadmin') }}</button>
+                        @else
+                            <span class="text-sm text-gray-600">{{ __('content.admin_unverified') }}</span>
                         @endif
                     </td>
                     <td class="px-4 py-2 text-sm">
