@@ -184,4 +184,13 @@ class InviteOnlyTeamsTest extends TestCase
 
         $this->assertSame(1, $user->ownedTeams()->count());
     }
+
+    public function test_a_user_without_a_team_can_still_answer_the_mailing_question(): void
+    {
+        $user = User::factory()->create(['has_consented_to_mailing' => null]);
+
+        $response = $this->actingAs($user)->get(route('user.mailing_consent', ['consent' => 1]));
+
+        $this->assertNotSame(route('no-team'), $response->headers->get('Location'));
+    }
 }

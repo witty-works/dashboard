@@ -18,7 +18,12 @@ class EnsureUserHasTeam
      * Pages a user without a team still needs. The localizer registers each
      * route under a prefixed name (with_locale., without_locale.).
      */
-    private const ALLOWED = ['profile.show', '*.profile.show', 'team-invitations.*', '*.team-invitations.*', 'no-team', '*.no-team'];
+    private const ALLOWED = [
+        'profile.show', '*.profile.show',
+        'user.mailing_consent', '*.user.mailing_consent',
+        'team-invitations.*', '*.team-invitations.*',
+        'no-team', '*.no-team',
+    ];
 
     public function handle(Request $request, Closure $next)
     {
