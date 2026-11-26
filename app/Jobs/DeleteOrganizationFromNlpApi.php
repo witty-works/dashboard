@@ -6,6 +6,9 @@ use App\Models\Team;
 
 class DeleteOrganizationFromNlpApi extends AbstractDeleteFromNlpApi
 {
+    /** Queued inside a deletion's transaction: send it only once that commits. */
+    public $afterCommit = true;
+
     protected $posthogId;
 
     public function __construct(Team $team, $queue = 'low')

@@ -73,7 +73,10 @@ class SyncToPosthog implements ShouldQueue
     {
         $user = User::find($this->id);
         if (!$user instanceof User) {
-            throw new InvalidArgumentException("User id '{$this->id} does not exist.");
+            // Deleted since the job was queued, for example by deleting their
+            // account, which also queues syncs through the team events.
+            // There is nothing left to send, and retrying cannot change that.
+            return true;
         }
 
         $properties = $user->getUserData();
@@ -109,7 +112,9 @@ class SyncToPosthog implements ShouldQueue
     {
         $team = Team::find($this->id);
         if (!$team instanceof Team) {
-            throw new InvalidArgumentException("Team id '{$this->id} does not exist.");
+            // Deleted since the job was queued, as when an account is deleted
+            // with its own team. Nothing is left to send.
+            return true;
         }
 
         $properties = [
