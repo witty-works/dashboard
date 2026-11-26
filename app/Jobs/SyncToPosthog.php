@@ -29,6 +29,7 @@ class SyncToPosthog implements ShouldQueue
     protected $model;
     protected $force;
     protected $isDeleted;
+    protected $groupKey;
 
     public function __construct($model, $force = false, $isDeleted = false)
     {
@@ -36,6 +37,14 @@ class SyncToPosthog implements ShouldQueue
         $this->model = $model instanceof Team ? 'team' : 'user';
         $this->force = $force;
         $this->isDeleted = $isDeleted;
+        // A sync run before a deletion commits would still see the user and
+        // send their properties after PostHog deleted the person.
+        $this->afterCommit();
+        // The team is gone by the time a deletion's sync runs. With
+        // POSTHOG_DASHBOARD_TEAM_ID set, the group is shared by every team.
+        $this->groupKey = $model instanceof Team && config('posthog.dashboard_team_id_override') === null
+            ? $model->posthogId()
+            : null;
     }
 
     public function handle()
@@ -110,6 +119,10 @@ class SyncToPosthog implements ShouldQueue
 
     public function handleTeam()
     {
+        if ($this->isDeleted) {
+            return $this->groupKey === null ? true : $this->clearDeletedTeam();
+        }
+
         $team = Team::find($this->id);
         if (!$team instanceof Team) {
             // Deleted since the job was queued, as when an account is deleted
@@ -147,5 +160,28 @@ class SyncToPosthog implements ShouldQueue
         });
 
         return $properties;
+    }
+
+    /**
+     * PostHog cannot delete a group, so a deleted team's group keeps its key
+     * and loses the properties that name the team and its owner.
+     */
+    protected function clearDeletedTeam()
+    {
+        $properties = [
+            'is_deleted' => true,
+            'name' => null,
+            'owner' => null,
+            'impersonate_url' => null,
+            'users' => 0,
+        ];
+
+        $result = PostHog::groupIdentify([
+            'groupType' => PosthogHelper::POSTHOG_ORGANIZATION_TYPE,
+            'groupKey' => $this->groupKey,
+            'properties' => $properties,
+        ]);
+
+        return $result ? $properties : false;
     }
 }

@@ -39,6 +39,13 @@ class PosthogHelper
         return config('posthog.host') . "/api/projects/$projectId/persons/trends";
     }
 
+    public static function getPersonsBulkDeleteUrl()
+    {
+        $projectId = config('posthog.project_id');
+
+        return config('posthog.host') . "/api/projects/$projectId/persons/bulk_delete/";
+    }
+
     public static function fetchWritingStreak($date, $offset, $organizations = false)
     {
         $url = self::getPersonsUrl();
