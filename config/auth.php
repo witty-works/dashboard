@@ -124,4 +124,16 @@ return [
 
     'password_timeout' => 10800,
 
+    /*
+    |--------------------------------------------------------------------------
+    | Invite only
+    |--------------------------------------------------------------------------
+    |
+    | When on, nobody signs up without a pending team invitation, only
+    | superadmins create teams, and nobody gets a personal team.
+    |
+    */
+
+    'invite_only' => (bool) env('INVITE_ONLY', false),
+
 ];

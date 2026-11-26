@@ -423,4 +423,5 @@ Please then go to "Register" again to finalize the registration into the "Witty 
     'admin_leave_impersonation' => 'Back to your own account',
     'admin_unverified' => 'Address not verified',
     'admin_unverified_cannot_be_superadmin' => ':email has not verified its address and cannot be made a superadmin.',
+    'invite_only_sign_up_refused' => 'Sign-up is by invitation only, and there is no invitation for this address.',
 ];

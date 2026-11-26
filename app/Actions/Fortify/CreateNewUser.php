@@ -2,6 +2,7 @@
 
 namespace App\Actions\Fortify;
 
+use App\Support\InviteOnly;
 use App\Http\Middleware\SwitchToTeam;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -19,7 +20,14 @@ class CreateNewUser implements CreatesNewUsers
     {
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => [
+                'required', 'string', 'email', 'max:255', 'unique:users',
+                function ($attribute, $value, $fail) {
+                    if (! InviteOnly::allowsSignUp($value)) {
+                        $fail(__('content.invite_only_sign_up_refused'));
+                    }
+                },
+            ],
             'password' => $this->passwordRules(),
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
         ])->validate();

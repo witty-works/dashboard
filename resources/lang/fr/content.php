@@ -424,4 +424,5 @@ Veuillez ensuite cliquer à nouveau sur "S\'inscrire" pour finaliser l\'inscript
     'admin_leave_impersonation' => 'Revenir à votre propre compte',
     'admin_unverified' => 'Adresse non vérifiée',
     'admin_unverified_cannot_be_superadmin' => ':email n’a pas vérifié son adresse et ne peut pas devenir superadmin.',
+    'invite_only_sign_up_refused' => 'L’inscription se fait uniquement sur invitation, et il n’y a pas d’invitation pour cette adresse.',
 ];
