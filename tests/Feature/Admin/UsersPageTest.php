@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Livewire\Livewire;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
 /**
@@ -136,5 +137,29 @@ class UsersPageTest extends TestCase
         $this->page($admin)
             ->assertSee(route('impersonate', $user->id), false)
             ->assertDontSee(route('impersonate', $other->id), false);
+    }
+
+    /**
+     * Livewire actions can be called with any snapshot of the component,
+     * whatever the page showed: each one checks the permission itself.
+     */
+    #[DataProvider('actions')]
+    public function test_an_ordinary_user_cannot_call_the_actions(string $action): void
+    {
+        $admin = $this->superadmin();
+        $user = $this->user();
+        $victim = $this->user();
+        $component = $this->page($admin);
+
+        $this->actingAs($user);
+        $component->call($action, $action === 'makeSuperadmin' ? $user->id : $victim->id)->assertForbidden();
+
+        $this->assertFalse($user->fresh()->hasRole(config('admin.role')));
+        $this->assertNotNull($victim->fresh());
+    }
+
+    public static function actions(): array
+    {
+        return [['makeSuperadmin'], ['removeSuperadmin'], ['deleteUser']];
     }
 }
