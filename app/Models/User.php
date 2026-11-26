@@ -224,7 +224,7 @@ class User extends Authenticatable implements MustVerifyEmail
             $team = $this->currentTeam;
         }
 
-        return $this->licenseTeam->id === $team->id;
+        return $team !== null && $this->licenseTeam->id === $team->id;
     }
 
     public function applyAcceptedInvitiations()
@@ -263,6 +263,9 @@ class User extends Authenticatable implements MustVerifyEmail
 
             $invitation->delete();
 
+            // switchTeam() checks membership against the loaded relation,
+            // which does not know the team this user was just added to.
+            $this->unsetRelation('teams');
             $this->switchTeam($invitation->team);
 
             // update notification count

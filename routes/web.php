@@ -68,8 +68,11 @@ Route::localize(
         |------------------
         */
         Route::group(['middleware' => config('jetstream.middleware', ['web'])], function () {
-            Route::group(['middleware' => ['auth:' . config('fortify.guard')]], function () {
+            Route::group(['middleware' => ['auth:' . config('fortify.guard'), 'team']], function () {
                 Route::get('/', [WelcomeController::class, 'show'])->name('root');
+
+                // Invite only: where a user without a team waits.
+                Route::view('/no-team', 'no-team')->name('no-team');
 
 
                 Route::get('/write', [WriteController::class, 'show'])
@@ -203,5 +206,6 @@ Route::middleware(['auth', 'can:' . config('admin.permission')])
     ->prefix(config('admin.prefix'))
     ->name('admin.')
     ->group(function () {
+        Route::redirect('/', '/' . config('admin.prefix') . '/users')->name('home');
         Route::view('/users', 'admin.users')->name('users');
     });

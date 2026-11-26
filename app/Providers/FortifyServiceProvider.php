@@ -42,6 +42,12 @@ class FortifyServiceProvider extends ServiceProvider
             return view('auth.register');
         });
         
+        // Unverified users are sent here, for example by an invitation link
+        // or a page that requires a verified address.
+        Fortify::verifyEmailView(function () {
+            return view('auth.verify-email');
+        });
+
         Fortify::requestPasswordResetLinkView(function () {
             return view('auth.forgot-password');
         });

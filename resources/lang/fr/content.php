@@ -425,4 +425,6 @@ Veuillez ensuite cliquer à nouveau sur "S\'inscrire" pour finaliser l\'inscript
     'admin_unverified' => 'Adresse non vérifiée',
     'admin_unverified_cannot_be_superadmin' => ':email n’a pas vérifié son adresse et ne peut pas devenir superadmin.',
     'invite_only_sign_up_refused' => 'L’inscription se fait uniquement sur invitation, et il n’y a pas d’invitation pour cette adresse.',
+    'no_team_title' => 'Vous ne faites encore partie d’aucune équipe',
+    'no_team_body' => 'Ce tableau de bord est accessible uniquement sur invitation. Demandez à un·e propriétaire d’équipe ou à un·e administrateur·rice de vous inviter.',
 ];

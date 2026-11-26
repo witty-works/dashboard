@@ -423,4 +423,6 @@ Bitte gehe dann erneut auf „Registrieren“, um die Registrierung im "Witty fo
     'admin_unverified' => 'Adresse nicht bestätigt',
     'admin_unverified_cannot_be_superadmin' => ':email hat die Adresse nicht bestätigt und kann nicht Superadmin werden.',
     'invite_only_sign_up_refused' => 'Die Registrierung ist nur mit Einladung möglich, und für diese Adresse gibt es keine.',
+    'no_team_title' => 'Du bist noch in keinem Team',
+    'no_team_body' => 'Dieses Dashboard ist nur auf Einladung zugänglich. Bitte eine Team-Eigentümer*in oder eine Administrator*in, dich einzuladen.',
 ];

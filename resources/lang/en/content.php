@@ -424,4 +424,6 @@ Please then go to "Register" again to finalize the registration into the "Witty 
     'admin_unverified' => 'Address not verified',
     'admin_unverified_cannot_be_superadmin' => ':email has not verified its address and cannot be made a superadmin.',
     'invite_only_sign_up_refused' => 'Sign-up is by invitation only, and there is no invitation for this address.',
+    'no_team_title' => 'You are not in a team yet',
+    'no_team_body' => 'This dashboard is by invitation only. Ask a team owner or an administrator to invite you.',
 ];
