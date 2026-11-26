@@ -10,10 +10,19 @@ class SyncUserToNlpApi extends AbstractSyncToNlpApi
 {
     protected $id;
 
-    public function __construct(User $user, $queue = 'medium')
+    /** A team the user is leaving: queued while they are still in it. */
+    protected ?int $withoutTeamId = null;
+
+    public function __construct(User $user, $queue = 'medium', ?int $withoutTeamId = null)
     {
         $this->id = $user->id;
+        $this->withoutTeamId = $withoutTeamId;
         $this->onQueue($queue);
+    }
+
+    public function userId(): int
+    {
+        return $this->id;
     }
 
     public function handle()
@@ -55,6 +64,14 @@ class SyncUserToNlpApi extends AbstractSyncToNlpApi
             'email' => $user->email,
             'name' => $user->name,
             'organization_id' => $user->posthogTeamId(),
+            // Every team the user is in: the NLP API refuses a key for a team
+            // that is not listed.
+            'teams' => $user->allTeams()
+                ->reject(fn ($team) => $team->id === $this->withoutTeamId)
+                ->map(fn ($team) => $team->posthogId())
+                ->unique()
+                ->values()
+                ->all(),
             'false_positives' => $falsePositives,
             'term_replacements' => $termReplacements,
             'domains' => $domains,
