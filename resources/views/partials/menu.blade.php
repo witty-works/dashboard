@@ -181,9 +181,16 @@
     </div>
 </div>
 
-    @if(config('lumki.show_lumki') || app('impersonate')->isImpersonating())
-        @lumki
-    @endif
+    @can(config('admin.permission'))
+        <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('admin.users') }}">
+            {{ __('content.admin_menu') }}
+        </x-nav-link>
+    @endcan
+    @impersonating
+        <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('impersonate.leave') }}">
+            {{ __('content.admin_leave_impersonation') }}
+        </x-nav-link>
+    @endImpersonating
 
 @else
     <!-- LOGGED OUT -->

@@ -197,3 +197,11 @@ if (config('app.browsers')) {
     // token of its own.
     Route::get('/browser-login', [OAuthController::class, 'browserLogin'])->name('browser_login');
 }
+
+// The superadmins' pages, outside the locale prefix.
+Route::middleware(['auth', 'can:' . config('admin.permission')])
+    ->prefix(config('admin.prefix'))
+    ->name('admin.')
+    ->group(function () {
+        Route::view('/users', 'admin.users')->name('users');
+    });

@@ -20,7 +20,7 @@ After changing any of them run `lando rebuild -y`.
     ```
 -   Install the Lando certificate in your browser: https://docs.lando.dev/config/security.html#certificates
 -   Go to the website and create an account
--   Run `lando artisan lumki:setup` (answer yes for every question)
+-   Run `lando artisan superadmin:create you@example.com "Your Name"` to get a superadmin account
 
 ## Switching between branches
 

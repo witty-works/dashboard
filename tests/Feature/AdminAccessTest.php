@@ -10,7 +10,7 @@ use Tests\TestCase;
 
 /**
  * The /admin area is gated by the spatie/laravel-permission "manage users"
- * permission (config/lumki.php). Authorisation is the least forgiving thing to
+ * permission (config/admin.php). Authorisation is the least forgiving thing to
  * get wrong in an upgrade, so both sides of the gate are asserted.
  */
 class AdminAccessTest extends TestCase
@@ -55,12 +55,43 @@ class AdminAccessTest extends TestCase
             ->assertOk();
     }
 
-    public function test_superadmin_can_list_roles(): void
+    public function test_lumkis_routes_are_gone(): void
     {
-        $this->actingAs($this->superadmin())
-            ->withoutLocaleRedirects()
-            ->get('/admin/roles')
-            ->assertOk();
+        // Lumki created accounts without an invitation and deleted them
+        // without DeleteUser; its roles pages could rename the permission.
+        $admin = $this->superadmin();
+        $user = User::factory()->withPersonalTeam()->create();
+
+        $this->actingAs($admin)->withoutLocaleRedirects();
+        $gone = [404, 405];
+        $this->assertContains($this->post('/admin/users', ['name' => 'X', 'email' => 'x@example.org', 'password' => 'secret-password', 'password_confirmation' => 'secret-password'])->status(), $gone);
+        $this->assertContains($this->delete('/admin/users/' . $user->id)->status(), $gone);
+        $this->assertContains($this->get('/admin/roles')->status(), $gone);
+        $this->assertContains($this->get('/admin/permissions')->status(), $gone);
+
+        $this->assertNull(User::where('email', 'x@example.org')->first());
+        $this->assertNotNull($user->fresh());
+    }
+
+    public function test_superadmins_see_the_admin_menu_entry(): void
+    {
+        $url = route('admin.users');
+
+        $this->actingAs($this->superadmin())->get('/en/user/profile')->assertSee($url, false);
+
+        $user = User::factory()->withPersonalTeam()->create();
+        $user->switchTeam($user->ownedTeams()->firstOrFail());
+        $this->actingAs($user->refresh())->get('/en/user/profile')->assertDontSee($url, false);
+    }
+
+    public function test_the_menu_offers_a_way_back_while_impersonating(): void
+    {
+        $user = User::factory()->withPersonalTeam()->create();
+        $user->switchTeam($user->ownedTeams()->firstOrFail());
+
+        $this->actingAs($this->superadmin())->get('/en/impersonate/take/' . $user->id);
+
+        $this->get('/en/user/profile')->assertSee(route('impersonate.leave'), false);
     }
 
     public function test_permission_is_actually_required_not_merely_the_role(): void

@@ -11,39 +11,33 @@ migration `2022_04_20_065350_roles` creates the baseline:
 -   a `Superadmin` role
 -   a `manage users` permission, granted to `Superadmin`
 
-`manage users` is the only permission the application checks. It is configured in
-`config/lumki.php` as `lumkiPermission` and guards every `/admin` route.
+`manage users` is the only permission the application checks. Its name is set
+in `config/admin.php` (`permission`); it guards every `/admin` route and decides
+who may impersonate.
 
-To make an account a superadmin, assign the role to it:
+To create a superadmin, or make an existing verified account one, run on the
+server:
 
 ```bash
-lando artisan tinker
->>> App\Models\User::where('email', 'you@example.com')->first()->assignRole('Superadmin');
+lando artisan superadmin:create you@example.com "Your Name"
 ```
+
+A new account is created verified, with an unusable password, and is mailed a
+link to set one (the link uses `APP_URL`). An existing account whose address is
+not verified is refused: anyone can register any address.
 
 ## Admin area
 
-The admin screens come from `kineticamobile/lumki` and are mounted under the
-prefix set in `config/lumki.php` (`/admin`):
+The admin pages are the dashboard's own, under the prefix set in
+`config/admin.php` (`/admin`), behind `auth` and `can:manage users`, so a user
+without the permission gets a 403:
 
--   `/admin/users` — list users, edit their roles, jump into impersonation
--   `/admin/roles` — manage roles
--   `/admin/permissions` — manage permissions
+-   `/admin/users` — search users by name or email, see every team each one
+    belongs to and their role there, make or remove superadmins (the last one
+    cannot remove their own role), impersonate, and delete accounts through
+    `DeleteUser`, the same deletion as on the profile page.
 
-They are behind `auth:sanctum`, `web` and `can:manage users`, so a user without
-the permission gets a 403.
-
-The views are published into `resources/views/vendor/lumki` and are edited in
-this repository rather than in the package.
-
-`SHOW_LUMKI` controls whether the admin entry appears in the navigation; the
-routes exist either way and remain permission-guarded.
-
-**Do not re-run `lumki:setup` on an existing checkout.** It is a one-time
-scaffolding command that rewrites `app/Models/User.php` to add the `HasRoles`
-trait. That trait is already applied, together with the conflict resolution the
-model needs since spatie/laravel-permission 8 (see the `use HasRoles, HasTeams`
-block), and the command would corrupt it.
+Every superadmin sees an "Admin" entry in the navigation.
 
 ## Impersonation
 
@@ -53,12 +47,14 @@ Impersonation uses
 -   `/impersonate/take/{id}` — start impersonating the user with that id
 -   `/impersonate/leave` — return to your own account
 
+Only superadmins may impersonate, and nobody may impersonate a superadmin
+(`User::canImpersonate()` and `canBeImpersonated()`).
+
 Links to `impersonate/take/{id}` are generated in the admin user list, in the
 team statistics email and in the PostHog sync payload, so a support request can
 be opened directly as the affected user.
 
-While impersonating, the admin navigation stays visible regardless of
-`SHOW_LUMKI` so you can find your way back out.
+While impersonating, the navigation shows a link back to your own account.
 
 ## Teams
 
