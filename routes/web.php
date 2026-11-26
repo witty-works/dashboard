@@ -198,7 +198,7 @@ if (config('app.browsers')) {
     Route::get('/browser-login', [OAuthController::class, 'browserLogin'])->name('browser_login');
 }
 
-// The superadmins' pages, outside the locale prefix like the old Lumki ones.
+// The superadmins' pages, outside the locale prefix.
 Route::middleware(['auth', 'can:' . config('admin.permission')])
     ->prefix(config('admin.prefix'))
     ->name('admin.')

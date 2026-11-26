@@ -419,4 +419,5 @@ Bitte gehe dann erneut auf „Registrieren“, um die Registrierung im "Witty fo
     'admin_delete_user_confirm' => 'Das Konto von :email mit allen Daten löschen? Das lässt sich nicht rückgängig machen.',
     'admin_no_users' => 'Keine Benutzer*innen gefunden.',
     'admin_menu' => 'Admin',
+    'admin_leave_impersonation' => 'Zurück zum eigenen Konto',
 ];

@@ -10,7 +10,7 @@
         "firebase/php-jwt": "^7.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "jfcherng/php-diff": "^7.0",
-        "kineticamobile/lumki": "^0.2.0",
+        "lab404/laravel-impersonate": "^1.7.8",
         "laravel/framework": "^13.0",
         "laravel/jetstream": "^5.0",
         "laravel/passport": "^13",
@@ -25,6 +25,7 @@
         "socialiteproviders/manager": "^4.8",
         "spatie/laravel-failed-job-monitor": "^4.3",
         "spatie/laravel-google-fonts": "^1.2",
+        "spatie/laravel-permission": "^8.5",
         "spatie/laravel-rate-limited-job-middleware": "^2.2",
         "spatie/laravel-slack-alerts": "^1.1",
         "symfony/http-client": "^8.0"

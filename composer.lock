@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6b6ff3fab4052f88d46b51b7677288f6",
+    "content-hash": "b33703e4a4c36ae09682164c8be6d940",
     "packages": [
         {
             "name": "artisansdk/ratelimiter",
@@ -1939,82 +1939,6 @@
                 }
             ],
             "time": "2026-04-06T14:59:12+00:00"
-        },
-        {
-            "name": "kineticamobile/lumki",
-            "version": "0.2.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/kineticamobile/lumki.git",
-                "reference": "494d1f13848e97b83fc38e4f5f39e0780f4f98e3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/kineticamobile/lumki/zipball/494d1f13848e97b83fc38e4f5f39e0780f4f98e3",
-                "reference": "494d1f13848e97b83fc38e4f5f39e0780f4f98e3",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/support": "^13.0",
-                "lab404/laravel-impersonate": "^1.7.8",
-                "php": "^8.3",
-                "spatie/laravel-permission": "^8.0"
-            },
-            "require-dev": {
-                "mockery/mockery": "^1.6.10",
-                "orchestra/testbench": "^11.0",
-                "phpunit/phpunit": "^11.5"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "aliases": {
-                        "Lumki": "Kineticamobile\\Lumki\\Facades\\Lumki"
-                    },
-                    "providers": [
-                        "Kineticamobile\\Lumki\\LumkiServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Kineticamobile\\Lumki\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Raul Tierno",
-                    "email": "raultm@gmail.com",
-                    "homepage": "https://github.com/raultm"
-                },
-                {
-                    "name": "Daniel Macías",
-                    "email": "danielmaciasramos@gmail.com",
-                    "homepage": "https://github.com/dmaciasr"
-                },
-                {
-                    "name": "Emilio Ortiz",
-                    "email": "emilio.ortiz@kinetica.mobi",
-                    "homepage": "https://github.com/branigan"
-                }
-            ],
-            "description": "Laravel User Management for Laravel 13 with Jetstream",
-            "homepage": "https://github.com/kineticamobile/lumki",
-            "keywords": [
-                "Lumki",
-                "laravel",
-                "laravel 13",
-                "users management"
-            ],
-            "support": {
-                "issues": "https://github.com/kineticamobile/lumki/issues",
-                "source": "https://github.com/kineticamobile/lumki/tree/0.2.1"
-            },
-            "time": "2026-11-05T15:55:56+00:00"
         },
         {
             "name": "lab404/laravel-impersonate",

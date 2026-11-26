@@ -420,4 +420,5 @@ Please then go to "Register" again to finalize the registration into the "Witty 
     'admin_delete_user_confirm' => 'Delete the account of :email and all of its data? This cannot be undone.',
     'admin_no_users' => 'No users found.',
     'admin_menu' => 'Admin',
+    'admin_leave_impersonation' => 'Back to your own account',
 ];

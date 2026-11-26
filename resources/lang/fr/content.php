@@ -421,4 +421,5 @@ Veuillez ensuite cliquer à nouveau sur "S\'inscrire" pour finaliser l\'inscript
     'admin_delete_user_confirm' => 'Supprimer le compte de :email et toutes ses données ? Cette action est irréversible.',
     'admin_no_users' => 'Aucun·e utilisateur·rice trouvé·e.',
     'admin_menu' => 'Admin',
+    'admin_leave_impersonation' => 'Revenir à votre propre compte',
 ];

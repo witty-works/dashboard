@@ -32,7 +32,7 @@ Runs on Laravel 13 / PHP 8.4, with Node 24 for the asset build.
     -   Install the lando certificate in your browser
         -   https://docs.lando.dev/config/security.html#certificates
     -   Go to the website and create an account
-    -   Run `lando artisan lumki:setup` (answer yes, ie. hit enter, for every question)
+    -   Run `lando artisan superadmin:create you@example.com "Your Name"` to get a superadmin account
 
 -   Install Sentry CLI https://docs.sentry.io/product/cli/installation/
     -   Run `sentry-cli login`
