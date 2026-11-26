@@ -79,6 +79,17 @@ class ApiKeysPageTest extends TestCase
             ->assertDontSee(self::KEY);
     }
 
+    public function test_key_ids_are_escaped_for_javascript(): void
+    {
+        $user = $this->user();
+        $this->fakeApi([$this->details($user->currentTeam, ['id' => "k1');alert(1);('"])]);
+
+        $html = $this->actingAs($user)->get('/en/user/api-keys')->assertOk()->getContent();
+
+        $this->assertStringContainsString("revoke('k1\\u0027);alert(1);(\\u0027')", $html);
+        $this->assertStringContainsString("replace('k1\\u0027);alert(1);(\\u0027')", $html);
+    }
+
     public function test_page_needs_a_verified_address(): void
     {
         $user = $this->user();

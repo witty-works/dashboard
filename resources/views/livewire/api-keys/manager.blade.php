@@ -83,11 +83,11 @@
                                 <option value="604800">{{ __('content.api_keys_grace_week') }}</option>
                                 <option value="0">{{ __('content.api_keys_grace_none') }}</option>
                             </select>
-                            <button type="button" class="ml-2 underline" wire:click="replace('{{ $key['id'] }}')">{{ __('content.api_keys_replace') }}</button>
+                            <button type="button" class="ml-2 underline" wire:click="replace(@js($key['id']))">{{ __('content.api_keys_replace') }}</button>
                             @else
                             <span>{{ __('content.api_keys_replaced') }}</span>
                             @endif
-                            <button type="button" class="ml-4 underline" wire:click="revoke('{{ $key['id'] }}')" wire:confirm="{{ __('content.api_keys_revoke_confirm') }}">{{ __('content.api_keys_revoke') }}</button>
+                            <button type="button" class="ml-4 underline" wire:click="revoke(@js($key['id']))" wire:confirm="{{ __('content.api_keys_revoke_confirm') }}">{{ __('content.api_keys_revoke') }}</button>
                         </td>
                     </tr>
                 @endforeach
