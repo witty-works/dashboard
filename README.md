@@ -144,6 +144,28 @@ See [docs/release.md](docs/release.md) for release and hotfix instructions, incl
 
 Deployments run the Docker image that a version tag publishes to `ghcr.io/witty-works/dashboard`, pinned by digest. One image serves as web server, queue worker and migration step, and takes all its configuration from the environment. See [docs/docker.md](docs/docker.md#production-image) for the roles, the settings a deployment needs and the first start.
 
+## Setting up a deployment
+
+A deployment of the dashboard needs these parts. [docs/docker.md](docs/docker.md#production-image) has the details of each step.
+
+-   **What runs:** the image's `web` container behind a reverse proxy that terminates TLS, a `worker` container for the queue, a `migrate` step on every release, and a MariaDB database. The containers keep no state of their own. Mail goes out over SMTP.
+-   **The NLP API:** the dashboard sends user and team settings to the [NLP API](https://github.com/witty-works/nlp_api) (`APP_NLP_API_SYNC_*`, see [NLP API Sync](#nlp-api-sync)), and the write page calls it from the browser (`NLP_API_PUBLIC_URL`). On the NLP API's side, `DASHBOARD_ISSUER` is the dashboard's `APP_URL` and `DASHBOARD_CLIENT_ID` holds the write page's OAuth client ([docs/oauth.md](docs/oauth.md#the-write-pages-flow)). The NLP API keeps the API keys people create in its Redis, so that Redis needs a backup, and a second NLP API endpoint must use the same one ([API keys](docs/user-management.md#api-keys)).
+-   **Settings:** the required ones are in [Configuration a deployment sets](docs/docker.md#configuration-a-deployment-sets): the app key, the public `https` address, the OAuth keys, the database, mail, the support address, and the deployment's own privacy policy and terms as Markdown files. Everything optional is under [Custom Application Configuration](#custom-application-configuration): invite-only sign-up, PostHog and its analytics pages, the browser extension, Office sign-in and the security headers. Sentry is in [docs/sentry.md](docs/sentry.md).
+-   **First start:** migrate, create the first superadmin, create the write page's OAuth client and put its id into both configurations ([First start](docs/docker.md#first-start)). Superadmins have to set up two-factor sign-in ([docs/user-management.md](docs/user-management.md#two-factor-sign-in)).
+-   **Backups:** the MariaDB database and the NLP API's Redis. Nothing else holds data that cannot be rebuilt.
+
+## Deployment checklist
+
+Check these before a deployment goes live, and again when its services change.
+
+-   **The privacy policy names every service that receives personal data:** the NLP API and the language model provider it calls, the mail service, the PostHog instance (`POSTHOG_HOST`) if `POSTHOG_ENABLED` is on, and Sentry if `SENTRY_LARAVEL_DSN` is set.
+-   **`PRIVACY_POLICY_FILE` and `TERMS_OF_SERVICE_FILE` point at the deployment's own documents.** Without them, sign-up asks for no agreement and the pages say that none has been published.
+-   **`APP_ENV=production` and `APP_DEBUG=false`,** so error pages show no details.
+-   **The PostHog personal API key has the `person:write` scope** (`POSTHOG_PERSONAL_API_KEY`, see [PostHog Analytics](#posthog-analytics)), or deleting an account leaves the person's data in PostHog.
+-   **The security headers are enforced.** A first rollout can run with `CSP_REPORT_ONLY=true`; switch it off once the reports are clean. Check Sentry's data scrubbing before pointing `CSP_REPORT_URI` at it (see [Security headers](#security-headers)).
+-   **Each release gets a screen reader check** (VoiceOver or NVDA) of the main pages, since the [browser tests](#browser-tests) find only part of what WCAG asks.
+-   **`composer audit` and `npm audit` show no untriaged advisories.**
+
 ## User management
 
 See [docs/user-management.md](docs/user-management.md) for superadmin rights, the admin area and impersonation.
