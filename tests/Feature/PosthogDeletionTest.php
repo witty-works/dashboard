@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\URL;
 use Livewire\Livewire;
 use Tests\TestCase;
 
@@ -217,20 +216,6 @@ class PosthogDeletionTest extends TestCase
         });
 
         $this->assertNotNull($user->fresh()->posthog_last_sync);
-    }
-
-    public function test_the_first_page_after_a_deletion_resets_posthog_in_the_browser(): void
-    {
-        config(['posthog.js_enabled' => true]);
-        Http::fake();
-        $user = $this->user();
-        $url = URL::temporarySignedRoute('account.delete.confirm', now()->addMinutes(30), ['user' => $user->id]);
-
-        $this->actingAs($user)->post($url)->assertRedirect();
-
-        $this->assertNull(User::find($user->id));
-        $this->get('/login')->assertOk()->assertSee('posthog.reset();', false);
-        $this->get('/login')->assertOk()->assertDontSee('posthog.reset();', false);
     }
 
     public function test_with_the_user_id_override_set_no_person_is_deleted(): void

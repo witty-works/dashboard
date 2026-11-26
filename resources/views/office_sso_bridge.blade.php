@@ -1,4 +1,3 @@
-@section('no-tracking', true)
 @push('head-first')
     <script>
         // Take the token out of the address before any other script runs.

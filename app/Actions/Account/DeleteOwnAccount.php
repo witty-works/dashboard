@@ -32,11 +32,6 @@ class DeleteOwnAccount
         if ($request->hasSession()) {
             $request->session()->invalidate();
             $request->session()->regenerateToken();
-            // The browser's PostHog still holds the deleted user's ID; the
-            // next page resets it, or its next event recreates the person.
-            if (config('posthog.js_enabled')) {
-                $request->session()->put('posthog_reset', true);
-            }
         }
     }
 }
