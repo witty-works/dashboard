@@ -3,11 +3,9 @@
 namespace App\Livewire\Teams;
 
 use App\Actions\Jetstream\TransferTeamOwnership;
-use App\Livewire\HelpHeroTrait;
 use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Jetstream\Http\Livewire\TeamMemberManager as TeamMemberManagerBase;
-use Laravel\Jetstream\Contracts\RemovesTeamMembers;
 use Livewire\Attributes\Locked;
 
 /**
@@ -18,8 +16,6 @@ use Livewire\Attributes\Locked;
  */
 class TeamMemberManagerHelpHero extends TeamMemberManagerBase
 {
-    use HelpHeroTrait;
-
     /** The team being managed: the server's, never the browser's to change. */
     #[Locked]
     public $team;
@@ -37,18 +33,6 @@ class TeamMemberManagerHelpHero extends TeamMemberManagerBase
     }
 
     /**
-     * Add a new team member to a team.
-     *
-     * @return void
-     */
-    public function addTeamMember()
-    {
-        parent::addTeamMember();
-
-        $this->updateHelpHero();
-    }
-
-    /**
      * Cancel a pending team member invitation.
      *
      * @param  int  $invitationId
@@ -59,7 +43,6 @@ class TeamMemberManagerHelpHero extends TeamMemberManagerBase
         Gate::authorize('removeTeamMember', $this->team);
 
         parent::cancelTeamInvitation($invitationId);
-        $this->updateHelpHero();
     }
 
     /**
@@ -92,33 +75,6 @@ class TeamMemberManagerHelpHero extends TeamMemberManagerBase
         $this->team = $this->team->fresh();
 
         $this->dispatch('saved');
-        $this->updateHelpHero();
-    }
-
-    /**
-     * Remove the currently authenticated user from the team.
-     *
-     * @param  \Laravel\Jetstream\Contracts\RemovesTeamMembers  $remover
-     * @return void
-     */
-    public function leaveTeam(RemovesTeamMembers $remover)
-    {
-        parent::leaveTeam($remover);
-
-        $this->updateHelpHero();
-    }
-
-    /**
-     * Remove a team member from the team.
-     *
-     * @param  \Laravel\Jetstream\Contracts\RemovesTeamMembers  $remover
-     * @return void
-     */
-    public function removeTeamMember(RemovesTeamMembers $remover)
-    {
-        parent::removeTeamMember($remover);
-
-        $this->updateHelpHero();
     }
 
     protected function resetForm()

@@ -71,7 +71,6 @@ class Category extends OrganizationCategorySettingsCategory
         $languageGuidelines->dispatchEventToPosthog((new \ReflectionClass($this))->getShortName());
 
         $this->dispatch('saved');
-        $this->updateHelpHero();
 
         dispatch(new SyncUserToNlpApi($this->model, 'high'));
     }

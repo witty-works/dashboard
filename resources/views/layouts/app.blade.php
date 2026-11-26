@@ -51,6 +51,5 @@
         @stack('modals')
 
         @livewireScripts
-        @include('partials/helphero')
     </body>
 </html>

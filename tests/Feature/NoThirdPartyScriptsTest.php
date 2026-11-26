@@ -2,26 +2,29 @@
 
 namespace Tests\Feature;
 
+use App\Livewire\UserFalsePositive\Show as UserFalsePositives;
+use App\Models\FalsePositive;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\URL;
+use Livewire\Livewire;
 use Tests\TestCase;
 
 /**
- * The dashboard loads no Google Tag Manager, HubSpot or PostHog browser
- * script, so it needs no cookie banner. The old switch is set here so that
- * the scripts would render if they were still there.
+ * The dashboard loads no Google Tag Manager, HubSpot, HelpHero or PostHog
+ * browser script, so it needs no cookie banner. The old switches are set
+ * here so that the scripts would render if they were still there.
  */
 class NoThirdPartyScriptsTest extends TestCase
 {
     use RefreshDatabase;
 
-    private const SCRIPTS = ['googletagmanager', '_hsp', 'posthog.init'];
+    private const SCRIPTS = ['googletagmanager', '_hsp', 'posthog.init', 'app.helphero.co', 'HelpHero.'];
 
     protected function setUp(): void
     {
         parent::setUp();
-        config(['posthog.js_enabled' => true]);
+        config(['posthog.js_enabled' => true, 'helphero.js_enabled' => true, 'helphero.app_id' => 'x']);
     }
 
     private function assertNoThirdPartyScripts($response): void
@@ -52,5 +55,18 @@ class NoThirdPartyScriptsTest extends TestCase
         $url = URL::temporarySignedRoute('account.delete.confirm', now()->addMinutes(30), ['user' => $user->id]);
 
         $this->assertNoThirdPartyScripts($this->get($url));
+    }
+
+    public function test_changing_a_setting_sends_no_helphero_update(): void
+    {
+        $user = User::factory()->withPersonalTeam()->create();
+        $entry = FalsePositive::forceCreate(['user_id' => $user->id, 'false_positive' => 'word']);
+
+        Livewire::actingAs($user)
+            ->test(UserFalsePositives::class, ['model' => $user])
+            ->call('deleteFalsePositive', $entry->id)
+            ->assertNotDispatched('helpHeroUpdate');
+
+        $this->assertModelMissing($entry);
     }
 }

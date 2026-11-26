@@ -4,7 +4,6 @@ namespace App\Livewire\OrganizationTermReplacement;
 
 use Livewire\Attributes\Locked;
 use App\Livewire\GuidelineEntryAuthorization;
-use App\Livewire\HelpHeroTrait;
 use App\Models\TermReplacement;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
@@ -14,7 +13,6 @@ class Show extends Component
 {
     use GuidelineEntryAuthorization;
     use AuthorizesRequests;
-    use HelpHeroTrait;
 
     protected $listeners = ['saved'];
 
@@ -43,7 +41,6 @@ class Show extends Component
     public function saved()
     {
         $this->render();
-        $this->updateHelpHero();
     }
 
     public function editTermReplacement(TermReplacement $termReplacement)
@@ -58,6 +55,5 @@ class Show extends Component
         $this->authorizeTeamEntry($termReplacement);
 
         $termReplacement->delete();
-        $this->updateHelpHero();
     }
 }

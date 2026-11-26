@@ -31,7 +31,6 @@
                 @include('partials.footer')
             </main>
         </div>
-        @include('partials/helphero')
         @livewireScripts
     </body>
 </html>

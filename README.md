@@ -166,13 +166,6 @@ Enabled the browser extension integration.
 -   `BROWSER_VERSION_EDGE` — Latest supported Edge version
 -   `BROWSER_VERSION_FIREFOX` — Latest supported Firefox version
 
-## Helphero Integration
-
-Used for application overlays for onboarding.
-
--   `HELPHERO_JS_ENABLED` — Enable Helphero JS widget
--   `HELPHERO_APP_ID` — Helphero App ID
-
 ## PostHog Analytics
 
 PostHog collects the statistics the Witty client applications (browser extension, Microsoft Word Add-in) and the dashboard's server send, which the dashboard's analytics pages show. The dashboard loads no tracking script in the browser.
