@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Jetstream\HandOverInvitedTeam;
 use App\Jobs\SyncUserToNlpApi;
 use App\Jobs\SyncToPosthog;
 use App\Models\TeamInvitation as ModelsTeamInvitation;
@@ -64,6 +65,14 @@ class TeamInvitationController extends BaseTeamInvitationController
             $invitation->save();
 
             return redirect()->route('verification.notice');
+        }
+
+        // An invitation to own the team: it is handed over, not joined.
+        if ($invitation->as_owner) {
+            app(HandOverInvitedTeam::class)->hand($user, $invitation);
+
+            return redirect(config('fortify.home'))
+                ->banner(__('teams.accepted_invitation', ['team' => $invitation->team->name]));
         }
 
         parent::accept($request, $invitation);

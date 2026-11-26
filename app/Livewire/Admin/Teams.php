@@ -2,9 +2,14 @@
 
 namespace App\Livewire\Admin;
 
+use App\Actions\Admin\InviteTeamOwner;
+use App\Mail\TeamInvitation as TeamInvitationMail;
 use App\Models\Team;
+use App\Models\TeamInvitation;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Validation\ValidationException;
 use Laravel\Jetstream\Contracts\DeletesTeams;
 use Livewire\Component;
 
@@ -24,6 +29,9 @@ class Teams extends Component
 
     /** @var array<int, int|string|null> the limit field of each team, by team id */
     public array $limits = [];
+
+    /** @var array<int, string> the owner address field of each team, by team id */
+    public array $ownerEmail = [];
 
     public function mount(): void
     {
@@ -92,9 +100,47 @@ class Teams extends Component
         unset($this->limits[$teamId]);
     }
 
+    public function inviteOwner(int $teamId, InviteTeamOwner $inviter): void
+    {
+        $this->authorizeSuperadmin();
+
+        $team = Team::findOrFail($teamId);
+        try {
+            $inviter->invite(auth()->user(), $team, (string) ($this->ownerEmail[$teamId] ?? ''));
+        } catch (ValidationException $e) {
+            foreach ($e->errors() as $messages) {
+                foreach ($messages as $message) {
+                    $this->addError("ownerEmail.$teamId", $message);
+                }
+            }
+
+            return;
+        }
+
+        unset($this->ownerEmail[$teamId]);
+    }
+
+    /** Mails the same invitation again, so its first link keeps working. */
+    public function resendInvitation(int $invitationId): void
+    {
+        $this->authorizeSuperadmin();
+
+        $invitation = TeamInvitation::where('as_owner', true)->findOrFail($invitationId);
+        Mail::to($invitation->email)->send(new TeamInvitationMail($invitation));
+        $invitation->touch();
+    }
+
+    public function revokeInvitation(int $invitationId): void
+    {
+        $this->authorizeSuperadmin();
+
+        TeamInvitation::where('as_owner', true)->findOrFail($invitationId)->delete();
+    }
+
     public function render()
     {
         return view('livewire.admin.teams', [
+            'waiting' => TeamInvitation::with('team')->where('as_owner', true)->orderBy('created_at')->get(),
             'teams' => Team::with('owner')->withCount('users')->orderBy('name')->get(),
             'superadminIds' => User::permission(config('admin.permission'))->pluck('id')->all(),
         ]);

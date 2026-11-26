@@ -3,6 +3,10 @@
 
 {!! __('content.invitation_email_welcome') !!}
 
+@if ($asOwner)
+{{ __('content.invitation_as_owner', ['team' => $team]) }}
+@endif
+
 @component('mail::button', ['url' => $acceptUrl])
 {{ __('content.accept_invitation') }}
 @endcomponent

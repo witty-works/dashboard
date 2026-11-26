@@ -13,6 +13,35 @@
         <button type="submit" class="button primary-button">{{ __('content.admin_create_team') }}</button>
     </form>
 
+    <h3 class="mb-2 font-semibold">{{ __('content.admin_waiting_title') }}</h3>
+    @if ($waiting->isEmpty())
+        <p class="mb-8 text-sm text-gray-600">{{ __('content.admin_waiting_none') }}</p>
+    @else
+        <table class="mb-8 min-w-full divide-y divide-gray-200 bg-white">
+            <thead>
+                <tr>
+                    <th scope="col" class="px-4 py-2 text-left">{{ __('content.admin_team_name') }}</th>
+                    <th scope="col" class="px-4 py-2 text-left">{{ __('content.admin_owner_email') }}</th>
+                    <th scope="col" class="px-4 py-2 text-left">{{ __('content.admin_invited_on') }}</th>
+                    <th scope="col" class="px-4 py-2 text-left">{{ __('content.admin_actions') }}</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+                @foreach ($waiting as $invitation)
+                    <tr wire:key="invitation-{{ $invitation->id }}">
+                        <td class="px-4 py-2">{{ $invitation->team->name }}</td>
+                        <td class="px-4 py-2 text-sm">{{ $invitation->email }}</td>
+                        <td class="px-4 py-2 text-sm">{{ $invitation->created_at->isoFormat('LL') }}</td>
+                        <td class="px-4 py-2 text-sm">
+                            <button type="button" class="underline" wire:click="resendInvitation({{ $invitation->id }})">{{ __('content.admin_resend') }}</button>
+                            <button type="button" class="ml-4 underline" wire:click="revokeInvitation({{ $invitation->id }})">{{ __('content.admin_revoke') }}</button>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    @endif
+
     <table class="min-w-full divide-y divide-gray-200 bg-white">
         <thead>
             <tr>
@@ -41,6 +70,14 @@
                     <td class="px-4 py-2 text-sm">
                         @if ($team->user_id === auth()->id())
                             <button type="button" class="underline" wire:click="configure({{ $team->id }})">{{ __('content.admin_configure') }}</button>
+                        @endif
+                        @if ($ownedBySuperadmin && ! $waiting->contains('team_id', $team->id))
+                            <form wire:submit="inviteOwner({{ $team->id }})" class="mb-2 flex items-center gap-2">
+                                <label for="owner-{{ $team->id }}" class="sr-only">{{ __('content.admin_owner_email') }}</label>
+                                <input id="owner-{{ $team->id }}" type="email" wire:model="ownerEmail.{{ $team->id }}" class="form-input w-56" placeholder="{{ __('content.admin_owner_email') }}" required>
+                                <button type="submit" class="underline">{{ __('content.admin_invite_owner') }}</button>
+                            </form>
+                            @error('ownerEmail.' . $team->id) <p class="text-sm text-red-600" role="alert">{{ $message }}</p> @enderror
                         @endif
                         @if ($ownedBySuperadmin)
                             <button type="button" class="ml-4 text-red-600 underline"
