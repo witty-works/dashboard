@@ -37,6 +37,14 @@ class CreateSuperadminCommand extends Command
 
         $user = User::whereRaw('LOWER(email) = ?', [$email])->first();
         if ($user) {
+            // Anyone can register any address, so an unverified account may
+            // not belong to the person the role is meant for.
+            if (! $user->hasVerifiedEmail()) {
+                $this->error("{$user->email} has not verified its address; verify it first or delete the account.");
+
+                return self::FAILURE;
+            }
+
             $user->assignRole(config('admin.role'));
             $this->info("{$user->email} is now a superadmin.");
 

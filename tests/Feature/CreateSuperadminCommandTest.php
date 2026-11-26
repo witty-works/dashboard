@@ -35,7 +35,7 @@ class CreateSuperadminCommandTest extends TestCase
     public function test_it_makes_an_existing_account_a_superadmin_without_a_new_password(): void
     {
         Notification::fake();
-        $user = User::factory()->create(['email' => 'existing@example.org']);
+        $user = User::factory()->create(['email' => 'existing@example.org', 'email_verified_at' => now()]);
         $password = $user->password;
 
         $this->artisan('superadmin:create', ['email' => 'Existing@Example.org', 'name' => 'Ignored'])
@@ -54,5 +54,17 @@ class CreateSuperadminCommandTest extends TestCase
             ->assertExitCode(1);
 
         $this->assertSame(0, User::count());
+    }
+
+    public function test_it_refuses_an_existing_account_whose_address_is_not_verified(): void
+    {
+        // Anyone can register any address; the role must not go to whoever
+        // registered it first.
+        $user = User::factory()->unverified()->create(['email' => 'unverified@example.org']);
+
+        $this->artisan('superadmin:create', ['email' => 'unverified@example.org', 'name' => 'Ignored'])
+            ->assertExitCode(1);
+
+        $this->assertFalse($user->fresh()->hasRole(config('admin.role')));
     }
 }
