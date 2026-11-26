@@ -449,4 +449,5 @@ Veuillez ensuite cliquer à nouveau sur "S\'inscrire" pour finaliser l\'inscript
     'admin_owner_invitation_not_superadmin_team' => 'Seule une équipe qui appartient encore à un·e superadmin peut recevoir un·e propriétaire.',
     'admin_invitation_exists_for_address' => 'Cette adresse a déjà une invitation dans cette équipe.',
     'delete_account_open_invitations' => 'Révoquez d’abord les invitations en attente de ces équipes, ou attendez qu’elles soient acceptées : :teams.',
+    'owner_invitation_no_longer_valid' => 'Cette invitation n’est plus valable. Demandez-en une nouvelle à un·e administrateur·rice.',
 ];

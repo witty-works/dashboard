@@ -149,9 +149,12 @@ class OwnerInvitationTest extends TestCase
         $invitation = TeamInvitation::firstOrFail();
         $admin->removeRole(config('admin.role'));
 
-        $this->actingAs($invitee)->get(route('team-invitations.accept', ['invitation' => $invitation->id]))->assertForbidden();
+        // Refused, and the invitation is dropped instead of being offered,
+        // and refused, on every page.
+        $this->actingAs($invitee)->get(route('team-invitations.accept', ['invitation' => $invitation->id]))->assertRedirect();
 
         $this->assertSame($admin->id, $team->fresh()->user_id);
+        $this->assertSame(0, TeamInvitation::count());
     }
 
     public function test_the_mail_names_the_invited_team_and_says_own(): void

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Actions\Jetstream\HandOverInvitedTeam;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Auth\Access\AuthorizationException;
 use App\Jobs\SyncUserToNlpApi;
 use App\Jobs\SyncToPosthog;
 use App\Models\TeamInvitation as ModelsTeamInvitation;
@@ -69,7 +71,16 @@ class TeamInvitationController extends BaseTeamInvitationController
 
         // An invitation to own the team: it is handed over, not joined.
         if ($invitation->as_owner) {
-            app(HandOverInvitedTeam::class)->hand($user, $invitation);
+            try {
+                app(HandOverInvitedTeam::class)->hand($user, $invitation);
+            } catch (AuthorizationException $e) {
+                // No longer valid: dropped, rather than offered and refused
+                // again on every page.
+                Log::warning('An owner invitation could not be handed over', ['invitation' => $invitation->id, 'reason' => $e->getMessage()]);
+                $invitation->delete();
+
+                return redirect(config('fortify.home'))->dangerBanner(__('content.owner_invitation_no_longer_valid'));
+            }
 
             return redirect(config('fortify.home'))
                 ->banner(__('teams.accepted_invitation', ['team' => $invitation->team->name]));
