@@ -109,6 +109,23 @@ class ApiKeyRevocationTest extends TestCase
             && $request->url() === 'https://nlp.example/user/configs?' . http_build_query(['email' => $old]));
     }
 
+    public function test_any_email_change_revokes_once(): void
+    {
+        $user = $this->owner();
+        $old = $user->email;
+
+        // Not through the profile form: a sign-in provider or an admin tool.
+        $user->forceFill(['email' => 'new@acme.example'])->save();
+        app(UpdateUserProfileInformation::class)->update($user->refresh(), ['name' => $user->name, 'email' => 'newer@acme.example']);
+
+        $this->assertSame([
+            ['nlp.example', $old, null], ['second.example', $old, null],
+            ['nlp.example', 'new@acme.example', null], ['second.example', 'new@acme.example', null],
+        ], $this->revocations());
+        Http::assertSent(fn (Request $request) => $request->method() === 'DELETE'
+            && $request->url() === 'https://nlp.example/user/configs?' . http_build_query(['email' => $old]));
+    }
+
     public function test_email_case_change_keeps_keys(): void
     {
         $user = $this->owner();
