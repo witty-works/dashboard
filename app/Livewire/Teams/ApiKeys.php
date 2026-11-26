@@ -38,6 +38,9 @@ class ApiKeys extends Component
 
     public function render(NlpApiKeys $keys)
     {
+        // Every refresh too: an admin demoted meanwhile no longer sees the list.
+        Gate::authorize('updateTeamMember', $this->team);
+
         try {
             $list = collect($keys->forTeam($this->team));
             $unavailable = false;

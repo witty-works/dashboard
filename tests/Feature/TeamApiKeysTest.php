@@ -107,6 +107,20 @@ class TeamApiKeysTest extends TestCase
             && $request->url() === 'https://nlp.example/managed_keys/k1');
     }
 
+    public function test_demoted_admin_no_longer_sees_the_list(): void
+    {
+        $owner = $this->owner();
+        $admin = User::factory()->create();
+        $owner->currentTeam->users()->attach($admin, ['role' => 'admin']);
+        $this->fakeTeamKeys($owner->currentTeam);
+        $this->actingAs($admin);
+        $component = Livewire::test(ApiKeys::class, ['team' => $owner->currentTeam])->assertSee('member@acme.example');
+
+        $owner->currentTeam->users()->updateExistingPivot($admin->id, ['role' => 'user']);
+
+        $component->call('$refresh')->assertForbidden();
+    }
+
     public function test_admin_cannot_revoke_key_of_another_team(): void
     {
         $owner = $this->owner();
