@@ -244,14 +244,10 @@
 </div>
 </x-app-layout>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/0.7.0/chartjs-plugin-datalabels.min.js" rossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js" rossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/locale/de.js" rossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/locale/fr.js" rossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{{-- Chart and moment come from the app's bundle, which runs deferred: before DOMContentLoaded, after this page's inline script. --}}
+@vite('resources/js/analytics.js')
 
 <script>
-    moment.locale(@json(app()->getLocale()))
     let topSubChart;
     const setElementStyle = (elementId, property, value) => {
         const element = document.getElementById(elementId);
@@ -261,6 +257,12 @@
     };
 
     function load_charts(refresh, chartType = 'overview', timerange = '1m', interval = 'week', language = [], categories = [], inclusive = 'non_inclusive', eventTypes = null) {
+        // A tab or filter used before the chart bundle has run waits for it.
+        if (!window.Chart) {
+            const args = arguments;
+            document.addEventListener('DOMContentLoaded', () => load_charts(...args));
+            return;
+        }
         if (eventTypes === null) {
             eventTypes = [@json($default_event)]
         }
@@ -1090,7 +1092,7 @@
         load_charts(refresh, activeTab, selectedTimeRangeOption, interval, selectedLanguageOption, categories, selectedInclusiveOption, eventTypes);
     }
 
-    load_charts(false);
+    document.addEventListener('DOMContentLoaded', () => load_charts(false));
 
     //updateSection function
     function updateLastRefresh(lastRefresh = null) {
