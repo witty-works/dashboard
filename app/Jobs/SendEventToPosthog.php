@@ -40,13 +40,16 @@ class SendEventToPosthog implements ShouldQueue
                 PosthogHelper::POSTHOG_ORGANIZATION_TYPE => $team->posthogId()
             ];
         }
+        // Run before a deletion commits, it would recreate the deleted person.
+        $this->afterCommit();
     }
 
     public function handle()
     {
         $user = User::find($this->id);
         if (!$user instanceof User) {
-            throw new InvalidArgumentException("User id '{$this->id} does not exist.");
+            // Deleted since the event was queued; nothing to send.
+            return true;
         }
 
         if (!config('posthog.enabled')) {

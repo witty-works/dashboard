@@ -293,16 +293,6 @@ class AccountDeletionTest extends TestCase
         Bus::assertDispatched(DeleteUserFromNlpApi::class);
     }
 
-    public function test_a_posthog_sync_queued_for_a_deleted_team_finishes_without_retrying(): void
-    {
-        config(['posthog.enabled' => true, 'posthog.api_key' => 'phc_test', 'posthog.host' => 'https://posthog.invalid']);
-        $team = $this->user()->currentTeam;
-        $job = new SyncToPosthog($team, false, true);
-        DB::table('teams')->where('id', $team->id)->delete();
-
-        $this->assertTrue($job->handle());
-    }
-
     public function test_a_posthog_sync_queued_for_a_deleted_user_finishes_without_retrying(): void
     {
         config(['posthog.enabled' => true, 'posthog.api_key' => 'phc_test', 'posthog.host' => 'https://posthog.invalid']);

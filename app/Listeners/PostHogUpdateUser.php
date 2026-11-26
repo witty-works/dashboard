@@ -3,7 +3,9 @@
 namespace App\Listeners;
 
 use App\Events\AbstractSubscription;
+use App\Events\UserDeleted;
 use App\Helpers\PosthogHelper;
+use App\Jobs\DeletePersonFromPosthog;
 use App\Jobs\SendEventToPosthog;
 use App\Jobs\SyncToPosthog;
 use Laravel\Jetstream\Events\TeamMemberAdded;
@@ -12,6 +14,12 @@ class PostHogUpdateUser
 {
     public function handle($event)
     {
+        if ($event instanceof UserDeleted) {
+            dispatch(new DeletePersonFromPosthog($event->user));
+
+            return;
+        }
+
         if (!empty($event->user)) {
             dispatch(new SyncToPosthog($event->user));
         }
