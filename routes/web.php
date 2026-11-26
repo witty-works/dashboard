@@ -206,6 +206,7 @@ Route::middleware(['auth', 'can:' . config('admin.permission')])
     ->prefix(config('admin.prefix'))
     ->name('admin.')
     ->group(function () {
-        Route::redirect('/', '/' . config('admin.prefix') . '/users')->name('home');
+        Route::redirect('/', '/' . config('admin.prefix') . '/teams')->name('home');
+        Route::view('/teams', 'admin.teams')->name('teams');
         Route::view('/users', 'admin.users')->name('users');
     });
