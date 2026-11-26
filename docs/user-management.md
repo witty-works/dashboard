@@ -80,6 +80,32 @@ that address for the real invitee, because addresses are unique. The invitee
 gets the account back through "Forgot your password?", which proves the
 mailbox is theirs.
 
+## API keys
+
+People create API keys on "API keys" (`/user/api-keys`), for tools such as
+the Witty editor. The NLP API keeps the keys (its `/managed_keys` routes); the
+dashboard stores none and shows a new key once. The page needs a verified
+address and an NLP API endpoint with `APP_NLP_API_SYNC_CONFIGS` on; without
+an endpoint the menu entry is hidden.
+
+-   **A key belongs to a person and one of their teams.** It checks with that
+    team's settings and counts against the team's LLM requests per minute,
+    which superadmins set on `/admin/teams` and everyone sees on the page.
+-   **A key can expire,** on a date chosen when it is created, and can be
+    replaced: the new key keeps the name, team and expiry, and the old one
+    works for a day, a week or not at all, as chosen.
+-   **Team owners and admins** see their team's keys on the team page (whose,
+    which name, when) and can revoke them.
+-   **Keys are revoked** when their person leaves or is removed from the team,
+    when the team is deleted or handed over, when the account is deleted and
+    when the email address changes, since the API knows people by address.
+    The NLP API also refuses a key whose team its person is no longer in, so
+    a revocation that fails is caught by the next user sync.
+
+With a second endpoint (`APP_NLP_API_SYNC_ENDPOINT_2`), keys are created and
+listed on the first one and revoked on both, so both servers must share one
+Redis for keys to work on either.
+
 ## Impersonation
 
 Impersonation uses

@@ -88,6 +88,14 @@ Route::localize(
                 Route::get('/user/profile', [UserProfileController::class, 'show'])
                     ->name('profile.show');
 
+                // Keys kept by the NLP API, for a verified address only: the
+                // API knows people by address.
+                Route::get('/user/api-keys', function () {
+                    abort_unless(app(\App\Services\NlpApiKeys::class)->enabled(), 404);
+
+                    return view('api-keys');
+                })->middleware('verified')->name('api-keys');
+
                 Route::get('/user/mailing', [WelcomeController::class, 'mailingConsent'])
                     ->name('user.mailing_consent');
 

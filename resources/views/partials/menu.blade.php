@@ -161,6 +161,13 @@
             </span>
         </x-nav-link>
 
+        @if (app(\App\Services\NlpApiKeys::class)->enabled())
+        <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('api-keys') }}" :active="request()->routeIs('*api-keys')">
+            <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/editor.svg') }}" alt="" />
+            {{ __('content.api_keys_menu') }}
+        </x-nav-link>
+        @endif
+
         <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('academy') }}" :active="request()->routeIs('academy')">
             <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/bulb.svg') }}" alt="" />
             {{ __('content.academy') }}
