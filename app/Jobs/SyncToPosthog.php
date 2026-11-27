@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Jobs\Concerns\RetriesThroughOutages;
 use App\Helpers\PosthogHelper;
 use PostHog\PostHog;
 use App\Models\User;
@@ -17,13 +18,7 @@ use InvalidArgumentException;
 class SyncToPosthog implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
-    /**
-     * The number of times the job may be attempted.
-     *
-     * @var int
-     */
-    public $tries = 50;
+    use RetriesThroughOutages;
 
     protected $id;
     protected $model;

@@ -78,7 +78,9 @@ One image, with the role as the command (`docker/docker-entrypoint.sh`):
 | `migrate` | `migrate --force`, then exits |
 | anything else | as given, e.g. `php artisan superadmin:create you@example.com "Your Name"` |
 
-The worker's flags come from `QUEUE_TRIES` (3, for jobs that set no `$tries` of their own; the NLP API and PostHog jobs do), `QUEUE_BACKOFF` (10 seconds, likewise), `QUEUE_TIMEOUT` (120 seconds per job) and `QUEUE_MAX_TIME` (3600). After `QUEUE_MAX_TIME` the worker exits, and the container's restart policy starts a fresh one.
+The worker's flags come from `QUEUE_TRIES` (3) and `QUEUE_BACKOFF` (10 seconds), both for jobs without retry settings of their own, `QUEUE_TIMEOUT` (120 seconds per job) and `QUEUE_MAX_TIME` (3600). After `QUEUE_MAX_TIME` the worker exits, and the container's restart policy starts a fresh one.
+
+The jobs that call the NLP API or PostHog set their own: they retry after 1, 5, 15 and 30 minutes and then every hour, and fail for good only after a day (`App\Jobs\Concerns\RetriesThroughOutages`), so an outage of hours does not leave a deleted account's settings, keys or PostHog data behind. A job that fails for good lands in `failed_jobs`, and a mail goes to `SUPPORT_EMAIL` (at most one an hour).
 
 There is no scheduler role: `App\Console\Kernel` schedules nothing. The commands a deployment may want to run regularly are `nlp_api:sync` (resends every user and team config to the NLP API), `kpis`, `writing-streak-kpi`, `posthog:sync` and `statistics`; run them from the host's scheduler with the image, as `php artisan <command>`.
 
