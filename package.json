@@ -33,7 +33,7 @@
     },
     "dependencies": {
         "@witty-works/editor": "2.8.0",
-        "chart.js": "2.9.4",
+        "chart.js": "4.6.1",
         "chartjs-plugin-datalabels": "0.7.0",
         "moment": "2.31.0"
     }
