@@ -479,4 +479,8 @@ Please then go to "Register" again to finalize the registration into the "Witty 
     'chart_table_period' => 'Period',
     'chart_table_name' => 'Name',
     'chart_table_count' => 'Count',
+    'server_error_title' => 'Server error',
+    'server_error_message' => 'Something went wrong.',
+    'server_error_id' => 'Error ID: :id',
+    'server_error_quote' => 'Please quote it to :support.',
 ];

@@ -6,7 +6,7 @@ return [
     'language_code_label' => 'Dieser Begriff ist',
     'manage_organization_guidelines' => 'Organisationsrichtlinien verwalten',
     'manage_organization_guidelines_description' => 'Konfiguriere Witty so, dass es besser zum Schreibstil deines Teams passt.',
-    'german_gender_ending' => 'Witty empfielt die Nutzung des Gernderstar. Wir erklären <a href="https://be-hindernisse.org/2022/02/15/mythos-der-doppelpunkt-ist-perfekt-zum-entgendern/" target="_blank">hier</a> warum. In <a href="https://www.witty.works/de/blog/inklusiv-schreiben-auf-deutsch"  target="_blank">diesem Blogbeitrag</a> erklären wir alle Geschlechtsformen.',
+    'german_gender_ending' => 'Witty empfiehlt den Genderstern. Wir erklären <a href="https://be-hindernisse.org/2022/02/15/mythos-der-doppelpunkt-ist-perfekt-zum-entgendern/" target="_blank">hier</a> warum. In <a href="https://www.witty.works/de/blog/inklusiv-schreiben-auf-deutsch"  target="_blank">diesem Blogbeitrag</a> erklären wir alle Geschlechtsformen.',
     'list_false_positives' => 'Ignorierte Wörter',
     'both' => 'Das gewählte Gender-Trennzeichen und die weibliche und männliche Form vorschlagen',
     'preferred_variants_de_DE' => 'Deutsch (🇩🇪 Deutschland)',
@@ -87,7 +87,7 @@ Alle Wörter, die zu dieser Liste hinzufügst, werden von Witty hervorgehoben, u
     'team_analytics_description' => 'Team-Analysen ermöglichen es, Trends zu erkennen, wie dein Team Witty verwendet, um zu sehen, wo das Team hervorragend ist und wo mehr Arbeit in Richtung einer inklusiven Sprache und, was noch wichtiger ist, einer inklusiven Kultur erforderlich ist.',
     'team_analytics' => 'Team-Statistiken',
     'user_access_to_team_analytics' => 'Zugriff auf die Team-Statistik',
-    'user_access_to_team_analytics_description' => 'Sollten Nicht-Administratoren Zugriff auf Teamanalysen haben? Abhängig von deiner Teamkultur kann Transparenz hilfreich sein. Wenn du die Daten jedoch mit deinem Team teilst, stelle sicher, dass dieses die Daten richtig interpretiert werden können.',
+    'user_access_to_team_analytics_description' => 'Sollten Mitglieder ohne Adminrechte Zugriff auf Teamanalysen haben? Abhängig von deiner Teamkultur kann Transparenz hilfreich sein. Wenn du die Daten jedoch mit deinem Team teilst, stelle sicher, dass es sie richtig interpretieren kann.',
     'domain_error' => 'Es ist ein Fehler beim Speichern der URL aufgetreten. Bitte lade die Seite neu.',
     'false_positive_error' => 'Beim Speichern ist ein Fehler aufgetreten. Bitte lade die Seite neu.',
     'term_replacement_error' => 'Es ist ein Fehler beim Speichern im Wörterbuchwort aufgetreten. Bitte lade die Seite neu.',
@@ -136,7 +136,7 @@ Alle Wörter, die zu dieser Liste hinzufügst, werden von Witty hervorgehoben, u
     'llm_alternatives_headline' => 'Verwendung von Large-Language-Model',
     'llm_alternatives_description' => 'Durch das Aktivieren dieser Funktion kann Witty fortschrittliche KI-Tools nutzen, um die Funktionalität zu verbessern. Wir speichern keine Daten oder verwenden diese für Trainingszwecke, wie auf unserer Seite <a href="https://www.witty.works/trust-and-security">Vertrauen und Sicherheit</a> erläutert.
 
-Wenn diese Funktion aktiviert ist, verwendet Witty LLMs (Large-Language-Models), um grammatikalisch korrekte Alternativen zu generieren. Wenn Sie diese Funktion deaktivieren, müssen Benutzer*innen die Alternativen grammatikalisch selbst anpassen.
+Wenn diese Funktion aktiviert ist, verwendet Witty LLMs (Large-Language-Models), um grammatikalisch korrekte Alternativen zu generieren. Wenn du diese Funktion deaktivierst, müssen Benutzer*innen die Alternativen grammatikalisch selbst anpassen.
 
 LLMs werden auch für Witty GPT verwendet, unsere GenerativeAI-Lösung, die inklusivere Inhalte erstellt. Witty GPT überprüft deine Prompts auf Vorurteile und stellt sicher, dass die Sprache im Ergebnis inklusiv ist.',
     'llm_alternatives' => 'Verwendung von LLM zulassen',
@@ -151,7 +151,7 @@ LLMs werden auch für Witty GPT verwendet, unsere GenerativeAI-Lösung, die inkl
     'french_gender_separator_point_s' => 'Punkt, inkl. Mehrzahl, z.B. expert.e.s',
     'french_gender_separator_barre_oblique' => 'Schrägstrich, z.B. expert/es',
     'french_gender_separator_barre_oblique_s' => 'Schrägstrich, inkl. Mehrzahl, z.B. expert/e/s',
-    'germam_gender_separator_genderstar' => 'Genderstar, f.e Expert*in',
+    'germam_gender_separator_genderstar' => 'Genderstern, z. B. Expert*in',
     'germam_gender_separator_colon' => 'Doppelpunkt, z. B. Expert:in',
     'germam_gender_separator_gendergap' => 'Gendergap, z.B. Experte_in',
     'germam_gender_separator_slash' => 'Schrägstrich, z.B. Expert/in',
@@ -160,7 +160,7 @@ LLMs werden auch für Witty GPT verwendet, unsere GenerativeAI-Lösung, die inkl
     'germam_gender_separator_parenthesis_dash' => 'Klammern + Strich, z.B. Expert(-in)',
     'germam_gender_separator_parenthesis' => 'Klammern, z.B. Expert(in)',
     'germam_gender_separator_inklusivum' => 'Inklusivum, z.B. de Expertere',
-    'french_gender_separator' => 'Witty empfielt die Nutzung des \'Punkt Médian\'. Wir erklären <a href="https://www.witty.works/fr/blog/post/langage-non-genr%C3%A9-en-fran%C3%A7ais" target="_blank">hier</a> warum.',
+    'french_gender_separator' => 'Witty empfiehlt den Point médian. Wir erklären <a href="https://www.witty.works/fr/blog/post/langage-non-genr%C3%A9-en-fran%C3%A7ais" target="_blank">hier</a> warum.',
     'german_gender_ending_label' => 'Gender-Endung',
     'french_gender_separator_label' => 'Gender-Trennzeichen',
     'french_gender_suffix_short' => 'Kurze Endung, z. B. utilisateur·rice, vendeur·se',

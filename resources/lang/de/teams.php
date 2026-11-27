@@ -30,7 +30,7 @@ return [
     'total_of_max_used_dictionary' => '[0,998] :total von :max_count möglichen Einträgen in das Team-Wörterbuch wurden erstellt|[999,*] :total von unlimitiert möglichen Einträgen in das Team-Wörterbuch wurden erstellt
 ',
     'total_of_max_used_ignored' => '[0,998] :total von :max_count möglichen Einträgen in die Liste ignorierter Wörter wurden erstellt |[999,*]:total von unlimitierten möglichen Einträgen in die Liste ignorierter Wörter wurden erstellt ',
-    'locked_by_team' => 'Diese Einstellung wurde von deinen Team-Administratoren gesperrt.',
+    'locked_by_team' => 'Diese Einstellung wurde von der Administration deines Teams gesperrt.',
     'license_count_error' => 'Beim Aktualisieren der Lizenzanzahl ist ein Fehler aufgetreten.',
     'license_count_too_small_error' => 'Bitte erhöhe die Anzahl der Lizenzen oder entferne Personen aus dem Team.',
     'license_count_label' => 'Lizenzanzahl',
