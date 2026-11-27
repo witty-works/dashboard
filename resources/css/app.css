@@ -1190,9 +1190,10 @@ input:checked+.slider:before {
     left: 50%;
 }
 
+/* WCAG 1.4.11: gray-500, 4.8:1 on white; gray-300 was 1.5:1. */
 .checkbox-wrapper {
     background-color: #ffffff;
-    border: 1px solid rgb(209, 213, 219);
+    border: 1px solid #6b7280;
     border-radius: 8px;
     padding: 5px 10px;
     display: flex;
