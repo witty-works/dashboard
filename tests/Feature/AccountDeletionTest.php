@@ -141,6 +141,18 @@ class AccountDeletionTest extends TestCase
         $this->assertModelExists($user);
     }
 
+    public function test_the_confirmation_link_is_queued_in_the_persons_language(): void
+    {
+        Mail::fake();
+        $user = $this->passwordless();
+        $user->forceFill(['language' => 'fr'])->save();
+        app()->setLocale('en');
+
+        $this->deleteForm($user)->call('deleteUser')->assertHasNoErrors();
+
+        Mail::assertQueued(ConfirmAccountDeletion::class, fn ($mail) => $mail->locale === 'fr');
+    }
+
     public function test_the_confirmation_link_is_sent_at_most_once_a_minute(): void
     {
         Mail::fake();

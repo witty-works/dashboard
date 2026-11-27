@@ -11,6 +11,7 @@ use App\Events\UserUpdated;
 use App\Http\Controllers\OAuthController;
 use App\Jobs\SyncUserToNlpApi;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Translation\HasLocalePreference;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -24,7 +25,7 @@ use Laravel\Jetstream\Jetstream;
 use Laravel\Passport\HasApiTokens;
 use Laravel\Jetstream\Role;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail, HasLocalePreference
 {
     // Passport's trait, not Sanctum's. Sanctum is still the guard for the
     // session-backed SPA requests, but it only reaches for this trait when a
@@ -91,6 +92,18 @@ class User extends Authenticatable implements MustVerifyEmail
         'two_factor_confirmed_at' => 'datetime',
         'team_analytics' => 'boolean',
     ];
+
+    /**
+     * The language mails and notifications to this person are written in:
+     * the one they last used the dashboard in, also when the mail is sent
+     * from the queue. Null leaves the current language.
+     */
+    public function preferredLocale(): ?string
+    {
+        $language = $this->language;
+
+        return in_array($language, config('localizer.supported_locales'), true) ? $language : null;
+    }
 
     public function setNameAttribute($name)
     {
