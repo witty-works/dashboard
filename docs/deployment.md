@@ -28,7 +28,7 @@ and the NLP API's own documentation for the API.
 ## Services a deployment runs
 
 -   **The dashboard image** (`ghcr.io/witty-works/dashboard`) as three roles: `web` (plain HTTP on port 8080), `worker` (the queue) and `migrate` (once per release). See [Roles](docker.md#roles).
--   **MariaDB** for the dashboard: accounts, teams, settings, sessions, the queue.
+-   **MariaDB** for the dashboard: accounts, teams, settings, sessions, the queue. Laravel 13 supports [MariaDB 10.3 or later](https://laravel.com/docs/13.x/database); the tests run against 10.5.
 -   **The [NLP API](https://github.com/witty-works/nlp_api)** with its **Redis**. The dashboard writes each user's and team's settings into the API, and the API keeps the API keys people create on the dashboard.
 -   **A reverse proxy** in front of both, terminating TLS. The dashboard and the API each get a public `https` address of their own.
 -   **An SMTP service** for invitations, password resets and address verification.

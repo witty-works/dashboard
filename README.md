@@ -253,7 +253,7 @@ PostHog collects the statistics the Witty client applications (browser extension
 -   `POSTHOG_PERSONAL_API_KEY` — Personal API key for PostHog. Besides reading insights, it asks PostHog to delete the person, events and session recordings of a deleted account; PostHog removes them in the background. That needs the `person:write` scope, so use a key limited to this project. Without the key or `POSTHOG_PROJECT_ID`, a deletion logs an error naming the person to delete by hand.
 -   `POSTHOG_INSIGHTS_CACHE_TIME` — Cache time for insights (seconds)
 -   `POSTHOG_DASHBOARD_USER_ID` — Dashboard user ID override, for local development only: every user then reports as this one PostHog person, and deleting an account leaves PostHog alone
--   `POSTHOG_DASHBOARD_TEAM_ID` — Dashboard team ID override, for local development only: every team then reports as this one group, and deleting a team leaves it alone
+-   `POSTHOG_DASHBOARD_TEAM_ID` — Dashboard team ID override, for local development only: every team then reports as this one group, and deleting a team leaves it alone. It is also the team id the NLP API sees, so every team's settings go to one organisation there, its API keys are listed together, and deleting any team revokes them all
 -   `POSTHOG_RATE_LIMIT` — API rate limit (default: 16)
 -   `POSTHOG_RATE_INTERVAL_SECONDS` — API rate interval in seconds (default: 60)
 -   `POSTHOG_RATE_MULTIPLIER` — API rate multiplier (default: 3)
