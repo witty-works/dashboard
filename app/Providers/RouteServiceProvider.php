@@ -48,6 +48,9 @@ class RouteServiceProvider extends ServiceProvider
             // registered before the localized groups in routes/web.php.
             Route::group([], base_path('routes/wellknown.php'));
 
+            // /up, for the container and the proxy; no session, no locale.
+            Route::group([], base_path('routes/health.php'));
+
             Route::prefix('api')
                 ->middleware('api')
                 ->namespace($this->namespace)
