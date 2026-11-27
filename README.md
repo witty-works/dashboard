@@ -94,6 +94,7 @@ PHPUnit sees markup; what only a rendered page shows is checked in Chromium with
 -   **No WCAG 2.2 A or AA violation axe can detect** on the guest pages and the main signed-in pages. Embedded players (the academy's YouTube videos) are left out, as their markup is the provider's.
 -   **Keyboard and focus:** the skip link is the first stop, visible above the sidebar, and leads to the main content; "Edit" in a list moves focus to the field it fills.
 -   **Reflow:** the pages do not scroll sideways at 320px.
+-   **The analytics page,** with canned data instead of PostHog's: axe once the charts are drawn, the legend's checkboxes by keyboard, the charts' data tables, and the refresh button that keeps focus.
 -   **No console errors or uncaught exceptions,** which includes anything the Content-Security-Policy blocks.
 
 CI runs them in their own job. To run them locally, against the `testing` database (a PHPUnit run empties it again):

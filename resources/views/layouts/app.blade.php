@@ -52,9 +52,8 @@
                     {{ $slot }}
                 </main>
             @else
-                {{-- Pages without the navigation slot. The analytics page still
-                     puts the navigation and its own #maincontent inside. --}}
-                <main @unless (str_contains((string) $slot, 'id="maincontent"')) id="maincontent" @endunless>
+                {{-- Pages without the navigation slot. --}}
+                <main id="maincontent">
                     {{ $slot }}
                 </main>
             @endisset

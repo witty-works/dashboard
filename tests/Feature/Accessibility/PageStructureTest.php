@@ -118,6 +118,8 @@ class PageStructureTest extends TestCase
             'team ignored words' => ['/team/language/ignored-words'],
             'personal privacy settings' => ['/user/language/privacy-settings'],
             'team language settings' => ['/team/language/language-settings'],
+            'personal analytics' => ['/user/analytics'],
+            'team analytics' => ['/team/analytics'],
         ];
     }
 
@@ -144,13 +146,11 @@ class PageStructureTest extends TestCase
         $this->assertLessThan(strpos($html, '<nav'), strpos($html, 'class="skip-link"'));
     }
 
-    public function test_the_analytics_page_keeps_one_skip_link_and_target(): void
+    public function test_the_analytics_page_starts_its_main_content_with_its_h1(): void
     {
-        // It still brings its own navigation and #maincontent, inside <main>.
-        $html = $this->actingAs($this->signedInUser())->withoutLocaleRedirects()->get('/user/analytics')->assertOk()->getContent();
+        $main = $this->main($this->actingAs($this->signedInUser())->withoutLocaleRedirects()->get('/user/analytics')->assertOk()->getContent());
 
-        $this->assertSame(1, substr_count($html, 'class="skip-link"'));
-        $this->assertSame(1, substr_count($html, 'id="maincontent"'));
+        $this->assertMatchesRegularExpression('/^\s*<div class="wittyworks-page[^"]*">\s*<h1\b/', $main);
     }
 
     public function test_the_menu_button_is_hidden_where_the_full_menu_shows(): void
