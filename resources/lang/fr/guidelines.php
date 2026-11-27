@@ -115,7 +115,7 @@ Witty surlignera tous les mots ajoutés à cette liste et suggérera vos alterna
     'advanced_toggle_title' => 'Définissez votre niveau de compétence',
     'advanced_toggle_description' => 'Avec Witty Teams, vous avez le choix entre trois niveaux de compétence pour de nombreuses catégories :',
     'advanced_toggle_advice' => 'Cela vous permet d\'adapter Witty à vos besoins et vos priorités.',
-    'advanced_toggle_disclaimer' => '<span style="color:#f06464">Nous recommandons de choisir le niveau de base au début.</span>',
+    'advanced_toggle_disclaimer' => '<span style="color:#b91c1c">Nous recommandons de choisir le niveau de base au début.</span>',
     'advanced_toggle_example' => 'Pour comprendre ce que cela signifie, prenons un exemple : la catégorie « <a href="https://www.witty.works/en/categories/ability-physicality/vision" target="_blank">vision »</a>. Au niveau de base, l\'expression <i>« fermer les yeux sur »</i> sera surlignée. Au niveau avancé, même les préjugés inconscients les plus subtils, comme le mot <i>« éclairé »</i>, seront surlignés.',
     'toggle_advanced_vs' => 'Niveau de base ou avancé',
     'proficiency_level_off' => 'Désactivé',
