@@ -473,4 +473,9 @@ Please then go to "Register" again to finalize the registration into the "Witty 
     'office_consent_without_documents' => 'I want an account for this address.',
     'api_keys_grace_for' => 'Grace period for :name',
     'make_owner_of' => 'Make :name the owner',
+    'chart_data_table' => 'Show the data as a table',
+    'chart_lines' => 'Lines shown',
+    'chart_table_period' => 'Period',
+    'chart_table_name' => 'Name',
+    'chart_table_count' => 'Count',
 ];

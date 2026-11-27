@@ -810,13 +810,56 @@ input:checked+.slider:before {
 }
 
 /* ANALYTICS */
+.chart-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.25rem;
+    width: 100%;
+    margin-bottom: 0.5rem;
+}
+
+.chart-legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    cursor: pointer;
+}
+
+.chart-data {
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.chart-data summary {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.chart-data-table {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.chart-data-table table {
+    border-collapse: collapse;
+    margin-top: 0.5rem;
+}
+
+.chart-data-table th,
+.chart-data-table td {
+    border: 1px solid #6b7280;
+    padding: 0.25rem 0.5rem;
+    text-align: left;
+}
+
 .wittyworks-analytics-chart-extra-large {
+    max-width: 100%;
     max-height: 600px;
     min-height: 500px;
 }
 
 .wittyworks-analytics-chart-top-categories {
-    max-width: 75%;
+    max-width: 100%;
     max-height: 500px;
     min-height: 300px;
 }
@@ -991,6 +1034,7 @@ input:checked+.slider:before {
 
 .drowdown-wrapper {
     white-space: nowrap;
+    max-width: 100%;
 }
 
 .link-box {
@@ -1144,13 +1188,16 @@ input:checked+.slider:before {
 
 .drowdown-wrapper {
     white-space: nowrap;
+    max-width: 100%;
 }
 
 .dropdown {
     position: relative;
     display: inline-block;
     border-radius: 8px;
-    min-width: 220px;
+    /* No wider than a 320px screen (WCAG 1.4.10). */
+    min-width: min(220px, 100%);
+    max-width: 100%;
     cursor: pointer;
 }
 
@@ -1194,7 +1241,8 @@ input:checked+.slider:before {
 .analytics-tab-line {
     position: absolute;
     content: '';
-    border-bottom: 3px solid #9489db;
+    /* 5:1 against the page's #f5f5f5 (WCAG 1.4.11). */
+    border-bottom: 3px solid #6357cc;
     width: 100%;
     transform: translateX(-50%);
     bottom: -1em;
@@ -1243,6 +1291,11 @@ label {
 }
 
 .ajax-link {
+    display: none;
+}
+
+/* Closed until its button opens it, whatever the colour scheme. */
+.checkboxes {
     display: none;
 }
 
@@ -1362,4 +1415,21 @@ label {
         -webkit-transition: none;
         transition: none;
     }
+}
+
+/* After the .drowdown-wrapper rules it overrides. On a narrow screen a filter's label and select may wrap (WCAG 1.4.10). */
+@media (max-width: 480px) {
+    .drowdown-wrapper {
+        white-space: normal;
+    }
+
+    .drowdown-wrapper .dropdown {
+        margin-right: 0;
+    }
+}
+
+/* The hidden attribute wins over .button's display: flex, which comes later
+   than Tailwind's [hidden] rule at the same specificity. */
+.button[hidden] {
+    display: none;
 }
