@@ -27,6 +27,23 @@
 
             <x-input-error for="french_gender_separator" class="mt-2" />
         </div>
+
+        <div class="margin-bottom">
+            {{ __('guidelines.french_gender_suffix') }}
+        </div>
+
+        <div class="margin-bottom flex flex-row mb-5">
+            <x-select id="french_gender_suffix"
+                :options="\App\Models\GuidelinesInterface::FRENCH_GENDER_SUFFIX"
+                class="guidelines-form-section-dropdown"
+                wire:model="french_gender_suffix"
+                :disabled="$disabled"
+                aria-label="{{ __('guidelines.french_gender_suffix_label') }}"
+                error="french_gender_suffix"
+            />
+
+            <x-input-error for="french_gender_suffix" class="mt-2" />
+        </div>
     </x-slot>
 
     <x-slot name="actions">

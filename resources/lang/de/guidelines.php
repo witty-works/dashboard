@@ -163,4 +163,8 @@ LLMs werden auch für Witty GPT verwendet, unsere GenerativeAI-Lösung, die inkl
     'french_gender_separator' => 'Witty empfielt die Nutzung des \'Punkt Médian\'. Wir erklären <a href="https://www.witty.works/fr/blog/post/langage-non-genr%C3%A9-en-fran%C3%A7ais" target="_blank">hier</a> warum.',
     'german_gender_ending_label' => 'Gender-Endung',
     'french_gender_separator_label' => 'Gender-Trennzeichen',
+    'french_gender_suffix_short' => 'Kurze Endung, z. B. utilisateur·rice, vendeur·se',
+    'french_gender_suffix_full' => 'Vollständige Endung, z. B. utilisateur·trice, vendeur·euse',
+    'french_gender_suffix' => 'Wähle, ob die weibliche Endung kurz oder vollständig geschrieben wird, wo beides geht: utilisateur·rice oder utilisateur·trice. Andere Formen wie enseignant·e bleiben gleich.',
+    'french_gender_suffix_label' => 'Weibliche Endung',
 ];
