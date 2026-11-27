@@ -15,5 +15,22 @@
     "Verify your email address": "Vérifiez votre adresse e-mail",
     "Please click the button below to verify your email address.": "Cliquez sur le bouton ci-dessous pour confirmer votre adresse e-mail.",
     "Verify Email Address": "Confirmer l’adresse e-mail",
-    "If you did not create an account, no further action is required.": "Si vous n’avez pas créé de compte, vous n’avez rien à faire."
+    "If you did not create an account, no further action is required.": "Si vous n’avez pas créé de compte, vous n’avez rien à faire.",
+    "Email": "E-mail",
+    "Password": "Mot de passe",
+    "Confirm Password": "Confirmer le mot de passe",
+    "Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.": "Mot de passe oublié ? Aucun problème. Indiquez votre adresse e-mail et nous vous enverrons un lien pour en choisir un nouveau.",
+    "Email Password Reset Link": "Envoyer le lien de réinitialisation",
+    "Before continuing, could you verify your email address by clicking on the link we just emailed to you? If you didn't receive the email, we will gladly send you another.": "Avant de continuer, veuillez confirmer votre adresse e-mail en cliquant sur le lien que nous venons de vous envoyer. Si vous n’avez pas reçu l’e-mail, nous vous en enverrons volontiers un autre.",
+    "A new verification link has been sent to the email address you provided in your profile settings.": "Un nouveau lien de confirmation a été envoyé à l’adresse e-mail de votre profil.",
+    "Resend Verification Email": "Renvoyer l’e-mail de confirmation",
+    "Log Out": "Se déconnecter",
+    "Update Password": "Modifier le mot de passe",
+    "Ensure your account is using a long, random password to stay secure.": "Utilisez un mot de passe long et aléatoire pour que votre compte reste sûr.",
+    "Current Password": "Mot de passe actuel",
+    "New Password": "Nouveau mot de passe",
+    "Saved.": "Enregistré.",
+    "Save": "Enregistrer",
+    "Server Error": "Erreur du serveur",
+    "The provided password does not match your current password.": "Ce mot de passe ne correspond pas à votre mot de passe actuel."
 }

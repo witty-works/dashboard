@@ -37,6 +37,7 @@ return [
     'use_an_authentication_code' => 'Use an authentication code',
     'log_in' => 'Login',
     'register' => 'Sign up',
+    'not_yet_registered' => 'No account yet?',
     'resend_verification_email' => 'Resend Verification Email',
     'log_out' => 'Log Out',
     'dashboard' => 'Dashboard',

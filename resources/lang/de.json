@@ -15,5 +15,22 @@
     "Verify your email address": "Bestätige deine E-Mail-Adresse",
     "Please click the button below to verify your email address.": "Klicke auf die Schaltfläche, um deine E-Mail-Adresse zu bestätigen.",
     "Verify Email Address": "E-Mail-Adresse bestätigen",
-    "If you did not create an account, no further action is required.": "Falls du kein Konto erstellt hast, musst du nichts tun."
+    "If you did not create an account, no further action is required.": "Falls du kein Konto erstellt hast, musst du nichts tun.",
+    "Email": "E-Mail",
+    "Password": "Passwort",
+    "Confirm Password": "Passwort bestätigen",
+    "Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.": "Passwort vergessen? Kein Problem. Gib deine E-Mail-Adresse ein, und wir schicken dir einen Link, mit dem du ein neues Passwort wählen kannst.",
+    "Email Password Reset Link": "Link zum Zurücksetzen senden",
+    "Before continuing, could you verify your email address by clicking on the link we just emailed to you? If you didn't receive the email, we will gladly send you another.": "Bitte bestätige zuerst deine E-Mail-Adresse über den Link, den wir dir gerade geschickt haben. Falls keine E-Mail angekommen ist, schicken wir dir gern eine neue.",
+    "A new verification link has been sent to the email address you provided in your profile settings.": "Wir haben einen neuen Bestätigungslink an die E-Mail-Adresse in deinem Profil geschickt.",
+    "Resend Verification Email": "Bestätigungs-E-Mail erneut senden",
+    "Log Out": "Abmelden",
+    "Update Password": "Passwort ändern",
+    "Ensure your account is using a long, random password to stay secure.": "Verwende ein langes, zufälliges Passwort, damit dein Konto sicher bleibt.",
+    "Current Password": "Aktuelles Passwort",
+    "New Password": "Neues Passwort",
+    "Saved.": "Gespeichert.",
+    "Save": "Speichern",
+    "Server Error": "Serverfehler",
+    "The provided password does not match your current password.": "Das Passwort stimmt nicht mit deinem aktuellen Passwort überein."
 }
