@@ -41,6 +41,16 @@ class FormComponentsRenderTest extends TestCase
         }
     }
 
+    #[DataProvider('guestPages')]
+    public function test_guest_pages_load_the_vite_build(string $url, array $ids): void
+    {
+        $html = $this->withoutLocaleRedirects()->get($url)->getContent();
+
+        // mix() points at files the Vite build does not make.
+        $this->assertStringNotContainsString('/css/app.css', $html);
+        $this->assertStringNotContainsString('/js/app.js', $html);
+    }
+
     public function test_a_field_with_an_error_is_marked_and_described(): void
     {
         $html = $this->withoutLocaleRedirects()
