@@ -7,6 +7,7 @@ use App\Mail\TeamInvitation as TeamInvitationMail;
 use App\Models\Team;
 use App\Models\TeamInvitation;
 use App\Models\User;
+use App\Support\SuperadminTwoFactor;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\ValidationException;
@@ -32,6 +33,15 @@ class Teams extends Component
 
     /** @var array<int, string> the owner address field of each team, by team id */
     public array $ownerEmail = [];
+
+    /**
+     * Every request, not only the first: an update request renders the page
+     * again from a snapshot, which is signed but not tied to the session.
+     */
+    public function boot(): void
+    {
+        $this->authorizeSuperadmin();
+    }
 
     public function mount(): void
     {
@@ -158,6 +168,11 @@ class Teams extends Component
 
     private function authorizeSuperadmin(): void
     {
-        abort_unless(auth()->user()?->can(config('admin.permission')), 403);
+        // Livewire's update requests do not run the page's two-factor
+        // middleware, so the requirement is checked here as well.
+        abort_unless(
+            auth()->user()?->can(config('admin.permission')) && SuperadminTwoFactor::passes(auth()->user()),
+            403
+        );
     }
 }

@@ -10,6 +10,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Livewire\Livewire;
 use PHPUnit\Framework\Attributes\DataProvider;
+use Tests\Concerns\UsesTwoFactor;
 use Tests\TestCase;
 
 /**
@@ -20,6 +21,7 @@ use Tests\TestCase;
 class UsersPageTest extends TestCase
 {
     use RefreshDatabase;
+    use UsesTwoFactor;
 
     private function user(array $attributes = []): User
     {
@@ -31,11 +33,13 @@ class UsersPageTest extends TestCase
 
     private function superadmin(array $attributes = []): User
     {
-        return tap($this->user($attributes))->assignRole(config('admin.role'));
+        return $this->superadminWithTwoFactor($this->user($attributes));
     }
 
     private function page(User $actor)
     {
+        $this->verifyTwoFactorSession($actor);
+
         return Livewire::actingAs($actor)->test(Users::class);
     }
 

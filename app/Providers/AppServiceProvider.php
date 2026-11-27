@@ -29,6 +29,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // After Jetstream's own registration (JetstreamServiceProvider::boot).
+        $this->app->booted(function () {
+            \Livewire\Livewire::component('profile.two-factor-authentication-form', \App\Livewire\Profile\TwoFactorAuthenticationForm::class);
+        });
+
         if (config('posthog.enabled')) {
             PostHog::init(
                 config('posthog.api_key'),

@@ -14,13 +14,17 @@ use Throwable;
 /**
  * The way into a deployment whose sign-up is closed (INVITE_ONLY): run on
  * the server, it creates a verified superadmin and mails them a link to set
- * a password, or makes an existing account a superadmin.
+ * a password, or makes an existing account a superadmin. Superadmins must
+ * use two-factor sign-in: on first visiting /admin they are sent to set it
+ * up on their profile page.
  */
 class CreateSuperadminCommand extends Command
 {
     protected $signature = 'superadmin:create {email} {name}';
 
     protected $description = 'Create a superadmin, or make an existing account one';
+
+    private const TWO_FACTOR_NOTICE = 'Before using /admin or impersonating, they must set up two-factor sign-in on their profile page; they are sent there on first visiting /admin.';
 
     public function handle(): int
     {
@@ -49,6 +53,9 @@ class CreateSuperadminCommand extends Command
 
             $user->assignRole(config('admin.role'));
             $this->info("{$user->email} is now a superadmin.");
+            if (! $user->hasEnabledTwoFactorAuthentication()) {
+                $this->line(self::TWO_FACTOR_NOTICE);
+            }
 
             return self::SUCCESS;
         }
@@ -78,6 +85,7 @@ class CreateSuperadminCommand extends Command
         }
 
         $this->info("Created superadmin {$email} and mailed a link to set a password.");
+        $this->line(self::TWO_FACTOR_NOTICE);
 
         return self::SUCCESS;
     }

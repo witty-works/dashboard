@@ -19,7 +19,11 @@
                 @livewire('profile.update-password-form')
             @endif
 
-            @if (Laravel\Fortify\Features::canManageTwoFactorAuthentication())
+            {{-- It applies to signing in with a password, which Word add-in
+                 users do not do; superadmins need it wherever they are. --}}
+            @if (Laravel\Fortify\Features::canManageTwoFactorAuthentication()
+                && (Session::get(\App\Http\Controllers\OAuthController::LOGIN_SOURCE) !== \App\Http\Controllers\OAuthController::OFFICE_PROVIDER
+                    || \App\Support\SuperadminTwoFactor::applies($user)))
                 <x-section-border />
 
                 @livewire('profile.two-factor-authentication-form')

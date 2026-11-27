@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+
 use App\Actions\Fortify\CreateNewUser;
 use App\Actions\Fortify\ResetUserPassword;
 use App\Actions\Fortify\UpdateUserProfileInformation;
@@ -62,6 +63,11 @@ class FortifyServiceProvider extends ServiceProvider
 
         RateLimiter::for('two-factor', function (Request $request) {
             return Limit::perMinute(5)->by($request->session()->get('login.id'));
+        });
+
+        // The code a signed-in superadmin enters before /admin.
+        RateLimiter::for('two-factor-verify', function (Request $request) {
+            return Limit::perMinute(5)->by($request->user()?->getAuthIdentifier() ?: $request->ip());
         });
     }
 }

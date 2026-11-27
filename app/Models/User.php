@@ -88,6 +88,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'two_factor_confirmed_at' => 'datetime',
         'team_analytics' => 'boolean',
     ];
 
@@ -159,12 +160,15 @@ class User extends Authenticatable implements MustVerifyEmail
 
     /**
      * Only superadmins may sign in as another user: the permission that
-     * opens the admin pages (config admin.permission). The package's
-     * default lets every user sign in as anyone.
+     * opens the admin pages (config admin.permission), with two-factor
+     * sign-in confirmed. The package's default lets every user sign in as
+     * anyone. The impersonation routes also ask for a code if the session
+     * has not seen one (EnsureSuperadminTwoFactor).
      */
     public function canImpersonate()
     {
-        return $this->can(config('admin.permission'));
+        return $this->can(config('admin.permission'))
+            && $this->hasEnabledTwoFactorAuthentication();
     }
 
     /**
