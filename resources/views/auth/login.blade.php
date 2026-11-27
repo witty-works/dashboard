@@ -17,12 +17,12 @@
 
             <div>
                 <x-label for="email" value="{{ __('content.email') }}" />
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" @error('email') aria-invalid="true" aria-describedby="email-error" @enderror />
+                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" error="email" />
             </div>
 
             <div class="mt-4">
                 <x-label for="password" value="{{ __('content.password') }}" />
-                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" @error('password') aria-invalid="true" aria-describedby="password-error" @enderror />
+                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" error="password" />
             </div>
 
             <div class="block mt-4 flex items-center">

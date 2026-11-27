@@ -27,7 +27,7 @@
                     wire:model="preferred_variants_en"
                     :disabled="\App\Models\LanguageGuidelines::isForcedOnTeam($model, 'preferred_variants')"
                     aria-label="{{ __('guidelines.user_preferred_variants_dialect') }} {{ __('content.en') }}"
-                    @error('preferred_variants_en') aria-invalid="true" aria-describedby="preferred_variants_en-error" @enderror
+                    error="preferred_variants_en"
                 />
                 <x-input-error for="preferred_variants_en" class="mt-2" role="alert" />
             </div>
@@ -46,7 +46,7 @@
                     wire:model="preferred_variants_de"
                     :disabled="\App\Models\LanguageGuidelines::isForcedOnTeam($model, 'preferred_variants')"
                     aria-label="{{ __('guidelines.user_preferred_variants_dialect') }} {{ __('content.de') }}"
-                    @error('preferred_variants_de') aria-invalid="true" aria-describedby="preferred_variants_de-error" @enderror
+                    error="preferred_variants_de"
                 />
                 <x-input-error for="preferred_variants_de" class="mt-2" role="alert" />
             </div>
@@ -66,7 +66,7 @@
                     wire:model="preferred_variants_fr"
                     :disabled="\App\Models\LanguageGuidelines::isForcedOnTeam($model, 'preferred_variants')"
                     aria-label="{{ __('guidelines.user_preferred_variants_dialect') }} {{ __('content.fr') }}"
-                    @error('preferred_variants_fr') aria-invalid="true" aria-describedby="preferred_variants_fr-error" @enderror
+                    error="preferred_variants_fr"
                 />
                 <x-input-error for="preferred_variants_fr" class="mt-2" role="alert" />
             </div>

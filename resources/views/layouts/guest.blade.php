@@ -14,11 +14,10 @@
 
         <!-- Styles -->
         <link rel="icon" type="image/webp" href="{{ URL::asset('/witty-icon-color-inverted@2x-1.webp') }}"/>
-        <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 
         <!-- Scripts -->
         @include('partials/sentry')
-        <script src="{{ mix('js/app.js') }}" defer></script>
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
         @include('partials/detect_browser')
         <!-- Styles -->
         @livewireStyles

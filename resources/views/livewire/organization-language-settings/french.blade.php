@@ -22,7 +22,7 @@
                 wire:model="french_gender_separator"
                 :disabled="$disabled"
                 aria-label="{{ __('guidelines.french_gender_separator_label') }}"
-                @error('french_gender_separator') aria-invalid="true" aria-describedby="french_gender_separator-error" @enderror
+                error="french_gender_separator"
             />
 
             <x-input-error for="french_gender_separator" class="mt-2" />

@@ -11,22 +11,22 @@
 
             <div>
                 <x-label for="name" value="{{ __('content.name') }}" />
-                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" @error('name') aria-invalid="true" aria-describedby="name-error" @enderror />
+                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" error="name" />
             </div>
 
             <div class="mt-4">
                 <x-label for="email" value="{{ __('content.email') }}" />
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" @error('email') aria-invalid="true" aria-describedby="email-error" @enderror />
+                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" error="email" />
             </div>
 
             <div class="mt-4">
                 <x-label for="password" value="{{ __('content.password') }}" />
-                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" @error('password') aria-invalid="true" aria-describedby="password-error" @enderror />
+                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" error="password" />
             </div>
 
             <div class="mt-4">
                 <x-label for="password_confirmation" value="{{ __('content.confirm_password') }}" />
-                <x-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" @error('password_confirmation') aria-invalid="true" aria-describedby="password_confirmation-error" @enderror />
+                <x-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" error="password_confirmation" />
             </div>
 
             @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())

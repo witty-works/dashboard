@@ -26,7 +26,7 @@
                     wire:model="domain"
                     autocomplete="off"
                     aria-autocomplete="none"
-                    @error('domain') aria-invalid="true" aria-describedby="domain-error" @enderror
+                    error="domain"
                 />
 
                 <x-input-error for="domain" class="mt-2" />

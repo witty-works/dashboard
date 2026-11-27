@@ -16,7 +16,7 @@
                 :label="__('teams.confirm_before_checking')"
                 :disabled="Auth::user()->hasTeamPermission($model, 'update') ? false : 'locked'"
                 aria-label="{{ __('teams.confirm_before_checking') }}"
-                @error('confirm_before_checking') aria-invalid="true" aria-describedby="confirm_before_checking-error" @enderror
+                error="confirm_before_checking"
             />
 
             <x-input-error for="confirm_before_checking" class="mt-2" />

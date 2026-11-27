@@ -24,7 +24,7 @@
                 class="mt-1 block w-full"
                 wire:model="state.name"
                 autofocus
-                @error('name') aria-invalid="true" aria-describedby="name-error" @enderror
+                error="name"
             />
             <x-input-error for="name" class="mt-2" />
         </div>

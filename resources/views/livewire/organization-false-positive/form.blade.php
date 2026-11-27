@@ -19,7 +19,7 @@
                          autocomplete="off"
                          aria-autocomplete="none"
                          :disabled="! Auth::user()->hasTeamPermission($model, 'edit_guidelines')"
-                         @error('false_positive') aria-invalid="true" aria-describedby="false_positive-error" @enderror
+                         error="false_positive"
             />
             <x-input-error for="false_positive" class="mt-2" />
         </div>

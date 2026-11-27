@@ -24,7 +24,7 @@
                         class="mt-2 block w-full"
                         wire:model="state.name"
                         :disabled="! Gate::check('update', $team)"
-                        @error('team-name') aria-invalid="true" aria-describedby="team-name-error" @enderror />
+                        error="team-name" />
 
             <x-input-error for="team-name" class="mt-2" />
         </div>
