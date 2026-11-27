@@ -103,7 +103,8 @@ return [
     */
 
     'limiters' => [
-        //'login' => 'login',
+        // Five password attempts a minute per address and IP (FortifyServiceProvider).
+        'login' => 'login',
         // Five codes a minute per sign-in attempt (FortifyServiceProvider).
         'two-factor' => 'two-factor',
     ],

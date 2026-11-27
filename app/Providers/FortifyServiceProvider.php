@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Str;
 
 use App\Actions\Fortify\CreateNewUser;
 use App\Actions\Fortify\ResetUserPassword;
@@ -58,7 +59,11 @@ class FortifyServiceProvider extends ServiceProvider
         });
 
         RateLimiter::for('login', function (Request $request) {
-            return Limit::perMinute(5)->by(strtolower($request->email) . $request->ip());
+            // A string whatever was sent: an address sent as a list must not
+            // turn the throttle into an error.
+            $email = $request->input(Fortify::username());
+
+            return Limit::perMinute(5)->by(Str::transliterate(Str::lower(is_string($email) ? $email : '')) . '|' . $request->ip());
         });
 
         RateLimiter::for('two-factor', function (Request $request) {
