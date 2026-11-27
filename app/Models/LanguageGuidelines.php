@@ -287,7 +287,7 @@ class LanguageGuidelines extends Model
                 $properties = [
                     'language_type' => (new \ReflectionClass($this))->getShortName(),
                     'french_gender_separator' => $this->french_gender_separator,
-                    'force' => $this->german_rules_force,
+                    'force' => $this->french_rules_force,
                 ];
                 break;
             case 'GenericMasculine':
