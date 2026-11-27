@@ -220,6 +220,13 @@ return [
 
     'write_contact' => env('WRITE_CONTACT', 'api@witty.works'),
 
+    // The deployment's privacy policy and terms of service: Markdown files
+    // outside the repository, for example mounted into the container. The
+    // repository holds no such text; without a file, the page says that the
+    // deployment has published none. Registration links to both pages.
+    'privacy_policy_file' => env('PRIVACY_POLICY_FILE'),
+    'terms_of_service_file' => env('TERMS_OF_SERVICE_FILE'),
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers

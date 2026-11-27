@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Support\LegalDocument;
 
 class TermsController extends Controller
 {
     /**
-     * Display the terms of service page.
+     * Display the deployment's terms of service (config app.terms_of_service_file).
      */
     public function show()
     {
-        return view('terms');
+        return view('terms', ['content' => LegalDocument::html(config('app.terms_of_service_file'))]);
     }
 }

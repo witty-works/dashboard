@@ -499,4 +499,6 @@ Bitte gehe dann erneut auf „Registrieren“, um die Registrierung im "Witty fo
     'superadmin_two_factor_required' => 'Superadmins müssen die Zwei-Faktor-Anmeldung einrichten, bevor sie die Admin-Seiten nutzen.',
     'superadmin_two_factor_notice' => 'Als Superadmin brauchst du die Zwei-Faktor-Anmeldung für die Admin-Seiten und um dich als andere Personen anzumelden. Aktiviere sie hier.',
     'continue' => 'Weiter',
+    'privacy_policy_not_published' => 'Diese Installation hat ihre Datenschutzerklärung noch nicht veröffentlicht.',
+    'terms_of_service_not_published' => 'Diese Installation hat ihre Nutzungsbedingungen noch nicht veröffentlicht.',
 ];

@@ -501,4 +501,6 @@ Veuillez ensuite cliquer à nouveau sur "S\'inscrire" pour finaliser l\'inscript
     'superadmin_two_factor_required' => 'Les superadmins doivent configurer la connexion à deux facteurs avant d’utiliser les pages d’administration.',
     'superadmin_two_factor_notice' => 'En tant que superadmin, vous avez besoin de la connexion à deux facteurs pour les pages d’administration et pour vous connecter à la place d’une autre personne. Activez-la ici.',
     'continue' => 'Continuer',
+    'privacy_policy_not_published' => 'Cette installation n’a pas encore publié sa politique de confidentialité.',
+    'terms_of_service_not_published' => 'Cette installation n’a pas encore publié ses conditions d’utilisation.',
 ];

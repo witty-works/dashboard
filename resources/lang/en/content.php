@@ -500,4 +500,6 @@ Please then go to "Register" again to finalize the registration into the "Witty 
     'superadmin_two_factor_required' => 'Superadmins must set up two-factor sign-in before using the admin pages.',
     'superadmin_two_factor_notice' => 'As a superadmin, you need two-factor sign-in for the admin pages and for signing in as other users. Turn it on here.',
     'continue' => 'Continue',
+    'privacy_policy_not_published' => 'This deployment has not published its privacy policy yet.',
+    'terms_of_service_not_published' => 'This deployment has not published its terms of service yet.',
 ];
