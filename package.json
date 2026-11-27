@@ -7,9 +7,12 @@
         "build": "vite build",
         "watch": "vite build --watch",
         "test": "vitest run",
-        "test:bundle": "node tests/js/analytics-bundle.mjs"
+        "test:bundle": "node tests/js/analytics-bundle.mjs",
+        "test:browser": "playwright test"
     },
     "devDependencies": {
+        "@axe-core/playwright": "4.14.0",
+        "@playwright/test": "1.65.1",
         "@sentry/browser": "^11.15.0",
         "@tailwindcss/forms": "^0.5.10",
         "@tailwindcss/typography": "^0.5.19",

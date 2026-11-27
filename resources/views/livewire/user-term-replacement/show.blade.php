@@ -9,44 +9,47 @@
     </x-slot>
 
     <x-slot name="list">
-        <table class="table-auto w-full">
-            <caption class="sr-only">{{ __('guidelines.list_term_replacements') }}</caption>
-            <thead>
-                <tr>
-                    <th scope="col" class="py-2 lato-paragraph-text-p">{{ __('guidelines.term_label') }}</th>
-                    <th scope="col" class="py-2 lato-paragraph-text-p">{{ __('guidelines.replacement_label') }}</th>
-                    <th scope="col" class="py-2 lato-paragraph-text-p">{{ __('guidelines.emoji_short_label') }}</th>
-                    <th scope="col" class="py-2 lato-paragraph-text-p">{{ __('guidelines.matching_type_label') }}</th>
-                    <th scope="col" class="py-2 lato-paragraph-text-p">{{ __('guidelines.exists_on_team_label') }}</th>
-                    <th scope="col" class="py-2 lato-paragraph-text-p">{{ __('guidelines.action_label') }}</th>
+        {{-- A wide table scrolls on its own on a narrow screen (WCAG 1.4.10 allows it for data tables). --}}
+        <div class="relative overflow-x-auto">
+            <table class="table-auto w-full">
+                <caption class="sr-only">{{ __('guidelines.list_term_replacements') }}</caption>
+                <thead>
+                    <tr>
+                        <th scope="col" class="py-2 lato-paragraph-text-p">{{ __('guidelines.term_label') }}</th>
+                        <th scope="col" class="py-2 lato-paragraph-text-p">{{ __('guidelines.replacement_label') }}</th>
+                        <th scope="col" class="py-2 lato-paragraph-text-p">{{ __('guidelines.emoji_short_label') }}</th>
+                        <th scope="col" class="py-2 lato-paragraph-text-p">{{ __('guidelines.matching_type_label') }}</th>
+                        <th scope="col" class="py-2 lato-paragraph-text-p">{{ __('guidelines.exists_on_team_label') }}</th>
+                        <th scope="col" class="py-2 lato-paragraph-text-p">{{ __('guidelines.action_label') }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach ($list as $term_replacement)
+                <tr wire:key="term-replacement-{{ $term_replacement->id }}" @if($loop->even)class="bg-grey"@endif>
+                    <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $term_replacement->term }}</td>
+                    <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $term_replacement->replacement }}</td>
+                    <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $term_replacement->emoji }}</td>
+                    <td class="border px-4 py-2 text-left lato-paragraph-text-p">
+                        @if($term_replacement->matching_type === 'lemmatize')
+                        {{ __('guidelines.'.$term_replacement->word_type) }}
+                        @else
+                        {{ __('guidelines.'.$term_replacement->matching_type) }}
+                        @endif
+                    </td>
+                    <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $term_replacement->exists_on_team ? __('guidelines.yes') : __('guidelines.no') }} </td>
+                    <td class="border px-4 py-2 text-center container-row">
+                        <button data-scroll-to="term" wire:click="editTermReplacement({{ $term_replacement->id }})" class="button primary-button-red ">
+                            {{ __('content.edit') }}
+                        </button>
+                        <button wire:click="deleteTermReplacement({{ $term_replacement->id }})" wire:confirm="{{ __('content.confirm_delete_entry') }}" class="button secondary-button-red">
+                            {{ __('content.delete_permanently') }}
+                        </button>
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-            @foreach ($list as $term_replacement)
-            <tr wire:key="term-replacement-{{ $term_replacement->id }}" @if($loop->even)class="bg-grey"@endif>
-                <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $term_replacement->term }}</td>
-                <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $term_replacement->replacement }}</td>
-                <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $term_replacement->emoji }}</td>
-                <td class="border px-4 py-2 text-left lato-paragraph-text-p">
-                    @if($term_replacement->matching_type === 'lemmatize')
-                    {{ __('guidelines.'.$term_replacement->word_type) }}
-                    @else
-                    {{ __('guidelines.'.$term_replacement->matching_type) }}
-                    @endif
-                </td>
-                <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $term_replacement->exists_on_team ? __('guidelines.yes') : __('guidelines.no') }} </td>
-                <td class="border px-4 py-2 text-center container-row">
-                    <button data-scroll-to="term" wire:click="editTermReplacement({{ $term_replacement->id }})" class="button primary-button-red ">
-                        {{ __('content.edit') }}
-                    </button>
-                    <button wire:click="deleteTermReplacement({{ $term_replacement->id }})" wire:confirm="{{ __('content.confirm_delete_entry') }}" class="button secondary-button-red">
-                        {{ __('content.delete_permanently') }}
-                    </button>
-                </td>
-            </tr>
-            @endforeach
-            </tbody>
-        </table>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
     </x-slot>
     @endif
 </x-list-section>

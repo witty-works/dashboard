@@ -40,6 +40,9 @@ h1 {
     font-size: 64px;
     line-height: 62px;
     color: #000000;
+    /* A long word breaks rather than pushing a narrow page sideways (WCAG 1.4.10). */
+    overflow-wrap: break-word;
+    hyphens: auto;
 }
 
 .ibarra-sub-title-h2,
@@ -347,6 +350,17 @@ h4 {
 /* At most as wide as the screen, so that it fits at 320px (WCAG 1.4.10). */
 .guidelines-form-section-dropdown {
     width: 385px;
+    max-width: 100%;
+    /* Lets it shrink beside its lock icon in a flex row. */
+    min-width: 0;
+}
+
+/* .container is a flex box, whose children would otherwise never shrink
+   below their content: a wide table or select pushed the page past a 320px
+   screen (WCAG 1.4.10). The table then scrolls inside its own box. */
+.container > *,
+div:has(> .guidelines-form-section-dropdown) {
+    min-width: 0;
     max-width: 100%;
 }
 
@@ -1432,4 +1446,13 @@ label {
    than Tailwind's [hidden] rule at the same specificity. */
 .button[hidden] {
     display: none;
+}
+
+/* Page titles at 64px leave no room on a phone. */
+@media (max-width: 480px) {
+    .ibarra-sub-title-h1,
+    h1 {
+        font-size: 40px;
+        line-height: 44px;
+    }
 }
