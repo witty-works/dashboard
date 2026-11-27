@@ -1,12 +1,11 @@
 <x-app-layout :pagetitle="__('content.write_title')">
-    <div class="wittyworks-navigation-wrapper">
-    @livewire('navigation-menu')
-    </div>
-    <div class="wittyworks-page-wrapper" id="maincontent">
-        <div class="wittyworks-page lg:ml-20">
-            @include('partials.banners')
+    <x-slot name="navigation">
+        @livewire('navigation-menu')
+    </x-slot>
 
+        <div class="wittyworks-page lg:ml-20">
             <h1 class="text-2xl">{{ __('content.write_title') }}</h1>
+            @include('partials.banners')
             <p class="mt-2">{{ __('content.write_intro') }}</p>
 
             @if (! $configured)
@@ -35,5 +34,4 @@
                 @vite('resources/js/write.js')
             @endif
         </div>
-    </div>
 </x-app-layout>

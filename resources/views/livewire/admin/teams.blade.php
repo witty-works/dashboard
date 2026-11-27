@@ -3,12 +3,12 @@
         <div>
             <label for="admin-new-team" class="block text-sm">{{ __('content.admin_team_name') }}</label>
             <input id="admin-new-team" type="text" wire:model="newName" class="form-input" required>
-            @error('newName') <p class="text-sm text-red-600" role="alert">{{ $message }}</p> @enderror
+            @error('newName') <p class="text-sm text-red-700" role="alert">{{ $message }}</p> @enderror
         </div>
         <div>
             <label for="admin-new-limit" class="block text-sm">{{ __('content.admin_limit') }}</label>
             <input id="admin-new-limit" type="number" min="1" wire:model="newLimit" class="form-input w-40" placeholder="{{ __('content.admin_no_limit') }}">
-            @error('newLimit') <p class="text-sm text-red-600" role="alert">{{ $message }}</p> @enderror
+            @error('newLimit') <p class="text-sm text-red-700" role="alert">{{ $message }}</p> @enderror
         </div>
         <button type="submit" class="button primary-button">{{ __('content.admin_create_team') }}</button>
     </form>
@@ -65,7 +65,7 @@
                             <input id="limit-{{ $team->id }}" type="number" min="1" wire:model="limits.{{ $team->id }}" class="form-input w-32" placeholder="{{ __('content.admin_no_limit') }}">
                             <button type="submit" class="text-sm underline">{{ __('content.admin_save') }}</button>
                         </form>
-                        @error('limits.' . $team->id) <p class="text-sm text-red-600" role="alert">{{ $message }}</p> @enderror
+                        @error('limits.' . $team->id) <p class="text-sm text-red-700" role="alert">{{ $message }}</p> @enderror
                     </td>
                     <td class="px-4 py-2 text-sm">
                         @if ($team->user_id === auth()->id())
@@ -77,10 +77,10 @@
                                 <input id="owner-{{ $team->id }}" type="email" wire:model="ownerEmail.{{ $team->id }}" class="form-input w-56" placeholder="{{ __('content.admin_owner_email') }}" required>
                                 <button type="submit" class="underline">{{ __('content.admin_invite_owner') }}</button>
                             </form>
-                            @error('ownerEmail.' . $team->id) <p class="text-sm text-red-600" role="alert">{{ $message }}</p> @enderror
+                            @error('ownerEmail.' . $team->id) <p class="text-sm text-red-700" role="alert">{{ $message }}</p> @enderror
                         @endif
                         @if ($ownedBySuperadmin)
-                            <button type="button" class="ml-4 text-red-600 underline"
+                            <button type="button" class="ml-4 text-red-700 underline"
                                     wire:click="deleteTeam({{ $team->id }})"
                                     wire:confirm="{{ __('content.admin_delete_team_confirm', ['team' => $team->name]) }}">{{ __('content.admin_delete_team') }}</button>
                         @endif

@@ -1,9 +1,13 @@
 <x-app-layout :pagetitle="__('content.manage_members')">
-    <div class="wittyworks-navigation-wrapper">
-    @livewire('navigation-menu')
-    </div>
-    <div class="wittyworks-page-wrapper" id="maincontent">
+    <x-slot name="navigation">
+        @livewire('navigation-menu')
+    </x-slot>
+
         <div class="wittyworks-page lg:ml-20">
+            {{-- Here, not in the member manager, so that it comes before the
+                 banners and whatever the manager shows. --}}
+            <h1 class="ibarra-sub-title-h1 margin-top">{{ __('content.manage_members') }}</h1>
+
             @include('partials.banners', ['hideInviteCheck' => true])
             @if (!Auth::user()->hasTeamPermission($team, 'update'))
             <x-slot name="header">
@@ -17,5 +21,4 @@
                 @livewire('teams.api-keys', ['team' => $team])
             @endif
         </div>
-    </div>
 </x-app-layout>

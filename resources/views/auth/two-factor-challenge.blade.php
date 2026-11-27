@@ -1,11 +1,13 @@
 {{-- Fortify's sign-in challenge, and the check a superadmin passes before
      /admin (TwoFactorVerificationController), which sets $action, $intro
      and $submit. --}}
-<x-guest-layout>
+<x-guest-layout :pagetitle="__('content.two_factor_authentication')">
     <x-authentication-card>
         <x-slot name="logo">
             <x-authentication-card-logo />
         </x-slot>
+
+        <h1 class="mb-4 text-2xl leading-tight">{{ __('content.two_factor_authentication') }}</h1>
 
         <div x-data="{ recovery: false }">
             @isset($intro)

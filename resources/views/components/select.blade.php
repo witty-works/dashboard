@@ -7,7 +7,7 @@
     }
 @endphp
 
-<select {!! $attributes->merge(['class' => 'border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm border-radius lato-small-text-p']) !!}>
+<select {!! $attributes->merge(['class' => 'border-gray-500 focus:border-indigo-700 focus:ring-2 focus:ring-indigo-700 rounded-md shadow-sm border-radius lato-small-text-p']) !!}>
     @foreach ($options as $key => $label)
         @php
             $isKeyInteger = is_int($key);

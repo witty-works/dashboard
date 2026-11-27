@@ -25,9 +25,9 @@
         <div class="font-sans text-gray-900 antialiased">
             <main class="relative flex items-top justify-center min-h-screen bg-gray-100 sm:items-center py-4 sm:pt-0">
                 {{ $slot }}
-
-                @include('partials.footer')
             </main>
+
+            @include('partials.footer')
         </div>
         @livewireScripts
     </body>

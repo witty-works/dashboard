@@ -2,6 +2,7 @@
     <h1 class="ibarra-sub-title-h1 margin-top">
         {{ __('guidelines.language') }}
     </h1>
+    @include('partials.banners')
 
     @livewire('organization-category-settings.intro', ['model' => $team])
 

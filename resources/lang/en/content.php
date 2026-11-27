@@ -86,6 +86,7 @@ return [
     'this_is_a_secure_area' => 'This is a secure area of the application. Please confirm your password before continuing.',
     'forgot_your_password_no_problem' => 'Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.',
     'forgot_your_password' => 'Forgot your password?',
+    'verify_email_title' => 'Verify your email address',
     'please_confirm_access_to_your_account' => 'Please confirm access to your account by entering the authentication code provided by your authenticator application.',
     'thank_you_for_signing_up' => 'Thanks for signing up! Before getting started, could you verify your email address by opening the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.',
     'verification_link_send' => 'A new verification link has been sent to the email address you provided during registration.',
@@ -107,6 +108,7 @@ return [
     'delete_account_too_many_attempts' => 'Too many attempts. Please try again in :seconds seconds.',
     'delete_account_hand_over_teams' => 'You own the team :teams, which other people belong to. Before you can delete your account, make one of its admins the owner on the team page.',
     'make_owner' => 'Make owner',
+    'change_role_of' => ', change the role of :name',
     'are_you_sure_you_would_like_to_make_owner' => 'Are you sure you would like to make this person the owner of the team? You stay on the team as an admin, and only they can hand the team over again.',
     'manage_and_log_out_your_active_sessions' => 'Manage and log out your active sessions on other browsers and devices.',
     'if_necessary_you_may_log_out' => 'If necessary, you may log out of all of your other browser sessions across all of your devices. Some of your recent sessions are listed below; however, this list may not be exhaustive. If you feel your account has been compromised, you should also update your password.',
@@ -469,4 +471,6 @@ Please then go to "Register" again to finalize the registration into the "Witty 
     'i_agree_to_the_privacy_policy' => 'I agree to the :privacy_policy',
     'i_agree_to_the_terms_of_service' => 'I agree to the :terms_of_service',
     'office_consent_without_documents' => 'I want an account for this address.',
+    'api_keys_grace_for' => 'Grace period for :name',
+    'make_owner_of' => 'Make :name the owner',
 ];

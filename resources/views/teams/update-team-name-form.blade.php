@@ -1,6 +1,6 @@
 <x-form-section submit="updateTeamName">
     <x-slot name="title">
-        <h2>{{ __('content.team_name') }}</h2>
+        {{ __('content.team_name') }}
     </x-slot>
 
     <x-slot name="description">

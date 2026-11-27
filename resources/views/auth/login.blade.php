@@ -1,13 +1,15 @@
-<x-guest-layout>
+<x-guest-layout :pagetitle="__('content.log_in')">
     <x-authentication-card>
         <x-slot name="logo">
             <x-authentication-card-logo />
         </x-slot>
 
+        <h1 class="mb-4 text-2xl leading-tight">{{ __('content.log_in') }}</h1>
+
         <x-validation-errors class="mb-4" />
 
         @if (session('status'))
-            <div class="mb-4 font-medium text-sm text-green-600" role="status">
+            <div class="mb-4 font-medium text-sm text-green-700" role="status">
                 {{ session('status') }}
             </div>
         @endif

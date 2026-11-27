@@ -7,7 +7,7 @@
 
     @foreach (['superadmin', 'team'] as $errorKey)
         @error($errorKey)
-            <p class="mb-4 text-sm text-red-600" role="alert">{{ $message }}</p>
+            <p class="mb-4 text-sm text-red-700" role="alert">{{ $message }}</p>
         @enderror
     @endforeach
 
@@ -52,7 +52,7 @@
                             <a class="underline" href="{{ route('impersonate', $user->id) }}">{{ __('content.admin_impersonate') }}</a>
                         @endunless
                         @unless ($user->is(auth()->user()))
-                            <button type="button" class="ml-4 text-red-600 underline"
+                            <button type="button" class="ml-4 text-red-700 underline"
                                     wire:click="deleteUser({{ $user->id }})"
                                     wire:confirm="{{ __('content.admin_delete_user_confirm', ['email' => $user->email]) }}">{{ __('content.admin_delete_user') }}</button>
                         @endunless

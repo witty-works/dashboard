@@ -86,6 +86,7 @@ return [
     'this_is_a_secure_area' => 'Il s\'agit d\'une zone sécurisée de l\'application. Veuillez confirmer votre mot de passe avant de continuer.',
     'forgot_your_password_no_problem' => 'Vous avez oublié votre mot de passe ? Pas de problème. Indiquez-nous votre e-mail et nous vous enverrons un lien de réinitialisation du mot de passe qui vous permettra d\'en choisir un nouveau.',
     'forgot_your_password' => 'Vous avez oublié votre mot de passe ?',
+    'verify_email_title' => 'Vérifiez votre adresse e-mail',
     'please_confirm_access_to_your_account' => 'Veuillez confirmer l\'accès à votre compte en saisissant le code d\'authentification fourni par votre application d\'authentification.',
     'thank_you_for_signing_up' => 'Merci de vous être inscrit ! Avant de commencer, pourriez-vous vérifier votre e-mail en ouvrant le lien que nous venons de vous envoyer par e-mail ? Si vous n\'avez pas reçu l\'e-mail, nous vous en enverrons un autre.',
     'verification_link_send' => 'Un nouveau lien de vérification a été envoyé à l\'adresse e-mail que vous avez fournie lors de votre inscription.',
@@ -107,6 +108,7 @@ return [
     'delete_account_too_many_attempts' => 'Trop de tentatives. Veuillez réessayer dans :seconds secondes.',
     'delete_account_hand_over_teams' => 'Vous êtes propriétaire de l’équipe :teams, à laquelle d’autres personnes appartiennent. Avant de pouvoir supprimer votre compte, désignez sur la page de l’équipe l’une de ses personnes admin comme propriétaire.',
     'make_owner' => 'Désigner comme propriétaire',
+    'change_role_of' => ', modifier le rôle de :name',
     'are_you_sure_you_would_like_to_make_owner' => 'Voulez-vous vraiment désigner cette personne comme propriétaire de l’équipe ? Vous restez dans l’équipe en tant qu’admin, et seule cette personne pourra à nouveau transférer l’équipe.',
     'manage_and_log_out_your_active_sessions' => 'Gérer et déconnecter vos sessions actives sur d\'autres navigateurs et appareils.',
     'if_necessary_you_may_log_out' => 'Si nécessaire, vous pouvez vous déconnecter de toutes vos autres sessions de navigation sur tous vos appareils. Certaines de vos sessions récentes sont énumérées ci-dessous, mais cette liste n\'est pas exhaustive. Si vous pensez que votre compte a été compromis, vous devriez également mettre à jour votre mot de passe.',
@@ -469,4 +471,6 @@ Veuillez ensuite cliquer à nouveau sur "S\'inscrire" pour finaliser l\'inscript
     'i_agree_to_the_privacy_policy' => 'J\'accepte la :privacy_policy',
     'i_agree_to_the_terms_of_service' => 'J\'accepte les :terms_of_service',
     'office_consent_without_documents' => 'Je souhaite un compte pour cette adresse.',
+    'api_keys_grace_for' => 'Délai de grâce pour :name',
+    'make_owner_of' => 'Transférer l’équipe à :name',
 ];

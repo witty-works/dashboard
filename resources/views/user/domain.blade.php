@@ -1,6 +1,7 @@
 <h1 class="ibarra-sub-title-h1 margin-top">
     {!! __('guidelines.privacy_settings_label') !!}
 </h1>
+@include('partials.banners')
 
 {{-- Consent to being counted in the team's analytics: only while events are collected. --}}
 @if (\App\Support\Analytics::collected())

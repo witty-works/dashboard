@@ -1,15 +1,17 @@
-<x-guest-layout>
+<x-guest-layout :pagetitle="__('content.forgot_your_password')">
     <x-authentication-card>
         <x-slot name="logo">
             <x-authentication-card-logo />
         </x-slot>
+
+        <h1 class="mb-4 text-2xl leading-tight">{{ __('content.forgot_your_password') }}</h1>
 
         <div class="mb-4 text-sm text-gray-600">
             {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
         </div>
 
         @if (session('status'))
-            <div class="mb-4 font-medium text-sm text-green-600" role="status">
+            <div class="mb-4 font-medium text-sm text-green-700" role="status">
                 {{ session('status') }}
             </div>
         @endif

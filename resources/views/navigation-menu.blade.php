@@ -4,8 +4,8 @@
         @include('partials.menu')
     </div>
 
-    <!-- burger -->
-    <div class="-mr-2 flex items-center">
+    <!-- burger, for the menu below -->
+    <div class="-mr-2 flex items-center lg:hidden">
         <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-800 transition" aria-label="{{ __('content.toggle_mobile_navigation') }}" aria-expanded="false" :aria-expanded="open.toString()">
             <svg class="h-6 w-6" stroke="black" fill="none" viewBox="0 0 24 24" aria-hidden="true">
                 <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />

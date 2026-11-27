@@ -1,9 +1,7 @@
 <div>
 @if (Gate::check('viewUserCreateForm', $team))
     <!-- Add Team Member -->
-    <section id="add-team-member" aria-labelledby="sectionTitle">
-        <h1 id="sectionTitle" class="ibarra-sub-title-h1 margin-top">{{ __('content.manage_members') }}</h1>
-
+    <div id="add-team-member">
         @livewire('teams.update-team-name-form-cancel', ['team' => $team])
 
         <div class="pt-10">
@@ -37,7 +35,7 @@
                             @foreach ($this->roles as $index => $role)
                                 <button type="button" aria-pressed="{{ $addTeamMemberForm['role'] === $role->key ? 'true' : 'false' }}" class="relative px-4 py-3 inline-flex w-full rounded-lg"
                                         wire:click="$set('addTeamMemberForm.role', '{{ $role->key }}')">
-                                    <div class="{{ $addTeamMemberForm['role'] !== $role->key ? 'opacity-50' : '' }}">
+                                    <div>
                                         <!-- Role Name -->
                                         <div class="flex items-center">
                                             <div class="lato-paragraph-text-p lato-small-paragraph-title-h4 {{ $addTeamMemberForm['role'] == $role->key ? 'font-semibold' : '' }}">
@@ -45,7 +43,7 @@
                                             </div>
 
                                             @if ($addTeamMemberForm['role'] == $role->key)
-                                                <svg aria-hidden="true" focusable="false" class="ml-2 h-5 w-5 text-green-400 lato-small-text-p" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                                <svg aria-hidden="true" focusable="false" class="ml-2 h-5 w-5 text-green-700 lato-small-text-p" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                             @endif
                                         </div>
 
@@ -73,7 +71,7 @@
             </x-slot>
         </x-form-section>
         </div>
-    </section>
+    </div>
 @endif
 
 @if ($team->teamInvitations->isNotEmpty() && Gate::check('viewUserCreateForm', $team))
@@ -154,7 +152,7 @@
                                 <!-- Manage Team Member Role -->
                                 @if (Gate::check('update', $team) && Laravel\Jetstream\Jetstream::hasRoles())
                                     <button class="ml-2 text-sm text-gray-600 underline" wire:click="manageRole('{{ $user->id }}')">
-                                        {{ __('content.'.Laravel\Jetstream\Jetstream::findRole($user->membership->role)->key) }}
+                                        {{ __('content.'.Laravel\Jetstream\Jetstream::findRole($user->membership->role)->key) }}<span class="sr-only">{{ __('content.change_role_of', ['name' => $user->name]) }}</span>
                                     </button>
                                 @elseif (Laravel\Jetstream\Jetstream::hasRoles())
                                     <div class="ml-2 text-sm text-gray-600">
@@ -165,7 +163,7 @@
                                 <!-- Hand the team over -->
                                 @if ($this->user->ownsTeam($team) && $user->membership->role === 'admin')
                                     <button class="cursor-pointer ml-6 text-sm text-gray-600 underline" wire:click="confirmOwnershipTransfer('{{ $user->id }}')">
-                                        {{ __('content.make_owner') }}
+                                        <span aria-hidden="true">{{ __('content.make_owner') }}</span><span class="sr-only">{{ __('content.make_owner_of', ['name' => $user->name]) }}</span>
                                     </button>
                                 @endif
 
@@ -178,7 +176,7 @@
                                 <!-- Remove Team Member -->
                                 @elseif (Gate::check('removeTeamMember', $team))
                                     <button class="cursor-pointer ml-6 text-sm text-red-700" wire:click="confirmTeamMemberRemoval('{{ $user->id }}')">
-                                        {{ __('content.remove') }}
+                                        {{ __('content.remove') }} <span class="sr-only">{{ $user->name }}</span>
                                     </button>
                                 @endif
                             </div>
@@ -199,9 +197,9 @@
         <x-slot name="content">
             <div class="relative z-0 mt-1 border border-gray-200 rounded-lg cursor-pointer">
                 @foreach ($this->roles as $index => $role)
-                    <button type="button" class="relative px-4 py-3 inline-flex w-full rounded-lg focus:z-10 focus:outline-none focus:border-blue-300 focus:ring focus:ring-blue-200 {{ $index > 0 ? 'border-t border-gray-200 rounded-t-none' : '' }} {{ ! $loop->last ? 'rounded-b-none' : '' }}"
+                    <button type="button" aria-pressed="{{ $currentRole === $role->key ? 'true' : 'false' }}" class="relative px-4 py-3 inline-flex w-full rounded-lg focus:z-10 focus:outline-none focus:ring-2 focus:ring-indigo-700 {{ $index > 0 ? 'border-t border-gray-200 rounded-t-none' : '' }} {{ ! $loop->last ? 'rounded-b-none' : '' }}"
                                     wire:click="$set('currentRole', '{{ $role->key }}')">
-                        <div class="{{ $currentRole !== $role->key ? 'opacity-50' : '' }}">
+                        <div>
                             <!-- Role Name -->
                             <div class="flex items-center">
                                 <div class="text-sm text-gray-600 {{ $currentRole == $role->key ? 'font-semibold' : '' }}">
@@ -209,7 +207,7 @@
                                 </div>
 
                                 @if ($currentRole == $role->key)
-                                    <svg aria-hidden="true" focusable="false" class="ml-2 h-5 w-5 text-green-400" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                    <svg aria-hidden="true" focusable="false" class="ml-2 h-5 w-5 text-green-700" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                 @endif
                             </div>
 

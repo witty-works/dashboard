@@ -6,9 +6,9 @@
     </p>
 
     @if ($unavailable)
-        <p class="mb-4 text-red-600" role="alert">{{ __('content.api_keys_unavailable') }}</p>
+        <p class="mb-4 text-red-700" role="alert">{{ __('content.api_keys_unavailable') }}</p>
     @endif
-    @error('keys') <p class="mb-4 text-red-600" role="alert">{{ $message }}</p> @enderror
+    @error('keys') <p class="mb-4 text-red-700" role="alert">{{ $message }}</p> @enderror
 
     @if ($keys->isEmpty())
         <p class="text-sm text-gray-600">{{ __('content.api_keys_none') }}</p>
@@ -31,7 +31,7 @@
                         <td class="px-4 py-2 text-sm">{{ \Illuminate\Support\Carbon::parse($key['created_at'])->isoFormat('LL') }}</td>
                         <td class="px-4 py-2 text-sm">{{ $key['expires_at'] ? \Illuminate\Support\Carbon::parse($key['expires_at'])->isoFormat('LLL') : __('content.api_keys_never') }}</td>
                         <td class="px-4 py-2 text-sm">
-                            <button type="button" class="underline" wire:click="revoke(@js($key['id']))" wire:confirm="{{ __('content.api_keys_revoke_confirm') }}">{{ __('content.api_keys_revoke') }}</button>
+                            <button type="button" class="underline" wire:click="revoke(@js($key['id']))" wire:confirm="{{ __('content.api_keys_revoke_confirm') }}">{{ __('content.api_keys_revoke') }} <span class="sr-only">{{ $key['name'] }} ({{ $key['email'] }})</span></button>
                         </td>
                     </tr>
                 @endforeach

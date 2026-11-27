@@ -27,6 +27,9 @@
     </head>
 
     <body class="font-sans antialiased">
+        {{-- The first thing a keyboard reaches, at every screen width (WCAG 2.4.1). --}}
+        <a class="skip-link" href="#maincontent">{{ __('content.skip_to_main_content') }}</a>
+
         <x-banner />
 
         <div class="min-h-screen bg-gray-100">
@@ -39,10 +42,22 @@
                 </header>
             @endif
 
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
+            @isset($navigation)
+                {{-- Outside <main>, so that the navigation landmark is not part of the main content. --}}
+                <div class="wittyworks-navigation-wrapper">
+                    {{ $navigation }}
+                </div>
+
+                <main class="wittyworks-page-wrapper" id="maincontent">
+                    {{ $slot }}
+                </main>
+            @else
+                {{-- Pages without the navigation slot. The analytics page still
+                     puts the navigation and its own #maincontent inside. --}}
+                <main @unless (str_contains((string) $slot, 'id="maincontent"')) id="maincontent" @endunless>
+                    {{ $slot }}
+                </main>
+            @endisset
 
             @include('partials.footer')
         </div>

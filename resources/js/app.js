@@ -100,6 +100,19 @@ function toggleDetails(button) {
     button.setAttribute('aria-expanded', open ? 'true' : 'false');
 }
 
+// The edit buttons of the dictionary, ignored words and domains lists
+// (livewire/*/show.blade.php) lead to the field the entry is edited in, and
+// move focus there too, so that keyboard and screen reader users land on the
+// form (WCAG 2.4.3). Livewire fills the field when its answer arrives.
+function scrollToField(button) {
+    const field = document.getElementById(button.dataset.scrollTo);
+    if (!field) {
+        return;
+    }
+    field.scrollIntoView({behavior: 'smooth', block: 'center'});
+    field.focus({preventScroll: true});
+}
+
 // The views attach no inline handlers (onclick= and the like), which the
 // Content-Security-Policy blocks; these listeners stand in for them. They are
 // on the document, so they also cover what Livewire renders later.
@@ -114,7 +127,7 @@ document.addEventListener('click', (event) => {
     } else if ((element = closest(event, '[data-toggle-details]'))) {
         toggleDetails(element);
     } else if ((element = closest(event, '[data-scroll-to]'))) {
-        document.getElementById(element.dataset.scrollTo)?.scrollIntoView({behavior: 'smooth'});
+        scrollToField(element);
     }
 });
 

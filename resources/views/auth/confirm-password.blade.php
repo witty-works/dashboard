@@ -1,8 +1,10 @@
-<x-guest-layout>
+<x-guest-layout :pagetitle="__('content.confirm_password')">
     <x-authentication-card>
         <x-slot name="logo">
             <x-authentication-card-logo />
         </x-slot>
+
+        <h1 class="mb-4 text-2xl leading-tight">{{ __('content.confirm_password') }}</h1>
 
         <div class="mb-4 text-sm text-gray-600">
             {{ __('content.for_your_security_confirm') }}

@@ -41,7 +41,7 @@
                 <span class="lato-paragraph-text-p">@include('partials.legal-consent', ['fallback' => __('content.office_consent_without_documents')])</span>
 
                 @if($errors->hasBag('default') && $errors->getBag('default')->getMessages())
-                <p id="consent-error" class="mt-2 text-sm text-red-600" role="alert">{{ __('content.you_must_consent') }}</p>
+                <p id="consent-error" class="mt-2 text-sm text-red-700" role="alert">{{ __('content.you_must_consent') }}</p>
                 @endif
             </div>
 

@@ -1,6 +1,6 @@
 <x-form-section submit="createTeam">
     <x-slot name="title">
-        <h2>{{ __('content.team_details') }}</h2>
+        {{ __('content.team_details') }}
     </x-slot>
 
     <x-slot name="description">

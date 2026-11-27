@@ -1,15 +1,17 @@
-<x-guest-layout>
+<x-guest-layout :pagetitle="__('content.verify_email_title')">
     <x-authentication-card>
         <x-slot name="logo">
             <x-authentication-card-logo />
         </x-slot>
+
+        <h1 class="mb-4 text-2xl leading-tight">{{ __('content.verify_email_title') }}</h1>
 
         <div class="mb-4 text-sm text-gray-600">
             {{ __('Before continuing, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.') }}
         </div>
 
         @if (session('status') == 'verification-link-sent')
-            <div class="mb-4 font-medium text-sm text-green-600" role="status">
+            <div class="mb-4 font-medium text-sm text-green-700" role="status">
                 {{ __('A new verification link has been sent to the email address you provided in your profile settings.') }}
             </div>
         @endif
