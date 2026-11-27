@@ -28,27 +28,9 @@ class AnalyticsPagesSwitchTest extends TestCase
         return $user->refresh();
     }
 
-    /** Routes are registered at boot, so the app boots again with the setting. */
     private function boot(bool $posthog, bool $pages): void
     {
-        $env = ['POSTHOG_ENABLED' => $posthog ? 'true' : 'false', 'ANALYTICS_PAGES_ENABLED' => $pages ? 'true' : 'false'];
-        $before = [];
-        foreach ($env as $name => $value) {
-            $before[$name] = [getenv($name), $_ENV[$name] ?? null, $_SERVER[$name] ?? null];
-            putenv("$name=$value");
-            $_ENV[$name] = $_SERVER[$name] = $value;
-        }
-        $this->refreshApplication();
-        // The new app has its own connection: roll back what this test writes
-        // there too, as RefreshDatabase does for the first one.
-        $this->beginDatabaseTransaction();
-        $this->withoutVite();
-        // Back to phpunit.xml's values for the tests after this one.
-        foreach ($before as $name => [$getenv, $envValue, $serverValue]) {
-            $getenv === false ? putenv($name) : putenv("$name=$getenv");
-            if ($envValue === null) { unset($_ENV[$name]); } else { $_ENV[$name] = $envValue; }
-            if ($serverValue === null) { unset($_SERVER[$name]); } else { $_SERVER[$name] = $serverValue; }
-        }
+        config(['posthog.enabled' => $posthog, 'posthog.analytics_pages' => $pages]);
     }
 
     public function test_hidden_pages_are_gone_while_collection_stays(): void
@@ -59,6 +41,8 @@ class AnalyticsPagesSwitchTest extends TestCase
 
         $this->get('/user/analytics')->assertNotFound();
         $this->get('/team/analytics')->assertNotFound();
+        $this->getJson('/api/user/analytics')->assertNotFound();
+        $this->getJson('/api/team/analytics')->assertNotFound();
         $this->get('/user/profile')->assertDontSee('/user/analytics')->assertDontSee('/team/analytics');
         // Who may see the team's analytics is moot; the personal consent to
         // being counted still matters while PostHog collects.

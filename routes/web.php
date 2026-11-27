@@ -131,9 +131,7 @@ Route::localize(
                     Route::get('/user/language/dictionary', [UserGuidelinesController::class, 'termReplacements'])->name('user.dictionary');
                     Route::get('/user/language/ignore-words', [UserGuidelinesController::class, 'falsePositives'])->name('user.ignored-words');
                     Route::get('/user/language/privacy-settings', [UserGuidelinesController::class, 'domains'])->name('user.privacy-settings');
-                    if (\App\Support\Analytics::pagesShown()) {
-                        Route::get('/user/analytics', [AnalyticsController::class, 'user'])->name('user.analytics');
-                    }
+                    Route::get('/user/analytics', [AnalyticsController::class, 'user'])->middleware('analytics.pages')->name('user.analytics');
 
                     Route::redirect('/team/language', '/team/language/customize-witty')->name('teams.language-guidelines');
                     Route::get('/team/language/customize-witty', [OrganizationGuidelinesController::class, 'categorySettings'])->name('teams.category-settings');
@@ -141,9 +139,7 @@ Route::localize(
                     Route::get('/team/language/dictionary', [OrganizationGuidelinesController::class, 'termReplacements'])->name('teams.dictionary');
                     Route::get('/team/language/ignored-words', [OrganizationGuidelinesController::class, 'falsePositives'])->name('teams.ignored-words');
                     Route::get('/team/language/privacy-settings', [OrganizationGuidelinesController::class, 'domains'])->name('teams.privacy-settings');
-                    if (\App\Support\Analytics::pagesShown()) {
-                        Route::get('/team/analytics', [AnalyticsController::class, 'organization'])->name('teams.analytics');
-                    }
+                    Route::get('/team/analytics', [AnalyticsController::class, 'organization'])->middleware('analytics.pages')->name('teams.analytics');
                 }
             });
         });

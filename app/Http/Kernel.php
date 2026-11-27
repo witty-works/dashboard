@@ -64,6 +64,7 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $middlewareAliases = [
+        'analytics.pages' => \App\Http\Middleware\EnsureAnalyticsPagesShown::class,
         'ensureStateful' => \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
