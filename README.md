@@ -87,6 +87,8 @@ The OAuth tests need Passport's signing keys; create them once with `php artisan
 
 CI (`.github/workflows/ci.yaml`) runs the suite on every pull request and on `dev` and `main`, against a MariaDB 10.5 service, and runs `npm test` and the Vite build. The tests fake the Google Fonts request and skip Vite, so they need neither the network nor a build.
 
+A pull request that changes `resources/lang` also has its copy checked with Witty (`.github/workflows/check-copy.yaml`): the NLP API's translation checker sends every string to an NLP API with Witty's own style (`config/witty.json` in the [NLP API repository](https://github.com/witty-works/nlp_api)) and lists what the API flags in the job summary. It reports and does not fail on findings, since the API also flags points the copy keeps on purpose; it fails only when the API cannot be reached. It runs only once the repository has the variable `WITTY_API_URL` and the secret `WITTY_API_KEY`, a key created for a CI account in one of the deployment's teams.
+
 ## Browser tests
 
 PHPUnit sees markup; what only a rendered page shows is checked in Chromium with Playwright (`tests/browser`, `playwright.config.js`):
