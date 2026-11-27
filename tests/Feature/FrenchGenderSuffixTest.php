@@ -96,6 +96,22 @@ class FrenchGenderSuffixTest extends TestCase
             ->assertSet('french_gender_suffix', 'full');
     }
 
+    public function test_a_user_cannot_save_while_the_team_locks_french(): void
+    {
+        $user = $this->signedInUser();
+        $guidelines = LanguageGuidelines::getLanguageGuidelines($user->currentTeam);
+        $guidelines->french_rules_force = true;
+        $guidelines->save();
+
+        Livewire::actingAs($user)
+            ->test(UserFrench::class, ['model' => $user])
+            ->set('french_gender_suffix', 'full')
+            ->call('updateLanguageGuidelinesFrench')
+            ->assertForbidden();
+
+        $this->assertSame('short', LanguageGuidelines::getLanguageGuidelines($user)->french_gender_suffix);
+    }
+
     public function test_an_unlocked_team_suggests_its_choice(): void
     {
         $user = $this->signedInUser();

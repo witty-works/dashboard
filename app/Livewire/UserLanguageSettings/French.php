@@ -81,6 +81,11 @@ class French extends Component
             abort(403);
         }
 
+        // The form is read-only while the team locks the French settings.
+        if (LanguageGuidelines::isForcedOnTeam($this->model, 'french_rules')) {
+            abort(403);
+        }
+
         $languageGuidelines = LanguageGuidelines::getLanguageGuidelines($this->model);
 
         $languageGuidelines->french_gender_separator = $this->french_gender_separator;
