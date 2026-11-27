@@ -3,6 +3,9 @@
 return [
 
     'enabled' => env('POSTHOG_ENABLED', false),
+    // The analytics pages, their API and menu entries, only while PostHog is
+    // enabled too (App\Support\Analytics). Off, events are still collected.
+    'analytics_pages' => (bool) env('ANALYTICS_PAGES_ENABLED', true),
     'api_key' => env('POSTHOG_API_KEY'),
     'host' => env('POSTHOG_HOST'),
     'debug' => env('POSTHOG_DEBUG', false),

@@ -75,11 +75,9 @@ if (config('app.browser_extension')) {
     });
 }
 
-if (config('posthog.enabled')) {
-    Route::middleware(['auth:sanctum'])->group(function () {
-        Route::get('/user/analytics', [AnalyticsController::class, 'userApi'])
-            ->name('api_user_analytics');
-        Route::get('/team/analytics', [AnalyticsController::class, 'organizationApi'])
-            ->name('api_team_analytics');
-    });
-}
+Route::middleware(['auth:sanctum', 'analytics.pages'])->group(function () {
+    Route::get('/user/analytics', [AnalyticsController::class, 'userApi'])
+        ->name('api_user_analytics');
+    Route::get('/team/analytics', [AnalyticsController::class, 'organizationApi'])
+        ->name('api_team_analytics');
+});

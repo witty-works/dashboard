@@ -173,6 +173,7 @@ installation-wide switch above that.
 PostHog collects the statistics the Witty client applications (browser extension, Microsoft Word Add-in) and the dashboard's server send, which the dashboard's analytics pages show. The dashboard loads no tracking script in the browser.
 
 -   `POSTHOG_ENABLED` — Enable PostHog analytics
+-   `ANALYTICS_PAGES_ENABLED` — Show the analytics pages, their API and menu entries, and the team setting for who may see them (default `true`). They show only while `POSTHOG_ENABLED` is on as well. Turn it off to collect events before the pages have anything worth showing; the personal consent to being counted stays while events are collected
 -   `POSTHOG_API_KEY` — API key for PostHog
 -   `POSTHOG_HOST` — Host URL for PostHog instance, the app host (for example `https://eu.posthog.com`), since the dashboard also calls PostHog's private API
 -   `POSTHOG_DEBUG` — Enable debug mode for PostHog
