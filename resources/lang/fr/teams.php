@@ -31,7 +31,7 @@ return [
     'ask_owner_to_buy_or_leave_to_create_own_team' => 'Demandez à :name (:email), responsable de l\'équipe, d\'acheter des licences Witty ou quittez votre équipe actuelle pour créer votre propre équipe.',
     'accepted_invitation' => 'C\'est super ! Vous avez accepté l\'invitation à rejoindre l\'équipe ":team".',
     'not_enough_data_to_display' => 'Pas assez de données pour afficher un graphique',
-    'locked_by_team' => 'Ce paramètre a été verrouillé par les administrateurs de votre équipe.',
+    'locked_by_team' => 'Ce paramètre a été verrouillé par les administrateur·rices de votre équipe.',
     'license_count_error' => 'Une erreur s\'est produite lors de la mise à jour du nombre de licences.',
     'license_count_too_small_error' => 'Veuillez augmenter le nombre de licences ou supprimer des sièges sous licence.',
     'license_count_label' => 'Nombre de licences',
