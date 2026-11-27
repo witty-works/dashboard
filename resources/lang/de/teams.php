@@ -4,7 +4,7 @@ return [
     'subscribe' => 'Jetzt kaufen',
     'billing' => 'Abrechnung',
     'store_context' => 'Kontext speichern',
-    'store_context_description' => 'Wenn eingeschaltet, speichert Witty in bestimmten Situationen <a href="https://www.witty.works/trust-and-security">einige Zeichen</a> vor und nach dem hervorgehobenen Begriff. So hilfst du mit, Witty zu verbessern, um in Zukunft noch bessere Vorschläge zu machen.',
+    'store_context_description' => 'Wenn eingeschaltet, speichert Witty einige Zeichen vor und nach einem hervorgehobenen Begriff mit den Nutzungsstatistiken, sofern dieser Dienst sie erfasst. Sie zeigen, welche Vorschläge helfen. Was gespeichert wird, steht in der Datenschutzerklärung dieses Dienstes.',
     'confirm_before_checking_headline' => 'Vor dem Prüfen fragen',
     'confirm_before_checking' => 'Vor dem Prüfen jedes Feldes fragen',
     'confirm_before_checking_description' => 'Die Browser-Erweiterung der Mitglieder fragt, bevor sie ein Textfeld prüft. So wird kein Text gesendet, bevor sie es bestätigen.',

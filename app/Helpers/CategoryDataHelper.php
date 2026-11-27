@@ -8,6 +8,9 @@ class CategoryDataHelper
 {
     protected static $tableData = [];
 
+    /** Where storage/app/data names the category icons and example images. */
+    public const WEBSITE_MEDIA_URL = 'https://www.witty.works/assets/media/';
+
     public static function loadTableData($tableName, $skipOrthography = false)
     {
         $tableNameFull = $tableName . ($skipOrthography ? '-no-orthograpbhy' : '-with-orthography');
@@ -17,7 +20,7 @@ class CategoryDataHelper
 
         if (!array_key_exists($tableName, self::$tableData)) {
             $file = storage_path("app/data/$tableName.json");
-            self::$tableData[$tableName] = json_decode(file_get_contents($file), true);
+            self::$tableData[$tableName] = self::withMediaUrl(json_decode(file_get_contents($file), true));
         }
 
         $data = self::$tableData[$tableName];
@@ -72,5 +75,22 @@ class CategoryDataHelper
         self::$tableData[$tableNameFull] = $collection->toLocale($locale, $skipOrthography);
 
         return self::$tableData[$tableNameFull];
+    }
+
+    /** Points the image URLs in the data at APP_MEDIA_URL. */
+    private static function withMediaUrl(array $data): array
+    {
+        $mediaUrl = rtrim((string) config('app.media_url'), '/') . '/';
+        if ($mediaUrl === '/' || $mediaUrl === self::WEBSITE_MEDIA_URL) {
+            return $data;
+        }
+
+        array_walk_recursive($data, function (&$value) use ($mediaUrl) {
+            if (is_string($value) && str_starts_with($value, self::WEBSITE_MEDIA_URL)) {
+                $value = $mediaUrl . substr($value, strlen(self::WEBSITE_MEDIA_URL));
+            }
+        });
+
+        return $data;
     }
 }

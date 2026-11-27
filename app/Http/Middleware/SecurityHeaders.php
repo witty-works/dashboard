@@ -23,8 +23,8 @@ use Symfony\Component\HttpFoundation\Response;
  *   views do not keep to.
  * - Inline styles are allowed: the views, the error pages and the
  *   laravel-embed wrapper use style attributes and <style> blocks.
- * - Images also from www.witty.works, where the category icons and
- *   examples in storage/app/data are hosted.
+ * - Images also from the host of APP_MEDIA_URL, where the category icons
+ *   and examples in storage/app/data are hosted (the website by default).
  * - The academy page frames YouTube's no-cookie player.
  * - The write page calls the NLP API, and the bundled Sentry SDK sends errors
  *   to the host of the DSN.
@@ -44,8 +44,6 @@ class SecurityHeaders
         . 'gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), usb=()';
 
     private const YOUTUBE = 'https://www.youtube-nocookie.com';
-
-    private const WEBSITE = 'https://www.witty.works';
 
     public function handle(Request $request, Closure $next): Response
     {
@@ -85,7 +83,7 @@ class SecurityHeaders
             'default-src' => ["'self'"],
             'script-src' => ["'self'", "'nonce-$nonce'", "'unsafe-eval'", $hot],
             'style-src' => ["'self'", "'unsafe-inline'", $hot],
-            'img-src' => ["'self'", 'data:', self::WEBSITE],
+            'img-src' => ["'self'", 'data:', $this->origin((string) config('app.media_url'))],
             'font-src' => ["'self'", $hot],
             'connect-src' => [
                 "'self'",

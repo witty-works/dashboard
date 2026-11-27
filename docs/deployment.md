@@ -86,6 +86,8 @@ To connect the NLP API:
 -   **`APP_NLP_API_SYNC_ENDPOINT`:** the API's address as the dashboard's containers reach it, with `APP_NLP_API_SYNC_USER` and `APP_NLP_API_SYNC_PASSWORD` (see [NLP API Sync](../README.md#nlp-api-sync)).
 -   **`NLP_API_PUBLIC_URL`:** the API's address as browsers reach it, for the write page.
 
+The category icons and example images on the guidelines pages load from `https://www.witty.works/assets/media/`, the website of the project's former maintainer, which the dashboard's licence does not cover. To serve your own copy of that folder, set **`APP_MEDIA_URL`** to its address; the images keep their file names.
+
 Which features a deployment offers is set with the switches in the README's [features a deployment switches on or off](../README.md#features-a-deployment-switches-on-or-off).
 
 ## Containers and the reverse proxy

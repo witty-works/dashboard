@@ -4,7 +4,7 @@ return [
     'subscribe' => 'Buy now',
     'billing' => 'Billing',
     'store_context' => 'Store context',
-    'store_context_description' => 'When switched on, Witty <a href="https://www.witty.works/trust-and-security">stores some characters</a> before and after the marked term in certain situations. This helps to improve Witty and make better suggestions in the future.',
+    'store_context_description' => 'When switched on, Witty keeps a few characters before and after a marked word with the usage statistics, where this service collects them. They show which suggestions help. The privacy policy of this service says what is kept.',
     'confirm_before_checking_headline' => 'Ask before checking',
     'confirm_before_checking' => 'Ask before checking each field',
     'confirm_before_checking_description' => 'Members\' browser extension asks before checking a text field, so no text is sent until they confirm.',

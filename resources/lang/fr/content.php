@@ -41,6 +41,7 @@ return [
     'resend_verification_email' => 'Renvoyer l\'e-mail de vérification',
     'log_out' => 'Se déconnecter',
     'dashboard' => 'Tableau de bord',
+    'go_to_dashboard_home' => 'Witty, accueil du tableau de bord',
     'manage_members' => 'Gérer l\'équipe',
     'create_new_team' => 'Créer une nouvelle équipe',
     'switch_teams' => 'Changer d\'équipe',
@@ -135,7 +136,7 @@ return [
     'team_information' => 'Nom et responsable de l\'équipe',
     'for_your_security_confirm' => 'Pour votre sécurité, veuillez confirmer votre mot de passe pour continuer.',
     'whoops' => 'Oups ! Il y a eu un problème.',
-    'you_have_been_invited' => 'Bienvenue dans <a href="https://www.witty.works/">Witty</a> !
+    'you_have_been_invited' => 'Bienvenue dans Witty !
 
 :name vous invite à rejoindre l\'équipe ":team".
 ',
@@ -324,8 +325,7 @@ Veuillez ensuite cliquer à nouveau sur "S\'inscrire" pour finaliser l\'inscript
     'already_registered_with_a_different_email_title' => 'Avez-vous déjà un compte ?',
     'already_registered_with_a_different_email_description' => 'Vérifiez que votre adresse Microsoft Office correspond à celle que vous utilisez sur votre compte existant avant de continuer.',
     'office_register_title' => 'Confidentialité, protection des données et sécurité',
-    'office_register_description' => 'Nous sommes très stricts sur ce sujet et nous dépassons les normes du secteur. <strong>Witty Works est une entreprise qui privilégie l\'éthique.</strong> La confiance de nos utilisateurs est plus importante pour nous que la collecte de données.',
-    'office_register_summary' => 'En bref, nous séparons totalement le profil de l\'utilisateur (comme l\'e-mail, etc.) des données collectées : <ul><li>Nous séparons totalement le profil de l\'utilisateur (comme l\'adresse électronique, etc.) de toutes les données collectées, c\'est-à-dire que <strong>dans nos analyses, nous ne pouvons pas retracer qui a écrit quel texte</strong>.</li><li>Nous ne stockons qu\'une quantité très limitée de votre texte dans le but d <strong>\'améliorer le produit</strong> (par exemple, ce qu\'il faut mettre en évidence, les alternatives à montrer).</li><li>Dans la version payante, vous pouvez même désactiver ce type de collecte de données.</li><li>Les données ne sont pas partagées avec des tiers.</li><li><strong>Nos serveurs se trouvent dans l\'UE.</strong></li></ul>',
+    'office_register_description' => 'Ce qui est collecté, et par qui, est décrit dans la politique de confidentialité de ce service.',
     'you_must_consent' => 'Vous devez accepter pour continuer.',
     'triple_toggle_locked_third_pos' => 'L\'administrateur de votre équipe a réglé cette dimension de la diversité sur "avancé". Vous ne pouvez pas la modifier.',
     'triple_toggle_locked_second_pos' => 'L\'administrateur de votre équipe a réglé cette dimension de la diversité sur "basique". Cliquez pour passer de "basique" à "avancé".',
