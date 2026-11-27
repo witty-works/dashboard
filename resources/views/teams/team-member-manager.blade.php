@@ -37,7 +37,7 @@
                             @foreach ($this->roles as $index => $role)
                                 <button type="button" aria-pressed="{{ $addTeamMemberForm['role'] === $role->key ? 'true' : 'false' }}" class="relative px-4 py-3 inline-flex w-full rounded-lg"
                                         wire:click="$set('addTeamMemberForm.role', '{{ $role->key }}')">
-                                    <div class="{{ $addTeamMemberForm['role'] !== $role->key ? 'opacity-50' : '' }}">
+                                    <div>
                                         <!-- Role Name -->
                                         <div class="flex items-center">
                                             <div class="lato-paragraph-text-p lato-small-paragraph-title-h4 {{ $addTeamMemberForm['role'] == $role->key ? 'font-semibold' : '' }}">
@@ -45,7 +45,7 @@
                                             </div>
 
                                             @if ($addTeamMemberForm['role'] == $role->key)
-                                                <svg aria-hidden="true" focusable="false" class="ml-2 h-5 w-5 text-green-400 lato-small-text-p" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                                <svg aria-hidden="true" focusable="false" class="ml-2 h-5 w-5 text-green-700 lato-small-text-p" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                             @endif
                                         </div>
 
@@ -199,9 +199,9 @@
         <x-slot name="content">
             <div class="relative z-0 mt-1 border border-gray-200 rounded-lg cursor-pointer">
                 @foreach ($this->roles as $index => $role)
-                    <button type="button" class="relative px-4 py-3 inline-flex w-full rounded-lg focus:z-10 focus:outline-none focus:ring-2 focus:ring-indigo-700 {{ $index > 0 ? 'border-t border-gray-200 rounded-t-none' : '' }} {{ ! $loop->last ? 'rounded-b-none' : '' }}"
+                    <button type="button" aria-pressed="{{ $currentRole === $role->key ? 'true' : 'false' }}" class="relative px-4 py-3 inline-flex w-full rounded-lg focus:z-10 focus:outline-none focus:ring-2 focus:ring-indigo-700 {{ $index > 0 ? 'border-t border-gray-200 rounded-t-none' : '' }} {{ ! $loop->last ? 'rounded-b-none' : '' }}"
                                     wire:click="$set('currentRole', '{{ $role->key }}')">
-                        <div class="{{ $currentRole !== $role->key ? 'opacity-50' : '' }}">
+                        <div>
                             <!-- Role Name -->
                             <div class="flex items-center">
                                 <div class="text-sm text-gray-600 {{ $currentRole == $role->key ? 'font-semibold' : '' }}">
@@ -209,7 +209,7 @@
                                 </div>
 
                                 @if ($currentRole == $role->key)
-                                    <svg aria-hidden="true" focusable="false" class="ml-2 h-5 w-5 text-green-400" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                    <svg aria-hidden="true" focusable="false" class="ml-2 h-5 w-5 text-green-700" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                 @endif
                             </div>
 

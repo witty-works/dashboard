@@ -13,9 +13,9 @@
     </template>
 
     @if ($unavailable)
-        <p class="mb-6 text-red-600" role="alert">{{ __('content.api_keys_unavailable') }}</p>
+        <p class="mb-6 text-red-700" role="alert">{{ __('content.api_keys_unavailable') }}</p>
     @endif
-    @error('keys') <p class="mb-6 text-red-600" role="alert">{{ $message }}</p> @enderror
+    @error('keys') <p class="mb-6 text-red-700" role="alert">{{ $message }}</p> @enderror
 
     <h3 class="mb-2 font-semibold">{{ __('content.api_keys_limits_title') }}</h3>
     <ul class="mb-8 text-sm">
@@ -32,7 +32,7 @@
         <div>
             <label for="api-key-name" class="block text-sm">{{ __('content.api_keys_name') }}</label>
             <input id="api-key-name" type="text" wire:model="name" class="form-input" maxlength="100" required>
-            @error('name') <p class="text-sm text-red-600" role="alert">{{ $message }}</p> @enderror
+            @error('name') <p class="text-sm text-red-700" role="alert">{{ $message }}</p> @enderror
         </div>
         <div>
             <label for="api-key-team" class="block text-sm">{{ __('content.api_keys_team') }}</label>
@@ -44,12 +44,12 @@
                     <option value="{{ $team->id }}">{{ $team->name }}</option>
                 @endforeach
             </select>
-            @error('teamId') <p class="text-sm text-red-600" role="alert">{{ $message }}</p> @enderror
+            @error('teamId') <p class="text-sm text-red-700" role="alert">{{ $message }}</p> @enderror
         </div>
         <div>
             <label for="api-key-expires" class="block text-sm">{{ __('content.api_keys_expires_optional') }}</label>
             <input id="api-key-expires" type="date" wire:model="expiresOn" class="form-input" min="{{ now()->addDay()->toDateString() }}">
-            @error('expiresOn') <p class="text-sm text-red-600" role="alert">{{ $message }}</p> @enderror
+            @error('expiresOn') <p class="text-sm text-red-700" role="alert">{{ $message }}</p> @enderror
         </div>
         <button type="submit" class="button primary-button">{{ __('content.api_keys_create') }}</button>
     </form>

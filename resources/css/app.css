@@ -71,7 +71,6 @@ h4 {
     font-weight: 600 !important;
     font-size: 22px !important;
     line-height: 28px !important;
-    color: #000000;
 }
 
 
@@ -90,7 +89,6 @@ h4 {
     font-weight: normal;
     font-size: 14px;
     line-height: 1.3;
-    color: #000000;
     margin-bottom: 0.5rem;
 }
 
@@ -101,7 +99,18 @@ h4 {
     font-weight: 400;
     font-size: 18px;
     line-height: 30px;
-    color: #000000;
+}
+
+/* The default colour of the Lato text classes sits in Tailwind's components
+   layer, before the utilities, so that a colour utility on the same element
+   wins: the danger button's text-white was black (WCAG 1.4.3). */
+@layer components {
+    .lato-small-paragraph-title-h4,
+    h4,
+    .proficiency-level-p,
+    .lato-paragraph-text-p {
+        color: #000000;
+    }
 }
 
 .lato-paragraph-text-p-red {

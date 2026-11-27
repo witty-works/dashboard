@@ -6,9 +6,9 @@
     </p>
 
     @if ($unavailable)
-        <p class="mb-4 text-red-600" role="alert">{{ __('content.api_keys_unavailable') }}</p>
+        <p class="mb-4 text-red-700" role="alert">{{ __('content.api_keys_unavailable') }}</p>
     @endif
-    @error('keys') <p class="mb-4 text-red-600" role="alert">{{ $message }}</p> @enderror
+    @error('keys') <p class="mb-4 text-red-700" role="alert">{{ $message }}</p> @enderror
 
     @if ($keys->isEmpty())
         <p class="text-sm text-gray-600">{{ __('content.api_keys_none') }}</p>

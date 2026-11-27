@@ -9,7 +9,7 @@
         </div>
 
         @if (session('status'))
-            <div class="mb-4 font-medium text-sm text-green-600" role="status">
+            <div class="mb-4 font-medium text-sm text-green-700" role="status">
                 {{ session('status') }}
             </div>
         @endif
