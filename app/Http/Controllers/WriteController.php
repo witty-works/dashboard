@@ -16,7 +16,7 @@ class WriteController extends Controller
     public function show(): View
     {
         $apiUrl = (string) config('app.nlp_api_public_url');
-        $contact = (string) config('app.write_contact');
+        $contact = (string) config('app.support_email');
 
         return view('write', [
             'configured' => $apiUrl !== '' && (string) config('passport.editor.client_id') !== '',

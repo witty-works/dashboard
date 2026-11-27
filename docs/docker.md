@@ -101,6 +101,7 @@ Besides the settings in `.env.example` and the README's "Custom Application Conf
 | `SESSION_DRIVER` | `database` |
 | `LOG_CHANNEL` | `stderr` (the image's default), so the container log collects it |
 | `MAIL_HOST`, `MAIL_PORT`, `MAIL_USERNAME`, `MAIL_PASSWORD`, `MAIL_FROM_ADDRESS` | SMTP; port 587 uses STARTTLS, 465 TLS |
+| `SUPPORT_EMAIL` | the deployment's one support address: shown where people are told whom to write to (the write page, the Word add-in's failed sign-in, invitations, the error page), and where reports and failed-job alerts go. Without it, `MAIL_FROM_ADDRESS` |
 | `PRIVACY_POLICY_FILE`, `TERMS_OF_SERVICE_FILE` | paths to the deployment's own privacy policy and terms of service, Markdown files mounted read-only into the container (for example under `/etc/dashboard/`); `/policy` and `/terms` render them without raw HTML; start their headings at `##`, as the page has its own title. Sign-up asks people to agree only to the documents provided, and the footer links only those. The repository holds no such text: without a file, each page says the deployment has published none |
 
 The cache stays on the default file store inside the container: it holds the OAuth signing key's JWK, PostHog insights and rate-limit counters, all of which can be rebuilt, so a new container starting empty costs nothing.

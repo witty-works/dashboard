@@ -228,10 +228,10 @@
                         <div class="chart-footer" id="topWordsChartCorporateRulesFooter"></div>
                     </div>
                   <div id="noCorporateRulesWrapper" class="container-row wittyworks-margin-top" style="display: none;">
-                     <div class="lato-small-text-p">{!! empty($user) ? __('content.no_corporate_rules') : __('content.no_corporate_rules_user') !!}</div>
+                     <div class="lato-small-text-p">{!! empty($user) ? __('content.no_corporate_rules', ['url' => e(route('teams.dictionary'))]) : __('content.no_corporate_rules_user', ['url' => e(route('user.dictionary'))]) !!}</div>
                   </div>
                   <div id="corporateRulesButNoneOpened" class="container-row wittyworks-margin-top" style="display: none;">
-                     <div class="lato-small-text-p">{!! empty($user) ? __('content.corporate_rules_none_opened') : __('content.corporate_rules_none_opened_user') !!}</div>
+                     <div class="lato-small-text-p">{!! empty($user) ? __('content.corporate_rules_none_opened', ['url' => e(route('teams.dictionary'))]) : __('content.corporate_rules_none_opened_user', ['url' => e(route('user.dictionary'))]) !!}</div>
                   </div>
                </div>
             </div>

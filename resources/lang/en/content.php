@@ -178,8 +178,7 @@ return [
     'already_invited_to_team' => 'This user has already been invited to the team.',
     'already_belongs_to_team' => 'This user already belongs to the team.',
     'team_invitation_subject' => 'Witty | :name invited you to join your team on Witty',
-    'if_you_have_questions' => 'P.S. Need support or have any questions?
-You can find answers to many questions <a href="https://www.witty.works/en/help/wittys-help-center">here</a>. You can get in touch with us at <a href="mailto:support@witty.works">support@witty.works</a>. We\'re here to help you at any step along the way.',
+    'if_you_have_questions' => 'P.S. Need support or have any questions? You can get in touch with us at <a href="mailto::support_email">:support_email</a>. We\'re here to help you at any step along the way.',
     'have_a_great_day' => 'Your Witty team',
     'more_resouces' => 'More Resources',
     'unable_to_find_user_with_this_email' => 'We were unable to find a registered user with this email address.',
@@ -200,12 +199,6 @@ You can find answers to many questions <a href="https://www.witty.works/en/help/
     'onboarding_login_witty_text' => 'In order to use Witty, please sign into the Witty browser extension.',
     'onboarding_login_witty_button' => 'Sign into Witty',
     'mailing_consent_reject' => 'No',
-    'upgrade_title' => 'Ready to upgrade?',
-    'upgrade_text' => 'If you want to invite more team members or customize Witty further, please upgrade.',
-    'upgrade_ask_owner_text' => 'If you want to invite more team members or customize Witty further, simply subscribe to a plan.
-
-Ask your team administrators <a href="mailto::email">:name</a> to upgrade to <a href="https://www.witty.works/pricing" target="_blank">Witty Teams</a>.',
-    'upgrade_button' => 'Upgrade',
     'writing_streak' => 'You have been using Witty for',
     'in_a_row' => 'weeks in a row',
     'learning_bites_requests_week_negative' => 'less often to learn about a bias',
@@ -278,9 +271,9 @@ Please use Witty more often and click on the highlighted terms.',
     'lead' => 'Team Lead',
     'employee' => 'Employee',
     'analytic_top_words_corporate_rules' => 'Top dictionary words',
-    'no_corporate_rules' => 'You haven\'t made any entries in <a href="https://dashboard.witty.works/team/language/dictionary" target="_blank">your team dictionary</a> yet, so we can\'t show statistics for that.<br/>
-<a href="https://dashboard.witty.works/team/language/dictionary" target="_blank">Try it!</a>',
-    'corporate_rules_none_opened' => 'You have entered words in your <a href="https://dashboard.witty.works/team/language/dictionary" target="_blank">team\'s dictionary</a>, but during the timeframe no one from your team has used these terms.',
+    'no_corporate_rules' => 'You haven\'t made any entries in <a href=":url">your team dictionary</a> yet, so we can\'t show statistics for that.<br/>
+<a href=":url">Try it!</a>',
+    'corporate_rules_none_opened' => 'You have entered words in your <a href=":url">team\'s dictionary</a>, but during the timeframe no one from your team has used these terms.',
     'browser_name_chrome' => 'Chrome',
     'browser_get_chrome' => 'Get for Chrome',
     'browser_name_edge' => 'Microsoft Edge',
@@ -290,9 +283,9 @@ Please use Witty more often and click on the highlighted terms.',
     'witty_download' => 'Download Witty. It’s free.',
     'witty_download_description' => 'Switch to one of the following browsers, and add the Witty extension.',
     'witty_download_description_not_supported_yet' => 'This browser is not yet supported by Witty.',
-    'no_corporate_rules_user' => 'You haven\'t made any entries in <a href="https://dashboard.witty.works/user/language/dictionary" target="_blank">your dictionary</a> yet, so we can\'t show statistics for that.<br/>
-<a href="https://dashboard.witty.works/user/language/dictionary" target="_blank">Try it!</a>',
-    'corporate_rules_none_opened_user' => 'You have entered words in your <a href="https://dashboard.witty.works/user/language/dictionary" target="_blank">team\'s dictionary</a>, but during the timeframe you have not used these terms.',
+    'no_corporate_rules_user' => 'You haven\'t made any entries in <a href=":url">your dictionary</a> yet, so we can\'t show statistics for that.<br/>
+<a href=":url">Try it!</a>',
+    'corporate_rules_none_opened_user' => 'You have entered words in <a href=":url">your dictionary</a>, but during the timeframe you have not used these terms.',
     'witty_download_already_installed' => 'Log in to use Witty.',
     'witty_download_installed' => 'Want to use Witty?',
     'sign_in' => 'Sign in',
@@ -321,7 +314,7 @@ You can now close this window.
 <br>
 <br>
 Please then go to "Register" again to finalize the registration into the "Witty for Word" Add-in.',
-    'witty_word_addin_text_failed' => 'We have failed to log you into Witty Word-Addin.<br>Please close this window and try again or contact <a href="mailto:support@witty.works">support@witty.works</a>.',
+    'witty_word_addin_text_failed' => 'We have failed to log you into Witty Word-Addin.<br>Please close this window and try again or contact <a href="mailto::support_email">:support_email</a>.',
     'witty_word_addin_text_invite_only' => 'Sign-up is by invitation only, and there is no invitation for this address.<br>Please close this window and ask the person who manages your team to invite you.',
     'inclusive_filter' => 'Inclusion',
     'inclusive_filter_non_inclusive' => 'Non-inclusive',

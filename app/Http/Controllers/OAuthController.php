@@ -241,30 +241,6 @@ class OAuthController extends Controller
         return $user;
     }
 
-    protected function isWittyWorksUrl($url, $strict = false)
-    {
-        if (empty($url)) {
-            return false;
-        }
-
-        $result = parse_url($url);
-        if (empty($result['host'])) {
-            return false;
-        }
-
-        if ($strict) {
-            return $result['host'] === 'dashboard.witty.works';
-        }
-
-        if (
-            $result['host'] === 'witty.works'
-            || str_ends_with($result['host'], '.witty.works')
-        ) {
-            return true;
-        }
-
-        return false;
-    }
 
     /**
      * Mirrors the response socialstream produced for a Jetstream application:

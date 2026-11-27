@@ -118,7 +118,7 @@ class WritePageTest extends TestCase
 
     public function test_the_config_cannot_close_its_script_element(): void
     {
-        config(['app.write_contact' => '</script><script>alert(1)</script>']);
+        config(['app.support_email' => '</script><script>alert(1)</script>']);
 
         $response = $this->actingAs($this->signedInUser())->withoutLocaleRedirects()->get('/write');
         $this->assertStringNotContainsString('</script><script>alert(1)', $response->getContent());

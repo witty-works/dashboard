@@ -16,7 +16,6 @@ return [
     'user_licenses' => 'Benutzer*innen',
     'term_replacements' => 'Team-Wörterbuch',
     'false_positives' => 'Ignorierte Wörter deines Teams',
-    'more_licenses' => 'Wenn du weitere Lizenzen erwerben möchtest, <a href="mailto:support@witty.works">wende</a> dich bitte an Witty Works.',
     'what_is_included' => 'Aboausnutzung',
     'user_limit_reached_error' => 'Alle Lizenzen wurden vergeben. Neue Teammitgliedern können keine Lizenz automatisch zugewiesen wiesen werden.',
     'end_date' => 'Dein Abo endet am ',

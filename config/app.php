@@ -211,14 +211,17 @@ return [
     |
     | The NLP API address the browser calls from the write page. Not the
     | server-side nlp_api_endpoint, which may be an internal address. Without
-    | it the page says it is not configured. The contact is whom users ask
-    | for access when the API does not let them in.
+    | it the page says it is not configured.
     |
     */
 
     'nlp_api_public_url' => env('NLP_API_PUBLIC_URL', ''),
 
-    'write_contact' => env('WRITE_CONTACT', 'api@witty.works'),
+    // The deployment's one support address: whom people write to for help,
+    // for access to the language model on the write page, or about an error;
+    // also where reports and failed-job alerts go. Without it, the sender
+    // address (MAIL_FROM_ADDRESS).
+    'support_email' => env('SUPPORT_EMAIL', env('MAIL_FROM_ADDRESS', '')),
 
     // The deployment's privacy policy and terms of service: Markdown files
     // outside the repository, for example mounted into the container. The

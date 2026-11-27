@@ -178,8 +178,7 @@ return [
     'already_invited_to_team' => 'Cette personne a déjà été invitée dans l\'équipe.',
     'already_belongs_to_team' => 'Cette personne est déjà membre de l\'équipe.',
     'team_invitation_subject' => 'Witty | :name vous a invité à rejoindre votre équipe sur Witty',
-    'if_you_have_questions' => 'P.S. Vous avez besoin d\'aide ou vous avez des questions ?
-Vous trouverez des réponses à de nombreuses questions <a href="https://www.witty.works/en/help/wittys-help-center">sur cette page</a> (en anglais uniquement). Vous pouvez aussi nous contacter par e-mail à <a href="mailto:support@witty.works">support@witty.works.</a> Nous sommes disponibles pour vous aider et vous accompagner dans l\'utilisation de Witty.',
+    'if_you_have_questions' => 'P.S. Vous avez besoin d\'aide ou vous avez des questions ? Vous pouvez nous contacter par e-mail à <a href="mailto::support_email">:support_email</a>. Nous sommes disponibles pour vous aider et vous accompagner dans l\'utilisation de Witty.',
     'have_a_great_day' => 'L\'équipe de Witty',
     'more_resouces' => 'Plus de ressources',
     'unable_to_find_user_with_this_email' => 'Cette adresse e-mail n\'est associée à aucun compte.',
@@ -200,12 +199,6 @@ Vous trouverez des réponses à de nombreuses questions <a href="https://www.wit
     'onboarding_login_witty_text' => 'Pour utiliser Witty, veuillez vous connecter à l\'extension de navigateur Witty.',
     'onboarding_login_witty_button' => 'Se connecter à Witty',
     'mailing_consent_reject' => 'Non',
-    'upgrade_title' => 'Prêt·e à passer au niveau supérieur ?',
-    'upgrade_text' => 'Si vous souhaitez inviter plus de membres de l\'équipe ou personnaliser davantage Witty, veuillez mettre à niveau.',
-    'upgrade_ask_owner_text' => 'Si vous souhaitez inviter d\'autres membres de l\'équipe ou personnaliser davantage Witty, il vous suffit de souscrire à un plan.
-
-Demandez aux administrateurs de votre équipe <a href="mailto::email">:name</a> de passer à <a href="https://www.witty.works/pricing" target="_blank">Witty Teams</a>.',
-    'upgrade_button' => 'Mise à niveau',
     'writing_streak' => 'Vous utilisez Witty depuis',
     'in_a_row' => 'semaines consécutives',
     'learning_bites_requests_week_negative' => 'moins souvent pour connaître un biais',
@@ -278,10 +271,9 @@ Veuillez utiliser Witty plus souvent et cliquez sur les termes mis en évidence.
     'lead' => 'Chef d\'équipe',
     'employee' => 'Employé·e',
     'analytic_top_words_corporate_rules' => 'Principaux mots du dictionnaire',
-    'no_corporate_rules' => 'Vous n\'avez pas encore fait d\'entrées dans <a href="https://dashboard.witty.works/team/language/dictionary" target="_blank">votre dictionnaire d\'équipe</a>, nous ne pouvons donc pas afficher de statistiques à ce sujet.<br/>
-<a href="https://dashboard.witty.works/team/language/dictionary" target="_blank">Essayez-le !</a>',
-    'corporate_rules_none_opened' => 'Vous avez saisi des mots dans le <a href="https://dashboard.witty.works/team/language/dictionary" target="_blank">dictionnaire 
- de votre équipe</a>, mais personne de votre équipe n\'a utilisé ces mots dans cette période.',
+    'no_corporate_rules' => 'Vous n\'avez pas encore fait d\'entrées dans <a href=":url">votre dictionnaire d\'équipe</a>, nous ne pouvons donc pas afficher de statistiques à ce sujet.<br/>
+<a href=":url">Essayez-le !</a>',
+    'corporate_rules_none_opened' => 'Vous avez saisi des mots dans le <a href=":url">dictionnaire de votre équipe</a>, mais personne de votre équipe n\'a utilisé ces mots dans cette période.',
     'browser_name_chrome' => 'Chrome',
     'browser_get_chrome' => 'Obtenir pour Chrome',
     'browser_name_edge' => 'Microsoft Edge',
@@ -291,9 +283,9 @@ Veuillez utiliser Witty plus souvent et cliquez sur les termes mis en évidence.
     'witty_download' => 'Télécharger Witty. C\'est gratuit.',
     'witty_download_description' => 'Passez à l\'un des navigateurs suivants et ajoutez l\'extension Witty.',
     'witty_download_description_not_supported_yet' => 'Ce navigateur n\'est pas encore pris en charge par Witty.',
-    'no_corporate_rules_user' => 'Vous n\'avez pas encore fait d\'entrées dans <a href="https://dashboard.witty.works/user/language/dictionary" target="_blank">votre dictionnaire</a>, nous ne pouvons donc pas afficher de statistiques à ce sujet.<br/>
-<a href="https://dashboard.witty.works/user/language/dictionary" target="_blank">Essayez-le !</a>',
-    'corporate_rules_none_opened_user' => 'Vous avez saisi des mots dans le <a href="https://dashboard.witty.works/user/language/dictionary" target="_blank">dictionnaire de votre équipe</a>, mais vous n\'avez pas utilisé ces mots dans cette période.',
+    'no_corporate_rules_user' => 'Vous n\'avez pas encore fait d\'entrées dans <a href=":url">votre dictionnaire</a>, nous ne pouvons donc pas afficher de statistiques à ce sujet.<br/>
+<a href=":url">Essayez-le !</a>',
+    'corporate_rules_none_opened_user' => 'Vous avez saisi des mots dans <a href=":url">votre dictionnaire</a>, mais vous n\'avez pas utilisé ces mots dans cette période.',
     'witty_download_already_installed' => 'Connectez-vous pour utiliser Witty.',
     'witty_download_installed' => 'Vous voulez utiliser Witty ?',
     'sign_in' => 'S\'inscrire',
@@ -322,7 +314,7 @@ Vous pouvez maintenant fermer cette fenêtre.
 <br>
 <br>
 Veuillez ensuite cliquer à nouveau sur "S\'inscrire" pour finaliser l\'inscription.',
-    'witty_word_addin_text_failed' => 'Nous n\'avons pas réussi à vous connecter à Witty Word-Addin.<br>Veuillez fermer cette fenêtre et réessayer ou contacter <a href="mailto:support@witty.works">support@witty.works</a>.',
+    'witty_word_addin_text_failed' => 'Nous n\'avons pas réussi à vous connecter à Witty Word-Addin.<br>Veuillez fermer cette fenêtre et réessayer ou contacter <a href="mailto::support_email">:support_email</a>.',
     'witty_word_addin_text_invite_only' => 'L’inscription se fait uniquement sur invitation, et il n’y a pas d’invitation pour cette adresse.<br>Veuillez fermer cette fenêtre et demander une invitation à la personne qui gère votre équipe.',
     'inclusive_filter' => 'Inclusion :',
     'inclusive_filter_non_inclusive' => 'Non inclusif',

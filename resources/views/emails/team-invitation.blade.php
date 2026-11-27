@@ -15,5 +15,5 @@
 
 {!! __('content.have_a_great_day') !!}
 
-{!! __('content.if_you_have_questions') !!}
+{!! __('content.if_you_have_questions', ['support_email' => e(config('app.support_email'))]) !!}
 @endcomponent

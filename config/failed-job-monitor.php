@@ -28,7 +28,8 @@ return [
     'channels' => ['mail'],
 
     'mail' => [
-        'to' => 'engineering@witty.works',
+        // The deployment's support address (config app.support_email).
+        'to' => env('SUPPORT_EMAIL', env('MAIL_FROM_ADDRESS')),
     ],
 
     'slack' => [
