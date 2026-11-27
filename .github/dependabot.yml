@@ -56,3 +56,23 @@ updates:
         update-types:
           - minor
           - patch
+
+  # The base images, pinned by tag and digest in Dockerfile. No cooldown: a
+  # new digest of the same tag is how the base image's security fixes arrive.
+  - package-ecosystem: docker
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    labels:
+      - dependencies
+    ignore:
+      # PHP and Node versions move by hand, with composer.json, .lando.yml and
+      # ci.yaml; only new digests of the pinned tags are proposed.
+      - dependency-name: dunglas/frankenphp
+        update-types:
+          - version-update:semver-major
+          - version-update:semver-minor
+      - dependency-name: node
+        update-types:
+          - version-update:semver-major

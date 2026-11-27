@@ -40,10 +40,9 @@ Runs on Laravel 13 / PHP 8.4, with Node 24 for the asset build.
     -   Edit `.sentryclirc` to add the auth token from
         https://sentry.io/settings/account/api/auth-tokens/
 
-**Note:** Plain `php artisan route:cache` is _not supported_ by the multilingual
-route extension used in this project and will break route localization. Use
-`php artisan route:trans:cache`, which builds one cache per locale — run it on
-deploy, after the code is in place. `route:trans:clear` removes them again.
+**Note:** `php artisan route:cache` works with the localization package in use
+(`niels-numbers/laravel-localizer`), which registers every localized route as a
+plain route. The production image caches routes when it starts.
 
 # Development
 
@@ -96,8 +95,7 @@ Two things to know when writing tests:
     registered under a prefix from `LaravelLocalization::setLocale()`, which reads
     the request. In tests the route file loads during bootstrap, before a request
     exists, so routes register unprefixed while the redirect middleware still
-    expects a prefix. This is the same limitation behind the route-caching note
-    above.
+    expects a prefix.
 
 # Other relevant URLs:
 
@@ -119,6 +117,10 @@ dependency; see that directory for why.
 # Deployments
 
 See [docs/release.md](docs/release.md) for release and hotfix instructions, including git config and deployment steps.
+
+## Production image
+
+Deployments run the Docker image that a version tag publishes to `ghcr.io/witty-works/dashboard`, pinned by digest. One image serves as web server, queue worker and migration step, and takes all its configuration from the environment. See [docs/docker.md](docs/docker.md#production-image) for the roles, the settings a deployment needs and the first start.
 
 ## User management
 
