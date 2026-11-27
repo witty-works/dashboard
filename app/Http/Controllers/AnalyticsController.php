@@ -32,7 +32,7 @@ class AnalyticsController extends Controller
             return 'check_highlights';
         }
 
-        return env('CHECK_HIGHLIGHTS_ENABLED', false) ? 'check_highlights' : 'popover_open';
+        return config('posthog.check_highlights_enabled') ? 'check_highlights' : 'popover_open';
     }
 
     public function user(Request $request)

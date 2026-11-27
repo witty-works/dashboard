@@ -12,6 +12,10 @@ return [
     'dashboard_user_id_override' => env('POSTHOG_DASHBOARD_USER_ID'),
     'dashboard_team_id_override' => env('POSTHOG_DASHBOARD_TEAM_ID'),
     'delay_per_count' => env('POSTHOG_DELAY_PER_COUNT', 0.1),
+    # The analytics pages count check_highlights events instead of
+    # popover_open ones. Read here rather than with env() in the controller,
+    # which returns null once the configuration is cached.
+    'check_highlights_enabled' => (bool) env('CHECK_HIGHLIGHTS_ENABLED', false),
     # https://posthog.com/docs/api#rate-limiting
     'rate' => [
         # 1200 per hour, use only 1000 per hour -> 16 per minute
