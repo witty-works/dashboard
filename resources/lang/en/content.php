@@ -108,6 +108,7 @@ return [
     'delete_account_too_many_attempts' => 'Too many attempts. Please try again in :seconds seconds.',
     'delete_account_hand_over_teams' => 'You own the team :teams, which other people belong to. Before you can delete your account, make one of its admins the owner on the team page.',
     'make_owner' => 'Make owner',
+    'change_role_of' => ', change the role of :name',
     'are_you_sure_you_would_like_to_make_owner' => 'Are you sure you would like to make this person the owner of the team? You stay on the team as an admin, and only they can hand the team over again.',
     'manage_and_log_out_your_active_sessions' => 'Manage and log out your active sessions on other browsers and devices.',
     'if_necessary_you_may_log_out' => 'If necessary, you may log out of all of your other browser sessions across all of your devices. Some of your recent sessions are listed below; however, this list may not be exhaustive. If you feel your account has been compromised, you should also update your password.',

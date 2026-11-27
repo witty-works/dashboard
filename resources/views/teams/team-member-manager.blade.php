@@ -152,7 +152,7 @@
                                 <!-- Manage Team Member Role -->
                                 @if (Gate::check('update', $team) && Laravel\Jetstream\Jetstream::hasRoles())
                                     <button class="ml-2 text-sm text-gray-600 underline" wire:click="manageRole('{{ $user->id }}')">
-                                        {{ __('content.'.Laravel\Jetstream\Jetstream::findRole($user->membership->role)->key) }}
+                                        {{ __('content.'.Laravel\Jetstream\Jetstream::findRole($user->membership->role)->key) }}<span class="sr-only">{{ __('content.change_role_of', ['name' => $user->name]) }}</span>
                                     </button>
                                 @elseif (Laravel\Jetstream\Jetstream::hasRoles())
                                     <div class="ml-2 text-sm text-gray-600">
@@ -163,7 +163,7 @@
                                 <!-- Hand the team over -->
                                 @if ($this->user->ownsTeam($team) && $user->membership->role === 'admin')
                                     <button class="cursor-pointer ml-6 text-sm text-gray-600 underline" wire:click="confirmOwnershipTransfer('{{ $user->id }}')">
-                                        {{ __('content.make_owner') }}
+                                        {{ __('content.make_owner') }}<span class="sr-only"> {{ $user->name }}</span>
                                     </button>
                                 @endif
 
@@ -176,7 +176,7 @@
                                 <!-- Remove Team Member -->
                                 @elseif (Gate::check('removeTeamMember', $team))
                                     <button class="cursor-pointer ml-6 text-sm text-red-700" wire:click="confirmTeamMemberRemoval('{{ $user->id }}')">
-                                        {{ __('content.remove') }}
+                                        {{ __('content.remove') }}<span class="sr-only"> {{ $user->name }}</span>
                                     </button>
                                 @endif
                             </div>

@@ -103,6 +103,7 @@ return [
     'delete_account_too_many_attempts' => 'Zu viele Versuche. Bitte versuche es in :seconds Sekunden erneut.',
     'delete_account_hand_over_teams' => 'Dir gehört das Team :teams, zu dem weitere Personen gehören. Bevor du dein Konto löschen kannst, übertrage das Team auf der Team-Seite an eine Admin-Person.',
     'make_owner' => 'Team übertragen',
+    'change_role_of' => ', Rolle von :name ändern',
     'are_you_sure_you_would_like_to_make_owner' => 'Möchtest du das Team wirklich an diese Person übertragen? Du bleibst als Admin im Team, und nur noch diese Person kann das Team weitergeben.',
     'manage_and_log_out_your_active_sessions' => 'Verwalte und melde deine aktiven Sitzungen auf anderen Browsern und Geräten ab.',
     'if_necessary_you_may_log_out' => 'Bei Bedarf kannst du auf allen deinen Geräten von allen anderen Browsersitzungen abmelden. Einige deiner letzten Sitzungen sind unten aufgeführt; diese Liste ist jedoch möglicherweise nicht vollständig. Wenn du das Gefühl hast, dass dein Konto kompromittiert wurde, solltest du auch dein Passwort aktualisieren.',

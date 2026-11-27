@@ -108,6 +108,7 @@ return [
     'delete_account_too_many_attempts' => 'Trop de tentatives. Veuillez réessayer dans :seconds secondes.',
     'delete_account_hand_over_teams' => 'Vous êtes propriétaire de l’équipe :teams, à laquelle d’autres personnes appartiennent. Avant de pouvoir supprimer votre compte, désignez sur la page de l’équipe l’une de ses personnes admin comme propriétaire.',
     'make_owner' => 'Désigner comme propriétaire',
+    'change_role_of' => ', modifier le rôle de :name',
     'are_you_sure_you_would_like_to_make_owner' => 'Voulez-vous vraiment désigner cette personne comme propriétaire de l’équipe ? Vous restez dans l’équipe en tant qu’admin, et seule cette personne pourra à nouveau transférer l’équipe.',
     'manage_and_log_out_your_active_sessions' => 'Gérer et déconnecter vos sessions actives sur d\'autres navigateurs et appareils.',
     'if_necessary_you_may_log_out' => 'Si nécessaire, vous pouvez vous déconnecter de toutes vos autres sessions de navigation sur tous vos appareils. Certaines de vos sessions récentes sont énumérées ci-dessous, mais cette liste n\'est pas exhaustive. Si vous pensez que votre compte a été compromis, vous devriez également mettre à jour votre mot de passe.',

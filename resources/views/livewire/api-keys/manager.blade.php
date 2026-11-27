@@ -81,17 +81,17 @@
                         <td class="px-4 py-2 text-sm">{{ $key['expires_at'] ? \Illuminate\Support\Carbon::parse($key['expires_at'])->isoFormat('LLL') : __('content.api_keys_never') }}</td>
                         <td class="px-4 py-2 text-sm">
                             @if (empty($key['replaced']))
-                            <label class="sr-only" for="grace-{{ $key['id'] }}">{{ __('content.api_keys_grace') }}</label>
+                            <label class="sr-only" for="grace-{{ $key['id'] }}">{{ __('content.api_keys_grace') }} {{ $key['name'] }}</label>
                             <select id="grace-{{ $key['id'] }}" wire:model="grace.{{ $key['id'] }}" class="form-select text-sm">
                                 <option value="86400">{{ __('content.api_keys_grace_day') }}</option>
                                 <option value="604800">{{ __('content.api_keys_grace_week') }}</option>
                                 <option value="0">{{ __('content.api_keys_grace_none') }}</option>
                             </select>
-                            <button type="button" class="ml-2 underline" wire:click="replace(@js($key['id']))">{{ __('content.api_keys_replace') }}</button>
+                            <button type="button" class="ml-2 underline" wire:click="replace(@js($key['id']))">{{ __('content.api_keys_replace') }}<span class="sr-only"> {{ $key['name'] }}</span></button>
                             @else
                             <span>{{ __('content.api_keys_replaced') }}</span>
                             @endif
-                            <button type="button" class="ml-4 underline" wire:click="revoke(@js($key['id']))" wire:confirm="{{ __('content.api_keys_revoke_confirm') }}">{{ __('content.api_keys_revoke') }}</button>
+                            <button type="button" class="ml-4 underline" wire:click="revoke(@js($key['id']))" wire:confirm="{{ __('content.api_keys_revoke_confirm') }}">{{ __('content.api_keys_revoke') }}<span class="sr-only"> {{ $key['name'] }}</span></button>
                         </td>
                     </tr>
                 @endforeach
