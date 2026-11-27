@@ -28,5 +28,8 @@ class UpdateUserPassword implements UpdatesUserPasswords
         $user->forceFill([
             'password' => Hash::make($input['password']),
         ])->save();
+
+        // Whoever knew the old password may hold extension or write page tokens.
+        $user->revokeOAuthTokens();
     }
 }

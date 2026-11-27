@@ -105,6 +105,36 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
         return in_array($language, config('localizer.supported_locales'), true) ? $language : null;
     }
 
+    /**
+     * Revoke every OAuth access and refresh token of this user: the browser
+     * extension and the write page are signed out. On logout and when the
+     * password changes.
+     *
+     * Through the models rather than a repository: Passport 13 deleted
+     * RefreshTokenRepository and reduced TokenRepository to lookups.
+     *
+     * Refresh tokens are matched against *every* access token this user has,
+     * not just the unrevoked ones. league/oauth2-server's refresh grant does
+     * not look at the access token's revoked flag, so a refresh token whose
+     * access token was revoked by some other path still mints new access
+     * tokens for its full 30 days.
+     *
+     * Two bulk statements rather than a loop: this runs inside a request, and
+     * an account that has been signing in for a year has a lot of rows. The
+     * subquery keeps the token ids in the database.
+     */
+    public function revokeOAuthTokens(): void
+    {
+        \Laravel\Passport\Passport::refreshTokenModel()::query()
+            ->whereIn('access_token_id', $this->tokens()->select('id'))
+            ->where('revoked', false)
+            ->update(['revoked' => true]);
+
+        $this->tokens()
+            ->where('revoked', false)
+            ->update(['revoked' => true]);
+    }
+
     public function setNameAttribute($name)
     {
         $this->attributes['name'] = strip_tags($name);

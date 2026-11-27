@@ -231,6 +231,16 @@ extension as a side effect of opening the Word add-in.
 > revocation to be immediate, the NLP API has to call back to the dashboard, and
 > the TTL should be cut in the meantime.
 
+### A new password revokes extension tokens
+
+Resetting the password (`App\Actions\Fortify\ResetUserPassword`) or changing it
+on the profile page (`UpdateUserPassword`) revokes the same tokens as logging
+out, through the same `User::revokeOAuthTokens()`. Jetstream already ends the
+other browser sessions; without this, whoever knew the old password could keep
+the extension's and the write page's refresh tokens working for up to 30 days.
+The same NLP API caveat applies: an access token stays valid there until it
+expires.
+
 ### Signing out of the extension revokes its token
 
 `POST /api/user/revoke-token` (`App\Http\Controllers\RevokeTokenController`)

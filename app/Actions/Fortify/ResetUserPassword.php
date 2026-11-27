@@ -25,5 +25,8 @@ class ResetUserPassword implements ResetsUserPasswords
         $user->forceFill([
             'password' => Hash::make($input['password']),
         ])->save();
+
+        // A reset often follows a takeover: end the OAuth sessions as well.
+        $user->revokeOAuthTokens();
     }
 }
