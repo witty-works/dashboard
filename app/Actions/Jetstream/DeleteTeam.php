@@ -2,6 +2,7 @@
 
 namespace App\Actions\Jetstream;
 
+use App\Jobs\RevokeApiKeysInNlpApi;
 use App\Models\Domain;
 use App\Models\FalsePositive;
 use App\Models\Kpi;
@@ -24,6 +25,10 @@ class DeleteTeam implements DeletesTeams
         foreach ($team->allUsers() as $user) {
             TeamMemberRemoved::dispatch($team, $user);
         }
+
+        // Every key for the team, including those of people who left it while
+        // a revocation failed.
+        dispatch(new RevokeApiKeysInNlpApi(null, $team->posthogId()));
 
         // The guideline and usage tables have no cascading foreign keys.
         foreach ([LanguageGuidelines::class, FalsePositive::class, TermReplacement::class, Domain::class, Kpi::class] as $model) {

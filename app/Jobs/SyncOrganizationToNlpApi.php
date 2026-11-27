@@ -78,6 +78,7 @@ class SyncOrganizationToNlpApi extends AbstractSyncToNlpApi
             'term_replacements' => $termReplacements,
             'domains' => $domains,
             'config' => $config,
+            'llm_requests_per_minute' => $team->llm_requests_per_minute,
         ];
 
         $data['config_hash'] = md5(serialize($data));

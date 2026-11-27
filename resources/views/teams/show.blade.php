@@ -12,6 +12,10 @@
             @endif
 
             @livewire('teams.team-member-manager-help-hero', ['team' => $team])
+
+            @if (app(\App\Services\NlpApiKeys::class)->enabled() && Gate::check('updateTeamMember', $team))
+                @livewire('teams.api-keys', ['team' => $team])
+            @endif
         </div>
     </div>
 </x-app-layout>

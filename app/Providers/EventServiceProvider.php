@@ -11,6 +11,7 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvi
 use App\Listeners\RevokeOAuthTokens;
 use App\Listeners\PostHogUpdateOrganization;
 use App\Listeners\PostHogUpdateUser;
+use App\Listeners\SyncMemberToNlpApi;
 use App\Listeners\TeamMemberAddedSlackAlert;
 use App\Listeners\TeamMemberInvitedSlackAlert;
 use App\Listeners\UpdateCurrentTeam;
@@ -54,12 +55,14 @@ class EventServiceProvider extends ServiceProvider
         ],
         TeamMemberAdded::class => [
             UpdateOrganizationGuidelines::class,
+            SyncMemberToNlpApi::class,
             PostHogUpdateUser::class,
             PostHogUpdateOrganization::class,
             TeamMemberAddedSlackAlert::class,
         ],
         TeamMemberRemoved::class => [
             UpdateCurrentTeam::class,
+            SyncMemberToNlpApi::class,
             UpdateOrganizationGuidelines::class,
             PostHogUpdateUser::class,
             PostHogUpdateOrganization::class,

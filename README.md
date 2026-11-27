@@ -142,7 +142,7 @@ See [docs/user-management.md](docs/user-management.md) for superadmin rights, th
 Use for the integration with the NLP API.
 
 -   `APP_NLP_API_SYNC_ENDPOINT` — Main endpoint for NLP API sync
--   `APP_NLP_API_SYNC_ENDPOINT_2` — (Optional) Secondary endpoint for NLP API sync
+-   `APP_NLP_API_SYNC_ENDPOINT_2` — (Optional) Secondary endpoint for NLP API sync. API keys are created on the main endpoint only, so both must share one Redis (see [docs/user-management.md](docs/user-management.md#api-keys))
 -   `APP_NLP_API_SYNC_USER` — Username for NLP API sync
 -   `APP_NLP_API_SYNC_PASSWORD` — Password for NLP API sync
 -   `APP_NLP_API_SYNC_CONFIGS` — Enable/disable sync configs

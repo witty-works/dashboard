@@ -11,9 +11,10 @@ class DeleteUserFromNlpApi extends AbstractDeleteFromNlpApi
     /** Queued inside the deletion's transaction: send it only once that commits. */
     public $afterCommit = true;
 
-    public function __construct(User $user, $queue = 'low')
+    /** A user, or the address the NLP API knew them by before it changed. */
+    public function __construct(User|string $user, $queue = 'low')
     {
-        $this->email = $user->email;
+        $this->email = $user instanceof User ? $user->email : $user;
         $this->onQueue($queue);
     }
 

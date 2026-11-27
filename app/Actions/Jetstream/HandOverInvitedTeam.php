@@ -4,6 +4,7 @@ namespace App\Actions\Jetstream;
 
 use App\Jobs\SyncOrganizationToNlpApi;
 use App\Jobs\SyncToPosthog;
+use App\Jobs\RevokeApiKeysInNlpApi;
 use App\Jobs\SyncUserToNlpApi;
 use App\Models\Team;
 use App\Models\TeamInvitation;
@@ -69,6 +70,7 @@ class HandOverInvitedTeam
         DB::afterCommit(function () use ($team, $newOwner, $formerOwner) {
             dispatch(new SyncUserToNlpApi($newOwner, 'high'));
             dispatch(new SyncUserToNlpApi($formerOwner, 'high'));
+            dispatch(new RevokeApiKeysInNlpApi($formerOwner->email, $team->posthogId()));
             dispatch(new SyncOrganizationToNlpApi($team, 'high'));
             dispatch(new SyncToPosthog($team));
         });

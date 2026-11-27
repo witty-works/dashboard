@@ -50,6 +50,10 @@ return [
     // @see: https://docs.sentry.io/platforms/php/configuration/options/#send-default-pii
     'send_default_pii' => false,
 
+    // No request bodies in events: a Livewire request can carry a form's
+    // state, and some forms hold credentials.
+    'max_request_body_size' => 'never',
+
     'traces_sample_rate' => (float)(env('SENTRY_TRACES_SAMPLE_RATE', 0.0)),
 
     'controllers_base_namespace' => env('SENTRY_CONTROLLERS_BASE_NAMESPACE', 'App\\Http\\Controllers'),
