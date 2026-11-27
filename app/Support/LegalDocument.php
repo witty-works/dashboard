@@ -13,6 +13,26 @@ use Illuminate\Support\Str;
  */
 class LegalDocument
 {
+    /** Whether the deployment provides its privacy policy and its terms of service. */
+    public static function provided(): array
+    {
+        return [
+            'privacy_policy' => self::readable(config('app.privacy_policy_file')),
+            'terms_of_service' => self::readable(config('app.terms_of_service_file')),
+        ];
+    }
+
+    /** Whether there is anything to agree to at sign-up. */
+    public static function anyProvided(): bool
+    {
+        return in_array(true, self::provided(), true);
+    }
+
+    private static function readable(?string $path): bool
+    {
+        return $path !== null && $path !== '' && is_file($path) && is_readable($path);
+    }
+
     /** The file as HTML, or null when none is configured or it cannot be read. */
     public static function html(?string $path): ?string
     {

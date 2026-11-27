@@ -39,11 +39,11 @@ class LegalPagesTest extends TestCase
     #[DataProvider('pages')]
     public function test_the_deployments_file_is_shown_as_html(string $url, string $config, string $missing): void
     {
-        file_put_contents($this->dir . '/page.md', "# Imprint\n\nSome **Street** 1\n\n[Contact](mailto:office@example.org)\n");
+        file_put_contents($this->dir . '/page.md', "## Imprint\n\nSome **Street** 1\n\n[Contact](mailto:office@example.org)\n");
         config([$config => $this->dir . '/page.md']);
 
         $this->withoutLocaleRedirects()->get($url)->assertOk()
-            ->assertSee('<h1>Imprint</h1>', false)
+            ->assertSee('<h2>Imprint</h2>', false)
             ->assertSee('<strong>Street</strong>', false)
             ->assertSee('href="mailto:office@example.org"', false)
             ->assertDontSee(__($missing))

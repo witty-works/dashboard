@@ -1,10 +1,12 @@
 @php
-$resourceLinks = [
+// The deployment's own legal documents, where it provides them; its imprint
+// is part of its privacy policy.
+$legal = \App\Support\LegalDocument::provided();
+$resourceLinks = array_filter([
     __('content.trust-and-security') => 'https://www.witty.works/trust-and-security',
-    __('content.terms') => 'https://www.witty.works/terms',
-    __('content.privacy') => 'https://www.witty.works/privacy',
-    __('content.imprint') => 'https://www.witty.works/imprint',
-];
+    __('content.terms') => $legal['terms_of_service'] ? route('terms.show') : null,
+    __('content.privacy') => $legal['privacy_policy'] ? route('policy.show') : null,
+]);
 
 $contactLinks = [
     __('content.contact') => 'https://www.witty.works/contact',

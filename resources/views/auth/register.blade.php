@@ -29,16 +29,14 @@
                 <x-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" error="password_confirmation" />
             </div>
 
-            @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
+            {{-- Only for the documents the deployment provides (PRIVACY_POLICY_FILE, TERMS_OF_SERVICE_FILE). --}}
+            @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature() && App\Support\LegalDocument::anyProvided())
                 <div class="mt-4">
                     <div class="flex items-center">
-                        <x-checkbox name="terms" id="terms" label="" aria-label="{{ __('content.i_agree_to_the_terms_of_service_and_privacy_policy', ['terms_of_service' => __('content.terms_of_service'), 'privacy_policy' => __('content.privacy_policy')]) }}" required />
+                        <x-checkbox name="terms" id="terms" label="" aria-label="{{ trim(view('partials.legal-consent', ['links' => false])->render()) }}" required />
 
                         <div class="ml-2">
-                            {!! __('content.i_agree_to_the_terms_of_service_and_privacy_policy', [
-                                'terms_of_service' => '<a target="_blank" href="'.route('terms.show').'" class="underline text-sm text-gray-600 hover:text-gray-900">'.__('content.terms_of_service').'</a>',
-                                'privacy_policy' => '<a target="_blank" href="'.route('policy.show').'" class="underline text-sm text-gray-600 hover:text-gray-900">'.__('content.privacy_policy').'</a>',
-                            ]) !!}
+                            @include('partials.legal-consent')
                         </div>
                     </div>
                 </div>

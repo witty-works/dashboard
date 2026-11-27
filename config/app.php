@@ -223,7 +223,8 @@ return [
     // The deployment's privacy policy and terms of service: Markdown files
     // outside the repository, for example mounted into the container. The
     // repository holds no such text; without a file, the page says that the
-    // deployment has published none. Registration links to both pages.
+    // deployment has published none. Sign-up asks people to agree to the
+    // documents provided, and the footer links them. Headings start at ##.
     'privacy_policy_file' => env('PRIVACY_POLICY_FILE'),
     'terms_of_service_file' => env('TERMS_OF_SERVICE_FILE'),
 

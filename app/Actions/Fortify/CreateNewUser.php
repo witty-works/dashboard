@@ -29,7 +29,8 @@ class CreateNewUser implements CreatesNewUsers
                 },
             ],
             'password' => $this->passwordRules(),
-            'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
+            // Only when the deployment provides something to agree to.
+            'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() && \App\Support\LegalDocument::anyProvided() ? ['accepted', 'required'] : '',
         ])->validate();
 
         return DB::transaction(function () use ($input) {
