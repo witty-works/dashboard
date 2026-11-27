@@ -76,3 +76,26 @@ updates:
       - dependency-name: node
         update-types:
           - version-update:semver-major
+
+  # The actions the workflows use, pinned by commit SHA. Without this entry the
+  # pins never move, security fixes included.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    # Same one-week wait as for Composer and npm.
+    cooldown:
+      default-days: 7
+    labels:
+      - dependencies
+    groups:
+      # Minor and patch updates in one weekly pull request; major versions
+      # come one pull request each.
+      github-actions:
+        applies-to: version-updates
+        patterns:
+          - "*"
+        update-types:
+          - minor
+          - patch
