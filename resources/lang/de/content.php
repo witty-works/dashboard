@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'open_from_dashboard' => 'Öffne diese Seite im Dashboard.',
     'created' => 'Erstellt.',
     'added' => 'Hinzugefügt.',
     'saved' => 'Gespeichert.',

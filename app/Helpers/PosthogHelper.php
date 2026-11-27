@@ -23,6 +23,10 @@ class PosthogHelper
     public const ADDED_TEAM_MEMBER = 'added_team_member';
     public const JOINED_TEAM = 'joined_team';
 
+    /** How old analytics data has to be before a refresh fetches it again; the
+     * page offers its refresh button from the same age. */
+    public const REFRESH_AFTER_MINUTES = 3;
+
     public static function getInsightsUrl()
     {
         $projectId = config('posthog.project_id');
@@ -81,8 +85,16 @@ class PosthogHelper
         $url = self::getInsightsUrl();
 
         $key = 'posthog:' . md5($url) . ':' . md5(serialize($filter));
+        // Any signed-in user can ask for a refresh, and each costs a PostHog
+        // API call from the deployment's rate limit: only data at least as old
+        // as the page waits before it offers its refresh button is fetched
+        // again.
         if ($refresh) {
-            Cache::forget($key);
+            $cached = Cache::get($key);
+            $fetched = is_array($cached) && isset($cached['last_refresh']) ? Carbon::parse($cached['last_refresh']) : null;
+            if ($fetched === null || $fetched->lte(Carbon::now()->subMinutes(self::REFRESH_AFTER_MINUTES))) {
+                Cache::forget($key);
+            }
         }
 
         return Cache::remember($key, config('posthog.insights_cache_time'), function () use ($url, $filter) {

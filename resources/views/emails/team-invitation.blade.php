@@ -1,5 +1,5 @@
 @component('mail::message')
-{!! __('content.you_have_been_invited', ['name' => $name, 'team' => $team, 'email' => $email]) !!}
+{!! __('content.you_have_been_invited', ['name' => e($name), 'team' => e($team), 'email' => e($email)]) !!}
 
 {!! __('content.invitation_email_welcome') !!}
 

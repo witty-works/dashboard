@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Support\SuperadminTwoFactor;
+use Laravel\Fortify\Events\TwoFactorAuthenticationConfirmed;
 use Laravel\Fortify\Events\TwoFactorAuthenticationDisabled;
 use Laravel\Fortify\Events\TwoFactorAuthenticationEvent;
 
@@ -22,6 +23,12 @@ class TrackTwoFactorInSession
             }
 
             return;
+        }
+
+        // A new session id, as the sign-in challenge starts one: an id someone
+        // learned before is not raised to the level that opens /admin.
+        if ($event instanceof TwoFactorAuthenticationConfirmed && session()->isStarted()) {
+            session()->regenerate();
         }
 
         SuperadminTwoFactor::markVerified($event->user);

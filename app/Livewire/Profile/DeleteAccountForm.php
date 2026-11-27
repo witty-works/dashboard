@@ -108,6 +108,10 @@ class DeleteAccountForm extends Component
         if ($this->teamsWithOpenInvitations->isNotEmpty()) {
             $messages[] = __('content.delete_account_open_invitations', ['teams' => $this->teamsWithOpenInvitations->pluck('name')->join(', ')]);
         }
+        $role = config('admin.role');
+        if (Auth::user()->hasRole($role) && \App\Models\User::role($role)->count() <= 1) {
+            $messages[] = __('content.admin_last_superadmin');
+        }
 
         return $messages;
     }

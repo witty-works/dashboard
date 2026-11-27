@@ -24,6 +24,15 @@
 	root /app/public
 	encode zstd br gzip
 
+	# The files Caddy serves itself (the build, fonts, robots.txt) never reach
+	# PHP's SecurityHeaders middleware. The same headers, only where a response
+	# has none yet, so PHP's own stay as they are. Kept equal to
+	# App\Http\Middleware\SecurityHeaders (tests/Feature/Hardening/StaticFileHeadersTest).
+	header ?X-Frame-Options "DENY"
+	header ?X-Content-Type-Options "nosniff"
+	header ?Referrer-Policy "strict-origin-when-cross-origin"
+	header ?Permissions-Policy "accelerometer=(), camera=(), display-capture=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), usb=()"
+
 	# Vite's hashed bundles never change under the same name.
 	@build path /build/assets/*
 	header @build Cache-Control "public, max-age=31536000, immutable"

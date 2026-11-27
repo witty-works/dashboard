@@ -11,7 +11,7 @@
             @include('partials.banners', ['hideInviteCheck' => true])
             @if (!Auth::user()->hasTeamPermission($team, 'update'))
             <x-slot name="header">
-                {!! __('content.making_changes_requires_admin_rights', ['email' => $team->owner->email]) !!}
+                {!! __('content.making_changes_requires_admin_rights', ['email' => e($team->owner->email)]) !!}
             </x-slot>
             @endif
 

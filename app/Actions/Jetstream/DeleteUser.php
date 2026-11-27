@@ -45,6 +45,7 @@ class DeleteUser implements DeletesUsers
             // Locked, so that a team handed to the user meanwhile is either
             // seen here or waits until the deletion is done.
             $this->ensureNoTeamToHandOver($user, $user->ownedTeams()->lockForUpdate()->get());
+            $this->ensureNotLastSuperadmin($user);
 
             $this->deleteTeams($user);
 
@@ -93,6 +94,22 @@ class DeleteUser implements DeletesUsers
 
         if ($messages) {
             throw ValidationException::withMessages(['team' => $messages]);
+        }
+    }
+
+    /**
+     * The last superadmin stays, as on the admin page: nobody would be left
+     * to create teams or help people.
+     *
+     * @param  mixed  $user
+     * @return void
+     */
+    protected function ensureNotLastSuperadmin($user)
+    {
+        $role = config('admin.role');
+        if ($user->hasRole($role) && \App\Models\User::role($role)->count() <= 1) {
+            // Under 'team', where the profile form shows why an account cannot go yet.
+            throw ValidationException::withMessages(['team' => [__('content.admin_last_superadmin')]]);
         }
     }
 
