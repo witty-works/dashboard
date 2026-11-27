@@ -18,7 +18,6 @@
         <!-- Scripts -->
         @include('partials/sentry')
         @vite(['resources/css/app.css', 'resources/js/app.js'])
-        @include('partials/detect_browser')
         <!-- Styles -->
         @livewireStyles
     </head>

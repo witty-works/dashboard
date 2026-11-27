@@ -184,12 +184,6 @@ Route::group(['middleware' => config('social_auth.middleware', ['web'])], functi
         ->middleware(['signed'])
         ->name('team-invitations.accept-signed');
 
-    if (!empty(config('app.browsers'))) {
-        Route::get('/download', function () {
-            return view('download');
-        })->name('download');
-    }
-
     Route::get('/word-addin', function () {
         return view('word-addin');
     })->name('word-addin');
@@ -206,7 +200,7 @@ Route::fallback(function () {
     return response()->view('errors.404', [], 404);
 });
 
-if (config('app.browsers')) {
+if (config('app.browser_extension')) {
     // Entry point for the extension's "Sign in" / "Sign up" buttons: a thin
     // redirect into the PKCE flow in routes/oauth.php. It no longer issues a
     // token of its own.

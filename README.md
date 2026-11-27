@@ -164,13 +164,9 @@ having LLM alternatives disabled regardless of its own setting.
 Teams still opt in individually under team privacy settings; this is the
 installation-wide switch above that.
 
-## Browser Version Tracking
+## Browser extension
 
-Enabled the browser extension integration.
-
--   `BROWSER_VERSION_CHROME` — Latest supported Chrome version
--   `BROWSER_VERSION_EDGE` — Latest supported Edge version
--   `BROWSER_VERSION_FIREFOX` — Latest supported Firefox version
+-   `BROWSER_EXTENSION_ENABLED` — The browser extension's sign-in and API routes, for people who use the extension (default `true`). The dashboard does not promote the extension; its write page does what the extension did.
 
 ## PostHog Analytics
 

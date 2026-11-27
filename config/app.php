@@ -31,32 +31,16 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Analytics
+    | Browser extension
     |--------------------------------------------------------------------------
     |
-    | This comma separated list determines if analytics is shown in the menu
-    |
-    | possible values: true/false
+    | The browser extension's sign-in (/browser-login) and its API routes, for
+    | people who use the extension. The dashboard does not promote it; its
+    | write page does what the extension did.
     |
     */
 
-    'browsers' => [
-        'chrome' => [
-            'image_src' => '/google-chrome-icon-transparent-4.webp',
-            'store_href' => 'https://chrome.google.com/webstore/detail/meojhlodfiihbjkcnehkdcgncnhgagog',
-            'latest_version' => env('BROWSER_VERSION_CHROME'),
-        ],
-        'edge' => [
-            'image_src' => '/Microsoft_Edge_logo_(2019).webp',
-            'store_href' => 'https://microsoftedge.microsoft.com/addons/detail/icngefdfohhklfkjbohjgjnboenocbic',
-            'latest_version' => env('BROWSER_VERSION_EDGE'),
-        ],
-        'firefox' => [
-            'image_src' => '/Firefox_logo,_2019.webp',
-            'store_href' => 'https://addons.mozilla.org/en-US/firefox/addon/witty/',
-            'latest_version' => env('BROWSER_VERSION_FIREFOX'),
-        ],
-    ],
+    'browser_extension' => (bool) env('BROWSER_EXTENSION_ENABLED', true),
 
     /*
     |--------------------------------------------------------------------------

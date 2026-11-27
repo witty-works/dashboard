@@ -21,7 +21,6 @@
 
         <!-- Scripts -->
         @include('partials/sentry')
-        @include('partials/detect_browser')
         @php
             $user = Auth::user();
         @endphp
