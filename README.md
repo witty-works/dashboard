@@ -87,6 +87,27 @@ The OAuth tests need Passport's signing keys; create them once with `php artisan
 
 CI (`.github/workflows/ci.yaml`) runs the suite on every pull request and on `dev` and `main`, against a MariaDB 10.5 service, and runs `npm test` and the Vite build. The tests fake the Google Fonts request and skip Vite, so they need neither the network nor a build.
 
+## Browser tests
+
+PHPUnit sees markup; what only a rendered page shows is checked in Chromium with Playwright (`tests/browser`, `playwright.config.js`):
+
+-   **No WCAG 2.2 A or AA violation axe can detect** on the guest pages and the main signed-in pages. Embedded players (the academy's YouTube videos) are left out, as their markup is the provider's.
+-   **Keyboard and focus:** the skip link is the first stop, visible above the sidebar, and leads to the main content; "Edit" in a list moves focus to the field it fills.
+-   **Reflow:** the pages do not scroll sideways at 320px.
+-   **No console errors or uncaught exceptions,** which includes anything the Content-Security-Policy blocks.
+
+CI runs them in their own job. To run them locally, against the `testing` database (a PHPUnit run empties it again):
+
+```
+npm run build
+php artisan storage:link
+POSTHOG_ENABLED=false APP_NLP_API_SYNC_ENDPOINT= php artisan migrate:fresh --seed --seeder=BrowserTestSeeder --force
+npx playwright install chromium
+npm run test:browser
+```
+
+The tests start PHP's built-in server on port 8000 themselves, with the app's address on plain HTTP. axe finds only part of what WCAG asks; a check with a screen reader (VoiceOver or NVDA) before a release covers the rest.
+
 Two things to know when writing tests:
 
 -   **Assert the view as well as the status.** Use `assertViewIs(...)` alongside
