@@ -4,7 +4,7 @@ return [
     'subscribe' => 'Acheter',
     'billing' => 'Facturation',
     'store_context' => 'Enregistrer le contexte',
-    'store_context_description' => 'Lorsqu\'il est activé, Witty <a href="https://www.witty.works/trust-and-security">enregistre certains caractères</a> avant et après le mot surligné dans certaines situations. Cela nous permet d\'améliorer Witty ainsi que nos suggestions d\'alternatives.',
+    'store_context_description' => 'Lorsqu’il est activé, Witty enregistre quelques caractères avant et après un mot surligné avec les statistiques d’utilisation, si ce service les collecte. Elles montrent quelles suggestions sont utiles. La politique de confidentialité de ce service indique ce qui est enregistré.',
     'confirm_before_checking_headline' => 'Demander avant de vérifier',
     'confirm_before_checking' => 'Demander avant de vérifier chaque champ',
     'confirm_before_checking_description' => 'L\'extension de navigateur des membres demande avant de vérifier un champ de texte : aucun texte n\'est envoyé avant leur confirmation.',

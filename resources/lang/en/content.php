@@ -42,6 +42,7 @@ return [
     'resend_verification_email' => 'Resend Verification Email',
     'log_out' => 'Log Out',
     'dashboard' => 'Dashboard',
+    'go_to_dashboard_home' => 'Witty, dashboard home',
     'manage_members' => 'Manage team',
     'create_new_team' => 'Create a new team',
     'switch_teams' => 'Switch Teams',
@@ -136,7 +137,7 @@ return [
     'team_information' => 'The team\'s name and owner information',
     'for_your_security_confirm' => 'For your security, please confirm your password to continue.',
     'whoops' => 'Whoops! Something went wrong.',
-    'you_have_been_invited' => 'Welcome to <a href="https://www.witty.works/">Witty</a>!
+    'you_have_been_invited' => 'Welcome to Witty!
 
 :name has invited you to join ":team" team!
 ',
@@ -325,8 +326,7 @@ Please then go to "Register" again to finalize the registration into the "Witty 
     'already_registered_with_a_different_email_title' => 'Already registered?',
     'already_registered_with_a_different_email_description' => 'Make sure your Microsoft Office email matches the email you use on your existing account before continung.',
     'office_register_title' => 'Privacy, data protection and security',
-    'office_register_description' => 'We are very stringent in this topic and above industry standards. <strong>Witty Works is an Ethics First company.</strong> The trust of our users is more important to us than data collection.',
-    'office_register_summary' => 'In a nutshell: <ul><li>We fully separate the user’s profile (like email etc.) from any data collected, e.g. <strong>in our analytics we cannot trace back who has written which text.</strong></li><li>We only store a very limited amount of your text <strong>for the purpose of improving the product</strong> (f.e. what to highlight, which alternatives to show).</li><li>In the paid version, you can even disable this kind of data collection.</li><li>Data is not shared with thirdparties.</li><li><strong>Our servers are in the EU.</strong></li></ul>',
+    'office_register_description' => 'What is collected, and by whom, is described in the privacy policy of this service.',
     'you_must_consent' => 'You must agree to continue.',
     'triple_toggle_locked_third_pos' => 'Your team admin set to this diversity dimension to \'advanced\'. You cannot change it.',
     'triple_toggle_locked_second_pos' => 'Your team admin has set this diversity dimension to \'basic\'. Click to switch between \'basic\' and \'advanced\'.',

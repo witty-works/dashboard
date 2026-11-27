@@ -201,6 +201,11 @@ return [
 
     'nlp_api_public_url' => env('NLP_API_PUBLIC_URL', ''),
 
+    // Where the category icons and example images load from. The category
+    // data in storage/app/data names them on the website; a deployment can
+    // serve its own copy of that folder instead.
+    'media_url' => env('APP_MEDIA_URL') ?: 'https://www.witty.works/assets/media/',
+
     // The deployment's one support address: whom people write to for help,
     // for access to the language model on the write page, or about an error;
     // also where reports and failed-job alerts go. Without it, the sender

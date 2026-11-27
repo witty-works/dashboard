@@ -40,6 +40,7 @@ return [
     'resend_verification_email' => 'Bestätigungsmail erneut senden',
     'log_out' => 'Abmelden',
     'dashboard' => 'Dashboard',
+    'go_to_dashboard_home' => 'Witty, Startseite des Dashboards',
     'create_new_team' => 'Erstelle ein Team',
     'switch_teams' => 'Team wechseln',
     'manage_account' => 'Mein Konto',
@@ -130,7 +131,7 @@ return [
     'team_information' => 'Name und Team-Eigentümer*in des Teams',
     'for_your_security_confirm' => 'Zu deiner eigenen Sicherheit, Bestätige dein Passwort, um fortzufahren.',
     'whoops' => 'Hoppla! Etwas ist schief gelaufen.',
-    'you_have_been_invited' => 'Willkommen bei <a href="https://www.witty.works/">Witty</a>!
+    'you_have_been_invited' => 'Willkommen bei Witty!
 
 :name hat dich zum Team ":team" eingeladen!
 ',
@@ -313,8 +314,7 @@ Bitte gehe dann erneut auf „Registrieren“, um die Registrierung im "Witty fo
     'already_registered_with_a_different_email_title' => 'Bereits registriert?',
     'already_registered_with_a_different_email_description' => 'Stelle  sicher, dass Deine Microsoft Office-E-Mail-Adresse mit der E-Mail-Adresse übereinstimmt, welche Du für Dein bestehenden Konto verwendst.',
     'office_register_title' => 'Privatsphäre, Datenschutz und Sicherheit',
-    'office_register_description' => 'Wir gehen bei diesem Thema sehr streng vor und gehen über die Branchenstandards hinaus. <strong>Witty Works stellt Ethik an die erste Stelle.</strong> Das Vertrauen unserer Nutzer ist uns wichtiger als die Datenerhebung.',
-    'office_register_summary' => 'Kurzgesagt:<ul><li>Wir trennen das Benutzerprofil (wie E-Mail usw.) vollständig von den erfassten Daten, sodass <strong>wir in unseren Analysen beispielsweise nicht nachvollziehen können, wer welchen Text geschrieben hat.</strong></li><li> Wir speichern nur einen sehr begrenzten Teil Deiner Texte <strong>zum Zweck der Produktverbesserung</strong> (z. B. was hervorgehoben werden soll, welche Alternativen angezeigt werden sollen).</li><li>In der kostenpflichtigen Version kannst Du diese Art der Datenerfassung sogar deaktivieren.</li><li> Eine Weitergabe der Daten an Dritte erfolgt nicht.</li><li> <strong>Unsere Server befinden sich in der EU.</strong></li></ul>',
+    'office_register_description' => 'Was erfasst wird und von wem, steht in der Datenschutzerklärung dieses Dienstes.',
     'you_must_consent' => 'Du musst zustimmen, um fortzufahren.',
     'witty_word_addin_text_failed' => 'Es ist uns nicht gelungen, Dich bei Witty Word-Addin anzumelden.<br> Bitte schließe dieses Fenster und versuche es erneut oder kontaktiere <a href="mailto::support_email">:support_email</a>.',
     'witty_word_addin_text_invite_only' => 'Die Registrierung ist nur mit Einladung möglich, und für diese Adresse gibt es keine.<br>Bitte schließe dieses Fenster und bitte die Person, die Dein Team verwaltet, um eine Einladung.',

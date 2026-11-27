@@ -42,8 +42,8 @@
         }
     }
 ?>
-<a href="https://www.witty.works/">
-    <img class="wittyworks-logo" src="{{ url('svg/witty-logo-white.svg') }}" alt="Witty Works" />
+<a href="{{ url(\App\Providers\RouteServiceProvider::HOME) }}">
+    <img class="wittyworks-logo" src="{{ url('svg/witty-logo-white.svg') }}" alt="{{ __('content.go_to_dashboard_home') }}" />
 </a>
 
 @auth

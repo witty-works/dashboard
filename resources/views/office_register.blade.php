@@ -94,9 +94,6 @@
                 <p>
                     {!! __('content.office_register_description') !!}
                 </p>
-                <p>
-                    {!! __('content.office_register_summary') !!}
-                </p>
             </div>
         </form>
     </div>
