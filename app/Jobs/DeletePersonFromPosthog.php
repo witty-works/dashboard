@@ -30,12 +30,16 @@ class DeletePersonFromPosthog implements ShouldQueue
 
     protected bool $overridden;
 
+    /** Whether the dashboard ever sent this person to PostHog. */
+    protected bool $wasSent = false;
+
     public function __construct(User $user)
     {
         $this->distinctId = $user->posthogId();
         // With POSTHOG_DASHBOARD_USER_ID set, every user reports as that one
         // person, so deleting it would delete someone else's data.
         $this->overridden = config('posthog.dashboard_user_id_override') !== null;
+        $this->wasSent = $user->posthog_last_sync !== null;
         // Only once the account deletion is saved.
         $this->afterCommit();
     }
@@ -43,6 +47,12 @@ class DeletePersonFromPosthog implements ShouldQueue
     public function handle(): void
     {
         if (!config('posthog.enabled')) {
+            // Switched off since this person was sent: their data is still
+            // there, and nobody would know.
+            if ($this->wasSent) {
+                Log::error("PostHog person {$this->distinctId} was not deleted: POSTHOG_ENABLED is off, but they were sent to PostHog before; delete the person and their events by hand.");
+            }
+
             return;
         }
 
