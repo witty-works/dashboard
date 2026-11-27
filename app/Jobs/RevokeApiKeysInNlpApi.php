@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Jobs\Concerns\RetriesThroughOutages;
 use App\Services\NlpApiKeys;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -20,8 +21,7 @@ use RuntimeException;
 class RevokeApiKeysInNlpApi implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable;
-
-    public $tries = 50;
+    use RetriesThroughOutages;
 
     public function __construct(public readonly ?string $email, public readonly ?string $teamId, $queue = 'high')
     {

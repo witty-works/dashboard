@@ -40,8 +40,9 @@ case "$role" in
     worker)
         cache_framework
         # Queues in priority order: the jobs dispatch to high, medium and low.
-        # --tries applies to jobs that set no $tries of their own; the NLP API
-        # and PostHog jobs set theirs. --max-time ends the worker every hour,
+        # --tries and --backoff apply to jobs without retry settings of their
+        # own; the NLP API and PostHog jobs retry for a day with a backoff
+        # growing to an hour (App\Jobs\Concerns\RetriesThroughOutages). --max-time ends the worker every hour,
         # and the container's restart policy starts a fresh one, which bounds
         # memory growth. SIGTERM lets the current job finish first.
         exec php artisan queue:work database \

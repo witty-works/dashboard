@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Jobs\Concerns\RetriesThroughOutages;
 use RuntimeException;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Http;
@@ -15,13 +16,7 @@ use Illuminate\Queue\SerializesModels;
 abstract class AbstractSyncToNlpApi implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
-    /**
-     * The number of times the job may be attempted.
-     *
-     * @var int
-     */
-    public $tries = 50;
+    use RetriesThroughOutages;
 
     public function updateRules($url, $data)
     {

@@ -22,9 +22,11 @@ class DeletePersonFromPosthog implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable;
 
-    public $tries = 5;
+    // About a day of tries (see the backoff): an outage of hours must not
+    // leave a deleted account's data in PostHog.
+    public $tries = 28;
 
-    public $backoff = [60, 300, 900, 3600];
+    public $backoff = [60, 300, 900, 1800, 3600];
 
     protected string $distinctId;
 

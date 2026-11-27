@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Jobs\Concerns\RetriesThroughOutages;
 use App\Helpers\PosthogHelper;
 use App\Models\Team;
 use PostHog\PostHog;
@@ -17,13 +18,7 @@ use InvalidArgumentException;
 class SendEventToPosthog implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
-    /**
-     * The number of times the job may be attempted.
-     *
-     * @var int
-     */
-    public $tries = 50;
+    use RetriesThroughOutages;
 
     protected $id;
     protected $event;
