@@ -4,7 +4,6 @@ namespace App\Jobs;
 
 use App\Models\LanguageGuidelines;
 use App\Models\Team;
-use InvalidArgumentException;
 
 class SyncOrganizationToNlpApi extends AbstractSyncToNlpApi
 {
@@ -20,7 +19,10 @@ class SyncOrganizationToNlpApi extends AbstractSyncToNlpApi
     {
         $team = Team::find($this->id);
         if (!$team instanceof Team) {
-            throw new InvalidArgumentException("Team id '{$this->id} does not exist.");
+            // Deleted since the job was queued, as when a team is deleted
+            // with its members; DeleteOrganizationFromNlpApi removes what the
+            // NLP API holds for it.
+            return true;
         }
 
         $url = '/organization/configs';

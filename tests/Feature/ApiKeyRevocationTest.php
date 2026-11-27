@@ -12,6 +12,7 @@ use App\Models\TeamInvitation;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Client\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use Spatie\Permission\Models\Role;
@@ -84,6 +85,28 @@ class ApiKeyRevocationTest extends TestCase
         $this->assertContains(['nlp.example', null, $team->posthogId()], $this->revocations());
         $this->assertContains(['second.example', null, $team->posthogId()], $this->revocations());
         $this->assertContains(['nlp.example', $member->email, $team->posthogId()], $this->revocations());
+    }
+
+    public function test_team_deletion_on_a_real_queue_leaves_no_failed_jobs(): void
+    {
+        // On the database queue the jobs run after the team is gone, unlike
+        // the inline queue the other tests use.
+        config(['queue.default' => 'database']);
+        $owner = $this->owner();
+        $member = $this->owner();
+        $team = Team::forceCreate(['user_id' => $owner->id, 'name' => 'Doomed', 'personal_team' => false]);
+        $team->users()->attach($member, ['role' => 'user']);
+
+        app(DeleteTeam::class)->delete($team);
+        $this->artisan('queue:work', [
+            'connection' => 'database',
+            '--queue' => 'high,medium,low,default',
+            '--stop-when-empty' => true,
+            '--backoff' => 0,
+        ])->assertSuccessful();
+
+        $this->assertSame([], DB::table('failed_jobs')->pluck('exception')->map(fn ($e) => strtok($e, "\n"))->all());
+        $this->assertSame(0, DB::table('jobs')->count());
     }
 
     public function test_account_deletion_revokes_all_keys(): void
