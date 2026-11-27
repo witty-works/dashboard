@@ -30,6 +30,20 @@ class RegistrationTest extends TestCase
         $this->assertDatabaseHas('users', ['email' => 'ada@example.com']);
     }
 
+    public function test_a_new_account_signs_in_with_the_password_chosen_at_sign_up(): void
+    {
+        $this->post(route('register'), [
+            'name' => 'New Person',
+            'email' => 'new.person@example.org',
+            'password' => 'chosen-at-sign-up-123',
+            'password_confirmation' => 'chosen-at-sign-up-123',
+            'terms' => true,
+        ]);
+
+        $user = \App\Models\User::where('email', 'new.person@example.org')->firstOrFail();
+        $this->assertTrue(\Illuminate\Support\Facades\Hash::check('chosen-at-sign-up-123', $user->password));
+    }
+
     public function test_registration_provisions_a_team_for_the_new_user(): void
     {
         $this->post(route('register'), [
