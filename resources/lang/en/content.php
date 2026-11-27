@@ -471,4 +471,6 @@ Please then go to "Register" again to finalize the registration into the "Witty 
     'i_agree_to_the_privacy_policy' => 'I agree to the :privacy_policy',
     'i_agree_to_the_terms_of_service' => 'I agree to the :terms_of_service',
     'office_consent_without_documents' => 'I want an account for this address.',
+    'api_keys_grace_for' => 'Grace period for :name',
+    'make_owner_of' => 'Make :name the owner',
 ];

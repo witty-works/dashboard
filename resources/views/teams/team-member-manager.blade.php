@@ -163,7 +163,7 @@
                                 <!-- Hand the team over -->
                                 @if ($this->user->ownsTeam($team) && $user->membership->role === 'admin')
                                     <button class="cursor-pointer ml-6 text-sm text-gray-600 underline" wire:click="confirmOwnershipTransfer('{{ $user->id }}')">
-                                        {{ __('content.make_owner') }}<span class="sr-only"> {{ $user->name }}</span>
+                                        <span aria-hidden="true">{{ __('content.make_owner') }}</span><span class="sr-only">{{ __('content.make_owner_of', ['name' => $user->name]) }}</span>
                                     </button>
                                 @endif
 
@@ -176,7 +176,7 @@
                                 <!-- Remove Team Member -->
                                 @elseif (Gate::check('removeTeamMember', $team))
                                     <button class="cursor-pointer ml-6 text-sm text-red-700" wire:click="confirmTeamMemberRemoval('{{ $user->id }}')">
-                                        {{ __('content.remove') }}<span class="sr-only"> {{ $user->name }}</span>
+                                        {{ __('content.remove') }} <span class="sr-only">{{ $user->name }}</span>
                                     </button>
                                 @endif
                             </div>

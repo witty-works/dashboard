@@ -471,4 +471,6 @@ Veuillez ensuite cliquer à nouveau sur "S\'inscrire" pour finaliser l\'inscript
     'i_agree_to_the_privacy_policy' => 'J\'accepte la :privacy_policy',
     'i_agree_to_the_terms_of_service' => 'J\'accepte les :terms_of_service',
     'office_consent_without_documents' => 'Je souhaite un compte pour cette adresse.',
+    'api_keys_grace_for' => 'Délai de grâce pour :name',
+    'make_owner_of' => 'Transférer l’équipe à :name',
 ];

@@ -80,8 +80,9 @@ class FocusAndNamesTest extends TestCase
 
         $html = Livewire::test(TeamMemberManagerHelpHero::class, ['team' => $team->fresh()])->html();
 
-        $this->assertMatchesRegularExpression('/' . preg_quote(__('content.remove'), '/') . '\s*<span class="sr-only">' . preg_quote(' ' . e('Sam Admin'), '/') . '<\/span>/', $html);
-        $this->assertMatchesRegularExpression('/' . preg_quote(__('content.make_owner'), '/') . '\s*<span class="sr-only">' . preg_quote(' ' . e('Sam Admin'), '/') . '<\/span>/', $html);
+        $this->assertMatchesRegularExpression('/' . preg_quote(__('content.remove'), '/') . '\s+<span class="sr-only">' . preg_quote(e('Sam Admin'), '/') . '<\/span>/', $html);
+        // The visible "make owner" is hidden from screen readers, which hear the sentence instead.
+        $this->assertMatchesRegularExpression('/<span aria-hidden="true">' . preg_quote(__('content.make_owner'), '/') . '<\/span><span class="sr-only">' . preg_quote(e(__('content.make_owner_of', ['name' => 'Sam Admin'])), '/') . '<\/span>/', $html);
         $this->assertMatchesRegularExpression('/' . preg_quote(__('content.admin'), '/') . '\s*<span class="sr-only">' . preg_quote(e(__('content.change_role_of', ['name' => 'Sam Admin'])), '/') . '<\/span>/', $html);
     }
 
@@ -107,11 +108,11 @@ class FocusAndNamesTest extends TestCase
         $this->actingAs($user);
 
         $html = Livewire::test(Manager::class)->html();
-        $suffix = preg_quote(' ' . e('Editor'), '/');
+        $suffix = preg_quote(e('Editor'), '/');
 
-        $this->assertMatchesRegularExpression('/' . preg_quote(__('content.api_keys_revoke'), '/') . '<span class="sr-only">' . $suffix . '<\/span>/', $html);
-        $this->assertMatchesRegularExpression('/' . preg_quote(__('content.api_keys_replace'), '/') . '<span class="sr-only">' . $suffix . '<\/span>/', $html);
-        $this->assertMatchesRegularExpression('/<label class="sr-only" for="grace-k1">' . preg_quote(__('content.api_keys_grace'), '/') . $suffix . '<\/label>/', $html);
+        $this->assertMatchesRegularExpression('/' . preg_quote(__('content.api_keys_revoke'), '/') . ' <span class="sr-only">' . $suffix . '<\/span>/', $html);
+        $this->assertMatchesRegularExpression('/' . preg_quote(__('content.api_keys_replace'), '/') . ' <span class="sr-only">' . $suffix . '<\/span>/', $html);
+        $this->assertMatchesRegularExpression('/<label class="sr-only" for="grace-k1">' . preg_quote(e(__('content.api_keys_grace_for', ['name' => 'Editor'])), '/') . '<\/label>/', $html);
     }
 
     public function test_team_api_key_buttons_name_the_key_and_its_owner(): void
@@ -125,6 +126,6 @@ class FocusAndNamesTest extends TestCase
 
         $html = Livewire::test(TeamApiKeys::class, ['team' => $user->currentTeam])->html();
 
-        $this->assertMatchesRegularExpression('/' . preg_quote(__('content.api_keys_revoke'), '/') . '<span class="sr-only">' . preg_quote(' ' . e('Editor (sam@acme.example)'), '/') . '<\/span>/', $html);
+        $this->assertMatchesRegularExpression('/' . preg_quote(__('content.api_keys_revoke'), '/') . ' <span class="sr-only">' . preg_quote(e('Editor (sam@acme.example)'), '/') . '<\/span>/', $html);
     }
 }

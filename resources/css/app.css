@@ -1308,7 +1308,8 @@ label {
     position: fixed;
     left: 1rem;
     top: 1rem;
-    z-index: 100;
+    /* Above the fixed sidebar (.wittyworks-navigation-wrapper, 9999). */
+    z-index: 10000;
     padding: 0.5rem 1rem;
     background: #ffffff;
     color: #000000;
