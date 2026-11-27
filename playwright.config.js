@@ -37,6 +37,8 @@ export default defineConfig({
             APP_NLP_API_SYNC_ENDPOINT: '',
             APP_NLP_API_SYNC_CONFIGS: 'false',
             MAIL_MAILER: 'log',
+            // A developer tool drawn over every page, not what people see.
+            DEBUGBAR_ENABLED: 'false',
         },
     },
 });
