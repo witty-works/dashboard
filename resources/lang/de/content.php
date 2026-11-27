@@ -472,4 +472,9 @@ Bitte gehe dann erneut auf „Registrieren“, um die Registrierung im "Witty fo
     'office_consent_without_documents' => 'Ich möchte ein Konto für diese Adresse.',
     'api_keys_grace_for' => 'Übergangsfrist für :name',
     'make_owner_of' => 'Team an :name übertragen',
+    'chart_data_table' => 'Daten als Tabelle anzeigen',
+    'chart_lines' => 'Angezeigte Linien',
+    'chart_table_period' => 'Zeitraum',
+    'chart_table_name' => 'Name',
+    'chart_table_count' => 'Anzahl',
 ];

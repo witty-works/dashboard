@@ -16,7 +16,12 @@
       <h1 class="ibarra-sub-title-h1 margin-top">
          {{ __('content.analytics') }}
       </h1>
-      <div id="lastRefresh" role="status" class="lato-small-text-p wittyworks-margin-right container-row margin-top" style="visibility: hidden; align-items: center;"></div>
+      {{-- Plain text: it changes every 30 seconds, which a live region would read out each time.
+           The button stays in place, so it keeps focus while the text changes. --}}
+      <div class="lato-small-text-p container-row margin-top" style="align-items: center;">
+         <span id="lastRefresh" class="wittyworks-margin-right" style="visibility: hidden;"></span>
+         <button type="button" class="button primary-button-red" id="refresh-data" hidden>{{ __('content.refresh_data') }}</button>
+      </div>
       <div class="container-row margin-top">
         <div class="drowdown-wrapper">
 
@@ -133,7 +138,9 @@
             </div>
             <div id="overview-wrapper" style="visibility: hidden; width: 100%">
                <div class="container-row wittyworks-margin-top">
+                  <div id="eventsChart-legend" class="chart-legend lato-small-text-p" role="group" aria-label="{{ __('content.chart_lines') }}"></div>
                   <canvas id="eventsChart" role="img" aria-label="{{ __('content.analytic_overview') }}" class="wittyworks-analytics-chart-extra-large"></canvas>
+                  <details id="eventsChart-data" class="chart-data" hidden><summary class="lato-small-text-p">{{ __('content.chart_data_table') }}</summary><div class="chart-data-table"></div></details>
                </div>
             </div>
          </div>
@@ -171,10 +178,13 @@
                <div id="top-categories-content" style="visibility: hidden; width: 100%">
                     <div class="chart-container-row">
                         <canvas id="topSubCategoriesBarChart" role="img" aria-label="{{ __('content.top_categories') }}" class="wittyworks-analytics-chart-extra-large"></canvas>
+                        <details id="topSubCategoriesBarChart-data" class="chart-data" hidden><summary class="lato-small-text-p">{{ __('content.chart_data_table') }}</summary><div class="chart-data-table"></div></details>
                     </div>
                     <div class="chart-container-row">
+                        <div id="topSubCategoriesChart-legend" class="chart-legend lato-small-text-p" role="group" aria-label="{{ __('content.chart_lines') }}"></div>
                         <canvas id="topSubCategoriesChart" role="img" aria-label="{{ __('content.top_categories') }}" class="wittyworks-analytics-chart-extra-large"></canvas>
-                        <button id="toggleLines" class="button primary-button-red">{{ __('content.toggle_lines') }}</button>
+                        <button type="button" id="toggleLines" class="button primary-button-red">{{ __('content.toggle_lines') }}</button>
+                        <details id="topSubCategoriesChart-data" class="chart-data" hidden><summary class="lato-small-text-p">{{ __('content.chart_data_table') }}</summary><div class="chart-data-table"></div></details>
                   </div>
                </div>
             </div>
@@ -218,6 +228,7 @@
                             class="wittyworks-analytics-chart-extra-large wittyworks-margin-top">
                         </canvas>
                         <div class="chart-footer" id="topWordsChartFooter"></div>
+                        <details id="topWordsChart-data" class="chart-data" hidden><summary class="lato-small-text-p">{{ __('content.chart_data_table') }}</summary><div class="chart-data-table"></div></details>
                     </div>
                     <div class="chart-container-row wittyworks-margin-top">
                         <canvas
@@ -226,6 +237,7 @@
                             class="wittyworks-analytics-chart-extra-large">
                         </canvas>
                         <div class="chart-footer" id="topWordsChartCorporateRulesFooter"></div>
+                        <details id="topWordsChartCorporateRules-data" class="chart-data" hidden><summary class="lato-small-text-p">{{ __('content.chart_data_table') }}</summary><div class="chart-data-table"></div></details>
                     </div>
                   <div id="noCorporateRulesWrapper" class="container-row wittyworks-margin-top" style="display: none;">
                      <div class="lato-small-text-p">{!! empty($user) ? __('content.no_corporate_rules', ['url' => e(route('teams.dictionary'))]) : __('content.no_corporate_rules_user', ['url' => e(route('user.dictionary'))]) !!}</div>
@@ -253,6 +265,113 @@
         }
     };
 
+
+    const chartTexts = {
+        period: @json(__('content.chart_table_period')),
+        name: @json(__('content.chart_table_name')),
+        count: @json(__('content.chart_table_count')),
+    };
+
+    // Lines differ in their dash and point shape too, not only in colour.
+    const lineDashes = [[], [8, 4], [2, 3], [10, 3, 2, 3]];
+    const pointStyles = ['circle', 'rect', 'triangle', 'rectRot', 'star', 'crossRot', 'rectRounded', 'cross'];
+    function styleLines(datasets) {
+        datasets.forEach((dataset, i) => {
+            dataset.borderDash = lineDashes[i % lineDashes.length];
+            dataset.pointStyle = pointStyles[i % pointStyles.length];
+            dataset.pointRadius = 4;
+        });
+    }
+
+    // Only web links from the API become links.
+    function safeUrl(url) {
+        try {
+            const parsed = new URL(url, window.location.href);
+            return ['http:', 'https:'].includes(parsed.protocol) ? parsed.href : null;
+        } catch (e) {
+            return null;
+        }
+    }
+
+    // The chart's data as a table, below the chart: what a screen reader or
+    // anyone who cannot read the chart uses instead.
+    function describeChart(chart) {
+        const details = document.getElementById(chart.canvas.id + '-data');
+        if (!details) return;
+        const isBar = chart.config.type === 'bar';
+        const datasets = isBar ? chart.data.datasets.slice(0, 1) : chart.data.datasets;
+        const table = document.createElement('table');
+        const head = table.createTHead().insertRow();
+        const header = (cell, text, url = null) => {
+            cell.scope = 'col';
+            if (url) {
+                const link = document.createElement('a');
+                link.href = url;
+                link.target = '_blank';
+                link.rel = 'noopener';
+                link.textContent = text;
+                cell.appendChild(link);
+            } else {
+                cell.textContent = text;
+            }
+            return cell;
+        };
+        head.appendChild(header(document.createElement('th'), isBar ? chartTexts.name : chartTexts.period));
+        datasets.forEach((dataset) => head.appendChild(
+            header(document.createElement('th'), isBar ? chartTexts.count : dataset.label, isBar ? null : safeUrl(dataset.url))
+        ));
+        const body = table.createTBody();
+        chart.data.labels.forEach((label, i) => {
+            const row = body.insertRow();
+            const th = document.createElement('th');
+            th.scope = 'row';
+            th.textContent = Array.isArray(label) ? label.join(' ') : String(label);
+            row.appendChild(th);
+            datasets.forEach((dataset) => {
+                row.insertCell().textContent = dataset.data[i] ?? '';
+            });
+        });
+        details.querySelector('.chart-data-table').replaceChildren(table);
+        details.hidden = false;
+    }
+
+    // A legend of checkboxes instead of the canvas one, which only a mouse
+    // can use: each switches its line on and off.
+    function renderLegend(chart) {
+        const box = document.getElementById(chart.canvas.id + '-legend');
+        if (!box) return;
+        box.replaceChildren(...chart.data.datasets.map((dataset, i) => {
+            const label = document.createElement('label');
+            label.className = 'chart-legend-item';
+            const input = document.createElement('input');
+            input.type = 'checkbox';
+            input.checked = chart.isDatasetVisible(i);
+            input.addEventListener('change', () => {
+                chart.setDatasetVisibility(i, input.checked);
+                chart.update();
+            });
+            const sample = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            sample.setAttribute('width', '28');
+            sample.setAttribute('height', '10');
+            sample.setAttribute('aria-hidden', 'true');
+            const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            line.setAttribute('x1', '0');
+            line.setAttribute('y1', '5');
+            line.setAttribute('x2', '28');
+            line.setAttribute('y2', '5');
+            line.setAttribute('stroke', dataset.borderColor);
+            line.setAttribute('stroke-width', '3');
+            if (dataset.borderDash && dataset.borderDash.length) {
+                line.setAttribute('stroke-dasharray', dataset.borderDash.join(' '));
+            }
+            sample.appendChild(line);
+            const text = document.createElement('span');
+            text.textContent = dataset.label;
+            label.append(input, sample, text);
+            return label;
+        }));
+    }
+
     function load_charts(refresh, chartType = 'overview', timerange = '1m', interval = 'week', language = [], categories = [], inclusive = 'non_inclusive', eventTypes = null) {
         // A tab or filter used before the chart bundle has run waits for it.
         if (!window.Chart) {
@@ -264,10 +383,11 @@
             eventTypes = [@json($default_event)]
         }
 
-        const colors = ['#f06567', '#f06773', '#f16980', '#f16b8c', '#f16d99', '#f16fa5', '#f172b1', '#f274be', '#f276ca', '#ed78d1',
- '#e57ad2', '#dc7bd3', '#d37dd4', '#cb7fd5', '#c280d6', '#b982d7', '#b184d8', '#a885d9', '#9f87da', '#9789db',
- '#8c8fdc', '#8197dd', '#76a0de', '#6ba9df', '#60b1e1', '#55bae2', '#4ac2e3', '#3fcbe4', '#38d1e4', '#3cd1de',
- '#41d0d9', '#45d0d4', '#49d0ce', '#4dd0c9', '#52cfc4', '#56cfbe', '#5acfb9'];
+        // At least 3:1 against white (WCAG 1.4.11), keeping each colour's hue.
+        const colors = ['#eb6264', '#e8636f', '#e7647a', '#e46585', '#e2668f', '#dd6697', '#db67a1', '#d968aa', '#d769b3', '#d26aba',
+ '#ce6dbc', '#c86fc0', '#c272c3', '#bc76c6', '#b678c9', '#af7bcc', '#a87dcd', '#a17fd0', '#9a82d3', '#9284d4',
+ '#8689d3', '#798dcf', '#6b91ca', '#5e94c4', '#5196bf', '#4598b9', '#3b9bb5', '#309caf', '#299caa', '#2c9ca6',
+ '#319ea4', '#349ea1', '#379e9c', '#3a9e98', '#3e9d94', '#419d90', '#449d8c'];
 
         const xValuesCheck = [];
         const yValuesCheck = [];
@@ -388,7 +508,7 @@
                 // Chart.js 4 refuses a second chart on a canvas; a filter
                 // change draws this one again.
                 Chart.getChart(chartElement)?.destroy();
-                new Chart(ctx, {
+                const barChart = new Chart(ctx, {
                     type: "bar",
                     data: {
                         labels: xValues,
@@ -465,6 +585,7 @@
                         },
                     }
                 });
+                describeChart(barChart);
             }
         }
 
@@ -636,6 +757,7 @@
                     // Drawn again for each event type and on every filter change;
                     // Chart.js 4 refuses a second chart on the canvas.
                     Chart.getChart('eventsChart')?.destroy();
+                    styleLines(datasetsOverview);
                     const overviewChart = new Chart(ctx, {
                         type: "line",
                         data: {
@@ -670,45 +792,8 @@
                                     },
                                     displayColors: false
                                 },
-                                legend: {
-                                    onHover: function(e) {
-                                        e.native.target.style.cursor = 'pointer';
-                                    },
-                                    onClick: function(e, legendItem, legend) {
-                                        const index = legendItem.datasetIndex;
-                                        const ci = legend.chart;
-                                        const meta = ci.getDatasetMeta(index);
-                                        meta.hidden = meta.hidden === null ? !ci.data.datasets[index].hidden : null;
-                                        ci.update();
-                                    },
-                                    labels: {
-                                        generateLabels: function(chart) {
-                                            return chart.data.datasets.map((dataset, i) => {
-                                                //workaround for charjs initial hidden state bug
-                                                let isCurrentlyHidden = chart.getDatasetMeta(i).hidden === false || chart.getDatasetMeta(i).hidden === true;
-
-                                                if (@json($default_event) !== 'popover_open') {
-                                                    if (showCheckHighlights) {
-                                                        isCurrentlyHidden = (i === 0 ? isCurrentlyHidden : !isCurrentlyHidden);
-                                                    } else {
-                                                        isCurrentlyHidden = (i === 0 ? true : false);
-                                                    }
-                                                }
-                                                const color = isCurrentlyHidden ? '#dddddd' : dataset.borderColor;
-                                                return {
-                                                    datasetIndex: i,
-                                                    text: dataset.label,
-                                                    fillStyle: color,
-                                                    strokeStyle: color,
-                                                    pointStyle: 'circle',
-                                                };
-                                            });
-                                        },
-                                        boxWidth: 12,
-                                        font: {size: 12},
-                                        usePointStyle: true,
-                                    },
-                                },
+                                // An HTML legend (renderLegend) replaces the canvas one.
+                                legend: {display: false},
                                 title: {
                                     display: true,
                                     text:  @json(__('content.analytic_overview')),
@@ -738,6 +823,8 @@
                             },
                         }
                     });
+                    renderLegend(overviewChart);
+                    describeChart(overviewChart);
                 }
             setElementStyle('loading-icon-overview', 'display', 'none');
             setElementStyle('overview-no-data', 'display', 'none');
@@ -808,6 +895,7 @@
                 topSubChart.destroy();
             }
             ctx = document.getElementById('topSubCategoriesChart').getContext('2d');
+            styleLines(datasetsLineChart);
             topSubChart = new Chart(ctx, {
                 type: 'line',
                 data: {
@@ -842,34 +930,8 @@
                                 },
                                 displayColors: false
                             },
-                            legend: {
-                                position: 'right',
-                                onHover: function(e) {
-                                    e.native.target.style.cursor = 'pointer';
-                                },
-                                onClick: function(e, legendItem) {
-                                    const index = legendItem.datasetIndex;
-                                    topSubChart.data.datasets[index].hidden = !topSubChart.data.datasets[index].hidden;
-                                    topSubChart.update();
-                                },
-                                labels: {
-                                    usePointStyle: true,
-                                    font: {size: 14},
-                                    padding: 18,
-                                    generateLabels: function(chart) {
-                                        return chart.data.datasets.map((dataset, i) => {
-                                            const color = dataset.hidden ? '#dddddd' : dataset.borderColor;
-                                            return {
-                                                datasetIndex: i,
-                                                text: dataset.label,
-                                                fillStyle: color,
-                                                strokeStyle: color,
-                                                pointStyle: 'circle',
-                                            };
-                                        });
-                                    },
-                                },
-                            },
+                            // An HTML legend (renderLegend) replaces the canvas one.
+                            legend: {display: false},
                             title: {
                                 display: true,
                                 text:  @json(__('content.top_categories_over_time')),
@@ -911,6 +973,8 @@
                         },
                     }
                 });
+            renderLegend(topSubChart);
+            describeChart(topSubChart);
             const toggleLinesButton = document.getElementById('toggleLines');
             toggleLinesButton.removeEventListener('click', toggleLines);
             toggleLinesButton.addEventListener('click', toggleLines);
@@ -1021,12 +1085,10 @@
     };
 
     function toggleLines() {
-        let allVisible = topSubChart.data.datasets.every(dataset => !dataset.hidden);
-        topSubChart.data.datasets.forEach(function(dataset) {
-            dataset.hidden = allVisible;
-        });
-
+        const allVisible = topSubChart.data.datasets.every((dataset, i) => topSubChart.isDatasetVisible(i));
+        topSubChart.data.datasets.forEach((dataset, i) => topSubChart.setDatasetVisibility(i, !allVisible));
         topSubChart.update();
+        renderLegend(topSubChart);
     }
 
     function updateDropdown(dropdownId, dropdownValue) {
@@ -1117,18 +1179,13 @@
     function updateSection() {
         const element = document.getElementById("lastRefresh");
         const lastRefresh = element.getAttribute('last_refresh');
+        if (!lastRefresh) return;
 
+        // Text only: the button next to it stays, and keeps focus.
+        element.textContent = @json(__('content.last_refreshed')) + '\u00a0' + moment(lastRefresh).fromNow();
 
-        lastRefreshFormatted = moment(lastRefresh).fromNow();
-        let innerHTML = '{{ __('content.last_refreshed') }} &nbsp;' + lastRefreshFormatted;
-
-        const lastRefreshDateFormatted = new Date(lastRefresh);
-        const lastRefreshMinutes = Math.floor((new Date() - lastRefreshDateFormatted) / 60000);
-        if (lastRefreshMinutes >= 3) {
-            innerHTML += '&nbsp; &nbsp; <button type="button" class="button primary-button-red" id="refresh-data">{{ __('content.refresh_data') }}</button>';
-        }
-
-        element.innerHTML = innerHTML
+        const lastRefreshMinutes = Math.floor((new Date() - new Date(lastRefresh)) / 60000);
+        document.getElementById('refresh-data').hidden = lastRefreshMinutes < 3;
     };
 
     setInterval(function() {

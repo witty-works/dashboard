@@ -473,4 +473,9 @@ Veuillez ensuite cliquer à nouveau sur "S\'inscrire" pour finaliser l\'inscript
     'office_consent_without_documents' => 'Je souhaite un compte pour cette adresse.',
     'api_keys_grace_for' => 'Délai de grâce pour :name',
     'make_owner_of' => 'Transférer l’équipe à :name',
+    'chart_data_table' => 'Afficher les données sous forme de tableau',
+    'chart_lines' => 'Lignes affichées',
+    'chart_table_period' => 'Période',
+    'chart_table_name' => 'Nom',
+    'chart_table_count' => 'Nombre',
 ];
