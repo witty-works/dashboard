@@ -1,9 +1,5 @@
 <x-form-section submit="storeDomain">
-    <x-slot name="title">
-        <div id="domains_title">
-            {{ __('guidelines.create_domain') }}
-        </div>
-    </x-slot>
+    <x-slot name="title">{{ __('guidelines.create_domain') }}</x-slot>
 
     <x-slot name="description">
     </x-slot>

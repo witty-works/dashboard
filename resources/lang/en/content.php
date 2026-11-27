@@ -86,6 +86,7 @@ return [
     'this_is_a_secure_area' => 'This is a secure area of the application. Please confirm your password before continuing.',
     'forgot_your_password_no_problem' => 'Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.',
     'forgot_your_password' => 'Forgot your password?',
+    'verify_email_title' => 'Verify your email address',
     'please_confirm_access_to_your_account' => 'Please confirm access to your account by entering the authentication code provided by your authenticator application.',
     'thank_you_for_signing_up' => 'Thanks for signing up! Before getting started, could you verify your email address by opening the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.',
     'verification_link_send' => 'A new verification link has been sent to the email address you provided during registration.',

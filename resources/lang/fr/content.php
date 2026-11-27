@@ -86,6 +86,7 @@ return [
     'this_is_a_secure_area' => 'Il s\'agit d\'une zone sécurisée de l\'application. Veuillez confirmer votre mot de passe avant de continuer.',
     'forgot_your_password_no_problem' => 'Vous avez oublié votre mot de passe ? Pas de problème. Indiquez-nous votre e-mail et nous vous enverrons un lien de réinitialisation du mot de passe qui vous permettra d\'en choisir un nouveau.',
     'forgot_your_password' => 'Vous avez oublié votre mot de passe ?',
+    'verify_email_title' => 'Vérifiez votre adresse e-mail',
     'please_confirm_access_to_your_account' => 'Veuillez confirmer l\'accès à votre compte en saisissant le code d\'authentification fourni par votre application d\'authentification.',
     'thank_you_for_signing_up' => 'Merci de vous être inscrit ! Avant de commencer, pourriez-vous vérifier votre e-mail en ouvrant le lien que nous venons de vous envoyer par e-mail ? Si vous n\'avez pas reçu l\'e-mail, nous vous en enverrons un autre.',
     'verification_link_send' => 'Un nouveau lien de vérification a été envoyé à l\'adresse e-mail que vous avez fournie lors de votre inscription.',

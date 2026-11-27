@@ -1,13 +1,13 @@
 <x-app-layout :pagetitle="__('content.manage_account')">
-    <div class="wittyworks-navigation-wrapper">
-    @livewire('navigation-menu')
-    </div>
-    <div class="wittyworks-page-wrapper" id="maincontent">
+    <x-slot name="navigation">
+        @livewire('navigation-menu')
+    </x-slot>
+
         <div class="wittyworks-page-subscription lg:ml-20">
-            @include('partials.banners')
             <h1 class="ibarra-sub-title-h1 margin-top">
                 {{ __('content.manage_account') }}
             </h1>
+            @include('partials.banners')
             
             @if (Laravel\Fortify\Features::canUpdateProfileInformation())
                 @livewire('profile.update-profile-information-form')
@@ -41,5 +41,4 @@
                 @livewire('profile.delete-account-form')
             @endif
         </div>
-    </div>
 </x-app-layout>

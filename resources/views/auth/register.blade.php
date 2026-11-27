@@ -1,8 +1,10 @@
-<x-guest-layout>
+<x-guest-layout :pagetitle="__('content.register')">
     <x-authentication-card>
         <x-slot name="logo">
             <x-authentication-card-logo />
         </x-slot>
+
+        <h1 class="mb-4 text-2xl leading-tight">{{ __('content.register') }}</h1>
 
         <x-validation-errors class="mb-4" />
 

@@ -1,6 +1,6 @@
 <x-form-section submit="storeFalsePositive">
     <x-slot name="title">
-        <h2 id="false_positives">{{ __('guidelines.create_false_positive') }}</h2>
+        {{ __('guidelines.create_false_positive') }}
     </x-slot>
 
     <x-slot name="description">

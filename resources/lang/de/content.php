@@ -81,6 +81,7 @@ return [
     'this_is_a_secure_area' => 'Dies ist ein sicherer Bereich der Anwendung. Bitte bestätigen dein Passwort, bevor du fortfährst.',
     'forgot_your_password_no_problem' => 'Passwort vergessen? Kein Problem. Teile uns einfach dein E-Mail-Adresse mit und wir senden dir einen Link zum Zurücksetzen des Passworts per E-Mail zu, mit dem du ein neues auswählen kannst.',
     'forgot_your_password' => 'Passwort vergessen?',
+    'verify_email_title' => 'Bestätige deine E-Mail-Adresse',
     'please_confirm_access_to_your_account' => 'Bitte bestätige den Zugriff auf dein Konto, indem du den von deiner Authentifizierungsanwendung bereitgestellten Authentifizierungscode eingibst.',
     'thank_you_for_signing_up' => 'Danke fürs Registrieren! Könntest du, bevor du beginnst, deine E-Mail-Adresse bestätigen, indem du Link öffnest, den wir dir gerade per E-Mail gesendet haben? Solltest du die E-Mail nicht erhalten haben, senden wir dir gerne eine neue zu.',
     'verification_link_send' => 'Ein neuer Bestätigungslink wurde an die E-Mail-Adresse gesendet, die du bei der Registrierung angegeben hast.',

@@ -1,7 +1,7 @@
 <x-form-section submit="storeTermReplacement">
 
     <x-slot name="title">
-        <h2 id="term_replacements">{{ __('guidelines.create_term_replacement') }}</h2>
+        {{ __('guidelines.create_term_replacement') }}
     </x-slot>
 
     <x-slot name="description">

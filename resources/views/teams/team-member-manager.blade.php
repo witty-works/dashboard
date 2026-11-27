@@ -1,9 +1,7 @@
 <div>
 @if (Gate::check('viewUserCreateForm', $team))
     <!-- Add Team Member -->
-    <section id="add-team-member" aria-labelledby="sectionTitle">
-        <h1 id="sectionTitle" class="ibarra-sub-title-h1 margin-top">{{ __('content.manage_members') }}</h1>
-
+    <div id="add-team-member">
         @livewire('teams.update-team-name-form-cancel', ['team' => $team])
 
         <div class="pt-10">
@@ -73,7 +71,7 @@
             </x-slot>
         </x-form-section>
         </div>
-    </section>
+    </div>
 @endif
 
 @if ($team->teamInvitations->isNotEmpty() && Gate::check('viewUserCreateForm', $team))

@@ -37,7 +37,7 @@
                 </td>
                 @if (Auth::user()->hasTeamPermission($model, 'edit_guidelines') && empty($hide_actions))
                 <td class="border px-4 py-2 text-center container-row">
-                    <button data-scroll-to="organization_term_replacements" wire:click="editTermReplacement({{ $term_replacement->id }})" class="button primary-button-red ">
+                    <button data-scroll-to="term" wire:click="editTermReplacement({{ $term_replacement->id }})" class="button primary-button-red ">
                         {{ __('content.edit') }}
                     </button>
                     <button wire:click="deleteTermReplacement({{ $term_replacement->id }})" wire:confirm="{{ __('content.confirm_delete_entry') }}" class="button secondary-button-red ">

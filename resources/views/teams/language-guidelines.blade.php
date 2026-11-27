@@ -19,12 +19,11 @@ switch ($tab) {
 }
 @endphp
 <x-app-layout :pagetitle="$pagetitle">
-    <div class="wittyworks-navigation-wrapper">
-    @livewire('navigation-menu')
-    </div>
-    <div class="wittyworks-page-wrapper" id="maincontent">
+    <x-slot name="navigation">
+        @livewire('navigation-menu')
+    </x-slot>
+
         <div class="wittyworks-page lg:ml-20">
-            @include('partials.banners')
             @if($team)
                 @if($tab === \App\Http\Controllers\Livewire\OrganizationGuidelinesController::CATEGORY_SETTINGS)
                     @include('teams/category-settings')
@@ -41,5 +40,4 @@ switch ($tab) {
             @include('partials.invitations')
             @endif
         </div>
-    </div>
 </x-app-layout>

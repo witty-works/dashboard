@@ -42,9 +42,6 @@
         }
     }
 ?>
-<a class="skip-link" href="#maincontent">{{ __('content.skip_to_main_content') }}</a>
-
-
 <a href="https://www.witty.works/">
     <img class="wittyworks-logo" src="{{ url('svg/witty-logo-white.svg') }}" alt="Witty Works" />
 </a>

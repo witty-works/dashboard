@@ -25,7 +25,7 @@
                 <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $false_positive->false_positive }} {{ $false_positive->language_code ? "($false_positive->language_code)" : '' }} </td>
                 @if (Auth::user()->hasTeamPermission($model, 'edit_guidelines') && empty($hide_actions))
                 <td class="border px-4 py-2 text-center container-row">
-                    <button data-scroll-to="organization_false_positives" wire:click="editFalsePositive({{ $false_positive->id }})" class="button primary-button-red ">
+                    <button data-scroll-to="false_positive" wire:click="editFalsePositive({{ $false_positive->id }})" class="button primary-button-red ">
                         {{ __('content.edit') }}
                     </button>
                     <button wire:click="deleteFalsePositive({{ $false_positive->id }})" wire:confirm="{{ __('content.confirm_delete_entry') }}" class="button secondary-button-red ">
