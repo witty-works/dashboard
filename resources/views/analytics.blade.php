@@ -299,7 +299,10 @@
         const xValuesTopCorporateWords = [];
         const yValuesTopCorporateWords = [];
 
-        Chart.defaults.global.defaultFontColor = '#000000';
+        // Chart.js 4: black text as before, and the curved lines Chart.js 2
+        // drew by default.
+        Chart.defaults.color = '#000000';
+        Chart.defaults.elements.line.tension = 0.4;
 
         function formatChartLabels(xValues, yValues, interval) {
             const formattedXValues = [];
@@ -382,6 +385,9 @@
                 chartElement.style.display = 'flex';
                 const ctx = chartElement.getContext('2d');
 
+                // Chart.js 4 refuses a second chart on a canvas; a filter
+                // change draws this one again.
+                Chart.getChart(chartElement)?.destroy();
                 new Chart(ctx, {
                     type: "bar",
                     data: {
@@ -396,49 +402,49 @@
                         events: [],
                         maintainAspectRatio: false,
                         responsive: true,
-                        title: {
-                        display: true,
-                        text: text,
-                        fontSize: 16,
-                        fontStyle: 'normal',
-                        font: {
-                            family: "Lato",
-                        },
-                        },
-                        scales:{
-                            xAxes: [{
+                        scales: {
+                            x: {
                                 display: display,
                                 ticks: {
-                                    //avoid very long labels
-                                    callback: function(value, index, values) {
-                                        if (value.length > 20) {
-                                            return value.substring(0, 20) + '...';
-                                        }
-                                        return value;
+                                    // Avoid very long labels. A category axis passes the
+                                    // tick's index; the label is looked up from it.
+                                    callback: function(value) {
+                                        const label = String(this.getLabelForValue(value));
+                                        return label.length > 20 ? label.substring(0, 20) + '...' : label;
                                     }
                                 }
-                            }],
-                            yAxes: [{
+                            },
+                            y: {
+                                beginAtZero: true,
+                                min: 0,
+                                max: Math.max(...yValues) + Math.max(...yValues) * 0.15,
                                 ticks: {
-                                    beginAtZero: true,
-                                    min: 0,
-                                    max: Math.max(...yValues) + Math.max(...yValues) * 0.15,
-                                    callback: function(value, index, values) {
+                                    callback: function(value) {
                                         if (Math.floor(value) === value) {
                                             return value;
                                         }
                                     }
                                 }
-                            }],
+                            },
                         },
                         plugins: {
+                            title: {
+                                display: true,
+                                text: text,
+                                font: {size: 16, weight: 'normal', family: 'Lato'},
+                            },
+                            legend: {
+                                display: false
+                            },
                             datalabels: {
                                 anchor: 'end',
                                 align: 'top',
                                 rotation: 315,
-                                formatter: (currentValue) => {
+                                formatter: (currentValue, context) => {
                                     if (calledDirectly) return '';
-                                    const index = yValues.indexOf(currentValue);
+                                    // The bar's own index: two bars with the same value
+                                    // each get their own label.
+                                    const index = context.dataIndex;
                                     const currentLabel = xValues[index];
                                     const eventTypeTopWords = document.getElementById("eventTypeTopWords").value;
                                     if (data.events && Object.hasOwn(data.events, eventTypeTopWords)) {
@@ -457,15 +463,6 @@
                                 },
                             }
                         },
-                        legend: {
-                            display: display,
-                        },
-                        legend: {
-                            display: false
-                        },
-                        tooltips: {
-                            label: false
-                        }
                     }
                 });
             }
@@ -636,6 +633,9 @@
 
 
                     ctx = document.getElementById('eventsChart').getContext('2d');
+                    // Drawn again for each event type and on every filter change;
+                    // Chart.js 4 refuses a second chart on the canvas.
+                    Chart.getChart('eventsChart')?.destroy();
                     const overviewChart = new Chart(ctx, {
                         type: "line",
                         data: {
@@ -643,105 +643,100 @@
                             datasets: datasetsOverview,
                         },
                         options: {
-                            tooltips: {
-                                enabled: true,
-                                mode: 'nearest',
-                                intersect: true,
-                                backgroundColor: '#f5f5f5',
-                                titleFontColor: 'black',
-                                bodyFontColor: 'black',
-                                callbacks: {
-                                    title: function(tooltipItems, data) {
-                                        return '';
-                                    },
-                                    label: function(tooltipItem, data) {
-                                        return data.datasets[tooltipItem.datasetIndex].label + ': ' + tooltipItem.yLabel;
-                                    },
-                                    labelColor: function(tooltipItem, chart) {
-                                        return {
-                                            borderColor: 'rgba(0,0,0,0)',
-                                            backgroundColor: 'rgba(0,0,0,0)'
-                                        };
-                                    },
-                                    afterLabel: function(tooltipItem, data) {
-                                        return '';
-                                    }
-                                },
-                                displayColors: false
-                            },
-                            legend: {
-                                onHover: function(e) {
-                                    e.target.style.cursor = 'pointer';
-                                },
-                                onClick: function(e, legendItem) {
-                                    const index = legendItem.datasetIndex;
-                                    const ci = this.chart;
-                                    const meta = ci.getDatasetMeta(index);
-                                    meta.hidden = meta.hidden === null ? !ci.data.datasets[index].hidden : null;
-                                    ci.update();
-                                },
-                                labels: {
-                                    generateLabels: function(chart) {
-                                        return chart.data.datasets.map((dataset, i) => {
-                                            //workaround for charjs initial hidden state bug
-                                            let isCurrentlyHidden = chart.getDatasetMeta(i).hidden === false || chart.getDatasetMeta(i).hidden === true;
-
-                                            if (@json($default_event) !== 'popover_open') {
-                                                if (showCheckHighlights) {
-                                                    isCurrentlyHidden = (i === 0 ? isCurrentlyHidden : !isCurrentlyHidden);
-                                                } else {
-                                                    isCurrentlyHidden = (i === 0 ? true : false);
-                                                }
-                                            }
+                            plugins: {
+                                tooltip: {
+                                    enabled: true,
+                                    mode: 'nearest',
+                                    intersect: true,
+                                    backgroundColor: '#f5f5f5',
+                                    titleColor: 'black',
+                                    bodyColor: 'black',
+                                    callbacks: {
+                                        title: function() {
+                                            return '';
+                                        },
+                                        label: function(context) {
+                                            return context.dataset.label + ': ' + context.formattedValue;
+                                        },
+                                        labelColor: function() {
                                             return {
-                                                datasetIndex: i,
-                                                text: dataset.label,
-                                                fillStyle: isCurrentlyHidden ? '#dddddd' : dataset.borderColor,
+                                                borderColor: 'rgba(0,0,0,0)',
+                                                backgroundColor: 'rgba(0,0,0,0)'
                                             };
-                                        });
+                                        },
+                                        afterLabel: function() {
+                                            return '';
+                                        }
                                     },
-                                    boxWidth: 12,
-                                    fontSize: 12,
-                                    usePointStyle: true,
+                                    displayColors: false
                                 },
-                            },
-                            hover: {
-                                onHover: function(e) {
-                                    var point = this.getElementAtEvent(e);
-                                    if (point.length) e.target.style.cursor = 'pointer';
-                                    else e.target.style.cursor = 'default';
+                                legend: {
+                                    onHover: function(e) {
+                                        e.native.target.style.cursor = 'pointer';
+                                    },
+                                    onClick: function(e, legendItem, legend) {
+                                        const index = legendItem.datasetIndex;
+                                        const ci = legend.chart;
+                                        const meta = ci.getDatasetMeta(index);
+                                        meta.hidden = meta.hidden === null ? !ci.data.datasets[index].hidden : null;
+                                        ci.update();
+                                    },
+                                    labels: {
+                                        generateLabels: function(chart) {
+                                            return chart.data.datasets.map((dataset, i) => {
+                                                //workaround for charjs initial hidden state bug
+                                                let isCurrentlyHidden = chart.getDatasetMeta(i).hidden === false || chart.getDatasetMeta(i).hidden === true;
+
+                                                if (@json($default_event) !== 'popover_open') {
+                                                    if (showCheckHighlights) {
+                                                        isCurrentlyHidden = (i === 0 ? isCurrentlyHidden : !isCurrentlyHidden);
+                                                    } else {
+                                                        isCurrentlyHidden = (i === 0 ? true : false);
+                                                    }
+                                                }
+                                                const color = isCurrentlyHidden ? '#dddddd' : dataset.borderColor;
+                                                return {
+                                                    datasetIndex: i,
+                                                    text: dataset.label,
+                                                    fillStyle: color,
+                                                    strokeStyle: color,
+                                                    pointStyle: 'circle',
+                                                };
+                                            });
+                                        },
+                                        boxWidth: 12,
+                                        font: {size: 12},
+                                        usePointStyle: true,
+                                    },
+                                },
+                                title: {
+                                    display: true,
+                                    text:  @json(__('content.analytic_overview')),
+                                    font: {size: 16, weight: 'normal'},
+                                },
+                                datalabels: {
+                                    display: false,
                                 }
+                            },
+                            onHover: function(e, elements) {
+                                e.native.target.style.cursor = elements.length ? 'pointer' : 'default';
                             },
                             events: ['click', 'mousemove', 'mouseout'],
                             maintainAspectRatio: false,
                             responsive: true,
-                            title: {
-                                display: true,
-                                text:  @json(__('content.analytic_overview')),
-                                fontSize: 16,
-                                fontStyle: 'normal'
-                            },
-                            scales:{
-                                yAxes: [{
+                            scales: {
+                                y: {
+                                    min: 0,
                                     ticks: {
-                                        min: 0,
-                                        callback: function(value, index, values) {
+                                        callback: function(value) {
                                             if (Math.floor(value) === value) {
                                                 return value;
                                             }
                                         }
                                     }
-                                }],
-                            },
-                            plugins: {
-                                datalabels: {
-                                    display: false,
-                                }
+                                },
                             },
                         }
-                    });
-                    window.addEventListener('resize', function() {
-                        overviewChart.data.labels = formatChartLabels(xValuesPopoverOpen, null, interval)[0];
                     });
                 }
             setElementStyle('loading-icon-overview', 'display', 'none');
@@ -820,104 +815,99 @@
                     datasets: datasetsLineChart,
                     },
                     options: {
-                        tooltips: {
-                            enabled: true,
-                            mode: 'nearest',
-                            intersect: true,
-                            backgroundColor: '#f5f5f5',
-                            titleFontColor: 'black',
-                            bodyFontColor: 'black',
-                            callbacks: {
-                                title: function(tooltipItems, data) {
-                                    return '';
-                                },
-                                label: function(tooltipItem, data) {
-                                    return data.datasets[tooltipItem.datasetIndex].label;
-                                },
-                                labelColor: function(tooltipItem, chart) {
-                                    return {
-                                        borderColor: 'rgba(0,0,0,0)',
-                                        backgroundColor: 'rgba(0,0,0,0)'
-                                    };
-                                },
-                                afterLabel: function(tooltipItem, data) {
-                                    return '';
-                                }
-                            },
-                            displayColors: false
-                        },
-                        onClick: function(e) {
-                            const line = this.getElementAtEvent(e)[0];
-                            if(!line) return;
-                            const index = line._index;
-                            const datasetIndex = line._datasetIndex;
-                            const url = this.data.datasets[datasetIndex].url;
-                            window.open(this.data.datasets[datasetIndex].url, '_blank');
-                        },
-                        legend: {
-                            position: 'right',
-                            onHover: function(e) {
-                                e.target.style.cursor = 'pointer';
-                            },
-                            onClick: function(e, legendItem) {
-                                const index = legendItem.datasetIndex;
-                                topSubChart.data.datasets[index].hidden = !topSubChart.data.datasets[index].hidden;
-                                topSubChart.update();
-                            },
-                            labels: {
-                                usePointStyle: true,
-                                fontSize: 14,
-                                padding: 18,
-                                generateLabels: function(chart) {
-                                    return chart.data.datasets.map((dataset, i) => {
-                                        let isHidden = dataset.hidden;
+                        plugins: {
+                            tooltip: {
+                                enabled: true,
+                                mode: 'nearest',
+                                intersect: true,
+                                backgroundColor: '#f5f5f5',
+                                titleColor: 'black',
+                                bodyColor: 'black',
+                                callbacks: {
+                                    title: function() {
+                                        return '';
+                                    },
+                                    label: function(context) {
+                                        return context.dataset.label;
+                                    },
+                                    labelColor: function() {
                                         return {
-                                            datasetIndex: i,
-                                            text: dataset.label,
-                                            fillStyle: isHidden ? '#dddddd' : dataset.borderColor,
+                                            borderColor: 'rgba(0,0,0,0)',
+                                            backgroundColor: 'rgba(0,0,0,0)'
                                         };
-                                    });
+                                    },
+                                    afterLabel: function() {
+                                        return '';
+                                    }
+                                },
+                                displayColors: false
+                            },
+                            legend: {
+                                position: 'right',
+                                onHover: function(e) {
+                                    e.native.target.style.cursor = 'pointer';
+                                },
+                                onClick: function(e, legendItem) {
+                                    const index = legendItem.datasetIndex;
+                                    topSubChart.data.datasets[index].hidden = !topSubChart.data.datasets[index].hidden;
+                                    topSubChart.update();
+                                },
+                                labels: {
+                                    usePointStyle: true,
+                                    font: {size: 14},
+                                    padding: 18,
+                                    generateLabels: function(chart) {
+                                        return chart.data.datasets.map((dataset, i) => {
+                                            const color = dataset.hidden ? '#dddddd' : dataset.borderColor;
+                                            return {
+                                                datasetIndex: i,
+                                                text: dataset.label,
+                                                fillStyle: color,
+                                                strokeStyle: color,
+                                                pointStyle: 'circle',
+                                            };
+                                        });
+                                    },
                                 },
                             },
-                        },
-                        hover: {
-                            onHover: function(e) {
-                                var point = this.getElementAtEvent(e);
-                                if (point.length) e.target.style.cursor = 'pointer';
-                                else e.target.style.cursor = 'default';
+                            title: {
+                                display: true,
+                                text:  @json(__('content.top_categories_over_time')),
+                                font: {size: 16, weight: 'normal'},
+                            },
+                            datalabels: {
+                                display: false,
                             }
+                        },
+                        // A click on a line opens its category's page.
+                        onClick: function(e, elements, chart) {
+                            const line = elements[0];
+                            if (!line) return;
+                            window.open(chart.data.datasets[line.datasetIndex].url, '_blank');
+                        },
+                        onHover: function(e, elements) {
+                            e.native.target.style.cursor = elements.length ? 'pointer' : 'default';
                         },
                         events: ['click', 'mousemove', 'mouseout'],
                         maintainAspectRatio: false,
                         responsive: true,
-                        title: {
-                            display: true,
-                            text:  @json(__('content.top_categories_over_time')),
-                            fontSize: 16,
-                            fontStyle: 'normal'
-                        },
-                        scales:{
-                            xAxes: [{
+                        scales: {
+                            x: {
                                 ticks: {
                                     autoSkip: true,
                                     minRotation: 30
                                 }
-                            }],
-                            yAxes: [{
+                            },
+                            y: {
+                                min: 0,
                                 ticks: {
-                                    min: 0,
-                                    callback: function(value, index, values) {
+                                    callback: function(value) {
                                         if (Math.floor(value) === value) {
                                             return value;
                                         }
                                     }
                                 }
-                            }],
-                        },
-                        plugins: {
-                            datalabels: {
-                                display: false,
-                            }
+                            },
                         },
                     }
                 });
