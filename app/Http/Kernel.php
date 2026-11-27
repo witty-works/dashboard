@@ -17,6 +17,7 @@ class Kernel extends HttpKernel
      */
     protected $middleware = [
         // \App\Http\Middleware\TrustHosts::class,
+        \App\Http\Middleware\UseApplicationUrl::class,
         \App\Http\Middleware\TrustProxies::class,
         // Early, so that every response gets the headers, error pages included.
         \App\Http\Middleware\SecurityHeaders::class,
