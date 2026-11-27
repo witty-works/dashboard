@@ -7,15 +7,14 @@
     ;
 ?>
 <x-app-layout :pagetitle="__('content.analytics')">
-<div class="wittyworks-navigation-wrapper">
+<x-slot name="navigation">
     @livewire('navigation-menu')
-</div>
-<div class="wittyworks-page-wrapper" id="maincontent">
+</x-slot>
    <div class="wittyworks-page lg:ml-20">
-      @include('partials.banners')
       <h1 class="ibarra-sub-title-h1 margin-top">
          {{ __('content.analytics') }}
       </h1>
+      @include('partials.banners')
       {{-- Plain text: it changes every 30 seconds, which a live region would read out each time.
            The button stays in place, so it keeps focus while the text changes. --}}
       <div class="lato-small-text-p container-row margin-top" style="align-items: center;">
@@ -251,7 +250,6 @@
          </div>
       </div>
    </div>
-</div>
 </x-app-layout>
 
 {{-- Chart and moment come from the app's bundle, which runs deferred: before DOMContentLoaded, after this page's inline script. --}}
