@@ -73,6 +73,7 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'team' => \App\Http\Middleware\EnsureUserHasTeam::class,
         'superadmin.two-factor' => \App\Http\Middleware\EnsureSuperadminTwoFactor::class,
+        'same-site-request' => \App\Http\Middleware\RefuseCrossSiteRequests::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,

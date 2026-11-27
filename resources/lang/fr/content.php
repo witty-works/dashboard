@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'open_from_dashboard' => 'Ouvrez cette page depuis le tableau de bord.',
     'created' => 'Créé.',
     'added' => 'Ajouté.',
     'saved' => 'Enregistré.',

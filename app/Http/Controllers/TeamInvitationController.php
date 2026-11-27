@@ -111,7 +111,9 @@ class TeamInvitationController extends BaseTeamInvitationController
             return $invitation;
         }
 
-        if (strtolower($request->user()->email) !== strtolower($invitation->email)) {
+        // Only once the address is verified: an account can claim any address.
+        if (! $request->user()->hasVerifiedEmail()
+            || strtolower($request->user()->email) !== strtolower($invitation->email)) {
             abort(403, 'Unauthorized action.');
         }
 

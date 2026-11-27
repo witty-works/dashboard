@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'open_from_dashboard' => 'Open this page from the dashboard.',
     'created' => 'Created.',
     'added' => 'Added.',
     'saved' => 'Saved.',

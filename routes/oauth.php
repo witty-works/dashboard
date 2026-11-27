@@ -46,7 +46,10 @@ Route::post('/token', [AccessTokenController::class, 'issueToken'])
  * once the user has signed in.
  */
 Route::middleware('web')->group(function () {
+    // Tokens only for a verified address: an account can claim any address,
+    // and /api/userinfo reports it to the extension.
     Route::get('/authorize', [AuthorizationController::class, 'authorize'])
+        ->middleware(\App\Http\Middleware\EnsureSignedInAddressIsVerified::class)
         ->name('authorizations.authorize');
 
     // Consent screen post-back. First-party clients skip this entirely (see

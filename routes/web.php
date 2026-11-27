@@ -52,7 +52,9 @@ Route::localize(
     function () {
         // Superadmins need two-factor sign-in to impersonate. Leaving is not
         // affected: the impersonated user is never a superadmin.
-        Route::middleware('superadmin.two-factor')->group(function () {
+        // Not from another site: taking over a session is a GET (the package's
+        // route), which a link or image elsewhere could otherwise trigger.
+        Route::middleware(['superadmin.two-factor', 'same-site-request'])->group(function () {
             Route::impersonate();
         });
 
@@ -120,7 +122,8 @@ Route::localize(
                         ->middleware(['auth'])
                         ->name('team-invitations.accept');
 
-                    Route::get('/team-invitations/{invitation}/reject', [TeamInvitationController::class, 'destroy'])
+                    // A POST: it deletes the invitation, so no other site may link to it.
+                    Route::post('/team-invitations/{invitation}/reject', [TeamInvitationController::class, 'destroy'])
                         ->middleware(['auth'])
                         ->name('team-invitations.reject');
 

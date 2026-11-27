@@ -111,13 +111,16 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
     }
 
     /**
-     * Get the open invitiations
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * The invitations to this user's address, once it is verified: an
+     * account can claim any address, and must not see or act on invitations
+     * meant for someone else. Not for eager loading (`with('invitations')`):
+     * that builds the relation on a blank user, which has no verified address.
      */
     public function invitations()
     {
-        return $this->hasMany(Jetstream::teamInvitationModel(), 'email', 'email');
+        $invitations = $this->hasMany(Jetstream::teamInvitationModel(), 'email', 'email');
+
+        return $this->hasVerifiedEmail() ? $invitations : $invitations->whereRaw('1 = 0');
     }
 
     /**

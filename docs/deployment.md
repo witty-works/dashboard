@@ -83,7 +83,7 @@ All settings are environment variables; the image holds none. The required ones,
 
 To connect the NLP API:
 
--   **`APP_NLP_API_SYNC_ENDPOINT`:** the API's address as the dashboard's containers reach it, with `APP_NLP_API_SYNC_USER` and `APP_NLP_API_SYNC_PASSWORD` (see [NLP API Sync](../README.md#nlp-api-sync)).
+-   **`APP_NLP_API_SYNC_ENDPOINT`:** the API's address as the dashboard's containers reach it, with `APP_NLP_API_SYNC_USER` and `APP_NLP_API_SYNC_PASSWORD` (see [NLP API Sync](../README.md#nlp-api-sync)). The credentials go with every request, so use `https` unless the two reach each other over a private network only.
 -   **`NLP_API_PUBLIC_URL`:** the API's address as browsers reach it, for the write page.
 
 Which features a deployment offers is set with the switches in the README's [features a deployment switches on or off](../README.md#features-a-deployment-switches-on-or-off).

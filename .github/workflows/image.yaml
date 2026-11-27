@@ -102,6 +102,8 @@ jobs:
           done
           curl -fsS -H 'X-Forwarded-Proto: https' http://127.0.0.1:8080/up
           curl -fsS -H 'X-Forwarded-Proto: https' http://127.0.0.1:8080/login | grep -q '<form'
+          # A file Caddy serves without PHP carries the security headers too.
+          curl -fsSI http://127.0.0.1:8080/robots.txt | grep -qi '^x-content-type-options: nosniff'
         env:
           # As the production compose file runs.
           MARIADB_IMAGE: mariadb:11.8
