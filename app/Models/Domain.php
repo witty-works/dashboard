@@ -51,8 +51,8 @@ class Domain extends Model
             $event = PosthogHelper::STORE_TEAM_DOMAIN;
         }
 
+        // The count only: a domain names a site someone works on.
         $properties['total'] = $model->domains->count();
-        $properties['domain'] = $this->domain;
 
         $job = new SendEventToPosthog(
             $user,

@@ -40,8 +40,8 @@ class FalsePositive extends Model
             $user,
             $event,
             [
+                // The count only: an ignored word is often a person's name.
                 'total' => $model->falsePositives->count(),
-                'false_positive' => $this->false_positive,
             ],
             !$this->wasRecentlyCreated,
             $team,
