@@ -1,5 +1,5 @@
 @push('head-first')
-    <script>
+    <script @cspNonce>
         // Take the token out of the address before any other script runs.
         window.officeSsoToken = new URLSearchParams(location.hash.slice(1)).get('token');
         history.replaceState(null, '', location.pathname);
@@ -19,7 +19,7 @@
         </form>
     </div>
 
-    <script>
+    <script @cspNonce>
         (function () {
             var token = window.officeSsoToken;
             window.officeSsoToken = null;

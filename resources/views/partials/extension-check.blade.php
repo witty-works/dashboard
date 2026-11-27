@@ -1,4 +1,4 @@
-<script>
+<script @cspNonce>
     window.addEventListener('load', () => {
         const wittyIsInstalled = document.querySelector('witty-is-installed');
 

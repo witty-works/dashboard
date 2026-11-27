@@ -18,7 +18,6 @@ class LanguageGuidelines extends Model
     const BASIC_ENABLED = 1;
     const ADVANCED_ENABLED = 2;
 
-    static public $tripleToogleLoaded = false;
 
     use HasFactory;
     use GuidelinesUpdateTrait {

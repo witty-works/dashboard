@@ -42,7 +42,7 @@
                         @endforeach
                     </div>
 
-                    <script>
+                    <script @cspNonce>
                         window.addEventListener('load', (event) => {
                             const wittyIsInstalled = document.querySelector('witty-is-installed');
 
