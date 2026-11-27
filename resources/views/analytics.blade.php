@@ -19,7 +19,8 @@
       {{-- Plain text: it changes every 30 seconds, which a live region would read out each time.
            The button stays in place, so it keeps focus while the text changes. --}}
       <div class="lato-small-text-p container-row margin-top" style="align-items: center;">
-         <span id="lastRefresh" class="wittyworks-margin-right" style="visibility: hidden;"></span>
+         {{-- Focus lands here when the refresh button it held disappears. --}}
+         <span id="lastRefresh" class="wittyworks-margin-right" style="visibility: hidden;" tabindex="-1"></span>
          <button type="button" class="button primary-button-red" id="refresh-data" hidden>{{ __('content.refresh_data') }}</button>
       </div>
       <div class="container-row margin-top">
@@ -285,6 +286,7 @@
 
     // Only web links from the API become links.
     function safeUrl(url) {
+        if (!url) return null;
         try {
             const parsed = new URL(url, window.location.href);
             return ['http:', 'https:'].includes(parsed.protocol) ? parsed.href : null;
@@ -447,6 +449,9 @@
                 setElementStyle(sectionIdNoData, 'display', 'block');
             } else if (chartId) {
                 setElementStyle(chartId, 'display', 'none');
+                // Its table goes with it, rather than showing an earlier filter's data.
+                const table = document.getElementById(chartId + '-data');
+                if (table) table.hidden = true;
             }
             const textElementId = sectionIdNoData ? sectionIdNoData + '-text' : null;
             const textElement = textElementId ? document.getElementById(textElementId) : null;
@@ -945,7 +950,8 @@
                         onClick: function(e, elements, chart) {
                             const line = elements[0];
                             if (!line) return;
-                            window.open(chart.data.datasets[line.datasetIndex].url, '_blank');
+                            const url = safeUrl(chart.data.datasets[line.datasetIndex].url);
+                            if (url) window.open(url, '_blank', 'noopener');
                         },
                         onHover: function(e, elements) {
                             e.native.target.style.cursor = elements.length ? 'pointer' : 'default';
@@ -1075,6 +1081,10 @@
                 setElementStyle('top-words-content', 'visibility', 'visible');
                 setElementStyle('top-words-content', 'display', 'block');
             } else {
+                // No dictionary data for this filter: clear an earlier filter's chart and table.
+                Chart.getChart('topWordsChartCorporateRules')?.destroy();
+                const table = document.getElementById('topWordsChartCorporateRules-data');
+                if (table) table.hidden = true;
                 if ({{ $dictionaryItems}}) {
                     setElementStyle('corporateRulesButNoneOpened', 'display', 'flex');
                 } else {
@@ -1172,6 +1182,8 @@
 
         const element = document.getElementById("lastRefresh");
         element.setAttribute('last_refresh', lastRefresh);
+        // Shown with whichever chart loads first, not only the overview.
+        element.style.visibility = 'visible';
 
         updateSection();
     }
@@ -1185,7 +1197,13 @@
         element.textContent = @json(__('content.last_refreshed')) + '\u00a0' + moment(lastRefresh).fromNow();
 
         const lastRefreshMinutes = Math.floor((new Date() - new Date(lastRefresh)) / 60000);
-        document.getElementById('refresh-data').hidden = lastRefreshMinutes < 3;
+        const button = document.getElementById('refresh-data');
+        const hide = lastRefreshMinutes < 3;
+        // A focused button that disappears would drop focus to the page.
+        if (hide && document.activeElement === button) {
+            element.focus();
+        }
+        button.hidden = hide;
     };
 
     setInterval(function() {

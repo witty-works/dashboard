@@ -43,8 +43,9 @@ class AnalyticsAccessibilityTest extends TestCase
 
         foreach (['eventsChart', 'topSubCategoriesChart'] as $chart) {
             $this->assertStringContainsString('id="' . $chart . '-legend" class="chart-legend lato-small-text-p" role="group"', $html);
-            $this->assertStringContainsString("legend: {display: false}", $html);
         }
+        // Both line charts switch their canvas legend off.
+        $this->assertSame(2, substr_count($html, 'legend: {display: false}'));
         $this->assertStringNotContainsString('generateLabels', $html);
     }
 
@@ -69,16 +70,35 @@ class AnalyticsAccessibilityTest extends TestCase
         }
     }
 
+    public function test_the_tab_underline_reaches_three_to_one_on_the_page_background(): void
+    {
+        preg_match('/\.analytics-tab-line \{[^}]*border-bottom: 3px solid #([0-9a-f]{6})/', file_get_contents(resource_path('css/app.css')), $match);
+
+        $this->assertGreaterThanOrEqual(3.0, $this->contrast($match[1], 'f5f5f5'));
+    }
+
+    public function test_a_hidden_button_stays_hidden(): void
+    {
+        // .button sets display: flex after Tailwind's [hidden] rule.
+        $this->assertMatchesRegularExpression('/\.button\[hidden\]\s*\{\s*display:\s*none;/', file_get_contents(resource_path('css/app.css')));
+    }
+
     private function contrastOnWhite(string $hex): float
     {
-        $channel = function (int $value): float {
-            $c = $value / 255;
-
-            return $c <= 0.03928 ? $c / 12.92 : (($c + 0.055) / 1.055) ** 2.4;
-        };
-        [$r, $g, $b] = array_map(fn ($i) => $channel(hexdec(substr($hex, $i, 2))), [0, 2, 4]);
-        $luminance = 0.2126 * $r + 0.7152 * $g + 0.0722 * $b;
-
-        return 1.05 / ($luminance + 0.05);
+        return $this->contrast($hex, 'ffffff');
     }
+
+    private function contrast(string $hex, string $background): float
+    {
+        $lum = function (string $h): float {
+            $channel = fn (int $v): float => ($c = $v / 255) <= 0.03928 ? $c / 12.92 : (($c + 0.055) / 1.055) ** 2.4;
+            [$r, $g, $b] = array_map(fn ($i) => $channel(hexdec(substr($h, $i, 2))), [0, 2, 4]);
+
+            return 0.2126 * $r + 0.7152 * $g + 0.0722 * $b;
+        };
+        [$a, $b] = [$lum($hex), $lum($background)];
+
+        return (max($a, $b) + 0.05) / (min($a, $b) + 0.05);
+    }
+
 }

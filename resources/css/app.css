@@ -854,9 +854,6 @@ input:checked+.slider:before {
 
 .wittyworks-analytics-chart-extra-large {
     max-width: 100%;
-}
-
-.wittyworks-analytics-chart-extra-large {
     max-height: 600px;
     min-height: 500px;
 }
@@ -1429,4 +1426,10 @@ label {
     .drowdown-wrapper .dropdown {
         margin-right: 0;
     }
+}
+
+/* The hidden attribute wins over .button's display: flex, which comes later
+   than Tailwind's [hidden] rule at the same specificity. */
+.button[hidden] {
+    display: none;
 }
