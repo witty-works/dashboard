@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Notification;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
@@ -44,5 +45,22 @@ class MailLanguageTest extends TestCase
         $this->assertStringNotContainsString('Regards,', $html);
         $this->assertStringNotContainsString('All rights reserved.', $html);
         $this->assertStringNotContainsString('having trouble clicking', $html);
+    }
+
+    public function test_a_notification_uses_the_persons_language_whatever_the_current_one(): void
+    {
+        Notification::fake();
+        $user = User::factory()->create(['language' => 'fr']);
+        app()->setLocale('en');
+
+        $user->notify(new ResetPassword('token'));
+
+        Notification::assertSentTo($user, ResetPassword::class, fn ($n, $channels, $notifiable, $locale) => $locale === 'fr');
+    }
+
+    public function test_an_unsupported_language_falls_back_to_the_current_one(): void
+    {
+        $this->assertNull(User::factory()->create(['language' => 'xx'])->preferredLocale());
+        $this->assertNull(User::factory()->create(['language' => null])->preferredLocale());
     }
 }

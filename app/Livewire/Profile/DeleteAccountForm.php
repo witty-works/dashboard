@@ -59,7 +59,7 @@ class DeleteAccountForm extends Component
             }
             RateLimiter::hit($mailKey, 60);
 
-            Mail::to($user->email)->queue(new ConfirmAccountDeletion($user));
+            Mail::to($user)->queue(new ConfirmAccountDeletion($user));
             $this->confirmationSent = true;
             $this->confirmingUserDeletion = false;
 
