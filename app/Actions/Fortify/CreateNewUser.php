@@ -37,7 +37,11 @@ class CreateNewUser implements CreatesNewUsers
                 'name' => $input['name'],
                 'email' => $input['email'],
                 'password' => Hash::make($input['password']),
-            ]), function (User $user) {
+            ]), function (User $user) use ($input) {
+                // Recorded as the Word add-in's sign-up does, so it does not ask again.
+                if (! empty($input['terms']) && \App\Support\LegalDocument::anyProvided()) {
+                    $user->forceFill(['has_consented_to_terms_of_service' => true])->save();
+                }
                 SwitchToTeam::ensureTeam($user);
             });
         });

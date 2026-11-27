@@ -336,7 +336,7 @@ Veuillez ensuite cliquer à nouveau sur "S\'inscrire" pour finaliser l\'inscript
     'toggle_lines' => 'Afficher / Masquer toutes les lignes',
     'subscribe' => 'Acheter Witty',
     'choose_team' => 'Choisir une équipe',
-    'license' => 'Licence ?',
+    'license' => 'Paramètres d’équipe utilisés ?',
     'no' => 'non',
     'role' => 'Rôle',
     'on-trial_title' => 'Prêt·e à passer au niveau supérieur ?',

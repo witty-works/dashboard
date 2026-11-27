@@ -336,7 +336,7 @@ Please then go to "Register" again to finalize the registration into the "Witty 
     'toggle_lines' => 'Toggle All Lines',
     'subscribe' => 'Buy Witty',
     'choose_team' => 'Choose team',
-    'license' => 'License?',
+    'license' => 'Team settings in use?',
     'no' => 'no',
     'role' => 'role',
     'on-trial_title' => 'Ready to upgrade?',

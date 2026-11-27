@@ -1,5 +1,7 @@
 # Release & Hotfix Process
 
+The steps below use `make-release.sh` from [witty-works/make-release](https://github.com/witty-works/make-release), which builds on git flow; its README says how to install it. The `make-release` file in this repository's root is its configuration for the dashboard: the release version goes into `config/sentry.php`, and the Sentry organisation and project are `witty-works-ag` and `dashboard`.
+
 ## Make a release
 
 -   Make sure translations are up to date

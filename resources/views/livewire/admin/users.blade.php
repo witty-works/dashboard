@@ -11,6 +11,7 @@
         @enderror
     @endforeach
 
+    <div class="relative overflow-x-auto">
     <table class="min-w-full divide-y divide-gray-200 bg-white">
         <thead>
             <tr>
@@ -63,6 +64,7 @@
             @endforelse
         </tbody>
     </table>
+    </div>
 
     <div class="mt-4">{{ $users->links() }}</div>
 </div>

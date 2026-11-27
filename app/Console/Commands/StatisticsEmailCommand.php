@@ -40,7 +40,7 @@ class StatisticsEmailCommand extends Command
         $html = "";
         $html .= "<h2>Users created by month of year</h2>";
         $html .= "<ul>";
-        $users_created_by_week = DB::select("SELECT DATE_FORMAT(created_at, '%Y-%m') AS year_month_num, COUNT(*) AS count FROM users WHERE email NOT LIKE '%@witty.works' GROUP BY year_month_num ORDER BY year_month_num");
+        $users_created_by_week = DB::select("SELECT DATE_FORMAT(created_at, '%Y-%m') AS year_month_num, COUNT(*) AS count FROM users GROUP BY year_month_num ORDER BY year_month_num");
         foreach ($users_created_by_week as $result) {
             $html .= "<li>{$result->year_month_num}: {$result->count}</li>";
         }
@@ -56,9 +56,13 @@ class StatisticsEmailCommand extends Command
 
         foreach ($teams_with_members as $result) {
             $team = Team::find($result->id);
-            $owner = $team->owner;
-            $impersonateUrl = config('app.url') . '/impersonate/take/' . $owner->id;
-            $html .= "<li>{$team->name} (team id: {$result->id}, <a href=\"{$impersonateUrl}\">{$owner->email}</a>): {$result->count}</li>";
+            $owner = $team?->owner;
+            $name = e($team?->name ?? '');
+            // A team whose owner is gone still counts, without a link.
+            $who = $owner
+                ? '<a href="' . e(config('app.url') . '/impersonate/take/' . $owner->id) . '">' . e($owner->email) . '</a>'
+                : 'no owner';
+            $html .= "<li>{$name} (team id: {$result->id}, {$who}): {$result->count}</li>";
         }
         $html .= "</ul>";
 

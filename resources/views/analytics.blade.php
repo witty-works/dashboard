@@ -250,7 +250,6 @@
          </div>
       </div>
    </div>
-</x-app-layout>
 
 {{-- Chart and moment come from the app's bundle, which runs deferred: before DOMContentLoaded, after this page's inline script. --}}
 @vite('resources/js/analytics.js')
@@ -429,7 +428,7 @@
 
             if (interval == 'week') {
                 for (var i = 0; i < xValues.length; i++) {
-                    formattedXValues[i] = '{{ __('content.week') }} ' + moment(xValues[i]).startOf('week').isoWeekday(1).week() + ' ' + moment(xValues[i]).startOf('week').isoWeekday(1).year();
+                    formattedXValues[i] = @json(__('content.week')) + ' ' + moment(xValues[i]).startOf('week').isoWeekday(1).week() + ' ' + moment(xValues[i]).startOf('week').isoWeekday(1).year();
                 }
             } else if (interval == 'month') {
                 for (var i = 0; i < xValues.length; i++) {
@@ -489,7 +488,7 @@
                     method: 'GET',
                     headers: {
                         'Accept': 'application/json',
-                        'X-App-Locale': '{{ app()->getLocale() }}',
+                        'X-App-Locale': @json(app()->getLocale()),
                     },
                 });
                 if (response.status >= 500) {
@@ -642,7 +641,7 @@
             }
             const startDateComparePeriod = formatDate(currentDate);
 
-            const footerText = `{{ __('content.chart_period_comparison_from') }} ${startDateCurrentPeriod} - ${endDateCurrentPeriod}, {{ __('content.chart_period_comparison_to') }} ${startDateComparePeriod} - ${endDateComparePeriod}`;
+            const footerText = `${@json(__('content.chart_period_comparison_from'))} ${startDateCurrentPeriod} - ${endDateCurrentPeriod}, ${@json(__('content.chart_period_comparison_to'))} ${startDateComparePeriod} - ${endDateComparePeriod}`;
             const footerElement = document.getElementById(`${chartId}Footer`);
             if (footerElement) {
                 footerElement.innerText = footerText;
@@ -714,21 +713,21 @@
                             data: aggregatedPopoverOpenData,
                             borderColor: colors[8],
                             fill: false,
-                            label: "{{ __('content.popover_label_line_chart') }}",
+                            label: @json(__('content.popover_label_line_chart')),
                             hidden: showCheckHighlights,
                         },
                         {
                             data: aggregatedAlternativeData,
                             borderColor: colors[16],
                             fill: false,
-                            label: "{{ __('content.alternative_label_line_chart') }}",
+                            label: @json(__('content.alternative_label_line_chart')),
                             hidden: showCheckHighlights,
                         },
                         {
                             data: aggregatedIgnoreData,
                             borderColor: colors[24],
                             fill: false,
-                            label:  "{{ __('content.ignored_label_line_chart') }}",
+                            label:  @json(__('content.ignored_label_line_chart')),
                             hidden: showCheckHighlights,
                         },
                         {
@@ -748,7 +747,7 @@
                                 fill: false,
                                 label: @json(__('content.check_highlights_label_line_chart')) +
                                     (!showCheckHighlights
-                                    ? ' ({{ __('teams.not_enough_data_to_display') }})'
+                                    ? ' (' + @json(__('teams.not_enough_data_to_display')) + ')'
                                     : ''),
                                 hidden: !showCheckHighlights,
                             }
@@ -882,7 +881,7 @@
                 "topSubCategoriesBarChart",
                 datasetsLineChart.map(dataset => dataset.label),
                 datasetsLineChart.map(dataset => dataset.data.reduce((a, b) => a + b, 0)),
-                "{{ __('content.analytic_top_categories') }}",
+                @json(__('content.analytic_top_categories')),
                 true,
                 false,
                 'topSubcategories',
@@ -1030,7 +1029,7 @@
                 "topWordsChart",
                 xValuesTopWordsCut,
                 yValuesTopWordsCut,
-                "{{ __('content.analytic_top_words') }}",
+                @json(__('content.analytic_top_words')),
                 true,
                 false,
                 'topWords',
@@ -1065,7 +1064,7 @@
                     "topWordsChartCorporateRules",
                     xValuesTopCorporateWordsCut,
                     yValuesTopCorporateWordsCut,
-                    "{{ __('content.analytic_top_words_corporate_rules') }}",
+                    @json(__('content.analytic_top_words_corporate_rules')),
                     true,
                     false,
                     'topWords',
@@ -1355,7 +1354,7 @@
             for (let l = 0; l < checkboxes.length; l++) {
                 const button = wrappers[k].querySelector('button');
                 const numberOfChecked = wrappers[k].querySelectorAll('input.val[type="checkbox"]:checked').length;
-                if (numberOfChecked === 6) {
+                if (numberOfChecked === wrappers[k].querySelectorAll('input.val[type="checkbox"]').length) {
                     button.textContent = @json(__('content.all_categories'));
                 } else if (numberOfChecked === 0) {
                     button.textContent = @json(__('content.none_selected'));
@@ -1369,3 +1368,4 @@
        }
     }
 </script>
+</x-app-layout>

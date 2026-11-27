@@ -89,7 +89,7 @@
             <x-slot name="content">
                 <div class="space-y-6">
                     @foreach ($team->teamInvitations as $invitation)
-                        <div class="flex items-center justify-between">
+                        <div class="flex items-center justify-between" wire:key="invitation-{{ $invitation->id }}">
                             <div class="lato-paragraph-text-p">{{ $invitation->email }}</div>
                             <div class="flex items-center">
                                 @if (Gate::check('removeTeamMember', $team))
@@ -125,7 +125,7 @@
             <x-slot name="content">
                 <div class="space-y-6">
                     @foreach ($team->users->sortBy('name') as $user)
-                        <div class="flex items-center justify-between">
+                        <div class="flex items-center justify-between" wire:key="member-{{ $user->id }}">
                             <div class="flex items-center">
                                 <div class="ml-4">
                                     <a href="mailto:{{ $user->email }}">{{ $user->name }}</a>

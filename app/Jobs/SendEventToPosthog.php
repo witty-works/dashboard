@@ -36,7 +36,7 @@ class SendEventToPosthog implements ShouldQueue
         $this->properties = $properties;
         $this->properties['is_edit'] = $isEdit;
         if ($team) {
-            $this->properties['$group'] = [
+            $this->properties['$groups'] = [
                 PosthogHelper::POSTHOG_ORGANIZATION_TYPE => $team->posthogId()
             ];
         }

@@ -334,7 +334,7 @@ Bitte gehe dann erneut auf „Registrieren“, um die Registrierung im "Witty fo
     'subscribe' => 'Witty kaufen',
     'choose_team' => 'Team auswählen',
     'accept_invitation_description' => 'Möchtest die Einladung für das Team ":invite_team_name" von <a href="mailto:invite_user_email" target="_blank" rel="noopener">:invite_user_email</a> annehmen?',
-    'license' => 'Lizenziert?',
+    'license' => 'Team-Einstellungen aktiv?',
     'no' => 'nein',
     'role' => 'Rolle',
     'on-trial_title' => 'Bereit, ein Abo abzuschließen?',
