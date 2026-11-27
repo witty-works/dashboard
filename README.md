@@ -250,7 +250,7 @@ PostHog collects the statistics the Witty client applications (browser extension
 -   `POSTHOG_HOST` — Host URL for PostHog instance, the app host (for example `https://eu.posthog.com`), since the dashboard also calls PostHog's private API
 -   `POSTHOG_DEBUG` — Enable debug mode for PostHog
 -   `POSTHOG_PROJECT_ID` — Project ID for PostHog
--   `POSTHOG_PERSONAL_API_KEY` — Personal API key for PostHog. Besides reading insights, it asks PostHog to delete the person, events and session recordings of a deleted account; PostHog removes them in the background. That needs the `person:write` scope, so use a key limited to this project. Without the key or `POSTHOG_PROJECT_ID`, a deletion logs an error naming the person to delete by hand.
+-   `POSTHOG_PERSONAL_API_KEY` — Personal API key for PostHog. Besides reading insights, it asks PostHog to delete the person, events and session recordings of a deleted account; PostHog removes them in the background. That needs the `person:write` scope, so use a key limited to this project. Without the key or `POSTHOG_PROJECT_ID`, a deletion logs an error naming the person to delete by hand; so does deleting someone who was sent to PostHog before `POSTHOG_ENABLED` was switched off.
 -   `POSTHOG_INSIGHTS_CACHE_TIME` — Cache time for insights (seconds)
 -   `POSTHOG_DASHBOARD_USER_ID` — Dashboard user ID override, for local development only: every user then reports as this one PostHog person, and deleting an account leaves PostHog alone
 -   `POSTHOG_DASHBOARD_TEAM_ID` — Dashboard team ID override, for local development only: every team then reports as this one group, and deleting a team leaves it alone

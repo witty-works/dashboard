@@ -143,6 +143,37 @@ class PosthogDeletionTest extends TestCase
         Http::assertNothingSent();
     }
 
+    public function test_a_person_sent_to_posthog_before_it_was_switched_off_is_logged_for_deletion_by_hand(): void
+    {
+        config(['posthog.enabled' => false]);
+        Http::fake();
+        Log::spy();
+        $user = $this->user();
+        $user->forceFill(['posthog_last_sync' => now()->subMonth()])->saveQuietly();
+        $distinctId = 'dashboard-user:' . $user->id;
+
+        $this->deleteAccount($user);
+
+        Http::assertNothingSent();
+        Log::shouldHaveReceived('error')
+            ->withArgs(fn ($message) => str_contains($message, $distinctId) && str_contains($message, 'POSTHOG_ENABLED'))
+            ->once();
+    }
+
+    public function test_a_person_never_sent_to_posthog_needs_no_deletion_when_it_is_off(): void
+    {
+        config(['posthog.enabled' => false]);
+        Http::fake();
+        Log::spy();
+        $user = $this->user();
+        $user->forceFill(['posthog_last_sync' => null])->saveQuietly();
+
+        $this->deleteAccount($user);
+
+        Http::assertNothingSent();
+        Log::shouldNotHaveReceived('error');
+    }
+
     public function test_a_deleted_teams_group_loses_its_name_and_owner(): void
     {
         $team = $this->user()->currentTeam;
