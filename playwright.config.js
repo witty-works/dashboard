@@ -33,7 +33,10 @@ export default defineConfig({
         env: {
             APP_URL: `http://127.0.0.1:${port}`,
             SESSION_SECURE_COOKIE: 'false',
-            POSTHOG_ENABLED: 'false',
+            // On, so the analytics pages exist; tests/browser/analytics.spec.js
+            // answers their data requests itself, and nothing reaches PostHog.
+            POSTHOG_ENABLED: 'true',
+            POSTHOG_HOST: 'http://127.0.0.1:9',
             APP_NLP_API_SYNC_ENDPOINT: '',
             APP_NLP_API_SYNC_CONFIGS: 'false',
             MAIL_MAILER: 'log',
