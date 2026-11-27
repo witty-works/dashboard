@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Firebase\JWT\JWT;
 use PostHog\PostHog;
@@ -33,6 +34,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->booted(function () {
             \Livewire\Livewire::component('profile.two-factor-authentication-form', \App\Livewire\Profile\TwoFactorAuthenticationForm::class);
         });
+
+        // <script @cspNonce>: the nonce App\Http\Middleware\SecurityHeaders
+        // allows inline scripts with. Nothing while the policy is off.
+        Blade::directive('cspNonce', fn () => '<?php if ($__cspNonce = \\Illuminate\\Support\\Facades\\Vite::cspNonce()) { echo \'nonce="\' . e($__cspNonce) . \'"\'; } ?>');
 
         if (config('posthog.enabled')) {
             PostHog::init(

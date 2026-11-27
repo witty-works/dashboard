@@ -59,15 +59,10 @@
             @include('partials.toggle_label', ['disabled' => $disabled])
 
             @if(!empty($proficiencyLevelData['translation']['lead_text']))
-            <button type="button" class="wittyworks-margin-left" aria-expanded="false" aria-controls="{{ $category }}-{{ $proficiencyLevel }}" onclick="
-                document.getElementById('arrow-down-icon-{{ $category}}-{{ $proficiencyLevel }}').style.display == 'none' ? document.getElementById('arrow-down-icon-{{ $category}}-{{ $proficiencyLevel }}').style.display = 'block' : document.getElementById('arrow-down-icon-{{ $category}}-{{ $proficiencyLevel }}').style.display = 'none';
-                document.getElementById('arrow-up-icon-{{ $category}}-{{ $proficiencyLevel }}').style.display == 'none' ? document.getElementById('arrow-up-icon-{{ $category}}-{{ $proficiencyLevel }}').style.display = 'block' : document.getElementById('arrow-up-icon-{{ $category}}-{{ $proficiencyLevel }}').style.display = 'none';
-                document.getElementById('{{ $category}}-{{ $proficiencyLevel }}').style.display = (document.getElementById('{{ $category}}-{{ $proficiencyLevel }}').style.display === 'none' ? 'block' : 'none');
-                this.setAttribute('aria-expanded', this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true');"
-            >
+            <button type="button" class="wittyworks-margin-left" aria-expanded="false" aria-controls="{{ $category }}-{{ $proficiencyLevel }}" data-toggle-details>
                 <span class="sr-only">{{ $proficiencyLevelData['translation']['hs_name'] }}</span>
-                <img id="arrow-down-icon-{{ $category}}-{{ $proficiencyLevel }}" src="{{ asset('arrow-down-sign-to-navigate_small.svg') }}" alt="" aria-hidden="true" />
-                <img id="arrow-up-icon-{{ $category}}-{{ $proficiencyLevel }}" src="{{ asset('arrow-up-sign-to-navigate_small.svg') }}" alt="" aria-hidden="true" style="display: none;" />
+                <img data-arrow="down" src="{{ asset('arrow-down-sign-to-navigate_small.svg') }}" alt="" aria-hidden="true" />
+                <img data-arrow="up" src="{{ asset('arrow-up-sign-to-navigate_small.svg') }}" alt="" aria-hidden="true" style="display: none;" />
             </button>
             @endif
         </div>

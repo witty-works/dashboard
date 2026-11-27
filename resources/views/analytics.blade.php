@@ -36,7 +36,6 @@
                 :disabled="$disabled"
                 class="dropdown margin-right"
                 id="timerangeDropdown"
-                onchange="setParams()"
             />
         </div>
 
@@ -55,7 +54,6 @@
                 :options="$ranges"
                 class="dropdown margin-right"
                 id="languageDropdown"
-                onchange="setParams()"
             />
         </div>
 
@@ -72,7 +70,6 @@
                 :options="$ranges"
                 class="dropdown margin-right"
                 id="inclusiveDropdown"
-                onchange="setParams()"
             />
         </div>
 
@@ -96,15 +93,15 @@
         </div>
 
       <div class="analytics-tab-container" role="tablist" aria-label="{{ __('content.analytics') }}">
-         <button type="button" role="tab" aria-selected="true" aria-controls="overview" class="analytics-tab" id="overview-tab" onclick="handleTabClick('overview')" style="color: #6357b8;">
+         <button type="button" role="tab" aria-selected="true" aria-controls="overview" class="analytics-tab" id="overview-tab" style="color: #6357b8;">
             {{ __('content.analytic_overview') }}
             <span class="analytics-tab-line" id="overview-line" aria-hidden="true"></span>
         </button>
-         <button type="button" role="tab" aria-selected="false" tabindex="-1" aria-controls="top-categories" class="analytics-tab" id="top-categories-tab" onclick="handleTabClick('top-categories')">
+         <button type="button" role="tab" aria-selected="false" tabindex="-1" aria-controls="top-categories" class="analytics-tab" id="top-categories-tab">
             {{ __('content.top_categories') }}
             <span id="top-categories-line" aria-hidden="true"></span>
         </button>
-         <button type="button" role="tab" aria-selected="false" tabindex="-1" aria-controls="top-words" class="analytics-tab" id="top-words-tab" onclick="handleTabClick('top-words')">
+         <button type="button" role="tab" aria-selected="false" tabindex="-1" aria-controls="top-words" class="analytics-tab" id="top-words-tab">
             {{ __('content.analytic_top_words') }}
             <span id="top-words-line" aria-hidden="true"></span>
         </button>
@@ -247,7 +244,7 @@
 {{-- Chart and moment come from the app's bundle, which runs deferred: before DOMContentLoaded, after this page's inline script. --}}
 @vite('resources/js/analytics.js')
 
-<script>
+<script @cspNonce>
     let topSubChart;
     const setElementStyle = (elementId, property, value) => {
         const element = document.getElementById(elementId);
@@ -757,7 +754,7 @@
             const selectedDropdownValue = eventTypes[0] || @json($default_event);
             const eventTypeDropdownTopCategories = document.getElementById("eventTypeDropdownTopCategories");
             eventTypeDropdownTopCategories.innerHTML = `
-                <select id="eventTypeTopCategories" class="dropdown" aria-label="{{ __('content.event_type') }}" onchange="setParams([this?.value])">
+                <select id="eventTypeTopCategories" class="dropdown" aria-label="{{ __('content.event_type') }}">
                     ${getOptionsHtml()}
                 </select>`;
 
@@ -937,7 +934,7 @@
             const selectedDropdownValue = eventTypes[0] || @json($default_event);
             const eventTypeDropdownTopWords = document.getElementById("eventTypeDropdownTopWords");
             eventTypeDropdownTopWords.innerHTML = `
-                <select id="eventTypeTopWords" class="dropdown" aria-label="{{ __('content.event_type') }}" onchange="setParams([this?.value])">
+                <select id="eventTypeTopWords" class="dropdown" aria-label="{{ __('content.event_type') }}">
                     ${getOptionsHtml()}
                 </select>`;
             updateDropdown("eventTypeTopWords", selectedDropdownValue);
@@ -1094,6 +1091,27 @@
 
     document.addEventListener('DOMContentLoaded', () => load_charts(false));
 
+    // Listeners in place of inline handlers, which the Content-Security-Policy
+    // blocks. On the document, since the event type menus and the refresh
+    // button are rendered later.
+    document.addEventListener('change', (event) => {
+        if (['timerangeDropdown', 'languageDropdown', 'inclusiveDropdown'].includes(event.target.id)) {
+            setParams();
+        } else if (['eventTypeTopCategories', 'eventTypeTopWords'].includes(event.target.id)) {
+            setParams([event.target.value]);
+        }
+    });
+
+    document.addEventListener('click', (event) => {
+        const tab = event.target.closest('.analytics-tab');
+        if (tab) {
+            handleTabClick(tab.getAttribute('aria-controls'));
+        } else if (event.target.closest('#refresh-data')) {
+            setParams(null, true);
+            updateLastRefresh();
+        }
+    });
+
     //updateSection function
     function updateLastRefresh(lastRefresh = null) {
         if (lastRefresh === null) {
@@ -1117,7 +1135,7 @@
         const lastRefreshDateFormatted = new Date(lastRefresh);
         const lastRefreshMinutes = Math.floor((new Date() - lastRefreshDateFormatted) / 60000);
         if (lastRefreshMinutes >= 3) {
-            innerHTML += '&nbsp; &nbsp; <button type="button" class="button primary-button-red" onclick="setParams(null, true); updateLastRefresh()">{{ __('content.refresh_data') }}</button>';
+            innerHTML += '&nbsp; &nbsp; <button type="button" class="button primary-button-red" id="refresh-data">{{ __('content.refresh_data') }}</button>';
         }
 
         element.innerHTML = innerHTML

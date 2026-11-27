@@ -44,14 +44,116 @@ function infoHoverCancelHide() {
     }
 }
 
-window.infoHoverShow = infoHoverShow;
-window.infoHoverScheduleHide = infoHoverScheduleHide;
-window.infoHoverCancelHide = infoHoverCancelHide;
-window.infoHoverHideAll = infoHoverHideAll;
+// Triple toggles (components/triple-toggle.blade.php): off, basic, advanced.
+// minvalue says how far down the team's setting lets the user go.
+function tripleToggle(toggle) {
+    const name = toggle.id.replace('tripple-toggle-', '');
+    const hiddenInput = document.getElementById(name);
+    const announcement = document.getElementById('toggle-announcement-' + name);
+    const set = (value, pressed, message) => {
+        hiddenInput.setAttribute('value', value);
+        toggle.setAttribute('aria-pressed', pressed);
+        announcement.innerText = toggle.dataset[message];
+    };
+    const toBasic = () => {
+        toggle.classList.add('active', 'middle');
+        set('1', 'mixed', 'messageBasic');
+    };
+
+    switch (toggle.getAttribute('minvalue')) {
+    case '0':
+        if (!toggle.classList.contains('active')) {
+            toBasic();
+        } else if (toggle.classList.contains('middle')) {
+            toggle.classList.remove('middle');
+            set('2', 'true', 'messageAdvanced');
+        } else {
+            toggle.classList.remove('active');
+            set('0', 'false', 'messageOff');
+        }
+        break;
+    case '1':
+        if (toggle.classList.contains('middle')) {
+            toggle.classList.remove('middle');
+            set('2', 'true', 'messageAdvanced');
+        } else {
+            toBasic();
+        }
+        break;
+    default:
+        return;
+    }
+
+    hiddenInput.dispatchEvent(new Event('input'));
+}
+
+// The proficiency levels' "more" buttons (*-category-settings/category.blade.php).
+function toggleDetails(button) {
+    const open = button.getAttribute('aria-expanded') !== 'true';
+    const details = document.getElementById(button.getAttribute('aria-controls'));
+    if (details) {
+        details.style.display = open ? 'block' : 'none';
+    }
+    button.querySelectorAll('[data-arrow]').forEach((arrow) => {
+        arrow.style.display = (arrow.dataset.arrow === 'up') === open ? 'block' : 'none';
+    });
+    button.setAttribute('aria-expanded', open ? 'true' : 'false');
+}
+
+// The views attach no inline handlers (onclick= and the like), which the
+// Content-Security-Policy blocks; these listeners stand in for them. They are
+// on the document, so they also cover what Livewire renders later.
+const closest = (event, selector) => (event.target instanceof Element ? event.target.closest(selector) : null);
+
+document.addEventListener('click', (event) => {
+    let element;
+    if ((element = closest(event, '.info-hover-trigger'))) {
+        infoHoverShow(element);
+    } else if ((element = closest(event, '[data-triple-toggle]'))) {
+        tripleToggle(element);
+    } else if ((element = closest(event, '[data-toggle-details]'))) {
+        toggleDetails(element);
+    } else if ((element = closest(event, '[data-scroll-to]'))) {
+        document.getElementById(element.dataset.scrollTo)?.scrollIntoView({behavior: 'smooth'});
+    }
+});
+
+document.addEventListener('mouseover', (event) => {
+    const trigger = closest(event, '.info-hover-trigger');
+    if (trigger) {
+        infoHoverShow(trigger);
+    } else if (closest(event, '.information-image')) {
+        infoHoverCancelHide();
+    }
+});
+
+document.addEventListener('mouseout', (event) => {
+    if (closest(event, '.info-hover-trigger, .information-image')) {
+        infoHoverScheduleHide();
+    }
+});
+
+document.addEventListener('focusin', (event) => {
+    const trigger = closest(event, '.info-hover-trigger');
+    if (trigger) {
+        infoHoverShow(trigger);
+    }
+});
+
+document.addEventListener('focusout', (event) => {
+    if (closest(event, '.info-hover-trigger')) {
+        infoHoverScheduleHide();
+    }
+});
 
 document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {
         infoHoverHideAll();
+    }
+    const toggle = closest(event, '[data-triple-toggle]');
+    if (toggle && (event.key === 'Enter' || event.key === ' ')) {
+        event.preventDefault();
+        tripleToggle(toggle);
     }
 });
 

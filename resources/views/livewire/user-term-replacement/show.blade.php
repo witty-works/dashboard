@@ -36,7 +36,7 @@
                 </td>
                 <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $term_replacement->exists_on_team ? __('guidelines.yes') : __('guidelines.no') }} </td>
                 <td class="border px-4 py-2 text-center container-row">
-                    <button onclick="document.getElementById('term_replacements')?.scrollIntoView({behavior: 'smooth'});" wire:click="editTermReplacement({{ $term_replacement->id }})" class="button primary-button-red ">
+                    <button data-scroll-to="term_replacements" wire:click="editTermReplacement({{ $term_replacement->id }})" class="button primary-button-red ">
                         {{ __('content.edit') }}
                     </button>
                     <button wire:click="deleteTermReplacement({{ $term_replacement->id }})" wire:confirm="{{ __('content.confirm_delete_entry') }}" class="button secondary-button-red">

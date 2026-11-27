@@ -196,3 +196,13 @@ Relevant for the Microsoft Word Add-in integration.
 -   `MICROSOFT_TENANT_ID` — (Optional) The organisation's Entra tenant ID, a GUID; tokens from any other tenant are refused
 
 The app registration has to issue the optional claims `email` and `xms_edov` in the **access** token, which is what the add-in receives (**Token configuration** → **Add optional claim** → token type **Access**). A user is identified by the Microsoft account linked to their dashboard account or, failing that, by `email`, and `email` counts only with `xms_edov: true`, which says the tenant verified the address's domain. `preferred_username` is not used: Microsoft documents it, like `email`, as a value a tenant's admin can set. A Microsoft account is linked to the dashboard account the first time it signs in or signs up through the add-in with a verified email; without the two claims, only users already linked get in.
+
+## Security headers
+
+Every response carries a Content-Security-Policy, `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin` and a Permissions-Policy that turns off the camera, microphone, location, payment and other device features. `App\Http\Middleware\SecurityHeaders` sets them and explains each exception in the policy. No page may be framed by another site. The dashboard does not send `Strict-Transport-Security`; the reverse proxy in front of it does.
+
+The policy lets pages load scripts, styles, fonts and images only from the dashboard itself. The exceptions are images from `https://www.witty.works`, the YouTube videos on the academy page, the NLP API address in `NLP_API_PUBLIC_URL` and the Sentry host in `SENTRY_LARAVEL_DSN`. An inline `<script>` in a view needs `@cspNonce` (`<script @cspNonce>`), and inline event handlers such as `onclick=` do not run: attach listeners from a script instead.
+
+-   `CSP_REPORT_ONLY` — `true` sends the policy as `Content-Security-Policy-Report-Only`: browsers report what it would block, but block nothing. Use it for a first rollout. Default `false`
+-   `CSP_REPORT_URI` — (Optional) Where browsers send violation reports, for example the Sentry project's security endpoint (**Project Settings** → **Security Headers** in Sentry). It must be a plain `https` URL; anything else is left out. Without it, violations show only in the browser's console. Reports include the page's query string, so check Sentry's data scrubbing before sending them there
+-   `CSP_ENABLED` — `false` sends no Content-Security-Policy at all, for local debugging only, for example of Laravel's exception page. Default `true`
