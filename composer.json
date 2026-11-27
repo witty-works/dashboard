@@ -5,7 +5,6 @@
     "license": "MIT",
     "require": {
         "php": "^8.4",
-        "barryvdh/laravel-debugbar": "^4.0",
         "bensampo/laravel-embed": "^3.0",
         "firebase/php-jwt": "^7.0",
         "guzzlehttp/guzzle": "^7.0.1",
@@ -31,6 +30,7 @@
         "symfony/http-client": "^8.0"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^4.0",
         "barryvdh/laravel-ide-helper": "^3.0",
         "fakerphp/faker": "^1.23",
         "mockery/mockery": "^1.6",
