@@ -58,6 +58,9 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      # APP_VERSION is the tag exactly as pushed, so the release Sentry is
+      # told about (config/sentry.php) is the one make-release creates with
+      # sentry-cli under the same name.
       - name: Build and push
         id: build
         uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
@@ -69,6 +72,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
             GIT_REVISION=${{ github.sha }}
+            APP_VERSION=${{ github.ref_name }}
 
       - name: Digest
         run: |

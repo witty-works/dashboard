@@ -102,9 +102,12 @@ RUN chmod 0755 /usr/local/bin/docker-entrypoint.sh \
 
 USER app
 
-# Baked in so the running revision can be read off the container.
+# Baked in so the running revision and version can be read off the
+# container; Sentry reports the version as its release (config/sentry.php).
 ARG GIT_REVISION=""
-ENV GIT_REVISION=${GIT_REVISION}
+ARG APP_VERSION=""
+ENV GIT_REVISION=${GIT_REVISION} \
+    APP_VERSION=${APP_VERSION}
 
 ENV PORT=8080 \
     LOG_CHANNEL=stderr \
