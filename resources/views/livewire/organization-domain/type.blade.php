@@ -18,7 +18,7 @@
                         type="radio"
                         wire:model="type"
                         value="{{ $type }}"
-                        @error('type') aria-invalid="true" aria-describedby="type-error" @enderror
+                        error="type"
                     />
                     {{ __($label) }}
                 </label>

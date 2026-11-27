@@ -24,7 +24,7 @@
                 <!-- Member Email -->
                 <div class="w-full margin-bottom">
                     <x-label id="email-label" class="lato-small-text-p" for="email" value="{{ __('content.email') }}" />
-                    <x-input id="email" type="email" class=" mt-1 block w-full" wire:model="addTeamMemberForm.email" @disabled(!Gate::check('addTeamMember', $team)) @error('email') aria-invalid="true" aria-describedby="email-error" @enderror />
+                    <x-input id="email" type="email" class=" mt-1 block w-full" wire:model="addTeamMemberForm.email" :disabled="! Gate::check('addTeamMember', $team)" error="email" />
                     <x-input-error for="email"></x-input-error>
                 </div>
 

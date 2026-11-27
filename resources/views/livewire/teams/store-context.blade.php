@@ -16,7 +16,7 @@
                 :label="__('teams.store_context')"
                 :disabled="Auth::user()->hasTeamPermission($model, 'update') ? false : 'locked'"
                 aria-label="{{ __('teams.store_context') }}"
-                @error('store_context') aria-invalid="true" aria-describedby="store_context-error" @enderror
+                error="store_context"
             />
 
             <x-input-error for="store_context" class="mt-2" />

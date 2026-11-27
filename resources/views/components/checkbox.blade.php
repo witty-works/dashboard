@@ -1,3 +1,12 @@
+@php
+    $error = $attributes->get('error');
+    $attributes = $attributes->except('error');
+    if ($error && isset($errors) && $errors->has($error)) {
+        // Marks the field and points at the message, which the form renders
+        // with the id "<field>-error" (x-input-error, x-validation-errors).
+        $attributes = $attributes->merge(['aria-invalid' => 'true', 'aria-describedby' => str_replace('.', '_', $error) . '-error']);
+    }
+@endphp
 <label @if (!empty($title)) title="{{ $title }}" @endif>
     <div class="switch">
         <input type="checkbox"

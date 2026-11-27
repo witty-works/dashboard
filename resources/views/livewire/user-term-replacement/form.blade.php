@@ -24,7 +24,7 @@
                          wire:model="term"
                          autocomplete="off"
                          aria-autocomplete="none"
-                         @error('term') aria-invalid="true" aria-describedby="term-error" @enderror />
+                         error="term" />
             <x-input-error for="term" class="mt-2" />
         </div>
 
@@ -36,7 +36,7 @@
                          wire:model="replacement"
                          autocomplete="off"
                          aria-autocomplete="none"
-                         @error('replacement') aria-invalid="true" aria-describedby="replacement-error" @enderror />
+                         error="replacement" />
             <x-input-error for="replacement" class="mt-2" />
         </div>
 
@@ -46,7 +46,7 @@
                       :options="$language_codes"
                       class="mt-1 block w-full"
                       wire:model="language_code"
-                      @error('language_code') aria-invalid="true" aria-describedby="language_code-error" @enderror />
+                      error="language_code" />
             <x-input-error for="language_code" class="mt-2" />
         </div>
 
@@ -57,7 +57,7 @@
                       class="mt-1 block w-full"
                       wire:model="matching_type"
                       wire:change="showHideWordType"
-                      @error('matching_type') aria-invalid="true" aria-describedby="matching_type-error" @enderror />
+                      error="matching_type" />
             <x-input-error for="matching_type" class="mt-2" />
             <x-input-error for="word_type" class="mt-2" />
         </div>
@@ -70,7 +70,7 @@
                           :options="\App\Models\TermReplacement::WORD_TYPES"
                           class="mt-1 block w-full"
                           wire:model="word_type"
-                          @error('word_type') aria-invalid="true" aria-describedby="word_type-error" @enderror />
+                          error="word_type" />
             </div>
         @endif
 
@@ -82,7 +82,7 @@
                          wire:model="explanation"
                          autocomplete="off"
                          aria-autocomplete="none"
-                         @error('explanation') aria-invalid="true" aria-describedby="explanation-error" @enderror />
+                         error="explanation" />
             <x-input-error for="explanation" class="mt-2" />
         </div>
 
@@ -94,7 +94,7 @@
                          wire:model="url"
                          autocomplete="off"
                          aria-autocomplete="none"
-                         @error('url') aria-invalid="true" aria-describedby="url-error" @enderror />
+                         error="url" />
             <x-input-error for="url" class="mt-2" />
         </div>
 
@@ -106,7 +106,7 @@
                          wire:model="emoji"
                          autocomplete="off"
                          aria-autocomplete="none"
-                         @error('emoji') aria-invalid="true" aria-describedby="emoji-error" @enderror />
+                         error="emoji" />
             <x-input-error for="emoji" class="mt-2" />
         </div>
     </x-slot>
