@@ -172,6 +172,7 @@ See [docs/user-management.md](docs/user-management.md) for superadmin rights, th
 
 # Documentation Index
 
+-   [Deploying the dashboard](docs/deployment.md)
 -   [Docker & Local Development](docs/docker.md)
 -   [Sentry CLI Integration](docs/sentry.md)
 -   [Release & Hotfix Process](docs/release.md)
