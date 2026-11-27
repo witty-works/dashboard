@@ -51,6 +51,24 @@ class GuestAccessTest extends TestCase
             ->assertViewIs('policy');
     }
 
+    public function test_policy_page_names_the_operator_and_what_happens_to_texts(): void
+    {
+        $this->withoutLocaleRedirects()
+            ->get('/policy')
+            ->assertSee('Berner Fachhochschule Wirtschaft')
+            ->assertSee('Brückenstrasse 73')
+            ->assertSee('stores neither the texts nor what it finds in them')
+            ->assertSee('BFH inference service')
+            ->assertDontSee('Lorem ipsum');
+    }
+
+    public function test_policy_page_shows_the_deployments_contact(): void
+    {
+        config(['app.imprint_contact' => 'office@bfh.example']);
+
+        $this->withoutLocaleRedirects()->get('/policy')->assertSee('mailto:office@bfh.example', false);
+    }
+
     public function test_guest_is_redirected_away_from_a_protected_page(): void
     {
         $this->withoutLocaleRedirects()

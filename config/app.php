@@ -220,6 +220,11 @@ return [
 
     'write_contact' => env('WRITE_CONTACT', 'api@witty.works'),
 
+    // Shown in the privacy policy's imprint (resources/views/policy.blade.php):
+    // whom to contact about this deployment. Without it, the write page's
+    // contact.
+    'imprint_contact' => env('IMPRINT_CONTACT', env('WRITE_CONTACT', 'api@witty.works')),
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
