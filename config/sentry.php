@@ -4,21 +4,26 @@ return [
 
     'dsn' => env('SENTRY_LARAVEL_DSN', env('SENTRY_DSN')),
 
-    // capture release as git sha
-    'release' => '1.42.9',
+    // The version the image was built from (its tag, APP_VERSION), else its
+    // commit (GIT_REVISION); SENTRY_RELEASE overrides both. Empty values
+    // count as unset, as the image sets both, empty outside a release build.
+    'release' => env('SENTRY_RELEASE') ?: (env('APP_VERSION') ?: (env('GIT_REVISION') ?: null)),
 
     // When left empty or `null` the Laravel environment will be used
     'environment' => env('SENTRY_ENVIRONMENT'),
 
+    // No personal data in breadcrumbs: sessions and the queue live in the
+    // database, so query values carry addresses, password hashes and job
+    // payloads, and log lines carry names and addresses.
     'breadcrumbs' => [
         // Capture Laravel logs in breadcrumbs
-        'logs' => true,
+        'logs' => false,
 
         // Capture SQL queries in breadcrumbs
         'sql_queries' => true,
 
         // Capture bindings on SQL queries logged in breadcrumbs
-        'sql_bindings' => true,
+        'sql_bindings' => false,
 
         // Capture queue job information in breadcrumbs
         'queue_info' => true,
