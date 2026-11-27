@@ -440,9 +440,11 @@
                                 anchor: 'end',
                                 align: 'top',
                                 rotation: 315,
-                                formatter: (currentValue) => {
+                                formatter: (currentValue, context) => {
                                     if (calledDirectly) return '';
-                                    const index = yValues.indexOf(currentValue);
+                                    // The bar's own index: two bars with the same value
+                                    // each get their own label.
+                                    const index = context.dataIndex;
                                     const currentLabel = xValues[index];
                                     const eventTypeTopWords = document.getElementById("eventTypeTopWords").value;
                                     if (data.events && Object.hasOwn(data.events, eventTypeTopWords)) {
@@ -735,9 +737,6 @@
                                 },
                             },
                         }
-                    });
-                    window.addEventListener('resize', function() {
-                        overviewChart.data.labels = formatChartLabels(xValuesPopoverOpen, null, interval)[0];
                     });
                 }
             setElementStyle('loading-icon-overview', 'display', 'none');
