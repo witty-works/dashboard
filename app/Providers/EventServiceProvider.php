@@ -8,7 +8,6 @@ use App\Events\UserCreated;
 use App\Events\UserDeleted;
 use App\Events\UserUpdated;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use App\Listeners\RevokeOAuthTokens;
 use App\Listeners\PostHogUpdateOrganization;
 use App\Listeners\PostHogUpdateUser;
 use App\Listeners\SyncMemberToNlpApi;
@@ -19,7 +18,6 @@ use App\Listeners\UpdateCurrentTeam;
 use App\Listeners\UpdateOrganizationGuidelines;
 use App\Listeners\UpdateUserGuidelines;
 use App\Listeners\UserAddedSlackAlert;
-use Illuminate\Auth\Events\Logout;
 use App\Listeners\UserCompanyUpdatedSlackAlert;
 use Laravel\Fortify\Events\TwoFactorAuthenticationConfirmed;
 use Laravel\Fortify\Events\TwoFactorAuthenticationDisabled;
@@ -95,9 +93,8 @@ class EventServiceProvider extends ServiceProvider
             PostHogUpdateUser::class,
             PostHogUpdateOrganization::class,
         ],
-        Logout::class => [
-            RevokeOAuthTokens::class,
-        ],
+        // Logout -> RevokeOAuthTokens is registered in AppServiceProvider::register,
+        // so it runs before laravel-impersonate's own Logout listener.
     ];
 
     /**

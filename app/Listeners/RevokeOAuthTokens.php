@@ -30,6 +30,13 @@ class RevokeOAuthTokens
             return;
         }
 
+        // A superadmin logging out while impersonating ends their own session;
+        // the event carries the impersonated user, whose extension stays
+        // signed in.
+        if (app('impersonate')->isImpersonating()) {
+            return;
+        }
+
         $event->user->revokeOAuthTokens();
     }
 }

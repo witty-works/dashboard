@@ -21,6 +21,12 @@ class AppServiceProvider extends ServiceProvider
         }
 
         JWT::$leeway = 10;
+
+        // Here rather than in EventServiceProvider: listeners attached in a
+        // provider's boot() run in provider order, and laravel-impersonate's
+        // Logout listener forgets whom the session is impersonating. Every
+        // register() runs before any boot(), so this one sees it still.
+        $this->app['events']->listen(\Illuminate\Auth\Events\Logout::class, \App\Listeners\RevokeOAuthTokens::class);
     }
 
     /**
