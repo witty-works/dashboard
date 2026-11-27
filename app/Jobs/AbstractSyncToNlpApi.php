@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use RuntimeException;
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Bus\Queueable;
@@ -51,15 +52,21 @@ abstract class AbstractSyncToNlpApi implements ShouldQueue
 
     protected function postData($data, $url, $user, $password)
     {
-        if (empty($user)) {
-            $response = Http::post($url, $data);
-        } else {
-            $response = Http::withBasicAuth($user, $password)
-                ->post($url, $data);
+        try {
+            if (empty($user)) {
+                $response = Http::post($url, $data);
+            } else {
+                $response = Http::withBasicAuth($user, $password)
+                    ->post($url, $data);
+            }
+        } catch (ConnectionException) {
+            // Guzzle's message ends with the URL, query string included.
+            throw new RuntimeException("The NLP API could not be reached to write to '" . strtok($url, '?') . "' ({$data['id']})");
         }
 
+        // The status only: the answer may repeat the person's address.
         if ($response->failed() && $response->status() !== 404) {
-            throw new RuntimeException("Unable to write to '{$url} ({$data['id']}): " . $response->body());
+            throw new RuntimeException("Unable to write to '{$url}' ({$data['id']}): HTTP {$response->status()}");
         }
 
         return $response;

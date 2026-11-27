@@ -64,6 +64,18 @@ class ApiKeysPageTest extends TestCase
         });
     }
 
+    public function test_an_unreachable_api_says_so_when_replacing_or_revoking(): void
+    {
+        $user = $this->user();
+        Http::fake(['*' => Http::failedConnection()]);
+
+        Livewire::actingAs($user)->test(Manager::class)
+            ->call('revoke', 'k1')
+            ->assertHasErrors('keys')
+            ->call('replace', 'k1')
+            ->assertHasErrors('keys');
+    }
+
     public function test_page_lists_own_keys_and_limits(): void
     {
         $user = $this->user();

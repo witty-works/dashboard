@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use RuntimeException;
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Bus\Queueable;
@@ -26,7 +27,7 @@ abstract class AbstractDeleteFromNlpApi implements ShouldQueue
     {
         $endpoint = config('app.nlp_api_endpoint');
         if (empty($endpoint['urls'])) {
-            Log::debug("Endpoint URL not set, otherwise would delete: $url");
+            Log::debug('Endpoint URL not set, otherwise would delete: ' . strtok($url, '?'));
 
             return true;
         }
@@ -44,15 +45,23 @@ abstract class AbstractDeleteFromNlpApi implements ShouldQueue
 
     protected function deleteData($url, $user, $password)
     {
-        if (empty($user)) {
-            $response = Http::delete($url);
-        } else {
-            $response = Http::withBasicAuth($user, $password)
-                ->delete($url);
+        try {
+            if (empty($user)) {
+                $response = Http::delete($url);
+            } else {
+                $response = Http::withBasicAuth($user, $password)
+                    ->delete($url);
+            }
+        } catch (ConnectionException) {
+            // Guzzle's message ends with the URL, query string included.
+            throw new RuntimeException("The NLP API could not be reached to delete '" . strtok($url, '?') . "'");
         }
 
+        // The path and the status only: the query string names the person,
+        // and the answer may repeat it. The message reaches Sentry and the
+        // failed-job mail.
         if ($response->failed() && $response->status() !== 404) {
-            throw new RuntimeException("Unable to delete '{$url}.: " . $response->body());
+            throw new RuntimeException("Unable to delete '" . strtok($url, '?') . "': HTTP {$response->status()}");
         }
 
         return $response;
