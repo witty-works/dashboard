@@ -107,6 +107,17 @@ class TeamApiKeysTest extends TestCase
             && $request->url() === 'https://nlp.example/managed_keys/k1');
     }
 
+    public function test_an_unreachable_api_says_so_when_revoking(): void
+    {
+        $owner = $this->owner();
+        $this->actingAs($owner);
+        Http::fake(['*' => Http::failedConnection()]);
+
+        Livewire::test(ApiKeys::class, ['team' => $owner->currentTeam])
+            ->call('revoke', 'k1')
+            ->assertHasErrors('keys');
+    }
+
     public function test_demoted_admin_no_longer_sees_the_list(): void
     {
         $owner = $this->owner();

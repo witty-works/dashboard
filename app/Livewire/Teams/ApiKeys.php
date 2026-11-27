@@ -27,9 +27,9 @@ class ApiKeys extends Component
     public function revoke(string $keyId, NlpApiKeys $keys): void
     {
         Gate::authorize('updateTeamMember', $this->team);
-        abort_unless(collect($keys->forTeam($this->team))->contains('id', $keyId), 403);
 
         try {
+            abort_unless(collect($keys->forTeam($this->team))->contains('id', $keyId), 403);
             $keys->revoke($keyId);
         } catch (NlpApiKeysUnavailable) {
             $this->addError('keys', __('content.api_keys_unavailable'));

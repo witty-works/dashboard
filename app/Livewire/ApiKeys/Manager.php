@@ -81,14 +81,14 @@ class Manager extends Component
     public function replace(string $keyId, NlpApiKeys $keys): void
     {
         $this->ensureVerified();
-        $key = $this->ownKeys($keys)->get($keyId);
-        $teamIds = $this->teams()->map(fn (Team $team) => $team->posthogId());
-        abort_if($key === null || ($key['team_id'] !== null && ! $teamIds->contains($key['team_id'])), 403);
-
         $grace = (int) ($this->grace[$keyId] ?? 86400);
         abort_unless(in_array($grace, self::GRACE_PERIODS, true), 422);
 
         try {
+            $key = $this->ownKeys($keys)->get($keyId);
+            $teamIds = $this->teams()->map(fn (Team $team) => $team->posthogId());
+            abort_if($key === null || ($key['team_id'] !== null && ! $teamIds->contains($key['team_id'])), 403);
+
             $replaced = $keys->replace($keyId, $grace);
         } catch (NlpApiKeysUnavailable) {
             $this->addError('keys', __('content.api_keys_unavailable'));
@@ -102,9 +102,9 @@ class Manager extends Component
     public function revoke(string $keyId, NlpApiKeys $keys): void
     {
         $this->ensureVerified();
-        abort_unless($this->ownKeys($keys)->has($keyId), 403);
 
         try {
+            abort_unless($this->ownKeys($keys)->has($keyId), 403);
             $keys->revoke($keyId);
         } catch (NlpApiKeysUnavailable) {
             $this->addError('keys', __('content.api_keys_unavailable'));

@@ -89,7 +89,8 @@ class NlpApiKeys
                 ? self::client()->{$method}($base . $path)
                 : self::client()->{$method}($base . $path, $body);
         } catch (ConnectionException) {
-            throw new NlpApiKeysUnavailable("The NLP API could not be reached for {$method} {$path}");
+            // Without the query string, which names the person.
+            throw new NlpApiKeysUnavailable("The NLP API could not be reached for {$method} " . strtok($path, '?'));
         }
 
         if ($response->failed()) {
