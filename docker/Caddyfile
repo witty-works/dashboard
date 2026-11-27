@@ -1,0 +1,32 @@
+# FrankenPHP in classic mode (one PHP request per thread, no worker script),
+# plain HTTP on $PORT. TLS, certificates and HSTS are the reverse proxy's job;
+# the container is only reachable through it.
+# https://frankenphp.dev/docs/config/
+{
+	# No certificates, no redirect to https, no admin API.
+	auto_https off
+	admin off
+	skip_install_trust
+
+	frankenphp {
+		# Unset: FrankenPHP picks 2 threads per CPU.
+		{$FRANKENPHP_CONFIG}
+	}
+
+	servers {
+		# The client address Caddy logs and hands PHP as REMOTE_ADDR stays the
+		# proxy's; Laravel reads X-Forwarded-For itself (TrustProxies).
+		trusted_proxies static private_ranges
+	}
+}
+
+:{$PORT:8080} {
+	root /app/public
+	encode zstd br gzip
+
+	# Vite's hashed bundles never change under the same name.
+	@build path /build/assets/*
+	header @build Cache-Control "public, max-age=31536000, immutable"
+
+	php_server
+}

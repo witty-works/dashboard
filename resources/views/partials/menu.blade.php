@@ -202,10 +202,6 @@
 @else
     <!-- LOGGED OUT -->
     <div class="wittyworks-navigation-bottom-half">
-        <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="https://www.witty.works/pricing" target="_blank" rel="noopener">
-            <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/star.svg') }}" alt="" />
-            {{ __('teams.pricing') }}
-        </x-nav-link>
         <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('login') }}">
             <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/login.svg') }}" alt="" />
             {{ __('content.log_in') }}

@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-if (config('app.browsers')) {
+if (config('app.browser_extension')) {
     /*
      * Token issuing and refreshing both live on POST /oauth/token now
      * (authorization_code + PKCE, and the refresh_token grant) — see

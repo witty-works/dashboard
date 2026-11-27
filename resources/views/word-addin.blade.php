@@ -7,7 +7,7 @@
 
             <div class="py-10">
                 @if(request()->get('status') === 'failed')
-                {!! __('content.witty_word_addin_text_failed') !!}
+                {!! __('content.witty_word_addin_text_failed', ['support_email' => e(config('app.support_email'))]) !!}
                 @elseif(request()->get('status') === 'invite_only')
                 {!! __('content.witty_word_addin_text_invite_only') !!}
                 @else

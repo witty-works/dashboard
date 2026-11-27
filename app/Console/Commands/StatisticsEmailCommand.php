@@ -63,9 +63,9 @@ class StatisticsEmailCommand extends Command
         $html .= "</ul>";
 
         Mail::send([], [], function (Message $message) use ($html) {
-            $message->to('sales@witty.works')
+            $message->to(config('app.support_email'))
                 ->subject('Dashboard Domains of Emails')
-                ->from('support@witty.works')
+                ->from(config('mail.from.address'))
                 ->html($html);
         });
 

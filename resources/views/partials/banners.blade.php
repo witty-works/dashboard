@@ -18,10 +18,6 @@ if ($user) {
 }
 @endphp
 
-@if (config('app.browsers') && Session::get(\App\Http\Controllers\OAuthController::LOGIN_SOURCE) !== \App\Http\Controllers\OAuthController::OFFICE_PROVIDER)
-@include('partials.extension-check')
-@endif
-
 @if($showInvitations)
 @include('partials.invitations', ['user' => $user])
 @elseif($showInviteCheck)

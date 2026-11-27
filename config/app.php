@@ -31,32 +31,16 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Analytics
+    | Browser extension
     |--------------------------------------------------------------------------
     |
-    | This comma separated list determines if analytics is shown in the menu
-    |
-    | possible values: true/false
+    | The browser extension's sign-in (/browser-login) and its API routes, for
+    | people who use the extension. The dashboard does not promote it; its
+    | write page does what the extension did.
     |
     */
 
-    'browsers' => [
-        'chrome' => [
-            'image_src' => '/google-chrome-icon-transparent-4.webp',
-            'store_href' => 'https://chrome.google.com/webstore/detail/meojhlodfiihbjkcnehkdcgncnhgagog',
-            'latest_version' => env('BROWSER_VERSION_CHROME'),
-        ],
-        'edge' => [
-            'image_src' => '/Microsoft_Edge_logo_(2019).webp',
-            'store_href' => 'https://microsoftedge.microsoft.com/addons/detail/icngefdfohhklfkjbohjgjnboenocbic',
-            'latest_version' => env('BROWSER_VERSION_EDGE'),
-        ],
-        'firefox' => [
-            'image_src' => '/Firefox_logo,_2019.webp',
-            'store_href' => 'https://addons.mozilla.org/en-US/firefox/addon/witty/',
-            'latest_version' => env('BROWSER_VERSION_FIREFOX'),
-        ],
-    ],
+    'browser_extension' => (bool) env('BROWSER_EXTENSION_ENABLED', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -211,14 +195,25 @@ return [
     |
     | The NLP API address the browser calls from the write page. Not the
     | server-side nlp_api_endpoint, which may be an internal address. Without
-    | it the page says it is not configured. The contact is whom users ask
-    | for access when the API does not let them in.
+    | it the page says it is not configured.
     |
     */
 
     'nlp_api_public_url' => env('NLP_API_PUBLIC_URL', ''),
 
-    'write_contact' => env('WRITE_CONTACT', 'api@witty.works'),
+    // The deployment's one support address: whom people write to for help,
+    // for access to the language model on the write page, or about an error;
+    // also where reports and failed-job alerts go. Without it, the sender
+    // address (MAIL_FROM_ADDRESS).
+    'support_email' => env('SUPPORT_EMAIL', env('MAIL_FROM_ADDRESS', '')),
+
+    // The deployment's privacy policy and terms of service: Markdown files
+    // outside the repository, for example mounted into the container. The
+    // repository holds no such text; without a file, the page says that the
+    // deployment has published none. Sign-up asks people to agree to the
+    // documents provided, and the footer links them. Headings start at ##.
+    'privacy_policy_file' => env('PRIVACY_POLICY_FILE'),
+    'terms_of_service_file' => env('TERMS_OF_SERVICE_FILE'),
 
     /*
     |--------------------------------------------------------------------------

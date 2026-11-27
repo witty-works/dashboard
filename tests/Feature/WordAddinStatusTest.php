@@ -22,6 +22,6 @@ class WordAddinStatusTest extends TestCase
     {
         $this->get('/word-addin?status=failed')
             ->assertOk()
-            ->assertSee(__('content.witty_word_addin_text_failed'), false);
+            ->assertSee(__('content.witty_word_addin_text_failed', ['support_email' => e(config('app.support_email'))]), false);
     }
 }

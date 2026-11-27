@@ -1,0 +1,58 @@
+# The build context is uploaded to the daemon before anything runs, and the
+# vendor stage copies all of it into the image, so everything below stays out.
+
+.git
+.github
+.gitignore
+.gitattributes
+.editorconfig
+.styleci.yml
+
+# Installed by the build itself, for Linux and without dev packages; a local
+# copy would carry the host's platform and the dev tools.
+vendor/
+node_modules/
+public/build/
+public/hot
+public/storage
+
+# Local configuration and secrets: the image takes all of it from the
+# environment at runtime.
+.env
+.env.*
+!.env.example
+storage/*.key
+auth.json
+.sentryclirc
+.lando.yml
+docker-compose.yaml
+
+# Whatever a local run left behind; the image starts with empty directories.
+# storage/app/data is not runtime data: it is committed, and the application
+# reads the category tables from it (App\Helpers\CategoryDataHelper).
+storage/app/*
+!storage/app/data/
+storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/views/*
+storage/framework/testing/*
+storage/logs/*
+storage/debugbar/
+bootstrap/cache/*.php
+.phpunit.result.cache
+.phpunit.cache/
+
+# Tests, docs and tooling that never affect the image
+tests/
+docs/
+phpunit.xml
+vitest.config.js
+sonar-project.properties
+make-release
+_ide_helper.php
+_ide_helper_models.php
+
+# Editor and OS noise
+.idea
+.vscode
+.DS_Store

@@ -102,7 +102,7 @@ token expires the extension must send the user through step 2 again.
 2. `/write/callback` renders the same page. The script removes the code from the address and history, checks the state, and exchanges the code with its verifier at `/oauth/token`.
 3. The tokens stay in memory: a reload signs in again, at the cost of one redirect. The access token is refreshed two minutes before it expires.
 4. The page asks the NLP API's `/v2.0/auth` whether it lets the user in, and `/v2.0/features` whether the user may use the language model. It then mounts the editor with the access token, and shows the prompt and AI suggestions only when the model is allowed and `APP_LLM_ENABLED` is on.
-5. A refused token is refreshed once, on `401` or `403` alike, because an NLP API before 4.0.0 answers `403` for an expired token. If the fresh token is refused too, a `401` asks the user to reload and a `403` says they have no access and whom to ask (`WRITE_CONTACT`). The text stays in the editor in both cases, so it can be copied.
+5. A refused token is refreshed once, on `401` or `403` alike, because an NLP API before 4.0.0 answers `403` for an expired token. If the fresh token is refused too, a `401` asks the user to reload and a `403` says they have no access and whom to ask (`SUPPORT_EMAIL`). The text stays in the editor in both cases, so it can be copied.
 
 The NLP API accepts the page's tokens only when the editor client's id is in its `DASHBOARD_CLIENT_ID`, next to the extension's.
 
