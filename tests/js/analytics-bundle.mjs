@@ -20,7 +20,8 @@ const expect = (what, actual, expected) => {
     if (actual !== expected) failures.push(`${what}: expected ${expected}, got ${actual}`);
 };
 expect('Chart', typeof window.Chart, 'function');
-expect('data labels plugin', window.Chart.plugins.getAll().some((p) => p.id === 'datalabels'), true);
+expect('Chart.js 4', String(window.Chart.version).split('.')[0], '4');
+expect('data labels plugin', Boolean(window.Chart.registry.plugins.get('datalabels')), true);
 expect('moment locale', window.moment.locale(), 'de');
 expect('German month', window.moment('2026-01-15').format('MMMM'), 'Januar');
 expect('French month', window.moment('2026-01-15').locale('fr').format('MMMM'), 'janvier');
