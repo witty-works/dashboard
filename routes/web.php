@@ -50,7 +50,11 @@ use App\Http\Controllers\WelcomeController;
 
 Route::localize(
     function () {
-        Route::impersonate();
+        // Superadmins need two-factor sign-in to impersonate. Leaving is not
+        // affected: the impersonated user is never a superadmin.
+        Route::middleware('superadmin.two-factor')->group(function () {
+            Route::impersonate();
+        });
 
         Route::get('/terms', [\App\Http\Controllers\TermsController::class, 'show'])->name('terms.show');
         Route::get('/policy', [\App\Http\Controllers\PolicyController::class, 'show'])->name('policy.show');
@@ -209,8 +213,19 @@ if (config('app.browsers')) {
     Route::get('/browser-login', [OAuthController::class, 'browserLogin'])->name('browser_login');
 }
 
-// The superadmins' pages, outside the locale prefix.
-Route::middleware(['auth', 'can:' . config('admin.permission')])
+// Asks a superadmin for a code before /admin when the session has not seen
+// one (Office SSO, "remember me"); see App\Support\SuperadminTwoFactor.
+Route::middleware(['auth'])->group(function () {
+    Route::get('/user/two-factor-verify', [\App\Http\Controllers\TwoFactorVerificationController::class, 'show'])
+        ->name('two-factor.verify');
+    Route::post('/user/two-factor-verify', [\App\Http\Controllers\TwoFactorVerificationController::class, 'store'])
+        ->middleware('throttle:two-factor-verify')
+        ->name('two-factor.verify.store');
+});
+
+// The superadmins' pages, outside the locale prefix. They need two-factor
+// sign-in (docs/user-management.md).
+Route::middleware(['auth', 'can:' . config('admin.permission'), 'superadmin.two-factor'])
     ->prefix(config('admin.prefix'))
     ->name('admin.')
     ->group(function () {

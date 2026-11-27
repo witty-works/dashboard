@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin;
 
 use App\Models\User;
+use App\Support\SuperadminTwoFactor;
 use Illuminate\Validation\ValidationException;
 use Laravel\Jetstream\Contracts\DeletesUsers;
 use Livewire\Component;
@@ -18,6 +19,15 @@ class Users extends Component
     use WithPagination;
 
     public string $search = '';
+
+    /**
+     * Every request, not only the first: an update request renders the page
+     * again from a snapshot, which is signed but not tied to the session.
+     */
+    public function boot(): void
+    {
+        $this->authorizeSuperadmin();
+    }
 
     public function mount(): void
     {
@@ -98,6 +108,11 @@ class Users extends Component
 
     private function authorizeSuperadmin(): void
     {
-        abort_unless(auth()->user()?->can(config('admin.permission')), 403);
+        // Livewire's update requests do not run the page's two-factor
+        // middleware, so the requirement is checked here as well.
+        abort_unless(
+            auth()->user()?->can(config('admin.permission')) && SuperadminTwoFactor::passes(auth()->user()),
+            403
+        );
     }
 }

@@ -6,7 +6,9 @@ use App\Models\User;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
+use Tests\Concerns\UsesTwoFactor;
 use Tests\TestCase;
 
 /**
@@ -17,6 +19,7 @@ use Tests\TestCase;
 class CreateSuperadminCommandTest extends TestCase
 {
     use RefreshDatabase;
+    use UsesTwoFactor;
 
     public function test_it_creates_a_verified_superadmin_and_mails_a_password_link(): void
     {
@@ -88,5 +91,40 @@ class CreateSuperadminCommandTest extends TestCase
         $this->artisan('superadmin:create', ['email' => 'admin@example.org', 'name' => 'Ada Admin'])
             ->expectsOutputToContain(route('password.request'))
             ->assertExitCode(1);
+    }
+
+    public function test_the_output_says_two_factor_sign_in_comes_next(): void
+    {
+        Notification::fake();
+
+        $this->artisan('superadmin:create', ['email' => 'admin@example.org', 'name' => 'Ada Admin'])
+            ->expectsOutputToContain('two-factor sign-in')
+            ->assertExitCode(0);
+    }
+
+    public function test_an_existing_account_without_two_factor_is_told_to_set_it_up(): void
+    {
+        User::factory()->create(['email' => 'existing@example.org', 'email_verified_at' => now()]);
+
+        $this->artisan('superadmin:create', ['email' => 'existing@example.org', 'name' => 'Ignored'])
+            ->expectsOutputToContain('two-factor sign-in')
+            ->assertExitCode(0);
+    }
+
+    public function test_a_new_superadmin_sets_up_two_factor_on_first_sign_in(): void
+    {
+        Notification::fake();
+        $this->artisan('superadmin:create', ['email' => 'admin@example.org', 'name' => 'Ada Admin']);
+        $admin = User::where('email', 'admin@example.org')->firstOrFail();
+        // What the emailed link does.
+        $admin->forceFill(['password' => Hash::make('secret-password')])->save();
+
+        // No code yet, so none is asked for.
+        $this->post(route('login'), ['email' => 'admin@example.org', 'password' => 'secret-password']);
+        $this->assertAuthenticatedAs($admin);
+
+        $this->withoutLocaleRedirects()->get('/admin/users')
+            ->assertRedirect(route('profile.show'))
+            ->assertSessionHas('flash.banner', __('content.superadmin_two_factor_required'));
     }
 }

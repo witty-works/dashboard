@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
 use Livewire\Livewire;
 use PHPUnit\Framework\Attributes\DataProvider;
+use Tests\Concerns\UsesTwoFactor;
 use Tests\TestCase;
 
 /**
@@ -24,6 +25,7 @@ use Tests\TestCase;
 class OwnerInvitationTest extends TestCase
 {
     use RefreshDatabase;
+    use UsesTwoFactor;
 
     protected function setUp(): void
     {
@@ -35,11 +37,13 @@ class OwnerInvitationTest extends TestCase
 
     private function superadmin(): User
     {
-        return tap(User::factory()->create())->assignRole(config('admin.role'));
+        return $this->superadminWithTwoFactor(User::factory()->create());
     }
 
     private function page(User $actor)
     {
+        $this->verifyTwoFactorSession($actor);
+
         return Livewire::actingAs($actor)->test(Teams::class);
     }
 

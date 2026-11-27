@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Tests\Concerns\UsesTwoFactor;
 use Tests\TestCase;
 
 /**
@@ -18,6 +19,7 @@ use Tests\TestCase;
 class SuperadminPagesTest extends TestCase
 {
     use RefreshDatabase;
+    use UsesTwoFactor;
 
     private function superadmin(): User
     {
@@ -28,7 +30,8 @@ class SuperadminPagesTest extends TestCase
         $user->switchTeam($user->ownedTeams()->firstOrFail());
         $user->assignRole($role);
 
-        return $user->refresh();
+        // /admin and impersonation need two-factor sign-in.
+        return $this->verifiedSuperadmin($user);
     }
 
     #[DataProvider('pageProvider')]

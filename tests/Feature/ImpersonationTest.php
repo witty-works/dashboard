@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Concerns\UsesTwoFactor;
 use Tests\TestCase;
 
 /**
@@ -14,15 +15,17 @@ use Tests\TestCase;
 class ImpersonationTest extends TestCase
 {
     use RefreshDatabase;
+    use UsesTwoFactor;
 
     private function user(): User
     {
         return User::factory()->withPersonalTeam()->create();
     }
 
+    /** With two-factor sign-in, which impersonation needs (SuperadminTwoFactorTest). */
     private function superadmin(): User
     {
-        return tap($this->user())->assignRole('Superadmin');
+        return $this->verifiedSuperadmin($this->user());
     }
 
     public function test_an_ordinary_user_cannot_sign_in_as_another_user(): void
@@ -49,6 +52,7 @@ class ImpersonationTest extends TestCase
     {
         $admin = $this->superadmin();
         $other = $this->superadmin();
+        $this->verifyTwoFactorSession($admin);
 
         // The package sends the request back instead of refusing it.
         $this->actingAs($admin)->get('/en/impersonate/take/' . $other->id)->assertRedirect();

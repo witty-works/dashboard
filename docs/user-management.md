@@ -1,6 +1,7 @@
 # User & Team Management
 
-Covers superadmin rights, the admin area and impersonation.
+Covers superadmin rights, two-factor sign-in, the admin area and
+impersonation.
 
 ## Roles and permissions
 
@@ -26,11 +27,80 @@ A new account is created verified, with an unusable password, and is mailed a
 link to set one (the link uses `APP_URL`). An existing account whose address is
 not verified is refused: anyone can register any address.
 
+A superadmin must set up two-factor sign-in before using `/admin` or
+impersonating anyone (see [Two-factor sign-in](#two-factor-sign-in)). A new
+superadmin sets their password through the link, signs in, and on first
+visiting `/admin` is sent to their profile page to set it up. Once they have
+entered a code there, `/admin` opens in the same session.
+
+## Two-factor sign-in
+
+Every user can turn on two-factor sign-in on their profile page. It uses
+Fortify's TOTP support, so any authenticator app works. Setting it up shows a QR
+code and a setup key; it takes effect only once a code from the app has been
+entered, and every change to it asks for the password first
+(`config/fortify.php`). The profile page then shows recovery codes, each good
+for one sign-in without the app.
+
+When it is on, signing in with a password asks for a code or a recovery code,
+at most five tries a minute. This also covers the browser extension and the
+write page, which sign in through `/oauth/authorize` and the same sign-in page.
+
+Signing in through Office SSO (the Word add-in) does not ask for a code:
+Microsoft's sign-in handles the second factor there, under the policies of the
+user's organisation. The profile page hides the setting in the add-in, except
+for superadmins.
+
+### Superadmins must use two-factor sign-in
+
+For `/admin`, its Livewire actions and `/impersonate/take/{id}`
+(`App\Support\SuperadminTwoFactor`):
+
+-   a superadmin without confirmed two-factor sign-in is sent to the profile
+    page, which says why, and cannot impersonate (`User::canImpersonate()`);
+-   a superadmin with it must also have entered a code in the current session,
+    at the sign-in challenge, when confirming the setup, or on
+    `/user/two-factor-verify`, where they are sent otherwise. This applies to
+    sessions started through Office SSO or a "remember me" cookie, which do not
+    ask for a code. That check allows five tries a minute.
+
+Turning two-factor sign-in off takes `/admin` away again until it is set up
+anew.
+
+Setting it up asks for the account's password. A superadmin whose account
+was made through Office SSO has none yet: they set one through "Forgot your
+password?" first.
+
+The setup key and QR code are shown only while setting up, and the form's
+display flags cannot be set by the browser, so neither the secret nor the
+recovery codes can be read without the password.
+
+### Recovering a locked-out account
+
+Someone who lost both their authenticator app and their recovery codes cannot
+sign in with a password. An operator removes two-factor sign-in from the
+account on the server:
+
+```bash
+lando artisan two-factor:reset user@example.com
+```
+
+The command asks for confirmation and logs the reset. Check first that the
+request comes from the account's owner, for example by a call to a number you
+already know or a message from their organisation's administrator; an email
+from the address alone is not enough, since a lost device can mean a lost
+mailbox. The user then signs in with their password alone; a superadmin has to
+set two-factor sign-in up again before using `/admin`.
+
+Superadmins who still have access can check their recovery codes on the
+profile page ("Show Recovery Codes") and generate new ones.
+
 ## Admin area
 
 The admin pages are the dashboard's own, under the prefix set in
 `config/admin.php` (`/admin`), behind `auth` and `can:manage users`, so a user
-without the permission gets a 403:
+without the permission gets a 403. A superadmin also needs two-factor sign-in
+(`superadmin.two-factor`):
 
 -   `/admin/teams` (where `/admin` leads):
     -   every team with its owner, member count and rate limit, which only
@@ -114,8 +184,9 @@ Impersonation uses
 -   `/impersonate/take/{id}` — start impersonating the user with that id
 -   `/impersonate/leave` — return to your own account
 
-Only superadmins may impersonate, and nobody may impersonate a superadmin
-(`User::canImpersonate()` and `canBeImpersonated()`).
+Only superadmins with two-factor sign-in may impersonate, and nobody may
+impersonate a superadmin (`User::canImpersonate()` and `canBeImpersonated()`).
+The session must have seen a code, as for `/admin`.
 
 Links to `impersonate/take/{id}` are generated in the admin user list, in the
 team statistics email and in the PostHog sync payload, so a support request can

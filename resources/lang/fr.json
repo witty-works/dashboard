@@ -1,0 +1,5 @@
+{
+    "The provided two factor authentication code was invalid.": "Ce code n’est pas valable.",
+    "The provided two factor recovery code was invalid.": "Ce code de récupération n’est pas valable.",
+    "This password does not match our records.": "Ce mot de passe est incorrect."
+}

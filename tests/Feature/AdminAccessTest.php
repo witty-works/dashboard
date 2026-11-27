@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Tests\Concerns\UsesTwoFactor;
 use Tests\TestCase;
 
 /**
@@ -16,6 +17,7 @@ use Tests\TestCase;
 class AdminAccessTest extends TestCase
 {
     use RefreshDatabase;
+    use UsesTwoFactor;
 
     private function superadmin(): User
     {
@@ -26,7 +28,8 @@ class AdminAccessTest extends TestCase
         $user->switchTeam($user->ownedTeams()->firstOrFail());
         $user->assignRole($role);
 
-        return $user->refresh();
+        // /admin and impersonation need two-factor sign-in.
+        return $this->verifiedSuperadmin($user);
     }
 
     public function test_user_without_the_permission_is_denied(): void

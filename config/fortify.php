@@ -103,8 +103,10 @@ return [
     */
 
     'limiters' => [
-        //'login' => 'login',
-        //'two-factor' => 'two-factor',
+        // Five password attempts a minute per address and IP (FortifyServiceProvider).
+        'login' => 'login',
+        // Five codes a minute per sign-in attempt (FortifyServiceProvider).
+        'two-factor' => 'two-factor',
     ],
 
     /*
@@ -137,10 +139,13 @@ return [
         Features::emailVerification(),
         Features::updateProfileInformation(),
         Features::updatePasswords(),
-        //Features::twoFactorAuthentication([
-        //    'confirm' => true,
-        //    'confirmPassword' => true,
-        //]),
+        // Open to every user and required for superadmins (docs/user-management.md).
+        // It takes effect only after a code from the app has been entered, and
+        // changing it needs the password entered within auth.password_timeout.
+        Features::twoFactorAuthentication([
+            'confirm' => true,
+            'confirmPassword' => true,
+        ]),
     ],
 
 ];

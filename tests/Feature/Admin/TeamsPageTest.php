@@ -9,6 +9,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Bus;
 use Livewire\Livewire;
 use PHPUnit\Framework\Attributes\DataProvider;
+use Tests\Concerns\UsesTwoFactor;
 use Tests\TestCase;
 
 /**
@@ -19,6 +20,7 @@ use Tests\TestCase;
 class TeamsPageTest extends TestCase
 {
     use RefreshDatabase;
+    use UsesTwoFactor;
 
     protected function setUp(): void
     {
@@ -36,11 +38,13 @@ class TeamsPageTest extends TestCase
 
     private function superadmin(): User
     {
-        return tap($this->user())->assignRole(config('admin.role'));
+        return $this->superadminWithTwoFactor($this->user());
     }
 
     private function page(User $actor)
     {
+        $this->verifyTwoFactorSession($actor);
+
         return Livewire::actingAs($actor)->test(Teams::class);
     }
 
@@ -164,7 +168,7 @@ class TeamsPageTest extends TestCase
 
     public function test_admin_home_leads_to_the_teams_page(): void
     {
-        $this->actingAs($this->superadmin())->withoutLocaleRedirects()
+        $this->actingAs($this->verifiedSuperadmin($this->user()))->withoutLocaleRedirects()
             ->get('/admin')->assertRedirect('/admin/teams');
     }
 }
