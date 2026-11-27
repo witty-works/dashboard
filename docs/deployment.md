@@ -3,11 +3,13 @@
 This guide sets up a production deployment of the dashboard together with the
 NLP API it depends on, in the order the work happens: services, secrets, the NLP
 API's side, the dashboard's settings, the containers, the first start, a check
-that it works, and how releases and backups go from then on. It is for whoever
-operates a deployment. The README's [deployment checklist](../README.md#deployment-checklist)
-lists what to confirm before going live; [docker.md](docker.md#production-image)
-is the reference for the image itself, and the NLP API's own documentation for
-the API.
+that it works, and how releases and backups go from then on, followed by the
+[technical checklist](#technical-checklist-before-going-live) to work through
+before going live. It is for whoever operates a deployment. The decisions an
+organisation takes first, such as its privacy policy and which features to
+offer, are in the README's [deployment checklist](../README.md#deployment-checklist);
+[docker.md](docker.md#production-image) is the reference for the image itself,
+and the NLP API's own documentation for the API.
 
 ## Contents
 
@@ -21,6 +23,7 @@ the API.
 -   [Releases and release candidates](#releases-and-release-candidates)
 -   [Backups and restoring](#backups-and-restoring)
 -   [Regular tasks](#regular-tasks)
+-   [Technical checklist before going live](#technical-checklist-before-going-live)
 
 ## Services a deployment runs
 
@@ -144,3 +147,41 @@ The image has no scheduler. Run these from the host's scheduler with the image, 
 -   `kpis`: stores each team's member and licence counts, which the analytics pages chart;
 -   `statistics`: mails sign-up and team figures to `SUPPORT_EMAIL`;
 -   `posthog:sync` and `writing-streak-kpi`: only with PostHog switched on.
+
+## Technical checklist before going live
+
+Check these before a deployment goes live, and again when its services change.
+
+**Privacy and legal settings**
+
+-   **`PRIVACY_POLICY_FILE` and `TERMS_OF_SERVICE_FILE` point at the organisation's own documents.** Without them, sign-up asks for no agreement and the pages say that none has been published.
+-   **`SUPPORT_EMAIL` is the organisation's support address,** where reports and failed jobs go too.
+-   **The PostHog personal API key has the `person:write` scope** (`POSTHOG_PERSONAL_API_KEY`, see [PostHog Analytics](../README.md#posthog-analytics)), or deleting an account leaves the person's data in PostHog.
+-   **Sentry's data scrubbing is checked** before `CSP_REPORT_URI` points at Sentry: violation reports carry the page's address with its query string.
+
+**The NLP API**
+
+-   **Its `DASHBOARD_URL`, `DASHBOARD_ISSUER` and `DASHBOARD_CLIENT_ID` match this dashboard;** the write page checking a text proves it ([Checking that it works](#checking-that-it-works)).
+-   **Its management endpoints need credentials** (`MANAGEMENT_AUTH_ENABLED` on), and they are the ones in `APP_NLP_API_SYNC_USER` and `APP_NLP_API_SYNC_PASSWORD`.
+-   **`API_KEY_HMAC_KEY` is set,** or nobody can create API keys.
+-   **`REQUIRE_AUTH` is on,** and `TEXTAREA_ENABLED` off unless the API's own page is wanted.
+-   **A language model is set up with an `LLM_ACCESS` policy,** if Witty GPT or AI rewrites are offered.
+
+**Accounts and features**
+
+-   **The first superadmin has two-factor sign-in set up.**
+-   **`INVITE_ONLY` and each switch in the README's [features table](../README.md#features-a-deployment-switches-on-or-off) are set as the organisation decided,** with what each also needs.
+
+**Security**
+
+-   **`APP_ENV=production` and `APP_DEBUG=false`,** so error pages show no details.
+-   **The `web` container is reachable only through the reverse proxy,** which sends `Strict-Transport-Security`.
+-   **The security headers are enforced.** A first rollout can run with `CSP_REPORT_ONLY=true`; switch it off once the reports are clean ([Security headers](../README.md#security-headers)).
+-   **The image is pinned by digest,** not by tag.
+-   **`composer audit` and `npm audit` show no untriaged advisories.**
+
+**Operations**
+
+-   **MariaDB and the NLP API's Redis are backed up,** and a restore has been tried once ([Backups and restoring](#backups-and-restoring)).
+-   **`GET /up` is monitored,** and the worker is restarted when it exits.
+-   **The regular tasks the deployment needs are scheduled** ([Regular tasks](#regular-tasks)).

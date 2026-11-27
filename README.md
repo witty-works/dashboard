@@ -148,67 +148,50 @@ Deployments run the Docker image that a version tag publishes to `ghcr.io/witty-
 
 A deployment runs the dashboard image (web server and queue worker, plus a migration step per release) behind a reverse proxy that terminates TLS, with a MariaDB database, an SMTP service and the [NLP API](https://github.com/witty-works/nlp_api) with its Redis. The dashboard sends every user's and team's settings to the NLP API and manages the API keys people create there; the write page calls the API from the browser.
 
-[docs/deployment.md](docs/deployment.md) walks through the setup in order: the secrets to generate, the NLP API's settings for the dashboard, the dashboard's settings, the containers and the proxy, the first start, how to check that it works, releases and release candidates, backups and regular tasks.
+[docs/deployment.md](docs/deployment.md) walks through the setup in order and ends with the [technical checklist](docs/deployment.md#technical-checklist-before-going-live) to work through before going live.
 
 ## Features a deployment switches on or off
 
-| Feature | Switch | Default | Also needs |
+| Feature | What people get | What it involves | Setting |
 | --- | --- | --- | --- |
-| Invite-only sign-up | `INVITE_ONLY` | off | Superadmins create the teams and invite their owners ([Invite-only mode](docs/user-management.md#invite-only-mode)) |
-| Sending settings to the NLP API | `APP_NLP_API_SYNC_CONFIGS` | on | `APP_NLP_API_SYNC_ENDPOINT` and its credentials ([NLP API Sync](#nlp-api-sync)) |
-| API keys page | shown with an NLP API endpoint and `APP_NLP_API_SYNC_CONFIGS` on | on | `API_KEY_HMAC_KEY` on the NLP API ([API keys](docs/user-management.md#api-keys)) |
-| Write page | `PASSPORT_EDITOR_CLIENT_ID` and `NLP_API_PUBLIC_URL` | says it is not set up until both are set | The client's id in the NLP API's `DASHBOARD_CLIENT_ID` ([The write page's flow](docs/oauth.md#the-write-pages-flow)) |
-| Witty GPT | `APP_LLM_ENABLED` | on | A language model on the NLP API; each team opts in, and superadmins set its requests per minute on `/admin/teams` ([Witty GPT](#witty-gpt)) |
-| Browser extension sign-in | `BROWSER_EXTENSION_ENABLED` | on | The extension's OAuth client ([Browser extension](#browser-extension), [Setup](docs/oauth.md#setup)) |
-| Word add-in sign-in | `MICROSOFT_CLIENT_ID` and the other `MICROSOFT_*` settings | off without them | An Entra app registration, and `OFFICE_SSO_CLIENT_ID` on the NLP API ([Microsoft Office SSO](#microsoft-office-sso)) |
-| Usage statistics in PostHog | `POSTHOG_ENABLED` | off | A PostHog instance and its keys ([PostHog Analytics](#posthog-analytics)) |
-| Analytics pages | `ANALYTICS_PAGES_ENABLED` | on, shown only with PostHog on | Collected events to show |
-| Error reports in Sentry | `SENTRY_LARAVEL_DSN` | off without it | A Sentry project ([docs/sentry.md](docs/sentry.md)) |
-| Security headers report only | `CSP_REPORT_ONLY` | off: enforced | Optionally `CSP_REPORT_URI` for the reports ([Security headers](#security-headers)) |
+| Invitation only | Nobody gets an account without an invitation; superadmins create the teams | Deciding who invites whom | `INVITE_ONLY`, off by default |
+| Write page | Writing and checking texts in the browser, signed in to the dashboard | Nothing beyond the setup | `PASSPORT_EDITOR_CLIENT_ID` and `NLP_API_PUBLIC_URL`; the page says it is not set up until both are set |
+| API keys | Keys for tools such as the Witty editor in other applications | Nothing beyond the setup | On with the NLP API connected |
+| Witty GPT and AI rewrites | Texts reviewed and rewritten with a language model | A language model provider, which receives the texts; each team opts in, and superadmins limit its requests per minute | `APP_LLM_ENABLED`, on by default, and a model on the NLP API |
+| Browser extension | Witty in text fields on other websites | Installing the extension; it signs in to this deployment | `BROWSER_EXTENSION_ENABLED`, on by default |
+| Word add-in | Witty in Microsoft Word | A Microsoft 365 administrator registering the add-in | `MICROSOFT_*`, off without them |
+| Usage statistics | Analytics pages on how Witty is used, per person and per team | A PostHog instance, which receives events about what people do with Witty | `POSTHOG_ENABLED`, off by default; the pages themselves with `ANALYTICS_PAGES_ENABLED` |
+| Error reports | Errors reach the operators | A Sentry project, which receives error details | `SENTRY_LARAVEL_DSN`, off without it |
+
+Each setting is described under [Custom Application Configuration](#custom-application-configuration).
 
 ## Deployment checklist
 
-Check these before a deployment goes live, and again when its services change.
+For anyone proposing the dashboard to their organisation: the decisions to take, the people to involve and what to prepare before it goes live. Each group names who usually takes care of it. The technical side, for whoever runs the servers, is the [technical checklist](docs/deployment.md#technical-checklist-before-going-live).
 
-**Privacy and legal**
+**What your organisation commits to**, with management and IT
 
--   **The privacy policy names every service that receives personal data:** the NLP API, the language model provider if Witty GPT or AI rewrites are on, the mail service, the PostHog instance (`POSTHOG_HOST`) if `POSTHOG_ENABLED` is on, and Sentry if `SENTRY_LARAVEL_DSN` is set.
--   **`PRIVACY_POLICY_FILE` and `TERMS_OF_SERVICE_FILE` point at the deployment's own documents.** Without them, sign-up asks for no agreement and the pages say that none has been published.
--   **`SUPPORT_EMAIL` reaches someone:** it is the address people are told to write to, and where reports and failed jobs go.
--   **The PostHog personal API key has the `person:write` scope** (`POSTHOG_PERSONAL_API_KEY`, see [PostHog Analytics](#posthog-analytics)), or deleting an account leaves the person's data in PostHog.
--   **Sentry's data scrubbing is checked** before `CSP_REPORT_URI` points at Sentry: violation reports carry the page's address with its query string.
+-   **Someone runs it,** usually IT or a hosting partner. The dashboard and the NLP API are services your organisation hosts or has hosted: servers with a database, an update for each release, backups, and someone who notices when it stops working ([Services a deployment runs](docs/deployment.md#services-a-deployment-runs)).
+-   **A support address with someone answering it.** People are told to write there when something goes wrong or they need access.
+-   **A trial with a release candidate first.** A small group uses a release candidate before everyone gets the release ([Releases and release candidates](docs/deployment.md#releases-and-release-candidates)).
 
-**The NLP API**
+**Privacy and legal**, with your data protection officer and legal team
 
--   **Its `DASHBOARD_URL`, `DASHBOARD_ISSUER` and `DASHBOARD_CLIENT_ID` match this dashboard,** so signed-in users can check texts: the write page proves it ([Checking that it works](docs/deployment.md#checking-that-it-works)).
--   **Its management endpoints need credentials** (`MANAGEMENT_AUTH_ENABLED` on), and they are the ones in `APP_NLP_API_SYNC_USER` and `APP_NLP_API_SYNC_PASSWORD`.
--   **`API_KEY_HMAC_KEY` is set** on the NLP API, or nobody can create API keys.
--   **`REQUIRE_AUTH` is on,** so only signed-in users and API keys get texts checked, and its own `/textarea` page stays off unless it is wanted.
--   **A language model is set up with an `LLM_ACCESS` policy,** if Witty GPT or AI rewrites are on.
+-   **Know what happens to the texts people write.** Every text people check goes to the NLP API. People use Witty when they write about disability, gender, origin, religion or health, so treat these texts as sensitive personal data. The NLP API is built not to store or log them (its [ethics notes](https://github.com/witty-works/nlp_api/blob/dev/docs/ethics.md#treat-all-submitted-text-as-sensitive-personal-data)). Spelling checks and AI features send texts on to further services, but only where they are set up.
+-   **Write a privacy policy and terms of use of your own.** The dashboard shows your documents and asks people to agree to them when they sign up; it comes with none. The privacy policy names every service that receives personal data: the hosting, the NLP API, the mail service, and, where used, the language model provider, the spelling service, usage statistics (PostHog) and error reports (Sentry).
+-   **Whether to collect usage statistics.** They are off unless switched on. When on, PostHog receives events about what people do with Witty, and for teams with "Store context" on also a few characters around each flagged word. Deleting an account deletes the person's data there too, once PostHog is set up for it ([technical checklist](docs/deployment.md#technical-checklist-before-going-live)).
+-   **Whether to offer AI features,** and with which provider. Witty GPT and AI rewrites send texts to a language model provider; each team then decides whether to use them.
 
-**Accounts and features**
+**Who uses it, and how**, with whoever introduces Witty in the organisation
 
--   **The first superadmin has two-factor sign-in set up;** superadmins cannot use the admin pages without it.
--   **`INVITE_ONLY` is as intended:** on, nobody gets an account without an invitation.
--   **Each switch in [Features a deployment switches on or off](#features-a-deployment-switches-on-or-off) is set as intended,** with what it also needs.
+-   **Decide between open sign-up and invitation only.** With invitations only, only people with an invitation get an account, and superadmins create the teams.
+-   **A few superadmins** who create the teams and manage accounts. They have to use two-factor sign-in.
+-   **An owner for each team.** Team owners and admins invite their members and choose the team's language guidelines: the gender-inclusive spelling, which kinds of language Witty points out, and whether members may change them.
+-   **The tools people use:** the write page in the browser, the browser extension, the Word add-in. The Word add-in needs a Microsoft 365 administrator to register it. See [Features a deployment switches on or off](#features-a-deployment-switches-on-or-off).
 
-**Security**
+**Accessibility**, with someone who uses a screen reader or tests with one
 
--   **`APP_ENV=production` and `APP_DEBUG=false`,** so error pages show no details.
--   **The `web` container is reachable only through the reverse proxy,** which sends `Strict-Transport-Security`.
--   **The security headers are enforced.** A first rollout can run with `CSP_REPORT_ONLY=true`; switch it off once the reports are clean.
--   **The image is pinned by digest,** not by tag.
--   **`composer audit` and `npm audit` show no untriaged advisories.**
-
-**Operations**
-
--   **MariaDB and the NLP API's Redis are backed up,** and a restore has been tried once ([Backups and restoring](docs/deployment.md#backups-and-restoring)).
--   **`GET /up` is monitored,** and the worker is restarted when it exits.
--   **The regular tasks the deployment needs are scheduled** ([Regular tasks](docs/deployment.md#regular-tasks)).
-
-**Accessibility**
-
--   **Each release gets a screen reader check** (VoiceOver or NVDA) of the main pages, since the [browser tests](#browser-tests) find only part of what WCAG asks.
+-   **Someone checks each release with a screen reader,** such as VoiceOver or NVDA: the automatic [browser tests](#browser-tests) find only part of what accessibility guidelines ask.
 
 ## User management
 
