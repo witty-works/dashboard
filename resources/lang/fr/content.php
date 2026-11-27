@@ -88,7 +88,7 @@ return [
     'forgot_your_password' => 'Vous avez oublié votre mot de passe ?',
     'verify_email_title' => 'Vérifiez votre adresse e-mail',
     'please_confirm_access_to_your_account' => 'Veuillez confirmer l\'accès à votre compte en saisissant le code d\'authentification fourni par votre application d\'authentification.',
-    'thank_you_for_signing_up' => 'Merci de vous être inscrit ! Avant de commencer, pourriez-vous vérifier votre e-mail en ouvrant le lien que nous venons de vous envoyer par e-mail ? Si vous n\'avez pas reçu l\'e-mail, nous vous en enverrons un autre.',
+    'thank_you_for_signing_up' => 'Merci de vous être inscrit·e ! Avant de commencer, pourriez-vous vérifier votre e-mail en ouvrant le lien que nous venons de vous envoyer par e-mail ? Si vous n\'avez pas reçu l\'e-mail, nous vous en enverrons un autre.',
     'verification_link_send' => 'Un nouveau lien de vérification a été envoyé à l\'adresse e-mail que vous avez fournie lors de votre inscription.',
     'not_connected' => 'Non connecté.',
     'manage_and_remove_your_connect_accounts' => 'Gérez et supprimez vos comptes de connexion.',
