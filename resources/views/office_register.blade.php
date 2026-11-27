@@ -97,8 +97,6 @@
                 <p>
                     {!! __('content.office_register_summary') !!}
                 </p>
-        
-                {!! __('content.office_register_further_reading') !!}
             </div>
         </form>
     </div>

@@ -117,4 +117,21 @@ class LegalConsentTest extends TestCase
         $this->assertStringNotContainsString('www.witty.works/privacy', $html);
         $this->assertStringNotContainsString('www.witty.works/terms', $html);
     }
+
+    public function test_no_links_to_the_old_websites_sales_and_help_pages(): void
+    {
+        $this->provide(privacy: true, terms: false);
+        $gone = ['www.witty.works/trust-and-security', 'www.witty.works/contact', '/demo', 'wittys-help-center', 'www.witty.works/pricing', 'mailto:support@witty.works'];
+
+        $pages = [
+            $this->withoutLocaleRedirects()->get('/login')->getContent(),
+            $this->post('/en/office-register', ['token' => $this->token(['email' => 'new@example.com', 'xms_edov' => true, 'sub' => 'sub-new'])])->getContent(),
+        ];
+
+        foreach ($pages as $html) {
+            foreach ($gone as $link) {
+                $this->assertStringNotContainsString($link, $html);
+            }
+        }
+    }
 }

@@ -14,7 +14,6 @@ return [
     'plan_headline' => 'Subscription',
     'profile' => 'Profile',
     'upgrade' => 'Upgrade to Witty Teams',
-    'pricing' => 'Pricing',
     'default_plan_name' => 'Witty Free',
     'renewal_date' => 'Your plan will be automatically renew on ',
     'user_licenses' => 'User licenses',
