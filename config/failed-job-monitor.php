@@ -28,8 +28,9 @@ return [
     'channels' => ['mail'],
 
     'mail' => [
-        // The deployment's support address (config app.support_email).
-        'to' => env('SUPPORT_EMAIL', env('MAIL_FROM_ADDRESS')),
+        // The deployment's support address (config app.support_email); an
+        // empty SUPPORT_EMAIL falls back to the sender, as unset does.
+        'to' => env('SUPPORT_EMAIL') ?: env('MAIL_FROM_ADDRESS'),
     ],
 
     'slack' => [

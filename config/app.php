@@ -205,7 +205,7 @@ return [
     // for access to the language model on the write page, or about an error;
     // also where reports and failed-job alerts go. Without it, the sender
     // address (MAIL_FROM_ADDRESS).
-    'support_email' => env('SUPPORT_EMAIL', env('MAIL_FROM_ADDRESS', '')),
+    'support_email' => env('SUPPORT_EMAIL') ?: (string) env('MAIL_FROM_ADDRESS', ''),
 
     // The deployment's privacy policy and terms of service: Markdown files
     // outside the repository, for example mounted into the container. The
