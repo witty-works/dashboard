@@ -84,7 +84,7 @@
                 </x-nav-link>
 
                 @if($isUserLicensedToTeam)
-                @if(config('posthog.enabled'))
+                @if(\App\Support\Analytics::pagesShown())
                     @if(!$team_edit && $team && $team->user_access_to_team_analytics)
                         <div class="wittyworks-navigation-link-wrapper-no-mb lato-paragraph-text-p" style="cursor: default">
                             <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/analytics.svg') }}" alt="" />
@@ -128,7 +128,7 @@
                     {{ __('content.manage_members') }}
                 </x-nav-link>
 
-                @if(config('posthog.enabled'))
+                @if(\App\Support\Analytics::pagesShown())
                     <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('teams.analytics') }}" :active="request()->routeIs('teams.analytics')">
                         <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/analytics.svg') }}" alt="" />
                         {{ __('content.analytics') }}

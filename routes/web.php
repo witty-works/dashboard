@@ -131,7 +131,7 @@ Route::localize(
                     Route::get('/user/language/dictionary', [UserGuidelinesController::class, 'termReplacements'])->name('user.dictionary');
                     Route::get('/user/language/ignore-words', [UserGuidelinesController::class, 'falsePositives'])->name('user.ignored-words');
                     Route::get('/user/language/privacy-settings', [UserGuidelinesController::class, 'domains'])->name('user.privacy-settings');
-                    if (config('posthog.enabled')) {
+                    if (\App\Support\Analytics::pagesShown()) {
                         Route::get('/user/analytics', [AnalyticsController::class, 'user'])->name('user.analytics');
                     }
 
@@ -141,7 +141,7 @@ Route::localize(
                     Route::get('/team/language/dictionary', [OrganizationGuidelinesController::class, 'termReplacements'])->name('teams.dictionary');
                     Route::get('/team/language/ignored-words', [OrganizationGuidelinesController::class, 'falsePositives'])->name('teams.ignored-words');
                     Route::get('/team/language/privacy-settings', [OrganizationGuidelinesController::class, 'domains'])->name('teams.privacy-settings');
-                    if (config('posthog.enabled')) {
+                    if (\App\Support\Analytics::pagesShown()) {
                         Route::get('/team/analytics', [AnalyticsController::class, 'organization'])->name('teams.analytics');
                     }
                 }

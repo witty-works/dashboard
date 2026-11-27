@@ -22,11 +22,13 @@
 </div>
 @endif
 
+@if (\App\Support\Analytics::pagesShown())
 <div>
     <div class="py-10">
         @livewire('teams.analytics-user-access', ['model' => $team])
     </div>
 </div>
+@endif
 
 
 <div>

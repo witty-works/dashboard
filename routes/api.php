@@ -75,7 +75,7 @@ if (config('app.browsers')) {
     });
 }
 
-if (config('posthog.enabled')) {
+if (\App\Support\Analytics::pagesShown()) {
     Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/user/analytics', [AnalyticsController::class, 'userApi'])
             ->name('api_user_analytics');

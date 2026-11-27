@@ -2,11 +2,14 @@
     {!! __('guidelines.privacy_settings_label') !!}
 </h1>
 
+{{-- Consent to being counted in the team's analytics: only while events are collected. --}}
+@if (\App\Support\Analytics::collected())
 <div>
     <div class="py-10">
         @livewire('team-analytics', ['model' => $user])
     </div>
 </div>
+@endif
 
 @php 
 $teamAllowList = !empty($user->currentTeam)
