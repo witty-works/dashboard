@@ -1,9 +1,12 @@
 <x-app-layout :pagetitle="__('content.api_keys_title')">
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{ __('content.api_keys_title') }}</h2>
+    <x-slot name="navigation">
+        @livewire('navigation-menu')
     </x-slot>
 
-    <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
+    <div class="wittyworks-page lg:ml-20">
+        <h1 class="ibarra-sub-title-h1 margin-top">{{ __('content.api_keys_title') }}</h1>
+        @include('partials.banners')
+
         <p class="mb-6 max-w-3xl">{{ __('content.api_keys_intro') }}</p>
         @livewire('api-keys.manager')
     </div>

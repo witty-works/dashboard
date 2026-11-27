@@ -247,4 +247,74 @@ class ApiKeysPageTest extends TestCase
         Livewire::test(Manager::class)->call('revoke', 'k1')->assertForbidden();
         Http::assertNotSent(fn (Request $request) => $request->method() !== 'GET');
     }
+
+    public function test_page_has_an_h1_and_the_navigation_outside_main(): void
+    {
+        $user = $this->user();
+        $this->fakeApi([]);
+
+        $html = $this->actingAs($user)->get('/en/user/api-keys')->assertOk()->getContent();
+
+        $this->assertMatchesRegularExpression('/<main\b[^>]*id="maincontent"/', $html);
+        preg_match('/<main\b[^>]*>(.*)<\/main>/s', $html, $main);
+        $this->assertMatchesRegularExpression('/^\s*<div[^>]*>\s*<h1\b[^>]*>\s*' . preg_quote(__('content.api_keys_title'), '/') . '\s*<\/h1>/', $main[1]);
+        $this->assertStringNotContainsString('<nav', $main[1]);
+        $this->assertStringContainsString('<nav', $html);
+        // The sections below the h1 are h2s, not h3s.
+        $this->assertStringNotContainsString('<h3', $main[1]);
+    }
+
+    public function test_the_new_key_is_announced_and_takes_focus(): void
+    {
+        $user = $this->user();
+        $this->fakeApi([]);
+        $this->actingAs($user);
+
+        $html = Livewire::test(Manager::class)->html();
+
+        // The live region is in the page before the key is put into it.
+        $this->assertMatchesRegularExpression('/<div[^>]*role="status"[^>]*>\s*<template x-if="key">/', $html);
+        $this->assertMatchesRegularExpression('/<p[^>]*x-ref="keyHeading"[^>]*tabindex="-1"/', $html);
+        $this->assertMatchesRegularExpression('/x-on:api-key-created\.window="[^"]*\$nextTick\(\(\) => \$refs\.keyHeading\.focus\(\)\)/', $html);
+    }
+
+    public function test_done_returns_focus_to_the_name_field(): void
+    {
+        $user = $this->user();
+        $this->fakeApi([]);
+        $this->actingAs($user);
+
+        $html = Livewire::test(Manager::class)->html();
+
+        $this->assertMatchesRegularExpression('/<button[^>]*x-on:click="key = null; \$nextTick\(\(\) => document\.getElementById\(\'api-key-name\'\)\.focus\(\)\)"[^>]*>\s*' . preg_quote(__('content.api_keys_done'), '/') . '/', $html);
+    }
+
+    public function test_errors_are_linked_to_their_fields(): void
+    {
+        $user = $this->user();
+        $this->fakeApi([]);
+        $this->actingAs($user);
+
+        $html = Livewire::test(Manager::class)
+            ->set('name', '')->set('teamId', null)->set('expiresOn', now()->subDay()->toDateString())
+            ->call('create')
+            ->assertHasErrors(['name', 'teamId', 'expiresOn'])
+            ->html();
+
+        foreach (['api-key-name' => 'input', 'api-key-team' => 'select', 'api-key-expires' => 'input'] as $id => $tag) {
+            $this->assertMatchesRegularExpression('/<' . $tag . ' id="' . $id . '"[^>]*aria-invalid="true"[^>]*aria-describedby="' . $id . '-error"/', $html, $id);
+            $this->assertMatchesRegularExpression('/<p id="' . $id . '-error"[^>]*role="alert"/', $html, $id);
+        }
+    }
+
+    public function test_fields_without_errors_are_not_marked(): void
+    {
+        $user = $this->user();
+        $this->fakeApi([]);
+        $this->actingAs($user);
+
+        $html = Livewire::test(Manager::class)->html();
+
+        $this->assertStringNotContainsString('aria-invalid', $html);
+    }
 }
