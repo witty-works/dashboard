@@ -33,6 +33,7 @@ $fields = [
     ],
     'german_gender_ending'    => \App\Models\GuidelinesInterface::GERMAN_GENDER_ENDING,
     'french_gender_separator' => \App\Models\GuidelinesInterface::FRENCH_GENDER_SEPARATOR,
+    'french_gender_suffix'    => \App\Models\GuidelinesInterface::FRENCH_GENDER_SUFFIX,
 ];
 
 // The Inklusivum is not a separator spliced into Expert…in but its own

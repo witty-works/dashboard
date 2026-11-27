@@ -163,4 +163,8 @@ Les LLM sont également utilisés pour Witty GPT, notre solution GenAI qui produ
     'french_gender_separator' => 'Witty recommande le point médian. Nous expliquons <a href="https://www.witty.works/fr/blog/post/langage-non-genr%C3%A9-en-fran%C3%A7ais" target="_blank">ici</a> pourquoi.',
     'german_gender_ending_label' => 'Terminaison de genre',
     'french_gender_separator_label' => 'Séparateur de genre',
+    'french_gender_suffix_short' => 'Terminaison courte, p. ex. utilisateur·rice, vendeur·se',
+    'french_gender_suffix_full' => 'Terminaison complète, p. ex. utilisateur·trice, vendeur·euse',
+    'french_gender_suffix' => 'Choisissez si la terminaison féminine s\'écrit en version courte ou complète, quand les deux sont possibles : utilisateur·rice ou utilisateur·trice. Les autres formes, comme enseignant·e, restent identiques.',
+    'french_gender_suffix_label' => 'Terminaison féminine',
 ];

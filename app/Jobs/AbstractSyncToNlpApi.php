@@ -153,6 +153,12 @@ abstract class AbstractSyncToNlpApi implements ShouldQueue
             'status' => $guidelines->french_rules_force ? 'force' : 'suggestion',
         ];
 
+        // Locked together with the separator: both say how French forms look.
+        $config['french_gender_suffix'] = [
+            'value' => $guidelines->french_gender_suffix ?? 'short',
+            'status' => $guidelines->french_rules_force ? 'force' : 'suggestion',
+        ];
+
         $guidelines->preferred_variants_force = $guidelines->preferred_variants_force ?? $forceDefault;
 
         $config['preferred_variants'] = [

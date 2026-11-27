@@ -27,6 +27,7 @@ class LanguageGuidelines extends Model
     protected $attributes = [
         'german_gender_ending' => '*in',
         'french_gender_separator' => '·',
+        'french_gender_suffix' => 'short',
         'gendered_roles_format' => 'inclusive_gender',
         'show_inspiration_alternatives' => false,
         'generic_masculine_force' => true,
@@ -59,6 +60,7 @@ class LanguageGuidelines extends Model
         'preferred_variants',
         'german_gender_ending',
         'french_gender_separator',
+        'french_gender_suffix',
         'gendered_roles_format',
         'show_inspiration_alternatives',
     ];
@@ -287,6 +289,7 @@ class LanguageGuidelines extends Model
                 $properties = [
                     'language_type' => (new \ReflectionClass($this))->getShortName(),
                     'french_gender_separator' => $this->french_gender_separator,
+                    'french_gender_suffix' => $this->french_gender_suffix,
                     'force' => $this->french_rules_force,
                 ];
                 break;
