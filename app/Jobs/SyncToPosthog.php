@@ -117,6 +117,20 @@ class SyncToPosthog implements ShouldQueue
         return $properties;
     }
 
+    /**
+     * What PostHog learns about a team: its name, to tell groups apart, its
+     * owner's PostHog id and its size.
+     */
+    public static function teamProperties(Team $team, bool $isDeleted): array
+    {
+        return [
+            'is_deleted' => $isDeleted,
+            'name' => $team->name,
+            'owner' => $team->owner->posthogId(),
+            'users' => $team->getTotalUserCount(),
+        ];
+    }
+
     public function handleTeam()
     {
         if ($this->isDeleted) {
@@ -130,13 +144,7 @@ class SyncToPosthog implements ShouldQueue
             return true;
         }
 
-        $properties = [
-            'is_deleted' => $this->isDeleted,
-            'name' => $team->name,
-            'owner' => $team->owner->posthogId(),
-            'impersonate_url' => config('app.url') . '/impersonate/take/' . $team->owner->id,
-            'users' => $team->getTotalUserCount(),
-        ];
+        $properties = self::teamProperties($team, $this->isDeleted);
 
         $encodedProperties = json_encode($properties);
         if (!$this->force && $team->posthog_last_sync_data === $encodedProperties) {

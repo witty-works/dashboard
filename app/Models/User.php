@@ -379,13 +379,11 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
         $data = [
             'witty_account_created_at' => $this->created_at->__toString(),
             'user_role' => $this->role,
-            'how_did_you_find' => $this->found,
             'has_witty_account' => $true,
             'has_consented_to_mailing' => $this->has_consented_to_mailing ? $true : $false,
             'hs_language' => $this->language,
             'dashboard_id' => $this->posthogId(),
             'team_dashboard_id' => $this->posthogTeamId(),
-            'impersonate_url' => config('app.url') . '/impersonate/take/' . $this->id,
             'dictionary_count' => $this->termReplacements->count(),
             'ignore_count' => $this->falsePositives->count(),
             'has_team_language_rules' => $false,
@@ -398,10 +396,6 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
             'writing_streak' => $this->getWritingStreakPast30Days(),
             'clients' => implode(';', $this->getUserClients()),
         ];
-
-        if (!empty($this->company_name)) {
-            $data['company'] = $this->company_name;
-        }
 
         // Users may own multiple teams, this code here does not handle this
         // so in that case it will simply sync the data of the team they most recently used
