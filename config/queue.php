@@ -38,7 +38,10 @@ return [
             'driver' => 'database',
             'table' => 'jobs',
             'queue' => 'default',
-            'retry_after' => 90,
+            // Longer than the worker's --timeout (QUEUE_TIMEOUT, 120 in the
+            // image), or a slow job is handed to a second worker while the
+            // first still runs it.
+            'retry_after' => (int) env('QUEUE_RETRY_AFTER', 150),
             'after_commit' => false,
         ],
 
