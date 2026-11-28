@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Support\SuperadminTwoFactor;
 use Illuminate\Validation\ValidationException;
 use Laravel\Jetstream\Contracts\DeletesUsers;
+use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -18,6 +19,8 @@ class Users extends Component
 {
     use WithPagination;
 
+    // In the address too (?search=), so a link can open the page on a user.
+    #[Url]
     public string $search = '';
 
     /**

@@ -60,7 +60,9 @@ class StatisticsEmailCommand extends Command
             $name = e($team?->name ?? '');
             // A team whose owner is gone still counts, without a link.
             $who = $owner
-                ? '<a href="' . e(config('app.url') . '/impersonate/take/' . $owner->id) . '">' . e($owner->email) . '</a>'
+                // The admin page, which can impersonate: not a one-click
+                // impersonation link in a mail.
+                ? '<a href="' . e(route('admin.users', ['search' => $owner->email])) . '">' . e($owner->email) . '</a>'
                 : 'no owner';
             $html .= "<li>{$name} (team id: {$result->id}, {$who}): {$result->count}</li>";
         }
