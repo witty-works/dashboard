@@ -32,7 +32,7 @@ abstract class AbstractDeleteFromNlpApi implements ShouldQueue
                 continue;
             }
 
-            $this->deleteData($baseUrl . $url, $endpoint['user'], $endpoint['password']);
+            $this->deleteData(rtrim($baseUrl, '/') . $url, $endpoint['user'], $endpoint['password']);
         }
 
         return true;
@@ -54,8 +54,9 @@ abstract class AbstractDeleteFromNlpApi implements ShouldQueue
 
         // The path and the status only: the query string names the person,
         // and the answer may repeat it. The message reaches Sentry and the
-        // failed-job mail.
-        if ($response->failed() && $response->status() !== 404) {
+        // failed-job mail. A 404 too: the API answers a delete of something
+        // already gone with 204, so it means a wrong address.
+        if ($response->failed()) {
             throw new RuntimeException("Unable to delete '" . strtok($url, '?') . "': HTTP {$response->status()}");
         }
 
