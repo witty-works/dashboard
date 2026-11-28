@@ -176,7 +176,9 @@ if (window.sentry_dsn) {
     // rate on its own does nothing in the v8+ browser SDK.
     Sentry.init({
         dsn: window.sentry_dsn,
-        release: window.app_name + "@" + window.sentry_release,
+        // The bare version, as the server and the release workflow name it
+        // (docs/sentry.md); none without one.
+        release: window.sentry_release || undefined,
         tracesSampleRate: window.sentry_sample_rate,
     });
 }
