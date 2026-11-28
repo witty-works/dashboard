@@ -140,7 +140,7 @@ dependency; see that directory for why.
 
 # Deployments
 
-See [docs/release.md](docs/release.md) for release and hotfix instructions, including git config and deployment steps.
+See [docs/release.md](docs/release.md) for releases, release candidates and hotfixes.
 
 ## Production image
 
