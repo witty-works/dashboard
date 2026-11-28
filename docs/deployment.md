@@ -57,7 +57,7 @@ Some of these cannot be changed lightly:
 
 ## NLP API settings the dashboard relies on
 
-Deploy the NLP API first, following its documentation (`docs/setup.md` and `docs/configuration.md` there). These of its settings concern the dashboard:
+Deploy the NLP API first, following its documentation (`docs/setup.md` and `docs/configuration.md` there). Dashboard 2.0.0 needs NLP API 4.0.0-rc4 or later, which brings the API keys, the synced team lists, the per-team LLM limit and the French feminine suffix setting; to update an existing deployment, see [Releases and release candidates](#releases-and-release-candidates) for the order. These of its settings concern the dashboard:
 
 -   **`DASHBOARD_URL`:** the dashboard's public address. The API fetches the dashboard's token signing keys from `{DASHBOARD_URL}/.well-known/jwks.json`.
 -   **`DASHBOARD_ISSUER`:** the dashboard's `APP_URL` without a trailing slash, as the dashboard's tokens carry it: `APP_URL=https://dashboard.example.org/` gives `DASHBOARD_ISSUER=https://dashboard.example.org`. The API compares it exactly, so a trailing slash turns every token away with `401` ([Issuer](oauth.md#issuer)).
@@ -132,7 +132,7 @@ To roll out a release or a release candidate:
 3.  Run `migrate` with the new image, then start `web` and `worker` with it.
 4.  Run the [checks above](#checking-that-it-works).
 
-The dashboard and the NLP API are released separately. Settings the dashboard sends that an older API does not know are ignored there, so the dashboard can go first; a feature that needs the API takes effect once the API is updated.
+The dashboard and the NLP API are released separately. Settings the dashboard sends that an older API does not know are ignored there, but the API keys need the API's own routes. From dashboard 1.x, update the dashboard first and the NLP API soon after: the API from 4.0.0 on refuses tokens without the issuer that dashboard 2.0.0 puts in them. Until the API is updated, the API keys page says the keys are unavailable, and key revocations (a member leaving a team, a changed address) are retried, for a day at most; one still failing then lands in `failed_jobs` and the failed-job mail, sent at most once an hour.
 
 ## Backups and restoring
 
