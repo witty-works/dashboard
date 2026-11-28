@@ -34,8 +34,8 @@ jobs:
     permissions:
       # Creates the tag and the GitHub release.
       contents: write
-      # Reads CI's results on the commit.
-      checks: read
+      # Reads CI's runs on the commit.
+      actions: read
     outputs:
       version: ${{ steps.version.outputs.version }}
       previous: ${{ steps.version.outputs.previous }}
@@ -70,20 +70,14 @@ jobs:
           } >> "$GITHUB_OUTPUT"
           echo "### $VERSION, from $PREVIOUS" >> "$GITHUB_STEP_SUMMARY"
 
-      # The tag publishes an image, so only a commit CI passed on gets one.
+      # The tag publishes an image, so only a commit CI passed on gets one:
+      # CI's own latest run of ci.yaml for it, re-runs included, and in it
+      # each job the protection of main requires.
       - name: CI passed on main
         env:
           GH_TOKEN: ${{ github.token }}
           SHA: ${{ steps.version.outputs.sha }}
-        run: |
-          RESULTS=$(gh api "repos/$GITHUB_REPOSITORY/commits/$SHA/check-runs?per_page=100" \
-            --jq '.check_runs[] | "\(.name) \(.conclusion)"')
-          for CHECK in php js browser; do
-            if ! grep -qx "$CHECK success" <<< "$RESULTS"; then
-              echo "CI's '$CHECK' has not passed on $SHA (yet); wait for it, or fix main." >&2
-              exit 1
-            fi
-          done
+        run: .github/scripts/ci-passed.sh "$SHA"
 
       - name: Tag and publish the GitHub release
         env:
