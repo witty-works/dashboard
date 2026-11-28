@@ -62,6 +62,20 @@ class UsersPageTest extends TestCase
         $this->page($admin)->set('search', 'alan@')->assertSee('Alan Turing')->assertDontSee('Grace Hopper');
     }
 
+    public function test_the_search_can_come_from_the_address(): void
+    {
+        // The statistics email links each team owner as /admin/users?search=…
+        $admin = $this->superadmin();
+        $this->user(['name' => 'Grace Hopper', 'email' => 'grace@example.org']);
+        $this->user(['name' => 'Alan Turing', 'email' => 'alan@example.org']);
+        $this->verifyTwoFactorSession($admin);
+
+        Livewire::withQueryParams(['search' => 'grace@example.org'])->actingAs($admin)->test(Users::class)
+            ->assertSet('search', 'grace@example.org')
+            ->assertSee('Grace Hopper')
+            ->assertDontSee('alan@example.org');
+    }
+
     public function test_it_lists_every_team_of_a_user_with_the_role(): void
     {
         $admin = $this->superadmin();

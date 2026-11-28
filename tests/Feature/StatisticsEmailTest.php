@@ -33,4 +33,19 @@ class StatisticsEmailTest extends TestCase
         $this->assertStringContainsString('<li>' . now()->format('Y-m') . ': 2</li>', $html);
         $this->assertStringContainsString('no owner', $html);
     }
+
+    public function test_it_links_team_owners_to_the_admin_users_page(): void
+    {
+        // A one-click impersonation link from a mail is refused from webmail
+        // (RefuseCrossSiteRequests) and better avoided anyway.
+        config(['mail.default' => 'array', 'app.support_email' => 'help@deployment.example']);
+        $owner = User::factory()->withPersonalTeam()->create(['email' => 'owner@example.org']);
+        $owner->ownedTeams()->firstOrFail()->users()->attach(User::factory()->create(), ['role' => 'user']);
+
+        $this->artisan('statistics')->assertSuccessful();
+
+        $html = app('mailer')->getSymfonyTransport()->messages()[0]->getOriginalMessage()->getHtmlBody();
+        $this->assertStringNotContainsString('/impersonate/', $html);
+        $this->assertStringContainsString(e(route('admin.users', ['search' => 'owner@example.org'])), $html);
+    }
 }
