@@ -100,6 +100,7 @@ Besides the settings in `.env.example` and the README's "Custom Application Conf
 | `APP_URL` | the public address, `https://…`; also the OAuth issuer (see [oauth.md](oauth.md#issuer)) |
 | `PASSPORT_PRIVATE_KEY`, `PASSPORT_PUBLIC_KEY` | the PEM keys from `php artisan passport:keys`, newlines written as `\n`; replacing them invalidates every issued token |
 | `QUEUE_CONNECTION` | `database` (the default `sync` runs jobs inside the request) |
+| `APP_NLP_API_SYNC_CONFIGS` | `true`, so settings and API keys reach the NLP API; `.env.example` has `false`, for local development |
 | `SESSION_DRIVER` | `database` |
 | `LOG_CHANNEL` | `stderr` (the image's default), so the container log collects it |
 | `MAIL_HOST`, `MAIL_PORT`, `MAIL_USERNAME`, `MAIL_PASSWORD`, `MAIL_FROM_ADDRESS` | SMTP; port 587 uses STARTTLS, 465 TLS |

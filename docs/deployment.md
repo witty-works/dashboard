@@ -60,7 +60,7 @@ Some of these cannot be changed lightly:
 Deploy the NLP API first, following its documentation (`docs/setup.md` and `docs/configuration.md` there). These of its settings concern the dashboard:
 
 -   **`DASHBOARD_URL`:** the dashboard's public address. The API fetches the dashboard's token signing keys from `{DASHBOARD_URL}/.well-known/jwks.json`.
--   **`DASHBOARD_ISSUER`:** the dashboard's `APP_URL`, exactly as the dashboard's tokens carry it ([Issuer](oauth.md#issuer)).
+-   **`DASHBOARD_ISSUER`:** the dashboard's `APP_URL` without a trailing slash, as the dashboard's tokens carry it: `APP_URL=https://dashboard.example.org/` gives `DASHBOARD_ISSUER=https://dashboard.example.org`. The API compares it exactly, so a trailing slash turns every token away with `401` ([Issuer](oauth.md#issuer)).
 -   **`DASHBOARD_CLIENT_ID`:** the write page's OAuth client, created at the [first start](#first-start), and the browser extension's client if it signs in to this deployment, comma-separated.
 -   **`MANAGEMENT_AUTH_ENABLED`** stays on (the default), with `API_DOCS_USERNAME` and `API_DOCS_PASSWORD` set: the dashboard signs in with them to write settings and manage API keys.
 -   **`API_KEY_HMAC_KEY`** set, or the dashboard's API keys page cannot create keys.
@@ -85,6 +85,7 @@ To connect the NLP API:
 
 -   **`APP_NLP_API_SYNC_ENDPOINT`:** the API's address as the dashboard's containers reach it, with `APP_NLP_API_SYNC_USER` and `APP_NLP_API_SYNC_PASSWORD` (see [NLP API Sync](../README.md#nlp-api-sync)). The credentials go with every request, so use `https` unless the two reach each other over a private network only.
 -   **`NLP_API_PUBLIC_URL`:** the API's address as browsers reach it, for the write page.
+-   **`APP_NLP_API_SYNC_CONFIGS=true`:** sends the teams' and people's settings to the API. It is on when the variable is missing, but `.env.example` sets it to `false` for local development, and an empty value counts as off. Off, no settings reach the API, the API keys page is disabled and keys are not revoked: keys made while it was on keep working. Deletions of settings are still sent.
 
 The category icons and example images on the guidelines pages load from `https://www.witty.works/assets/media/`, the website of the project's former maintainer, which the dashboard's licence does not cover. To serve your own copy of that folder, set **`APP_MEDIA_URL`** to its address; the images keep their file names.
 
