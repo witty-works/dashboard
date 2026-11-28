@@ -299,6 +299,7 @@ Vous pouvez maintenant fermer cette fenêtre.
 Veuillez ensuite cliquer à nouveau sur "S\'inscrire" pour finaliser l\'inscription.',
     'witty_word_addin_text_failed' => 'Nous n\'avons pas réussi à vous connecter à Witty Word-Addin.<br>Veuillez fermer cette fenêtre et réessayer ou contacter <a href="mailto::support_email">:support_email</a>.',
     'witty_word_addin_text_invite_only' => 'L’inscription se fait uniquement sur invitation, et il n’y a pas d’invitation pour cette adresse.<br>Veuillez fermer cette fenêtre et demander une invitation à la personne qui gère votre équipe.',
+    'witty_word_addin_text_unverified_email' => 'Un compte du tableau de bord utilise cette adresse, mais ne l’a pas encore confirmée.<br>S’il s’agit de votre compte, connectez-vous au tableau de bord, confirmez l’adresse et réessayez. Sinon, contactez <a href="mailto::support_email">:support_email</a>.',
     'inclusive_filter' => 'Inclusion :',
     'inclusive_filter_non_inclusive' => 'Non inclusif',
     'inclusive_filter_both' => 'Les deux',

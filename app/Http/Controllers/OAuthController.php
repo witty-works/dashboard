@@ -80,6 +80,12 @@ class OAuthController extends Controller
             return redirect(config('services.microsoft_office.redirect_uri') . '?status=failed');
         }
 
+        // The address belongs to an account that has not verified it: neither
+        // link the Microsoft account to it nor create a second account.
+        if ($user === null && User::where('email', $email)->exists()) {
+            return redirect(config('services.microsoft_office.redirect_uri') . '?status=unverified_email');
+        }
+
         // Invite only: no account for an address nobody invited, and no
         // consent form for one either.
         if ($user === null && ! InviteOnly::allowsSignUp($email)) {
@@ -214,7 +220,9 @@ class OAuthController extends Controller
         }
 
         if (!$account) {
-            $user = User::where('email', $providerAccount->getEmail())->first();
+            $user = User::where('email', $providerAccount->getEmail())
+                ->whereNotNull('email_verified_at')
+                ->first();
             if ($user) {
                 $this->createsConnectedAccounts->create($user, $provider, $providerAccount);
             } else {

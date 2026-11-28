@@ -206,6 +206,67 @@ class OfficeSsoIdentityTest extends TestCase
         $this->assertDatabaseHas('connected_accounts', ['user_id' => $user->id, 'provider_id' => 'sub-someone']);
     }
 
+    // --- An address the dashboard has not verified ---
+    //
+    // Anyone signed in can change their address on the profile page to a
+    // colleague's; it stays unverified, and they keep signing in with their
+    // password. Microsoft verifying that address for the colleague must not
+    // hand the colleague's Microsoft account to them.
+
+    private function holderOfAnUnverifiedAddress(): User
+    {
+        $user = User::factory()->withPersonalTeam()->unverified()->create([
+            'email' => 'victim@example.com',
+            'has_consented_to_terms_of_service' => true,
+        ]);
+
+        return $user->refresh();
+    }
+
+    private function verifiedToken(): string
+    {
+        return $this->token(['email' => 'victim@example.com', 'xms_edov' => true, 'sub' => 'sub-victim']);
+    }
+
+    public function test_the_add_in_is_not_let_in_on_an_address_the_dashboard_has_not_verified(): void
+    {
+        $this->holderOfAnUnverifiedAddress();
+
+        $this->assertNull($this->resolve($this->verifiedToken()));
+    }
+
+    public function test_sign_in_is_refused_on_an_address_the_dashboard_has_not_verified(): void
+    {
+        $holder = $this->holderOfAnUnverifiedAddress();
+
+        $this->post('/en/office-login', ['token' => $this->verifiedToken(), 'confirm' => 1])
+            ->assertRedirect('https://office.example/done?status=unverified_email');
+
+        $this->assertGuest();
+        $this->assertDatabaseMissing('connected_accounts', ['user_id' => $holder->id]);
+    }
+
+    public function test_sign_up_is_refused_on_an_address_the_dashboard_has_not_verified(): void
+    {
+        $holder = $this->holderOfAnUnverifiedAddress();
+
+        $this->post('/en/office-register', [
+            'token' => $this->verifiedToken(),
+            'has_consented_to_terms_of_service' => 1,
+            'has_consented_to_mailing' => 0,
+        ])->assertRedirect('https://office.example/done?status=unverified_email');
+
+        $this->assertGuest();
+        $this->assertDatabaseMissing('connected_accounts', ['user_id' => $holder->id]);
+        $this->assertSame(1, User::where('email', 'victim@example.com')->count());
+    }
+
+    public function test_the_add_in_page_explains_an_unverified_address(): void
+    {
+        $this->get('/word-addin?status=unverified_email')
+            ->assertSee(__('content.witty_word_addin_text_unverified_email', ['support_email' => e(config('app.support_email'))]), false);
+    }
+
     // --- Restricting the tenant ---
 
     public function test_a_token_from_another_tenant_is_refused_when_the_tenant_is_set(): void

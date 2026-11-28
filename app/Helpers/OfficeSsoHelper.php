@@ -149,7 +149,11 @@ class OfficeSsoHelper
 
         $email = $this->verifiedEmail($claims);
 
-        return $email === null ? null : AppUser::where('email', $email)->first();
+        // Only an address the dashboard verified too: anyone can enter an
+        // address on the profile page, and it stays unverified there.
+        return $email === null ? null : AppUser::where('email', $email)
+            ->whereNotNull('email_verified_at')
+            ->first();
     }
 
     /**

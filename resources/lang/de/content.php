@@ -318,6 +318,7 @@ Bitte gehe dann erneut auf „Registrieren“, um die Registrierung im "Witty fo
     'you_must_consent' => 'Du musst zustimmen, um fortzufahren.',
     'witty_word_addin_text_failed' => 'Es ist uns nicht gelungen, Dich bei Witty Word-Addin anzumelden.<br> Bitte schließe dieses Fenster und versuche es erneut oder kontaktiere <a href="mailto::support_email">:support_email</a>.',
     'witty_word_addin_text_invite_only' => 'Die Registrierung ist nur mit Einladung möglich, und für diese Adresse gibt es keine.<br>Bitte schließe dieses Fenster und bitte die Person, die Dein Team verwaltet, um eine Einladung.',
+    'witty_word_addin_text_unverified_email' => 'Ein Dashboard-Konto verwendet diese Adresse, hat sie aber noch nicht bestätigt.<br>Wenn es Dein Konto ist, melde Dich im Dashboard an, bestätige die Adresse und versuche es erneut. Sonst kontaktiere <a href="mailto::support_email">:support_email</a>.',
     'triple_toggle_locked_third_pos' => 'Dein*e Teamadministrator*in hat diese Diversitätsdimension auf „Erweitert“ eingestellt. Du kannst sie nicht anpassen.',
     'event_type' => 'Ereignistyp',
     'triple_toggle_locked_second_pos' => 'Dein*e Team-Administrator*in hat diese Diversitätsdimension auf „Grundlagen“ eingestellt. Klicke, um zwischen „Grundlagen“ und „Erweitert“ zu wechseln.',
