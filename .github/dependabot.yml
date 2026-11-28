@@ -1,6 +1,6 @@
 # Dependabot reads composer.lock and package-lock.json. Security updates are
 # switched on in the repository settings and open pull requests against the
-# default branch, dev; the options below shape them and the weekly version
+# default branch, main; the options below shape them and the weekly version
 # updates. There is no target-branch on purpose: with one set, these options
 # would apply only to version updates and no longer to security updates.
 version: 2
