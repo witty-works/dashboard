@@ -7,10 +7,39 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
+use PostHog\PostHog;
 use RuntimeException;
 
 class PosthogHelper
 {
+    /**
+     * The client, as configured (config/posthog.php). Sends over the network
+     * unless the tests ask for the file consumer.
+     */
+    public static function init(): void
+    {
+        $options = [
+            'host' => config('posthog.host'),
+            'debug' => config('posthog.debug'),
+            'consumer' => config('posthog.consumer') === 'file' ? 'file' : 'lib_curl',
+        ];
+        if (config('posthog.filename')) {
+            $options['filename'] = config('posthog.filename');
+        }
+
+        PostHog::init(config('posthog.api_key'), $options);
+    }
+
+    /**
+     * Whether PostHog received what a capture or identify call queued. The
+     * client only queues and reports success either way; flushing sends it
+     * now and says whether that worked, so a job can fail and be retried.
+     */
+    public static function sent(bool $queued): bool
+    {
+        return $queued && PostHog::flush();
+    }
+
     public const POSTHOG_ORGANIZATION_TYPE = 'organization';
     public const STORE_TEAM_DOMAIN = 'team_store_domain';
     public const STORE_DOMAIN = 'store_domain';

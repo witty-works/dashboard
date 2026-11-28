@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Helpers\PosthogHelper;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Firebase\JWT\JWT;
@@ -46,10 +47,7 @@ class AppServiceProvider extends ServiceProvider
         Blade::directive('cspNonce', fn () => '<?php if ($__cspNonce = \\Illuminate\\Support\\Facades\\Vite::cspNonce()) { echo \'nonce="\' . e($__cspNonce) . \'"\'; } ?>');
 
         if (config('posthog.enabled')) {
-            PostHog::init(
-                config('posthog.api_key'),
-                ['host' => config('posthog.host'), 'debug' => config('posthog.debug')],
-            );
+            PosthogHelper::init();
         }
     }
 }

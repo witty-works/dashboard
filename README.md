@@ -251,6 +251,7 @@ PostHog collects the statistics the Witty client applications (browser extension
 -   `POSTHOG_API_KEY` — API key for PostHog
 -   `POSTHOG_HOST` — Host URL for PostHog instance, the app host (for example `https://eu.posthog.com`), since the dashboard also calls PostHog's private API
 -   `POSTHOG_DEBUG` — Enable debug mode for PostHog
+-   `POSTHOG_CONSUMER` and `POSTHOG_FILENAME` — For the tests only: `file` writes events to `POSTHOG_FILENAME` instead of sending them, and the PostHog client makes that file world-writable, so a deployment leaves both unset. Events then go to `POSTHOG_HOST`; the jobs send at once and fail when PostHog does not take the events, so they are retried through an outage
 -   `POSTHOG_PROJECT_ID` — Project ID for PostHog
 -   `POSTHOG_PERSONAL_API_KEY` — Personal API key for PostHog. Besides reading insights, it asks PostHog to delete the person, events and session recordings of a deleted account; PostHog removes them in the background. That needs the `person:write` scope, so use a key limited to this project. Without the key or `POSTHOG_PROJECT_ID`, a deletion logs an error naming the person to delete by hand; so does deleting someone who was sent to PostHog before `POSTHOG_ENABLED` was switched off.
 -   `POSTHOG_INSIGHTS_CACHE_TIME` — Cache time for insights (seconds)
