@@ -15,7 +15,9 @@ class WriteController extends Controller
 {
     public function show(): View
     {
+        // The page appends paths (`v2.0/auth`), so it ends in one slash.
         $apiUrl = (string) config('app.nlp_api_public_url');
+        $apiUrl = $apiUrl === '' ? '' : rtrim($apiUrl, '/') . '/';
         $contact = (string) config('app.support_email');
 
         return view('write', [

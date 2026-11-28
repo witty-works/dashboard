@@ -39,7 +39,7 @@ abstract class AbstractSyncToNlpApi implements ShouldQueue
                 continue;
             }
 
-            $this->postData($data, $baseUrl . $url, $endpoint['user'], $endpoint['password']);
+            $this->postData($data, rtrim($baseUrl, '/') . $url, $endpoint['user'], $endpoint['password']);
         }
 
         return $data;
@@ -59,8 +59,9 @@ abstract class AbstractSyncToNlpApi implements ShouldQueue
             throw new RuntimeException("The NLP API could not be reached to write to '" . strtok($url, '?') . "' ({$data['id']})");
         }
 
-        // The status only: the answer may repeat the person's address.
-        if ($response->failed() && $response->status() !== 404) {
+        // The status only: the answer may repeat the person's address. A 404
+        // too: the API has these routes, so it means a wrong address.
+        if ($response->failed()) {
             throw new RuntimeException("Unable to write to '{$url}' ({$data['id']}): HTTP {$response->status()}");
         }
 

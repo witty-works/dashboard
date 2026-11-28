@@ -164,6 +164,17 @@ class WritePageTest extends TestCase
         $this->assertFalse($page());
     }
 
+    public function test_the_api_address_works_without_a_trailing_slash(): void
+    {
+        // The page appends paths such as `v2.0/auth` to it.
+        foreach (['https://api.example.com', 'https://api.example.com/', 'https://api.example.com//'] as $url) {
+            config(['app.nlp_api_public_url' => $url]);
+            $response = $this->actingAs($this->signedInUser())->withoutLocaleRedirects()->get('/write')->assertOk();
+
+            $this->assertSame('https://api.example.com/', $this->pageConfig($response->getContent())['apiUrl'], $url);
+        }
+    }
+
     public function test_the_config_cannot_close_its_script_element(): void
     {
         config(['app.support_email' => '</script><script>alert(1)</script>']);
