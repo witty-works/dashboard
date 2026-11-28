@@ -9,6 +9,11 @@ return [
     'api_key' => env('POSTHOG_API_KEY'),
     'host' => env('POSTHOG_HOST'),
     'debug' => env('POSTHOG_DEBUG', false),
+    // How the client sends: lib_curl (PostHog's default) over the network.
+    // file, for the tests only (phpunit.xml), writes each event as a line to
+    // POSTHOG_FILENAME, which the client makes world-writable.
+    'consumer' => env('POSTHOG_CONSUMER') ?: 'lib_curl',
+    'filename' => env('POSTHOG_FILENAME'),
     'project_id' => env('POSTHOG_PROJECT_ID'),
     'personal_api_key' => env('POSTHOG_PERSONAL_API_KEY'),
     'insights_cache_time' => env('POSTHOG_INSIGHTS_CACHE_TIME', 3600),

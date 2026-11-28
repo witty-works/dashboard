@@ -44,12 +44,16 @@
             The tests must not depend on .env: the example environment, as CI
             uses it, has no PostHog key and a placeholder sender address.
             PostHog stays on, since the analytics pages exist only then, with a
-            dummy key and a host on the discard port, so nothing reaches
-            PostHog. Failure notifications get a valid sender.
+            dummy key and the file consumer writing to /dev/null, so nothing
+            reaches PostHog and a send still succeeds; the host is the discard
+            port should anything use the network. Failure notifications get a
+            valid sender.
         -->
         <server name="POSTHOG_ENABLED" value="true"/>
         <server name="POSTHOG_API_KEY" value="phc_tests"/>
         <server name="POSTHOG_HOST" value="http://127.0.0.1:9"/>
+        <server name="POSTHOG_CONSUMER" value="file"/>
+        <server name="POSTHOG_FILENAME" value="/dev/null"/>
         <server name="MAIL_FROM_ADDRESS" value="tests@example.com"/>
         <server name="QUEUE_CONNECTION" value="sync"/>
         <server name="SESSION_DRIVER" value="array"/>

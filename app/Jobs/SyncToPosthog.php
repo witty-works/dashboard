@@ -50,10 +50,7 @@ class SyncToPosthog implements ShouldQueue
             return true;
         }
 
-        PostHog::init(
-            config('posthog.api_key'),
-            ['host' => config('posthog.host'), 'debug' => config('posthog.debug')],
-        );
+        PosthogHelper::init();
 
         switch ($this->model) {
             case 'team':
@@ -94,10 +91,10 @@ class SyncToPosthog implements ShouldQueue
             return true;
         }
 
-        $result = PostHog::identify([
+        $result = PosthogHelper::sent(PostHog::identify([
             'distinctId' => $user->posthogId(),
             'properties' => $properties,
-        ]);
+        ]));
 
         if (!$result) {
             return false;
@@ -146,11 +143,11 @@ class SyncToPosthog implements ShouldQueue
             return true;
         }
 
-        $result = PostHog::groupIdentify([
+        $result = PosthogHelper::sent(PostHog::groupIdentify([
             'groupType' => PosthogHelper::POSTHOG_ORGANIZATION_TYPE,
             'groupKey' => $team->posthogId(),
             'properties' => $properties,
-        ]);
+        ]));
 
         if (!$result) {
             return false;
@@ -179,11 +176,11 @@ class SyncToPosthog implements ShouldQueue
             'users' => 0,
         ];
 
-        $result = PostHog::groupIdentify([
+        $result = PosthogHelper::sent(PostHog::groupIdentify([
             'groupType' => PosthogHelper::POSTHOG_ORGANIZATION_TYPE,
             'groupKey' => $this->groupKey,
             'properties' => $properties,
-        ]);
+        ]));
 
         return $result ? $properties : false;
     }

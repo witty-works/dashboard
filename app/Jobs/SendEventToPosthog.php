@@ -53,10 +53,7 @@ class SendEventToPosthog implements ShouldQueue
             return true;
         }
 
-        PostHog::init(
-            config('posthog.api_key'),
-            ['host' => config('posthog.host'), 'debug' => config('posthog.debug')],
-        );
+        PosthogHelper::init();
 
         $data = [
             'distinctId' => $user->posthogId(),
@@ -64,7 +61,7 @@ class SendEventToPosthog implements ShouldQueue
             'properties' => $this->properties,
         ];
 
-        $result = PostHog::capture($data);
+        $result = PosthogHelper::sent(PostHog::capture($data));
         if (!$result) {
             throw new InvalidArgumentException("User id '{$this->id} could not be added to Posthog.");
         }
