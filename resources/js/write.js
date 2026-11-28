@@ -70,7 +70,7 @@ const schedule = () => {
  * A request to the NLP API with the access token. A refused token is
  * refreshed once (nextAction); null when the session has ended.
  */
-const apiFetch = async (path, init = {}) => {
+const apiFetch = async (path, init = {}, {forbiddenIsAnAnswer = false} = {}) => {
     let refreshed = false;
     for (;;) {
         const response = await fetch(config.apiUrl + path, {
@@ -81,7 +81,7 @@ const apiFetch = async (path, init = {}) => {
                 Authorization: `Bearer ${tokens.accessToken}`,
             },
         });
-        const action = nextAction(response.status, refreshed);
+        const action = nextAction(response.status, refreshed, {forbiddenIsAnAnswer});
         if (action === 'none') return response;
         if (action === 'refresh') {
             refreshed = true;
@@ -153,8 +153,15 @@ const rewrite = async (event) => {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({prompt, text: handle.getText()}),
-        });
+        }, {forbiddenIsAnAnswer: true});
         if (!response) return;
+        if (response.status === 403) {
+            // The team's LLM is off (perhaps since the page was opened): the
+            // editor and the text stay, the prompt goes.
+            promptForm.hidden = true;
+            showStatus(status, messages.llmRefused);
+            return;
+        }
         if (!response.ok) {
             showStatus(status, messages.rewriteFailed);
             return;

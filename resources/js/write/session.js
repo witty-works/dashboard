@@ -5,10 +5,13 @@
 // in. A refresh that fails ends the session as well.
 
 /** `status` is the HTTP status, or 'refresh-failed'. */
-export function nextAction(status, refreshedAlready) {
+export function nextAction(status, refreshedAlready, {forbiddenIsAnAnswer = false} = {}) {
     if (status === 'refresh-failed') return 'reload';
     if (status !== 401 && status !== 403) return 'none';
     if (!refreshedAlready) return 'refresh';
+    // A request the API answers with 403 for what it asks, not for who asks
+    // (the rewrite, for a team without the LLM): the caller shows that.
+    if (status === 403 && forbiddenIsAnAnswer) return 'none';
     return status === 403 ? 'no-access' : 'reload';
 }
 
