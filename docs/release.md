@@ -1,38 +1,51 @@
 # Release & Hotfix Process
 
-The steps below use `make-release.sh` from [witty-works/make-release](https://github.com/witty-works/make-release), which builds on git flow; its README says how to install it. The `make-release` file in this repository's root is its configuration for the dashboard: no version file (the image carries its version tag as `APP_VERSION`, see [sentry.md](sentry.md#release-reported-to-sentry)), and the Sentry organisation and project `witty-works-ag` and `dashboard`.
+How the dashboard's maintainers make a release, a release candidate or a fix to a release. Every change reaches `main`, the only long-lived branch, through a pull request on which CI passed; a release is a tag on `main`, made by a workflow started by hand. Nothing needs installing locally. The workflow is untried until its first run, which makes 2.0.0-rc1.
 
-Every version tag publishes an image: `x.y.z` for a release, `x.y.z-rcN` for a release candidate ([Production image](docker.md#production-image)).
+## What the release workflow does
+
+The **Release** workflow (`.github/workflows/release.yaml`) releases `main`'s latest commit:
+
+1.  It stops unless CI's `php`, `js` and `browser` jobs passed on that commit.
+2.  It works out the version from the existing tags (`.github/scripts/release-version.sh`).
+3.  It creates the tag and a GitHub release whose notes list the pull requests merged since the previous version. A release candidate is marked as a pre-release.
+4.  It builds the image and publishes it under the version ([Production image](docker.md#production-image)).
+5.  It creates the Sentry release with the commits since the previous version ([sentry.md](sentry.md#release-reported-to-sentry)).
+
+The run summary names the version and the image digest to pin deployments by.
+
+| Type | After `1.42.9` | After `2.0.0-rc1` |
+| --- | --- | --- |
+| `rc major` | `2.0.0-rc1`, the first candidate for 2.0.0 | `2.0.0-rc2` |
+| `rc` | refused: no candidate to continue | `2.0.0-rc2` |
+| `major` | `2.0.0` | `2.0.0`, the release itself |
+| `minor` | `1.43.0` | `1.43.0` |
+| `patch` | `1.42.10` | `1.42.10` |
+
+`rc minor` and `rc patch` start candidates for the other release types. `major`, `minor` and `patch` count from the last release, never from a candidate.
 
 ## Make a release
 
--   Make sure translations are up to date
--   Check https://github.com/witty-works/dashboard/compare/main...dev
--   Check that staging works fine
--   Go to the console
-    -   `make-release.sh minor` // to start a minor release; `major` or `patch` for the others
-    -   `make-release.sh finish` // use `:wq` to save, use `i` to insert the copied milestone URL and `esc` to get out of insert mode
-    -   `make-release.sh finalize`
+-   Make sure translations are up to date: `lando artisan langman:missing` lists keys that still need a value, and new `en` keys need their `de` and `fr` translations.
+-   Look through what the release brings: the pull requests merged into `main` since the last tag.
+-   Check that staging works fine.
+-   Wait until CI has finished on `main`'s latest commit: the workflow refuses a commit CI has not passed on yet.
+-   In GitHub, open **Actions** → **Release** → **Run workflow**, leave "Use workflow from" on `main`, choose the type, and run it.
 
 ## Make a release candidate
 
 A release candidate is tagged `x.y.z-rcN` and published as an image of that name, for a deployment to try before the release.
 
--   Go to the console
-    -   `make-release.sh rc major` // the first candidate names the release it leads to: after `1.42.9`, `2.0.0-rc1`; `rc minor` and `rc patch` for the others
-    -   `make-release.sh rc` // each later candidate counts on: `2.0.0-rc2`
-    -   `make-release.sh finish`, then `make-release.sh finalize`, as for a release
--   When the candidate is good, make the release itself with the same type: `make-release.sh major` after `2.0.0-rc2` starts `2.0.0`.
+-   Run the **Release** workflow with `rc major` (or `rc minor`, `rc patch`) for the first candidate: after `1.42.9`, `rc major` makes `2.0.0-rc1`.
+-   Run it with `rc` for each later candidate: `2.0.0-rc2`.
+-   When a candidate is good, run it with the same type as the first candidate (`major` after `2.0.0-rc2`) to release `2.0.0` from `main`.
 
-`make-release.sh next rc major` prints the version a command would start, without changing anything. This needs make-release with release-candidate support (witty-works/make-release#3); an older copy makes `1.42.9.1`, which publishes no image.
+## Fix a release
 
-## Make a hotfix
+-   Fix it on `main` through a pull request, as any change, then run the **Release** workflow with `patch`.
+-   To fix an older release while `main` holds changes that are not ready, branch from that release's tag, fix it there, and have an admin push the tag (`1.42.10`) by hand: the tag push builds the image (`.github/workflows/release-image.yaml`). Create the Sentry release by hand with `sentry-cli` (see [sentry.md](sentry.md)), and bring the fix into `main` with a pull request.
 
--   Go to the console
-    -   `make-release.sh hotfix` // to start a hotfix release
-    -   Make your changes, ie. `git commit`, ensure that they work locally
-    -   Make sure translations are up to date
-        -   Manually add the translations for `de` and `fr` if new translations were added for `en`
-        -   `lando artisan langman:missing` lists keys that still need a value
-    -   `make-release.sh finish` // use `:wq` to save, use `i` to insert the copied milestone URL and `esc` to get out of insert mode
-    -   `make-release.sh finalize`
+## Settings the workflow relies on
+
+-   The repository secret `SENTRY_AUTH_TOKEN`, a Sentry token allowed to create releases in the `witty-works-ag` organisation. Without it, the Sentry step is skipped and says so in the run summary.
+-   Version tags may be created only by admins and by the release workflow (#1019), so nobody else can publish an image.

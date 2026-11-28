@@ -48,7 +48,6 @@ docs/
 phpunit.xml
 vitest.config.js
 sonar-project.properties
-make-release
 _ide_helper.php
 _ide_helper_models.php
 
