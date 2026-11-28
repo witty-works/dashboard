@@ -14,11 +14,20 @@ on:
     tags: ["[0-9]+.[0-9]+.[0-9]+", "[0-9]+.[0-9]+.[0-9]+-rc[0-9]+"]
   # A rebuild of an existing tag, e.g. after a base image security fix. Run it
   # on the tag (the "Use workflow from" selector): on a branch there is no
-  # version to tag the image with, and the push fails.
+  # version tag to check out, and the run fails.
   workflow_dispatch:
+  # From the release workflow (release.yaml), whose tag starts no workflow.
+  workflow_call:
+    inputs:
+      tag:
+        description: The version tag to build, e.g. 2.0.0-rc1.
+        type: string
+        required: true
 
 env:
   IMAGE: ghcr.io/${{ github.repository }}
+  # The tag being built: the release workflow's, or the one pushed or chosen.
+  VERSION: ${{ inputs.tag || github.ref_name }}
 
 jobs:
   image:
@@ -30,10 +39,15 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          ref: refs/tags/${{ env.VERSION }}
           # No later step uses git with the token: the build reads the
           # checkout as files. Left in .git/config, the token would be readable
           # by the build and whatever it runs.
           persist-credentials: false
+
+      - name: Commit
+        id: commit
+        run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
 
       - name: Image tags
         id: meta
@@ -45,8 +59,8 @@ jobs:
           # by digest anyway. A release candidate gets only its full version
           # (1.43.0-rc1), never 1.43.
           tags: |
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{version}},value=${{ env.VERSION }}
+            type=semver,pattern={{major}}.{{minor}},value=${{ env.VERSION }}
           flavor: |
             latest=false
 
@@ -59,8 +73,8 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       # APP_VERSION is the tag exactly as pushed, so the release Sentry is
-      # told about (config/sentry.php) is the one make-release creates with
-      # sentry-cli under the same name.
+      # told about (config/sentry.php) is the one the release workflow
+      # creates under the same name.
       - name: Build and push
         id: build
         uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
@@ -71,8 +85,8 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
-            GIT_REVISION=${{ github.sha }}
-            APP_VERSION=${{ github.ref_name }}
+            GIT_REVISION=${{ steps.commit.outputs.sha }}
+            APP_VERSION=${{ env.VERSION }}
 
       - name: Digest
         run: |
