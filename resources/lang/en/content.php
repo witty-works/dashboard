@@ -374,6 +374,7 @@ Please then go to "Register" again to finalize the registration into the "Witty 
     'write_sign_in_failed' => 'Signing in to Witty\'s language service failed. Reload the page to try again.',
     'write_rewriting' => 'Witty is rewriting your text…',
     'write_rewrite_failed' => 'The rewrite failed. Your text is unchanged; please try again.',
+    'write_llm_refused' => 'Rewriting is not available for your team. Your text is unchanged.',
     'admin_users_title' => 'Users',
     'admin_search' => 'Search by name or email',
     'admin_teams' => 'Teams',

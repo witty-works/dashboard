@@ -373,6 +373,7 @@ Bitte gehe dann erneut auf „Registrieren“, um die Registrierung im "Witty fo
     'write_sign_in_failed' => 'Die Anmeldung beim Sprachdienst von Witty ist fehlgeschlagen. Lade die Seite neu, um es nochmals zu versuchen.',
     'write_rewriting' => 'Witty schreibt deinen Text um …',
     'write_rewrite_failed' => 'Das Umschreiben ist fehlgeschlagen. Dein Text ist unverändert; bitte versuche es nochmals.',
+    'write_llm_refused' => 'Das Umschreiben ist für dein Team nicht verfügbar. Dein Text ist unverändert.',
     'admin_users_title' => 'Benutzer*innen',
     'admin_search' => 'Nach Name oder E-Mail suchen',
     'admin_teams' => 'Teams',

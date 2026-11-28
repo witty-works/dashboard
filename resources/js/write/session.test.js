@@ -22,6 +22,13 @@ describe('nextAction', () => {
         expect(nextAction('refresh-failed', true)).toBe('reload');
     });
 
+    it('a 403 that answers the request itself does not end the session', () => {
+        // The rewrite: refused for this user's team, not for their token.
+        expect(nextAction(403, false, {forbiddenIsAnAnswer: true})).toBe('refresh');
+        expect(nextAction(403, true, {forbiddenIsAnAnswer: true})).toBe('none');
+        expect(nextAction(401, true, {forbiddenIsAnAnswer: true})).toBe('reload');
+    });
+
     it('does nothing for an answer that is not a refusal', () => {
         expect(nextAction(200, false)).toBe('none');
         expect(nextAction(503, false)).toBe('none');

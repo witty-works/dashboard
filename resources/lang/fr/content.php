@@ -374,6 +374,7 @@ Veuillez ensuite cliquer à nouveau sur "S\'inscrire" pour finaliser l\'inscript
     'write_sign_in_failed' => 'La connexion au service linguistique de Witty a échoué. Rechargez la page pour réessayer.',
     'write_rewriting' => 'Witty réécrit votre texte…',
     'write_rewrite_failed' => 'La réécriture a échoué. Votre texte n\'a pas changé ; veuillez réessayer.',
+    'write_llm_refused' => 'La réécriture n\'est pas disponible pour votre équipe. Votre texte n\'a pas changé.',
     'admin_users_title' => 'Utilisateur·rices',
     'admin_search' => 'Rechercher par nom ou e-mail',
     'admin_teams' => 'Équipes',

@@ -79,7 +79,7 @@ class WritePageTest extends TestCase
         preg_match('#<script type="application/json" id="write-messages">(.*?)</script>#s', $html, $match);
         $messages = json_decode($match[1], true, flags: JSON_THROW_ON_ERROR);
         $this->assertSame(
-            ['noAccess', 'reload', 'editorLabel', 'signInFailed', 'rewriting', 'rewriteFailed'],
+            ['noAccess', 'reload', 'editorLabel', 'signInFailed', 'rewriting', 'rewriteFailed', 'llmRefused'],
             array_keys($messages),
         );
         $this->assertNotContains('', $messages);
@@ -114,6 +114,54 @@ class WritePageTest extends TestCase
         $response = $this->actingAs($this->signedInUser())->withoutLocaleRedirects()->get('/write')
             ->assertOk();
         $this->assertFalse($this->pageConfig($response->getContent())['llmEnabled']);
+    }
+
+    public function test_the_prompt_is_offered_only_where_the_team_has_the_llm_on(): void
+    {
+        // The NLP API refuses /v1.0/write for a team whose synced setting
+        // forces LLM alternatives off; a prompt there would only be refused.
+        config(['app.llm_enabled' => true]);
+        $user = $this->signedInUser();
+        $team = $user->currentTeam;
+        $user->forceFill(['license_team_id' => $team->id])->save();
+
+        $page = fn () => $this->pageConfig(
+            $this->actingAs($user->refresh())->withoutLocaleRedirects()->get('/write')->assertOk()->getContent()
+        )['llmEnabled'];
+
+        $team->forceFill(['llm_alternatives' => null])->save();
+        $this->assertFalse($page());
+
+        $team->forceFill(['llm_alternatives' => false])->save();
+        $this->assertFalse($page());
+
+        $team->forceFill(['llm_alternatives' => true])->save();
+        $this->assertTrue($page());
+    }
+
+    public function test_the_prompt_follows_the_licence_team_not_the_current_one(): void
+    {
+        // The NLP API applies the licence team's settings (SyncUserToNlpApi
+        // sends it as the person's organisation), whichever team is current.
+        config(['app.llm_enabled' => true]);
+        $user = $this->signedInUser();
+        $licence = $user->currentTeam;
+        $other = User::factory()->withPersonalTeam()->create()->ownedTeams()->firstOrFail();
+        $other->users()->attach($user, ['role' => 'user']);
+        $user->forceFill(['license_team_id' => $licence->id])->save();
+        $user->switchTeam($other);
+
+        $page = fn () => $this->pageConfig(
+            $this->actingAs($user->refresh())->withoutLocaleRedirects()->get('/write')->assertOk()->getContent()
+        )['llmEnabled'];
+
+        $licence->forceFill(['llm_alternatives' => true])->save();
+        $other->forceFill(['llm_alternatives' => false])->save();
+        $this->assertTrue($page());
+
+        $licence->forceFill(['llm_alternatives' => false])->save();
+        $other->forceFill(['llm_alternatives' => true])->save();
+        $this->assertFalse($page());
     }
 
     public function test_the_config_cannot_close_its_script_element(): void

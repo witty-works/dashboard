@@ -28,7 +28,10 @@ class WriteController extends Controller
                 'redirectUri' => CreateEditorOAuthClientCommand::redirectUri(),
                 // Where the script returns after the callback, without its code.
                 'pageUrl' => route('write'),
-                'llmEnabled' => (bool) config('app.llm_enabled'),
+                // The NLP API refuses the prompt where the person's licence
+                // team, whose settings it applies (SyncUserToNlpApi), has LLM
+                // alternatives off (SyncOrganizationToNlpApi forces them).
+                'llmEnabled' => config('app.llm_enabled') && (bool) auth()->user()?->licenseTeam?->llm_alternatives,
                 'contact' => $contact,
                 'lang' => app()->getLocale(),
             ],
@@ -40,6 +43,7 @@ class WriteController extends Controller
                 'signInFailed' => __('content.write_sign_in_failed'),
                 'rewriting' => __('content.write_rewriting'),
                 'rewriteFailed' => __('content.write_rewrite_failed'),
+                'llmRefused' => __('content.write_llm_refused'),
             ],
         ]);
     }
