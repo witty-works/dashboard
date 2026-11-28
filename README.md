@@ -221,7 +221,7 @@ Use for the integration with the NLP API.
 -   `APP_NLP_API_SYNC_ENDPOINT_2` — (Optional) Secondary endpoint for NLP API sync. API keys are created on the main endpoint only, so both must share one Redis (see [docs/user-management.md](docs/user-management.md#api-keys))
 -   `APP_NLP_API_SYNC_USER` — Username for NLP API sync
 -   `APP_NLP_API_SYNC_PASSWORD` — Password for NLP API sync
--   `APP_NLP_API_SYNC_CONFIGS` — Enable/disable sync configs
+-   `APP_NLP_API_SYNC_CONFIGS` — Send teams' and people's settings to the NLP API (default `true`). Off, the API keys page is disabled and keys are not revoked; deletions of settings are still sent
 -   `APP_NLP_API_SYNC_DELAY_PER_COUNT` — Delay per sync count (default: 0.1)
 
 ## Witty GPT

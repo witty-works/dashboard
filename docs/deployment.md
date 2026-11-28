@@ -85,6 +85,7 @@ To connect the NLP API:
 
 -   **`APP_NLP_API_SYNC_ENDPOINT`:** the API's address as the dashboard's containers reach it, with `APP_NLP_API_SYNC_USER` and `APP_NLP_API_SYNC_PASSWORD` (see [NLP API Sync](../README.md#nlp-api-sync)). The credentials go with every request, so use `https` unless the two reach each other over a private network only.
 -   **`NLP_API_PUBLIC_URL`:** the API's address as browsers reach it, for the write page.
+-   **`APP_NLP_API_SYNC_CONFIGS=true`:** sends the teams' and people's settings to the API. It is on when the variable is missing, but `.env.example` sets it to `false` for local development, and an empty value counts as off. Off, no settings reach the API, the API keys page is disabled and keys are not revoked: keys made while it was on keep working. Deletions of settings are still sent.
 
 The category icons and example images on the guidelines pages load from `https://www.witty.works/assets/media/`, the website of the project's former maintainer, which the dashboard's licence does not cover. To serve your own copy of that folder, set **`APP_MEDIA_URL`** to its address; the images keep their file names.
 
