@@ -2,7 +2,9 @@
 
 namespace App\Jobs;
 
+use App\Jobs\Concerns\RetriesThroughOutages;
 use RuntimeException;
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Bus\Queueable;
@@ -14,13 +16,7 @@ use Illuminate\Queue\SerializesModels;
 abstract class AbstractSyncToNlpApi implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
-    /**
-     * The number of times the job may be attempted.
-     *
-     * @var int
-     */
-    public $tries = 50;
+    use RetriesThroughOutages;
 
     public function updateRules($url, $data)
     {
@@ -43,7 +39,7 @@ abstract class AbstractSyncToNlpApi implements ShouldQueue
                 continue;
             }
 
-            $this->postData($data, $baseUrl . $url, $endpoint['user'], $endpoint['password']);
+            $this->postData($data, rtrim($baseUrl, '/') . $url, $endpoint['user'], $endpoint['password']);
         }
 
         return $data;
@@ -51,32 +47,33 @@ abstract class AbstractSyncToNlpApi implements ShouldQueue
 
     protected function postData($data, $url, $user, $password)
     {
-        if (empty($user)) {
-            $response = Http::post($url, $data);
-        } else {
-            $response = Http::withBasicAuth($user, $password)
-                ->post($url, $data);
+        try {
+            if (empty($user)) {
+                $response = Http::post($url, $data);
+            } else {
+                $response = Http::withBasicAuth($user, $password)
+                    ->post($url, $data);
+            }
+        } catch (ConnectionException) {
+            // Guzzle's message ends with the URL, query string included.
+            throw new RuntimeException("The NLP API could not be reached to write to '" . strtok($url, '?') . "' ({$data['id']})");
         }
 
-        if ($response->failed() && $response->status() !== 404) {
-            throw new RuntimeException("Unable to write to '{$url} ({$data['id']}): " . $response->body());
+        // The status only: the answer may repeat the person's address. A 404
+        // too: the API has these routes, so it means a wrong address.
+        if ($response->failed()) {
+            throw new RuntimeException("Unable to write to '{$url}' ({$data['id']}): HTTP {$response->status()}");
         }
 
         return $response;
     }
 
-    protected function getFalsePositives($falsePositives, $subscribed, $count)
+    protected function getFalsePositives($falsePositives)
     {
-        $data = $falsePositives->pluck('false_positive')->toArray();
-
-        if (!$subscribed) {
-            $data = array_slice($data, 0, $count);
-        }
-
-        return $data;
+        return $falsePositives->pluck('false_positive')->toArray();
     }
 
-    protected function getTermReplacements($termReplacements, $subscribed, $count)
+    protected function getTermReplacements($termReplacements)
     {
         $data = [];
         foreach ($termReplacements as $termReplacement) {
@@ -103,10 +100,6 @@ abstract class AbstractSyncToNlpApi implements ShouldQueue
             foreach ($languageCodes as $languageCode) {
                 $data[$termReplacement->term . '|' . $languageCode] = $termReplacementData;
             }
-        }
-
-        if (!$subscribed) {
-            $data = array_slice($data, 0, $count);
         }
 
         return $data;
@@ -160,6 +153,12 @@ abstract class AbstractSyncToNlpApi implements ShouldQueue
 
         $config['french_gender_separator'] = [
             'value' => $guidelines->french_gender_separator,
+            'status' => $guidelines->french_rules_force ? 'force' : 'suggestion',
+        ];
+
+        // Locked together with the separator: both say how French forms look.
+        $config['french_gender_suffix'] = [
+            'value' => $guidelines->french_gender_suffix ?? 'short',
             'status' => $guidelines->french_rules_force ? 'force' : 'suggestion',
         ];
 

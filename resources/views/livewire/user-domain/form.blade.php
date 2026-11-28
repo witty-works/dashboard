@@ -1,9 +1,5 @@
 <x-form-section submit="storeDomain">
-    <x-slot name="title">
-        <div id="domains_title">
-            {{ __('guidelines.create_domain') }}
-        </div>
-    </x-slot>
+    <x-slot name="title">{{ __('guidelines.create_domain') }}</x-slot>
 
     <x-slot name="description">
     </x-slot>
@@ -19,15 +15,15 @@
                 aria-autocomplete="none" />
 
             <x-input id="domain"
-                type="text" 
+                type="text"
                 class="mt-1 block w-full"
                 wire:model="domain"
                 autocomplete="off"
                 aria-autocomplete="none"
-                aria-labelledby="domains_title"
+                error="domain"
             />
 
-            <x-input-error for="domain" class="mt-2" aria-describedby="domain" />
+            <x-input-error for="domain" class="mt-2" />
         </div>
     </x-slot>
 

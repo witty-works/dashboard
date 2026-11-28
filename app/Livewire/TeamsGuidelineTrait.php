@@ -2,12 +2,8 @@
 
 namespace App\Livewire;
 
-use App\Livewire\HelpHeroTrait;
-
 trait TeamsGuidelineTrait
 {
-    use HelpHeroTrait;
-
     /**
      * Mount the component.
      *

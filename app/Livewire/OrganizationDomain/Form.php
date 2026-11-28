@@ -2,6 +2,8 @@
 
 namespace App\Livewire\OrganizationDomain;
 
+use Livewire\Attributes\Locked;
+use App\Livewire\GuidelineEntryAuthorization;
 use App\Models\Domain;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
@@ -10,6 +12,7 @@ use Livewire\Component;
 
 class Form extends Component
 {
+    use GuidelineEntryAuthorization;
     use AuthorizesRequests;
 
     public $domain_id;
@@ -27,6 +30,7 @@ class Form extends Component
      *
      * @var mixed
      */
+    #[Locked]
     public $model;
 
     /**
@@ -71,6 +75,8 @@ class Form extends Component
 
     public function edit(Domain $domain)
     {
+        $this->authorizeEntry($domain);
+
         $this->domain_id = $domain->id;
         $this->domain = $domain->domain;
 

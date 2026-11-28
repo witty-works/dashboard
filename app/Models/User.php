@@ -2,33 +2,52 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\Log;
+use Illuminate\Auth\Access\AuthorizationException;
+use App\Actions\Jetstream\HandOverInvitedTeam;
 use App\Events\UserCreated;
 use App\Events\UserDeleted;
 use App\Events\UserUpdated;
 use App\Http\Controllers\OAuthController;
 use App\Jobs\SyncUserToNlpApi;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Translation\HasLocalePreference;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use JoelButcher\Socialstream\HasConnectedAccounts;
+use App\Models\Concerns\HasConnectedAccounts;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Spatie\Permission\Traits\HasRoles;
 use Lab404\Impersonate\Models\Impersonate;
 use Laravel\Jetstream\Contracts\AddsTeamMembers;
 use Laravel\Jetstream\HasTeams;
 use Laravel\Jetstream\Jetstream;
-use Laravel\Sanctum\HasApiTokens;
+use Laravel\Passport\HasApiTokens;
 use Laravel\Jetstream\Role;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail, HasLocalePreference
 {
+    // Passport's trait, not Sanctum's. Sanctum is still the guard for the
+    // session-backed SPA requests, but it only reaches for this trait when a
+    // bearer token is present (see Laravel\Sanctum\Guard::supportsTokens), and
+    // nothing in the application ever issued a Sanctum personal access token —
+    // Jetstream's api feature is disabled in config/jetstream.php. Bearer
+    // tokens are Passport's job now.
     use HasApiTokens;
     use HasFactory;
-    use HasRoles;
     use Impersonate;
-    use HasTeams;
     use HasConnectedAccounts;
+
+    /**
+     * spatie/laravel-permission 8 added HasRoles::teams(), which collides with
+     * Jetstream's. Its own teams feature is not enabled here (config/permission.php
+     * sets no 'teams' key), so that method is a stub that deliberately returns no
+     * rows — Jetstream's real relation wins.
+     */
+    use HasRoles, HasTeams {
+        HasTeams::teams insteadof HasRoles;
+    }
+
     use Notifiable;
     use TwoFactorAuthenticatable;
     use GuidelinesTrait;
@@ -38,40 +57,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'executive' => 'content.executive',
         'lead' => 'content.lead',
         'employee' => 'content.employee'
-    ];
-
-    protected $emailProviders = [
-        'gmail.com',
-        'bluewin.ch',
-        'icloud.com',
-        'hotmail.com',
-        'protonmail.com',
-        'protonmail.ch',
-        'gmx.ch',
-        'gmx.at',
-        'gmx.de',
-        'gmx.net',
-        'mein.gmx',
-        'aol.com',
-        'outlook.com',
-        'zoho.com',
-        'zohomail.eu',
-        'yahoo.com',
-        'web.de',
-        'cyon.ch',
-        'orange.fr',
-        'vodafone.com',
-        'me.com',
-        'hotmail.de',
-        'hotmail.ch',
-        'yahoo.ch',
-        'yahoo.de',
-        'hey.com',
-        'hotmail.fr',
-        'bluemail.ch',
-        'freenet.de',
-        'sunrise.ch',
-        'googlemail.com'
     ];
 
     /**
@@ -104,8 +89,51 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'two_factor_confirmed_at' => 'datetime',
         'team_analytics' => 'boolean',
     ];
+
+    /**
+     * The language mails and notifications to this person are written in:
+     * the one they last used the dashboard in, also when the mail is sent
+     * from the queue. Null leaves the current language.
+     */
+    public function preferredLocale(): ?string
+    {
+        $language = $this->language;
+
+        return in_array($language, config('localizer.supported_locales'), true) ? $language : null;
+    }
+
+    /**
+     * Revoke every OAuth access and refresh token of this user: the browser
+     * extension and the write page are signed out. On logout and when the
+     * password changes.
+     *
+     * Through the models rather than a repository: Passport 13 deleted
+     * RefreshTokenRepository and reduced TokenRepository to lookups.
+     *
+     * Refresh tokens are matched against *every* access token this user has,
+     * not just the unrevoked ones. league/oauth2-server's refresh grant does
+     * not look at the access token's revoked flag, so a refresh token whose
+     * access token was revoked by some other path still mints new access
+     * tokens for its full 30 days.
+     *
+     * Two bulk statements rather than a loop: this runs inside a request, and
+     * an account that has been signing in for a year has a lot of rows. The
+     * subquery keeps the token ids in the database.
+     */
+    public function revokeOAuthTokens(): void
+    {
+        \Laravel\Passport\Passport::refreshTokenModel()::query()
+            ->whereIn('access_token_id', $this->tokens()->select('id'))
+            ->where('revoked', false)
+            ->update(['revoked' => true]);
+
+        $this->tokens()
+            ->where('revoked', false)
+            ->update(['revoked' => true]);
+    }
 
     public function setNameAttribute($name)
     {
@@ -113,13 +141,16 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * Get the open invitiations
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * The invitations to this user's address, once it is verified: an
+     * account can claim any address, and must not see or act on invitations
+     * meant for someone else. Not for eager loading (`with('invitations')`):
+     * that builds the relation on a blank user, which has no verified address.
      */
     public function invitations()
     {
-        return $this->hasMany(Jetstream::teamInvitationModel(), 'email', 'email');
+        $invitations = $this->hasMany(Jetstream::teamInvitationModel(), 'email', 'email');
+
+        return $this->hasVerifiedEmail() ? $invitations : $invitations->whereRaw('1 = 0');
     }
 
     /**
@@ -141,6 +172,9 @@ class User extends Authenticatable implements MustVerifyEmail
         }
 
         $switchableTeams = [];
+        /**
+         * @var \App\Models\Team $team
+         */
         foreach ($teams as $team) {
             if ($team->getTotalUserWithInvitationsCount() > 1 || $team->id === $this->license_team_id) {
                 $switchableTeams[] = $team;
@@ -168,6 +202,27 @@ class User extends Authenticatable implements MustVerifyEmail
     public function domains()
     {
         return $this->hasMany(Domain::class, 'user_id');
+    }
+
+    /**
+     * Only superadmins may sign in as another user: the permission that
+     * opens the admin pages (config admin.permission), with two-factor
+     * sign-in confirmed. The package's default lets every user sign in as
+     * anyone. The impersonation routes also ask for a code if the session
+     * has not seen one (EnsureSuperadminTwoFactor).
+     */
+    public function canImpersonate()
+    {
+        return $this->can(config('admin.permission'))
+            && $this->hasEnabledTwoFactorAuthentication();
+    }
+
+    /**
+     * Nobody may sign in as a superadmin, not even another superadmin.
+     */
+    public function canBeImpersonated()
+    {
+        return !$this->can(config('admin.permission'));
     }
 
     public function posthogId()
@@ -222,68 +277,17 @@ class User extends Authenticatable implements MustVerifyEmail
             $team = $this->currentTeam;
         }
 
-        return $this->licenseTeam->id === $team->id;
-    }
-
-    public function subscribed($type = 'default', $price = null)
-    {
-        $team = $this->currentTeam;
-        if (!$team) {
-            return false;
-        }
-
-        return $team->subscribed($type, $price);
-    }
-
-    public function subscription($type = 'default')
-    {
-        $team = $this->currentTeam;
-        if (!$team) {
-            return null;
-        }
-
-        return $team->subscription($type);
-    }
-
-    protected function getStripeConfig($key)
-    {
-        $plan = $this->planId() ?? 'witty_free';
-        $plan = str_replace('_trial', '', $plan);
-        return config('stripe.plans.' . $plan . '.' . $key);
-    }
-
-    public function getTermReplacementsCount()
-    {
-        return $this->getStripeConfig('features.user_term_replacements.count');
-    }
-
-    public function getFalsePositivesCount()
-    {
-        return $this->getStripeConfig('features.user_false_positives.count');
-    }
-
-    public function isPremium()
-    {
-        $team = $this->currentTeam;
-        if (!$team) {
-            return false;
-        }
-
-        return $team->isPremium();
-    }
-
-    public function planId()
-    {
-        $team = $this->licenseTeam;
-        if ($team) {
-            return $team->planId();
-        }
-
-        return null;
+        return $team !== null && $this->licenseTeam->id === $team->id;
     }
 
     public function applyAcceptedInvitiations()
     {
+        // The invitation went to an address; only its verified owner takes it
+        // up, not whoever registers with that address first.
+        if (! $this->hasVerifiedEmail()) {
+            return;
+        }
+
         # are there any remaining invitations that were previously accept?
         $invitations = TeamInvitation::where('email', $this->email)
             ->where('accepted', true)
@@ -295,6 +299,31 @@ class User extends Authenticatable implements MustVerifyEmail
         }
 
         foreach ($invitations as $invitation) {
+            // An invitation to own the team, handed over rather than joined.
+            // Before the membership check: the invitee may already be in it.
+            if ($invitation->as_owner) {
+                try {
+                    app(HandOverInvitedTeam::class)->hand($this, $invitation);
+                } catch (AuthorizationException $e) {
+                    // No longer valid; dropped rather than retried on every request.
+                    Log::warning('An owner invitation could not be handed over', ['invitation' => $invitation->id, 'reason' => $e->getMessage()]);
+                    $invitation->delete();
+                }
+                $this->unsetRelation('ownedTeams');
+                $this->unsetRelation('teams');
+                $this->unsetRelation('currentTeam');
+
+                continue;
+            }
+
+            // Already on the team, for example through an earlier invitation:
+            // adding again would fail on every request.
+            if ($invitation->team->hasUser($this)) {
+                $invitation->delete();
+
+                continue;
+            }
+
             app(AddsTeamMembers::class)->add(
                 $invitation->team->owner,
                 $invitation->team,
@@ -304,6 +333,9 @@ class User extends Authenticatable implements MustVerifyEmail
 
             $invitation->delete();
 
+            // switchTeam() checks membership against the loaded relation,
+            // which does not know the team this user was just added to.
+            $this->unsetRelation('teams');
             $this->switchTeam($invitation->team);
 
             // update notification count
@@ -313,12 +345,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function getNotificationCount()
     {
-        $count = $this->invitations->count();
-        if ($this->currentTeam && $this->ownsTeam($this->currentTeam)) {
-            $count += $this->currentTeam->invitationRequests->count();
-        }
-
-        return $count;
+        return $this->invitations->count();
     }
 
     public function getFirstNameAttribute()
@@ -343,19 +370,6 @@ class User extends Authenticatable implements MustVerifyEmail
         return array_pop($split);
     }
 
-    public function getEmailDomain()
-    {
-        $email = explode('@', $this->email);
-        return array_pop($email);
-    }
-
-    public function isSharedEmailAccount()
-    {
-        $provider = $this->getEmailDomain();
-
-        return in_array($provider, $this->emailProviders);
-    }
-
     public function getTeamRoleName()
     {
         if (!$this->currentTeam) {
@@ -375,37 +389,14 @@ class User extends Authenticatable implements MustVerifyEmail
         return Kpi::getWritingStreakPast30Days($this);
     }
 
-    public function getOrganizationUsers($owners = false, $subscribed = false)
-    {
-        $query = User::where('users.email', '!=', $this->email)
-            ->where('users.id', '!=', $this->id)
-            ->where('users.current_team_id', '!=', $this->current_team_id)
-            ->where('users.email', 'LIKE', '%@' . $this->getEmailDomain());
-
-        if ($owners) {
-            $query->join('teams', 'users.current_team_id', '=', 'teams.id')
-                ->whereColumn('users.id', 'teams.user_id');
-        }
-
-        if ($subscribed) {
-            $query->join('subscriptions', 'subscriptions.team_id', '=', 'users.current_team_id');
-        }
-
-        return $query->get();
-    }
-
-    public function getHubspotCompanyUserCount()
-    {
-        return self::where('hubspot_company_id', $this->hubspot_company_id)->count();
-    }
-
     protected function getUserClients()
     {
         $clients = [];
+        /**
+         * @var \App\Models\ConnectedAccount $connectedAccount
+         */
         foreach ($this->connectedAccounts as $connectedAccount) {
-            if ($connectedAccount->provider == OAuthController::AZURE_AD_B2C_PROVIDER) {
-                $clients[] = 'browser';
-            } elseif ($connectedAccount->provider == OAuthController::OFFICE_PROVIDER) {
+            if ($connectedAccount->provider == OAuthController::OFFICE_PROVIDER) {
                 $clients[] = 'word';
             }
         }
@@ -413,7 +404,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return array_unique($clients);
     }
 
-    public function getHubspotData($booleanAsStrings = false)
+    public function getUserData($booleanAsStrings = false)
     {
         $true = $booleanAsStrings ? 'Yes' : true;
         $false = $booleanAsStrings ? 'No' : false;
@@ -421,15 +412,11 @@ class User extends Authenticatable implements MustVerifyEmail
         $data = [
             'witty_account_created_at' => $this->created_at->__toString(),
             'user_role' => $this->role,
-            'how_did_you_find' => $this->found,
             'has_witty_account' => $true,
             'has_consented_to_mailing' => $this->has_consented_to_mailing ? $true : $false,
-            'has_accessed_stripe' => $this->has_accessed_stripe ? $true : $false,
-            'witty_plan' => $this->planId() ?? 'unlicensed',
             'hs_language' => $this->language,
             'dashboard_id' => $this->posthogId(),
             'team_dashboard_id' => $this->posthogTeamId(),
-            'impersonate_url' => config('app.url') . '/impersonate/take/' . $this->id,
             'dictionary_count' => $this->termReplacements->count(),
             'ignore_count' => $this->falsePositives->count(),
             'has_team_language_rules' => $false,
@@ -439,20 +426,14 @@ class User extends Authenticatable implements MustVerifyEmail
             'team_member_count' => 0,
             'team_dictionary_count' => 0,
             'team_ignore_count' => 0,
-            'hubspot_company_user_count' => $this->hubspot_company_id ? $this->getHubspotCompanyUserCount() : null,
             'writing_streak' => $this->getWritingStreakPast30Days(),
             'clients' => implode(';', $this->getUserClients()),
         ];
-
-        if (!empty($this->company_name)) {
-            $data['company'] = $this->company_name;
-        }
 
         // Users may own multiple teams, this code here does not handle this
         // so in that case it will simply sync the data of the team they most recently used
         $personalTeam = $this->personalTeam();
         if ($personalTeam) {
-            $data['witty_trial_ends_at'] = $personalTeam->trial_ends_at ? $personalTeam->trial_ends_at->format('Y-m-d') : null;
             $data['has_team_language_rules'] = $personalTeam->hasLanguageRules() ? $true : $false;
             $data['has_team_privacy_set'] = $personalTeam->hasConfiguredPrivacy() ? $true : $false;
             $data['team_dictionary_count'] = $personalTeam->termReplacements->count();

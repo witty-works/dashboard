@@ -10,17 +10,28 @@ class SyncUserToNlpApi extends AbstractSyncToNlpApi
 {
     protected $id;
 
-    public function __construct(User $user, $queue = 'medium')
+    /** A team the user is leaving: queued while they are still in it. */
+    protected ?int $withoutTeamId = null;
+
+    public function __construct(User $user, $queue = 'medium', ?int $withoutTeamId = null)
     {
         $this->id = $user->id;
+        $this->withoutTeamId = $withoutTeamId;
         $this->onQueue($queue);
+    }
+
+    public function userId(): int
+    {
+        return $this->id;
     }
 
     public function handle()
     {
         $user = User::find($this->id);
         if (!$user instanceof User) {
-            throw new InvalidArgumentException("User id '{$this->id} does not exist.");
+            // Deleted since the job was queued; DeleteUserFromNlpApi removes
+            // what the NLP API holds for them.
+            return true;
         }
 
         $url = '/user/configs';
@@ -31,19 +42,9 @@ class SyncUserToNlpApi extends AbstractSyncToNlpApi
 
     public function getData(User $user)
     {
-        $subscribed = $user->licenseTeam && $user->licenseTeam->isPremium();
+        $termReplacements = $this->getTermReplacements($user->termReplacements);
 
-        $termReplacements = $this->getTermReplacements(
-            $user->termReplacements,
-            $subscribed,
-            $user->getTermReplacementsCount()
-        );
-
-        $falsePositives = $this->getFalsePositives(
-            $user->falsePositives,
-            $subscribed,
-            $user->getFalsePositivesCount()
-        );
+        $falsePositives = $this->getFalsePositives($user->falsePositives);
 
         $domains = $this->getDomains($user->domains, 'deny');
 
@@ -62,15 +63,22 @@ class SyncUserToNlpApi extends AbstractSyncToNlpApi
             'id' => $user->posthogId(),
             'email' => $user->email,
             'name' => $user->name,
-            'plan' => $user->planId() ?? "none",
             'organization_id' => $user->posthogTeamId(),
+            // Every team the user is in: the NLP API refuses a key for a team
+            // that is not listed.
+            'teams' => $user->allTeams()
+                ->reject(fn ($team) => $team->id === $this->withoutTeamId)
+                ->map(fn ($team) => $team->posthogId())
+                ->unique()
+                ->values()
+                ->all(),
             'false_positives' => $falsePositives,
             'term_replacements' => $termReplacements,
             'domains' => $domains,
             'config' => $config,
             'notifications' => $user->getNotificationCount(),
             'has_consented_to_mailing' => (bool) $user->has_consented_to_mailing,
-            'team_analytics' => $subscribed ? $user->team_analytics !== false : true,
+            'team_analytics' => $user->team_analytics !== false,
         ];
 
         $data['config_hash'] = md5(serialize($data));

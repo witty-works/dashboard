@@ -1,6 +1,7 @@
 <h1 class="ibarra-sub-title-h1 margin-top">
     {!! __('guidelines.privacy_settings_label') !!}
 </h1>
+@include('partials.banners')
 
 <div>
     <div class="py-10">
@@ -10,15 +11,25 @@
 
 <div>
     <div class="py-10">
-        @livewire('teams.llm-alternatives', ['model' => $team])
+        @livewire('teams.confirm-before-checking', ['model' => $team])
     </div>
 </div>
 
+@if (config('app.llm_enabled'))
+<div>
+    <div class="py-10">
+        @livewire('teams.llm-alternatives', ['model' => $team])
+    </div>
+</div>
+@endif
+
+@if (\App\Support\Analytics::pagesShown())
 <div>
     <div class="py-10">
         @livewire('teams.analytics-user-access', ['model' => $team])
     </div>
 </div>
+@endif
 
 
 <div>

@@ -4,10 +4,10 @@ namespace App\Http\Middleware;
 
 use App\Models\Team;
 use App\Models\User;
+use App\Support\InviteOnly;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Platformsh\ConfigReader\Config;
 
 class SwitchToTeam
 {
@@ -16,14 +16,15 @@ class SwitchToTeam
         $user = $request->user();
 
         if ($user instanceof User) {
-            $this->checkTeam($user);
-            $user->applyAcceptedInvitiations();
-        } elseif (
-            !Route::is('mock-login')
-            && config('app.mock_login')
-            && (new Config())->branch !== 'dev'
-        ) {
-            return redirect()->route('mock-login', ['email' => config('app.mock_login')]);
+            if (InviteOnly::enabled()) {
+                // Invitations first, so that nobody is given a team, or
+                // shown the "not in a team" page, before theirs applies.
+                $user->applyAcceptedInvitiations();
+                $this->checkTeam($user);
+            } else {
+                $this->checkTeam($user);
+                $user->applyAcceptedInvitiations();
+            }
         }
 
         return $next($request);
@@ -31,6 +32,12 @@ class SwitchToTeam
 
     protected function checkTeam($user)
     {
+        // A current team the user is no longer in is no current team.
+        if ($user instanceof User && $user->currentTeam && ! $user->belongsToTeam($user->currentTeam)) {
+            $user->forceFill(['current_team_id' => null])->save();
+            $user->unsetRelation('currentTeam');
+        }
+
         // every user should have a current team
         if ($user instanceof User && !$user->currentTeam) {
             $teams = $user->teams;
@@ -47,6 +54,12 @@ class SwitchToTeam
     {
         $ownedTeams = $user->ownedTeams();
 
+        // Invite only: no personal teams; a user without a team waits for an
+        // invitation (EnsureUserHasTeam).
+        if (InviteOnly::enabled() && !$ownedTeams->count()) {
+            return;
+        }
+
         if (!$ownedTeams->count()) {
             $user->ownedTeams()->save(Team::forceCreate([
                 'user_id' => $user->id,
@@ -59,7 +72,7 @@ class SwitchToTeam
         $team = $ownedTeams->first();
         $user->switchTeam($team);
 
-        if ($user->licenseTeam === null && !$team->getUserLicensesLimitReached()) {
+        if ($user->licenseTeam === null) {
             $user->license_team_id = $team->id;
             $user->save();
         }

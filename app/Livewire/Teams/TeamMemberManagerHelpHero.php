@@ -2,52 +2,34 @@
 
 namespace App\Livewire\Teams;
 
-use App\Livewire\HelpHeroTrait;
-use App\Jobs\SyncUserToNlpApi;
-use App\Models\TeamInvitationRequest;
-use App\Mail\TeamInvitationRequestAccepted;
-use Illuminate\Support\Facades\Mail;
-use Laravel\Jetstream\Contracts\AddsTeamMembers;
+use App\Actions\Jetstream\TransferTeamOwnership;
+use App\Models\User;
+use Illuminate\Support\Facades\Gate;
 use Laravel\Jetstream\Http\Livewire\TeamMemberManager as TeamMemberManagerBase;
-use Laravel\Jetstream\Contracts\RemovesTeamMembers;
+use Livewire\Attributes\Locked;
 
+/**
+ * Rendered for admins on the team page and, so that they can leave, for
+ * members without admin rights on their profile page. The view hides what
+ * those members may not do, but every action can be called from the browser,
+ * so each one checks the permission itself.
+ */
 class TeamMemberManagerHelpHero extends TeamMemberManagerBase
 {
-    use HelpHeroTrait;
+    /** The team being managed: the server's, never the browser's to change. */
+    #[Locked]
+    public $team;
+
+    /** Whether the hand-over of the team is being confirmed, and to whom. */
+    public $confirmingOwnershipTransfer = false;
+
+    public $ownershipTransferTo = null;
 
     public function mount($team)
     {
         parent::mount($team);
 
         $this->resetForm();
-    }
-
-    /**
-     * Add a new team member to a team.
-     *
-     * @return void
-     */
-    public function addTeamMember()
-    {
-        $invitationRequest = TeamInvitationRequest::join('users', 'users.id', '=', 'team_invitation_requests.user_id')
-            ->where('email', $this->addTeamMemberForm['email'])
-            ->where('team_id', $this->team->id)
-            ->first();
-
-        if ($invitationRequest) {
-            $this->acceptTeamInvitationRequest($invitationRequest, $this->addTeamMemberForm['role']);
-
-            $this->addTeamMemberForm = [
-                'email' => '',
-                'role' => null,
-            ];
-
-            $this->team = $this->team->fresh();
-        } else {
-            parent::addTeamMember();
-        }
-
-        $this->updateHelpHero();
     }
 
     /**
@@ -58,103 +40,41 @@ class TeamMemberManagerHelpHero extends TeamMemberManagerBase
      */
     public function cancelTeamInvitation($invitationId)
     {
+        Gate::authorize('removeTeamMember', $this->team);
+
         parent::cancelTeamInvitation($invitationId);
-        $this->updateHelpHero();
     }
 
     /**
-     * Cancel a pending team member invitation request.
+     * Ask the owner to confirm handing the team over to the given admin.
      *
-     * @param  TeamInvitationRequest  $invitationRequest
+     * @param  int  $userId
      * @return void
      */
-    public function cancelTeamInvitationRequest(TeamInvitationRequest $invitationRequest = null)
+    public function confirmOwnershipTransfer($userId)
     {
-        if (!empty($invitationRequest)) {
-            $invitationRequest->delete();
-        }
-
-        $this->team = $this->team->fresh();
-
-        $this->updateHelpHero();
+        $this->ownershipTransferTo = (int) $userId;
+        $this->confirmingOwnershipTransfer = true;
     }
 
     /**
-     * Accept a pending team member invitation request.
+     * Hand the team over. TransferTeamOwnership checks that the signed-in
+     * user owns the team and that the new owner is one of its admins.
      *
-     * @param  TeamInvitationRequest  $invitationRequest
      * @return void
      */
-    public function acceptTeamInvitationRequest(TeamInvitationRequest $invitationRequest = null, $role = 'user')
+    public function transferOwnership(TransferTeamOwnership $transfer)
     {
-        if (empty($invitationRequest)) {
-            session()->flash('teams_invitation_request_message', __('content.invitation_request_already_accepted'));
+        $newOwner = User::find($this->ownershipTransferTo);
+        abort_unless($newOwner instanceof User, 403);
 
-            return;
-        }
+        $transfer->transfer($this->user, $this->team, $newOwner);
 
-        if ($this->team->id != $invitationRequest->team->id) {
-            return;
-        }
-
-        $user = $invitationRequest->user;
-
-        if (!$this->team->subscribed()) {
-            $role = 'admin';
-        }
-
-        app(AddsTeamMembers::class)->add(
-            $this->team->owner,
-            $this->team,
-            $user->email,
-            $role,
-        );
-
-        $user->switchTeam($this->team);
-
+        $this->confirmingOwnershipTransfer = false;
+        $this->ownershipTransferTo = null;
         $this->team = $this->team->fresh();
-
-        Mail::to($user->email)->send(
-            new TeamInvitationRequestAccepted($invitationRequest, $role, request()->user())
-        );
-
-        $invitationRequests = TeamInvitationRequest::where('user_id', $user->id)->get();
-        foreach ($invitationRequests as $invitationRequest) {
-            $invitationRequest->delete();
-
-            // update notification count
-            dispatch(new SyncUserToNlpApi($invitationRequest->team->owner, 'high'));
-        }
 
         $this->dispatch('saved');
-
-        $this->updateHelpHero();
-    }
-
-    /**
-     * Remove the currently authenticated user from the team.
-     *
-     * @param  \Laravel\Jetstream\Contracts\RemovesTeamMembers  $remover
-     * @return void
-     */
-    public function leaveTeam(RemovesTeamMembers $remover)
-    {
-        parent::leaveTeam($remover);
-
-        $this->updateHelpHero();
-    }
-
-    /**
-     * Remove a team member from the team.
-     *
-     * @param  \Laravel\Jetstream\Contracts\RemovesTeamMembers  $remover
-     * @return void
-     */
-    public function removeTeamMember(RemovesTeamMembers $remover)
-    {
-        parent::removeTeamMember($remover);
-
-        $this->updateHelpHero();
     }
 
     protected function resetForm()
@@ -163,7 +83,7 @@ class TeamMemberManagerHelpHero extends TeamMemberManagerBase
 
         $this->addTeamMemberForm = [
             'email' => '',
-            'role' => $this->team->subscribed() ? null : 'admin',
+            'role' => null,
         ];
     }
 

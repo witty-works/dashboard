@@ -17,6 +17,6 @@ class UserAddedSlackAlert
             $event->user->source,
         );
 
-        SlackAlert::message(getenv('PLATFORM_ENVIRONMENT') . $message);
+        SlackAlert::message(config('app.env') . $message);
     }
 }

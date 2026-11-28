@@ -1,4 +1,0 @@
-rdbms:
-    type: mariadb:10.5
-    disk: 3800
-

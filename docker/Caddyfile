@@ -1,0 +1,41 @@
+# FrankenPHP in classic mode (one PHP request per thread, no worker script),
+# plain HTTP on $PORT. TLS, certificates and HSTS are the reverse proxy's job;
+# the container is only reachable through it.
+# https://frankenphp.dev/docs/config/
+{
+	# No certificates, no redirect to https, no admin API.
+	auto_https off
+	admin off
+	skip_install_trust
+
+	frankenphp {
+		# Unset: FrankenPHP picks 2 threads per CPU.
+		{$FRANKENPHP_CONFIG}
+	}
+
+	servers {
+		# The client address Caddy logs and hands PHP as REMOTE_ADDR stays the
+		# proxy's; Laravel reads X-Forwarded-For itself (TrustProxies).
+		trusted_proxies static private_ranges
+	}
+}
+
+:{$PORT:8080} {
+	root /app/public
+	encode zstd br gzip
+
+	# The files Caddy serves itself (the build, fonts, robots.txt) never reach
+	# PHP's SecurityHeaders middleware. The same headers, only where a response
+	# has none yet, so PHP's own stay as they are. Kept equal to
+	# App\Http\Middleware\SecurityHeaders (tests/Feature/Hardening/StaticFileHeadersTest).
+	header ?X-Frame-Options "DENY"
+	header ?X-Content-Type-Options "nosniff"
+	header ?Referrer-Policy "strict-origin-when-cross-origin"
+	header ?Permissions-Policy "accelerometer=(), camera=(), display-capture=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), usb=()"
+
+	# Vite's hashed bundles never change under the same name.
+	@build path /build/assets/*
+	header @build Cache-Control "public, max-age=31536000, immutable"
+
+	php_server
+}

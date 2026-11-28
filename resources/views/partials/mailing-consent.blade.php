@@ -1,11 +1,11 @@
-<div class="wittyworks-upgrade-banner" id="wittyworks-upgrade-banner">
+<div class="wittyworks-upgrade-banner" id="wittyworks-upgrade-banner-mailing">
     <div>
-        <div class="wittyworks-upgrade-banner-title">
+        <h2 class="wittyworks-upgrade-banner-title">
             {!! __('content.mailing_consent_title') !!}
-        </div>
-        <div class="wittyworks-upgrade-banner-text">
+        </h2>
+        <p class="wittyworks-upgrade-banner-text">
             {!! __('content.mailing_consent_text') !!}
-        </div>
+        </p>
     </div>
 
     <div class="wittyworks-upgrade-banner-button-container">

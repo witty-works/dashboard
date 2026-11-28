@@ -2,6 +2,7 @@
 
 namespace App\Livewire\OrganizationLanguageSettings;
 
+use Livewire\Attributes\Locked;
 use App\Livewire\TeamsGuidelineTrait;
 use App\Models\GuidelinesInterface;
 use App\Models\LanguageGuidelines;
@@ -28,6 +29,7 @@ class Language extends Component
         'preferred_variants_fr' => 'nullable|string|in:fr-FR',
     ];
 
+    #[Locked]
     public $model;
 
     public function resetForm()
@@ -78,15 +80,12 @@ class Language extends Component
 
         $languageGuidelines->preferred_variants = $this->preferred_variants;
 
-        if ($this->model->isPremium()) {
-            $languageGuidelines->preferred_variants_force = (bool) $this->preferred_variants_force;
-        }
+        $languageGuidelines->preferred_variants_force = (bool) $this->preferred_variants_force;
 
         $languageGuidelines->save();
         $languageGuidelines->dispatchEventToPosthog((new \ReflectionClass($this))->getShortName());
 
         $this->dispatch('saved');
-        $this->updateHelpHero();
     }
 
     /**

@@ -22,6 +22,8 @@
             :options="App\Models\GuidelinesInterface::PREFERRED_VARIANTS_EN"
             class="guidelines-form-section-dropdown margin-bottom"
             wire:model="preferred_variants_en"
+            aria-label="{{ __('guidelines.team_preferred_variants_dialect') }} {{ __('content.en') }}"
+            error="preferred_variants_en"
         />
         <x-input-error for="preferred_variants_en" class="mt-2" role="alert" />
 
@@ -32,10 +34,11 @@
             :options="App\Models\GuidelinesInterface::PREFERRED_VARIANTS_DE"
             class="guidelines-form-section-dropdown"
             wire:model="preferred_variants_de"
+            aria-label="{{ __('guidelines.team_preferred_variants_dialect') }} {{ __('content.de') }}"
+            error="preferred_variants_de"
         />
         <x-input-error for="preferred_variants_de" class="mt-2" role="alert" />
 
-        @if(\App\Http\Kernel::isFrenchEnabled($model))
         <div class="mt-4">
         <label class="lato-small-text-p mt-20" for="preferred_variants_fr">
             {{ __('guidelines.team_preferred_variants_dialect') }}
@@ -44,10 +47,11 @@
             :options="App\Models\GuidelinesInterface::PREFERRED_VARIANTS_FR"
             class="guidelines-form-section-dropdown"
             wire:model="preferred_variants_fr"
+            aria-label="{{ __('guidelines.team_preferred_variants_dialect') }} {{ __('content.fr') }}"
+            error="preferred_variants_fr"
         />
         <x-input-error for="preferred_variants_fr" class="mt-2" role="alert" />
         </div>
-        @endif
     </x-slot>
 
     <x-slot name="actions">
@@ -57,7 +61,6 @@
                 value="1"
                 :label="__('guidelines.set_for_all')"
                 wire:model="preferred_variants_force"
-                :disabled="!$model->isPremium()"
             />
         </div>
 

@@ -2,46 +2,44 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\SocialAuth\CreatesConnectedAccounts;
+use App\Contracts\SocialAuth\CreatesUserFromProvider;
+use App\Contracts\SocialAuth\UpdatesConnectedAccounts;
 use App\Helpers\OfficeSsoHelper;
-use App\Models\ConnectedAccount as ModelsConnectedAccount;
+use App\Models\ConnectedAccount;
 use App\Models\User;
-use Laravel\Socialite\AbstractUser;
-use Laravel\Socialite\Two\InvalidStateException;
+use App\Support\InviteOnly;
 use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Contracts\Auth\Guard;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Contracts\Container\BindingResolutionException;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use JoelButcher\Socialstream\ConnectedAccount;
-use JoelButcher\Socialstream\Contracts\GeneratesProviderRedirect;
-use JoelButcher\Socialstream\Contracts\ResolvesSocialiteUsers;
-use JoelButcher\Socialstream\Http\Controllers\OAuthController as BaseOAuthController;
-use JoelButcher\Socialstream\Socialstream;
-use SocialiteProviders\Manager\Contracts\OAuth2\ProviderInterface;
-use Symfony\Component\Routing\Exception\RouteNotFoundException;
-use Socialite;
-use Mail;
-use InvalidArgumentException;
-use Exception;
-use JoelButcher\Socialstream\Contracts\CreatesConnectedAccounts;
-use JoelButcher\Socialstream\Contracts\CreatesUserFromProvider;
-use JoelButcher\Socialstream\Contracts\OAuthLoginResponse;
-use JoelButcher\Socialstream\Contracts\SocialstreamResponse;
-use JoelButcher\Socialstream\Contracts\UpdatesConnectedAccounts;
+use Illuminate\Support\Facades\Auth;
+use Laravel\Fortify\Fortify;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\MessageBag;
+use Illuminate\Support\ViewErrorBag;
+use Throwable;
 
-class OAuthController extends BaseOAuthController
+/**
+ * Handles Microsoft Office SSO.
+ *
+ * This used to extend JoelButcher\Socialstream\Http\Controllers\OAuthController,
+ * but that package was archived upstream in December 2025 and never supported
+ * Laravel 13. Nothing here ever called into the parent — the inherited
+ * redirect/callback/prompt/confirm actions only served the generic OAuth routes,
+ * and socialstream.providers has always been empty — so the base class was
+ * dropped and the handful of Socialstream:: helpers inlined.
+ */
+class OAuthController extends Controller
 {
-    public const AZURE_AD_B2C_PROVIDER = 'azureadb2c';
     public const OFFICE_PROVIDER = 'microsoft_office';
-    public const MOCK_LOGIN = 'mock';
     public const LOGIN_SOURCE = 'login_source';
 
     /**
      * Create a new controller instance.
      */
     public function __construct(
-        protected Guard $guard,
         protected CreatesUserFromProvider $createsUser,
         protected CreatesConnectedAccounts $createsConnectedAccounts,
         protected UpdatesConnectedAccounts $updatesConnectedAccounts
@@ -49,160 +47,93 @@ class OAuthController extends BaseOAuthController
         //
     }
 
-    public function logout(string $provider)
+
+
+    /**
+     * The page the Word add-in opens, for signing in and for signing up. The
+     * add-in can only open a URL, so it puts its token in the fragment
+     * (`#token=`), which browsers never send to the server; this page posts
+     * it, so the token stays out of server, proxy and error logs.
+     */
+    public function showOfficeSsoBridge()
     {
-        Session::flush();
-
-        Auth::logout();
-
-        $provider = self::getProvider($provider);
-
-        return redirect($provider->logout(route('login')));
+        return view('office_sso_bridge', ['action' => url()->current()]);
     }
-
-    public function redirectToProvider(string $provider, GeneratesProviderRedirect $generator, $policy = 'login')
-    {
-        $redirectUri = null;
-        if ($this->isWittyWorksUrl(back()->getTargetUrl(), true)) {
-            $redirectUri = back()->getTargetUrl();
-        }
-
-        $redirectUri = request()->get('redirect_uri', $redirectUri);
-        if ($this->isWittyWorksUrl($redirectUri)) {
-            session()->put('socialstream.previous_url', $redirectUri);
-        } else {
-            session()->remove('socialstream.previous_url');
-        }
-
-        return $generator->generate($provider, $policy);
-    }
-
-    public function redirectToProviderBrowserLogin(Request $request, GeneratesProviderRedirect $generator)
-    {
-        $redirectUri = $request->get('redirect_uri');
-        $register = $request->has('register');
-
-        $user = $request->user();
-        if ($user && !$request->has('force')) {
-            $account = $user->connectedAccounts
-                ->where('provider', 'azureadb2c')
-                ->first();
-
-            if ($account && $account->token) {
-                $data = [
-                    'email' => strtolower($user->email),
-                    'access_token' => $account->token,
-                    'refresh_token' => $account->refresh_token,
-                ];
-
-                return self::returnAccessTokenResponse($data, $redirectUri);
-            }
-        }
-
-        $policy = $register ? 'browser_register' : 'browser_login';
-        $response = $generator->generate(self::AZURE_AD_B2C_PROVIDER, $policy);
-        if ($redirectUri && $this->validateRedirectUri($redirectUri)) {
-            $targetUrl = $response->getTargetUrl();
-            $url = parse_url($targetUrl);
-            if (!empty($url['query'])) {
-                $result = null;
-                parse_str($url['query'], $result);
-                $result['state'] = $redirectUri;
-
-                $newTargetUrl = $url['scheme'] . '://' . $url['host'] . $url['path'] . '?' . http_build_query($result);
-
-                $response->setTargetUrl($newTargetUrl);
-            }
-        }
-
-        return $response;
-    }
-
-    public function accessTokenFromRefreshToken(Request $request)
-    {
-        $refreshToken = $request->json('token');
-        if (!$refreshToken) {
-            return response()->json(['error' => "'token' parameter empty"], 400);
-        }
-
-        try {
-            $provider = self::getProvider(self::AZURE_AD_B2C_PROVIDER, 'browser_login');
-            $provider->setRefreshToken($refreshToken);
-            $tokens = self::getAccessTokenResponse($provider, true);
-        } catch (\Exception $e) {
-            # refresh token has expired?
-            $connectedAccount = ModelsConnectedAccount::where('refresh_token', $refreshToken)->first();
-            if ($connectedAccount) {
-                $connectedAccount->token = null;
-                $connectedAccount->refresh_token = null;
-                $connectedAccount->save();
-            }
-
-            return response()->json(['error' => 'Not authorized.'], 403);
-        }
-
-        return response()->json($tokens);
-    }
-
 
     public function handleOfficeSsoRegister(Request $request)
     {
-        $token = $request->get('token');
-        $officeSsoHelper = new OfficeSsoHelper();
-
-        $ssoDebugEmail = env('OFFICE_SSO_DEBUG_EMAIL', false);
+        $token = $this->officeSsoToken($request);
+        $officeSsoHelper = app(OfficeSsoHelper::class);
 
         try {
             $claims = $officeSsoHelper->validateIdToken($token);
-        } catch (Exception $e) {
-            if ($ssoDebugEmail) {
-                Mail::raw('token: ' . $token . "\n\n" . $e->getMessage(), function ($m) use ($ssoDebugEmail) {
-                    $m->to($ssoDebugEmail)->subject('SSO Login Failed');
-                });
-            }
+        } catch (Throwable $e) {
+            return $this->officeSsoFailed($e);
+        }
 
+        $user = $officeSsoHelper->findUser($claims);
+        $email = $officeSsoHelper->verifiedEmail($claims);
+
+        // Neither linked nor with an address the tenant verified: there is no
+        // one to sign in or to create an account for.
+        if ($user === null && $email === null) {
             return redirect(config('services.microsoft_office.redirect_uri') . '?status=failed');
         }
 
-        $email = strtolower($claims['preferred_username'] ?? '');
+        // The address belongs to an account that has not verified it: neither
+        // link the Microsoft account to it nor create a second account.
+        if ($user === null && User::where('email', $email)->exists()) {
+            return redirect(config('services.microsoft_office.redirect_uri') . '?status=unverified_email');
+        }
 
-        $user = Auth::user();
+        // Invite only: no account for an address nobody invited, and no
+        // consent form for one either.
+        if ($user === null && ! InviteOnly::allowsSignUp($email)) {
+            return redirect(config('services.microsoft_office.redirect_uri') . '?status=invite_only');
+        }
+
         if (
-            $user instanceof User
-            && $user->email === $email
+            $user !== null
+            && $user->is(Auth::user())
             && $user->has_consented_to_terms_of_service
         ) {
             return redirect(config('services.microsoft_office.redirect_uri') . '?status=success');
         }
 
-        $user = Socialstream::newUserModel()->where('email', $email)->first();
-
-        // no account for email that has consented to the terms => show the form
-        if ($request->getMethod() === 'POST') {
-            $validated = $request->validate([
+        // The consent form always sends this field; the token alone, from the
+        // add-in's page or from signing in, asks for the form.
+        $errors = null;
+        if ($request->has('has_consented_to_terms_of_service')) {
+            // Not validate(): its redirect would go back to the add-in's page,
+            // which has no token without the fragment. Show the form again.
+            $validator = Validator::make($request->all(), [
                 'has_consented_to_terms_of_service' => 'required|in:1',
                 'has_consented_to_mailing' => 'nullable|boolean',
             ]);
+            $validated = $validator->fails() ? false : $validator->validated();
+            $errors = $validator->errors();
         } else {
             $validated = $user instanceof User && $user->has_consented_to_terms_of_service;
         }
 
-        // not yet consented => show the form again
+        // not yet consented => show the form
         if (!$validated) {
             $params = [
                 'name' => $claims['name'] ?? null,
-                'email' => $email,
+                'email' => $user?->email ?? $email,
                 'token' => $token,
             ];
 
-            return view('office_register', $params);
+            return response(
+                view('office_register', $params)->with('errors', (new ViewErrorBag())->put('default', $errors ?? new MessageBag())),
+                $errors?->isNotEmpty() ? 422 : 200
+            );
         }
 
         $providerAccount = $officeSsoHelper->getProviderAccount($claims);
-        $providerAccount->setToken($token);
         if (is_array($validated) && $validated['has_consented_to_terms_of_service']) {
             $providerAccount->attributes['has_consented_to_terms_of_service'] = true;
-            $providerAccount->attributes['has_consented_to_mailing'] = $validated['has_consented_to_mailing'];
+            $providerAccount->attributes['has_consented_to_mailing'] = $validated['has_consented_to_mailing'] ?? false;
         }
 
         $this->handleProviderAccount($request, $providerAccount, self::OFFICE_PROVIDER);
@@ -212,65 +143,62 @@ class OAuthController extends BaseOAuthController
 
     public function handleOfficeSsoLogin(Request $request)
     {
-        $officeSsoHelper = new OfficeSsoHelper();
+        $token = $this->officeSsoToken($request);
+        $officeSsoHelper = app(OfficeSsoHelper::class);
 
         try {
-            $claims = $officeSsoHelper->validateIdToken($request->get('token'));
-        } catch (Exception $e) {
-            return redirect(config('services.microsoft_office.redirect_uri') . '?status=failed');
+            $claims = $officeSsoHelper->validateIdToken($token);
+        } catch (Throwable $e) {
+            return $this->officeSsoFailed($e);
         }
 
-        $email = strtolower($claims['preferred_username'] ?? '');
-
-        $user = Auth::user();
-        if ($user !== null) {
-            Auth::logout();
-        }
-
-        $user = Socialstream::newUserModel()->where('email', $email)->first();
+        $user = $officeSsoHelper->findUser($claims);
 
         // no account for email that has consented to the terms => show the form
         if ($user === null || !$user->has_consented_to_terms_of_service) {
             return $this->handleOfficeSsoRegister($request);
         }
 
+        // Anyone can be sent a link with someone else's token. Unless that
+        // user is already signed in here, say who this signs in as and let
+        // the person confirm, instead of switching accounts silently.
+        if (!$user->is(Auth::user()) && !$request->boolean('confirm')) {
+            return view('office_login_confirm', [
+                'email' => $user->email,
+                'signedInAs' => Auth::user()?->email,
+                'token' => $token,
+                'action' => url()->current(),
+            ]);
+        }
+
+        // Switching accounts: nothing of the previous user's session stays.
+        if (Auth::user() !== null && !$user->is(Auth::user())) {
+            Auth::logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+        }
+
+        // Found by its verified email: link the Microsoft account, so that it
+        // is recognised by its `sub` from now on.
+        $this->handleProviderAccount($request, $officeSsoHelper->getProviderAccount($claims), self::OFFICE_PROVIDER);
+
         return $this->loginUser($user, self::OFFICE_PROVIDER);
     }
 
-    public function handleProviderCallback(Request $request, string $provider, ResolvesSocialiteUsers $resolver, $policy = 'login')
+    /** The posted token; anything but a string counts as none. */
+    protected function officeSsoToken(Request $request): string
     {
-        if ($request->has('error')) {
-            return Auth::check()
-                ? redirect(config('fortify.home'))->dangerBanner($request->error_description)
-                : redirect()->route('register')->withErrors($request->error_description);
-        }
+        $token = $request->input('token');
 
-        try {
-            /** @var \Laravel\Socialite\Two\User $providerAccount */
-            $providerAccount = $resolver->resolve($provider, $policy);
-        } catch (InvalidStateException $e) {
-            $this->invalidStateHandler->handle($e);
-        }
+        return is_string($token) ? $token : '';
+    }
 
-        $tokens = self::getAccessTokenResponse(self::getProvider($provider, $policy));
-        if (!empty($tokens['access_token'])) {
-            $providerAccount->setToken($tokens['access_token']);
-        }
-        if (!empty($tokens['refresh_token'])) {
-            $providerAccount->setRefreshToken($tokens['refresh_token']);
-        }
+    /** A refused token: logged without the token itself, which is a credential. */
+    protected function officeSsoFailed(Throwable $e)
+    {
+        Log::info('Office sign-in refused a token', ['exception' => $e::class, 'reason' => strtok($e->getMessage(), "\n")]);
 
-        // Authenticated...
-        $user = Auth::user();
-        if ($user !== null) {
-            $account = Socialstream::findConnectedAccountForProviderAndId($provider, $providerAccount->getId());
-
-            return $this->alreadyAuthenticated($user, $account, $provider, $providerAccount);
-        }
-
-        $user = $this->handleProviderAccount($request, $providerAccount, $provider);
-
-        return $this->login($user, $provider);
+        return redirect(config('services.microsoft_office.redirect_uri') . '?status=failed');
     }
 
     protected function handleProviderAccount(Request $request, $providerAccount, string $provider)
@@ -281,15 +209,24 @@ class OAuthController extends BaseOAuthController
             $userData['has_consented_to_terms_of_service'] = $providerAccount->attributes['has_consented_to_terms_of_service'];
         }
 
-        $account = Socialstream::findConnectedAccountForProviderAndId($provider, $providerAccount->getId());
+        $account = ConnectedAccount::where('provider', $provider)
+            ->where('provider_id', $providerAccount->getId())
+            ->first();
+
+        // Left behind by a deleted user: it links nobody.
+        if ($account && !$account->user) {
+            $account->delete();
+            $account = null;
+        }
 
         if (!$account) {
-            $user = Socialstream::newUserModel()->where('email', $providerAccount->getEmail())->first();
+            $user = User::where('email', $providerAccount->getEmail())
+                ->whereNotNull('email_verified_at')
+                ->first();
             if ($user) {
                 $this->createsConnectedAccounts->create($user, $provider, $providerAccount);
             } else {
                 $user = $this->createsUser->create($provider, $providerAccount);
-                $userData['hubspotutk'] = $request->cookie('hubspotutk');
             }
 
             if (!empty($providerAccount->attributes['has_consented_to_mailing'])) {
@@ -312,204 +249,63 @@ class OAuthController extends BaseOAuthController
         return $user;
     }
 
-    protected function isWittyWorksUrl($url, $strict = false)
-    {
-        if (empty($url)) {
-            return false;
-        }
-
-        $result = parse_url($url);
-        if (empty($result['host'])) {
-            return false;
-        }
-
-        if ($strict) {
-            return $result['host'] === 'dashboard.witty.works';
-        }
-
-        if (
-            $result['host'] === 'witty.works'
-            || str_ends_with($result['host'], '.witty.works')
-        ) {
-            return true;
-        }
-
-        return false;
-    }
-
-    protected function checkAllowedRedirectUri($redirectUri)
-    {
-        $allowedRedirectUris = config('services.azureadb2c.redirect_uri');
-        if (is_array($allowedRedirectUris)) {
-            foreach ($allowedRedirectUris as $uri) {
-                if (strpos($redirectUri, $uri) === 0) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
-    protected function validateRedirectUri($redirectUri)
-    {
-        return config('services.azureadb2c.validate_redirect_uri_disabled')
-            || strpos($redirectUri, 'moz-extension://') === 0
-            || $this->isWittyWorksUrl($redirectUri)
-            || $this->checkAllowedRedirectUri($redirectUri);
-    }
-
-    protected static function getAccessTokenResponse(ProviderInterface $provider, $updateAccount = false)
-    {
-        $socialiteUser = $provider->user();
-
-        $tokens = [
-            'email' => User::getEmailFromProvider($socialiteUser->user),
-            'refresh_token' => $socialiteUser->accessTokenResponseBody['refresh_token'] ?? null,
-            'access_token' => $socialiteUser->accessTokenResponseBody['access_token'] ?? null,
-        ];
-
-        if ($updateAccount) {
-            $connectedAccount = ModelsConnectedAccount::where('provider_id', $socialiteUser->id)->first();
-            if ($connectedAccount) {
-                $connectedAccount->token = $tokens['access_token'];
-                $connectedAccount->refresh_token = $tokens['refresh_token'];
-                $connectedAccount->save();
-            }
-        }
-
-        return $tokens;
-    }
-
-    protected function returnAccessTokenResponse($data, $redirectUri = null)
-    {
-        if (empty($redirectUri)) {
-            $redirectUri = request()->get('state');
-        }
-
-        if ($redirectUri && $this->validateRedirectUri($redirectUri)) {
-            $redirectUri .= '?' . http_build_query($data);
-
-            return redirect($redirectUri);
-        }
-
-        return view('browser-login', $data);
-    }
 
     /**
-     *
-     * @param User $user
-     * @param ConnectedAccount $account
-     * @param string $provider
-     * @param AbstractUser $providerAccount
-     * @return mixed
-     * @throws BindingResolutionException
-     * @throws RouteNotFoundException
+     * Mirrors the response socialstream produced for a Jetstream application:
+     * a JSON body for XHR callers, otherwise Fortify's intended login redirect.
      */
-    protected function alreadyAuthenticated($user, $account, $provider, $providerAccount)
+    protected function loginUser(Authenticatable $user, $provider): JsonResponse|RedirectResponse
     {
-        $policy = self::isBrowserLogin();
-        if ($policy) {
-            $provider = self::getProvider(self::AZURE_AD_B2C_PROVIDER, $policy);
-            return $this->returnAccessTokenResponse(self::getAccessTokenResponse($provider, true));
-        }
-
-        if (!$account) {
-            //$this->createsConnectedAccounts->create($user, $provider, $providerAccount);
-        } elseif ($account->user_id === $user->id) {
-            $user->updateName($providerAccount);
-            $user->saveQuietly();
-        }
-
-        $redirectUri = session()->get('socialstream.previous_url');
-        if ($redirectUri && $this->validateRedirectUri($redirectUri)) {
-            return redirect($redirectUri);
-        }
-
-        return redirect(config('fortify.home'));
-    }
-
-    protected function loginUser(Authenticatable $user, $provider): SocialstreamResponse
-    {
-        $this->guard->login($user, Socialstream::hasRememberSessionFeatures());
+        Auth::login($user, config('social_auth.remember_session', true));
+        // A new session id for the signed-in user, against session fixation.
+        request()->session()->regenerate();
         request()->session()->put(self::LOGIN_SOURCE, $provider);
 
-        return app(OAuthLoginResponse::class);
+        return request()->wantsJson()
+            ? response()->json(['two_factor' => false])
+            : redirect()->intended(Fortify::redirects('login'));
     }
+
+
+    // mockLogin feature removed
 
     /**
-     * Authenticate the given user and return a login response.
+     * Entry point for the extension's "Sign in" / "Sign up" buttons.
      *
-     * @param  \Illuminate\Contracts\Auth\Authenticatable|mixed  $user
-     * @return mixed
+     * Issues nothing itself — it is a redirect into /oauth/authorize, which runs
+     * the real authorization_code + PKCE flow. (It used to mint an HS256 JWT
+     * signed with APP_KEY that nothing ever validated: the extension API only
+     * accepted Microsoft id_tokens, so every call made with one of those JWTs
+     * was rejected with a 403.)
+     *
+     * The only thing this adds over linking straight to /oauth/authorize is the
+     * `register` case. Passport's authorization endpoint sends guests to the
+     * login page; a user who came from "Sign up" wants the registration page,
+     * and there is no OAuth parameter for that.
      */
-    protected function login($user, $provider = self::AZURE_AD_B2C_PROVIDER)
+    public function browserLogin(Request $request)
     {
-        $policy = self::isBrowserLogin();
+        // Every parameter except our own `register` flag belongs to the OAuth
+        // request — response_type, client_id, redirect_uri, code_challenge,
+        // code_challenge_method, state — and is passed through untouched. The
+        // destination is our own named route, so nothing here can be redirected
+        // off-site; validating the OAuth parameters is the authorization
+        // endpoint's job, not ours.
+        $authorizeUrl = route('passport.authorizations.authorize', $request->except('register'));
 
-        $loginResponse = $this->loginUser($user, $provider);
+        if ($request->boolean('register') && !Auth::check()) {
+            // Fortify sends the user to fortify.home after registering, so the
+            // OAuth request has to be stashed as the intended URL to come back
+            // to. redirect()->guest() would stash this route instead, which
+            // would bounce the user through here a second time.
+            $request->session()->put('url.intended', $authorizeUrl);
 
-        if ($policy) {
-            $provider = self::getProvider($provider, $policy);
-            $tokens = self::getAccessTokenResponse($provider, true);
-
-            return $this->returnAccessTokenResponse($tokens);
+            return redirect()->route('register');
         }
 
-        if ($user->wasRecentlyCreated) {
-            return redirect()->route('download');
-        }
-
-        $redirectUri = session()->get('socialstream.previous_url');
-        if ($redirectUri) {
-            session()->remove('socialstream.previous_url');
-
-            return redirect($redirectUri);
-        }
-
-        return $loginResponse;
-    }
-
-    public static function isBrowserLogin($policy = null)
-    {
-        $browserLoginPolicies = ['browser_login', 'browser_register'];
-
-        $request = request();
-        foreach ($browserLoginPolicies as $browserLoginPolicy) {
-            $url = route('oauth.callback', ['provider' => 'azureadb2c', 'policy' => $browserLoginPolicy]);
-            if ($request->url() === $url) {
-                $policy = $browserLoginPolicy;
-                break;
-            }
-        }
-
-        return in_array($policy, $browserLoginPolicies) ? $policy : false;
-    }
-
-    public static function getProvider($provider, $policy = null)
-    {
-        try {
-            $provider = Socialite::driver($provider);
-        } catch (InvalidArgumentException $e) {
-            abort(400);
-        }
-
-        if (self::isBrowserLogin($policy)) {
-            $provider->setScopes(config('services.azureadb2c.scope'));
-            $provider->stateless();
-        }
-
-        return $provider;
-    }
-
-    public function mockLogin(Request $request)
-    {
-        if (!config('app.mock_login')) {
-            abort(404);
-        }
-
-        $user = User::where('email', $request->get('email'))->firstOrFail();
-
-        return $this->login($user);
+        // Guests get here too: AuthorizationController throws an
+        // AuthenticationException, which the handler turns into a redirect to
+        // the login page with url.intended set, and back here afterwards.
+        return redirect()->to($authorizeUrl);
     }
 }

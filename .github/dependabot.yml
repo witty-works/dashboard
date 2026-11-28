@@ -1,0 +1,101 @@
+# Dependabot reads composer.lock and package-lock.json. Security updates are
+# switched on in the repository settings and open pull requests against the
+# default branch, dev; the options below shape them and the weekly version
+# updates. There is no target-branch on purpose: with one set, these options
+# would apply only to version updates and no longer to security updates.
+version: 2
+updates:
+  # PHP packages: Laravel and the rest of the back end.
+  - package-ecosystem: composer
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    # Version updates wait a week after a release, so a compromised or broken
+    # release has time to be pulled before it is proposed here.
+    cooldown:
+      default-days: 7
+    labels:
+      - dependencies
+    groups:
+      # Minor and patch updates in one weekly pull request; major versions
+      # come one pull request each, so each can be tested on its own.
+      composer:
+        applies-to: version-updates
+        patterns:
+          - "*"
+        update-types:
+          - minor
+          - patch
+
+  # npm packages: the Vite and Tailwind asset build.
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    # Same one-week wait as for Composer.
+    cooldown:
+      default-days: 7
+    labels:
+      - dependencies
+    ignore:
+      # Tailwind 4 is a migration, not an update: it drops the @tailwind
+      # directives and the JavaScript config this build uses, so the version
+      # bump alone fails the build. Moved by hand, together with the CSS.
+      - dependency-name: tailwindcss
+        update-types:
+          - version-update:semver-major
+    groups:
+      # Minor and patch updates in one weekly pull request; major versions
+      # come one pull request each.
+      npm:
+        applies-to: version-updates
+        patterns:
+          - "*"
+        update-types:
+          - minor
+          - patch
+
+  # The base images, pinned by tag and digest in Dockerfile. No cooldown: a
+  # new digest of the same tag is how the base image's security fixes arrive.
+  - package-ecosystem: docker
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    labels:
+      - dependencies
+    ignore:
+      # PHP and Node versions move by hand, with composer.json, .lando.yml and
+      # ci.yaml; only new digests of the pinned tags are proposed.
+      - dependency-name: dunglas/frankenphp
+        update-types:
+          - version-update:semver-major
+          - version-update:semver-minor
+      - dependency-name: node
+        update-types:
+          - version-update:semver-major
+
+  # The actions the workflows use, pinned by commit SHA. Without this entry the
+  # pins never move, security fixes included.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    # Same one-week wait as for Composer and npm.
+    cooldown:
+      default-days: 7
+    labels:
+      - dependencies
+    groups:
+      # Minor and patch updates in one weekly pull request; major versions
+      # come one pull request each.
+      github-actions:
+        applies-to: version-updates
+        patterns:
+          - "*"
+        update-types:
+          - minor
+          - patch

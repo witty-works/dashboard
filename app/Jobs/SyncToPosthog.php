@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Jobs\Concerns\RetriesThroughOutages;
 use App\Helpers\PosthogHelper;
 use PostHog\PostHog;
 use App\Models\User;
@@ -17,18 +18,13 @@ use InvalidArgumentException;
 class SyncToPosthog implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
-    /**
-     * The number of times the job may be attempted.
-     *
-     * @var int
-     */
-    public $tries = 50;
+    use RetriesThroughOutages;
 
     protected $id;
     protected $model;
     protected $force;
     protected $isDeleted;
+    protected $groupKey;
 
     public function __construct($model, $force = false, $isDeleted = false)
     {
@@ -36,6 +32,14 @@ class SyncToPosthog implements ShouldQueue
         $this->model = $model instanceof Team ? 'team' : 'user';
         $this->force = $force;
         $this->isDeleted = $isDeleted;
+        // A sync run before a deletion commits would still see the user and
+        // send their properties after PostHog deleted the person.
+        $this->afterCommit();
+        // The team is gone by the time a deletion's sync runs. With
+        // POSTHOG_DASHBOARD_TEAM_ID set, the group is shared by every team.
+        $this->groupKey = $model instanceof Team && config('posthog.dashboard_team_id_override') === null
+            ? $model->posthogId()
+            : null;
     }
 
     public function handle()
@@ -46,10 +50,7 @@ class SyncToPosthog implements ShouldQueue
             return true;
         }
 
-        PostHog::init(
-            config('posthog.api_key'),
-            ['host' => config('posthog.host'), 'debug' => config('posthog.debug')],
-        );
+        PosthogHelper::init();
 
         switch ($this->model) {
             case 'team':
@@ -73,14 +74,13 @@ class SyncToPosthog implements ShouldQueue
     {
         $user = User::find($this->id);
         if (!$user instanceof User) {
-            throw new InvalidArgumentException("User id '{$this->id} does not exist.");
+            // Deleted since the job was queued, for example by deleting their
+            // account, which also queues syncs through the team events.
+            // There is nothing left to send, and retrying cannot change that.
+            return true;
         }
 
-        $properties = $user->getHubspotData();
-        $properties['hubspot_source'] = $user->hubspot_source;
-        $properties['hubspot_company_id'] = $user->hubspot_company_id;
-        $properties['hubspot_id'] = $user->hubspot_id;
-        $properties['hubspot_sales_readiness'] = $user->hubspot_sales_readiness;
+        $properties = $user->getUserData();
 
         $properties['$groups'] = [
             PosthogHelper::POSTHOG_ORGANIZATION_TYPE => $user->posthogTeamId()
@@ -91,10 +91,10 @@ class SyncToPosthog implements ShouldQueue
             return true;
         }
 
-        $result = PostHog::identify([
+        $result = PosthogHelper::sent(PostHog::identify([
             'distinctId' => $user->posthogId(),
             'properties' => $properties,
-        ]);
+        ]));
 
         if (!$result) {
             return false;
@@ -109,32 +109,45 @@ class SyncToPosthog implements ShouldQueue
         return $properties;
     }
 
-    public function handleTeam()
+    /**
+     * What PostHog learns about a team: its name, to tell groups apart, its
+     * owner's PostHog id and its size.
+     */
+    public static function teamProperties(Team $team, bool $isDeleted): array
     {
-        $team = Team::find($this->id);
-        if (!$team instanceof Team) {
-            throw new InvalidArgumentException("Team id '{$this->id} does not exist.");
-        }
-
-        $properties = [
-            'is_deleted' => $this->isDeleted,
+        return [
+            'is_deleted' => $isDeleted,
             'name' => $team->name,
             'owner' => $team->owner->posthogId(),
-            'impersonate_url' => config('app.url') . '/impersonate/take/' . $team->owner->id,
             'users' => $team->getTotalUserCount(),
-            'stripe_plan' => $team->planId(),
         ];
+    }
+
+    public function handleTeam()
+    {
+        if ($this->isDeleted) {
+            return $this->groupKey === null ? true : $this->clearDeletedTeam();
+        }
+
+        $team = Team::find($this->id);
+        if (!$team instanceof Team) {
+            // Deleted since the job was queued, as when an account is deleted
+            // with its own team. Nothing is left to send.
+            return true;
+        }
+
+        $properties = self::teamProperties($team, $this->isDeleted);
 
         $encodedProperties = json_encode($properties);
         if (!$this->force && $team->posthog_last_sync_data === $encodedProperties) {
             return true;
         }
 
-        $result = PostHog::groupIdentify([
+        $result = PosthogHelper::sent(PostHog::groupIdentify([
             'groupType' => PosthogHelper::POSTHOG_ORGANIZATION_TYPE,
             'groupKey' => $team->posthogId(),
             'properties' => $properties,
-        ]);
+        ]));
 
         if (!$result) {
             return false;
@@ -147,5 +160,28 @@ class SyncToPosthog implements ShouldQueue
         });
 
         return $properties;
+    }
+
+    /**
+     * PostHog cannot delete a group, so a deleted team's group keeps its key
+     * and loses the properties that name the team and its owner.
+     */
+    protected function clearDeletedTeam()
+    {
+        $properties = [
+            'is_deleted' => true,
+            'name' => null,
+            'owner' => null,
+            'impersonate_url' => null,
+            'users' => 0,
+        ];
+
+        $result = PosthogHelper::sent(PostHog::groupIdentify([
+            'groupType' => PosthogHelper::POSTHOG_ORGANIZATION_TYPE,
+            'groupKey' => $this->groupKey,
+            'properties' => $properties,
+        ]));
+
+        return $result ? $properties : false;
     }
 }

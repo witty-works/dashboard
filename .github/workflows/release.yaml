@@ -1,0 +1,131 @@
+name: Release
+
+# Makes a release or a release candidate of main's latest commit, once CI has
+# passed on it: works out the version from the tags, creates the tag and the
+# GitHub release with generated notes, publishes the image and creates the
+# Sentry release. Started by hand from the Actions tab; see docs/release.md.
+
+on:
+  workflow_dispatch:
+    inputs:
+      type:
+        description: "rc: the next candidate. rc major|minor|patch: the first candidate for that release. major|minor|patch: the release itself."
+        type: choice
+        required: true
+        options:
+          - rc
+          - rc major
+          - rc minor
+          - rc patch
+          - major
+          - minor
+          - patch
+
+permissions: {}
+
+# One release at a time: two runs would compute the same version.
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    permissions:
+      # Creates the tag and the GitHub release.
+      contents: write
+      # Reads CI's runs on the commit.
+      actions: read
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      previous: ${{ steps.version.outputs.previous }}
+    steps:
+      # "Use workflow from" can pick any branch, whose copy of this file
+      # would run instead.
+      - name: Only from main
+        if: github.ref != 'refs/heads/main'
+        run: |
+          echo "Run the release workflow from main, not $GITHUB_REF_NAME." >&2
+          exit 1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+          # The version comes from the tags.
+          fetch-depth: 0
+          fetch-tags: true
+          persist-credentials: false
+
+      - name: Version
+        id: version
+        env:
+          TYPE: ${{ inputs.type }}
+        run: |
+          read -r MODE BUMP <<< "$TYPE"
+          VERSION=$(.github/scripts/release-version.sh next "$MODE" $BUMP)
+          PREVIOUS=$(.github/scripts/release-version.sh previous "$MODE" $BUMP)
+          {
+            echo "version=$VERSION"
+            echo "previous=$PREVIOUS"
+            echo "sha=$(git rev-parse HEAD)"
+          } >> "$GITHUB_OUTPUT"
+          echo "### $VERSION, from $PREVIOUS" >> "$GITHUB_STEP_SUMMARY"
+
+      # The tag publishes an image, so only a commit CI passed on gets one:
+      # CI's own latest run of ci.yaml for it, re-runs included, and in it
+      # each job the protection of main requires.
+      - name: CI passed on main
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SHA: ${{ steps.version.outputs.sha }}
+        run: .github/scripts/ci-passed.sh "$SHA"
+
+      - name: Tag and publish the GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.version.outputs.version }}
+          PREVIOUS: ${{ steps.version.outputs.previous }}
+          SHA: ${{ steps.version.outputs.sha }}
+        run: |
+          FLAGS=()
+          if [[ $VERSION == *-rc* ]]; then FLAGS+=(--prerelease); fi
+          gh release create "$VERSION" --repo "$GITHUB_REPOSITORY" --target "$SHA" \
+            --title "$VERSION" --generate-notes --notes-start-tag "$PREVIOUS" "${FLAGS[@]}"
+
+  # A tag created with the workflow's token starts no other workflow, so the
+  # image is built here rather than by the tag push.
+  image:
+    needs: tag
+    permissions:
+      contents: read
+      packages: write
+    uses: ./.github/workflows/release-image.yaml
+    with:
+      tag: ${{ needs.tag.outputs.version }}
+
+  # The release errors are filed under (docs/sentry.md), with the commits
+  # since the previous version. Skipped without the secret SENTRY_AUTH_TOKEN.
+  sentry:
+    needs: tag
+    runs-on: ubuntu-latest
+    permissions: {}
+    env:
+      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      SENTRY_ORG: witty-works-ag
+      SENTRY_PROJECT: dashboard
+      VERSION: ${{ needs.tag.outputs.version }}
+      PREVIOUS: ${{ needs.tag.outputs.previous }}
+    steps:
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        if: env.SENTRY_AUTH_TOKEN != ''
+        with:
+          node-version: '24'
+      - name: Create the Sentry release
+        if: env.SENTRY_AUTH_TOKEN != ''
+        run: |
+          SENTRY="npx --yes @sentry/cli@3.8.2"
+          $SENTRY releases new -p "$SENTRY_PROJECT" "$VERSION"
+          $SENTRY releases set-commits "$VERSION" --commit "$GITHUB_REPOSITORY@$PREVIOUS..$VERSION"
+          $SENTRY releases finalize "$VERSION"
+      - name: Skip without a Sentry token
+        if: env.SENTRY_AUTH_TOKEN == ''
+        run: echo "SENTRY_AUTH_TOKEN is not set; no Sentry release created." >> "$GITHUB_STEP_SUMMARY"

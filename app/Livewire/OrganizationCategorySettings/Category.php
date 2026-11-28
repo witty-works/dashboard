@@ -2,6 +2,7 @@
 
 namespace App\Livewire\OrganizationCategorySettings;
 
+use Livewire\Attributes\Locked;
 use App\Livewire\TeamsGuidelineTrait;
 use App\Jobs\SyncOrganizationToNlpApi;
 use App\Models\LanguageGuidelines;
@@ -25,6 +26,7 @@ class Category extends Component
         'dimensions.*' => 'nullable|int|max:2',
     ];
 
+    #[Locked]
     public $model;
 
     public $category;
@@ -63,11 +65,6 @@ class Category extends Component
         $this->readDimensions($disabledCategories);
 
         $disabledCategoriesForce = (array) $languageGuidelines->disabled_categories_force;
-        if (!$this->model->isPremium()) {
-            $this->dimensions_force = true;
-        } else {
-            $this->dimensions_force = in_array($this->category, $disabledCategoriesForce);
-        }
 
         $this->resetErrorBag();
     }
@@ -115,15 +112,11 @@ class Category extends Component
 
         $this->processDimensions($languageGuidelines, $this->dimensions);
 
-        if (!$this->model->isPremium()) {
-            $this->dimensions_force = true;
-        }
         $languageGuidelines->inPlaceUpateArray($this->category, 'disabled_categories_force', !$this->dimensions_force);
 
         $languageGuidelines->dispatchEventToPosthog((new \ReflectionClass($this))->getShortName());
 
         $this->dispatch('saved');
-        $this->updateHelpHero();
 
         dispatch(new SyncOrganizationToNlpApi($this->model, 'high'));
     }

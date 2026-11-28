@@ -1,9 +1,25 @@
-@foreach(LaravelLocalization::getSupportedLocales() as $locale => $supported_locale)
-    @if($locale !== 'fr' || \App\Http\Kernel::isFrenchEnabled(Auth::user()))
-    @if($locale === LaravelLocalization::getCurrentLocale())
-        <x-nav-link class="footer-links margin-right" :active="request()->segment(1) === $locale"><span>{{ $supported_locale['native'] }}</span></x-nav-link>
-    @else
-        <x-nav-link class="footer-links margin-right" :active="request()->is('/en')" href="{{ LaravelLocalization::getLocalizedURL($locale) }}"><span>{{ $supported_locale['native'] }}</span></x-nav-link>
-    @endif
-    @endif
-@endforeach
+@php
+    $nativeNames = ['de' => 'Deutsch', 'en' => 'English', 'fr' => 'Français'];
+    // The current page in each other language. A page the localizer cannot
+    // translate, such as the 404 page of the fallback route, has no other
+    // language to switch to, and the switcher is left out.
+    $switchUrls = [];
+    try {
+        foreach (config('localizer.supported_locales') as $locale) {
+            if ($locale !== app()->getLocale()) {
+                $switchUrls[$locale] = Route::localizedSwitcherUrl($locale);
+            }
+        }
+    } catch (\LogicException $exception) {
+        $switchUrls = null;
+    }
+@endphp
+@if ($switchUrls !== null)
+    @foreach (config('localizer.supported_locales') as $locale)
+        @if ($locale === app()->getLocale())
+            <span class="footer-links margin-right" aria-current="true"><span lang="{{ $locale }}">{{ $nativeNames[$locale] ?? $locale }}</span></span>
+        @else
+            <x-nav-link class="footer-links margin-right" href="{{ $switchUrls[$locale] }}"><span lang="{{ $locale }}">{{ $nativeNames[$locale] ?? $locale }}</span></x-nav-link>
+        @endif
+    @endforeach
+@endif

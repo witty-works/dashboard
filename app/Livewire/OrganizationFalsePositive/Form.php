@@ -2,6 +2,8 @@
 
 namespace App\Livewire\OrganizationFalsePositive;
 
+use Livewire\Attributes\Locked;
+use App\Livewire\GuidelineEntryAuthorization;
 use App\Models\FalsePositive;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
@@ -10,6 +12,7 @@ use Livewire\Component;
 
 class Form extends Component
 {
+    use GuidelineEntryAuthorization;
     use AuthorizesRequests;
 
     public $false_positive;
@@ -29,6 +32,7 @@ class Form extends Component
      *
      * @var mixed
      */
+    #[Locked]
     public $model;
 
     /**
@@ -66,6 +70,8 @@ class Form extends Component
 
     public function edit(FalsePositive $falsePositive)
     {
+        $this->authorizeEntry($falsePositive);
+
         $this->false_positive_id = $falsePositive->id;
         $this->false_positive = $falsePositive->false_positive;
 
@@ -96,11 +102,6 @@ class Form extends Component
                 throw ValidationException::withMessages(['false_positive' => $message]);
             }
         } else {
-            if ($this->model->getFalsePositivesLimitReached()) {
-                $message = __('guidelines.false_positive_limit_reached_error', ['max_count' => $this->model->getFalsePositivesCount()]);
-                throw ValidationException::withMessages(['false_positive' => $message]);
-            }
-
             $falsePositive = new FalsePositive();
         }
 

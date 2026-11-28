@@ -17,7 +17,10 @@ class Kernel extends HttpKernel
      */
     protected $middleware = [
         // \App\Http\Middleware\TrustHosts::class,
+        \App\Http\Middleware\UseApplicationUrl::class,
         \App\Http\Middleware\TrustProxies::class,
+        // Early, so that every response gets the headers, error pages included.
+        \App\Http\Middleware\SecurityHeaders::class,
         \Illuminate\Http\Middleware\HandleCors::class,
         \App\Http\Middleware\PreventRequestsDuringMaintenance::class,
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
@@ -39,10 +42,11 @@ class Kernel extends HttpKernel
             \Illuminate\Session\Middleware\StartSession::class,
             \Laravel\Jetstream\Http\Middleware\AuthenticateSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-            \App\Http\Middleware\VerifyCsrfToken::class,
+            \App\Http\Middleware\PreventRequestForgery::class,
+            \NielsNumbers\LaravelLocalizer\Middleware\SetLocale::class,
+            \NielsNumbers\LaravelLocalizer\Middleware\RedirectLocale::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\SwitchToTeam::class,
-            \App\Http\Middleware\HubSpotIdentificationToken::class,
             \App\Http\Middleware\SetUserLanguage::class,
         ],
 
@@ -61,42 +65,21 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $middlewareAliases = [
+        'analytics.pages' => \App\Http\Middleware\EnsureAnalyticsPagesShown::class,
         'ensureStateful' => \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
+        'team' => \App\Http\Middleware\EnsureUserHasTeam::class,
+        'superadmin.two-factor' => \App\Http\Middleware\EnsureSuperadminTwoFactor::class,
+        'same-site-request' => \App\Http\Middleware\RefuseCrossSiteRequests::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        #'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'localize'                => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRoutes::class,
-        'localizationRedirect'    => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRedirectFilter::class,
-        'localeSessionRedirect'   => \Mcamara\LaravelLocalization\Middleware\LocaleSessionRedirect::class,
-        'localeCookieRedirect'    => \Mcamara\LaravelLocalization\Middleware\LocaleCookieRedirect::class,
-        'localeViewPath'          => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationViewPath::class,
+        // Registered as an alias only, not applied to a group: /write uses it,
+        // since the NLP API refuses tokens of users with an unverified email.
+        'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
     ];
-
-    public static function isFrenchEnabled($model)
-    {
-        $frenchSupport = config('app.french_support');
-        if (empty($frenchSupport)) {
-            return false;
-        }
-
-        if (in_array('0', $frenchSupport)) {
-            return true;
-        }
-
-        if ($model instanceof User) {
-            $model = $model->currentTeam;
-        }
-
-        if (!$model instanceof Team) {
-            return false;
-        }
-
-        return in_array($model->id, $frenchSupport);
-    }
 }

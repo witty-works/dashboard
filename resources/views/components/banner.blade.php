@@ -24,15 +24,15 @@
                     </svg>
                 </span>
 
-                <p class="ms-3 font-medium text-sm text-white truncate" x-text="message"></p>
+                <p class="ms-3 font-medium text-sm text-white truncate" :role="style == 'danger' ? 'alert' : 'status'" x-text="message"></p>
             </div>
 
             <div class="shrink-0 sm:ms-3">
                 <button
                     type="button"
-                    class="-me-1 flex p-2 rounded-md focus:outline-none sm:-me-2 transition"
+                    class="-me-1 flex p-2 rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white sm:-me-2 transition"
                     :class="{ 'hover:bg-indigo-600 focus:bg-indigo-600': style == 'success', 'hover:bg-red-600 focus:bg-red-600': style == 'danger' }"
-                    aria-label="Dismiss"
+                    aria-label="{{ __('content.dismiss') }}"
                     x-on:click="show = false">
                     <svg class="h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />

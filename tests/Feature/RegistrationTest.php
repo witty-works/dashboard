@@ -2,53 +2,73 @@
 
 namespace Tests\Feature;
 
-use App\Providers\RouteServiceProvider;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Laravel\Fortify\Features;
-use Laravel\Jetstream\Jetstream;
 use Tests\TestCase;
 
+/**
+ * Registration runs App\Actions\Fortify\CreateNewUser, which also provisions the
+ * user's team. This is the path that the posthog_last_sync NOT NULL column broke,
+ * so it is worth covering explicitly.
+ */
 class RegistrationTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_registration_screen_can_be_rendered()
+    public function test_new_user_can_register(): void
     {
-        if (! Features::enabled(Features::registration())) {
-            return $this->markTestSkipped('Registration support is not enabled.');
-        }
-
-        $response = $this->get('/register');
-
-        $response->assertStatus(200);
-    }
-
-    public function test_registration_screen_cannot_be_rendered_if_support_is_disabled()
-    {
-        if (Features::enabled(Features::registration())) {
-            return $this->markTestSkipped('Registration support is enabled.');
-        }
-
-        $response = $this->get('/register');
-
-        $response->assertStatus(404);
-    }
-
-    public function test_new_users_can_register()
-    {
-        if (! Features::enabled(Features::registration())) {
-            return $this->markTestSkipped('Registration support is not enabled.');
-        }
-
-        $response = $this->post('/register', [
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-            'password' => 'password',
-            'password_confirmation' => 'password',
-            'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature(),
+        $response = $this->post(route('register'), [
+            'name' => 'Ada Lovelace',
+            'email' => 'ada@example.com',
+            'password' => 'Str0ng-Passw0rd!',
+            'password_confirmation' => 'Str0ng-Passw0rd!',
+            'terms' => true,
         ]);
 
-        $this->assertAuthenticated();
-        $response->assertRedirect(RouteServiceProvider::HOME);
+        $response->assertSessionHasNoErrors();
+
+        $this->assertDatabaseHas('users', ['email' => 'ada@example.com']);
+    }
+
+    public function test_a_new_account_signs_in_with_the_password_chosen_at_sign_up(): void
+    {
+        $this->post(route('register'), [
+            'name' => 'New Person',
+            'email' => 'new.person@example.org',
+            'password' => 'chosen-at-sign-up-123',
+            'password_confirmation' => 'chosen-at-sign-up-123',
+            'terms' => true,
+        ]);
+
+        $user = \App\Models\User::where('email', 'new.person@example.org')->firstOrFail();
+        $this->assertTrue(\Illuminate\Support\Facades\Hash::check('chosen-at-sign-up-123', $user->password));
+    }
+
+    public function test_registration_provisions_a_team_for_the_new_user(): void
+    {
+        $this->post(route('register'), [
+            'name' => 'Ada Lovelace',
+            'email' => 'ada@example.com',
+            'password' => 'Str0ng-Passw0rd!',
+            'password_confirmation' => 'Str0ng-Passw0rd!',
+            'terms' => true,
+        ])->assertSessionHasNoErrors();
+
+        $user = User::where('email', 'ada@example.com')->firstOrFail();
+
+        $this->assertNotNull($user->currentTeam, 'Registered user has no current team.');
+    }
+
+    public function test_registration_rejects_a_duplicate_email(): void
+    {
+        User::factory()->create(['email' => 'ada@example.com']);
+
+        $this->post(route('register'), [
+            'name' => 'Ada Lovelace',
+            'email' => 'ada@example.com',
+            'password' => 'Str0ng-Passw0rd!',
+            'password_confirmation' => 'Str0ng-Passw0rd!',
+            'terms' => true,
+        ])->assertSessionHasErrors('email');
     }
 }

@@ -19,13 +19,12 @@ switch ($tab) {
 }
 @endphp
 <x-app-layout :pagetitle="$pagetitle">
-    <nav class="wittyworks-navigation-wrapper" id="maincontent" aria-label="Main Navigation">
-    @livewire('navigation-menu')
-    </nav>
-        <div class="wittyworks-page-wrapper">
+    <x-slot name="navigation">
+        @livewire('navigation-menu')
+    </x-slot>
+
             <div class="wittyworks-page lg:ml-20">
-                @include('partials.banners')
-                @if($tab === \App\Http\Controllers\Livewire\UserGuidelinesController::CATEGORY_SETTINGS)
+                    @if($tab === \App\Http\Controllers\Livewire\UserGuidelinesController::CATEGORY_SETTINGS)
                     @include('user/category-settings')
                 @elseif($tab === \App\Http\Controllers\Livewire\UserGuidelinesController::LANGUAGE_SETTINGS)
                     @include('user/language-settings')
@@ -37,6 +36,4 @@ switch ($tab) {
                     @include('user/domain')
                 @endif
             </div>
-        </div>
-    </div>
 </x-app-layout>

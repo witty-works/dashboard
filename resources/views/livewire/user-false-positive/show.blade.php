@@ -9,31 +9,35 @@
     </x-slot>
 
     <x-slot name="list">
-        <table class="table-auto w-full">
-            <thead>
-                <tr>
-                    <th class="py-2 lato-paragraph-text-p">{{ __('guidelines.false_positive_label') }}</th>
-                    <th class="py-2 lato-paragraph-text-p">{{ __('guidelines.exists_on_team_label') }}</th>
-                    <th class="py-2 lato-paragraph-text-p">{{ __('guidelines.action_label') }}</th>
+        {{-- A wide table scrolls on its own on a narrow screen (WCAG 1.4.10 allows it for data tables). --}}
+        <div class="relative overflow-x-auto">
+            <table class="table-auto w-full">
+                <caption class="sr-only">{{ __('guidelines.list_false_positives') }}</caption>
+                <thead>
+                    <tr>
+                        <th scope="col" class="py-2 lato-paragraph-text-p">{{ __('guidelines.false_positive_label') }}</th>
+                        <th scope="col" class="py-2 lato-paragraph-text-p">{{ __('guidelines.exists_on_team_label') }}</th>
+                        <th scope="col" class="py-2 lato-paragraph-text-p">{{ __('guidelines.action_label') }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach ($list as $false_positive)
+                <tr wire:key="false-positive-{{ $false_positive->id }}" @if($loop->even)class="bg-grey"@endif>
+                    <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $false_positive->false_positive }} {{ $false_positive->language_code ? "($false_positive->language_code)" : '' }} </td>
+                    <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $false_positive->exists_on_team ? __('guidelines.yes') : __('guidelines.no') }} </td>
+                    <td class="border px-4 py-2 text-center container-row">
+                        <button data-scroll-to="false_positive" wire:click="editFalsePositive({{ $false_positive->id }})" class="button primary-button-red">
+                            {{ __('content.edit') }}
+                        </button>
+                        <button wire:click="deleteFalsePositive({{ $false_positive->id }})" wire:confirm="{{ __('content.confirm_delete_entry') }}" class="button secondary-button-red">
+                            {{ __('content.delete_permanently') }}
+                        </button>
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-            @foreach ($list as $false_positive)
-            <tr @if($loop->even)class="bg-grey"@endif>
-                <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $false_positive->false_positive }} {{ $false_positive->language_code ? "($false_positive->language_code)" : '' }} </td>
-                <td class="border px-4 py-2 text-left lato-paragraph-text-p">{{ $false_positive->exists_on_team ? __('guidelines.yes') : __('guidelines.no') }} </td>
-                <td class="border px-4 py-2 text-center container-row">
-                    <button onclick="document.getElementById('false_positives')?.scrollIntoView({behavior: 'smooth'});" wire:click="editFalsePositive({{ $false_positive->id }})" class="button primary-button-red">
-                        {{ __('content.edit') }}
-                    </button>
-                    <button wire:click="deleteFalsePositive({{ $false_positive->id }})"class="button secondary-button-red">
-                        {{ __('content.delete_permanently') }}
-                    </button>
-                </td>
-            </tr>
-            @endforeach
-            </tbody>
-        </table>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
     </x-slot>
     @endif
 </x-list-section>

@@ -20,3 +20,7 @@ _ide_helper.php
 _ide_helper_models.php
 .DS_Store
 public/build/*
+# Browser tests (playwright.config.js)
+/tests/browser/.auth/
+/test-results/
+/playwright-report/

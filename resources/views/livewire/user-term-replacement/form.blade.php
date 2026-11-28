@@ -1,16 +1,12 @@
 <x-form-section submit="storeTermReplacement">
 
     <x-slot name="title">
-        <h2 id="term_replacements">{{ __('guidelines.create_term_replacement') }}</h2>
+        {{ __('guidelines.create_term_replacement') }}
     </x-slot>
 
     <x-slot name="description">
-        <p aria-describedby="term_replacements">
-            @if($model->getFalsePositivesLimitReached() && !$model->isPremium())
-                {!! __('guidelines.term_replacement_limit_reached', ['max_count' => $model->getTermReplacementsCount(), 'url' => route('teams.subscription')]) !!}
-            @else
+        <p>
                 {!! Str::markdown(__('guidelines.create_new_term_replacement_description')) !!}
-            @endif
         </p>
     </x-slot>
 
@@ -27,7 +23,8 @@
                          class="mt-1 block w-full textarea-as-input"
                          wire:model="term"
                          autocomplete="off"
-                         aria-autocomplete="none" />
+                         aria-autocomplete="none"
+                         error="term" />
             <x-input-error for="term" class="mt-2" />
         </div>
 
@@ -38,7 +35,8 @@
                          class="mt-1 block w-full textarea-as-input"
                          wire:model="replacement"
                          autocomplete="off"
-                         aria-autocomplete="none" />
+                         aria-autocomplete="none"
+                         error="replacement" />
             <x-input-error for="replacement" class="mt-2" />
         </div>
 
@@ -47,21 +45,19 @@
             <x-select id="language_code"
                       :options="$language_codes"
                       class="mt-1 block w-full"
-                      wire:model="language_code" />
+                      wire:model="language_code"
+                      error="language_code" />
             <x-input-error for="language_code" class="mt-2" />
         </div>
 
         <div class="w-full col-span-6 sm:col-span-4 mt-5">
             <x-label for="matching_type">{!! __('guidelines.matching_type_label') !!}</x-label>
-            @if(!$model->isPremium())
-                <span class="pl-3">@include('partials.witty-teams-only')</span>
-            @endif
             <x-select id="matching_type"
                       :options="\App\Models\TermReplacement::MATCHING_TYPES"
                       class="mt-1 block w-full"
                       wire:model="matching_type"
                       wire:change="showHideWordType"
-                      :disabled="!$model->isPremium()" />
+                      error="matching_type" />
             <x-input-error for="matching_type" class="mt-2" />
             <x-input-error for="word_type" class="mt-2" />
         </div>
@@ -74,7 +70,7 @@
                           :options="\App\Models\TermReplacement::WORD_TYPES"
                           class="mt-1 block w-full"
                           wire:model="word_type"
-                          :disabled="!$model->isPremium()" />
+                          error="word_type" />
             </div>
         @endif
 
@@ -85,7 +81,8 @@
                          class="mt-1 block w-full"
                          wire:model="explanation"
                          autocomplete="off"
-                         aria-autocomplete="none" />
+                         aria-autocomplete="none"
+                         error="explanation" />
             <x-input-error for="explanation" class="mt-2" />
         </div>
 
@@ -96,7 +93,8 @@
                          class="mt-1 block w-full"
                          wire:model="url"
                          autocomplete="off"
-                         aria-autocomplete="none" />
+                         aria-autocomplete="none"
+                         error="url" />
             <x-input-error for="url" class="mt-2" />
         </div>
 
@@ -107,7 +105,8 @@
                          class="mt-1 block w-full"
                          wire:model="emoji"
                          autocomplete="off"
-                         aria-autocomplete="none" />
+                         aria-autocomplete="none"
+                         error="emoji" />
             <x-input-error for="emoji" class="mt-2" />
         </div>
     </x-slot>

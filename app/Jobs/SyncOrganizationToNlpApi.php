@@ -4,7 +4,6 @@ namespace App\Jobs;
 
 use App\Models\LanguageGuidelines;
 use App\Models\Team;
-use InvalidArgumentException;
 
 class SyncOrganizationToNlpApi extends AbstractSyncToNlpApi
 {
@@ -20,7 +19,10 @@ class SyncOrganizationToNlpApi extends AbstractSyncToNlpApi
     {
         $team = Team::find($this->id);
         if (!$team instanceof Team) {
-            throw new InvalidArgumentException("Team id '{$this->id} does not exist.");
+            // Deleted since the job was queued, as when a team is deleted
+            // with its members; DeleteOrganizationFromNlpApi removes what the
+            // NLP API holds for it.
+            return true;
         }
 
         $url = '/organization/configs';
@@ -31,22 +33,14 @@ class SyncOrganizationToNlpApi extends AbstractSyncToNlpApi
 
     public function getData(Team $team)
     {
-        $termReplacements = $this->getTermReplacements(
-            $team->termReplacements,
-            $team->isPremium(),
-            $team->getTermReplacementsCount()
-        );
+        $termReplacements = $this->getTermReplacements($team->termReplacements);
 
-        $falsePositives = $this->getFalsePositives(
-            $team->falsePositives,
-            $team->isPremium(),
-            $team->getFalsePositivesCount()
-        );
+        $falsePositives = $this->getFalsePositives($team->falsePositives);
 
         $domains = $this->getDomains($team->domains, $team->getDomainListType());
 
         $guidelines = LanguageGuidelines::getLanguageGuidelines($team);
-        $config = self::getConfig($guidelines, !$team->isPremium());
+        $config = self::getConfig($guidelines, false);
 
         $config['categories']['orthography'] = [
             'value' => !in_array('orthography', $guidelines->disabled_categories),
@@ -61,24 +55,32 @@ class SyncOrganizationToNlpApi extends AbstractSyncToNlpApi
         $config['force_categories'] = $guidelines->disabled_categories_force;
 
         $config['store_context'] = [
-            'value' => $team->isPremium() ? (bool) $team->store_context : true,
+            'value' => (bool) $team->store_context,
             'status' => 'force',
         ];
 
+        // Forced only when switched on: members cannot turn it off, but a team
+        // that leaves it off does not stop a member from asking for it.
+        $config['confirm_before_checking'] = [
+            'value' => (bool) $team->confirm_before_checking,
+            'status' => $team->confirm_before_checking ? 'force' : 'suggestion',
+        ];
+
+        // An installation whose backend has no LLM support reports every team as
+        // opted out, whatever the team's own setting says.
         $config['llm_alternatives'] = [
-            'value' => (bool) $team->llm_alternatives,
+            'value' => config('app.llm_enabled') && (bool) $team->llm_alternatives,
             'status' => 'force',
         ];
 
         $data = [
             'id' => $team->posthogId(),
             'name' => $team->name,
-            'plan' => $team->planId() ?? "none",
-            'trial_ends_at' => $team->subscribed() ? null : $team->trial_ends_at,
             'false_positives' => $falsePositives,
             'term_replacements' => $termReplacements,
             'domains' => $domains,
             'config' => $config,
+            'llm_requests_per_minute' => $team->llm_requests_per_minute,
         ];
 
         $data['config_hash'] = md5(serialize($data));

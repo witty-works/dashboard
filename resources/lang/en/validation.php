@@ -81,6 +81,7 @@ return [
         'array' => 'The :attribute must have at least :min items.',
     ],
     'multiple_of' => 'The :attribute must be a multiple of :value.',
+    'no_markup' => 'The :attribute must not contain HTML. Remove any "<" that is directly followed by a letter, "/", "!" or "?".',
     'not_in' => 'The selected :attribute is invalid.',
     'not_regex' => 'The :attribute format is invalid.',
     'numeric' => 'The :attribute must be a number.',

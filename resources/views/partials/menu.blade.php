@@ -42,22 +42,19 @@
         }
     }
 ?>
-<a class="skip-link" href="#maincontent">{{ __('content.skip_to_main_content') }}</a>
-
-
-<a href="https://www.witty.works/">
-    <img class="wittyworks-logo" src="{{ url('svg/witty-logo-white.svg') }}" alt="" />
+<a href="{{ url(\App\Providers\RouteServiceProvider::HOME) }}">
+    <img class="wittyworks-logo" src="{{ url('svg/witty-logo-white.svg') }}" alt="{{ __('content.go_to_dashboard_home') }}" />
 </a>
 
 @auth
-<nav aria-label="{{ __('content.main_navigation_aria_label') }}">
+<div>
     <div class="wittyworks-navigation-container">
         @if ($team_edit && $isUserLicensedToTeam)
             <div class="wittyworks-navigation-account-toggle-wrapper">
                 <x-nav-link id="personal_account" class="wittyworks-navigation-item lato-small-paragraph-title-h4" href="{{ route($personalRoute) }}" :active="$open_tab === 'user'">
                     {{ __('guidelines.personal_account') }}
                 </x-nav-link>
-                <div class="wittyworks-navigation-account-divider">|</div>
+                <div class="wittyworks-navigation-account-divider" aria-hidden="true">|</div>
                  <x-nav-link id="team_account" class="wittyworks-navigation-item lato-small-paragraph-title-h4" href="{{ route($teamRoute) }}" :active="$open_tab === 'team'">
                     {{ __('guidelines.team_account') }}
                 </x-nav-link>
@@ -69,7 +66,7 @@
             <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/team.svg') }}" alt="" />
             {{ __('content.choose_team') }}
         </div>
-        <div class="wittyworks-navigation-sub-wrapper">
+        <div class="wittyworks-navigation-sub-wrapper" role="group" aria-label="{{ __('content.choose_team') }}">
             @foreach ($user->allSwitchableTeams() as $teamMemberOf)
                 <x-switchable-team :team="$teamMemberOf" />
             @endforeach
@@ -77,28 +74,30 @@
         @endif
 
         @if ($open_tab === 'user' || !$isUserLicensedToTeam)
-        <div id="personal_account_content" aria-label="{{ __('content.personal_account_content') }}">
+        <div id="personal_account_content" role="group" aria-label="{{ __('content.personal_account_content') }}">
                 <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('profile.show') }}" :active="request()->routeIs('user.subscription')">
                     <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/user.svg') }}" alt="" />
                     {{ __('content.manage_account') }}
                 </x-nav-link>
 
                 @if($isUserLicensedToTeam)
-                @if(!$team_edit && $team && $team->user_access_to_team_analytics)
-                    <div class="wittyworks-navigation-link-wrapper-no-mb lato-paragraph-text-p" style="cursor: default">
-                        <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/analytics.svg') }}" alt="" />
-                        {{ __('content.analytics') }}
-                    </div>
+                @if(\App\Support\Analytics::pagesShown())
+                    @if(!$team_edit && $team && $team->user_access_to_team_analytics)
+                        <div class="wittyworks-navigation-link-wrapper-no-mb lato-paragraph-text-p" style="cursor: default">
+                            <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/analytics.svg') }}" alt="" />
+                            {{ __('content.analytics') }}
+                        </div>
 
-                    <div class="wittyworks-navigation-sub-wrapper">
-                        <x-nav-link class="wittyworks-navigation-sub-sub-link lato-small-text-p" href="{{ route('user.analytics') }}" :active="request()->routeIs('user.analytics')">{{ __('guidelines.personal_account') }}</x-nav-link>
-                        <x-nav-link class="wittyworks-navigation-sub-sub-link lato-small-text-p" href="{{ route('teams.analytics') }}" :active="request()->routeIs('teams.analytics')">{{ __('guidelines.team_account') }}</x-nav-link>
-                    </div>
-                @else
-                    <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('user.analytics') }}" :active="request()->routeIs('user.analytics')">
-                        <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/analytics.svg') }}" alt="" />
-                        {{ __('content.analytics') }}
-                    </x-nav-link>
+                        <div class="wittyworks-navigation-sub-wrapper" role="group" aria-label="{{ __('content.analytics') }}">
+                            <x-nav-link class="wittyworks-navigation-sub-sub-link lato-small-text-p" href="{{ route('user.analytics') }}" :active="request()->routeIs('user.analytics')">{{ __('guidelines.personal_account') }}</x-nav-link>
+                            <x-nav-link class="wittyworks-navigation-sub-sub-link lato-small-text-p" href="{{ route('teams.analytics') }}" :active="request()->routeIs('teams.analytics')">{{ __('guidelines.team_account') }}</x-nav-link>
+                        </div>
+                    @else
+                        <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('user.analytics') }}" :active="request()->routeIs('user.analytics')">
+                            <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/analytics.svg') }}" alt="" />
+                            {{ __('content.analytics') }}
+                        </x-nav-link>
+                    @endif
                 @endif
 
                 @foreach($links as $route => $label)
@@ -120,21 +119,18 @@
             @endif
 
         @if ($open_tab === 'team')
-            <div id='team_account_content' aria-label="{{ __('content.team_account_content_aria_label') }}">
+            <div id='team_account_content' role="group" aria-label="{{ __('content.team_account_content_aria_label') }}">
                 <x-nav-link class="wittyworks-navigation-link-wrapper" href="{{ route('teams.show') }}" :active="request()->routeIs('teams.show')">
                     <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/team.svg') }}" alt="" />
                     {{ __('content.manage_members') }}
                 </x-nav-link>
 
-                <x-nav-link class="wittyworks-navigation-link-wrapper" href="{{ route('teams.subscription') }}" :active="request()->routeIs('teams.subscription')">
-                    <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/dollar.svg') }}" alt="" />
-                    {{ __('content.subscription') }}
-                </x-nav-link>
-
-                <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('teams.analytics') }}" :active="request()->routeIs('teams.analytics')">
-                    <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/analytics.svg') }}" alt="" />
-                    {{ __('content.analytics') }}
-                </x-nav-link>
+                @if(\App\Support\Analytics::pagesShown())
+                    <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('teams.analytics') }}" :active="request()->routeIs('teams.analytics')">
+                        <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/analytics.svg') }}" alt="" />
+                        {{ __('content.analytics') }}
+                    </x-nav-link>
+                @endif
 
                 @foreach($links as $route => $label)
                 @if($loop->first)
@@ -152,18 +148,22 @@
                 </div>
             </div>
         @endif
-        <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('editor') }}" target="_new">
-            <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/editor.svg') }}" alt="" />
-            {{ __('content.witty_editor') }}
-        </x-nav-link>
 
-        <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('prompt') }}">
+
+        <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('write') }}">
             <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/prompt.svg') }}" alt="" />
-            {{ __('content.witty_prompt') }}
+            {{ __('content.write_title') }}
             <span class="ml-2 no-underline">
                 @include('partials.beta')
             </span>
         </x-nav-link>
+
+        @if (app(\App\Services\NlpApiKeys::class)->enabled())
+        <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('api-keys') }}" :active="request()->routeIs('*api-keys')">
+            <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/editor.svg') }}" alt="" />
+            {{ __('content.api_keys_menu') }}
+        </x-nav-link>
+        @endif
 
         <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('academy') }}" :active="request()->routeIs('academy')">
             <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/bulb.svg') }}" alt="" />
@@ -171,39 +171,39 @@
         </x-nav-link>
 
         @if (Session::get(\App\Http\Controllers\OAuthController::LOGIN_SOURCE) !== \App\Http\Controllers\OAuthController::OFFICE_PROVIDER)
-        <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('logout', ['provider' => 'azureadb2c']) }}">
-            <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/logout.svg') }}" alt="" />
-            {{ __('content.log_out') }}
-        </x-nav-link>
+        <form method="POST" action="{{ route('logout') }}" class="wittyworks-navigation-link-wrapper">
+            @csrf
+            <button type="submit" class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" style="background: none; border: none; padding: 0; cursor: pointer; width: 100%; text-align: left; display: flex; align-items: center;">
+                <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/logout.svg') }}" alt="" />
+                {{ __('content.log_out') }}
+            </button>
+        </form>
         @endif
         <div class="wittyworks-navigation-username lato-small-text-p">
             {{ $user->name }}
         </div>
     </div>
-</nav>
+</div>
 
-    @if(config('lumki.show_lumki') || app('impersonate')->isImpersonating())
-        @lumki
-
-        @can(config('lumki.lumkiPermission'))
-        <a href="{{ route('subscriptions') }}" class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out">
-            Subscriptions
-        </a>
-        @endcan
-    @endif
+    @can(config('admin.permission'))
+        <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('admin.users') }}">
+            {{ __('content.admin_menu') }}
+        </x-nav-link>
+    @endcan
+    @impersonating
+        <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('impersonate.leave') }}">
+            {{ __('content.admin_leave_impersonation') }}
+        </x-nav-link>
+    @endImpersonating
 
 @else
     <!-- LOGGED OUT -->
     <div class="wittyworks-navigation-bottom-half">
-        <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="https://www.witty.works/pricing" target="_blank" rel="noopener">
-            <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/star.svg') }}" alt="" />
-            {{ __('teams.pricing') }}
-        </x-nav-link>
-        <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'login']) }}">
+        <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('login') }}">
             <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/login.svg') }}" alt="" />
             {{ __('content.log_in') }}
         </x-nav-link>
-        <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('oauth.redirect', ['provider' => 'azureadb2c', 'policy' => 'register']) }}">
+        <x-nav-link class="wittyworks-navigation-link-wrapper lato-paragraph-text-p" href="{{ route('register') }}">
             <img class="wittyworks-navigation-icon" src="{{ url('svg/navigationIcons/register.svg') }}" alt="" />
             {{ __('content.register') }}
         </x-nav-link>

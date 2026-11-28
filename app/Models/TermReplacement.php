@@ -83,8 +83,8 @@ class TermReplacement extends Model
             $user,
             $event,
             [
+                // The count and the kind, not the replacement itself.
                 'total' => $model->termReplacements->count(),
-                'replacement' => $this->replacement,
                 'language_code' => $this->language_code,
                 'word_type' => $this->word_type,
 

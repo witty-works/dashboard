@@ -2,19 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Console\Commands\SyncToHubspotCategoriesCommand;
-use App\Helpers\OfficeSsoHelper;
+use App\Helpers\CategoryDataHelper;
 use App\Jobs\SyncUserToNlpApi;
-use App\Models\ConnectedAccount;
 use App\Models\Domain;
 use App\Models\FalsePositive;
 use App\Models\LanguageGuidelines;
-use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use JoelButcher\Socialstream\Socialstream;
-use Laravel\Socialite\Two\InvalidStateException;
-use Socialite;
 
 class UserGuidelinesApiController extends Controller
 {
@@ -130,7 +124,7 @@ class UserGuidelinesApiController extends Controller
             $is_advanced = false;
         }
 
-        $diversityDimensionDrivers = SyncToHubspotCategoriesCommand::loadTableData('diversity_dimension_drivers');
+        $diversityDimensionDrivers = CategoryDataHelper::loadTableData('diversity_dimension_drivers');
         $ddds = $diversityDimensionDrivers->toArray();
         if (!array_key_exists($diversity_dimension, $ddds)) {
             return response()->json(['error' => "Invalid parameter for 'diversity_dimension': '$diversity_dimension'"], 400);
@@ -186,40 +180,16 @@ class UserGuidelinesApiController extends Controller
         return response()->noContent();
     }
 
+    /**
+     * The routes carry `auth:extension`, so the bearer token — a Passport access
+     * token from the browser extension, or a Microsoft id_token from the Office
+     * add-in — has already been validated by App\Auth\ExtensionUserResolver and
+     * an unauthenticated request never reaches the controller.
+     *
+     * @return \App\Models\User
+     */
     protected function getUser(Request $request)
     {
-        $accessToken = $request->bearerToken();
-        $officeSsoHelper = new OfficeSsoHelper();
-
-        try {
-            $payload = $officeSsoHelper->decodeIdToken($accessToken);
-        } catch (Exception $e) {
-            abort(403);
-        }
-
-        $aud = $payload['aud'] ?? null;
-        $user = null;
-
-        try {
-            if ($aud === config('services.azureadb2c.client_id')) {
-                $provider = Socialite::driver('azureadb2c');
-                $socialiteUser = $provider->getUserByToken($accessToken);
-                $connectedUser = ConnectedAccount::where('provider_id', $socialiteUser->getId())->first();
-                if ($connectedUser instanceof ConnectedAccount) {
-                    $user = $connectedUser->user;
-                }
-            } elseif ($aud === config('services.microsoft_office.client_id')) {
-                $claims = $officeSsoHelper->validateIdToken($accessToken);
-                $email = strtolower($claims['preferred_username'] ?? '');
-                $user = Socialstream::newUserModel()->where('email', $email)->first();
-            }
-        } catch (Exception $e) {
-        }
-
-        if ($user === null) {
-            abort(403);
-        }
-
-        return $user;
+        return $request->user();
     }
 }

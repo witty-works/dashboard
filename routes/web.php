@@ -4,8 +4,6 @@ use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\Livewire\OrganizationGuidelinesController;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\StripeController;
-use App\Http\Controllers\WebhookController;
 
 /*
 |------------------
@@ -16,7 +14,7 @@ use App\Http\Controllers\TeamInvitationController;
 use Laravel\Jetstream\Http\Controllers\CurrentTeamController;
 use Laravel\Jetstream\Http\Controllers\Livewire\ApiTokenController;
 use App\Http\Controllers\Livewire\TeamController;
-use App\Http\Controllers\Livewire\PromptController;
+use App\Http\Controllers\WriteController;
 use App\Http\Controllers\Livewire\UserGuidelinesController;
 use Laravel\Jetstream\Http\Controllers\Livewire\UserProfileController;
 use Laravel\Jetstream\Jetstream;
@@ -28,28 +26,14 @@ use Laravel\Jetstream\Jetstream;
 
 /*
 |------------------
-| SOCIALSTREAM
+| SOCIAL AUTH
 |------------------
 */
 use App\Http\Controllers\OAuthController;
 use App\Http\Controllers\WelcomeController;
 /*
 |------------------
-| \SOCIALSTREAM
-|------------------
-*/
-
-/*
-|------------------
-| MCAMARA LARAVELLOCALIZATION
-|------------------
-*/
-
-use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
-
-/*
-|------------------
-| \MCAMARA LARAVELLOCALIZATION
+| \SOCIAL AUTH
 |------------------
 */
 
@@ -64,16 +48,24 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 |
 */
 
-Route::group(
-    [
-        'prefix' => LaravelLocalization::setLocale(),
-        'middleware' => ['localize', 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath']
-    ],
+Route::localize(
     function () {
-        Route::impersonate();
+        // Superadmins need two-factor sign-in to impersonate. Leaving is not
+        // affected: the impersonated user is never a superadmin.
+        // Not from another site: taking over a session is a GET (the package's
+        // route), which a link or image elsewhere could otherwise trigger.
+        Route::middleware(['superadmin.two-factor', 'same-site-request'])->group(function () {
+            Route::impersonate();
+        });
 
-        Route::get('/office-login', [OAuthController::class, 'handleOfficeSsoLogin'])->name('office_login');
-        Route::get('/office-register', [OAuthController::class, 'handleOfficeSsoRegister'])->name('office_register');
+        Route::get('/terms', [\App\Http\Controllers\TermsController::class, 'show'])->name('terms.show');
+        Route::get('/policy', [\App\Http\Controllers\PolicyController::class, 'show'])->name('policy.show');
+
+        // The add-in opens these with its token in the URL fragment; the page
+        // posts it. See OAuthController::showOfficeSsoBridge().
+        Route::get('/office-login', [OAuthController::class, 'showOfficeSsoBridge'])->name('office_login');
+        Route::post('/office-login', [OAuthController::class, 'handleOfficeSsoLogin'])->name('office_login_post');
+        Route::get('/office-register', [OAuthController::class, 'showOfficeSsoBridge'])->name('office_register');
         Route::post('/office-register', [OAuthController::class, 'handleOfficeSsoRegister'])->name('office_register_post');
 
         /*
@@ -82,16 +74,18 @@ Route::group(
         |------------------
         */
         Route::group(['middleware' => config('jetstream.middleware', ['web'])], function () {
-            Route::group(['middleware' => ['auth:' . config('fortify.guard')]], function () {
+            Route::group(['middleware' => ['auth:' . config('fortify.guard'), 'team']], function () {
                 Route::get('/', [WelcomeController::class, 'show'])->name('root');
 
-                Route::get('/editor', function () {
-                    return view('editor');
-                })->name('editor');
+                // Invite only: where a user without a team waits.
+                Route::view('/no-team', 'no-team')->name('no-team');
 
-                Route::get('/prompt', [PromptController::class, 'show'])->name('prompt');
 
-                Route::get('/subscribe', [StripeController::class, 'subscribe'])->name('stripe.subscribe');
+                Route::get('/write', [WriteController::class, 'show'])
+                    ->middleware('verified')
+                    ->name('write');
+                // Witty GPT's old address.
+                Route::get('/prompt', fn () => redirect()->route('write'))->name('prompt');
 
                 Route::post('/user/onboarding', [UserProfileController::class, 'storeOnboarding'])
                     ->name('profile.onboarding.store');
@@ -99,6 +93,14 @@ Route::group(
                 // User & Profile...
                 Route::get('/user/profile', [UserProfileController::class, 'show'])
                     ->name('profile.show');
+
+                // Keys kept by the NLP API, for a verified address only: the
+                // API knows people by address.
+                Route::get('/user/api-keys', function () {
+                    abort_unless(app(\App\Services\NlpApiKeys::class)->enabled(), 404);
+
+                    return view('api-keys');
+                })->middleware('verified')->name('api-keys');
 
                 Route::get('/user/mailing', [WelcomeController::class, 'mailingConsent'])
                     ->name('user.mailing_consent');
@@ -116,13 +118,12 @@ Route::group(
                 if (Jetstream::hasTeamFeatures()) {
                     Route::get('/team/show', [TeamController::class, 'show'])->name('teams.show');
                     Route::put('/current-team', [CurrentTeamController::class, 'update'])->name('current-team.update');
-                    Route::get('/team/subscription', [StripeController::class, 'show'])->name('teams.subscription');
-
                     Route::get('/team-invitations/{invitation}/accept', [TeamInvitationController::class, 'accept'])
                         ->middleware(['auth'])
                         ->name('team-invitations.accept');
 
-                    Route::get('/team-invitations/{invitation}/reject', [TeamInvitationController::class, 'destroy'])
+                    // A POST: it deletes the invitation, so no other site may link to it.
+                    Route::post('/team-invitations/{invitation}/reject', [TeamInvitationController::class, 'destroy'])
                         ->middleware(['auth'])
                         ->name('team-invitations.reject');
 
@@ -133,7 +134,7 @@ Route::group(
                     Route::get('/user/language/dictionary', [UserGuidelinesController::class, 'termReplacements'])->name('user.dictionary');
                     Route::get('/user/language/ignore-words', [UserGuidelinesController::class, 'falsePositives'])->name('user.ignored-words');
                     Route::get('/user/language/privacy-settings', [UserGuidelinesController::class, 'domains'])->name('user.privacy-settings');
-                    Route::get('/user/analytics', [AnalyticsController::class, 'user'])->name('user.analytics');
+                    Route::get('/user/analytics', [AnalyticsController::class, 'user'])->middleware('analytics.pages')->name('user.analytics');
 
                     Route::redirect('/team/language', '/team/language/customize-witty')->name('teams.language-guidelines');
                     Route::get('/team/language/customize-witty', [OrganizationGuidelinesController::class, 'categorySettings'])->name('teams.category-settings');
@@ -141,14 +142,7 @@ Route::group(
                     Route::get('/team/language/dictionary', [OrganizationGuidelinesController::class, 'termReplacements'])->name('teams.dictionary');
                     Route::get('/team/language/ignored-words', [OrganizationGuidelinesController::class, 'falsePositives'])->name('teams.ignored-words');
                     Route::get('/team/language/privacy-settings', [OrganizationGuidelinesController::class, 'domains'])->name('teams.privacy-settings');
-                    Route::get('/team/analytics', [AnalyticsController::class, 'organization'])->name('teams.analytics');
-
-                    $prefix = config('lumki.prefix') ?? "lumki";
-                    $lumkiPermission = config('lumki.lumkiPermission') ?? "manage users";
-                    $middleware = config('lumki.middleware') ?? ["auth:sanctum", "web", "can:$lumkiPermission"];
-                    Route::prefix($prefix)->middleware($middleware)->group(function () {
-                        Route::get('/subscriptions', [StripeController::class, 'subscriptions'])->name('subscriptions');
-                    });
+                    Route::get('/team/analytics', [AnalyticsController::class, 'organization'])->middleware('analytics.pages')->name('teams.analytics');
                 }
             });
         });
@@ -157,47 +151,37 @@ Route::group(
         | \JETSTREAM LIVEWIRE
         |------------------
         */
-
-        /*
-        |------------------
-        | CASHIER
-        |------------------
-        */
-
-        Route::middleware(['auth:sanctum'])->group(function () {
-            Route::get('/stripe/portal', [StripeController::class, 'portal'])->name('stripe.portal');
-        });
-
-        /*
-        |------------------
-        | /CASHIER
-        |------------------
-        */
     }
 );
 
 
 /*
 |------------------
-| SOCIALSTREAM
+| SOCIAL AUTH
 |------------------
 */
-Route::group(['middleware' => config('socialstream.middleware', ['web'])], function () {
-    Route::get('/', [WelcomeController::class, 'show'])->name('login');
-    Route::redirect('/register', '/oauth/azureadb2c/register')->name('register');
-    Route::get('/mock-login', [OAuthController::class, 'mockLogin'])->name('mock-login');
-    Route::get('/logout/{provider}', [OAuthController::class, 'logout'])->name('logout');
-    Route::get('/oauth/{provider}/{policy}', [OAuthController::class, 'redirectToProvider'])->name('oauth.redirect');
-    Route::get('/oauth/{provider}/{policy}/callback', [OAuthController::class, 'handleProviderCallback'])->name('oauth.callback');
-    Route::get('/browser-login', [OAuthController::class, 'redirectToProviderBrowserLogin'])->name('browser_login');
+// The write page's OAuth callback: outside the locale prefix, so the redirect
+// URI registered for its client (passport:editor-client) stays fixed.
+Route::get('/write/callback', [WriteController::class, 'show'])
+    ->middleware(['web', 'auth:' . config('fortify.guard'), 'verified'])
+    ->name('write.callback');
+
+// The emailed link for deleting an account without a password: outside the
+// locale prefix, so the signature covers the address the user opens. The
+// signed link proves the mailbox, so it works without a session: such
+// accounts sign in only from Word, and the mail opens in another browser.
+Route::get('/account/delete/{user}', [\App\Http\Controllers\DeleteAccountController::class, 'show'])
+    ->middleware(['web', 'signed'])
+    ->name('account.delete.confirm');
+Route::post('/account/delete/{user}', [\App\Http\Controllers\DeleteAccountController::class, 'destroy'])
+    ->middleware(['web', 'signed'])
+    ->name('account.delete.destroy');
+
+Route::group(['middleware' => config('social_auth.middleware', ['web'])], function () {
 
     Route::get('/team-invitations/{invitation}', [TeamInvitationController::class, 'acceptSigned'])
         ->middleware(['signed'])
         ->name('team-invitations.accept-signed');
-
-    Route::get('/download', function () {
-        return view('download');
-    })->name('download');
 
     Route::get('/word-addin', function () {
         return view('word-addin');
@@ -206,18 +190,39 @@ Route::group(['middleware' => config('socialstream.middleware', ['web'])], funct
 
 /*
 |------------------
-| \SOCIALSTREAM
+| \SOCIAL AUTH
 |------------------
 */
 
-Route::get('/roadmap', [WelcomeController::class, 'roadmap'])->name('roadmap');
-
-Route::post(
-    '/stripe/webhook',
-    [WebhookController::class, 'handleWebhook']
-)->name('cashier.webhook');
-
 
 Route::fallback(function () {
-    return view('errors.404');
+    return response()->view('errors.404', [], 404);
 });
+
+if (config('app.browser_extension')) {
+    // Entry point for the extension's "Sign in" / "Sign up" buttons: a thin
+    // redirect into the PKCE flow in routes/oauth.php. It no longer issues a
+    // token of its own.
+    Route::get('/browser-login', [OAuthController::class, 'browserLogin'])->name('browser_login');
+}
+
+// Asks a superadmin for a code before /admin when the session has not seen
+// one (Office SSO, "remember me"); see App\Support\SuperadminTwoFactor.
+Route::middleware(['auth'])->group(function () {
+    Route::get('/user/two-factor-verify', [\App\Http\Controllers\TwoFactorVerificationController::class, 'show'])
+        ->name('two-factor.verify');
+    Route::post('/user/two-factor-verify', [\App\Http\Controllers\TwoFactorVerificationController::class, 'store'])
+        ->middleware('throttle:two-factor-verify')
+        ->name('two-factor.verify.store');
+});
+
+// The superadmins' pages, outside the locale prefix. They need two-factor
+// sign-in (docs/user-management.md).
+Route::middleware(['auth', 'can:' . config('admin.permission'), 'superadmin.two-factor'])
+    ->prefix(config('admin.prefix'))
+    ->name('admin.')
+    ->group(function () {
+        Route::redirect('/', '/' . config('admin.prefix') . '/teams')->name('home');
+        Route::view('/teams', 'admin.teams')->name('teams');
+        Route::view('/users', 'admin.users')->name('users');
+    });

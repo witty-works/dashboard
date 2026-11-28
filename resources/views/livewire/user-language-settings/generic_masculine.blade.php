@@ -9,11 +9,11 @@
 
     <x-slot name="form" submit="updateLanguageGuidelinesGenericMasculine">
         @php
-            $disabled = !$model->isPremium() || \App\Models\LanguageGuidelines::isForcedOnTeam($model, 'generic_masculine');
+            $disabled = \App\Models\LanguageGuidelines::isForcedOnTeam($model, 'generic_masculine');
         @endphp
 
         @foreach (\App\Models\GuidelinesInterface::GENDERED_ROLES_FORMAT as $key => $value)
-        <div class="margin-bottom">
+        <div class="margin-bottom" wire:key="gendered-roles-format-{{ $key }}">
             <label class="guidelines-form-section-radio" style="cursor: {{ $disabled ? 'not-allowed' : 'pointer' }};">
                 <input
                     type="radio"

@@ -26,6 +26,8 @@
                     class="guidelines-form-section-dropdown margin-bottom"
                     wire:model="preferred_variants_en"
                     :disabled="\App\Models\LanguageGuidelines::isForcedOnTeam($model, 'preferred_variants')"
+                    aria-label="{{ __('guidelines.user_preferred_variants_dialect') }} {{ __('content.en') }}"
+                    error="preferred_variants_en"
                 />
                 <x-input-error for="preferred_variants_en" class="mt-2" role="alert" />
             </div>
@@ -43,13 +45,14 @@
                     class="guidelines-form-section-dropdown lato-small-text-p"
                     wire:model="preferred_variants_de"
                     :disabled="\App\Models\LanguageGuidelines::isForcedOnTeam($model, 'preferred_variants')"
+                    aria-label="{{ __('guidelines.user_preferred_variants_dialect') }} {{ __('content.de') }}"
+                    error="preferred_variants_de"
                 />
                 <x-input-error for="preferred_variants_de" class="mt-2" role="alert" />
             </div>
             @include('partials.toggle_label', ['disabled' => \App\Models\LanguageGuidelines::isForcedOnTeam($model, 'preferred_variants')])
         </div>
 
-        @if(\App\Http\Kernel::isFrenchEnabled($model))
         <div class="mt-4">
         <label class="lato-small-text-p" for="preferred_variants_fr">
             {{ __('guidelines.user_preferred_variants_dialect') }}
@@ -62,13 +65,14 @@
                     class="guidelines-form-section-dropdown lato-small-text-p"
                     wire:model="preferred_variants_fr"
                     :disabled="\App\Models\LanguageGuidelines::isForcedOnTeam($model, 'preferred_variants')"
+                    aria-label="{{ __('guidelines.user_preferred_variants_dialect') }} {{ __('content.fr') }}"
+                    error="preferred_variants_fr"
                 />
                 <x-input-error for="preferred_variants_fr" class="mt-2" role="alert" />
             </div>
             @include('partials.toggle_label', ['disabled' => \App\Models\LanguageGuidelines::isForcedOnTeam($model, 'preferred_variants')])
         </div>
         </div>
-        @endif
     </x-slot>
 
     @if(!\App\Models\LanguageGuidelines::isForcedOnTeam($model, 'preferred_variants'))

@@ -1,6 +1,6 @@
 <?php
 
-use App\Console\Commands\SyncToHubspotCategoriesCommand;
+use App\Helpers\CategoryDataHelper;
 use App\Models\GuidelinesInterface;
 use App\Models\LanguageGuidelines;
 use App\Models\Team;
@@ -68,7 +68,7 @@ return new class extends Migration
      */
     public function up()
     {
-        $this->diversityDimensionDrivers = SyncToHubspotCategoriesCommand::loadTableData('diversity_dimension_drivers');
+        $this->diversityDimensionDrivers = CategoryDataHelper::loadTableData('diversity_dimension_drivers');
 
         foreach ($this->diversityDimensionDrivers as $ddd => $config) {
             if (empty($config['category']) || empty($config['proficiency_level']) || $config['proficiency_level'] === 'openly_discriminating') {
@@ -78,7 +78,7 @@ return new class extends Migration
             $this->advanced[] = 'advanced_' . $ddd;
         }
 
-        $categories = SyncToHubspotCategoriesCommand::loadTableData('categories');
+        $categories = CategoryDataHelper::loadTableData('categories');
         $this->newCategories += $categories->keys()->toArray();
 
         $query = Team::query();

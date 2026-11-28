@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Console\Commands\SyncToHubspotCategoriesCommand;
+use App\Helpers\CategoryDataHelper;
 use App\Helpers\PosthogHelper;
 use App\Http\Controllers\Livewire\UserGuidelinesController;
 use App\Jobs\SendEventToPosthog;
@@ -18,9 +18,6 @@ class LanguageGuidelines extends Model
     const BASIC_ENABLED = 1;
     const ADVANCED_ENABLED = 2;
 
-    const UNLIMITED = 999;
-
-    static public $tripleToogleLoaded = false;
 
     use HasFactory;
     use GuidelinesUpdateTrait {
@@ -30,6 +27,7 @@ class LanguageGuidelines extends Model
     protected $attributes = [
         'german_gender_ending' => '*in',
         'french_gender_separator' => '·',
+        'french_gender_suffix' => 'short',
         'gendered_roles_format' => 'inclusive_gender',
         'show_inspiration_alternatives' => false,
         'generic_masculine_force' => true,
@@ -62,6 +60,7 @@ class LanguageGuidelines extends Model
         'preferred_variants',
         'german_gender_ending',
         'french_gender_separator',
+        'french_gender_suffix',
         'gendered_roles_format',
         'show_inspiration_alternatives',
     ];
@@ -72,8 +71,8 @@ class LanguageGuidelines extends Model
 
     public function __construct(array $attributes = [])
     {
-        $this->proficiencyLevels = SyncToHubspotCategoriesCommand::loadTableData('proficiency_levels');
-        $this->diversityDimensionDrivers = SyncToHubspotCategoriesCommand::loadTableData('diversity_dimension_drivers');
+        $this->proficiencyLevels = CategoryDataHelper::loadTableData('proficiency_levels');
+        $this->diversityDimensionDrivers = CategoryDataHelper::loadTableData('diversity_dimension_drivers');
 
         $disabled_categories = [];
         foreach ($this->getDiversityDimensionDrivers(null, true, true) as $ddd => $config) {
@@ -107,15 +106,6 @@ class LanguageGuidelines extends Model
         $filter = [$model instanceof Team ? 'team_id' : 'user_id'  => $model->id];
         $languageGuideline = LanguageGuidelines::firstOrNew($filter);
 
-        if (!$model->isPremium()) {
-            $disabled_categories = $languageGuideline->disabled_categories;
-            foreach ($languageGuideline->getDiversityDimensionDrivers(null, true, true) as $ddd => $config) {
-                if (!in_array($ddd, $disabled_categories)) {
-                    $disabled_categories[] = $ddd;
-                }
-            }
-            $languageGuideline->disabled_categories = $disabled_categories;
-        }
         if ($languageGuideline->disabled_categories_force === null) {
             $languageGuideline->disabled_categories_force = [];
         }
@@ -155,8 +145,7 @@ class LanguageGuidelines extends Model
             $genderedRolesFormat = $this->gendered_roles_format;
         }
 
-        $subscribed = $this->team_id ? $this->team->isPremium() : $this->user->isPremium();
-        if (!$subscribed || !array_key_exists($genderedRolesFormat, GuidelinesInterface::GENDERED_ROLES_FORMAT)) {
+        if (!array_key_exists($genderedRolesFormat, GuidelinesInterface::GENDERED_ROLES_FORMAT)) {
             return key(GuidelinesInterface::GENDERED_ROLES_FORMAT);
         }
 
@@ -210,8 +199,6 @@ class LanguageGuidelines extends Model
             $level = LanguageGuidelines::BASIC_ENABLED;
         } elseif (empty($level)) {
             $level = LanguageGuidelines::DISABLED;
-        } elseif (!$this->model->isPremium()) {
-            $level = LanguageGuidelines::BASIC_ENABLED;
         }
 
         switch ($level) {
@@ -237,6 +224,17 @@ class LanguageGuidelines extends Model
 
     public function inPlaceUpateArray($element, $column, $enabled)
     {
+        // A user or team that never saved a setting has no row yet:
+        // getLanguageGuidelines() returns an unsaved one with the defaults, and
+        // the UPDATE below, by id, would change nothing. JSON_CONTAINS on a NULL
+        // column is NULL, so a NULL list would not change either; in memory it
+        // may already read as [] (getLanguageGuidelines() sets that for the
+        // force list), so a changed attribute is saved too.
+        if (! $this->exists || $this->isDirty($column) || $this->{$column} === null) {
+            $this->{$column} ??= [];
+            $this->save();
+        }
+
         $params = [':id' => $this->id, ':element' => $element, ':element_json' => "\"$element\""];
 
         if ($enabled) {
@@ -272,55 +270,45 @@ class LanguageGuidelines extends Model
             $event = PosthogHelper::STORE_TEAM_LANGUAGE;
         }
 
-        $subscribed = $user->isPremium();
-
         switch ($type) {
             case 'Language':
                 $properties = [
                     'language_type' => (new \ReflectionClass($this))->getShortName(),
                     'preferred_variants' => $this->preferred_variants,
-                    'force' => !$subscribed || $this->preferred_variants_force,
+                    'force' => $this->preferred_variants_force,
                 ];
                 break;
             case 'German':
                 $properties = [
                     'language_type' => (new \ReflectionClass($this))->getShortName(),
                     'german_gender_ending' => $this->german_gender_ending,
-                    'force' => !$subscribed || $this->german_rules_force,
+                    'force' => $this->german_rules_force,
                 ];
                 break;
             case 'French':
                 $properties = [
                     'language_type' => (new \ReflectionClass($this))->getShortName(),
                     'french_gender_separator' => $this->french_gender_separator,
-                    'force' => !$subscribed || $this->german_rules_force,
+                    'french_gender_suffix' => $this->french_gender_suffix,
+                    'force' => $this->french_rules_force,
                 ];
                 break;
             case 'GenericMasculine':
                 $properties = [
                     'language_type' => (new \ReflectionClass($this))->getShortName(),
                     'gendered_roles_format' => $this->gendered_roles_format,
-                    'force' => !$subscribed || $this->generic_masculine_force,
+                    'force' => $this->generic_masculine_force,
                 ];
                 break;
             case 'Inspiration':
                 $properties = [
                     'language_type' => (new \ReflectionClass($this))->getShortName(),
                     'show_inspiration_alternatives' => $this->show_inspiration_alternatives,
-                    'force' => !$subscribed || $this->show_inspiration_alternatives_force,
+                    'force' => $this->show_inspiration_alternatives_force,
                 ];
                 break;
             case 'Category':
-                if (!$subscribed) {
-                    $disabled_categories_force = [];
-                    if (is_array($this->disabled_categories_force)) {
-                        foreach ($this->disabled_categories_force as $key => $value) {
-                            $disabled_categories_force[] = $key;
-                        }
-                    }
-                } else {
-                    $disabled_categories_force = (array) $this->disabled_categories_force;
-                }
+                $disabled_categories_force = (array) $this->disabled_categories_force;
                 $properties = [
                     'language_type' => (new \ReflectionClass($this))->getShortName(),
                     'disabled_categories' => $this->disabled_categories,
@@ -350,9 +338,6 @@ class LanguageGuidelines extends Model
 
     public static function isForcedOnTeam(User $user, $section, $category = null)
     {
-        if (!$user->isPremium()) {
-            return 'locked_upgrade';
-        }
 
         $teamGuidelines = self::getTeamGuidelines($user);
 
@@ -404,7 +389,7 @@ class LanguageGuidelines extends Model
 
         switch ($type) {
             case UserGuidelinesController::CATEGORY_SETTINGS:
-                $diversityDimensionDrivers = SyncToHubspotCategoriesCommand::loadTableData('diversity_dimension_drivers');
+                $diversityDimensionDrivers = CategoryDataHelper::loadTableData('diversity_dimension_drivers');
 
                 foreach ($diversityDimensionDrivers as $ddd => $config) {
                     if (!empty($config['category']) && $config['category'] === 'orthography') {

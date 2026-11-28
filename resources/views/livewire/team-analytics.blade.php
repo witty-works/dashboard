@@ -14,17 +14,15 @@
                 value="1"
                 wire:model="team_analytics"
                 :label="__('guidelines.team_analytics_participate')"
-                :disabled="!$model->isPremium() ? 'upgrade' : false"
                 aria-label="{{ __('guidelines.team_analytics_participate') }}"
+                error="team_analytics"
             />
 
-            <x-input-error for="team_analytics" class="mt-2" aria-describedby="team_analytics" />
+            <x-input-error for="team_analytics" class="mt-2" />
         </div>
     </x-slot>
 
-    @if ($model->isPremium())
     <x-slot name="actions">
         @include('partials/save_cancel_action')
     </x-slot>
-    @endif
 </x-form-section>

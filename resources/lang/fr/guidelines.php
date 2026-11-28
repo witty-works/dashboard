@@ -15,7 +15,7 @@ Witty surlignera tous les mots ajoutés à cette liste et suggérera vos alterna
     'language_settings_label' => 'Paramètres linguistiques',
     'manage_organization_guidelines' => 'Gérer les lignes directrices de l\'organisation',
     'manage_organization_guidelines_description' => 'Configurez Witty pour qu\'il corresponde mieux au style d\'écriture de votre équipe.',
-    'german_gender_ending' => 'Witty recommande l\'astérisque (\'Genderstar\'). Nous expliquons <a href="https://be-hindernisse.org/2022/02/15/mythos-der-doppelpunkt-ist-perfekt-zum-entgendern/" target="_blank">ici</a> pourquoi. Pour en savoir plus sur toutes les formes de langage inclusif en allemand, consultez <a href="https://www.witty.works/fr/blog/post/langage-non-genr%C3%A9-en-fran%C3%A7ais"  target="_blank">notre article de blog dédié</a>.',
+    'german_gender_ending' => 'Witty recommande l\'astérisque (\'Genderstar\'). Nous expliquons <a href="https://be-hindernisse.org/2022/02/15/mythos-der-doppelpunkt-ist-perfekt-zum-entgendern/" target="_blank">ici</a> pourquoi. Pour en savoir plus sur toutes les formes de langage inclusif en allemand, consultez <a href="https://www.witty.works/en/blog/gender-inclusive-writing-in-german"  target="_blank">notre article de blog dédié</a>.',
     'list_false_positives' => 'Mots ignorés',
     'list_false_positives_description' => 'Witty ne surlignera plus aucun mot de cette liste pour vous.',
     'list_term_replacements' => 'Dictionnaire personnel',
@@ -115,7 +115,7 @@ Witty surlignera tous les mots ajoutés à cette liste et suggérera vos alterna
     'advanced_toggle_title' => 'Définissez votre niveau de compétence',
     'advanced_toggle_description' => 'Avec Witty Teams, vous avez le choix entre trois niveaux de compétence pour de nombreuses catégories :',
     'advanced_toggle_advice' => 'Cela vous permet d\'adapter Witty à vos besoins et vos priorités.',
-    'advanced_toggle_disclaimer' => '<span style="color:#f06464">Nous recommandons de choisir le niveau de base au début.</span>',
+    'advanced_toggle_disclaimer' => '<span style="color:#b91c1c">Nous recommandons de choisir le niveau de base au début.</span>',
     'advanced_toggle_example' => 'Pour comprendre ce que cela signifie, prenons un exemple : la catégorie « <a href="https://www.witty.works/en/categories/ability-physicality/vision" target="_blank">vision »</a>. Au niveau de base, l\'expression <i>« fermer les yeux sur »</i> sera surlignée. Au niveau avancé, même les préjugés inconscients les plus subtils, comme le mot <i>« éclairé »</i>, seront surlignés.',
     'toggle_advanced_vs' => 'Niveau de base ou avancé',
     'proficiency_level_off' => 'Désactivé',
@@ -134,7 +134,7 @@ Witty surlignera tous les mots ajoutés à cette liste et suggérera vos alterna
     'manage_organization_guidelines_generic_masculine' => 'Le masculin générique dans les langues genrées',
     'manage_organization_guidelines_description_generic_masculine' => 'Comment Witty devrait-il traiter le masculin générique dans des langues sexuées comme <a href="https://www.witty.works/fr/blog/post/langage-non-genr%C3%A9-en-fran%C3%A7ais" target="_new">le français</a> ou <a href="https://www.witty.works/en/blog/gender-inclusive-writing-in-german" target="_new">l\'allemand</a>  ?',
     'llm_alternatives_headline' => 'Utilisation du Large-Language-Model',
-    'llm_alternatives_description' => 'Activer cette fonctionnalité permet à Witty d\'utiliser des outils d\'IA avancés pour améliorer ses fonctionnalités. Aucune donnée n\'est stockée ni utilisée à des fins d\'entraînement, comme indiqué sur notre page <a href="https://www.witty.works/trust-and-security">Confiance et Sécurité</a>.
+    'llm_alternatives_description' => 'Activer cette fonctionnalité permet à Witty d’utiliser un grand modèle de langage (LLM). Les textes concernés sont envoyés au fournisseur du modèle de langage de ce service ; sa politique de confidentialité nomme le fournisseur et indique ce qu’il advient des textes.
 
 Lorsqu\'elle est activée, Witty utilise des LLM (Large-Language-Model) pour générer des alternatives grammaticalement correctes. Si vous désactivez cette fonctionnalité, les utilisateur·trices devront manuellement ajuster les alternatives.
 
@@ -157,5 +157,14 @@ Les LLM sont également utilisés pour Witty GPT, notre solution GenAI qui produ
     'germam_gender_separator_slash' => 'Barre oblique, p. ex. Expert/in',
     'germam_gender_separator_slash_dash' => 'Barre oblique + Tiret, p. ex. Expert/-in',
     'germam_gender_separator_binnen_i' => 'Binnen-I, p. ex. ExpertIn',
+    'germam_gender_separator_parenthesis_dash' => 'Parenthèses + Tiret, p. ex. Expert(-in)',
+    'germam_gender_separator_parenthesis' => 'Parenthèses, p. ex. Expert(in)',
+    'germam_gender_separator_inklusivum' => 'Inklusivum, p. ex. de Expertere',
     'french_gender_separator' => 'Witty recommande le point médian. Nous expliquons <a href="https://www.witty.works/fr/blog/post/langage-non-genr%C3%A9-en-fran%C3%A7ais" target="_blank">ici</a> pourquoi.',
+    'german_gender_ending_label' => 'Terminaison de genre',
+    'french_gender_separator_label' => 'Séparateur de genre',
+    'french_gender_suffix_short' => 'Terminaison courte, p. ex. utilisateur·rice, vendeur·se',
+    'french_gender_suffix_full' => 'Terminaison complète, p. ex. utilisateur·trice, vendeur·euse',
+    'french_gender_suffix' => 'Choisissez si la terminaison féminine s\'écrit en version courte ou complète, quand les deux sont possibles : utilisateur·rice ou utilisateur·trice. Les autres formes, comme enseignant·e, restent identiques.',
+    'french_gender_suffix_label' => 'Terminaison féminine',
 ];

@@ -1,15 +1,11 @@
 <x-form-section submit="storeFalsePositive">
     <x-slot name="title">
-        <h2 id="organization_false_positives">{{ __('guidelines.create_false_positive') }}</h2>
+        {{ __('guidelines.create_false_positive') }}
     </x-slot>
 
     <x-slot name="description">
-        <p aria-describedby="organization_false_positives">
-            @if($model->getFalsePositivesLimitReached() && Auth::user()->ownsTeam($model) && !$model->isPremium())
-                {!! __('guidelines.false_positive_limit_reached', ['max_count' => $model->getFalsePositivesCount(), 'url' => route('teams.subscription')]) !!}
-            @else
+        <p>
                 {!! Str::markdown(__('guidelines.create_new_false_positive_description')) !!}
-            @endif
         </p>
     </x-slot>
 
@@ -23,6 +19,7 @@
                          autocomplete="off"
                          aria-autocomplete="none"
                          :disabled="! Auth::user()->hasTeamPermission($model, 'edit_guidelines')"
+                         error="false_positive"
             />
             <x-input-error for="false_positive" class="mt-2" />
         </div>

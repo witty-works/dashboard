@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Jobs\Concerns\RetriesThroughOutages;
 use App\Helpers\PosthogHelper;
 use App\Models\Team;
 use PostHog\PostHog;
@@ -17,36 +18,33 @@ use InvalidArgumentException;
 class SendEventToPosthog implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
-    /**
-     * The number of times the job may be attempted.
-     *
-     * @var int
-     */
-    public $tries = 50;
+    use RetriesThroughOutages;
 
     protected $id;
     protected $event;
     protected $properties;
 
-    public function __construct(User $user, $event, $properties, $isEdit = false, Team $team = null)
+    public function __construct(User $user, $event, $properties, $isEdit = false, ?Team $team = null)
     {
         $this->id = $user->id;
         $this->event = $event;
         $this->properties = $properties;
         $this->properties['is_edit'] = $isEdit;
         if ($team) {
-            $this->properties['$group'] = [
+            $this->properties['$groups'] = [
                 PosthogHelper::POSTHOG_ORGANIZATION_TYPE => $team->posthogId()
             ];
         }
+        // Run before a deletion commits, it would recreate the deleted person.
+        $this->afterCommit();
     }
 
     public function handle()
     {
         $user = User::find($this->id);
         if (!$user instanceof User) {
-            throw new InvalidArgumentException("User id '{$this->id} does not exist.");
+            // Deleted since the event was queued; nothing to send.
+            return true;
         }
 
         if (!config('posthog.enabled')) {
@@ -55,10 +53,7 @@ class SendEventToPosthog implements ShouldQueue
             return true;
         }
 
-        PostHog::init(
-            config('posthog.api_key'),
-            ['host' => config('posthog.host'), 'debug' => config('posthog.debug')],
-        );
+        PosthogHelper::init();
 
         $data = [
             'distinctId' => $user->posthogId(),
@@ -66,7 +61,7 @@ class SendEventToPosthog implements ShouldQueue
             'properties' => $this->properties,
         ];
 
-        $result = PostHog::capture($data);
+        $result = PosthogHelper::sent(PostHog::capture($data));
         if (!$result) {
             throw new InvalidArgumentException("User id '{$this->id} could not be added to Posthog.");
         }

@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Teams;
 
+use Livewire\Attributes\Locked;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -16,6 +17,7 @@ class AnalyticsUserAccess extends Component
         'user_access_to_team_analytics' => 'nullable|boolean',
     ];
 
+    #[Locked]
     public $model;
 
     /**
@@ -36,9 +38,6 @@ class AnalyticsUserAccess extends Component
         $this->resetErrorBag();
 
         $this->user_access_to_team_analytics = (bool) $this->model->user_access_to_team_analytics;
-        if (!$this->model->isPremium()) {
-            $this->user_access_to_team_analytics = true;
-        }
     }
 
     public function updateUserAccessToTeamAnalytics()
@@ -48,10 +47,6 @@ class AnalyticsUserAccess extends Component
         }
 
         $this->validate();
-
-        if (!$this->model->isPremium()) {
-            $this->user_access_to_team_analytics = true;
-        }
 
         $this->model->user_access_to_team_analytics = (bool) $this->user_access_to_team_analytics;
         $this->model->save();

@@ -2,13 +2,17 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Str;
+
 use App\Actions\Fortify\CreateNewUser;
+use App\Actions\Fortify\ResetUserPassword;
 use App\Actions\Fortify\UpdateUserProfileInformation;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Fortify\Fortify;
+use Laravel\Fortify\Contracts\ResetsUserPasswords;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -19,7 +23,7 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        Fortify::ignoreRoutes();
+        $this->app->singleton(ResetsUserPasswords::class, ResetUserPassword::class);
     }
 
     /**
@@ -31,13 +35,44 @@ class FortifyServiceProvider extends ServiceProvider
     {
         Fortify::createUsersUsing(CreateNewUser::class);
         Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
+        
+        Fortify::loginView(function () {
+            return view('auth.login');
+        });
+        
+        Fortify::registerView(function () {
+            return view('auth.register');
+        });
+        
+        // Unverified users are sent here, for example by an invitation link
+        // or a page that requires a verified address.
+        Fortify::verifyEmailView(function () {
+            return view('auth.verify-email');
+        });
+
+        Fortify::requestPasswordResetLinkView(function () {
+            return view('auth.forgot-password');
+        });
+        
+        Fortify::resetPasswordView(function ($request) {
+            return view('auth.reset-password', ['request' => $request]);
+        });
 
         RateLimiter::for('login', function (Request $request) {
-            return Limit::perMinute(5)->by(strtolower($request->email) . $request->ip());
+            // A string whatever was sent: an address sent as a list must not
+            // turn the throttle into an error.
+            $email = $request->input(Fortify::username());
+
+            return Limit::perMinute(5)->by(Str::transliterate(Str::lower(is_string($email) ? $email : '')) . '|' . $request->ip());
         });
 
         RateLimiter::for('two-factor', function (Request $request) {
             return Limit::perMinute(5)->by($request->session()->get('login.id'));
+        });
+
+        // The code a signed-in superadmin enters before /admin.
+        RateLimiter::for('two-factor-verify', function (Request $request) {
+            return Limit::perMinute(5)->by($request->user()?->getAuthIdentifier() ?: $request->ip());
         });
     }
 }

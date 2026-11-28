@@ -1,0 +1,113 @@
+name: build image
+
+# Builds the Docker image for linux/amd64, as release-image.yaml does, but
+# without pushing it, and boots it against MariaDB, whenever the build or the
+# application code it boots changes. The release build only runs on a version tag, after the merge, and
+# publishes what it builds; this one tests the same build on the branch.
+
+on:
+  push:
+    branches: ["**"]
+    paths:
+      - Dockerfile
+      - .dockerignore
+      - docker/**
+      - composer.json
+      - composer.lock
+      - package.json
+      - package-lock.json
+      - vite.config.js
+      - tailwind.config.js
+      - postcss.config.js
+      # The image boots the app, so a change there can break the smoke test.
+      - app/**
+      - bootstrap/**
+      - config/**
+      - database/**
+      - resources/**
+      - routes/**
+      - .github/workflows/image.yaml
+  workflow_dispatch:
+
+concurrency:
+  group: image-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  image:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # No later step uses git with the token: the build reads the
+          # checkout as files. Left in .git/config, the token would be readable
+          # by the build and whatever it runs.
+          persist-credentials: false
+
+      - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
+
+      - name: Build
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
+        with:
+          context: .
+          platforms: linux/amd64
+          push: false
+          # Kept in the runner's image store for the smoke test below.
+          load: true
+          tags: dashboard:ci
+          build-args: |
+            GIT_REVISION=${{ github.sha }}
+
+      # The image boots: the framework caches build from the environment, and
+      # the web role serves /up and the login page against a real database.
+      - name: Smoke test
+        run: |
+          set -eu
+          # The app user may write to storage and bootstrap/cache only, never
+          # to the code it runs.
+          docker run --rm --entrypoint sh dashboard:ci -c \
+            'test -w storage && test -w bootstrap/cache && ! test -w public && ! test -w app && ! test -w vendor'
+          docker network create smoke
+          docker run -d --name db --network smoke \
+            -e MARIADB_DATABASE=dashboard -e MARIADB_USER=dashboard \
+            -e MARIADB_PASSWORD=dashboard -e MARIADB_RANDOM_ROOT_PASSWORD=1 \
+            --health-cmd "healthcheck.sh --connect --innodb_initialized" \
+            --health-interval 2s --health-retries 30 \
+            "$MARIADB_IMAGE"
+          for _ in $(seq 60); do
+            [ "$(docker inspect -f '{{.State.Health.Status}}' db)" = healthy ] && break
+            sleep 2
+          done
+          app_key="base64:$(openssl rand -base64 32)"
+          cat > smoke.env <<EOF
+          APP_KEY=$app_key
+          APP_URL=http://localhost:8080
+          DB_HOST=db
+          DB_DATABASE=dashboard
+          DB_USERNAME=dashboard
+          DB_PASSWORD=dashboard
+          DB_SSLMODE=disable
+          SESSION_DRIVER=database
+          QUEUE_CONNECTION=database
+          MAIL_MAILER=log
+          EOF
+          docker run --rm --network smoke --env-file smoke.env dashboard:ci migrate
+          docker run -d --name web --network smoke --env-file smoke.env -p 8080:8080 dashboard:ci
+          for _ in $(seq 30); do
+            curl -fsS -H 'X-Forwarded-Proto: https' http://127.0.0.1:8080/up && break
+            sleep 2
+          done
+          curl -fsS -H 'X-Forwarded-Proto: https' http://127.0.0.1:8080/up
+          curl -fsS -H 'X-Forwarded-Proto: https' http://127.0.0.1:8080/login | grep -q '<form'
+          # A file Caddy serves without PHP carries the security headers too.
+          curl -fsSI http://127.0.0.1:8080/robots.txt | grep -qi '^x-content-type-options: nosniff'
+        env:
+          # As the production compose file runs.
+          MARIADB_IMAGE: mariadb:11.8
+
+      - name: Container logs
+        if: always()
+        run: docker logs web 2>&1 | tail -n 100 || true

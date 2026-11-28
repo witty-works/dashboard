@@ -2,10 +2,13 @@
 
 namespace App\Livewire\OrganizationLanguageSettings;
 
+use Livewire\Attributes\Locked;
 use App\Livewire\TeamsGuidelineTrait;
+use App\Models\GuidelinesInterface;
 use App\Models\LanguageGuidelines;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 use Livewire\Component;
 
 class French extends Component
@@ -18,12 +21,18 @@ class French extends Component
     public $enabled;
     public $french_rules_force;
     public $french_gender_separator;
+    public $french_gender_suffix;
 
-    protected $rules = [
-        'french_rules_force' => 'nullable|boolean',
-        'french_gender_separator' => 'nullable|string|in:·,·s,.,.s,/,/s',
-    ];
+    protected function rules(): array
+    {
+        return [
+            'french_rules_force' => 'nullable|boolean',
+            'french_gender_separator' => ['nullable', 'string', Rule::in(array_keys(GuidelinesInterface::FRENCH_GENDER_SEPARATOR))],
+            'french_gender_suffix' => ['required', 'string', Rule::in(array_keys(GuidelinesInterface::FRENCH_GENDER_SUFFIX))],
+        ];
+    }
 
+    #[Locked]
     public $model;
 
     public static function isEnabled($genderedRolesFormat, $preferredVariants)
@@ -54,6 +63,7 @@ class French extends Component
 
         $this->french_rules_force = (bool) $languageGuidelines->french_rules_force;
         $this->french_gender_separator = $languageGuidelines->french_gender_separator;
+        $this->french_gender_suffix = $languageGuidelines->french_gender_suffix ?? 'short';
     }
 
     public function updateLanguageGuidelinesFrench()
@@ -64,21 +74,17 @@ class French extends Component
             abort(403);
         }
 
-        if (!$this->model->isPremium()) {
-            return;
-        }
-
         $languageGuidelines = LanguageGuidelines::getLanguageGuidelines($this->model);
 
         $languageGuidelines->french_rules_force = (bool) $this->french_rules_force;
 
         $languageGuidelines->french_gender_separator = $this->french_gender_separator;
+        $languageGuidelines->french_gender_suffix = $this->french_gender_suffix;
 
         $languageGuidelines->save();
         $languageGuidelines->dispatchEventToPosthog((new \ReflectionClass($this))->getShortName());
 
         $this->dispatch('saved');
-        $this->updateHelpHero();
     }
 
     /**

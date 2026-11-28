@@ -2,14 +2,21 @@
 
 namespace App\Models;
 
+use App\Events\ConnectedAccountCreated;
+use App\Events\ConnectedAccountDeleted;
+use App\Events\ConnectedAccountUpdated;
 use Illuminate\Database\Eloquent\Concerns\HasTimestamps;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use JoelButcher\Socialstream\ConnectedAccount as SocialstreamConnectedAccount;
-use JoelButcher\Socialstream\Events\ConnectedAccountCreated;
-use JoelButcher\Socialstream\Events\ConnectedAccountDeleted;
-use JoelButcher\Socialstream\Events\ConnectedAccountUpdated;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class ConnectedAccount extends SocialstreamConnectedAccount
+/**
+ * Previously extended JoelButcher\Socialstream\ConnectedAccount. That package was
+ * archived upstream in December 2025 and never supported Laravel 13, so the base
+ * model was absorbed here. The package's Inertia and OAuth2-credentials helpers
+ * were dropped because this application never used them.
+ */
+class ConnectedAccount extends Model
 {
     use HasFactory;
     use HasTimestamps;
@@ -41,4 +48,23 @@ class ConnectedAccount extends SocialstreamConnectedAccount
         'updated' => ConnectedAccountUpdated::class,
         'deleted' => ConnectedAccountDeleted::class,
     ];
+
+    /**
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'created_at' => 'datetime',
+            'expires_at' => 'datetime',
+        ];
+    }
+
+    /**
+     * Get the user this connected account belongs to.
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id', (new User)->getAuthIdentifierName());
+    }
 }

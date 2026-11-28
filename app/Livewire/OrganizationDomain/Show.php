@@ -2,7 +2,8 @@
 
 namespace App\Livewire\OrganizationDomain;
 
-use App\Livewire\HelpHeroTrait;
+use Livewire\Attributes\Locked;
+use App\Livewire\GuidelineEntryAuthorization;
 use App\Models\Domain;
 use App\Models\LanguageGuidelines;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -12,11 +13,12 @@ use Livewire\Component;
 
 class Show extends Component
 {
+    use GuidelineEntryAuthorization;
     use AuthorizesRequests;
-    use HelpHeroTrait;
 
     protected $listeners = ['saved', 'typeChange'];
 
+    #[Locked]
     public $model;
 
     public $hide_actions;
@@ -57,25 +59,19 @@ class Show extends Component
     public function saved()
     {
         $this->render();
-        $this->updateHelpHero();
     }
 
     public function editDomain(Domain $domain)
     {
-        if (!Auth::user()->hasTeamPermission($this->model, 'edit_guidelines')) {
-            abort(403);
-        }
+        $this->authorizeTeamEntry($domain);
 
         $this->dispatch('edit', domain: $domain);
     }
 
     public function deleteDomain(Domain $domain)
     {
-        if (!Auth::user()->hasTeamPermission($this->model, 'edit_guidelines')) {
-            abort(403);
-        }
+        $this->authorizeTeamEntry($domain);
 
         $domain->delete();
-        $this->updateHelpHero();
     }
 }

@@ -2,8 +2,11 @@
 
 namespace App\Livewire\OrganizationTermReplacement;
 
+use Livewire\Attributes\Locked;
+use App\Livewire\GuidelineEntryAuthorization;
 use App\Http\Kernel;
 use App\Models\TermReplacement;
+use App\Rules\NoMarkup;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Facades\Auth;
@@ -13,6 +16,7 @@ use Livewire\Component;
 
 class Form extends Component
 {
+    use GuidelineEntryAuthorization;
     use AuthorizesRequests;
 
     public $term;
@@ -28,23 +32,34 @@ class Form extends Component
 
     protected $listeners = ['edit'];
 
-    protected $rules = [
-        'term_replacement_id' => 'int|nullable',
-        'term' => 'required|min:1|max:250',
-        'replacement' => 'required|min:1|max:250|different:term',
-        'explanation' => 'required_with:url,emoji|max:100',
-        'url' => 'nullable|url|max:250',
-        'emoji' => 'nullable',
-        'language_code' => 'nullable|string|in:en,de,fr',
-        'matching_type' => 'nullable|string|in:case_insensitive,case_sensitive,lemmatize',
-        'word_type' => 'nullable|string|in:a,v,n',
-    ];
+    /**
+     * Also used by UserTermReplacement\Form, which extends this component.
+     *
+     * The explanation and URL are shown by the browser extension inside
+     * third-party pages, so the explanation may carry no markup and the URL
+     * must be http or https (a bare `url` rule accepts other schemes too).
+     */
+    protected function rules()
+    {
+        return [
+            'term_replacement_id' => 'int|nullable',
+            'term' => 'required|min:1|max:250',
+            'replacement' => 'required|min:1|max:250|different:term',
+            'explanation' => ['required_with:url,emoji', 'max:100', new NoMarkup()],
+            'url' => 'nullable|url:http,https|max:250',
+            'emoji' => 'nullable',
+            'language_code' => 'nullable|string|in:en,de,fr',
+            'matching_type' => 'nullable|string|in:case_insensitive,case_sensitive,lemmatize',
+            'word_type' => 'nullable|string|in:a,v,n',
+        ];
+    }
 
     /**
      * The model instance.
      *
      * @var mixed
      */
+    #[Locked]
     public $model;
 
     /**
@@ -63,9 +78,6 @@ class Form extends Component
     protected function getLanguageCodes()
     {
         $languageCodes = TermReplacement::LANGUAGE_CODES;
-        if (!Kernel::isFrenchEnabled($this->model)) {
-            unset($languageCodes['fr']);
-        }
         if ($this->matching_type === 'lemmatize') {
             $this->show_word_type = true;
             unset($languageCodes['']);
@@ -77,18 +89,15 @@ class Form extends Component
         return $languageCodes;
     }
 
-    protected function cleanValues($subscribed)
+    protected function cleanValues()
     {
         $this->term = trim($this->term);
         $this->replacement = trim($this->replacement);
-        if (!$subscribed) {
-            $this->matching_type = 'case_insensitive';
-        }
     }
 
     public function render()
     {
-        $this->cleanValues($this->model->isPremium());
+        $this->cleanValues();
 
         $params = ['language_codes' => $this->getLanguageCodes()];
         return view('livewire.organization-term-replacement.form', $params);
@@ -123,6 +132,8 @@ class Form extends Component
 
     public function edit(TermReplacement $termReplacement)
     {
+        $this->authorizeEntry($termReplacement);
+
         $this->term_replacement_id = $termReplacement->id;
         $this->term = $termReplacement->term;
         $this->replacement = $termReplacement->replacement;
@@ -139,7 +150,7 @@ class Form extends Component
     public function storeTermReplacement()
     {
         $this->validate();
-        $this->cleanValues($this->model->isPremium());
+        $this->cleanValues();
 
         if (!Auth::user()->hasTeamPermission($this->model, 'edit_guidelines')) {
             abort(403);
@@ -176,13 +187,6 @@ class Form extends Component
                 throw ValidationException::withMessages(['term' => $message]);
             }
         } else {
-            if ($this->model->getTermReplacementsLimitReached()) {
-                $message = __(
-                    'guidelines.term_replacement_limit_reached_error',
-                    ['max_count' => $this->model->getTermReplacementsCount()]
-                );
-                throw ValidationException::withMessages(['term' => $message]);
-            }
 
             $termReplacement = new TermReplacement();
         }

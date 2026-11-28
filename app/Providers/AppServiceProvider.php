@@ -2,11 +2,10 @@
 
 namespace App\Providers;
 
-use App\Models\Subscription;
-use App\Models\Team;
+use App\Helpers\PosthogHelper;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Firebase\JWT\JWT;
-use Laravel\Cashier\Cashier;
 use PostHog\PostHog;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +22,12 @@ class AppServiceProvider extends ServiceProvider
         }
 
         JWT::$leeway = 10;
+
+        // Here rather than in EventServiceProvider: listeners attached in a
+        // provider's boot() run in provider order, and laravel-impersonate's
+        // Logout listener forgets whom the session is impersonating. Every
+        // register() runs before any boot(), so this one sees it still.
+        $this->app['events']->listen(\Illuminate\Auth\Events\Logout::class, \App\Listeners\RevokeOAuthTokens::class);
     }
 
     /**
@@ -32,16 +37,17 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Cashier::useCustomerModel(Team::class);
-        Cashier::calculateTaxes();
-        Cashier::useSubscriptionModel(Subscription::class);
-        Cashier::keepPastDueSubscriptionsActive();
+        // After Jetstream's own registration (JetstreamServiceProvider::boot).
+        $this->app->booted(function () {
+            \Livewire\Livewire::component('profile.two-factor-authentication-form', \App\Livewire\Profile\TwoFactorAuthenticationForm::class);
+        });
+
+        // <script @cspNonce>: the nonce App\Http\Middleware\SecurityHeaders
+        // allows inline scripts with. Nothing while the policy is off.
+        Blade::directive('cspNonce', fn () => '<?php if ($__cspNonce = \\Illuminate\\Support\\Facades\\Vite::cspNonce()) { echo \'nonce="\' . e($__cspNonce) . \'"\'; } ?>');
 
         if (config('posthog.enabled')) {
-            PostHog::init(
-                config('posthog.api_key'),
-                ['host' => config('posthog.host'), 'debug' => config('posthog.debug')],
-            );
+            PosthogHelper::init();
         }
     }
 }

@@ -11,6 +11,9 @@ interface GuidelinesInterface
         '/in' => 'guidelines.germam_gender_separator_slash',
         '/-in' => 'guidelines.germam_gender_separator_slash_dash',
         'In' => 'guidelines.germam_gender_separator_binnen_i',
+        '(-)' => 'guidelines.germam_gender_separator_parenthesis_dash',
+        '()' => 'guidelines.germam_gender_separator_parenthesis',
+        'de-e' => 'guidelines.germam_gender_separator_inklusivum',
     ];
     const FRENCH_GENDER_SEPARATOR = [
         '·' => 'guidelines.french_gender_separator_point_median',
@@ -19,6 +22,10 @@ interface GuidelinesInterface
         '.s' => 'guidelines.french_gender_separator_point_s',
         '/' => 'guidelines.french_gender_separator_barre_oblique',
         '/s' => 'guidelines.french_gender_separator_barre_oblique_s',
+    ];
+    const FRENCH_GENDER_SUFFIX = [
+        'short' => 'guidelines.french_gender_suffix_short',
+        'full' => 'guidelines.french_gender_suffix_full',
     ];
     const GENDERED_ROLES_FORMAT = ['inclusive_gender' => 'guidelines.inclusive_gender', 'both' => 'guidelines.both', 'binary_gender' => 'guidelines.binary_gender',  'none' => 'guidelines.none'];
     const PREFERRED_VARIANTS_EN = ['' => 'guidelines.preferred_variants_none', 'en-US' => 'guidelines.preferred_variants_en_US', 'en-GB' => 'guidelines.preferred_variants_en_GB'];

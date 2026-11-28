@@ -10,6 +10,6 @@ class UserCompanyUpdatedSlackAlert
     {
         $message = " - User {$event->user->email} set company name to {$event->user->company_name}";
 
-        SlackAlert::message(getenv('PLATFORM_ENVIRONMENT') . $message);
+        SlackAlert::message(config('app.env') . $message);
     }
 }

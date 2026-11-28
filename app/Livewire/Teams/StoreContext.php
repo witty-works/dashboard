@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Teams;
 
-use App\Livewire\HelpHeroTrait;
+use Livewire\Attributes\Locked;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -10,7 +10,6 @@ use Livewire\Component;
 class StoreContext extends Component
 {
     use AuthorizesRequests;
-    use HelpHeroTrait;
 
     public $store_context;
 
@@ -18,6 +17,7 @@ class StoreContext extends Component
         'store_context' => 'nullable|boolean',
     ];
 
+    #[Locked]
     public $model;
 
     /**
@@ -38,9 +38,6 @@ class StoreContext extends Component
         $this->resetErrorBag();
 
         $this->store_context = (bool) $this->model->store_context;
-        if (!$this->model->isPremium()) {
-            $this->store_context = true;
-        }
     }
 
     public function updateTeamsStoreContext()
@@ -51,16 +48,11 @@ class StoreContext extends Component
             abort(403);
         }
 
-        if (!$this->model->isPremium()) {
-            $this->store_context = true;
-        }
-
         $this->model->store_context = (bool) $this->store_context;
 
         $this->model->save();
 
         $this->dispatch('saved');
-        $this->updateHelpHero();
     }
 
     /**

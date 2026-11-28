@@ -19,14 +19,8 @@
                 value="1"
                 :label="__('guidelines.enable_orthography')"
                 wire:model="orthography"
-                :disabled="!$model->isPremium()"
             />
 
-            @if(!$model->isPremium())
-              <div class="p-3">
-                @include('partials.witty-teams-only')
-              </div>
-            @endif
         </div>
     </x-slot>
 
@@ -37,14 +31,8 @@
                 value="1"
                 :label="__('guidelines.set_for_all')"
                 wire:model="orthography_force"
-                :disabled="!$model->isPremium()"
             />
 
-            @if(!$model->isPremium())
-              <div class="p-3">
-                @include('partials.witty-teams-only')
-              </div>
-            @endif
         </div>
 
         @include('partials/save_cancel_action')

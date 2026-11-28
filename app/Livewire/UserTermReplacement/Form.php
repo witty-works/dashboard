@@ -2,6 +2,7 @@
 
 namespace App\Livewire\UserTermReplacement;
 
+use Livewire\Attributes\Locked;
 use App\Models\TermReplacement;
 use App\Livewire\OrganizationTermReplacement\Form as OrganizationForm;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -12,6 +13,7 @@ class Form extends OrganizationForm
 {
     use AuthorizesRequests;
 
+    #[Locked]
     public $model;
 
     public function mount($model)
@@ -23,7 +25,7 @@ class Form extends OrganizationForm
 
     public function render()
     {
-        $this->cleanValues($this->model->isPremium());
+        $this->cleanValues();
 
         $params = ['language_codes' => $this->getLanguageCodes()];
         return view('livewire.user-term-replacement.form', $params);
@@ -37,7 +39,7 @@ class Form extends OrganizationForm
             abort(403);
         }
 
-        $this->cleanValues($this->model->isPremium());
+        $this->cleanValues();
 
         $query = TermReplacement::query()
             ->where('user_id', $this->model->id)
@@ -67,10 +69,6 @@ class Form extends OrganizationForm
                 throw ValidationException::withMessages(['term' => $message]);
             }
         } else {
-            if ($this->model->getTermReplacementsLimitReached()) {
-                $message = __('guidelines.term_replacement_limit_reached_error', ['max_count' => $this->model->getTermReplacementsCount()]);
-                throw ValidationException::withMessages(['term' => $message]);
-            }
 
             $termReplacement = new TermReplacement();
         }

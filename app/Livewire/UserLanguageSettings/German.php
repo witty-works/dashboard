@@ -2,11 +2,14 @@
 
 namespace App\Livewire\UserLanguageSettings;
 
+use Livewire\Attributes\Locked;
 use App\Livewire\OrganizationLanguageSettings\German as OrganizationLanguageSettingsGerman;
 use App\Livewire\UserGuidelineTrait;
+use App\Models\GuidelinesInterface;
 use App\Models\LanguageGuidelines;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 use Livewire\Component;
 
 class German extends Component
@@ -19,10 +22,18 @@ class German extends Component
     public $enabled;
     public $german_gender_ending;
 
-    protected $rules = [
-        'german_gender_ending' => 'nullable|string|in::in,*in,/in,_in,In,/-in',
-    ];
+    protected function rules()
+    {
+        return [
+            'german_gender_ending' => [
+                'nullable',
+                'string',
+                Rule::in(array_keys(GuidelinesInterface::GERMAN_GENDER_ENDING)),
+            ],
+        ];
+    }
 
+    #[Locked]
     public $model;
 
     protected function resetForm()
@@ -65,10 +76,6 @@ class German extends Component
             abort(403);
         }
 
-        if (!$this->model->isPremium()) {
-            return;
-        }
-
         $languageGuidelines = LanguageGuidelines::getLanguageGuidelines($this->model);
 
         $languageGuidelines->german_gender_ending = $this->german_gender_ending;
@@ -77,7 +84,6 @@ class German extends Component
         $languageGuidelines->dispatchEventToPosthog((new \ReflectionClass($this))->getShortName());
 
         $this->dispatch('saved');
-        $this->updateHelpHero();
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Livewire\OrganizationLanguageSettings;
 
+use Livewire\Attributes\Locked;
 use App\Livewire\TeamsGuidelineTrait;
 use App\Models\LanguageGuidelines;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -21,6 +22,7 @@ class Inspirations extends Component
         'show_inspiration_alternatives_force' => 'nullable|boolean',
     ];
 
+    #[Locked]
     public $model;
 
     public function resetForm()
@@ -41,17 +43,14 @@ class Inspirations extends Component
             abort(403);
         }
 
-        if ($this->model->isPremium()) {
-            $languageGuidelines = LanguageGuidelines::getLanguageGuidelines($this->model);
+        $languageGuidelines = LanguageGuidelines::getLanguageGuidelines($this->model);
 
-            $languageGuidelines->show_inspiration_alternatives = (bool) $this->show_inspiration_alternatives;
-            $languageGuidelines->show_inspiration_alternatives_force = (bool) $this->show_inspiration_alternatives_force;
-            $languageGuidelines->save();
-            $languageGuidelines->dispatchEventToPosthog((new \ReflectionClass($this))->getShortName());
-        }
+        $languageGuidelines->show_inspiration_alternatives = (bool) $this->show_inspiration_alternatives;
+        $languageGuidelines->show_inspiration_alternatives_force = (bool) $this->show_inspiration_alternatives_force;
+        $languageGuidelines->save();
+        $languageGuidelines->dispatchEventToPosthog((new \ReflectionClass($this))->getShortName());
 
         $this->dispatch('saved');
-        $this->updateHelpHero();
     }
 
     /**

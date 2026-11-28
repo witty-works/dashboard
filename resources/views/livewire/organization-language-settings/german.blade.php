@@ -9,7 +9,7 @@
 
     <x-slot name="form" submit="updateLanguageGuidelinesGerman">
         @php
-            $disabled = !$model->isPremium();
+            $disabled = false;
         @endphp
         <div class="margin-bottom">
             {!! __('guidelines.german_gender_ending') !!}
@@ -21,13 +21,14 @@
                 class="guidelines-form-section-dropdown"
                 wire:model="german_gender_ending"
                 :disabled="$disabled"
+                aria-label="{{ __('guidelines.german_gender_ending_label') }}"
+                error="german_gender_ending"
             />
 
             <x-input-error for="german_gender_ending" class="mt-2" />
         </div>
     </x-slot>
 
-    @if($model->isPremium())
     <x-slot name="actions">
         <div class="guidelines-form-section--apply-for-all">
             <x-checkbox
@@ -42,6 +43,5 @@
         @include('partials/save_cancel_action')
         @endif
     </x-slot>
-    @endif
 
 </x-form-section>

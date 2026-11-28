@@ -2,6 +2,7 @@
 
 namespace App\Livewire\UserFalsePositive;
 
+use Livewire\Attributes\Locked;
 use App\Models\FalsePositive;
 use Illuminate\Validation\ValidationException;
 use App\Livewire\OrganizationFalsePositive\Form as OrganizationForm;
@@ -17,6 +18,7 @@ class Form extends OrganizationForm
      *
      * @var mixed
      */
+    #[Locked]
     public $model;
 
     /**
@@ -41,6 +43,10 @@ class Form extends OrganizationForm
     {
         $this->validate();
 
+        if (Auth::user()->id !== $this->model->id) {
+            abort(403);
+        }
+
         $query = FalsePositive::query()
             ->where('user_id', $this->model->id)
             ->where('false_positive', $this->false_positive);
@@ -56,11 +62,6 @@ class Form extends OrganizationForm
                 throw ValidationException::withMessages(['false_positive' => $message]);
             }
         } else {
-            if ($this->model->getFalsePositivesLimitReached()) {
-                $message = __('guidelines.false_positive_limit_reached_error', ['max_count' => $this->model->getFalsePositivesCount()]);
-                throw ValidationException::withMessages(['false_positive' => $message]);
-            }
-
             $falsePositive = new FalsePositive();
         }
 

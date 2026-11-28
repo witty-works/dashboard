@@ -15,15 +15,16 @@
                 value="1"
                 wire:model="llm_alternatives"
                 :label="__('guidelines.llm_alternatives')"
-                :disabled="!$model->isPremium() ? 'upgrade' : (Auth::user()->hasTeamPermission($model, 'update') ? false : 'locked')"
+                :disabled="Auth::user()->hasTeamPermission($model, 'update') ? false : 'locked'"
                 aria-label="{{ __('guidelines.llm_alternatives') }}"
+                error="llm_alternatives"
             />
 
-            <x-input-error for="llm_alternatives" class="mt-2" aria-describedby="llm_alternatives" />
+            <x-input-error for="llm_alternatives" class="mt-2" />
         </div>
     </x-slot>
 
-    @if (Auth::user()->hasTeamPermission($model, 'update') && $model->isPremium())
+    @if (Auth::user()->hasTeamPermission($model, 'update'))
     <x-slot name="actions">
         @include('partials/save_cancel_action')
     </x-slot>

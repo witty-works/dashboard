@@ -9,7 +9,7 @@
 
     <x-slot name="form" submit="updateLanguageGuidelinesFrench">
         @php
-            $disabled = !$model->isPremium();
+            $disabled = false;
         @endphp
         <div class="margin-bottom">
             {!! __('guidelines.french_gender_separator') !!}
@@ -21,13 +21,31 @@
                 class="guidelines-form-section-dropdown"
                 wire:model="french_gender_separator"
                 :disabled="$disabled"
+                aria-label="{{ __('guidelines.french_gender_separator_label') }}"
+                error="french_gender_separator"
             />
 
             <x-input-error for="french_gender_separator" class="mt-2" />
         </div>
+
+        <div class="margin-bottom">
+            {{ __('guidelines.french_gender_suffix') }}
+        </div>
+
+        <div class="margin-bottom flex flex-row mb-5">
+            <x-select id="french_gender_suffix"
+                :options="\App\Models\GuidelinesInterface::FRENCH_GENDER_SUFFIX"
+                class="guidelines-form-section-dropdown"
+                wire:model="french_gender_suffix"
+                :disabled="$disabled"
+                aria-label="{{ __('guidelines.french_gender_suffix_label') }}"
+                error="french_gender_suffix"
+            />
+
+            <x-input-error for="french_gender_suffix" class="mt-2" />
+        </div>
     </x-slot>
 
-    @if($model->isPremium())
     <x-slot name="actions">
         <div class="guidelines-form-section--apply-for-all">
             <x-checkbox
@@ -42,6 +60,5 @@
         @include('partials/save_cancel_action')
         @endif
     </x-slot>
-    @endif
 
 </x-form-section>

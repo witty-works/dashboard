@@ -9,7 +9,7 @@
 
     <x-slot name="form" submit="updateLanguageGuidelinesGerman">
         @php
-            $disabled = !$model->isPremium() || \App\Models\LanguageGuidelines::isForcedOnTeam($model, 'german_rules');
+            $disabled = \App\Models\LanguageGuidelines::isForcedOnTeam($model, 'german_rules');
         @endphp
         <div class="margin-bottom">
             {!! __('guidelines.german_gender_ending') !!}
@@ -21,6 +21,8 @@
                 class="guidelines-form-section-dropdown"
                 wire:model="german_gender_ending"
                 :disabled="$disabled"
+                aria-label="{{ __('guidelines.german_gender_ending_label') }}"
+                error="german_gender_ending"
             />
             @include('partials.toggle_label', ['disabled' => \App\Models\LanguageGuidelines::isForcedOnTeam($model, 'german_rules')])
 

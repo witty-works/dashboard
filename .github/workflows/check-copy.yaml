@@ -1,0 +1,70 @@
+name: Check copy with Witty
+
+# Sends the language files to an NLP API and lists what it flags in the job
+# summary, so new or changed copy follows the dashboard's own style. It
+# reports only: the API also flags points the copy keeps on purpose.
+#
+# Runs only where the repository sets the variable WITTY_API_URL and the
+# secret WITTY_API_KEY (a key of its own, for a CI account, so it can be
+# revoked alone). Pull requests from forks get no secrets and skip it.
+
+on:
+  pull_request:
+    paths:
+      - 'resources/lang/**'
+      - '.github/workflows/check-copy.yaml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  copy:
+    runs-on: ubuntu-latest
+    # Some 2,700 strings, one request each.
+    timeout-minutes: 30
+    env:
+      WITTY_API_URL: ${{ vars.WITTY_API_URL }}
+      WITTY_API_KEY: ${{ secrets.WITTY_API_KEY }}
+    steps:
+      - name: Skip without an API
+        if: env.WITTY_API_URL == '' || env.WITTY_API_KEY == ''
+        run: echo "WITTY_API_URL or WITTY_API_KEY is not set; nothing checked." >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        if: env.WITTY_API_URL != '' && env.WITTY_API_KEY != ''
+        with:
+          persist-credentials: false
+      # The checker and Witty's style (config/witty.json) come from the NLP
+      # API repository, at a fixed commit; bump it to take a newer checker.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        if: env.WITTY_API_URL != '' && env.WITTY_API_KEY != ''
+        with:
+          repository: witty-works/nlp_api
+          ref: 627168aae0c8fa29d1b56b4ec50b93d4837d6c6b
+          path: nlp_api
+          persist-credentials: false
+          sparse-checkout: |
+            bin/check_translations.py
+            config/witty.json
+          sparse-checkout-cone-mode: false
+      # The Laravel language files are PHP, which the checker runs to read.
+      - uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
+        if: env.WITTY_API_URL != '' && env.WITTY_API_KEY != ''
+        with:
+          php-version: '8.4'
+          coverage: none
+      - name: Check the language files
+        if: env.WITTY_API_URL != '' && env.WITTY_API_KEY != ''
+        # Exit status 1 means findings, which are reported, not failed; 2
+        # means a file could not be read or the API could not be reached.
+        run: |
+          set +e
+          python3 nlp_api/bin/check_translations.py resources/lang \
+            --api "$WITTY_API_URL" \
+            --exclude-key '^(german|germam|french)_gender_separator_' \
+            --workers 4 \
+            > findings.md
+          status=$?
+          set -e
+          cat findings.md >> "$GITHUB_STEP_SUMMARY"
+          if [ "$status" -eq 2 ]; then exit 1; fi

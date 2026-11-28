@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use Livewire\Attributes\Locked;
 use App\Jobs\SyncUserToNlpApi;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
@@ -17,6 +18,7 @@ class TeamAnalytics extends Component
         'team_analytics' => 'nullable|boolean',
     ];
 
+    #[Locked]
     public $model;
 
     /**
@@ -37,9 +39,6 @@ class TeamAnalytics extends Component
         $this->resetErrorBag();
 
         $this->team_analytics = (bool) $this->model->team_analytics;
-        if (!$this->model->isPremium()) {
-            $this->team_analytics = true;
-        }
     }
 
     public function updateTeamsAnalytics()
@@ -48,10 +47,6 @@ class TeamAnalytics extends Component
 
         if (Auth::user()->id !== $this->model->id) {
             abort(403);
-        }
-
-        if (!$this->model->isPremium()) {
-            $this->team_analytics = true;
         }
 
         $this->model->team_analytics = (bool) $this->team_analytics;

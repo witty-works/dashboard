@@ -17,6 +17,11 @@ class TeamInvitation extends JetstreamTeamInvitation
         'role',
     ];
 
+    // as_owner stays out of $fillable: only InviteTeamOwner sets it.
+    protected $casts = [
+        'as_owner' => 'boolean',
+    ];
+
     /**
      * Get the team that the invitation belongs to.
      *

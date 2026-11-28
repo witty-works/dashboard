@@ -1,0 +1,108 @@
+{
+    "gendered_roles_format": {
+        "translations": {
+            "en": {
+                "none": "Suggest only gender-neutral alternatives",
+                "both": "Suggest both the chosen gender separator and the female and male form",
+                "inclusive_gender": "Suggest the chosen gender separator",
+                "binary_gender": "Suggest the female and male form"
+            },
+            "de": {
+                "none": "Nur geschlechtsneutrale Alternativen vorschlagen",
+                "both": "Das gewählte Gender-Trennzeichen und die weibliche und männliche Form vorschlagen",
+                "inclusive_gender": "Gewählte Gender-Trennzeichen vorschlagen",
+                "binary_gender": "Weibliche und männliche Form vorschlagen"
+            },
+            "fr": {
+                "none": "Proposer uniquement des alternatives non genrées",
+                "both": "Suggérer le séparateur de genre choisi ainsi que les formes féminines et masculines",
+                "inclusive_gender": "Suggérer le séparateur de genre choisi",
+                "binary_gender": "Proposer le masculin et le féminin"
+            }
+        }
+    },
+    "german_gender_ending": {
+        "translations": {
+            "en": {
+                "*in": "Genderstar, e.g. Expert*in",
+                ":in": "Colon, e.g. Expert:in",
+                "_in": "Gendergap, e.g. Expert_in",
+                "/in": "Slash, e.g. Expert/in",
+                "/-in": "Slash + Dash, e.g. Expert/-in",
+                "In": "Binnen-I, e.g. ExpertIn",
+                "(-)": "Parenthesis + Dash, e.g. Expert(-in)",
+                "()": "Parenthesis, e.g. Expert(in)",
+                "de-e": "Inklusivum, e.g. de Expertere"
+            },
+            "de": {
+                "*in": "Genderstern, z. B. Expert*in",
+                ":in": "Doppelpunkt, z. B. Expert:in",
+                "_in": "Gendergap, z.B. Experte_in",
+                "/in": "Schrägstrich, z.B. Expert/in",
+                "/-in": "Schrägstrich + Strich, z.B. Experte/-in",
+                "In": "Binnen-I, z.B. ExpertIn",
+                "(-)": "Klammern + Strich, z.B. Expert(-in)",
+                "()": "Klammern, z.B. Expert(in)",
+                "de-e": "Inklusivum, z.B. de Expertere"
+            },
+            "fr": {
+                "*in": "Genderstar, p. ex. Expert*in",
+                ":in": "Côlon, p. ex. Expert:in",
+                "_in": "Gendergap, p. ex. Expert_in",
+                "/in": "Barre oblique, p. ex. Expert/in",
+                "/-in": "Barre oblique + Tiret, p. ex. Expert/-in",
+                "In": "Binnen-I, p. ex. ExpertIn",
+                "(-)": "Parenthèses + Tiret, p. ex. Expert(-in)",
+                "()": "Parenthèses, p. ex. Expert(in)",
+                "de-e": "Inklusivum, p. ex. de Expertere"
+            }
+        },
+        "icon_image": {
+            "de-e": "https://www.witty.works/assets/media/vgd-icon-bunt.svg"
+        }
+    },
+    "french_gender_separator": {
+        "translations": {
+            "en": {
+                "·": "Point médian, e.g. expert·es",
+                "·s": "Point médian, incl. plural, e.g. expert·e·s",
+                ".": "Point, e.g. expert.es",
+                ".s": "Dot incl. plural, e.g. expert.e.s",
+                "/": "Slash, e.g. expert/es",
+                "/s": "Slash, incl. plural, e.g. expert/e/s"
+            },
+            "de": {
+                "·": "Mittelpunkt (Point médian), z.B. expert·es",
+                "·s": "Point médian, inkl. Mehrzahl, z.B. expert·e·s",
+                ".": "Punkt (Point), z.B. expert.es",
+                ".s": "Punkt, inkl. Mehrzahl, z.B. expert.e.s",
+                "/": "Schrägstrich, z.B. expert/es",
+                "/s": "Schrägstrich, inkl. Mehrzahl, z.B. expert/e/s"
+            },
+            "fr": {
+                "·": "Point médian, p. ex. expert·es",
+                "·s": "Point médian, incl. pluriel, p. ex. expert·e·s",
+                ".": "Point, p. ex. expert.es",
+                ".s": "Point, incl. pluriel, p. ex. expert.e.s",
+                "/": "Barre oblique, p. ex. expert/es",
+                "/s": "Barre oblique, incl. pluriel, p. ex. expert/e/s"
+            }
+        }
+    },
+    "french_gender_suffix": {
+        "translations": {
+            "en": {
+                "short": "Short ending, e.g. utilisateur·rice, vendeur·se",
+                "full": "Full ending, e.g. utilisateur·trice, vendeur·euse"
+            },
+            "de": {
+                "short": "Kurze Endung, z. B. utilisateur·rice, vendeur·se",
+                "full": "Vollständige Endung, z. B. utilisateur·trice, vendeur·euse"
+            },
+            "fr": {
+                "short": "Terminaison courte, p. ex. utilisateur·rice, vendeur·se",
+                "full": "Terminaison complète, p. ex. utilisateur·trice, vendeur·euse"
+            }
+        }
+    }
+}

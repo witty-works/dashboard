@@ -19,7 +19,7 @@
         </div>
     </x-slot>
 
-    @if($model->isPremium() && !\App\Models\LanguageGuidelines::isForcedOnTeam($model, 'disabled_categories', 'orthography'))
+    @if(!\App\Models\LanguageGuidelines::isForcedOnTeam($model, 'disabled_categories', 'orthography'))
     <x-slot name="actions">
         @include('partials/save_cancel_action')
     </x-slot>
