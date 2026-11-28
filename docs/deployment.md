@@ -60,7 +60,7 @@ Some of these cannot be changed lightly:
 Deploy the NLP API first, following its documentation (`docs/setup.md` and `docs/configuration.md` there). These of its settings concern the dashboard:
 
 -   **`DASHBOARD_URL`:** the dashboard's public address. The API fetches the dashboard's token signing keys from `{DASHBOARD_URL}/.well-known/jwks.json`.
--   **`DASHBOARD_ISSUER`:** the dashboard's `APP_URL`, exactly as the dashboard's tokens carry it ([Issuer](oauth.md#issuer)).
+-   **`DASHBOARD_ISSUER`:** the dashboard's `APP_URL` without a trailing slash, as the dashboard's tokens carry it: `APP_URL=https://dashboard.example.org/` gives `DASHBOARD_ISSUER=https://dashboard.example.org`. The API compares it exactly, so a trailing slash turns every token away with `401` ([Issuer](oauth.md#issuer)).
 -   **`DASHBOARD_CLIENT_ID`:** the write page's OAuth client, created at the [first start](#first-start), and the browser extension's client if it signs in to this deployment, comma-separated.
 -   **`MANAGEMENT_AUTH_ENABLED`** stays on (the default), with `API_DOCS_USERNAME` and `API_DOCS_PASSWORD` set: the dashboard signs in with them to write settings and manage API keys.
 -   **`API_KEY_HMAC_KEY`** set, or the dashboard's API keys page cannot create keys.
