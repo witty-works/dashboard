@@ -107,7 +107,9 @@ class DeleteUser implements DeletesUsers
     protected function ensureNotLastSuperadmin($user)
     {
         $role = config('admin.role');
-        if ($user->hasRole($role) && \App\Models\User::role($role)->count() <= 1) {
+        // The superadmins' rows locked: a second superadmin deleting their own
+        // account at the same time waits here, and then counts one fewer.
+        if ($user->hasRole($role) && \App\Models\User::role($role)->lockForUpdate()->pluck('id')->count() <= 1) {
             // Under 'team', where the profile form shows why an account cannot go yet.
             throw ValidationException::withMessages(['team' => [__('content.admin_last_superadmin')]]);
         }
