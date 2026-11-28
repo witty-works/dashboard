@@ -67,6 +67,8 @@ jobs:
       - run: npm test --if-present
       - run: npm run build
       - run: npm run test:bundle
+      # The version the release workflow (release.yaml) gives a release.
+      - run: .github/scripts/release-version.test.sh
 
   # The rendered pages in Chromium (playwright.config.js, tests/browser): axe's
   # WCAG 2.2 A and AA checks, keyboard and focus behaviour, reflow at 320px,
