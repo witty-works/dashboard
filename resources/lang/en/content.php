@@ -299,6 +299,7 @@ You can now close this window.
 Please then go to "Register" again to finalize the registration into the "Witty for Word" Add-in.',
     'witty_word_addin_text_failed' => 'We have failed to log you into Witty Word-Addin.<br>Please close this window and try again or contact <a href="mailto::support_email">:support_email</a>.',
     'witty_word_addin_text_invite_only' => 'Sign-up is by invitation only, and there is no invitation for this address.<br>Please close this window and ask the person who manages your team to invite you.',
+    'witty_word_addin_text_unverified_email' => 'A dashboard account uses this address but has not confirmed it yet.<br>If it is your account, sign in to the dashboard, confirm the address and try again. Otherwise contact <a href="mailto::support_email">:support_email</a>.',
     'inclusive_filter' => 'Inclusion',
     'inclusive_filter_non_inclusive' => 'Non-inclusive',
     'inclusive_filter_both' => 'Both',
